@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "Bhagavad Gita",
+    "slug": "bhagavad-gita-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "platforms": ["ios", "android"],
+    "description": "Interactive mobile app for learning and exploring the Bhagavad Gita with daily verses, chapter-wise navigation, and personalized progress tracking.",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#fff7ed"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bhagavadgita.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#fff7ed"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.bhagavadgita.app"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "your-project-id"
+      }
+    }
+  }
+}
