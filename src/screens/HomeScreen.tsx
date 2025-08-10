@@ -39,14 +39,7 @@ const HomeScreen: React.FC = () => {
       try {
         setIsInitializing(true);
         
-        // Check if Vapi is enabled
-        if (!VAPI_CONFIG.enabled) {
-          console.log('Vapi disabled - running in demo mode');
-          setIsInitializing(false);
-          return;
-        }
-        
-        // Initialize Vapi service with configuration
+        // Initialize Vapi service with configuration (works in both real and demo modes)
         if (!vapiService.isReady()) {
           await vapiService.initialize(
             VAPI_CONFIG.publicApiKey,

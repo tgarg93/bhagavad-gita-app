@@ -171,6 +171,20 @@ export class VapiService {
           };
           this.eventHandlers.onCallStart?.();
           this.eventHandlers.onStatusUpdate?.(this.currentStatus);
+          
+          // Simulate call duration updates in demo mode
+          const demoInterval = setInterval(() => {
+            if (this.currentStatus.isActive && this.callStartTime) {
+              const elapsed = Math.floor((Date.now() - this.callStartTime) / 1000);
+              this.currentStatus = {
+                ...this.currentStatus,
+                callDuration: elapsed,
+              };
+              this.eventHandlers.onStatusUpdate?.(this.currentStatus);
+            } else {
+              clearInterval(demoInterval);
+            }
+          }, 1000);
         }, 2000);
         return;
       }
