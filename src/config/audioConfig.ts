@@ -8,11 +8,9 @@ export const AUDIO_CONFIG = {
   cloudSources: [
     {
       name: 'GitHub',
-      // To use GitHub: 
-      // 1. Upload 8_yo_version.m4a to your repo (e.g., in assets/audio/ folder)
-      // 2. Update the URL below with your username and repo name
+      // Audio file hosted on GitHub repository
       url: 'https://raw.githubusercontent.com/tgarg93/bhagavad-gita-app/main/assets/audio/8_yo_version.m4a',
-      active: false, // Set to true when you upload the file
+      active: true, // ✅ Active - file is uploaded to GitHub
     },
     
     {
