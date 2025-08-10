@@ -32,15 +32,23 @@ const HomeScreen: React.FC = () => {
   const [playbackStatus, setPlaybackStatus] = useState<any>(null);
 
   useEffect(() => {
-    // Configure audio session
+    // Configure audio session with comprehensive settings
     const configureAudio = async () => {
       try {
+        console.log('Configuring audio session...');
         await Audio.setAudioModeAsync({
           playsInSilentModeIOS: true,
           staysActiveInBackground: true,
+          allowsRecordingIOS: false,
+          interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+          shouldDuckAndroid: true,
+          interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+          playThroughEarpieceAndroid: false,
         });
+        console.log('Audio session configured successfully');
       } catch (error) {
         console.log('Error configuring audio:', error);
+        Alert.alert('Audio Setup Error', 'There was a problem setting up audio. Please check your device settings.');
       }
     };
     configureAudio();
@@ -96,11 +104,40 @@ const HomeScreen: React.FC = () => {
       
       if (audioPath) {
         console.log('Loading audio from:', audioPath);
+        
+        // Check if file exists and get info
+        const fileInfo = await require('expo-file-system').getInfoAsync(audioPath);
+        console.log('Audio file info:', fileInfo);
+        
+        if (!fileInfo.exists) {
+          throw new Error('Audio file does not exist at path: ' + audioPath);
+        }
+        
         const { sound: audioSound } = await Audio.Sound.createAsync(
           { uri: audioPath },
-          { shouldPlay: false, isLooping: false },
+          { 
+            shouldPlay: false, 
+            isLooping: false,
+            volume: 1.0,
+            isMuted: false,
+            rate: 1.0,
+            shouldCorrectPitch: true,
+          },
           onPlaybackStatusUpdate
         );
+        
+        // Get initial status to verify audio is loaded
+        const status = await audioSound.getStatusAsync();
+        console.log('Audio loaded successfully. Status:', {
+          isLoaded: status.isLoaded,
+          durationMillis: status.isLoaded ? status.durationMillis : 'unknown',
+          volume: status.isLoaded ? status.volume : 'unknown'
+        });
+        
+        if (!status.isLoaded) {
+          throw new Error('Audio failed to load properly');
+        }
+        
         setSound(audioSound);
         return audioSound;
       } else {
@@ -120,12 +157,25 @@ const HomeScreen: React.FC = () => {
   const onPlaybackStatusUpdate = (status: any) => {
     setPlaybackStatus(status);
     if (status.isLoaded) {
+      // Update progress
       const progress = status.durationMillis > 0 
         ? Math.round((status.positionMillis / status.durationMillis) * 100)
         : 0;
       setStoryProgress(progress);
       
+      // Sync playing state with actual playback status
+      setIsPlaying(status.isPlaying);
+      
+      // Log status for debugging
+      console.log('Playback status:', {
+        isPlaying: status.isPlaying,
+        positionMillis: status.positionMillis,
+        durationMillis: status.durationMillis,
+        progress: progress + '%'
+      });
+      
       if (status.didJustFinish) {
+        console.log('Audio finished playing');
         setIsPlaying(false);
         setStoryProgress(100);
       }
@@ -156,12 +206,48 @@ const HomeScreen: React.FC = () => {
       
       if (isPlaying) {
         // Pause audio
+        console.log('Pausing audio...');
         await sound?.pauseAsync();
         setIsPlaying(false);
+        console.log('Audio paused');
       } else {
-        // Play audio
-        await sound?.playAsync();
-        setIsPlaying(true);
+        // Play audio with retry logic
+        console.log('Starting audio playback...');
+        try {
+          // Get current status before playing
+          const currentStatus = await sound?.getStatusAsync();
+          console.log('Audio status before play:', currentStatus);
+          
+          if (currentStatus?.isLoaded) {
+            // Try to play from current position
+            await sound?.playAsync();
+            setIsPlaying(true);
+            console.log('Audio playback started');
+            
+            // Verify it's actually playing after a short delay
+            setTimeout(async () => {
+              const playStatus = await sound?.getStatusAsync();
+              if (playStatus?.isLoaded && !playStatus.isPlaying && playStatus.positionMillis === 0) {
+                console.log('Audio didn\'t start properly, retrying...');
+                try {
+                  await sound?.setPositionAsync(0);
+                  await sound?.playAsync();
+                } catch (retryError) {
+                  console.log('Retry failed:', retryError);
+                }
+              }
+            }, 500);
+          } else {
+            throw new Error('Sound not properly loaded');
+          }
+        } catch (playError) {
+          console.log('Error playing audio:', playError);
+          setIsPlaying(false);
+          Alert.alert(
+            'Playback Error',
+            'Unable to start audio playback. Try tapping play again.'
+          );
+        }
       }
     } catch (error) {
       console.log('Error playing audio:', error);
@@ -177,10 +263,28 @@ const HomeScreen: React.FC = () => {
 
   const changeAudioFile = async () => {
     Alert.alert(
-      'Change Audio File',
-      'Select a different audio file for the Bhagavad Gita story.',
+      'Audio Options',
+      'What would you like to do?',
       [
         { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Test Audio Info',
+          onPress: async () => {
+            if (sound) {
+              const status = await sound.getStatusAsync();
+              const audioInfo = {
+                isLoaded: status.isLoaded,
+                isPlaying: status.isPlaying,
+                duration: status.isLoaded ? `${Math.round(status.durationMillis / 1000)}s` : 'unknown',
+                position: status.isLoaded ? `${Math.round(status.positionMillis / 1000)}s` : 'unknown',
+                volume: status.isLoaded ? status.volume : 'unknown'
+              };
+              Alert.alert('Audio Debug Info', JSON.stringify(audioInfo, null, 2));
+            } else {
+              Alert.alert('No Audio', 'No audio file loaded yet.');
+            }
+          }
+        },
         { 
           text: 'Select New File', 
           onPress: async () => {
