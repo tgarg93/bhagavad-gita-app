@@ -1,5 +1,12 @@
-import Vapi from '@vapi-ai/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Conditional import to avoid native module errors in Expo Go
+let Vapi: any = null;
+try {
+  Vapi = require('@vapi-ai/react-native').default;
+} catch (error) {
+  console.log('Vapi not available (likely running in Expo Go)');
+}
 
 // Types for Vapi integration
 export interface VapiCallStatus {
@@ -49,6 +56,13 @@ export class VapiService {
   ): Promise<void> {
     try {
       console.log('Initializing Vapi service...');
+      
+      // Check if Vapi is available (for Expo Go compatibility)
+      if (!Vapi) {
+        console.log('Vapi SDK not available - running in demo mode');
+        this.isInitialized = true;
+        return;
+      }
       
       // Store configuration for future use
       await AsyncStorage.setItem(VAPI_CONFIG_KEY, JSON.stringify({
@@ -131,7 +145,7 @@ export class VapiService {
 
   // Start a voice call with Krishna assistant
   async startKrishnaCall(assistantId?: string): Promise<void> {
-    if (!this.isInitialized || !this.vapi) {
+    if (!this.isInitialized) {
       throw new Error('Vapi service not initialized');
     }
 
@@ -143,6 +157,23 @@ export class VapiService {
         error: undefined,
       };
       this.eventHandlers.onStatusUpdate?.(this.currentStatus);
+
+      // Demo mode for Expo Go
+      if (!this.vapi) {
+        console.log('Running in demo mode - simulating call');
+        setTimeout(() => {
+          this.callStartTime = Date.now();
+          this.currentStatus = {
+            isConnecting: false,
+            isConnected: true,
+            isActive: true,
+            callDuration: 0,
+          };
+          this.eventHandlers.onCallStart?.();
+          this.eventHandlers.onStatusUpdate?.(this.currentStatus);
+        }, 2000);
+        return;
+      }
 
       // Get stored configuration
       const configStr = await AsyncStorage.getItem(VAPI_CONFIG_KEY);
@@ -186,10 +217,23 @@ export class VapiService {
 
   // End the current call
   async endCall(): Promise<void> {
-    if (!this.vapi) return;
-
     try {
       console.log('Ending voice call...');
+      
+      // Demo mode
+      if (!this.vapi) {
+        this.callStartTime = null;
+        this.currentStatus = {
+          isConnecting: false,
+          isConnected: false,
+          isActive: false,
+          callDuration: 0,
+        };
+        this.eventHandlers.onCallEnd?.();
+        this.eventHandlers.onStatusUpdate?.(this.currentStatus);
+        return;
+      }
+
       await this.vapi.stop();
     } catch (error) {
       console.error('Error ending call:', error);

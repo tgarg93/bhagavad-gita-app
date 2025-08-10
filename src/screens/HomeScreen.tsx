@@ -39,6 +39,13 @@ const HomeScreen: React.FC = () => {
       try {
         setIsInitializing(true);
         
+        // Check if Vapi is enabled
+        if (!VAPI_CONFIG.enabled) {
+          console.log('Vapi disabled - running in demo mode');
+          setIsInitializing(false);
+          return;
+        }
+        
         // Initialize Vapi service with configuration
         if (!vapiService.isReady()) {
           await vapiService.initialize(
@@ -307,12 +314,19 @@ const HomeScreen: React.FC = () => {
         {/* Connection Status */}
         <Text style={styles.lessonStatus}>
           {isInitializing ? 'Initializing voice service...' :
+           !VAPI_CONFIG.enabled ? 'Demo Mode - UI Preview Only' :
            callStatus.error ? `Error: ${callStatus.error}` :
            callStatus.isConnecting ? 'Connecting to Krishna...' :
            callStatus.isActive ? 'Speaking with Krishna 🙏' :
            totalCallTime === 0 ? 'Talk to Krishna' : 
            'Ready to talk again'}
         </Text>
+        
+        {!VAPI_CONFIG.enabled && (
+          <Text style={styles.demoModeText}>
+            Create a development build to enable voice calls
+          </Text>
+        )}
       </View>
 
       {/* Bottom Actions */}
@@ -466,6 +480,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#4b5563',
     marginTop: 30,
+  },
+  demoModeText: {
+    fontSize: 14,
+    color: '#9ca3af',
+    marginTop: 8,
+    textAlign: 'center',
+    fontStyle: 'italic',
   },
   bottomActions: {
     flexDirection: 'row',

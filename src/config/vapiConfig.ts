@@ -2,6 +2,9 @@
 // Update these values with your actual Vapi credentials and assistant settings
 
 export const VAPI_CONFIG = {
+  // Enable/disable Vapi functionality (set to false for Expo Go testing)
+  enabled: false, // Set to true when you have development build + API key
+  
   // Your Vapi public API key (get from https://vapi.ai dashboard)
   publicApiKey: 'YOUR_VAPI_PUBLIC_API_KEY', // Replace with your actual key
   
