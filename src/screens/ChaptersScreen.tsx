@@ -2,146 +2,105 @@ import React from 'react';
 import {
   View,
   Text,
-  FlatList,
+  ScrollView,
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import Card from '../components/ui/Card';
+import { bhagavadGitaData } from '../data/bhagavadGitaData';
 
-interface Chapter {
-  id: number;
-  sanskrit: string;
-  english: string;
-  summary: string;
-  verseCount: number;
-  progress: number; // 0-100
-}
+const { width } = Dimensions.get('window');
 
-const chapters: Chapter[] = [
-  {
-    id: 1,
-    sanskrit: 'अर्जुन विषाद योग',
-    english: 'Arjuna Vishada Yoga',
-    summary: 'Arjuna\'s dejection and moral crisis on the battlefield',
-    verseCount: 47,
-    progress: 100,
-  },
-  {
-    id: 2,
-    sanskrit: 'सांख्य योग',
-    english: 'Sankhya Yoga',
-    summary: 'The path of knowledge and analytical study of the soul',
-    verseCount: 72,
-    progress: 85,
-  },
-  {
-    id: 3,
-    sanskrit: 'कर्म योग',
-    english: 'Karma Yoga',
-    summary: 'The path of action and selfless service',
-    verseCount: 43,
-    progress: 60,
-  },
-  {
-    id: 4,
-    sanskrit: 'ज्ञान कर्म संन्यास योग',
-    english: 'Jnana Karma Sannyasa Yoga',
-    summary: 'The path of knowledge and renunciation of actions',
-    verseCount: 42,
-    progress: 30,
-  },
-  {
-    id: 5,
-    sanskrit: 'कर्म संन्यास योग',
-    english: 'Karma Sannyasa Yoga',
-    summary: 'The path of renunciation of actions',
-    verseCount: 29,
-    progress: 15,
-  },
-  {
-    id: 6,
-    sanskrit: 'आत्म संयम योग',
-    english: 'Atma Samyama Yoga',
-    summary: 'The path of meditation and self-control',
-    verseCount: 47,
-    progress: 0,
-  },
-];
 
 const ChaptersScreen: React.FC = () => {
-  const renderChapterItem = ({ item }: { item: Chapter }) => (
-    <TouchableOpacity style={styles.chapterItem}>
-      <Card style={styles.chapterCard}>
-        <View style={styles.chapterHeader}>
-          <View style={styles.chapterNumber}>
-            <Text style={styles.chapterNumberText}>{item.id}</Text>
-          </View>
-          <View style={styles.chapterInfo}>
-            <Text style={styles.chapterTitle}>{item.english}</Text>
-            <Text style={styles.chapterSanskrit}>{item.sanskrit}</Text>
-          </View>
-          {item.progress === 100 && (
-            <Ionicons name="checkmark-circle" size={24} color="#10b981" />
+  const navigation = useNavigation();
+
+  const openChapter = (chapterId: string) => {
+    navigation.navigate('ChapterDetail' as never, { chapterId } as never);
+  };
+
+  // Define colors for each chapter (Duolingo style)
+  const chapterColors = [
+    ['#58cc02', '#89e219'], // Green
+    ['#1cb0f6', '#4fc3f7'], // Blue
+    ['#ff9600', '#ffb84d'], // Orange
+    ['#ce82ff', '#e0a3ff'], // Purple
+    ['#ff4b4b', '#ff7979'], // Red
+    ['#2dd4bf', '#5eead4'], // Teal
+  ];
+
+  const getChapterColor = (index: number) => {
+    return chapterColors[index % chapterColors.length];
+  };
+
+  const getCompletionPercentage = (chapterNumber: number) => {
+    // Mock completion data - in real app this would come from user progress
+    const completionData: { [key: number]: number } = {
+      1: 100, 2: 85, 3: 60, 4: 30, 5: 15, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0
+    };
+    return completionData[chapterNumber] || 0;
+  };
+
+  const renderChapterCircle = (item: any, index: number) => {
+    const colors = getChapterColor(index);
+    const completion = getCompletionPercentage(item.number);
+    const isCompleted = completion === 100;
+    const isLocked = index > 0 && getCompletionPercentage(bhagavadGitaData[index - 1].number) === 0;
+    
+    return (
+      <TouchableOpacity 
+        key={item.id}
+        style={[styles.chapterCircle, { 
+          left: (index % 2) * (width * 0.5) + (width * 0.15),
+          top: Math.floor(index / 2) * 120,
+        }]} 
+        onPress={() => !isLocked && openChapter(item.id)}
+        disabled={isLocked}
+      >
+        <LinearGradient
+          colors={isLocked ? ['#e5e7eb', '#d1d5db'] : colors}
+          style={styles.chapterButton}
+        >
+          {completion > 0 && completion < 100 && (
+            <View style={[styles.progressRing, {
+              borderTopColor: colors[1],
+              transform: [{ rotate: `${(completion / 100) * 360}deg` }]
+            }]} />
           )}
-        </View>
-
-        <Text style={styles.chapterSummary}>{item.summary}</Text>
-
-        <View style={styles.chapterMeta}>
-          <View style={styles.metaItem}>
-            <Ionicons name="book-outline" size={16} color="#6b7280" />
-            <Text style={styles.metaText}>{item.verseCount} verses</Text>
-          </View>
-          <View style={styles.metaItem}>
-            <Ionicons name="time-outline" size={16} color="#6b7280" />
-            <Text style={styles.metaText}>{Math.ceil(item.verseCount * 1.5)} min</Text>
-          </View>
-        </View>
-
-        {item.progress > 0 && (
-          <View style={styles.progressContainer}>
-            <View style={styles.progressHeader}>
-              <Text style={styles.progressLabel}>Progress</Text>
-              <Text style={styles.progressPercent}>{item.progress}%</Text>
-            </View>
-            <View style={styles.progressBar}>
-              <LinearGradient
-                colors={['#ea580c', '#f97316']}
-                style={[styles.progressFill, { width: `${item.progress}%` }]}
-              />
-            </View>
-          </View>
-        )}
-
-        <View style={styles.chapterActions}>
-          <TouchableOpacity style={styles.actionButton}>
-            <Text style={[styles.actionText, styles.primaryAction]}>
-              {item.progress === 0 ? 'Start Reading' : 
-               item.progress === 100 ? 'Review' : 'Continue'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </Card>
-    </TouchableOpacity>
-  );
+          
+          {isCompleted ? (
+            <Ionicons name="checkmark" size={28} color="#ffffff" />
+          ) : isLocked ? (
+            <Ionicons name="lock-closed" size={28} color="#9ca3af" />
+          ) : (
+            <Text style={styles.chapterNumberText}>{item.number}</Text>
+          )}
+        </LinearGradient>
+        
+        <Text style={[styles.chapterLabel, { opacity: isLocked ? 0.5 : 1 }]} numberOfLines={1}>
+          {item.name.english}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>📚 Chapters</Text>
-        <Text style={styles.headerSubtitle}>18 chapters of eternal wisdom</Text>
+        <Text style={styles.headerTitle}>Chapters</Text>
       </View>
 
-      <FlatList
-        data={chapters}
-        renderItem={renderChapterItem}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={styles.listContainer}
+      <ScrollView 
+        style={styles.scrollView} 
+        contentContainerStyle={styles.skillTree}
         showsVerticalScrollIndicator={false}
-      />
+      >
+        {bhagavadGitaData.map((item, index) => renderChapterCircle(item, index))}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -149,129 +108,67 @@ const ChaptersScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: '#ffffff',
   },
   header: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
     paddingTop: 20,
-    paddingBottom: 10,
+    paddingBottom: 20,
+    alignItems: 'center',
   },
   headerTitle: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#111827',
+    fontWeight: '900',
+    color: '#4b5563',
   },
-  headerSubtitle: {
-    fontSize: 16,
-    color: '#6b7280',
-    marginTop: 4,
-  },
-  listContainer: {
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-  },
-  chapterItem: {
-    marginBottom: 16,
-  },
-  chapterCard: {
-    padding: 20,
-  },
-  chapterHeader: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 12,
-  },
-  chapterNumber: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#ea580c',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 16,
-  },
-  chapterNumberText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  chapterInfo: {
+  scrollView: {
     flex: 1,
   },
-  chapterTitle: {
-    fontSize: 18,
+  skillTree: {
+    paddingTop: 20,
+    paddingBottom: 100,
+    minHeight: Math.ceil(bhagavadGitaData.length / 2) * 120 + 40,
+    position: 'relative',
+  },
+  chapterCircle: {
+    position: 'absolute',
+    alignItems: 'center',
+  },
+  chapterButton: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  progressRing: {
+    position: 'absolute',
+    width: 88,
+    height: 88,
+    borderRadius: 44,
+    borderWidth: 4,
+    borderColor: 'transparent',
+    top: -4,
+    left: -4,
+  },
+  chapterNumberText: {
+    fontSize: 24,
+    fontWeight: '900',
+    color: '#ffffff',
+  },
+  chapterLabel: {
+    fontSize: 12,
     fontWeight: 'bold',
-    color: '#111827',
-    marginBottom: 4,
-  },
-  chapterSanskrit: {
-    fontSize: 14,
-    color: '#ea580c',
-    fontWeight: '500',
-  },
-  chapterSummary: {
-    fontSize: 14,
-    color: '#6b7280',
-    lineHeight: 20,
-    marginBottom: 16,
-  },
-  chapterMeta: {
-    flexDirection: 'row',
-    marginBottom: 16,
-  },
-  metaItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 20,
-  },
-  metaText: {
-    fontSize: 12,
-    color: '#6b7280',
-    marginLeft: 4,
-  },
-  progressContainer: {
-    marginBottom: 16,
-  },
-  progressHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  progressLabel: {
-    fontSize: 12,
-    color: '#6b7280',
-    fontWeight: '500',
-  },
-  progressPercent: {
-    fontSize: 12,
-    color: '#ea580c',
-    fontWeight: '600',
-  },
-  progressBar: {
-    height: 6,
-    backgroundColor: '#e5e7eb',
-    borderRadius: 3,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    height: '100%',
-    borderRadius: 3,
-  },
-  chapterActions: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  actionButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  actionText: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  primaryAction: {
-    color: '#ea580c',
+    color: '#4b5563',
+    marginTop: 8,
+    textAlign: 'center',
+    maxWidth: 100,
   },
 });
 

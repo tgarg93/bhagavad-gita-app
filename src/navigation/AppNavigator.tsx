@@ -6,9 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import HomeScreen from '../screens/HomeScreen';
 import ChaptersScreen from '../screens/ChaptersScreen';
-import SearchScreen from '../screens/SearchScreen';
-import BookmarksScreen from '../screens/BookmarksScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import AskKrishnaScreen from '../screens/AskKrishnaScreen';
 import LoginScreen from '../screens/LoginScreen';
 import ChapterDetailScreen from '../screens/ChapterDetailScreen';
 import VerseDetailScreen from '../screens/VerseDetailScreen';
@@ -29,25 +27,25 @@ const TabNavigator = () => {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Chapters') {
             iconName = focused ? 'book' : 'book-outline';
-          } else if (route.name === 'Search') {
-            iconName = focused ? 'search' : 'search-outline';
-          } else if (route.name === 'Bookmarks') {
-            iconName = focused ? 'bookmark' : 'bookmark-outline';
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'person' : 'person-outline';
+          } else if (route.name === 'Ask Krishna') {
+            iconName = focused ? 'chatbubble' : 'chatbubble-outline';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#ea580c',
+        tabBarActiveTintColor: '#58cc02',
         tabBarInactiveTintColor: '#9ca3af',
         tabBarStyle: {
           backgroundColor: '#ffffff',
-          borderTopWidth: 1,
-          borderTopColor: '#e5e7eb',
-          height: 90,
+          borderTopWidth: 0,
+          height: 80,
           paddingBottom: 10,
-          paddingTop: 10,
+          paddingTop: 8,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 8,
+          elevation: 10,
         },
         headerShown: false,
       })}
@@ -63,19 +61,9 @@ const TabNavigator = () => {
         options={{ tabBarLabel: 'Chapters' }}
       />
       <Tab.Screen 
-        name="Search" 
-        component={SearchScreen}
-        options={{ tabBarLabel: 'Search' }}
-      />
-      <Tab.Screen 
-        name="Bookmarks" 
-        component={BookmarksScreen}
-        options={{ tabBarLabel: 'Bookmarks' }}
-      />
-      <Tab.Screen 
-        name="Profile" 
-        component={ProfileScreen}
-        options={{ tabBarLabel: 'Profile' }}
+        name="Ask Krishna" 
+        component={AskKrishnaScreen}
+        options={{ tabBarLabel: 'Ask Krishna' }}
       />
     </Tab.Navigator>
   );
