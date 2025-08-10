@@ -25,6 +25,8 @@ const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadProgress, setDownloadProgress] = useState(0);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [storyProgress, setStoryProgress] = useState(0); // 0-100%
   const [playbackStatus, setPlaybackStatus] = useState<any>(null);
@@ -53,25 +55,44 @@ const HomeScreen: React.FC = () => {
 
   const loadAudio = async (): Promise<Audio.Sound | null> => {
     try {
-      let audioPath = await AudioService.findAudioFile('8_yo_version.m4a');
+      setIsDownloading(true);
+      setDownloadProgress(0);
+      
+      let audioPath = await AudioService.findAudioFile('8_yo_version.m4a', (progress) => {
+        setDownloadProgress(progress);
+      });
       
       if (!audioPath) {
-        // Show file picker if no audio file found
-        const shouldPick = await new Promise<boolean>((resolve) => {
+        // Show options for getting the audio file
+        const choice = await new Promise<string>((resolve) => {
           Alert.alert(
-            'Select Audio File',
-            'Please select the "8_yo_version.m4a" file from your device. This could be in Downloads, Files app, or any other location.',
+            'Audio File Not Found',
+            'The Bhagavad Gita audio file is not available. How would you like to get it?',
             [
-              { text: 'Cancel', style: 'cancel', onPress: () => resolve(false) },
-              { text: 'Select File', onPress: () => resolve(true) }
+              { text: 'Cancel', style: 'cancel', onPress: () => resolve('cancel') },
+              { text: 'Select from Device', onPress: () => resolve('pick') },
+              { text: 'Download from Cloud', onPress: () => resolve('download') }
             ]
           );
         });
         
-        if (shouldPick) {
+        if (choice === 'pick') {
           audioPath = await AudioService.pickAudioFile();
+        } else if (choice === 'download') {
+          audioPath = await AudioService.downloadAudioFromCloud((progress) => {
+            setDownloadProgress(progress);
+          });
+          
+          if (!audioPath) {
+            Alert.alert(
+              'Download Failed', 
+              'Could not download the audio file from cloud storage. You can try selecting the file manually if you have it on your device.'
+            );
+          }
         }
       }
+      
+      setIsDownloading(false);
       
       if (audioPath) {
         console.log('Loading audio from:', audioPath);
@@ -87,6 +108,7 @@ const HomeScreen: React.FC = () => {
       }
     } catch (error) {
       console.log('Error loading audio:', error);
+      setIsDownloading(false);
       Alert.alert(
         'Audio Load Error', 
         'Unable to load the audio file. Please make sure the file is accessible and try again.'
@@ -222,7 +244,7 @@ const HomeScreen: React.FC = () => {
             style={styles.giantPlayButton} 
             onPress={startStory}
             onLongPress={changeAudioFile}
-            disabled={isLoading}
+            disabled={isLoading || isDownloading}
           >
             <LinearGradient
               colors={storyProgress === 100 ? ['#ffd700', '#ffed4e'] : 
@@ -231,7 +253,9 @@ const HomeScreen: React.FC = () => {
               style={styles.playButtonCircle}
             >
               <Ionicons 
-                name={isLoading ? 'hourglass-outline' : isPlaying ? 'pause' : 'play'} 
+                name={isDownloading ? 'cloud-download-outline' :
+                     isLoading ? 'hourglass-outline' : 
+                     isPlaying ? 'pause' : 'play'} 
                 size={60} 
                 color="#ffffff" 
               />
@@ -245,7 +269,8 @@ const HomeScreen: React.FC = () => {
         
         {/* Lesson Status */}
         <Text style={styles.lessonStatus}>
-          {isLoading ? 'Loading audio...' : 
+          {isDownloading ? `Downloading... ${downloadProgress}%` :
+           isLoading ? 'Loading audio...' : 
            isPlaying ? 'Playing story...' :
            storyProgress === 0 ? 'Start lesson' : 
            storyProgress === 100 ? 'Story complete!' : 'Continue lesson'}
