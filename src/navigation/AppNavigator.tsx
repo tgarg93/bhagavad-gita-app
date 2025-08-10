@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import HomeScreen from '../screens/HomeScreen';
 import ChaptersScreen from '../screens/ChaptersScreen';
+import StoriesScreen from '../screens/StoriesScreen';
 import AskKrishnaScreen from '../screens/AskKrishnaScreen';
 import LoginScreen from '../screens/LoginScreen';
 import ChapterDetailScreen from '../screens/ChapterDetailScreen';
@@ -24,9 +25,11 @@ const TabNavigator = () => {
           let iconName: any;
 
           if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
+            iconName = focused ? 'mic' : 'mic-outline';
           } else if (route.name === 'Chapters') {
             iconName = focused ? 'book' : 'book-outline';
+          } else if (route.name === 'Stories') {
+            iconName = focused ? 'headset' : 'headset-outline';
           } else if (route.name === 'Ask Krishna') {
             iconName = focused ? 'chatbubble' : 'chatbubble-outline';
           }
@@ -53,12 +56,17 @@ const TabNavigator = () => {
       <Tab.Screen 
         name="Home" 
         component={HomeScreen}
-        options={{ tabBarLabel: 'Home' }}
+        options={{ tabBarLabel: 'Talk' }}
       />
       <Tab.Screen 
         name="Chapters" 
         component={ChaptersScreen}
         options={{ tabBarLabel: 'Chapters' }}
+      />
+      <Tab.Screen 
+        name="Stories" 
+        component={StoriesScreen}
+        options={{ tabBarLabel: 'Stories' }}
       />
       <Tab.Screen 
         name="Ask Krishna" 

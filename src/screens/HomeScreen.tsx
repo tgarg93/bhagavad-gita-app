@@ -13,228 +13,105 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
 import { useAuth } from '../contexts/AuthContext';
 import Button from '../components/ui/Button';
-import { AudioService } from '../services/audioService';
+import { vapiService, VapiCallStatus } from '../services/vapiService';
+import { VAPI_CONFIG, createAssistantConfig } from '../config/vapiConfig';
 
 const { width } = Dimensions.get('window');
 
 const HomeScreen: React.FC = () => {
   const { currentUser, loginAsGuest } = useAuth();
   const navigation = useNavigation();
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [downloadProgress, setDownloadProgress] = useState(0);
-  const [sound, setSound] = useState<Audio.Sound | null>(null);
-  const [storyProgress, setStoryProgress] = useState(0); // 0-100%
-  const [playbackStatus, setPlaybackStatus] = useState<any>(null);
+  const [callStatus, setCallStatus] = useState<VapiCallStatus>({
+    isConnecting: false,
+    isConnected: false,
+    isActive: false,
+    callDuration: 0,
+  });
+  const [isInitializing, setIsInitializing] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [totalCallTime, setTotalCallTime] = useState(0); // Total time spent talking to Krishna
 
   useEffect(() => {
-    // Configure audio session with comprehensive fallback options
-    const configureAudio = async (retryCount = 0) => {
-      const maxRetries = 2;
-      const audioConfigs = [
-        // Most permissive configuration - should work on all devices
-        {
-          name: 'Minimal',
-          config: {
-            playsInSilentModeIOS: true,
-          }
-        },
-        // Ultra-minimal fallback - just in case
-        {
-          name: 'Default',
-          config: {} // Use system defaults
+    // Initialize Vapi service and set up event handlers
+    const initializeVapi = async () => {
+      try {
+        setIsInitializing(true);
+        
+        // Initialize Vapi service with configuration
+        if (!vapiService.isReady()) {
+          await vapiService.initialize(
+            VAPI_CONFIG.publicApiKey,
+            VAPI_CONFIG.assistantId,
+            createAssistantConfig('first-time')
+          );
         }
-      ];
 
-      for (const { name, config } of audioConfigs) {
-        try {
-          await Audio.setAudioModeAsync(config);
-          console.log(`Audio configuration successful: ${name}`);
-          return true; // Success
-        } catch (error) {
-          console.log(`Audio config ${name} failed, trying next...`);
-          // Continue to next configuration silently
-        }
+        // Set up event handlers
+        vapiService.setEventHandlers({
+          onCallStart: () => {
+            console.log('Voice call with Krishna started');
+            setCallStatus(vapiService.getCallStatus());
+          },
+          onCallEnd: () => {
+            console.log('Voice call with Krishna ended');
+            setCallStatus(vapiService.getCallStatus());
+            setIsMuted(false);
+          },
+          onError: (error) => {
+            console.error('Voice call error:', error);
+            setCallStatus(vapiService.getCallStatus());
+          },
+          onStatusUpdate: (status) => {
+            setCallStatus(status);
+          },
+        });
+
+        console.log('Vapi service initialized successfully');
+      } catch (error) {
+        console.error('Failed to initialize Vapi:', error);
+        Alert.alert(
+          'Voice Service Error',
+          'Unable to initialize voice calling service. Some features may not work properly.'
+        );
+      } finally {
+        setIsInitializing(false);
       }
-      
-      // If all configurations fail, retry once more after a delay
-      if (retryCount < maxRetries) {
-        setTimeout(() => configureAudio(retryCount + 1), 1000);
-        return false;
-      }
-      
-      // Final fallback - audio will work with system defaults
-      console.log('Using system default audio settings');
-      return true; // Don't block the app
     };
-    
-    configureAudio();
+
+    initializeVapi();
+
+    // Update call duration every second when call is active
+    const interval = setInterval(() => {
+      if (callStatus.isActive) {
+        setCallStatus(vapiService.getCallStatus());
+      }
+    }, 1000);
 
     // Cleanup function
     return () => {
-      if (sound) {
-        sound.unloadAsync();
-      }
+      clearInterval(interval);
     };
   }, []);
 
-  const loadAudio = async (): Promise<Audio.Sound | null> => {
-    try {
-      setIsDownloading(true);
-      setDownloadProgress(0);
-      
-      let audioPath = await AudioService.findAudioFile('8_yo_version.m4a', (progress) => {
-        setDownloadProgress(progress);
-      });
-      
-      if (!audioPath) {
-        // Show options for getting the audio file
-        const choice = await new Promise<string>((resolve) => {
-          Alert.alert(
-            'Audio File Not Found',
-            'The Bhagavad Gita audio file is not available. How would you like to get it?',
-            [
-              { text: 'Cancel', style: 'cancel', onPress: () => resolve('cancel') },
-              { text: 'Select from Device', onPress: () => resolve('pick') },
-              { text: 'Download from Cloud', onPress: () => resolve('download') }
-            ]
-          );
-        });
-        
-        if (choice === 'pick') {
-          audioPath = await AudioService.pickAudioFile();
-        } else if (choice === 'download') {
-          audioPath = await AudioService.downloadAudioFromCloud((progress) => {
-            setDownloadProgress(progress);
-          });
-          
-          if (!audioPath) {
-            Alert.alert(
-              'Download Failed', 
-              'Could not download the audio file from cloud storage. You can try selecting the file manually if you have it on your device.'
-            );
-          }
+  // Load total call time from storage
+  useEffect(() => {
+    const loadCallTime = async () => {
+      try {
+        const savedTime = await require('@react-native-async-storage/async-storage').default.getItem('total_call_time');
+        if (savedTime) {
+          setTotalCallTime(parseInt(savedTime, 10));
         }
+      } catch (error) {
+        console.log('Error loading call time:', error);
       }
-      
-      setIsDownloading(false);
-      
-      if (audioPath) {
-        console.log('Loading audio from:', audioPath);
-        
-        // Check if file exists and get info
-        const fileInfo = await require('expo-file-system').getInfoAsync(audioPath);
-        console.log('Audio file info:', fileInfo);
-        
-        if (!fileInfo.exists) {
-          throw new Error('Audio file does not exist at path: ' + audioPath);
-        }
-        
-        // Create audio with minimal configuration and wait for full load
-        console.log('Creating audio object...');
-        const { sound: audioSound } = await Audio.Sound.createAsync(
-          { uri: audioPath },
-          { 
-            shouldPlay: false, 
-            isLooping: false,
-            volume: 1.0,
-            progressUpdateIntervalMillis: 1000,
-          }
-          // Don't set status callback initially to avoid conflicts
-        );
-        
-        // Wait a moment for the sound to fully initialize
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        // Get initial status to verify audio is loaded
-        const status = await audioSound.getStatusAsync();
-        console.log('Audio creation status:', {
-          isLoaded: status.isLoaded,
-          duration: status.isLoaded ? `${Math.round(status.durationMillis / 1000)}s` : 'unknown',
-          uri: audioPath.split('/').pop()
-        });
-        
-        if (!status.isLoaded) {
-          console.log('First attempt failed, trying with even simpler config...');
-          // Clean up the failed sound
-          await audioSound.unloadAsync();
-          
-          // Try to reload once more with absolute minimal config
-          const { sound: retrySound } = await Audio.Sound.createAsync({ uri: audioPath });
-          
-          // Wait for loading
-          await new Promise(resolve => setTimeout(resolve, 200));
-          
-          const retryStatus = await retrySound.getStatusAsync();
-          console.log('Retry attempt status:', {
-            isLoaded: retryStatus.isLoaded,
-            duration: retryStatus.isLoaded ? `${Math.round(retryStatus.durationMillis / 1000)}s` : 'unknown'
-          });
-          
-          if (!retryStatus.isLoaded) {
-            await retrySound.unloadAsync();
-            throw new Error('Audio failed to load after multiple attempts');
-          }
-          
-          // Now set the status callback
-          retrySound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
-          setSound(retrySound);
-          return retrySound;
-        }
-        
-        // Set the status callback after successful loading
-        audioSound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
-        setSound(audioSound);
-        return audioSound;
-      } else {
-        return null;
-      }
-    } catch (error) {
-      console.log('Error loading audio:', error);
-      setIsDownloading(false);
-      Alert.alert(
-        'Audio Load Error', 
-        'Unable to load the audio file. Please make sure the file is accessible and try again.'
-      );
-      return null;
-    }
-  };
+    };
+    loadCallTime();
+  }, []);
 
-  const onPlaybackStatusUpdate = (status: any) => {
-    setPlaybackStatus(status);
-    if (status.isLoaded) {
-      // Update progress
-      const progress = status.durationMillis > 0 
-        ? Math.round((status.positionMillis / status.durationMillis) * 100)
-        : 0;
-      setStoryProgress(progress);
-      
-      // Sync playing state with actual playback status
-      setIsPlaying(status.isPlaying);
-      
-      // Log status for debugging (only on significant changes)
-      if (status.didJustFinish || Math.floor(status.positionMillis / 10000) !== Math.floor((status.positionMillis - 500) / 10000)) {
-        console.log('Playback status:', {
-          isPlaying: status.isPlaying,
-          positionSeconds: Math.round(status.positionMillis / 1000),
-          durationSeconds: Math.round(status.durationMillis / 1000),
-          progress: progress + '%'
-        });
-      }
-      
-      if (status.didJustFinish) {
-        console.log('Audio finished playing');
-        setIsPlaying(false);
-        setStoryProgress(100);
-      }
-    }
-  };
-
-  const startStory = async () => {
+  // Start or end voice conversation with Krishna
+  const toggleKrishnaCall = async () => {
     if (!currentUser) {
       // Auto-login as guest if not logged in
       try {
@@ -244,230 +121,103 @@ const HomeScreen: React.FC = () => {
         return;
       }
     }
-    
+
     try {
-      setIsLoading(true);
-      
-      // Ensure we have a properly loaded sound before proceeding
-      let currentSound = sound;
-      if (!currentSound) {
-        console.log('No sound loaded, loading audio...');
-        currentSound = await loadAudio();
-        if (!currentSound) {
-          setIsLoading(false);
-          return;
-        }
-      }
-      
-      // Double-check that the sound is actually loaded
-      const soundStatus = await currentSound.getStatusAsync();
-      if (!soundStatus.isLoaded) {
-        console.log('Sound not loaded, reloading...');
-        // Try to reload the audio
-        await currentSound.unloadAsync();
-        setSound(null);
-        currentSound = await loadAudio();
-        if (!currentSound) {
-          setIsLoading(false);
-          Alert.alert(
-            'Audio Error',
-            'Unable to load audio file. Please try again or select a different file.'
-          );
-          return;
-        }
-      }
-      
-      if (isPlaying) {
-        // Pause audio
-        console.log('Pausing audio...');
-        try {
-          await currentSound.pauseAsync();
-          setIsPlaying(false);
-          console.log('Audio paused');
-        } catch (pauseError) {
-          console.log('Error pausing audio:', pauseError);
-          setIsPlaying(false);
-        }
+      if (callStatus.isActive) {
+        // End the current call
+        console.log('Ending call with Krishna...');
+        await vapiService.endCall();
+      } else if (callStatus.isConnecting) {
+        // Cancel connecting call
+        console.log('Canceling call...');
+        await vapiService.endCall();
       } else {
-        // Play audio with comprehensive error handling
-        console.log('Starting audio playback...');
-        try {
-          // Final status check before playing
-          const finalStatus = await currentSound.getStatusAsync();
-          console.log('Final audio status before play:', {
-            isLoaded: finalStatus.isLoaded,
-            duration: finalStatus.isLoaded ? `${Math.round(finalStatus.durationMillis / 1000)}s` : 'unknown'
-          });
-          
-          if (finalStatus.isLoaded && finalStatus.durationMillis > 0) {
-            // Reset to beginning if at the end
-            if (finalStatus.positionMillis >= finalStatus.durationMillis - 1000) {
-              await currentSound.setPositionAsync(0);
-              // Wait a moment after position reset
-              await new Promise(resolve => setTimeout(resolve, 50));
-            }
-            
-            // Start playback
-            console.log('Attempting to start playback...');
-            await currentSound.playAsync();
-            
-            // Wait a moment and verify it started
-            await new Promise(resolve => setTimeout(resolve, 100));
-            const verifyStatus = await currentSound.getStatusAsync();
-            
-            if (verifyStatus.isLoaded && verifyStatus.isPlaying) {
-              setIsPlaying(true);
-              console.log('Audio playback confirmed started');
-            } else {
-              console.log('Playback verification failed, status:', verifyStatus);
-              throw new Error('Playback did not start properly');
-            }
-            
-            // Verify playback started after a short delay
-            setTimeout(async () => {
-              try {
-                const playStatus = await currentSound.getStatusAsync();
-                if (playStatus?.isLoaded && !playStatus.isPlaying) {
-                  console.log('Audio not playing after start, attempting retry...');
-                  await currentSound.setPositionAsync(0);
-                  await currentSound.playAsync();
-                }
-              } catch (verifyError) {
-                console.log('Verification retry failed:', verifyError);
-              }
-            }, 1000);
-          } else {
-            throw new Error('Audio not ready for playback');
-          }
-        } catch (playError) {
-          console.log('Error playing audio:', playError);
-          setIsPlaying(false);
-          
-          // Try one more time with a fresh audio load
-          console.log('Attempting complete audio reload...');
-          try {
-            await currentSound.unloadAsync();
-            setSound(null);
-            const freshSound = await loadAudio();
-            if (freshSound) {
-              const freshStatus = await freshSound.getStatusAsync();
-              if (freshStatus.isLoaded) {
-                await freshSound.playAsync();
-                setIsPlaying(true);
-                console.log('Audio started after reload');
-                return;
-              }
-            }
-          } catch (reloadError) {
-            console.log('Complete reload failed:', reloadError);
-          }
-          
-          Alert.alert(
-            'Playback Error',
-            'Unable to start audio playback. Please try selecting the audio file again using the long-press menu.'
-          );
-        }
+        // Start a new call
+        console.log('Starting call with Krishna...');
+        await vapiService.startKrishnaCall();
       }
     } catch (error) {
-      console.log('Error playing audio:', error);
-      Alert.alert('Playback Error', 'Unable to play audio file.');
-    } finally {
-      setIsLoading(false);
+      console.error('Error with Krishna call:', error);
+      Alert.alert(
+        'Connection Error',
+        'Unable to connect to Krishna right now. Please check your internet connection and try again.'
+      );
     }
   };
 
+  // Toggle mute during call
+  const toggleMute = async () => {
+    try {
+      const newMutedState = !isMuted;
+      await vapiService.setMuted(newMutedState);
+      setIsMuted(newMutedState);
+    } catch (error) {
+      console.error('Error toggling mute:', error);
+    }
+  };
+
+  // Save total call time when call ends
+  useEffect(() => {
+    if (!callStatus.isActive && callStatus.callDuration > 0) {
+      const updateTotalTime = async () => {
+        const newTotal = totalCallTime + callStatus.callDuration;
+        setTotalCallTime(newTotal);
+        try {
+          await require('@react-native-async-storage/async-storage').default.setItem('total_call_time', newTotal.toString());
+        } catch (error) {
+          console.log('Error saving call time:', error);
+        }
+      };
+      updateTotalTime();
+    }
+  }, [callStatus.isActive]);
+
+  // Navigate to different sections
   const continueLearning = () => {
     navigation.navigate('Chapters' as never);
   };
 
-  const changeAudioFile = async () => {
+  const openCallOptions = async () => {
     Alert.alert(
-      'Audio Options',
-      'What would you like to do?',
+      'Krishna Call Options',
+      'Voice calling options',
       [
         { text: 'Cancel', style: 'cancel' },
         {
-          text: 'Test Audio Info',
+          text: 'Call Status',
           onPress: async () => {
-            if (sound) {
-              const status = await sound.getStatusAsync();
-              const audioInfo = {
-                isLoaded: status.isLoaded,
-                isPlaying: status.isPlaying,
-                duration: status.isLoaded ? `${Math.round(status.durationMillis / 1000)}s` : 'unknown',
-                position: status.isLoaded ? `${Math.round(status.positionMillis / 1000)}s` : 'unknown',
-                volume: status.isLoaded ? status.volume : 'unknown'
-              };
-              console.log('=== AUDIO DEBUG INFO ===');
-              console.log('Sound object exists:', !!sound);
-              console.log('Status:', status);
-              console.log('========================');
-              Alert.alert('Audio Debug Info', JSON.stringify(audioInfo, null, 2));
-            } else {
-              console.log('=== AUDIO DEBUG ===');
-              console.log('No sound object loaded');
-              console.log('==================');
-              Alert.alert('No Audio', 'No audio file loaded yet.');
-            }
+            const status = vapiService.getCallStatus();
+            const statusInfo = {
+              isConnected: status.isConnected,
+              isActive: status.isActive,
+              callDuration: status.isActive ? `${status.callDuration}s` : 'N/A',
+              totalCallTime: `${Math.floor(totalCallTime / 60)}m ${totalCallTime % 60}s`,
+              error: status.error || 'None'
+            };
+            console.log('=== VOICE CALL STATUS ===');
+            console.log('Vapi service ready:', vapiService.isReady());
+            console.log('Status:', status);
+            console.log('========================');
+            Alert.alert('Voice Call Status', JSON.stringify(statusInfo, null, 2));
           }
         },
         {
-          text: 'Force Reload Audio',
+          text: 'Reset Call History',
           onPress: async () => {
             try {
-              setIsLoading(true);
-              if (sound) {
-                await sound.unloadAsync();
-                setSound(null);
-              }
-              setIsPlaying(false);
-              setStoryProgress(0);
-              
-              console.log('=== FORCING AUDIO RELOAD ===');
-              const newSound = await loadAudio();
-              if (newSound) {
-                const status = await newSound.getStatusAsync();
-                console.log('New sound loaded:', status);
-                Alert.alert('Success', 'Audio reloaded! Check status and try playing.');
-              } else {
-                Alert.alert('Failed', 'Could not reload audio.');
-              }
-              console.log('==============================');
+              await require('@react-native-async-storage/async-storage').default.removeItem('total_call_time');
+              setTotalCallTime(0);
+              Alert.alert('Success', 'Call history has been reset.');
             } catch (error) {
-              console.log('Force reload error:', error);
-              Alert.alert('Error', 'Failed to reload audio.');
-            } finally {
-              setIsLoading(false);
+              console.log('Error resetting call history:', error);
+              Alert.alert('Error', 'Failed to reset call history.');
             }
           }
         },
         { 
-          text: 'Select New File', 
-          onPress: async () => {
-            try {
-              setIsLoading(true);
-              // Stop current audio if playing
-              if (sound) {
-                await sound.stopAsync();
-                await sound.unloadAsync();
-                setSound(null);
-              }
-              setIsPlaying(false);
-              setStoryProgress(0);
-              
-              // Clear saved path and pick new file
-              await AudioService.clearSavedAudioPath();
-              const newPath = await AudioService.pickAudioFile();
-              
-              if (newPath) {
-                Alert.alert('Success', 'New audio file selected! Tap play to start.');
-              }
-            } catch (error) {
-              console.log('Error changing audio file:', error);
-              Alert.alert('Error', 'Failed to change audio file.');
-            } finally {
-              setIsLoading(false);
-            }
+          text: 'Go to Stories', 
+          onPress: () => {
+            navigation.navigate('Stories' as never);
           }
         }
       ]
@@ -489,51 +239,79 @@ const HomeScreen: React.FC = () => {
 
       {/* Main Content */}
       <View style={styles.mainContent}>
-        {/* Giant Play Button with Progress Ring */}
+        {/* Giant Call Button with Call Duration Ring */}
         <View style={styles.playContainer}>
-          {storyProgress > 0 && (
+          {(callStatus.isActive || totalCallTime > 0) && (
             <View style={styles.progressRing}>
               <View style={[styles.progressArc, { 
-                transform: [{ rotate: `${(storyProgress / 100) * 360 - 90}deg` }],
-                borderTopColor: storyProgress === 100 ? '#ffd700' : '#58cc02'
+                transform: [{ rotate: `${Math.min((totalCallTime / 3600) * 360, 360) - 90}deg` }],
+                borderTopColor: callStatus.isActive ? '#ff9600' : totalCallTime > 1800 ? '#ffd700' : '#58cc02'
               }]} />
             </View>
           )}
           
           <TouchableOpacity 
             style={styles.giantPlayButton} 
-            onPress={startStory}
-            onLongPress={changeAudioFile}
-            disabled={isLoading || isDownloading}
+            onPress={toggleKrishnaCall}
+            onLongPress={openCallOptions}
+            disabled={isInitializing}
           >
             <LinearGradient
-              colors={storyProgress === 100 ? ['#ffd700', '#ffed4e'] : 
-                     storyProgress > 0 ? ['#1cb0f6', '#4fc3f7'] : 
+              colors={callStatus.isActive ? ['#ff4444', '#ff6b6b'] : 
+                     callStatus.isConnecting ? ['#ff9600', '#ffb84d'] : 
+                     totalCallTime > 1800 ? ['#ffd700', '#ffed4e'] :
                      ['#58cc02', '#89e219']}
               style={styles.playButtonCircle}
             >
               <Ionicons 
-                name={isDownloading ? 'cloud-download-outline' :
-                     isLoading ? 'hourglass-outline' : 
-                     isPlaying ? 'pause' : 'play'} 
+                name={isInitializing ? 'hourglass-outline' :
+                     callStatus.isConnecting ? 'call-outline' : 
+                     callStatus.isActive ? 'call' : 'mic'} 
                 size={60} 
                 color="#ffffff" 
               />
             </LinearGradient>
           </TouchableOpacity>
           
-          {storyProgress > 0 && (
-            <Text style={styles.progressLabel}>{storyProgress}% complete</Text>
+          {callStatus.isActive && (
+            <Text style={styles.progressLabel}>
+              {vapiService.formatCallDuration ? 
+                vapiService.formatCallDuration(callStatus.callDuration) : 
+                `${Math.floor(callStatus.callDuration / 60)}:${(callStatus.callDuration % 60).toString().padStart(2, '0')}`}
+            </Text>
+          )}
+          
+          {totalCallTime > 0 && !callStatus.isActive && (
+            <Text style={styles.totalTimeLabel}>
+              Total: {Math.floor(totalCallTime / 60)}m {totalCallTime % 60}s with Krishna
+            </Text>
           )}
         </View>
         
-        {/* Lesson Status */}
+        {/* Call Controls */}
+        {callStatus.isActive && (
+          <View style={styles.callControls}>
+            <TouchableOpacity 
+              style={[styles.controlButton, isMuted && styles.mutedButton]} 
+              onPress={toggleMute}
+            >
+              <Ionicons 
+                name={isMuted ? 'mic-off' : 'mic'} 
+                size={24} 
+                color={isMuted ? '#ff4444' : '#ffffff'} 
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+        
+        {/* Connection Status */}
         <Text style={styles.lessonStatus}>
-          {isDownloading ? `Downloading... ${downloadProgress}%` :
-           isLoading ? 'Loading audio...' : 
-           isPlaying ? 'Playing story...' :
-           storyProgress === 0 ? 'Start lesson' : 
-           storyProgress === 100 ? 'Story complete!' : 'Continue lesson'}
+          {isInitializing ? 'Initializing voice service...' :
+           callStatus.error ? `Error: ${callStatus.error}` :
+           callStatus.isConnecting ? 'Connecting to Krishna...' :
+           callStatus.isActive ? 'Speaking with Krishna 🙏' :
+           totalCallTime === 0 ? 'Talk to Krishna' : 
+           'Ready to talk again'}
         </Text>
       </View>
 
@@ -545,6 +323,18 @@ const HomeScreen: React.FC = () => {
             style={styles.bottomButtonGradient}
           >
             <Ionicons name="book" size={24} color="#ffffff" />
+          </LinearGradient>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.bottomButton} 
+          onPress={() => navigation.navigate('Stories' as never)}
+        >
+          <LinearGradient
+            colors={['#9333ea', '#a855f7']}
+            style={styles.bottomButtonGradient}
+          >
+            <Ionicons name="headset" size={24} color="#ffffff" />
           </LinearGradient>
         </TouchableOpacity>
         
@@ -641,6 +431,36 @@ const styles = StyleSheet.create({
     color: '#58cc02',
     marginTop: 20,
   },
+  totalTimeLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#6b7280',
+    marginTop: 8,
+    textAlign: 'center',
+  },
+  callControls: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 30,
+    gap: 20,
+  },
+  controlButton: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#58cc02',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#58cc02',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  mutedButton: {
+    backgroundColor: '#ff4444',
+    shadowColor: '#ff4444',
+  },
   lessonStatus: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -650,9 +470,9 @@ const styles = StyleSheet.create({
   bottomActions: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingHorizontal: 40,
+    paddingHorizontal: 20,
     paddingBottom: 40,
-    gap: 40,
+    gap: 30,
   },
   bottomButton: {
     shadowColor: '#000',
