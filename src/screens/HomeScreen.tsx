@@ -122,6 +122,7 @@ const HomeScreen: React.FC = () => {
             isMuted: false,
             rate: 1.0,
             shouldCorrectPitch: true,
+            progressUpdateIntervalMillis: 1000, // Update every 1 second instead of 500ms
           },
           onPlaybackStatusUpdate
         );
@@ -166,13 +167,15 @@ const HomeScreen: React.FC = () => {
       // Sync playing state with actual playback status
       setIsPlaying(status.isPlaying);
       
-      // Log status for debugging
-      console.log('Playback status:', {
-        isPlaying: status.isPlaying,
-        positionMillis: status.positionMillis,
-        durationMillis: status.durationMillis,
-        progress: progress + '%'
-      });
+      // Log status for debugging (only on significant changes)
+      if (status.didJustFinish || Math.floor(status.positionMillis / 10000) !== Math.floor((status.positionMillis - 500) / 10000)) {
+        console.log('Playback status:', {
+          isPlaying: status.isPlaying,
+          positionSeconds: Math.round(status.positionMillis / 1000),
+          durationSeconds: Math.round(status.durationMillis / 1000),
+          progress: progress + '%'
+        });
+      }
       
       if (status.didJustFinish) {
         console.log('Audio finished playing');
