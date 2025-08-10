@@ -51,9 +51,27 @@ const HomeScreen: React.FC = () => {
     };
   }, []);
 
-  const loadAudio = async () => {
+  const loadAudio = async (): Promise<Audio.Sound | null> => {
     try {
-      const audioPath = await AudioService.findAudioFile('8_yo_version.m4a');
+      let audioPath = await AudioService.findAudioFile('8_yo_version.m4a');
+      
+      if (!audioPath) {
+        // Show file picker if no audio file found
+        const shouldPick = await new Promise<boolean>((resolve) => {
+          Alert.alert(
+            'Select Audio File',
+            'Please select the "8_yo_version.m4a" file from your device. This could be in Downloads, Files app, or any other location.',
+            [
+              { text: 'Cancel', style: 'cancel', onPress: () => resolve(false) },
+              { text: 'Select File', onPress: () => resolve(true) }
+            ]
+          );
+        });
+        
+        if (shouldPick) {
+          audioPath = await AudioService.pickAudioFile();
+        }
+      }
       
       if (audioPath) {
         console.log('Loading audio from:', audioPath);
@@ -65,13 +83,13 @@ const HomeScreen: React.FC = () => {
         setSound(audioSound);
         return audioSound;
       } else {
-        throw new Error('Audio file not found');
+        return null;
       }
     } catch (error) {
       console.log('Error loading audio:', error);
       Alert.alert(
-        'Audio Not Found', 
-        'Please make sure "8_yo_version.m4a" is in your Downloads folder. The app will look for it in common download locations.'
+        'Audio Load Error', 
+        'Unable to load the audio file. Please make sure the file is accessible and try again.'
       );
       return null;
     }
@@ -135,6 +153,45 @@ const HomeScreen: React.FC = () => {
     navigation.navigate('Chapters' as never);
   };
 
+  const changeAudioFile = async () => {
+    Alert.alert(
+      'Change Audio File',
+      'Select a different audio file for the Bhagavad Gita story.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { 
+          text: 'Select New File', 
+          onPress: async () => {
+            try {
+              setIsLoading(true);
+              // Stop current audio if playing
+              if (sound) {
+                await sound.stopAsync();
+                await sound.unloadAsync();
+                setSound(null);
+              }
+              setIsPlaying(false);
+              setStoryProgress(0);
+              
+              // Clear saved path and pick new file
+              await AudioService.clearSavedAudioPath();
+              const newPath = await AudioService.pickAudioFile();
+              
+              if (newPath) {
+                Alert.alert('Success', 'New audio file selected! Tap play to start.');
+              }
+            } catch (error) {
+              console.log('Error changing audio file:', error);
+              Alert.alert('Error', 'Failed to change audio file.');
+            } finally {
+              setIsLoading(false);
+            }
+          }
+        }
+      ]
+    );
+  };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -164,6 +221,7 @@ const HomeScreen: React.FC = () => {
           <TouchableOpacity 
             style={styles.giantPlayButton} 
             onPress={startStory}
+            onLongPress={changeAudioFile}
             disabled={isLoading}
           >
             <LinearGradient
