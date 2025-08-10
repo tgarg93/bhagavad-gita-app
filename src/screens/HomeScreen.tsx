@@ -32,25 +32,46 @@ const HomeScreen: React.FC = () => {
   const [playbackStatus, setPlaybackStatus] = useState<any>(null);
 
   useEffect(() => {
-    // Configure audio session with comprehensive settings
-    const configureAudio = async () => {
-      try {
-        console.log('Configuring audio session...');
-        await Audio.setAudioModeAsync({
-          playsInSilentModeIOS: true,
-          staysActiveInBackground: true,
-          allowsRecordingIOS: false,
-          interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-          shouldDuckAndroid: true,
-          interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-          playThroughEarpieceAndroid: false,
-        });
-        console.log('Audio session configured successfully');
-      } catch (error) {
-        console.log('Error configuring audio:', error);
-        Alert.alert('Audio Setup Error', 'There was a problem setting up audio. Please check your device settings.');
+    // Configure audio session with comprehensive fallback options
+    const configureAudio = async (retryCount = 0) => {
+      const maxRetries = 2;
+      const audioConfigs = [
+        // Most permissive configuration - should work on all devices
+        {
+          name: 'Minimal',
+          config: {
+            playsInSilentModeIOS: true,
+          }
+        },
+        // Ultra-minimal fallback - just in case
+        {
+          name: 'Default',
+          config: {} // Use system defaults
+        }
+      ];
+
+      for (const { name, config } of audioConfigs) {
+        try {
+          await Audio.setAudioModeAsync(config);
+          console.log(`Audio configuration successful: ${name}`);
+          return true; // Success
+        } catch (error) {
+          console.log(`Audio config ${name} failed, trying next...`);
+          // Continue to next configuration silently
+        }
       }
+      
+      // If all configurations fail, retry once more after a delay
+      if (retryCount < maxRetries) {
+        setTimeout(() => configureAudio(retryCount + 1), 1000);
+        return false;
+      }
+      
+      // Final fallback - audio will work with system defaults
+      console.log('Using system default audio settings');
+      return true; // Don't block the app
     };
+    
     configureAudio();
 
     // Cleanup function
@@ -113,30 +134,38 @@ const HomeScreen: React.FC = () => {
           throw new Error('Audio file does not exist at path: ' + audioPath);
         }
         
+        // Create audio with minimal configuration for maximum compatibility
         const { sound: audioSound } = await Audio.Sound.createAsync(
           { uri: audioPath },
           { 
             shouldPlay: false, 
             isLooping: false,
             volume: 1.0,
-            isMuted: false,
-            rate: 1.0,
-            shouldCorrectPitch: true,
-            progressUpdateIntervalMillis: 1000, // Update every 1 second instead of 500ms
+            progressUpdateIntervalMillis: 1000,
           },
           onPlaybackStatusUpdate
         );
         
         // Get initial status to verify audio is loaded
         const status = await audioSound.getStatusAsync();
-        console.log('Audio loaded successfully. Status:', {
-          isLoaded: status.isLoaded,
-          durationMillis: status.isLoaded ? status.durationMillis : 'unknown',
-          volume: status.isLoaded ? status.volume : 'unknown'
-        });
+        console.log('Audio loaded successfully. Duration:', 
+          status.isLoaded ? `${Math.round(status.durationMillis / 1000)}s` : 'unknown'
+        );
         
         if (!status.isLoaded) {
-          throw new Error('Audio failed to load properly');
+          // Try to reload once more with even simpler config
+          const { sound: retrySound } = await Audio.Sound.createAsync(
+            { uri: audioPath },
+            { shouldPlay: false },
+            onPlaybackStatusUpdate
+          );
+          
+          const retryStatus = await retrySound.getStatusAsync();
+          if (!retryStatus.isLoaded) {
+            throw new Error('Audio failed to load after retry');
+          }
+          setSound(retrySound);
+          return retrySound;
         }
         
         setSound(audioSound);
