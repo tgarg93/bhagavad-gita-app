@@ -134,7 +134,8 @@ const HomeScreen: React.FC = () => {
           throw new Error('Audio file does not exist at path: ' + audioPath);
         }
         
-        // Create audio with minimal configuration for maximum compatibility
+        // Create audio with minimal configuration and wait for full load
+        console.log('Creating audio object...');
         const { sound: audioSound } = await Audio.Sound.createAsync(
           { uri: audioPath },
           { 
@@ -142,32 +143,51 @@ const HomeScreen: React.FC = () => {
             isLooping: false,
             volume: 1.0,
             progressUpdateIntervalMillis: 1000,
-          },
-          onPlaybackStatusUpdate
+          }
+          // Don't set status callback initially to avoid conflicts
         );
+        
+        // Wait a moment for the sound to fully initialize
+        await new Promise(resolve => setTimeout(resolve, 100));
         
         // Get initial status to verify audio is loaded
         const status = await audioSound.getStatusAsync();
-        console.log('Audio loaded successfully. Duration:', 
-          status.isLoaded ? `${Math.round(status.durationMillis / 1000)}s` : 'unknown'
-        );
+        console.log('Audio creation status:', {
+          isLoaded: status.isLoaded,
+          duration: status.isLoaded ? `${Math.round(status.durationMillis / 1000)}s` : 'unknown',
+          uri: audioPath.split('/').pop()
+        });
         
         if (!status.isLoaded) {
-          // Try to reload once more with even simpler config
-          const { sound: retrySound } = await Audio.Sound.createAsync(
-            { uri: audioPath },
-            { shouldPlay: false },
-            onPlaybackStatusUpdate
-          );
+          console.log('First attempt failed, trying with even simpler config...');
+          // Clean up the failed sound
+          await audioSound.unloadAsync();
+          
+          // Try to reload once more with absolute minimal config
+          const { sound: retrySound } = await Audio.Sound.createAsync({ uri: audioPath });
+          
+          // Wait for loading
+          await new Promise(resolve => setTimeout(resolve, 200));
           
           const retryStatus = await retrySound.getStatusAsync();
+          console.log('Retry attempt status:', {
+            isLoaded: retryStatus.isLoaded,
+            duration: retryStatus.isLoaded ? `${Math.round(retryStatus.durationMillis / 1000)}s` : 'unknown'
+          });
+          
           if (!retryStatus.isLoaded) {
-            throw new Error('Audio failed to load after retry');
+            await retrySound.unloadAsync();
+            throw new Error('Audio failed to load after multiple attempts');
           }
+          
+          // Now set the status callback
+          retrySound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
           setSound(retrySound);
           return retrySound;
         }
         
+        // Set the status callback after successful loading
+        audioSound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
         setSound(audioSound);
         return audioSound;
       } else {
@@ -228,10 +248,31 @@ const HomeScreen: React.FC = () => {
     try {
       setIsLoading(true);
       
-      if (!sound) {
-        const loadedSound = await loadAudio();
-        if (!loadedSound) {
+      // Ensure we have a properly loaded sound before proceeding
+      let currentSound = sound;
+      if (!currentSound) {
+        console.log('No sound loaded, loading audio...');
+        currentSound = await loadAudio();
+        if (!currentSound) {
           setIsLoading(false);
+          return;
+        }
+      }
+      
+      // Double-check that the sound is actually loaded
+      const soundStatus = await currentSound.getStatusAsync();
+      if (!soundStatus.isLoaded) {
+        console.log('Sound not loaded, reloading...');
+        // Try to reload the audio
+        await currentSound.unloadAsync();
+        setSound(null);
+        currentSound = await loadAudio();
+        if (!currentSound) {
+          setIsLoading(false);
+          Alert.alert(
+            'Audio Error',
+            'Unable to load audio file. Please try again or select a different file.'
+          );
           return;
         }
       }
@@ -239,45 +280,91 @@ const HomeScreen: React.FC = () => {
       if (isPlaying) {
         // Pause audio
         console.log('Pausing audio...');
-        await sound?.pauseAsync();
-        setIsPlaying(false);
-        console.log('Audio paused');
+        try {
+          await currentSound.pauseAsync();
+          setIsPlaying(false);
+          console.log('Audio paused');
+        } catch (pauseError) {
+          console.log('Error pausing audio:', pauseError);
+          setIsPlaying(false);
+        }
       } else {
-        // Play audio with retry logic
+        // Play audio with comprehensive error handling
         console.log('Starting audio playback...');
         try {
-          // Get current status before playing
-          const currentStatus = await sound?.getStatusAsync();
-          console.log('Audio status before play:', currentStatus);
+          // Final status check before playing
+          const finalStatus = await currentSound.getStatusAsync();
+          console.log('Final audio status before play:', {
+            isLoaded: finalStatus.isLoaded,
+            duration: finalStatus.isLoaded ? `${Math.round(finalStatus.durationMillis / 1000)}s` : 'unknown'
+          });
           
-          if (currentStatus?.isLoaded) {
-            // Try to play from current position
-            await sound?.playAsync();
-            setIsPlaying(true);
-            console.log('Audio playback started');
+          if (finalStatus.isLoaded && finalStatus.durationMillis > 0) {
+            // Reset to beginning if at the end
+            if (finalStatus.positionMillis >= finalStatus.durationMillis - 1000) {
+              await currentSound.setPositionAsync(0);
+              // Wait a moment after position reset
+              await new Promise(resolve => setTimeout(resolve, 50));
+            }
             
-            // Verify it's actually playing after a short delay
+            // Start playback
+            console.log('Attempting to start playback...');
+            await currentSound.playAsync();
+            
+            // Wait a moment and verify it started
+            await new Promise(resolve => setTimeout(resolve, 100));
+            const verifyStatus = await currentSound.getStatusAsync();
+            
+            if (verifyStatus.isLoaded && verifyStatus.isPlaying) {
+              setIsPlaying(true);
+              console.log('Audio playback confirmed started');
+            } else {
+              console.log('Playback verification failed, status:', verifyStatus);
+              throw new Error('Playback did not start properly');
+            }
+            
+            // Verify playback started after a short delay
             setTimeout(async () => {
-              const playStatus = await sound?.getStatusAsync();
-              if (playStatus?.isLoaded && !playStatus.isPlaying && playStatus.positionMillis === 0) {
-                console.log('Audio didn\'t start properly, retrying...');
-                try {
-                  await sound?.setPositionAsync(0);
-                  await sound?.playAsync();
-                } catch (retryError) {
-                  console.log('Retry failed:', retryError);
+              try {
+                const playStatus = await currentSound.getStatusAsync();
+                if (playStatus?.isLoaded && !playStatus.isPlaying) {
+                  console.log('Audio not playing after start, attempting retry...');
+                  await currentSound.setPositionAsync(0);
+                  await currentSound.playAsync();
                 }
+              } catch (verifyError) {
+                console.log('Verification retry failed:', verifyError);
               }
-            }, 500);
+            }, 1000);
           } else {
-            throw new Error('Sound not properly loaded');
+            throw new Error('Audio not ready for playback');
           }
         } catch (playError) {
           console.log('Error playing audio:', playError);
           setIsPlaying(false);
+          
+          // Try one more time with a fresh audio load
+          console.log('Attempting complete audio reload...');
+          try {
+            await currentSound.unloadAsync();
+            setSound(null);
+            const freshSound = await loadAudio();
+            if (freshSound) {
+              const freshStatus = await freshSound.getStatusAsync();
+              if (freshStatus.isLoaded) {
+                await freshSound.playAsync();
+                setIsPlaying(true);
+                console.log('Audio started after reload');
+                return;
+              }
+            }
+          } catch (reloadError) {
+            console.log('Complete reload failed:', reloadError);
+          }
+          
           Alert.alert(
             'Playback Error',
-            'Unable to start audio playback. Try tapping play again.'
+            'Unable to start audio playback. Please try selecting the audio file again using the long-press menu.'
           );
         }
       }
@@ -311,9 +398,46 @@ const HomeScreen: React.FC = () => {
                 position: status.isLoaded ? `${Math.round(status.positionMillis / 1000)}s` : 'unknown',
                 volume: status.isLoaded ? status.volume : 'unknown'
               };
+              console.log('=== AUDIO DEBUG INFO ===');
+              console.log('Sound object exists:', !!sound);
+              console.log('Status:', status);
+              console.log('========================');
               Alert.alert('Audio Debug Info', JSON.stringify(audioInfo, null, 2));
             } else {
+              console.log('=== AUDIO DEBUG ===');
+              console.log('No sound object loaded');
+              console.log('==================');
               Alert.alert('No Audio', 'No audio file loaded yet.');
+            }
+          }
+        },
+        {
+          text: 'Force Reload Audio',
+          onPress: async () => {
+            try {
+              setIsLoading(true);
+              if (sound) {
+                await sound.unloadAsync();
+                setSound(null);
+              }
+              setIsPlaying(false);
+              setStoryProgress(0);
+              
+              console.log('=== FORCING AUDIO RELOAD ===');
+              const newSound = await loadAudio();
+              if (newSound) {
+                const status = await newSound.getStatusAsync();
+                console.log('New sound loaded:', status);
+                Alert.alert('Success', 'Audio reloaded! Check status and try playing.');
+              } else {
+                Alert.alert('Failed', 'Could not reload audio.');
+              }
+              console.log('==============================');
+            } catch (error) {
+              console.log('Force reload error:', error);
+              Alert.alert('Error', 'Failed to reload audio.');
+            } finally {
+              setIsLoading(false);
             }
           }
         },
