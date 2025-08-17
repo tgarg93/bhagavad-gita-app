@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -9,105 +9,156 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   Platform,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-
-interface Message {
-  id: string;
-  text: string;
-  isUser: boolean;
-  timestamp: Date;
-  citation?: string;
-}
+import { DharmaColors } from '../constants/colors';
+import { geminiService, GeminiMessage, GeminiChatSession } from '../services/geminiService';
+import { KRISHNA_PERSONA, ERROR_MESSAGES, RATE_LIMITS } from '../config/geminiConfig';
 
 const AskKrishnaScreen: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      text: "🙏 Namaste! I am here to share the wisdom of the scriptures with you. Ask me anything about life, dharma, or the teachings of the Bhagavad Gita. What would you like to understand today?",
-      isUser: false,
-      timestamp: new Date(),
-    }
-  ]);
+  const [chatSession, setChatSession] = useState<GeminiChatSession>({
+    messages: [],
+    isActive: false,
+    isTyping: false,
+  });
   const [inputText, setInputText] = useState('');
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [apiKey, setApiKey] = useState('');
+  const [showApiKeyInput, setShowApiKeyInput] = useState(false);
+  const scrollViewRef = useRef<ScrollView>(null);
 
-  const suggestedQuestions = [
-    "What is the meaning of dharma?",
-    "How can I find peace in difficult times?",
-    "What does the Gita say about fear?",
-    "How should I handle anger?",
-    "What is the path to happiness?",
-  ];
+  const suggestedQuestions = KRISHNA_PERSONA.conversationStarters;
 
-  // Simple Krishna-like responses (in a real app, this would be an AI service)
-  const getKrishnaResponse = (question: string): { response: string; citation?: string } => {
-    const lowerQuestion = question.toLowerCase();
-    
-    if (lowerQuestion.includes('dharma') || lowerQuestion.includes('duty')) {
-      return {
-        response: "Dharma is your righteous duty, dear one. It is better to perform your own dharma imperfectly than to perform another's dharma perfectly. Each soul has its unique path, and following it with sincerity leads to spiritual growth.",
-        citation: "Bhagavad Gita 3.35"
-      };
-    } else if (lowerQuestion.includes('fear') || lowerQuestion.includes('afraid')) {
-      return {
-        response: "Fear arises from attachment and the illusion of separation. Remember, you are the eternal soul, not the temporary body. When you realize this truth, fear dissolves like darkness before the dawn.",
-        citation: "Bhagavad Gita 2.20"
-      };
-    } else if (lowerQuestion.includes('anger') || lowerQuestion.includes('angry')) {
-      return {
-        response: "Anger clouds the mind and destroys wisdom. Practice patience and see the divine in all beings. When you understand that everyone is on their own journey, anger transforms into compassion.",
-        citation: "Bhagavad Gita 2.63"
-      };
-    } else if (lowerQuestion.includes('peace') || lowerQuestion.includes('difficult') || lowerQuestion.includes('suffering')) {
-      return {
-        response: "True peace comes from within, not from external circumstances. Perform your duties without attachment to results. Accept both joy and sorrow with equanimity, knowing that both are temporary.",
-        citation: "Bhagavad Gita 2.47"
-      };
-    } else if (lowerQuestion.includes('happiness') || lowerQuestion.includes('joy')) {
-      return {
-        response: "Lasting happiness comes from connecting with your true self and serving others selflessly. Material pleasures are like raindrops on a hot stone - they bring temporary relief but do not quench the soul's thirst.",
-        citation: "Bhagavad Gita 5.21"
-      };
-    } else {
-      return {
-        response: "Every question you ask shows your sincere seeking, and that itself is beautiful. Remember, the path of wisdom begins with self-inquiry. Reflect on your question deeply, and the answer will arise from within your own heart.",
-        citation: "Bhagavad Gita 4.34"
-      };
+  useEffect(() => {
+    initializeChat();
+  }, []);
+
+  useEffect(() => {
+    // Auto-scroll to bottom when new messages arrive
+    if (chatSession.messages.length > 0) {
+      setTimeout(() => {
+        scrollViewRef.current?.scrollToEnd({ animated: true });
+      }, 100);
+    }
+  }, [chatSession.messages.length]);
+
+  const initializeChat = async () => {
+    try {
+      // Try to auto-initialize with pre-configured API key
+      const autoInitSuccess = await geminiService.autoInitialize();
+      
+      if (autoInitSuccess || geminiService.isReady()) {
+        geminiService.startKrishnaChat();
+        setChatSession(geminiService.getCurrentSession());
+        setIsInitialized(true);
+        setShowApiKeyInput(false);
+      } else {
+        setShowApiKeyInput(true);
+      }
+    } catch (error) {
+      console.error('Failed to initialize chat:', error);
+      setShowApiKeyInput(true);
     }
   };
 
-  const sendMessage = () => {
+  const setupGeminiAPI = async () => {
+    if (!apiKey.trim()) {
+      Alert.alert('Error', 'Please enter a valid Gemini API key');
+      return;
+    }
+
+    try {
+      await geminiService.initialize(apiKey.trim());
+      geminiService.startKrishnaChat();
+      setChatSession(geminiService.getCurrentSession());
+      setIsInitialized(true);
+      setShowApiKeyInput(false);
+      Alert.alert('Success', 'Connected to Krishna! You can now start chatting.');
+    } catch (error) {
+      console.error('Failed to initialize Gemini:', error);
+      Alert.alert('Error', 'Failed to connect. Please check your API key and try again.');
+    }
+  };
+
+  const sendMessage = async () => {
     if (!inputText.trim()) return;
 
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      text: inputText.trim(),
-      isUser: true,
-      timestamp: new Date(),
-    };
+    if (!isInitialized || !geminiService.isReady()) {
+      Alert.alert('Error', ERROR_MESSAGES.API_KEY_MISSING);
+      setShowApiKeyInput(true);
+      return;
+    }
 
-    const { response, citation } = getKrishnaResponse(inputText.trim());
-    
-    const krishnaMessage: Message = {
-      id: (Date.now() + 1).toString(),
-      text: response,
-      isUser: false,
-      timestamp: new Date(),
-      citation,
-    };
+    if (inputText.length > RATE_LIMITS.maxMessageLength) {
+      Alert.alert('Error', ERROR_MESSAGES.MESSAGE_TOO_LONG);
+      return;
+    }
 
-    setMessages(prev => [...prev, userMessage, krishnaMessage]);
+    const messageText = inputText.trim();
     setInputText('');
+
+    try {
+      // Update UI to show user message and typing indicator
+      setChatSession(prev => ({
+        ...prev,
+        isTyping: true,
+      }));
+
+      // Send message to Gemini
+      await geminiService.sendMessage(messageText);
+      
+      // Update UI with latest session
+      setChatSession(geminiService.getCurrentSession());
+    } catch (error) {
+      console.error('Error sending message:', error);
+      setChatSession(prev => ({
+        ...prev,
+        isTyping: false,
+      }));
+      
+      // Add error message to chat
+      const errorMessage: GeminiMessage = {
+        id: `error-${Date.now()}`,
+        text: 'I apologize, but I am having trouble responding right now. Please try again in a moment.',
+        isUser: false,
+        timestamp: new Date(),
+      };
+      
+      setChatSession(prev => ({
+        ...prev,
+        messages: [...prev.messages, errorMessage],
+      }));
+    }
   };
 
   const askSuggestedQuestion = (question: string) => {
     setInputText(question);
-    // Auto-send the suggested question
-    setTimeout(() => sendMessage(), 100);
   };
 
-  const renderMessage = (message: Message) => (
+  const clearChat = () => {
+    Alert.alert(
+      'Clear Conversation',
+      'Are you sure you want to clear this conversation with Krishna?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Clear',
+          style: 'destructive',
+          onPress: () => {
+            geminiService.clearChat();
+            if (geminiService.isReady()) {
+              geminiService.startKrishnaChat();
+              setChatSession(geminiService.getCurrentSession());
+            }
+          }
+        }
+      ]
+    );
+  };
+
+  const renderMessage = (message: GeminiMessage) => (
     <View
       key={message.id}
       style={[
@@ -116,7 +167,7 @@ const AskKrishnaScreen: React.FC = () => {
       ]}
     >
       {!message.isUser && (
-        <Text style={styles.krishnaHeader}>🕉️ Krishna</Text>
+        <Text style={styles.krishnaHeader}>Krishna</Text>
       )}
       <Text style={[
         styles.messageText,
@@ -124,24 +175,86 @@ const AskKrishnaScreen: React.FC = () => {
       ]}>
         {message.text}
       </Text>
-      {message.citation && (
-        <Text style={styles.citation}>— {message.citation}</Text>
-      )}
+      <Text style={styles.timestamp}>
+        {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+      </Text>
     </View>
   );
+
+  if (showApiKeyInput) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.setupContainer}>
+          <Text style={styles.setupTitle}>Connection Issue</Text>
+          <Text style={styles.setupDescription}>
+            Unable to connect to Krishna. Please check your internet connection or enter a custom API key.
+          </Text>
+          
+          <TouchableOpacity style={styles.setupButton} onPress={initializeChat}>
+            <Text style={styles.setupButtonText}>Retry Connection</Text>
+          </TouchableOpacity>
+          
+          <Text style={styles.dividerText}>or</Text>
+          
+          <TextInput
+            style={styles.apiKeyInput}
+            value={apiKey}
+            onChangeText={setApiKey}
+            placeholder="Enter custom Gemini API key..."
+            placeholderTextColor={DharmaColors.text.tertiary}
+            secureTextEntry
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          
+          <TouchableOpacity style={styles.secondaryButton} onPress={setupGeminiAPI}>
+            <Text style={styles.secondaryButtonText}>Use Custom Key</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.helpButton}
+            onPress={() => Alert.alert(
+              'Get API Key',
+              'Visit https://makersuite.google.com/app/apikey to get your free Gemini API key'
+            )}
+          >
+            <Text style={styles.helpButtonText}>How to get API key?</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Ask Krishna</Text>
+        <TouchableOpacity onPress={clearChat} style={styles.clearButton}>
+          <Ionicons name="refresh" size={20} color={DharmaColors.text.tertiary} />
+        </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.messagesContainer} showsVerticalScrollIndicator={false}>
-        {messages.map(renderMessage)}
+      <ScrollView 
+        ref={scrollViewRef}
+        style={styles.messagesContainer} 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.messagesContent}
+      >
+        {chatSession.messages.map(renderMessage)}
         
-        {messages.length === 1 && (
+        {chatSession.isTyping && (
+          <View style={styles.typingContainer}>
+            <Text style={styles.krishnaHeader}>Krishna</Text>
+            <View style={styles.typingBubble}>
+              <ActivityIndicator size="small" color={DharmaColors.primary[400]} />
+              <Text style={styles.typingText}>thinking...</Text>
+            </View>
+          </View>
+        )}
+        
+        {chatSession.messages.length === 1 && !chatSession.isTyping && (
           <View style={styles.suggestionsContainer}>
-            <Text style={styles.suggestionsTitle}>Try asking:</Text>
+            <Text style={styles.suggestionsTitle}>Ask Krishna about:</Text>
             {suggestedQuestions.map((question, index) => (
               <TouchableOpacity
                 key={index}
@@ -165,18 +278,19 @@ const AskKrishnaScreen: React.FC = () => {
             value={inputText}
             onChangeText={setInputText}
             placeholder="Ask Krishna anything..."
+            placeholderTextColor={DharmaColors.text.tertiary}
             multiline
-            maxLength={500}
+            maxLength={RATE_LIMITS.maxMessageLength}
           />
           <TouchableOpacity
             style={[styles.sendButton, !inputText.trim() && styles.sendButtonDisabled]}
             onPress={sendMessage}
-            disabled={!inputText.trim()}
+            disabled={!inputText.trim() || chatSession.isTyping}
           >
             <Ionicons 
               name="send" 
               size={20} 
-              color={inputText.trim() ? '#ffffff' : '#9ca3af'} 
+              color={inputText.trim() ? DharmaColors.text.inverse : DharmaColors.text.tertiary} 
             />
           </TouchableOpacity>
         </View>
@@ -188,23 +302,31 @@ const AskKrishnaScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: DharmaColors.background.primary,
   },
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 24,
     paddingTop: 20,
-    paddingBottom: 20,
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
+    paddingBottom: 16,
   },
   headerTitle: {
-    fontSize: 28,
-    fontWeight: '900',
-    color: '#58cc02',
+    fontSize: 24,
+    fontWeight: '300',
+    color: DharmaColors.text.primary,
+    letterSpacing: 1,
+  },
+  clearButton: {
+    padding: 8,
   },
   messagesContainer: {
     flex: 1,
+  },
+  messagesContent: {
     padding: 20,
+    paddingBottom: 40,
   },
   messageContainer: {
     marginBottom: 20,
@@ -212,119 +334,193 @@ const styles = StyleSheet.create({
   },
   userMessage: {
     alignSelf: 'flex-end',
-    backgroundColor: '#1cb0f6',
-    borderRadius: 24,
-    borderBottomRightRadius: 8,
-    padding: 20,
-    shadowColor: '#1cb0f6',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 6,
+    backgroundColor: DharmaColors.primary[500],
+    borderRadius: 20,
+    borderBottomRightRadius: 4,
+    padding: 16,
   },
   krishnaMessage: {
     alignSelf: 'flex-start',
-    backgroundColor: '#f3f4f6',
-    borderRadius: 24,
-    borderBottomLeftRadius: 8,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    backgroundColor: DharmaColors.background.secondary,
+    borderRadius: 20,
+    borderBottomLeftRadius: 4,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: DharmaColors.background.tertiary,
   },
   krishnaHeader: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#58cc02',
+    fontSize: 12,
+    fontWeight: '600',
+    color: DharmaColors.primary[400],
     marginBottom: 8,
+    letterSpacing: 0.5,
   },
   messageText: {
-    fontSize: 17,
-    lineHeight: 24,
-    fontWeight: '500',
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '300',
   },
   userMessageText: {
-    color: '#ffffff',
+    color: DharmaColors.text.inverse,
   },
   krishnaMessageText: {
-    color: '#374151',
+    color: DharmaColors.text.primary,
   },
-  citation: {
-    fontSize: 12,
-    fontStyle: 'italic',
-    color: '#6b7280',
+  timestamp: {
+    fontSize: 10,
+    color: DharmaColors.text.muted,
     marginTop: 8,
     textAlign: 'right',
+  },
+  typingContainer: {
+    alignSelf: 'flex-start',
+    maxWidth: '85%',
+    marginBottom: 20,
+  },
+  typingBubble: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: DharmaColors.background.secondary,
+    borderRadius: 20,
+    borderBottomLeftRadius: 4,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: DharmaColors.background.tertiary,
+    gap: 8,
+  },
+  typingText: {
+    fontSize: 14,
+    color: DharmaColors.text.secondary,
+    fontStyle: 'italic',
   },
   suggestionsContainer: {
     marginTop: 20,
   },
   suggestionsTitle: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
-    color: '#374151',
-    marginBottom: 15,
+    color: DharmaColors.text.secondary,
+    marginBottom: 16,
+    letterSpacing: 0.5,
   },
   suggestionButton: {
-    backgroundColor: '#f0f9ff',
-    borderRadius: 20,
-    padding: 18,
-    marginBottom: 12,
-    borderLeftWidth: 4,
-    borderLeftColor: '#58cc02',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    backgroundColor: DharmaColors.background.secondary,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: DharmaColors.background.tertiary,
   },
   suggestionText: {
-    fontSize: 16,
-    color: '#1f2937',
-    fontWeight: '500',
+    fontSize: 14,
+    color: DharmaColors.text.primary,
+    fontWeight: '300',
   },
   inputContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: DharmaColors.background.secondary,
     borderTopWidth: 1,
-    borderTopColor: '#e5e7eb',
+    borderTopColor: DharmaColors.background.tertiary,
     padding: 20,
   },
   inputRow: {
     flexDirection: 'row',
     alignItems: 'flex-end',
+    gap: 12,
   },
   textInput: {
     flex: 1,
-    borderWidth: 2,
-    borderColor: '#e5e7eb',
-    borderRadius: 24,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    fontSize: 17,
-    maxHeight: 120,
-    marginRight: 16,
-    backgroundColor: '#f9fafb',
-    fontWeight: '500',
+    borderWidth: 1,
+    borderColor: DharmaColors.background.tertiary,
+    borderRadius: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 16,
+    maxHeight: 100,
+    backgroundColor: DharmaColors.background.primary,
+    color: DharmaColors.text.primary,
+    fontWeight: '300',
   },
   sendButton: {
-    backgroundColor: '#58cc02',
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    backgroundColor: DharmaColors.primary[500],
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#58cc02',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 6,
   },
   sendButtonDisabled: {
-    backgroundColor: '#e5e7eb',
-    shadowOpacity: 0,
-    elevation: 0,
+    backgroundColor: DharmaColors.background.tertiary,
+  },
+  // Setup screen styles
+  setupContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 32,
+  },
+  setupTitle: {
+    fontSize: 28,
+    fontWeight: '300',
+    color: DharmaColors.text.primary,
+    textAlign: 'center',
+    marginBottom: 16,
+    letterSpacing: 1,
+  },
+  setupDescription: {
+    fontSize: 16,
+    color: DharmaColors.text.secondary,
+    textAlign: 'center',
+    marginBottom: 32,
+    lineHeight: 22,
+  },
+  apiKeyInput: {
+    borderWidth: 1,
+    borderColor: DharmaColors.background.tertiary,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    fontSize: 16,
+    backgroundColor: DharmaColors.background.secondary,
+    color: DharmaColors.text.primary,
+    marginBottom: 24,
+  },
+  setupButton: {
+    backgroundColor: DharmaColors.primary[500],
+    borderRadius: 12,
+    paddingVertical: 16,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  setupButtonText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: DharmaColors.text.inverse,
+  },
+  dividerText: {
+    fontSize: 14,
+    color: DharmaColors.text.tertiary,
+    textAlign: 'center',
+    marginVertical: 16,
+  },
+  secondaryButton: {
+    backgroundColor: DharmaColors.background.tertiary,
+    borderRadius: 12,
+    paddingVertical: 16,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  secondaryButtonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: DharmaColors.text.primary,
+  },
+  helpButton: {
+    alignItems: 'center',
+    padding: 8,
+  },
+  helpButtonText: {
+    fontSize: 14,
+    color: DharmaColors.primary[400],
+    textDecorationLine: 'underline',
   },
 });
 

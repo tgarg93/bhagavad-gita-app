@@ -13,6 +13,7 @@ import ChapterDetailScreen from '../screens/ChapterDetailScreen';
 import VerseDetailScreen from '../screens/VerseDetailScreen';
 
 import { useAuth } from '../contexts/AuthContext';
+import { DharmaColors } from '../constants/colors';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -36,19 +37,15 @@ const TabNavigator = () => {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#58cc02',
-        tabBarInactiveTintColor: '#9ca3af',
+        tabBarActiveTintColor: DharmaColors.primary[400],
+        tabBarInactiveTintColor: DharmaColors.text.tertiary,
         tabBarStyle: {
-          backgroundColor: '#ffffff',
-          borderTopWidth: 0,
+          backgroundColor: DharmaColors.background.secondary,
+          borderTopWidth: 1,
+          borderTopColor: DharmaColors.background.tertiary,
           height: 80,
           paddingBottom: 10,
           paddingTop: 8,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: -2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 8,
-          elevation: 10,
         },
         headerShown: false,
       })}

@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Bhagavad Gita",
-    "slug": "bhagavad-gita-app",
+    "name": "Dharma",
+    "slug": "dharma-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "platforms": ["ios", "android"],
-    "description": "Interactive mobile app for learning and exploring the Bhagavad Gita with daily verses, chapter-wise navigation, and personalized progress tracking.",
+    "description": "Comprehensive Hindu wisdom platform with scriptures, festival calendar, daily insights, and AI-powered spiritual guidance.",
     "plugins": [
       "expo-dev-client"
     ],
@@ -22,7 +22,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bhagavadgita.app",
+      "bundleIdentifier": "com.dharma.app",
       "infoPlist": {
         "NSMicrophoneUsageDescription": "This app needs microphone access to enable voice conversations with Krishna",
         "NSCameraUsageDescription": "This app may need camera access for video calls (optional)"
@@ -34,7 +34,7 @@
         "backgroundColor": "#fff7ed"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.bhagavadgita.app"
+      "package": "com.dharma.app"
     }
   }
 }

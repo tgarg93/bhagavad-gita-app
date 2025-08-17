@@ -30,6 +30,12 @@
           <string>com.bhagavadgita.app</string>
         </array>
       </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>exp+bhagavad-gita-app</string>
+        </array>
+      </dict>
     </array>
     <key>CFBundleVersion</key>
     <string>1</string>
@@ -44,6 +50,10 @@
       <key>NSAllowsLocalNetworking</key>
       <true/>
     </dict>
+    <key>NSCameraUsageDescription</key>
+    <string>This app may need camera access for video calls (optional)</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app needs microphone access to enable voice conversations with Krishna</string>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
     <key>UIRequiredDeviceCapabilities</key>

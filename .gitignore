@@ -32,6 +32,11 @@ yarn-error.*
 
 # local env files
 .env*.local
+.env
+
+# API Keys and sensitive configuration
+**/config/*Config.ts
+!**/config/*Config.example.ts
 
 # typescript
 *.tsbuildinfo
