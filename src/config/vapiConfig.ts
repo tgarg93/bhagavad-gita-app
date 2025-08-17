@@ -6,10 +6,10 @@ export const VAPI_CONFIG = {
   enabled: true, // Set to true when you have development build + API key
   
   // Your Vapi public API key (get from https://vapi.ai dashboard)
-  publicApiKey: 'YOUR_VAPI_PUBLIC_API_KEY', // Replace with your actual key from vapi.ai
+  publicApiKey: 'eb4ba22f-7927-429e-9726-cd9bf4256c2a', // Replace with your actual key from vapi.ai
   
   // Your Krishna assistant ID (optional - will use inline configuration if not provided)
-  assistantId: 'YOUR_ASSISTANT_ID', // Replace with your actual assistant ID if you have one
+  assistantId: 'f70f7f45-9dbd-4de6-941e-a2f2be59fce9', // Replace with your actual assistant ID if you have one
   
   // Default Krishna assistant configuration (used if no assistantId provided)
   defaultAssistant: {

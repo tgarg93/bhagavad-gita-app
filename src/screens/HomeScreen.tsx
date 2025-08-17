@@ -32,6 +32,7 @@ const HomeScreen: React.FC = () => {
   const [isInitializing, setIsInitializing] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [totalCallTime, setTotalCallTime] = useState(0); // Total time spent talking to Krishna
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Prevent rapid button presses
 
   useEffect(() => {
     // Initialize Vapi service and set up event handlers
@@ -112,17 +113,33 @@ const HomeScreen: React.FC = () => {
 
   // Start or end voice conversation with Krishna
   const toggleKrishnaCall = async () => {
+    // Prevent rapid button presses
+    if (isButtonDisabled) {
+      console.log('Button disabled, ignoring press');
+      return;
+    }
+
+    setIsButtonDisabled(true);
+    setTimeout(() => setIsButtonDisabled(false), 2000); // Re-enable after 2 seconds
+
     if (!currentUser) {
       // Auto-login as guest if not logged in
       try {
         await loginAsGuest();
       } catch (error) {
         Alert.alert('Error', 'Unable to start. Please try again.');
+        setIsButtonDisabled(false);
         return;
       }
     }
 
     try {
+      console.log('Current call status:', {
+        isActive: callStatus.isActive,
+        isConnecting: callStatus.isConnecting,
+        isConnected: callStatus.isConnected
+      });
+
       if (callStatus.isActive) {
         // End the current call
         console.log('Ending call with Krishna...');
@@ -138,6 +155,7 @@ const HomeScreen: React.FC = () => {
       }
     } catch (error) {
       console.error('Error with Krishna call:', error);
+      setIsButtonDisabled(false);
       Alert.alert(
         'Connection Error',
         'Unable to connect to Krishna right now. Please check your internet connection and try again.'
@@ -254,7 +272,7 @@ const HomeScreen: React.FC = () => {
             style={styles.giantPlayButton} 
             onPress={toggleKrishnaCall}
             onLongPress={openCallOptions}
-            disabled={isInitializing}
+            disabled={isInitializing || isButtonDisabled}
           >
             <LinearGradient
               colors={callStatus.isActive ? ['#ff4444', '#ff6b6b'] : 

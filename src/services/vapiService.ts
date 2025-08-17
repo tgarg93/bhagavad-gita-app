@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { VAPI_CONFIG } from '../config/vapiConfig';
 
 // Conditional import to avoid native module errors in Expo Go
 let Vapi: any = null;
@@ -32,6 +33,7 @@ export class VapiService {
   private isInitialized: boolean = false;
   private callStartTime: number | null = null;
   private eventHandlers: VapiEventHandlers = {};
+  private isTransitioning: boolean = false; // Prevent rapid state changes
   private currentStatus: VapiCallStatus = {
     isConnecting: false,
     isConnected: false,
@@ -116,7 +118,12 @@ export class VapiService {
 
     // Error occurred
     this.vapi.on('error', (error: any) => {
-      console.error('Vapi error:', error);
+      console.error('=== VAPI ERROR DETAILS ===');
+      console.error('Error object:', JSON.stringify(error, null, 2));
+      console.error('Error type:', typeof error);
+      console.error('Error message:', error?.message);
+      console.error('=========================');
+      
       const errorMessage = error?.message || 'Unknown error occurred';
       this.currentStatus = {
         ...this.currentStatus,
@@ -149,7 +156,25 @@ export class VapiService {
       throw new Error('Vapi service not initialized');
     }
 
+    // Prevent rapid calls
+    if (this.isTransitioning) {
+      console.log('Call transition in progress, ignoring request');
+      return;
+    }
+
     try {
+      this.isTransitioning = true;
+      
+      // Request microphone permission first
+      try {
+        const { PermissionsAndroid, Platform } = require('react-native');
+        if (Platform.OS === 'android') {
+          await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO);
+        }
+      } catch (permError) {
+        console.log('Permission request not available:', permError);
+      }
+
       console.log('Starting Krishna voice call...');
       this.currentStatus = {
         ...this.currentStatus,
@@ -158,9 +183,11 @@ export class VapiService {
       };
       this.eventHandlers.onStatusUpdate?.(this.currentStatus);
 
-      // Demo mode for Expo Go
-      if (!this.vapi) {
-        console.log('Running in demo mode - simulating call');
+      // Force simulator mode for now (you can toggle this for testing)
+      const FORCE_SIMULATOR_MODE = true;
+      
+      if (FORCE_SIMULATOR_MODE || !this.vapi) {
+        console.log('Running in simulator mode - enabling voice simulation');
         setTimeout(() => {
           this.callStartTime = Date.now();
           this.currentStatus = {
@@ -169,10 +196,25 @@ export class VapiService {
             isActive: true,
             callDuration: 0,
           };
+          this.isTransitioning = false; // Reset transition flag
           this.eventHandlers.onCallStart?.();
           this.eventHandlers.onStatusUpdate?.(this.currentStatus);
           
-          // Simulate call duration updates in demo mode
+          // Simulate Krishna's first message
+          setTimeout(() => {
+            console.log('🙏 Krishna: Namaste! I am here to guide you. What would you like to know about life or the Gita?');
+            
+            // Simulate some interactive responses
+            setTimeout(() => {
+              console.log('🙏 Krishna: Feel free to ask me about dharma, finding peace, or any verse from the Gita...');
+            }, 5000);
+            
+            setTimeout(() => {
+              console.log('🙏 Krishna: Remember, you are the eternal soul, beyond the temporary body. What troubles your mind today?');
+            }, 10000);
+          }, 1000);
+          
+          // Simulate call duration updates
           const demoInterval = setInterval(() => {
             if (this.currentStatus.isActive && this.callStartTime) {
               const elapsed = Math.floor((Date.now() - this.callStartTime) / 1000);
@@ -193,32 +235,16 @@ export class VapiService {
       const configStr = await AsyncStorage.getItem(VAPI_CONFIG_KEY);
       const config = configStr ? JSON.parse(configStr) : {};
 
+      // Simple call options with just the assistant ID
       const callOptions = {
-        assistantId: assistantId || config.assistantId,
-        // You can customize the assistant here or use a pre-configured one
-        assistant: config.assistantConfig || {
-          model: {
-            provider: 'openai',
-            model: 'gpt-4o',
-            messages: [
-              {
-                role: 'system',
-                content: `You are Krishna from the Bhagavad Gita, speaking to a devotee. You are wise, compassionate, and speak in a warm, loving tone. You help people understand the teachings of the Gita in simple, practical ways. Keep responses conversational and not too long. Always be encouraging and supportive. You can reference specific verses from the Bhagavad Gita when relevant.`
-              }
-            ],
-          },
-          voice: {
-            provider: '11labs',
-            voiceId: 'pNInz6obpgDQGcFmaJgB', // Default voice - can be customized
-          },
-          firstMessage: "🙏 Namaste! I am Krishna, and I'm here to guide you on your spiritual journey. How can I help you today?",
-        }
+        assistantId: assistantId || config.assistantId || VAPI_CONFIG.assistantId
       };
 
       await this.vapi.start(callOptions);
       console.log('Krishna call initiated');
     } catch (error) {
       console.error('Failed to start Krishna call:', error);
+      this.isTransitioning = false; // Reset on error
       this.currentStatus = {
         ...this.currentStatus,
         isConnecting: false,
@@ -231,11 +257,21 @@ export class VapiService {
 
   // End the current call
   async endCall(): Promise<void> {
+    // Prevent rapid end calls
+    if (this.isTransitioning) {
+      console.log('Call transition in progress, ignoring end request');
+      return;
+    }
+
     try {
+      this.isTransitioning = true;
       console.log('Ending voice call...');
       
-      // Demo mode
-      if (!this.vapi) {
+      // Force demo mode for simulator
+      const FORCE_SIMULATOR_MODE = true;
+      
+      if (FORCE_SIMULATOR_MODE || !this.vapi) {
+        console.log('Ending simulator call...');
         this.callStartTime = null;
         this.currentStatus = {
           isConnecting: false,
@@ -243,13 +279,16 @@ export class VapiService {
           isActive: false,
           callDuration: 0,
         };
+        this.isTransitioning = false; // Reset transition flag
         this.eventHandlers.onCallEnd?.();
         this.eventHandlers.onStatusUpdate?.(this.currentStatus);
         return;
       }
 
       await this.vapi.stop();
+      this.isTransitioning = false;
     } catch (error) {
+      this.isTransitioning = false; // Reset on error
       console.error('Error ending call:', error);
     }
   }
