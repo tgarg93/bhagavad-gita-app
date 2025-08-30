@@ -10,6 +10,7 @@ export interface DailyInsight {
   title: string;
   content: string;
   sanskrit?: string;
+  transliteration?: string; // Direct English transliteration of Sanskrit
   translation?: string;
   source: string; // Scripture or teacher source
   category: DailyCategory;
@@ -59,6 +60,7 @@ export const dailyInsightsData: DailyInsight[] = [
     title: 'New Beginnings with Divine Grace',
     content: 'As we begin this new year, remember that every moment offers a fresh start. The divine grace of Krishna guides us toward righteousness and inner peace.',
     sanskrit: 'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन',
+    transliteration: 'karmanye vadhikaraste ma phaleshu kadachana',
     translation: 'You have the right to perform your prescribed duty, but not to the fruits of action',
     source: 'Bhagavad Gita 2.47',
     category: 'dharma',
@@ -73,6 +75,7 @@ export const dailyInsightsData: DailyInsight[] = [
     title: 'The Power of Self-Discipline',
     content: 'True freedom comes not from doing whatever we want, but from disciplining our minds and senses toward higher purposes.',
     sanskrit: 'उद्धरेदात्मनात्मानं नात्मानमवसादयेत्',
+    transliteration: 'uddhared atmanatmanam natmanam avasadayet',
     translation: 'One should lift up the self by the self and not degrade the self',
     source: 'Bhagavad Gita 6.5',
     category: 'wisdom',
@@ -87,6 +90,7 @@ export const dailyInsightsData: DailyInsight[] = [
     title: 'Cultivating Gratitude',
     content: 'Gratitude transforms ordinary moments into sacred experiences. When we appreciate the divine gifts around us, our hearts naturally open to love.',
     sanskrit: 'कृतज्ञता सर्वगुणानां मूलम्',
+    transliteration: 'kritajnata sarva gunanam mulam',
     translation: 'Gratitude is the root of all virtues',
     source: 'Chanakya Niti 15.6',
     category: 'devotion',
@@ -101,6 +105,7 @@ export const dailyInsightsData: DailyInsight[] = [
     title: 'Seeing Unity in Diversity',
     content: 'The same divine consciousness that flows through you flows through every being. When we see this unity, compassion naturally arises.',
     sanskrit: 'सर्वभूतेषु चात्मानं सर्वभूतानि चात्मनि',
+    transliteration: 'sarva bhuteshu chatmanam sarva bhutani chatmani',
     translation: 'One who sees the Self in all beings and all beings in the Self',
     source: 'Bhagavad Gita 6.29',
     category: 'compassion',
@@ -115,6 +120,7 @@ export const dailyInsightsData: DailyInsight[] = [
     title: 'The Art of Letting Go',
     content: 'Attachment to outcomes creates suffering. When we perform our duties with devotion but surrender the results to the Divine, we find peace.',
     sanskrit: 'सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज',
+    transliteration: 'sarva dharman parityajya mam ekam sharanam vraja',
     translation: 'Abandon all varieties of dharma and just surrender unto Me',
     source: 'Bhagavad Gita 18.66',
     category: 'detachment',

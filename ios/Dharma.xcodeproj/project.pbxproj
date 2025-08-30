@@ -9,27 +9,27 @@
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		513F6B20502212842898D7FE /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 423691D2E536282043DB23B4 /* PrivacyInfo.xcprivacy */; };
-		8F9F13FB087E3ADC9252E7FB /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF22E79C13F0F616A5B99CE /* ExpoModulesProvider.swift */; };
-		AF20BFDC1FF1A736E0B9B205 /* libPods-BhagavadGita.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB88A6660D7C41AD877EE2C /* libPods-BhagavadGita.a */; };
+		52A8909E88CF96EEE3522C29 /* libPods-Dharma.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA2FF0B32C82CCDD99A0825 /* libPods-Dharma.a */; };
+		AAA500C4C6BC73D5B0883C26 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970EFACA59C9CA32932B8298 /* ExpoModulesProvider.swift */; };
+		B8DE3BAA63E14EF681A366C3 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B537A07A276D0F11AEB4904F /* PrivacyInfo.xcprivacy */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		13B07F961A680F5B00A75B9A /* BhagavadGita.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BhagavadGita.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BhagavadGita/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BhagavadGita/Info.plist; sourceTree = "<group>"; };
-		423691D2E536282043DB23B4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = BhagavadGita/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		79081FA84691E6B92BD0DE75 /* Pods-BhagavadGita.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BhagavadGita.debug.xcconfig"; path = "Target Support Files/Pods-BhagavadGita/Pods-BhagavadGita.debug.xcconfig"; sourceTree = "<group>"; };
-		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = BhagavadGita/SplashScreen.storyboard; sourceTree = "<group>"; };
-		AFF22E79C13F0F616A5B99CE /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-BhagavadGita/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		064BEE4A5A5C8C013FC72409 /* Pods-Dharma.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dharma.release.xcconfig"; path = "Target Support Files/Pods-Dharma/Pods-Dharma.release.xcconfig"; sourceTree = "<group>"; };
+		0AA2FF0B32C82CCDD99A0825 /* libPods-Dharma.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Dharma.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Dharma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dharma.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Dharma/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Dharma/Info.plist; sourceTree = "<group>"; };
+		55AB8427E9BD092414CB2D4A /* Pods-Dharma.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dharma.debug.xcconfig"; path = "Target Support Files/Pods-Dharma/Pods-Dharma.debug.xcconfig"; sourceTree = "<group>"; };
+		970EFACA59C9CA32932B8298 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Dharma/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Dharma/SplashScreen.storyboard; sourceTree = "<group>"; };
+		B537A07A276D0F11AEB4904F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Dharma/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		CA762698FC918C9E44E1D6B8 /* Pods-BhagavadGita.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BhagavadGita.release.xcconfig"; path = "Target Support Files/Pods-BhagavadGita/Pods-BhagavadGita.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = BhagavadGita/AppDelegate.swift; sourceTree = "<group>"; };
-		F11748442D0722820044C1D9 /* BhagavadGita-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "BhagavadGita-Bridging-Header.h"; path = "BhagavadGita/BhagavadGita-Bridging-Header.h"; sourceTree = "<group>"; };
-		FDB88A6660D7C41AD877EE2C /* libPods-BhagavadGita.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BhagavadGita.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Dharma/AppDelegate.swift; sourceTree = "<group>"; };
+		F11748442D0722820044C1D9 /* Dharma-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Dharma-Bridging-Header.h"; path = "Dharma/Dharma-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,52 +37,42 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF20BFDC1FF1A736E0B9B205 /* libPods-BhagavadGita.a in Frameworks */,
+				52A8909E88CF96EEE3522C29 /* libPods-Dharma.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13B07FAE1A68108700A75B9A /* BhagavadGita */ = {
+		13B07FAE1A68108700A75B9A /* Dharma */ = {
 			isa = PBXGroup;
 			children = (
 				F11748412D0307B40044C1D9 /* AppDelegate.swift */,
-				F11748442D0722820044C1D9 /* BhagavadGita-Bridging-Header.h */,
+				F11748442D0722820044C1D9 /* Dharma-Bridging-Header.h */,
 				BB2F792B24A3F905000567C9 /* Supporting */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				423691D2E536282043DB23B4 /* PrivacyInfo.xcprivacy */,
+				B537A07A276D0F11AEB4904F /* PrivacyInfo.xcprivacy */,
 			);
-			name = BhagavadGita;
-			sourceTree = "<group>";
-		};
-		22D8DCAA7D0A209D10D9B95C /* BhagavadGita */ = {
-			isa = PBXGroup;
-			children = (
-				AFF22E79C13F0F616A5B99CE /* ExpoModulesProvider.swift */,
-			);
-			name = BhagavadGita;
+			name = Dharma;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				FDB88A6660D7C41AD877EE2C /* libPods-BhagavadGita.a */,
+				0AA2FF0B32C82CCDD99A0825 /* libPods-Dharma.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		611A1B2D9B64F10A15CD71DC /* Pods */ = {
+		4F565B1D55EF4411EAE5A585 /* Dharma */ = {
 			isa = PBXGroup;
 			children = (
-				79081FA84691E6B92BD0DE75 /* Pods-BhagavadGita.debug.xcconfig */,
-				CA762698FC918C9E44E1D6B8 /* Pods-BhagavadGita.release.xcconfig */,
+				970EFACA59C9CA32932B8298 /* ExpoModulesProvider.swift */,
 			);
-			name = Pods;
-			path = Pods;
+			name = Dharma;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -95,12 +85,12 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* BhagavadGita */,
+				13B07FAE1A68108700A75B9A /* Dharma */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				611A1B2D9B64F10A15CD71DC /* Pods */,
-				F37C1738A5ED42F49E4C938D /* ExpoModulesProviders */,
+				F87D08AAEC398345DB2F60DF /* Pods */,
+				A61A67F3F1EEB39597C68EA3 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -110,9 +100,17 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* BhagavadGita.app */,
+				13B07F961A680F5B00A75B9A /* Dharma.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A61A67F3F1EEB39597C68EA3 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				4F565B1D55EF4411EAE5A585 /* Dharma */,
+			);
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -121,40 +119,42 @@
 				BB2F792C24A3F905000567C9 /* Expo.plist */,
 			);
 			name = Supporting;
-			path = BhagavadGita/Supporting;
+			path = Dharma/Supporting;
 			sourceTree = "<group>";
 		};
-		F37C1738A5ED42F49E4C938D /* ExpoModulesProviders */ = {
+		F87D08AAEC398345DB2F60DF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				22D8DCAA7D0A209D10D9B95C /* BhagavadGita */,
+				55AB8427E9BD092414CB2D4A /* Pods-Dharma.debug.xcconfig */,
+				064BEE4A5A5C8C013FC72409 /* Pods-Dharma.release.xcconfig */,
 			);
-			name = ExpoModulesProviders;
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13B07F861A680F5B00A75B9A /* BhagavadGita */ = {
+		13B07F861A680F5B00A75B9A /* Dharma */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "BhagavadGita" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Dharma" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				79866BAF3FE4F050547B33BB /* [Expo] Configure project */,
+				75747087E0CE637A788F9E19 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				96ED6AB138CC6D1F5F491FAC /* [CP] Embed Pods Frameworks */,
+				8A6E3E156E6D79A311513164 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = BhagavadGita;
-			productName = BhagavadGita;
-			productReference = 13B07F961A680F5B00A75B9A /* BhagavadGita.app */;
+			name = Dharma;
+			productName = Dharma;
+			productReference = 13B07F961A680F5B00A75B9A /* Dharma.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -170,7 +170,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "BhagavadGita" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Dharma" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -183,7 +183,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* BhagavadGita */,
+				13B07F861A680F5B00A75B9A /* Dharma */,
 			);
 		};
 /* End PBXProject section */
@@ -196,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				513F6B20502212842898D7FE /* PrivacyInfo.xcprivacy in Resources */,
+				B8DE3BAA63E14EF681A366C3 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,14 +233,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BhagavadGita-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Dharma-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		79866BAF3FE4F050547B33BB /* [Expo] Configure project */ = {
+		75747087E0CE637A788F9E19 /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -257,7 +257,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-BhagavadGita/expo-configure-project.sh\"\n";
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-Dharma/expo-configure-project.sh\"\n";
 		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -265,7 +265,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BhagavadGita/Pods-BhagavadGita-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Dharma/Pods-Dharma-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/ExpoConstants_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoFileSystem/ExpoFileSystem_privacy.bundle",
@@ -294,16 +294,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BhagavadGita/Pods-BhagavadGita-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dharma/Pods-Dharma-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		96ED6AB138CC6D1F5F491FAC /* [CP] Embed Pods Frameworks */ = {
+		8A6E3E156E6D79A311513164 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BhagavadGita/Pods-BhagavadGita-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Dharma/Pods-Dharma-frameworks.sh",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/JitsiWebRTC/WebRTC.framework/WebRTC",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ReactNativeDailyJSScreenShareExtension/ReactNativeDailyJSScreenShareExtension.framework/ReactNativeDailyJSScreenShareExtension",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
@@ -316,7 +316,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BhagavadGita/Pods-BhagavadGita-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dharma/Pods-Dharma-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -327,7 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				8F9F13FB087E3ADC9252E7FB /* ExpoModulesProvider.swift in Sources */,
+				AAA500C4C6BC73D5B0883C26 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,18 +336,18 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79081FA84691E6B92BD0DE75 /* Pods-BhagavadGita.debug.xcconfig */;
+			baseConfigurationReference = 55AB8427E9BD092414CB2D4A /* Pods-Dharma.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = BhagavadGita/BhagavadGita.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Dharma/Dharma.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
 				);
-				INFOPLIST_FILE = BhagavadGita/Info.plist;
+				INFOPLIST_FILE = Dharma/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -360,9 +360,9 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bhagavadgita.app;
-				PRODUCT_NAME = "BhagavadGita";
-				SWIFT_OBJC_BRIDGING_HEADER = "BhagavadGita/BhagavadGita-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dharma.app;
+				PRODUCT_NAME = Dharma;
+				SWIFT_OBJC_BRIDGING_HEADER = "Dharma/Dharma-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -372,13 +372,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA762698FC918C9E44E1D6B8 /* Pods-BhagavadGita.release.xcconfig */;
+			baseConfigurationReference = 064BEE4A5A5C8C013FC72409 /* Pods-Dharma.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = BhagavadGita/BhagavadGita.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Dharma/Dharma.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = BhagavadGita/Info.plist;
+				INFOPLIST_FILE = Dharma/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -391,9 +391,9 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bhagavadgita.app;
-				PRODUCT_NAME = "BhagavadGita";
-				SWIFT_OBJC_BRIDGING_HEADER = "BhagavadGita/BhagavadGita-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dharma.app;
+				PRODUCT_NAME = Dharma;
+				SWIFT_OBJC_BRIDGING_HEADER = "Dharma/Dharma-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -527,7 +527,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "BhagavadGita" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Dharma" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -536,7 +536,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "BhagavadGita" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Dharma" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

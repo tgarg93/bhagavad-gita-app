@@ -1,57 +1,57 @@
-// Dharma App Color Palette - Hindu-inspired colors
-// Based on traditional Hindu spiritual and cultural symbolism
+// Dharma App Color Palette - Ancient wisdom meets modern design
+// Updated design system with culturally authentic colors
 
 export const DharmaColors = {
-  // Primary Colors - Saffron (Sacred and Spiritual)
+  // Primary Colors - Saffron Gradient System
   primary: {
-    50: '#fff7ed',   // Very light saffron
-    100: '#ffedd5',  // Light saffron
-    200: '#fed7aa',  // Soft saffron
-    300: '#fdba74',  // Medium saffron
-    400: '#fb923c',  // Vibrant saffron
-    500: '#f97316',  // Primary saffron
-    600: '#ea580c',  // Deep saffron
-    700: '#c2410c',  // Dark saffron
-    800: '#9a3412',  // Very dark saffron
-    900: '#7c2d12',  // Deepest saffron
+    50: '#FFF8F0',   // Cream Canvas (background)
+    100: '#FFE8D1',  // Very light saffron
+    200: '#FFD1A3',  // Light saffron warmth
+    300: '#FFB627',  // Marigold Warm (celebrations)
+    400: '#F7931E',  // Turmeric Gold (accents)
+    500: '#FF6B35',  // Saffron Sunset (primary CTA)
+    600: '#E55A2B',  // Deep saffron
+    700: '#CC4A21',  // Darker saffron
+    800: '#B33A17',  // Very dark saffron
+    900: '#992A0D',  // Deepest saffron
   },
 
-  // Secondary Colors - Deep Blue (Divine Wisdom)
+  // Secondary Colors - Sacred Blue System (Krishna Blue)
   secondary: {
-    50: '#eff6ff',   // Very light blue
-    100: '#dbeafe',  // Light blue
-    200: '#bfdbfe',  // Soft blue
-    300: '#93c5fd',  // Medium blue
-    400: '#60a5fa',  // Vibrant blue
-    500: '#3b82f6',  // Primary blue
-    600: '#2563eb',  // Deep blue (Krishna's color)
-    700: '#1d4ed8',  // Dark blue
-    800: '#1e40af',  // Very dark blue
-    900: '#1e3a8a',  // Deepest blue
+    50: '#EBF3FF',   // Very light Krishna blue
+    100: '#D7E7FF',  // Light Krishna blue
+    200: '#B8D4FF',  // Soft Krishna blue
+    300: '#8BB8FF',  // Medium Krishna blue
+    400: '#6BA4F5',  // Vibrant Krishna blue
+    500: '#4A90E2',  // Krishna Blue (trust, wisdom)
+    600: '#3A7BD1',  // Deep Krishna blue
+    700: '#2A66C0',  // Dark Krishna blue
+    800: '#1A51AF',  // Very dark blue
+    900: '#0A3C9E',  // Deepest blue
   },
 
-  // Accent Colors - Gold (Prosperity and Divinity)
+  // Accent Colors - Lotus Pink System (Love & Devotion)
   accent: {
-    50: '#fefce8',   // Very light gold
-    100: '#fef9c3',  // Light gold
-    200: '#fef08a',  // Soft gold
-    300: '#fde047',  // Medium gold
-    400: '#facc15',  // Vibrant gold
-    500: '#eab308',  // Primary gold
-    600: '#ca8a04',  // Deep gold
-    700: '#a16207',  // Dark gold
-    800: '#854d0e',  // Very dark gold
-    900: '#713f12',  // Deepest gold
+    50: '#FDF2F8',   // Very light lotus pink
+    100: '#FCE7F3',  // Light lotus pink
+    200: '#FBCFE8',  // Soft lotus pink
+    300: '#F9A8D4',  // Medium lotus pink
+    400: '#F472B6',  // Vibrant lotus pink
+    500: '#E91E63',  // Lotus Pink (love, devotion)
+    600: '#DB1A5C',  // Deep lotus pink
+    700: '#BE185D',  // Dark lotus pink
+    800: '#9D174D',  // Very dark pink
+    900: '#831843',  // Deepest pink
   },
 
-  // Sacred Colors
+  // Sacred Colors (Cultural Elements)
   sacred: {
-    lotus: '#fda4af',      // Lotus pink (Divine beauty)
-    tulsi: '#22c55e',      // Tulsi green (Sacred plant)
-    sindoor: '#dc2626',    // Sindoor red (Auspicious)
-    turmeric: '#fbbf24',   // Turmeric yellow (Purification)
-    sandalwood: '#d4a574', // Sandalwood beige (Sacred wood)
-    ivory: '#faf7f2',      // Temple ivory (Purity)
+    vermillion: '#DC143C',  // Sacred Vermillion (festivals, notifications)
+    krishnaBlue: '#4A90E2', // Krishna Blue (wisdom, trust)
+    lotusPink: '#E91E63',   // Lotus Pink (love, devotion)
+    turmericGold: '#F7931E', // Turmeric Gold (purity, prosperity)
+    marigoldWarm: '#FFB627', // Marigold Warm (celebrations)
+    saffronSunset: '#FF6B35', // Saffron Sunset (spiritual energy)
   },
 
   // Nature Colors (Elements)
@@ -63,22 +63,22 @@ export const DharmaColors = {
     space: '#1e3a8a',      // Space deep blue
   },
 
-  // UI Colors - Dark Mode
+  // UI Colors - Light Mode (New Design System)
   background: {
-    primary: '#0a0a0a',    // Very dark background
-    secondary: '#1a1a1a',  // Dark gray
-    tertiary: '#2a2a2a',   // Medium dark gray
-    paper: '#151515',      // Paper dark
-    overlay: 'rgba(0, 0, 0, 0.8)', // Modal overlay
+    primary: '#FFF8F0',    // Cream Canvas (primary background)
+    secondary: '#F5F1E8',  // Warm Ivory (card backgrounds)
+    tertiary: '#E8E8E8',   // Gentle Mist (borders, dividers)
+    paper: '#FFFFFF',      // Pure white paper
+    overlay: 'rgba(44, 44, 44, 0.8)', // Dark overlay for modals
   },
 
   text: {
-    primary: '#ffffff',    // White text
-    secondary: '#a1a1aa',  // Light gray
-    tertiary: '#71717a',   // Medium gray
-    muted: '#52525b',      // Dark gray
-    inverse: '#000000',    // Black text
-    link: '#60a5fa',       // Light blue
+    primary: '#2C2C2C',    // Charcoal Ink (primary text)
+    secondary: '#757575',  // Soft Ash (secondary text)
+    tertiary: '#9CA3AF',   // Light gray (muted text)
+    muted: '#D1D5DB',      // Very light gray
+    inverse: '#FFFFFF',    // White text (on dark backgrounds)
+    link: '#4A90E2',       // Krishna Blue for links
   },
 
   // Semantic Colors
@@ -89,14 +89,14 @@ export const DharmaColors = {
     info: '#0ea5e9',       // Info blue
   },
 
-  // Gradient Combinations
+  // Cultural Gradients (New Design System)
   gradients: {
-    sunrise: ['#f97316', '#fbbf24'],      // Saffron to gold
-    divine: ['#2563eb', '#7c3aed'],       // Blue to purple
-    prosperity: ['#eab308', '#f97316'],   // Gold to saffron
-    peace: ['#22c55e', '#0ea5e9'],        // Green to blue
-    wisdom: ['#1e3a8a', '#2563eb'],       // Deep to medium blue
-    celebration: ['#dc2626', '#f97316'],  // Red to saffron
+    sunriseBlend: ['#FF6B35', '#F7931E'],    // Saffron Sunset to Turmeric Gold
+    twilightWisdom: ['#4A90E2', '#E91E63'],  // Krishna Blue to Lotus Pink
+    goldenHour: ['#FFB627', '#FF6B35'],      // Marigold Warm to Saffron Sunset
+    creamWarmth: ['#FFF8F0', '#F5F1E8'],     // Cream Canvas to Warm Ivory
+    sacredGlow: ['#DC143C', '#E91E63'],      // Sacred Vermillion to Lotus Pink
+    culturalBlend: ['#4A90E2', '#F7931E'],   // Krishna Blue to Turmeric Gold
   },
 
   // Special Effects
@@ -136,12 +136,12 @@ export const DharmaThemes = {
   },
 };
 
-// Navigation Colors (for different sections)
+// Navigation Colors (Cultural Design System)
 export const NavigationColors = {
-  landing: DharmaColors.gradients.sunrise,        // Home/Landing
-  scriptures: DharmaColors.gradients.wisdom,      // Scriptures
-  festivals: DharmaColors.gradients.celebration,  // Festival Calendar
-  askKrishna: DharmaColors.gradients.divine,      // Ask Krishna (Chat)
+  home: DharmaColors.gradients.sunriseBlend,      // Home - Saffron energy
+  learn: DharmaColors.gradients.twilightWisdom,   // Learn - Krishna wisdom
+  festivals: DharmaColors.gradients.goldenHour,   // Festivals - Celebration warmth
+  askKrishna: DharmaColors.gradients.culturalBlend, // Ask Krishna - Cultural blend
 };
 
 export default DharmaColors;

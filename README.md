@@ -1,6 +1,6 @@
-# 🕉️ Bhagavad Gita Mobile App
+# 🪷 Dharma - Hindu Wisdom Platform
 
-A comprehensive React Native mobile application for learning and exploring the Bhagavad Gita with interactive features, personalized progress tracking, and modern mobile UI design. **All data is stored locally on your device** for privacy and offline access.
+A comprehensive React Native mobile application for exploring Hindu scriptures, festivals, deities, and spiritual wisdom. Features the complete Bhagavad Gita with child-friendly adaptations, interactive content, and modern mobile UI design. **All data is stored locally on your device** for privacy and offline access.
 
 ![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android-blue)
 ![React Native](https://img.shields.io/badge/React%20Native-Expo-blue)
@@ -9,13 +9,25 @@ A comprehensive React Native mobile application for learning and exploring the B
 
 ## ✨ Features
 
-### 🕉️ Core Learning Features
-- **Daily Verse**: Get inspired with a new verse every day with reflection prompts
-- **Chapter Navigation**: Explore all 18 chapters with progress tracking
-- **Interactive Verses**: Sanskrit, transliteration, translations, and commentary
-- **Multi-language Support**: English, Hindi, and Sanskrit text
-- **Search Functionality**: Find verses by keywords, themes, or concepts
-- **Bookmarks & Favorites**: Save meaningful verses for later reference
+### 🪷 Core Features
+
+#### 📚 Scriptures
+- **Bhagavad Gita**: Complete 18 chapters with child-friendly adaptations
+- **Interactive Content**: Stories, real-life examples, and reflection questions  
+- **Audio & Podcasts**: Listen to audiobook narrations and discussion podcasts
+- **Sanskrit & Translations**: Original text with English translations
+
+#### 🎉 Festivals & Culture
+- **Festival Calendar**: Learn about major Hindu festivals and their significance
+- **Cultural Context**: Historical backgrounds and modern celebrations
+
+#### 🕉️ Deities & Philosophy  
+- **Gods & Goddesses**: Explore major deities, their stories and teachings
+- **Spiritual Concepts**: Understand dharma, karma, meditation, and more
+
+#### 🧘 Practices
+- **Yoga & Meditation**: Practical spiritual practices and guidance
+- **Daily Wisdom**: Personalized insights and reflection prompts
 
 ### 📱 Mobile-Optimized Experience
 - **Native Mobile UI**: Designed specifically for iOS and Android

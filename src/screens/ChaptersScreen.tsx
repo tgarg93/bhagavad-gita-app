@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { bhagavadGitaData } from '../data/bhagavadGitaData';
+import { DharmaColors } from '../constants/colors';
 
 const { width } = Dimensions.get('window');
 
@@ -20,14 +21,14 @@ const ChaptersScreen: React.FC = () => {
   const navigation = useNavigation();
 
   const openChapter = (chapterId: string) => {
-    navigation.navigate('ChapterDetail' as never, { chapterId } as never);
+    (navigation as any).navigate('ChapterDetail', { chapterId });
   };
 
-  // Define colors for each chapter (Duolingo style)
+  // Define colors for each chapter (Dharma style)
   const chapterColors = [
-    ['#58cc02', '#89e219'], // Green
-    ['#1cb0f6', '#4fc3f7'], // Blue
-    ['#ff9600', '#ffb84d'], // Orange
+    [DharmaColors.primary[500], DharmaColors.primary[400]], // Saffron
+    [DharmaColors.secondary[500], DharmaColors.secondary[400]], // Deep Blue
+    [DharmaColors.accent[500], DharmaColors.accent[400]], // Gold
     ['#ce82ff', '#e0a3ff'], // Purple
     ['#ff4b4b', '#ff7979'], // Red
     ['#2dd4bf', '#5eead4'], // Teal
@@ -62,7 +63,7 @@ const ChaptersScreen: React.FC = () => {
         disabled={isLocked}
       >
         <LinearGradient
-          colors={isLocked ? ['#e5e7eb', '#d1d5db'] : colors}
+          colors={isLocked ? [DharmaColors.background.tertiary, DharmaColors.background.secondary] : colors as any}
           style={styles.chapterButton}
         >
           {completion > 0 && completion < 100 && (
@@ -75,7 +76,7 @@ const ChaptersScreen: React.FC = () => {
           {isCompleted ? (
             <Ionicons name="checkmark" size={28} color="#ffffff" />
           ) : isLocked ? (
-            <Ionicons name="lock-closed" size={28} color="#9ca3af" />
+            <Ionicons name="lock-closed" size={28} color={DharmaColors.text.tertiary} />
           ) : (
             <Text style={styles.chapterNumberText}>{item.number}</Text>
           )}
@@ -91,7 +92,7 @@ const ChaptersScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Chapters</Text>
+        <Text style={styles.headerTitle}>Scriptures</Text>
       </View>
 
       <ScrollView 
@@ -108,7 +109,7 @@ const ChaptersScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: DharmaColors.background.primary,
   },
   header: {
     paddingHorizontal: 24,
@@ -118,8 +119,9 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 28,
-    fontWeight: '900',
-    color: '#4b5563',
+    fontWeight: '300',
+    color: DharmaColors.text.primary,
+    letterSpacing: 1,
   },
   scrollView: {
     flex: 1,
@@ -164,8 +166,8 @@ const styles = StyleSheet.create({
   },
   chapterLabel: {
     fontSize: 12,
-    fontWeight: 'bold',
-    color: '#4b5563',
+    fontWeight: '600',
+    color: DharmaColors.text.primary,
     marginTop: 8,
     textAlign: 'center',
     maxWidth: 100,

@@ -5,15 +5,20 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
 import HomeScreen from '../screens/HomeScreen';
-import ChaptersScreen from '../screens/ChaptersScreen';
-import StoriesScreen from '../screens/StoriesScreen';
+import WisdomHubScreen from '../screens/WisdomHubScreen';
+import FestivalCalendarScreen from '../screens/FestivalCalendarScreen';
 import AskKrishnaScreen from '../screens/AskKrishnaScreen';
-import LoginScreen from '../screens/LoginScreen';
 import ChapterDetailScreen from '../screens/ChapterDetailScreen';
 import VerseDetailScreen from '../screens/VerseDetailScreen';
+import PracticeDetailScreen from '../screens/PracticeDetailScreen';
+import DeityDetailScreen from '../screens/DeityDetailScreen';
+import PhilosophyDetailScreen from '../screens/PhilosophyDetailScreen';
+import ScriptureDetailScreen from '../screens/ScriptureDetailScreen';
+import BhagavadGitaChaptersScreen from '../screens/BhagavadGitaChaptersScreen';
+import ChapterReadingScreen from '../screens/ChapterReadingScreen';
 
-import { useAuth } from '../contexts/AuthContext';
 import { DharmaColors } from '../constants/colors';
+import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -26,26 +31,31 @@ const TabNavigator = () => {
           let iconName: any;
 
           if (route.name === 'Home') {
-            iconName = focused ? 'mic' : 'mic-outline';
-          } else if (route.name === 'Chapters') {
-            iconName = focused ? 'book' : 'book-outline';
-          } else if (route.name === 'Stories') {
-            iconName = focused ? 'headset' : 'headset-outline';
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Scriptures') {
+            iconName = focused ? 'library' : 'library-outline';
+          } else if (route.name === 'FestivalCalendar') {
+            iconName = focused ? 'calendar' : 'calendar-outline';
           } else if (route.name === 'Ask Krishna') {
             iconName = focused ? 'chatbubble' : 'chatbubble-outline';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: DharmaColors.primary[400],
-        tabBarInactiveTintColor: DharmaColors.text.tertiary,
+        tabBarActiveTintColor: DharmaDesignSystem.colors.primary.saffronSunset,
+        tabBarInactiveTintColor: DharmaDesignSystem.colors.neutrals.softAsh,
         tabBarStyle: {
-          backgroundColor: DharmaColors.background.secondary,
+          backgroundColor: DharmaDesignSystem.colors.neutrals.white,
           borderTopWidth: 1,
-          borderTopColor: DharmaColors.background.tertiary,
-          height: 80,
-          paddingBottom: 10,
-          paddingTop: 8,
+          borderTopColor: 'rgba(255, 107, 53, 0.12)',
+          height: DharmaDesignSystem.layout.tabBarHeight,
+          paddingBottom: DharmaDesignSystem.spacing.sm,
+          paddingTop: DharmaDesignSystem.spacing.sm,
+          shadowColor: 'rgba(255, 107, 53, 0.08)',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 1,
+          shadowRadius: 8,
+          elevation: 8,
         },
         headerShown: false,
       })}
@@ -53,17 +63,17 @@ const TabNavigator = () => {
       <Tab.Screen 
         name="Home" 
         component={HomeScreen}
-        options={{ tabBarLabel: 'Talk' }}
+        options={{ tabBarLabel: 'Home' }}
       />
       <Tab.Screen 
-        name="Chapters" 
-        component={ChaptersScreen}
-        options={{ tabBarLabel: 'Chapters' }}
+        name="Scriptures" 
+        component={WisdomHubScreen}
+        options={{ tabBarLabel: 'Learn' }}
       />
       <Tab.Screen 
-        name="Stories" 
-        component={StoriesScreen}
-        options={{ tabBarLabel: 'Stories' }}
+        name="FestivalCalendar" 
+        component={FestivalCalendarScreen}
+        options={{ tabBarLabel: 'Festivals' }}
       />
       <Tab.Screen 
         name="Ask Krishna" 
@@ -75,24 +85,18 @@ const TabNavigator = () => {
 };
 
 const AppNavigator = () => {
-  const { currentUser, loading } = useAuth();
-
-  if (loading) {
-    return null; // Or loading screen
-  }
-
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {currentUser ? (
-          <>
-            <Stack.Screen name="MainTabs" component={TabNavigator} />
-            <Stack.Screen name="ChapterDetail" component={ChapterDetailScreen} />
-            <Stack.Screen name="VerseDetail" component={VerseDetailScreen} />
-          </>
-        ) : (
-          <Stack.Screen name="Login" component={LoginScreen} />
-        )}
+        <Stack.Screen name="MainTabs" component={TabNavigator} />
+        <Stack.Screen name="ChapterDetail" component={ChapterDetailScreen} />
+        <Stack.Screen name="VerseDetail" component={VerseDetailScreen} />
+        <Stack.Screen name="PracticeDetail" component={PracticeDetailScreen} />
+        <Stack.Screen name="DeityDetail" component={DeityDetailScreen} />
+        <Stack.Screen name="PhilosophyDetail" component={PhilosophyDetailScreen} />
+        <Stack.Screen name="ScriptureDetail" component={ScriptureDetailScreen} />
+        <Stack.Screen name="BhagavadGitaChapters" component={BhagavadGitaChaptersScreen} />
+        <Stack.Screen name="ChapterReading" component={ChapterReadingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
