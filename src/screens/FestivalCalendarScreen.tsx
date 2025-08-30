@@ -13,6 +13,9 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaColors, NavigationColors } from '../constants/colors';
+import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
+import DharmaHeader from '../components/ui/DharmaHeader';
+import DharmaHeaderAction from '../components/ui/DharmaHeaderAction';
 import { 
   festivalData, 
   getTodaysFestivals, 
@@ -585,30 +588,28 @@ const FestivalCalendarScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Festivals</Text>
-        <View style={styles.headerControls}>
-          <TouchableOpacity
-            style={[styles.viewToggle, viewMode === 'cards' && styles.activeViewToggle]}
-            onPress={() => setViewMode('cards')}
-          >
-            <Ionicons name="grid" size={20} color={viewMode === 'cards' ? DharmaColors.text.inverse : DharmaColors.text.tertiary} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.viewToggle, viewMode === 'calendar' && styles.activeViewToggle]}
-            onPress={() => setViewMode('calendar')}
-          >
-            <Ionicons name="calendar" size={20} color={viewMode === 'calendar' ? DharmaColors.text.inverse : DharmaColors.text.tertiary} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.viewToggle, viewMode === 'list' && styles.activeViewToggle]}
-            onPress={() => setViewMode('list')}
-          >
-            <Ionicons name="list" size={20} color={viewMode === 'list' ? DharmaColors.text.inverse : DharmaColors.text.tertiary} />
-          </TouchableOpacity>
-        </View>
-      </View>
+      <DharmaHeader
+        title="Festivals"
+        rightActions={
+          <View style={styles.headerControls}>
+            <DharmaHeaderAction
+              iconName="grid"
+              onPress={() => setViewMode('cards')}
+              variant={viewMode === 'cards' ? 'primary' : 'default'}
+            />
+            <DharmaHeaderAction
+              iconName="calendar"
+              onPress={() => setViewMode('calendar')}
+              variant={viewMode === 'calendar' ? 'primary' : 'default'}
+            />
+            <DharmaHeaderAction
+              iconName="list"
+              onPress={() => setViewMode('list')}
+              variant={viewMode === 'list' ? 'primary' : 'default'}
+            />
+          </View>
+        }
+      />
 
       {/* Conditional Month Navigation - only for calendar view */}
       {viewMode === 'calendar' && (
@@ -643,6 +644,7 @@ const FestivalCalendarScreen: React.FC = () => {
         </View>
       )}
 
+      <View style={styles.contentSpacer} />
       {/* View Content */}
       {viewMode === 'cards' && renderCardsView()}
       {viewMode === 'calendar' && renderCalendarView()}
@@ -657,7 +659,7 @@ const FestivalCalendarScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: DharmaColors.background.primary,
+    backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
   },
   header: {
     flexDirection: 'row',
@@ -667,23 +669,12 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 16,
   },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: '300',
-    color: DharmaColors.text.primary,
-    letterSpacing: 1,
-  },
   headerControls: {
     flexDirection: 'row',
-    gap: 8,
+    gap: DharmaDesignSystem.spacing.sm,
   },
-  viewToggle: {
-    padding: 8,
-    borderRadius: 8,
-    backgroundColor: DharmaColors.background.secondary,
-  },
-  activeViewToggle: {
-    backgroundColor: DharmaColors.primary[500],
+  contentSpacer: {
+    height: DharmaDesignSystem.spacing.lg,
   },
   monthNavigation: {
     flexDirection: 'row',

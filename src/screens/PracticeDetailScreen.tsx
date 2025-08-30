@@ -36,7 +36,7 @@ const PracticeDetailScreen: React.FC<PracticeDetailScreenProps> = () => {
           <Ionicons 
             name="chevron-back" 
             size={24} 
-            color={DharmaDesignSystem.colors.neutrals.charcoalInk} 
+            color={DharmaDesignSystem.colors.neutrals.charcoalBlack} 
           />
         </TouchableOpacity>
         
@@ -71,7 +71,7 @@ const PracticeDetailScreen: React.FC<PracticeDetailScreenProps> = () => {
               <Ionicons 
                 name="book-outline" 
                 size={20} 
-                color={DharmaDesignSystem.colors.primary.saffronSunset} 
+                color={DharmaDesignSystem.colors.primary.deepSaffron} 
               />
               <Text style={styles.featureText}>Detailed practice instructions</Text>
             </View>
@@ -80,7 +80,7 @@ const PracticeDetailScreen: React.FC<PracticeDetailScreenProps> = () => {
               <Ionicons 
                 name="play-circle-outline" 
                 size={20} 
-                color={DharmaDesignSystem.colors.primary.saffronSunset} 
+                color={DharmaDesignSystem.colors.primary.deepSaffron} 
               />
               <Text style={styles.featureText}>Audio and video guides</Text>
             </View>
@@ -89,7 +89,7 @@ const PracticeDetailScreen: React.FC<PracticeDetailScreenProps> = () => {
               <Ionicons 
                 name="heart-outline" 
                 size={20} 
-                color={DharmaDesignSystem.colors.primary.saffronSunset} 
+                color={DharmaDesignSystem.colors.primary.deepSaffron} 
               />
               <Text style={styles.featureText}>Benefits and spiritual significance</Text>
             </View>
@@ -98,7 +98,7 @@ const PracticeDetailScreen: React.FC<PracticeDetailScreenProps> = () => {
               <Ionicons 
                 name="time-outline" 
                 size={20} 
-                color={DharmaDesignSystem.colors.primary.saffronSunset} 
+                color={DharmaDesignSystem.colors.primary.deepSaffron} 
               />
               <Text style={styles.featureText}>Time commitments and schedules</Text>
             </View>
@@ -112,7 +112,7 @@ const PracticeDetailScreen: React.FC<PracticeDetailScreenProps> = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: DharmaDesignSystem.colors.neutrals.creamCanvas,
+    backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
   },
   header: {
     flexDirection: 'row',
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     ...DharmaDesignSystem.typography.sizes.headingSM,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
   },
   headerSpacer: {
     width: 40, // Same width as back button for centering
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     ...DharmaDesignSystem.typography.sizes.headingMD,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     marginBottom: DharmaDesignSystem.spacing.md,
   },
   placeholderText: {
@@ -187,11 +187,11 @@ const styles = StyleSheet.create({
     backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,
     borderRadius: DharmaDesignSystem.borderRadius.medium,
     borderLeftWidth: 3,
-    borderLeftColor: DharmaDesignSystem.colors.primary.saffronSunset,
+    borderLeftColor: DharmaDesignSystem.colors.primary.deepSaffron,
   },
   featureText: {
     ...DharmaDesignSystem.typography.sizes.bodyMD,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     marginLeft: DharmaDesignSystem.spacing.sm,
   },
 });

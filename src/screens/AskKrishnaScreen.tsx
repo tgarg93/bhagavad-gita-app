@@ -14,6 +14,9 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaColors } from '../constants/colors';
+import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
+import DharmaHeader from '../components/ui/DharmaHeader';
+import DharmaHeaderAction from '../components/ui/DharmaHeaderAction';
 import { geminiService, GeminiMessage, GeminiChatSession } from '../services/geminiService';
 import { KRISHNA_PERSONA, ERROR_MESSAGES, RATE_LIMITS } from '../config/geminiConfig';
 
@@ -227,13 +230,18 @@ const AskKrishnaScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Ask Krishna</Text>
-        <TouchableOpacity onPress={clearChat} style={styles.clearButton}>
-          <Ionicons name="refresh" size={20} color={DharmaColors.text.tertiary} />
-        </TouchableOpacity>
-      </View>
+      <DharmaHeader
+        title="Ask Krishna"
+        rightActions={
+          <DharmaHeaderAction
+            iconName="refresh"
+            onPress={clearChat}
+            variant="subtle"
+          />
+        }
+      />
 
+      <View style={styles.contentSpacer} />
       <ScrollView 
         ref={scrollViewRef}
         style={styles.messagesContainer} 
@@ -302,24 +310,10 @@ const AskKrishnaScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: DharmaColors.background.primary,
+    backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingTop: 20,
-    paddingBottom: 16,
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: '300',
-    color: DharmaColors.text.primary,
-    letterSpacing: 1,
-  },
-  clearButton: {
-    padding: 8,
+  contentSpacer: {
+    height: DharmaDesignSystem.spacing.lg,
   },
   messagesContainer: {
     flex: 1,

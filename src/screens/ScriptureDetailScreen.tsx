@@ -27,7 +27,7 @@ const ScriptureDetailScreen: React.FC = () => {
           <Ionicons 
             name="chevron-back" 
             size={24} 
-            color={DharmaDesignSystem.colors.neutrals.charcoalInk} 
+            color={DharmaDesignSystem.colors.neutrals.charcoalBlack} 
           />
         </TouchableOpacity>
         
@@ -63,7 +63,7 @@ const ScriptureDetailScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: DharmaDesignSystem.colors.neutrals.creamCanvas,
+    backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
   },
   header: {
     flexDirection: 'row',
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     ...DharmaDesignSystem.typography.sizes.headingSM,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
   },
   headerSpacer: {
     width: 40,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     ...DharmaDesignSystem.typography.sizes.headingMD,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     marginBottom: DharmaDesignSystem.spacing.md,
   },
   placeholderText: {

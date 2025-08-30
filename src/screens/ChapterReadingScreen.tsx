@@ -92,10 +92,10 @@ const ChapterReadingScreen: React.FC = () => {
           {verse.difficulty && (
             <View style={[styles.difficultyIndicator, {
               backgroundColor: verse.difficulty === 'easy' 
-                ? DharmaDesignSystem.colors.primary.marigoldWarm
+                ? DharmaDesignSystem.colors.primary.turmericYellow
                 : verse.difficulty === 'medium'
-                ? DharmaDesignSystem.colors.sacred.krishnaBlue
-                : DharmaDesignSystem.colors.primary.saffronSunset
+                ? DharmaDesignSystem.colors.primary.peacockTeal
+                : DharmaDesignSystem.colors.primary.deepSaffron
             }]}>
               <Text style={styles.difficultyText}>
                 {verse.difficulty.toUpperCase()}
@@ -120,7 +120,7 @@ const ChapterReadingScreen: React.FC = () => {
           {/* Character Dialogue */}
           {verse.characterDialogue && (
             <View style={styles.dialogueBox}>
-              <Ionicons name="chatbubble-outline" size={16} color={DharmaDesignSystem.colors.sacred.krishnaBlue} />
+              <Ionicons name="chatbubble-outline" size={16} color={DharmaDesignSystem.colors.primary.peacockTeal} />
               <Text style={[styles.characterDialogue, { fontSize: getFontSize() }]}>
                 {verse.characterDialogue}
               </Text>
@@ -149,7 +149,7 @@ const ChapterReadingScreen: React.FC = () => {
 
           {/* Real Life Example */}
           <View style={styles.exampleBox}>
-            <Ionicons name="lightbulb-outline" size={16} color={DharmaDesignSystem.colors.primary.marigoldWarm} />
+            <Ionicons name="lightbulb-outline" size={16} color={DharmaDesignSystem.colors.primary.turmericYellow} />
             <Text style={[styles.realLifeExample, { fontSize: getFontSize() }]}>
               <Text style={styles.exampleLabel}>Real Life Example: </Text>
               {verse.realLifeExample}
@@ -188,7 +188,7 @@ const ChapterReadingScreen: React.FC = () => {
         <View style={styles.modalHeader}>
           <Text style={styles.modalTitle}>Key Words</Text>
           <TouchableOpacity onPress={toggleVocabulary}>
-            <Ionicons name="close" size={24} color={DharmaDesignSystem.colors.neutrals.charcoalInk} />
+            <Ionicons name="close" size={24} color={DharmaDesignSystem.colors.neutrals.charcoalBlack} />
           </TouchableOpacity>
         </View>
         
@@ -227,7 +227,7 @@ const ChapterReadingScreen: React.FC = () => {
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Ionicons name="chevron-back" size={24} color={DharmaDesignSystem.colors.neutrals.charcoalInk} />
+          <Ionicons name="chevron-back" size={24} color={DharmaDesignSystem.colors.neutrals.charcoalBlack} />
         </TouchableOpacity>
         
         <View style={styles.headerContent}>
@@ -246,7 +246,7 @@ const ChapterReadingScreen: React.FC = () => {
             <Ionicons 
               name={isAudioPlaying ? "pause" : "headset-outline"} 
               size={20} 
-              color={isAudioPlaying ? DharmaDesignSystem.colors.primary.saffronSunset : DharmaDesignSystem.colors.neutrals.softAsh} 
+              color={isAudioPlaying ? DharmaDesignSystem.colors.primary.deepSaffron : DharmaDesignSystem.colors.neutrals.softAsh} 
             />
           </TouchableOpacity>
           
@@ -257,7 +257,7 @@ const ChapterReadingScreen: React.FC = () => {
             <Ionicons 
               name={isPodcastPlaying ? "pause" : "radio-outline"} 
               size={20} 
-              color={isPodcastPlaying ? DharmaDesignSystem.colors.sacred.krishnaBlue : DharmaDesignSystem.colors.neutrals.softAsh} 
+              color={isPodcastPlaying ? DharmaDesignSystem.colors.primary.peacockTeal : DharmaDesignSystem.colors.neutrals.softAsh} 
             />
           </TouchableOpacity>
           
@@ -298,7 +298,7 @@ const ChapterReadingScreen: React.FC = () => {
 
           {/* Main Lesson */}
           <View style={styles.mainLessonContainer}>
-            <Ionicons name="star-outline" size={20} color={DharmaDesignSystem.colors.primary.marigoldWarm} />
+            <Ionicons name="star-outline" size={20} color={DharmaDesignSystem.colors.primary.turmericYellow} />
             <Text style={[styles.mainLessonText, { fontSize: getFontSize() }]}>
               <Text style={styles.mainLessonLabel}>Key Teaching: </Text>
               {chapter.mainLesson}
@@ -323,7 +323,7 @@ const ChapterReadingScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: DharmaDesignSystem.colors.neutrals.creamCanvas,
+    backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
   },
   loadingContainer: {
     flex: 1,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     ...DharmaDesignSystem.typography.sizes.headingSM,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
   },
   headerSubtitle: {
     ...DharmaDesignSystem.typography.sizes.caption,
@@ -407,11 +407,11 @@ const styles = StyleSheet.create({
     borderRadius: DharmaDesignSystem.borderRadius.large,
     marginBottom: DharmaDesignSystem.spacing.lg,
     borderLeftWidth: 4,
-    borderLeftColor: DharmaDesignSystem.colors.primary.marigoldWarm,
+    borderLeftColor: DharmaDesignSystem.colors.primary.turmericYellow,
   },
   storyHook: {
     ...DharmaDesignSystem.typography.sizes.bodyLG,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     lineHeight: 24,
     fontWeight: '500',
   },
@@ -430,14 +430,14 @@ const styles = StyleSheet.create({
   },
   mainLessonLabel: {
     fontWeight: '600',
-    color: DharmaDesignSystem.colors.primary.saffronSunset,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
   },
   versesContainer: {
     marginBottom: DharmaDesignSystem.spacing.xl,
   },
   versesTitle: {
     ...DharmaDesignSystem.typography.sizes.headingMD,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     marginBottom: DharmaDesignSystem.spacing.lg,
   },
   verseContainer: {
@@ -454,7 +454,7 @@ const styles = StyleSheet.create({
     marginBottom: DharmaDesignSystem.spacing.md,
   },
   verseNumberBadge: {
-    backgroundColor: DharmaDesignSystem.colors.primary.saffronSunset,
+    backgroundColor: DharmaDesignSystem.colors.primary.deepSaffron,
     width: 28,
     height: 28,
     borderRadius: 14,
@@ -494,7 +494,7 @@ const styles = StyleSheet.create({
     padding: DharmaDesignSystem.spacing.md,
     borderRadius: DharmaDesignSystem.borderRadius.medium,
     borderLeftWidth: 3,
-    borderLeftColor: DharmaDesignSystem.colors.sacred.krishnaBlue,
+    borderLeftColor: DharmaDesignSystem.colors.primary.peacockTeal,
   },
   dialogueBox: {
     flexDirection: 'row',
@@ -503,24 +503,24 @@ const styles = StyleSheet.create({
     padding: DharmaDesignSystem.spacing.md,
     borderRadius: DharmaDesignSystem.borderRadius.medium,
     borderLeftWidth: 3,
-    borderLeftColor: DharmaDesignSystem.colors.sacred.krishnaBlue,
+    borderLeftColor: DharmaDesignSystem.colors.primary.peacockTeal,
   },
   characterDialogue: {
     flex: 1,
     marginLeft: DharmaDesignSystem.spacing.sm,
     ...DharmaDesignSystem.typography.sizes.bodyMD,
-    color: DharmaDesignSystem.colors.sacred.krishnaBlue,
+    color: DharmaDesignSystem.colors.primary.peacockTeal,
     fontStyle: 'italic',
     lineHeight: 22,
   },
   childStory: {
     ...DharmaDesignSystem.typography.sizes.bodyLG,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     lineHeight: 26,
   },
   simpleExplanation: {
     ...DharmaDesignSystem.typography.sizes.bodyMD,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     lineHeight: 22,
   },
   exampleBox: {
@@ -537,7 +537,7 @@ const styles = StyleSheet.create({
   },
   exampleLabel: {
     fontWeight: '600',
-    color: DharmaDesignSystem.colors.primary.marigoldWarm,
+    color: DharmaDesignSystem.colors.primary.turmericYellow,
   },
   questionBox: {
     flexDirection: 'row',
@@ -557,13 +557,13 @@ const styles = StyleSheet.create({
   },
   sanskritVerse: {
     ...DharmaDesignSystem.typography.sizes.sacredQuote,
-    color: DharmaDesignSystem.colors.primary.turmericGold,
+    color: DharmaDesignSystem.colors.primary.turmericYellow,
     textAlign: 'center',
     lineHeight: 28,
   },
   englishTranslation: {
     ...DharmaDesignSystem.typography.sizes.bodyLG,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     lineHeight: 24,
   },
   verseAudioButton: {
@@ -591,7 +591,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: DharmaDesignSystem.spacing.sm,
     lineHeight: 20,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
   },
   activitiesContainer: {
     backgroundColor: 'rgba(255, 182, 39, 0.08)',
@@ -601,7 +601,7 @@ const styles = StyleSheet.create({
   },
   activitiesTitle: {
     ...DharmaDesignSystem.typography.sizes.headingSM,
-    color: DharmaDesignSystem.colors.primary.marigoldWarm,
+    color: DharmaDesignSystem.colors.primary.turmericYellow,
     marginBottom: DharmaDesignSystem.spacing.md,
   },
   activityItem: {
@@ -613,11 +613,11 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: DharmaDesignSystem.spacing.sm,
     lineHeight: 20,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
   },
   modalContainer: {
     flex: 1,
-    backgroundColor: DharmaDesignSystem.colors.neutrals.creamCanvas,
+    backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
   },
   modalHeader: {
     flexDirection: 'row',
@@ -629,7 +629,7 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     ...DharmaDesignSystem.typography.sizes.headingSM,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
   },
   vocabularyList: {
     flex: 1,
@@ -654,12 +654,12 @@ const styles = StyleSheet.create({
   },
   vocabularyWord: {
     ...DharmaDesignSystem.typography.sizes.headingSM,
-    color: DharmaDesignSystem.colors.primary.saffronSunset,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
     marginBottom: DharmaDesignSystem.spacing.xs,
   },
   vocabularyDefinition: {
     ...DharmaDesignSystem.typography.sizes.bodyMD,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     lineHeight: 20,
   },
 });

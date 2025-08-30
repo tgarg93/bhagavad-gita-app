@@ -2,57 +2,60 @@
 // Ancient wisdom meets modern design
 
 export const DharmaDesignSystem = {
-  // 🌈 Color Palette
+  // 🌈 Color Palette - Culturally Authentic Indian Design
   colors: {
-    // Primary Colors
+    // Primary Colors (Vibrant & Traditional)
     primary: {
-      saffronSunset: '#FF6B35',     // Primary CTA, highlights
-      turmericGold: '#F7931E',      // Secondary buttons, accents
-      marigoldWarm: '#FFB627',      // Success states, celebrations
+      deepSaffron: '#E65100',       // Primary CTA, warm vibrant culturally Indian
+      turmericYellow: '#FFC107',    // Energetic highlights, buttons & key states
+      peacockTeal: '#00796B',       // Rich grounding, traditional fabrics & jewel tones
+      indigoBlue: '#303F9F',        // Stability, trust, modern counterpoint
     },
     
-    // Sacred Colors (Cultural Touches)
+    // Sacred Colors (Cultural Authenticity)
     sacred: {
-      krishnaBlue: '#4A90E2',       // Trust, wisdom sections
       lotusPink: '#E91E63',         // Love, devotion elements
       sacredVermillion: '#DC143C',  // Important notifications, festivals
+      banyanGreen: '#388E3C',       // Success states, growth
+      warningRed: '#C62828',        // Alerts, important warnings
     },
     
-    // Neutrals (Modern Foundation)
+    // Neutrals (Cultural Foundation)
     neutrals: {
-      creamCanvas: '#FFF8F0',       // Primary background
+      sandstoneBeige: '#FAF3E0',    // Primary background, cultural warmth
       warmIvory: '#F5F1E8',         // Card backgrounds
-      charcoalInk: '#2C2C2C',       // Primary text
+      charcoalBlack: '#212121',     // Primary text, strong contrast
       softAsh: '#757575',           // Secondary text
       gentleMist: '#E8E8E8',        // Borders, dividers
       white: '#FFFFFF',             // Pure white
       black: '#000000',             // Pure black
     },
     
-    // Gradients
+    // Gradients (Cultural Richness)
     gradients: {
-      sunriseBlend: ['#FF6B35', '#F7931E'],      // Saffron to Turmeric
-      twilightWisdom: ['#4A90E2', '#E91E63'],    // Krishna Blue to Lotus Pink
-      goldenHour: ['#FFB627', '#FF6B35'],        // Marigold to Saffron
-      creamWarmth: ['#FFF8F0', '#F5F1E8'],       // Cream Canvas to Warm Ivory
+      sunriseBlend: ['#E65100', '#FFC107'],      // Deep Saffron to Turmeric
+      twilightWisdom: ['#00796B', '#E91E63'],    // Peacock Teal to Lotus Pink
+      goldenHour: ['#FFC107', '#E65100'],        // Turmeric to Deep Saffron
+      creamWarmth: ['#FAF3E0', '#F5F1E8'],       // Sandstone Beige to Warm Ivory
       sacredGlow: ['#DC143C', '#E91E63'],        // Vermillion to Lotus Pink
+      indigoDepth: ['#303F9F', '#00796B'],       // Indigo Blue to Peacock Teal
     },
     
     // Dark Mode Adaptation
     dark: {
       bgPrimary: '#1A1A1A',
       bgSecondary: '#2D2D2D',
-      textPrimary: '#F5F1E8',
-      accent: '#FFB627',
-      surface: '#2C2C2C',
+      textPrimary: '#FAF3E0',       // Sandstone Beige for readability
+      accent: '#FFC107',            // Turmeric Yellow
+      surface: '#212121',           // Charcoal Black
     },
     
-    // Semantic Colors
+    // Semantic Colors (Cultural Status Indicators)
     semantic: {
-      success: '#22C55E',           // Success green
-      warning: '#F59E0B',           // Warning amber
-      error: '#EF4444',             // Error red
-      info: '#3B82F6',              // Info blue
+      success: '#388E3C',           // Banyan Green
+      warning: '#FFC107',           // Turmeric Yellow
+      error: '#C62828',             // Warning Red
+      info: '#303F9F',              // Indigo Blue
     },
   },
 
@@ -271,7 +274,7 @@ export const createButtonStyle = (variant: 'primary' | 'secondary' | 'cultural' 
     case 'primary':
       return {
         ...baseStyle,
-        backgroundColor: DharmaDesignSystem.colors.primary.saffronSunset,
+        backgroundColor: DharmaDesignSystem.colors.primary.deepSaffron,
         ...DharmaDesignSystem.shadows.button,
       };
     case 'secondary':
@@ -279,12 +282,12 @@ export const createButtonStyle = (variant: 'primary' | 'secondary' | 'cultural' 
         ...baseStyle,
         backgroundColor: 'transparent',
         borderWidth: 2,
-        borderColor: DharmaDesignSystem.colors.primary.saffronSunset,
+        borderColor: DharmaDesignSystem.colors.primary.deepSaffron,
       };
     case 'cultural':
       return {
         ...baseStyle,
-        backgroundColor: DharmaDesignSystem.colors.sacred.krishnaBlue,
+        backgroundColor: DharmaDesignSystem.colors.primary.peacockTeal,
         borderRadius: DharmaDesignSystem.borderRadius.small,
         ...DharmaDesignSystem.shadows.cultural,
       };
@@ -311,9 +314,9 @@ export const createCardStyle = (variant: 'primary' | 'wisdom' | 'festival' | 'cu
     case 'primary':
       return {
         ...baseStyle,
-        backgroundColor: DharmaDesignSystem.colors.neutrals.creamCanvas,
+        backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,
         borderWidth: 1,
-        borderColor: 'rgba(255, 107, 53, 0.12)',
+        borderColor: 'rgba(230, 81, 0, 0.12)',
         ...DharmaDesignSystem.shadows.soft,
       };
     case 'wisdom':
@@ -321,13 +324,13 @@ export const createCardStyle = (variant: 'primary' | 'wisdom' | 'festival' | 'cu
         ...baseStyle,
         backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,
         borderLeftWidth: 4,
-        borderLeftColor: DharmaDesignSystem.colors.primary.saffronSunset,
+        borderLeftColor: DharmaDesignSystem.colors.primary.deepSaffron,
         borderRadius: DharmaDesignSystem.borderRadius.medium,
       };
     case 'festival':
       return {
         ...baseStyle,
-        backgroundColor: DharmaDesignSystem.colors.primary.marigoldWarm,
+        backgroundColor: DharmaDesignSystem.colors.primary.turmericYellow,
         borderRadius: DharmaDesignSystem.borderRadius.xLarge,
       };
     case 'cultural':
@@ -335,7 +338,7 @@ export const createCardStyle = (variant: 'primary' | 'wisdom' | 'festival' | 'cu
         ...baseStyle,
         backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,
         borderWidth: 2,
-        borderColor: DharmaDesignSystem.colors.sacred.krishnaBlue,
+        borderColor: DharmaDesignSystem.colors.primary.peacockTeal,
         ...DharmaDesignSystem.shadows.cultural,
       };
     default:
@@ -348,7 +351,7 @@ export const createTextStyle = (variant: keyof typeof DharmaDesignSystem.typogra
   const style = DharmaDesignSystem.typography.sizes[variant];
   return {
     ...style,
-    color: color || DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: color || DharmaDesignSystem.colors.neutrals.charcoalBlack,
   };
 };
 

@@ -42,16 +42,16 @@ const TabNavigator = () => {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: DharmaDesignSystem.colors.primary.saffronSunset,
+        tabBarActiveTintColor: DharmaDesignSystem.colors.primary.deepSaffron,
         tabBarInactiveTintColor: DharmaDesignSystem.colors.neutrals.softAsh,
         tabBarStyle: {
           backgroundColor: DharmaDesignSystem.colors.neutrals.white,
           borderTopWidth: 1,
-          borderTopColor: 'rgba(255, 107, 53, 0.12)',
+          borderTopColor: 'rgba(230, 81, 0, 0.12)',
           height: DharmaDesignSystem.layout.tabBarHeight,
           paddingBottom: DharmaDesignSystem.spacing.sm,
           paddingTop: DharmaDesignSystem.spacing.sm,
-          shadowColor: 'rgba(255, 107, 53, 0.08)',
+          shadowColor: 'rgba(230, 81, 0, 0.08)',
           shadowOffset: { width: 0, height: -2 },
           shadowOpacity: 1,
           shadowRadius: 8,

@@ -16,6 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DharmaColors } from '../constants/colors';
 import { DharmaDesignSystem, createTextStyle, createGradientColors } from '../constants/DharmaDesignSystem';
+import DharmaSearchHeader from '../components/ui/DharmaSearchHeader';
 import { getContentSections, getFeaturedContent, searchContent } from '../data/contentAggregator';
 import { ContentSection, ContentCard, ContentCategory } from '../types/contentTypes';
 
@@ -88,9 +89,9 @@ const WisdomHubScreen: React.FC = () => {
   const renderContentCard = ({ item }: { item: ContentCard }) => {
     const getDifficultyColor = (difficulty: string) => {
       switch (difficulty) {
-        case 'beginner': return DharmaDesignSystem.colors.primary.marigoldWarm;
-        case 'intermediate': return DharmaDesignSystem.colors.sacred.krishnaBlue;
-        case 'advanced': return DharmaDesignSystem.colors.primary.saffronSunset;
+        case 'beginner': return DharmaDesignSystem.colors.primary.turmericYellow;
+        case 'intermediate': return DharmaDesignSystem.colors.primary.peacockTeal;
+        case 'advanced': return DharmaDesignSystem.colors.primary.deepSaffron;
         default: return DharmaDesignSystem.colors.neutrals.softAsh;
       }
     };
@@ -207,7 +208,7 @@ const WisdomHubScreen: React.FC = () => {
             <Ionicons 
               name={section.icon as any} 
               size={24} 
-              color={DharmaDesignSystem.colors.primary.saffronSunset} 
+              color={DharmaDesignSystem.colors.primary.deepSaffron} 
               style={styles.sectionIcon}
             />
             <View>
@@ -221,7 +222,7 @@ const WisdomHubScreen: React.FC = () => {
             onPress={() => handleViewAll(section)}
           >
             <Text style={styles.viewAllText}>View All</Text>
-            <Ionicons name="chevron-forward" size={16} color={DharmaDesignSystem.colors.primary.saffronSunset} />
+            <Ionicons name="chevron-forward" size={16} color={DharmaDesignSystem.colors.primary.deepSaffron} />
           </TouchableOpacity>
         </View>
 
@@ -263,49 +264,19 @@ const WisdomHubScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.headerContent}>
-          <View style={styles.headerTextContainer}>
-            <Text style={styles.headerTitle}>Dharma Wisdom</Text>
-            <Text style={styles.headerSubtitle}>Your journey to spiritual understanding</Text>
-          </View>
-        </View>
-      </View>
-
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <View style={styles.searchInputContainer}>
-          <Ionicons 
-            name="search" 
-            size={20} 
-            color={DharmaDesignSystem.colors.neutrals.softAsh} 
-            style={styles.searchIcon}
-          />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search scriptures, festivals, deities..."
-            placeholderTextColor={DharmaDesignSystem.colors.neutrals.softAsh}
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            returnKeyType="search"
-          />
-          {searchQuery.length > 0 && (
-            <TouchableOpacity 
-              onPress={() => setSearchQuery('')}
-              style={styles.clearButton}
-            >
-              <Ionicons name="close-circle" size={20} color={DharmaDesignSystem.colors.neutrals.softAsh} />
-            </TouchableOpacity>
-          )}
-        </View>
-      </View>
+      <DharmaSearchHeader
+        title="Learn"
+        searchPlaceholder="Search scriptures, festivals, deities..."
+        searchValue={searchQuery}
+        onSearchChange={setSearchQuery}
+      />
 
       <ScrollView 
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
+        <View style={styles.contentSpacer} />
         {/* Search Results or Regular Content */}
         {isSearching ? (
           searchResults.length > 0 ? (
@@ -361,64 +332,16 @@ const WisdomHubScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: DharmaDesignSystem.colors.neutrals.creamCanvas,
-  },
-  header: {
-    paddingHorizontal: DharmaDesignSystem.spacing.lg,
-    paddingTop: DharmaDesignSystem.spacing.md,
-    paddingBottom: DharmaDesignSystem.spacing.md,
-    alignItems: 'center',
-  },
-  headerContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  headerTextContainer: {
-    alignItems: 'center',
-  },
-  headerTitle: {
-    ...DharmaDesignSystem.typography.sizes.headingLG,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
-    letterSpacing: 1,
-    marginBottom: DharmaDesignSystem.spacing.xs / 2,
-  },
-  headerSubtitle: {
-    ...DharmaDesignSystem.typography.sizes.bodySM,
-    color: DharmaDesignSystem.colors.neutrals.softAsh,
-    letterSpacing: 0.5,
-  },
-  searchContainer: {
-    paddingHorizontal: DharmaDesignSystem.spacing.lg,
-    paddingBottom: DharmaDesignSystem.spacing.md,
-  },
-  searchInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,
-    borderRadius: DharmaDesignSystem.borderRadius.medium,
-    paddingHorizontal: DharmaDesignSystem.spacing.md,
-    paddingVertical: DharmaDesignSystem.spacing.md,
-    borderWidth: 1,
-    borderColor: DharmaDesignSystem.colors.neutrals.gentleMist,
-    ...DharmaDesignSystem.shadows.soft,
-  },
-  searchIcon: {
-    marginRight: DharmaDesignSystem.spacing.sm,
-  },
-  searchInput: {
-    flex: 1,
-    ...DharmaDesignSystem.typography.sizes.bodyMD,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
-  },
-  clearButton: {
-    padding: DharmaDesignSystem.spacing.xs,
+    backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
   },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
     paddingBottom: DharmaDesignSystem.spacing.xl,
+  },
+  contentSpacer: {
+    height: DharmaDesignSystem.spacing.lg,
   },
   section: {
     marginBottom: DharmaDesignSystem.spacing.xl,
@@ -440,7 +363,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     ...DharmaDesignSystem.typography.sizes.headingMD,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     marginBottom: DharmaDesignSystem.spacing.xs / 2,
   },
   sectionDescription: {
@@ -460,7 +383,7 @@ const styles = StyleSheet.create({
   },
   viewAllText: {
     ...DharmaDesignSystem.typography.sizes.navText,
-    color: DharmaDesignSystem.colors.primary.saffronSunset,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
     marginRight: DharmaDesignSystem.spacing.xs,
   },
   cardsContainer: {
@@ -532,7 +455,7 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: '100%',
-    backgroundColor: DharmaDesignSystem.colors.primary.marigoldWarm,
+    backgroundColor: DharmaDesignSystem.colors.primary.turmericYellow,
     borderRadius: 2,
   },
   progressText: {
@@ -546,13 +469,13 @@ const styles = StyleSheet.create({
   cardTitle: {
     ...DharmaDesignSystem.typography.sizes.headingSM,
     fontWeight: '600',
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     marginBottom: DharmaDesignSystem.spacing.xs,
     lineHeight: 22,
   },
   cardSanskrit: {
     ...DharmaDesignSystem.typography.sizes.sacredSmall,
-    color: DharmaDesignSystem.colors.primary.turmericGold,
+    color: DharmaDesignSystem.colors.primary.turmericYellow,
     marginBottom: DharmaDesignSystem.spacing.sm,
     fontSize: 13,
   },
@@ -584,7 +507,7 @@ const styles = StyleSheet.create({
   },
   tagText: {
     ...DharmaDesignSystem.typography.sizes.overline,
-    color: DharmaDesignSystem.colors.primary.saffronSunset,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
     fontSize: 10,
   },
   cardMeta: {
@@ -610,7 +533,7 @@ const styles = StyleSheet.create({
   },
   searchResultsTitle: {
     ...DharmaDesignSystem.typography.sizes.headingSM,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     paddingHorizontal: DharmaDesignSystem.spacing.lg,
     marginBottom: DharmaDesignSystem.spacing.md,
   },
@@ -621,7 +544,7 @@ const styles = StyleSheet.create({
   },
   noResultsText: {
     ...DharmaDesignSystem.typography.sizes.bodyLG,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     marginTop: DharmaDesignSystem.spacing.md,
     marginBottom: DharmaDesignSystem.spacing.sm,
     textAlign: 'center',

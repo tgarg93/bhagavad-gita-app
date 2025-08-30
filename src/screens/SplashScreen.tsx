@@ -40,9 +40,9 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onAnimationComplete }) => {
       <Animated.View style={[styles.backgroundContainer, { opacity: backgroundOpacity }]}>
         <LinearGradient
           colors={[
-            DharmaDesignSystem.colors.neutrals.creamCanvas,
+            DharmaDesignSystem.colors.neutrals.sandstoneBeige,
             DharmaDesignSystem.colors.neutrals.warmIvory,
-            DharmaDesignSystem.colors.neutrals.creamCanvas,
+            DharmaDesignSystem.colors.neutrals.sandstoneBeige,
           ]}
           style={styles.background}
           start={{ x: 0, y: 0 }}
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     ...DharmaDesignSystem.typography.sizes.headingXL,
     fontSize: 42,
     fontWeight: '300',
-    color: DharmaDesignSystem.colors.primary.saffronSunset,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
     letterSpacing: 3,
     textAlign: 'center',
     marginBottom: DharmaDesignSystem.spacing.sm,
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: DharmaDesignSystem.colors.primary.turmericGold,
+    backgroundColor: DharmaDesignSystem.colors.primary.turmericYellow,
     opacity: 0.6,
   },
 });

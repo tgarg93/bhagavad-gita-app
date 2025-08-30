@@ -34,9 +34,9 @@ const BhagavadGitaChaptersScreen: React.FC = () => {
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'easy': return DharmaDesignSystem.colors.primary.marigoldWarm;
-      case 'medium': return DharmaDesignSystem.colors.sacred.krishnaBlue;
-      case 'advanced': return DharmaDesignSystem.colors.primary.saffronSunset;
+      case 'easy': return DharmaDesignSystem.colors.primary.turmericYellow;
+      case 'medium': return DharmaDesignSystem.colors.primary.peacockTeal;
+      case 'advanced': return DharmaDesignSystem.colors.primary.deepSaffron;
       default: return DharmaDesignSystem.colors.neutrals.softAsh;
     }
   };
@@ -101,14 +101,14 @@ const BhagavadGitaChaptersScreen: React.FC = () => {
           {/* Reading Time & Audio Info */}
           <View style={styles.metaInfo}>
             <View style={styles.readingTime}>
-              <Ionicons name="time-outline" size={16} color={DharmaDesignSystem.colors.primary.saffronSunset} />
+              <Ionicons name="time-outline" size={16} color={DharmaDesignSystem.colors.primary.deepSaffron} />
               <Text style={styles.timeText}>
                 {chapter.estimatedReadingTime.child}
               </Text>
             </View>
             
             <View style={styles.audioInfo}>
-              <Ionicons name="volume-high-outline" size={16} color={DharmaDesignSystem.colors.sacred.krishnaBlue} />
+              <Ionicons name="volume-high-outline" size={16} color={DharmaDesignSystem.colors.primary.peacockTeal} />
               <Text style={styles.audioText}>{chapter.estimatedReadingTime.audio}</Text>
             </View>
           </View>
@@ -124,7 +124,7 @@ const BhagavadGitaChaptersScreen: React.FC = () => {
             </TouchableOpacity>
             
             <TouchableOpacity style={styles.audioButton}>
-              <Ionicons name="headset-outline" size={18} color={DharmaDesignSystem.colors.sacred.krishnaBlue} />
+              <Ionicons name="headset-outline" size={18} color={DharmaDesignSystem.colors.primary.peacockTeal} />
               <Text style={styles.audioButtonText}>Listen</Text>
             </TouchableOpacity>
           </View>
@@ -144,7 +144,7 @@ const BhagavadGitaChaptersScreen: React.FC = () => {
           <Ionicons 
             name="chevron-back" 
             size={24} 
-            color={DharmaDesignSystem.colors.neutrals.charcoalInk} 
+            color={DharmaDesignSystem.colors.neutrals.charcoalBlack} 
           />
         </TouchableOpacity>
         
@@ -181,7 +181,7 @@ const BhagavadGitaChaptersScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: DharmaDesignSystem.colors.neutrals.creamCanvas,
+    backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
   },
   header: {
     flexDirection: 'row',
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     ...DharmaDesignSystem.typography.sizes.headingSM,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
   },
   headerSubtitle: {
     ...DharmaDesignSystem.typography.sizes.caption,
@@ -218,11 +218,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 182, 39, 0.08)',
     borderRadius: DharmaDesignSystem.borderRadius.medium,
     borderLeftWidth: 4,
-    borderLeftColor: DharmaDesignSystem.colors.primary.marigoldWarm,
+    borderLeftColor: DharmaDesignSystem.colors.primary.turmericYellow,
   },
   introText: {
     ...DharmaDesignSystem.typography.sizes.bodySM,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     lineHeight: 20,
   },
   chaptersContainer: {
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: DharmaDesignSystem.spacing.sm,
     left: DharmaDesignSystem.spacing.sm,
-    backgroundColor: DharmaDesignSystem.colors.primary.saffronSunset,
+    backgroundColor: DharmaDesignSystem.colors.primary.deepSaffron,
     width: 32,
     height: 32,
     borderRadius: 16,
@@ -284,23 +284,23 @@ const styles = StyleSheet.create({
   },
   englishTitle: {
     ...DharmaDesignSystem.typography.sizes.headingSM,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     marginBottom: DharmaDesignSystem.spacing.xs / 2,
   },
   childFriendlyTitle: {
     ...DharmaDesignSystem.typography.sizes.bodyLG,
-    color: DharmaDesignSystem.colors.primary.saffronSunset,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
     fontWeight: '600',
     marginBottom: DharmaDesignSystem.spacing.xs,
   },
   sanskritTitle: {
     ...DharmaDesignSystem.typography.sizes.sacredSmall,
-    color: DharmaDesignSystem.colors.primary.turmericGold,
+    color: DharmaDesignSystem.colors.primary.turmericYellow,
     marginBottom: DharmaDesignSystem.spacing.md,
   },
   mainLesson: {
     ...DharmaDesignSystem.typography.sizes.bodyMD,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     lineHeight: 22,
     marginBottom: DharmaDesignSystem.spacing.md,
   },
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
   },
   timeText: {
     ...DharmaDesignSystem.typography.sizes.caption,
-    color: DharmaDesignSystem.colors.primary.saffronSunset,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
     marginLeft: DharmaDesignSystem.spacing.xs,
     fontWeight: '500',
   },
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
   },
   audioText: {
     ...DharmaDesignSystem.typography.sizes.caption,
-    color: DharmaDesignSystem.colors.sacred.krishnaBlue,
+    color: DharmaDesignSystem.colors.primary.peacockTeal,
     marginLeft: DharmaDesignSystem.spacing.xs,
     fontWeight: '500',
   },
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: DharmaDesignSystem.colors.primary.saffronSunset,
+    backgroundColor: DharmaDesignSystem.colors.primary.deepSaffron,
     paddingVertical: DharmaDesignSystem.spacing.sm,
     borderRadius: DharmaDesignSystem.borderRadius.medium,
     ...DharmaDesignSystem.shadows.button,
@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'transparent',
     borderWidth: 2,
-    borderColor: DharmaDesignSystem.colors.sacred.krishnaBlue,
+    borderColor: DharmaDesignSystem.colors.primary.peacockTeal,
     paddingVertical: DharmaDesignSystem.spacing.sm,
     borderRadius: DharmaDesignSystem.borderRadius.medium,
   },
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
   },
   audioButtonText: {
     ...DharmaDesignSystem.typography.sizes.buttonText,
-    color: DharmaDesignSystem.colors.sacred.krishnaBlue,
+    color: DharmaDesignSystem.colors.primary.peacockTeal,
     marginLeft: DharmaDesignSystem.spacing.xs,
   },
   cardSeparator: {

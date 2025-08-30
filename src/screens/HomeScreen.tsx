@@ -82,18 +82,11 @@ const HomeScreen: React.FC = () => {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.headerContent}>
-            <Text style={styles.appTitle}>Dharma</Text>
-          </View>
-        </View>
-
-        {/* Daily Wisdom Card - Centered */}
+        {/* Daily Wisdom Card - Top Positioned */}
         <View style={styles.wisdomContainer}>
           <View style={styles.wisdomCard}>
             <TouchableOpacity onPress={refreshInsight} style={styles.refreshButton}>
-              <Ionicons name="refresh" size={18} color={DharmaDesignSystem.colors.primary.saffronSunset} />
+              <Ionicons name="refresh" size={18} color={DharmaDesignSystem.colors.primary.deepSaffron} />
             </TouchableOpacity>
             
             <View style={styles.wisdomContent}>
@@ -121,7 +114,7 @@ const HomeScreen: React.FC = () => {
           <View style={styles.festivalsHeader}>
             <Text style={styles.festivalsTitle}>Upcoming festivals</Text>
             <TouchableOpacity onPress={navigateToFestivals} style={styles.viewAllButton}>
-              <Ionicons name="chevron-forward" size={16} color={DharmaDesignSystem.colors.sacred.krishnaBlue} />
+              <Ionicons name="chevron-forward" size={16} color={DharmaDesignSystem.colors.primary.peacockTeal} />
             </TouchableOpacity>
           </View>
           
@@ -150,7 +143,7 @@ const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: DharmaDesignSystem.colors.neutrals.creamCanvas,
+    backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
   },
   scrollView: {
     flex: 1,
@@ -158,35 +151,18 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
   },
-  header: {
-    paddingHorizontal: DharmaDesignSystem.spacing.xl,
-    paddingTop: DharmaDesignSystem.spacing.lg,
-    paddingBottom: DharmaDesignSystem.spacing.lg,
-    alignItems: 'center',
-  },
-  headerContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  appTitle: {
-    ...DharmaDesignSystem.typography.sizes.headingXL,
-    fontWeight: '300',
-    color: DharmaDesignSystem.colors.primary.saffronSunset,
-    letterSpacing: 2,
-  },
   wisdomContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     paddingHorizontal: DharmaDesignSystem.spacing.lg,
-    paddingVertical: DharmaDesignSystem.spacing.xxl,
+    paddingTop: DharmaDesignSystem.spacing.xl,
   },
   wisdomCard: {
     backgroundColor: DharmaDesignSystem.colors.neutrals.white,
     borderRadius: DharmaDesignSystem.borderRadius.xLarge,
     padding: DharmaDesignSystem.spacing.xl,
     borderWidth: 2,
-    borderColor: 'rgba(255, 107, 53, 0.12)',
+    borderColor: 'rgba(230, 81, 0, 0.12)',
     ...DharmaDesignSystem.shadows.cultural,
     position: 'relative',
     // Add subtle gradient background
@@ -207,7 +183,7 @@ const styles = StyleSheet.create({
   },
   sanskritText: {
     ...DharmaDesignSystem.typography.sizes.sacredQuote,
-    color: DharmaDesignSystem.colors.primary.turmericGold,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
     textAlign: 'center',
     marginBottom: DharmaDesignSystem.spacing.md,
     letterSpacing: 1,
@@ -224,21 +200,21 @@ const styles = StyleSheet.create({
   translationText: {
     ...DharmaDesignSystem.typography.sizes.sacredSmall,
     fontWeight: '400',
-    color: DharmaDesignSystem.colors.sacred.krishnaBlue,
+    color: DharmaDesignSystem.colors.primary.peacockTeal,
     textAlign: 'center',
     marginBottom: DharmaDesignSystem.spacing.xl,
   },
   meaningText: {
     ...DharmaDesignSystem.typography.sizes.bodyMD,
     fontWeight: '400',
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     textAlign: 'center',
     marginBottom: DharmaDesignSystem.spacing.xxl,
   },
   sourceText: {
     ...DharmaDesignSystem.typography.sizes.caption,
     fontWeight: '600',
-    color: DharmaDesignSystem.colors.primary.saffronSunset,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
     textAlign: 'center',
     letterSpacing: 1,
     textTransform: 'uppercase',
@@ -262,7 +238,7 @@ const styles = StyleSheet.create({
   },
   festivalsTitle: {
     ...DharmaDesignSystem.typography.sizes.headingSM,
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     letterSpacing: 0.5,
   },
   viewAllButton: {
@@ -288,11 +264,11 @@ const styles = StyleSheet.create({
   festivalDay: {
     ...DharmaDesignSystem.typography.sizes.bodyLG,
     fontWeight: '700',
-    color: DharmaDesignSystem.colors.primary.marigoldWarm,
+    color: DharmaDesignSystem.colors.primary.turmericYellow,
   },
   festivalMonth: {
     ...DharmaDesignSystem.typography.sizes.overline,
-    color: DharmaDesignSystem.colors.primary.turmericGold,
+    color: DharmaDesignSystem.colors.primary.turmericYellow,
     fontSize: 10,
   },
   festivalDetails: {
@@ -301,7 +277,7 @@ const styles = StyleSheet.create({
   festivalName: {
     ...DharmaDesignSystem.typography.sizes.bodyMD,
     fontWeight: '600',
-    color: DharmaDesignSystem.colors.neutrals.charcoalInk,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     marginBottom: DharmaDesignSystem.spacing.xs / 2,
   },
   festivalSignificance: {
