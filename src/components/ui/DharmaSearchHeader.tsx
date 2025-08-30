@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../../constants/DharmaDesignSystem';
 
@@ -20,8 +21,14 @@ const DharmaSearchHeader: React.FC<DharmaSearchHeaderProps> = ({
   onSearchChange,
   rightActions,
 }) => {
+  const [isFocused, setIsFocused] = useState(false);
   return (
-    <View style={styles.header}>
+    <LinearGradient
+      colors={DharmaDesignSystem.colors.gradients.warmIvory}
+      style={styles.header}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 1 }}
+    >
       <View style={styles.headerContent}>
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerTitle}>{title}</Text>
@@ -38,11 +45,14 @@ const DharmaSearchHeader: React.FC<DharmaSearchHeaderProps> = ({
       </View>
       
       <View style={styles.searchContainer}>
-        <View style={styles.searchInputContainer}>
+        <View style={[
+          styles.searchInputContainer,
+          isFocused && styles.searchInputContainerFocused
+        ]}>
           <Ionicons 
             name="search" 
             size={20} 
-            color={DharmaDesignSystem.colors.neutrals.softAsh} 
+            color={isFocused ? DharmaDesignSystem.colors.primary.deepSaffron : DharmaDesignSystem.colors.neutrals.softAsh} 
             style={styles.searchIcon}
           />
           <TextInput
@@ -51,26 +61,27 @@ const DharmaSearchHeader: React.FC<DharmaSearchHeaderProps> = ({
             placeholderTextColor={DharmaDesignSystem.colors.neutrals.softAsh}
             value={searchValue}
             onChangeText={onSearchChange}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             returnKeyType="search"
           />
         </View>
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
     paddingTop: DharmaDesignSystem.spacing.lg,
     paddingBottom: DharmaDesignSystem.spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(230, 81, 0, 0.12)',
-    shadowColor: 'rgba(230, 81, 0, 0.08)',
-    shadowOffset: { width: 0, height: 2 },
+    borderBottomColor: 'rgba(230, 81, 0, 0.15)',
+    shadowColor: 'rgba(230, 81, 0, 0.12)',
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowRadius: 6,
+    elevation: 4,
   },
   headerContent: {
     flexDirection: 'row',
@@ -117,6 +128,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 4,
     elevation: 2,
+  },
+  searchInputContainerFocused: {
+    borderColor: DharmaDesignSystem.colors.primary.deepSaffron,
+    borderWidth: 2,
+    backgroundColor: 'rgba(255, 248, 240, 0.95)',
+    shadowColor: 'rgba(230, 81, 0, 0.15)',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    elevation: 6,
   },
   searchIcon: {
     marginRight: DharmaDesignSystem.spacing.sm,

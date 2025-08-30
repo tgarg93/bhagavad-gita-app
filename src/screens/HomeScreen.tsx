@@ -85,8 +85,12 @@ const HomeScreen: React.FC = () => {
         {/* Daily Wisdom Card - Top Positioned */}
         <View style={styles.wisdomContainer}>
           <View style={styles.wisdomCard}>
-            <TouchableOpacity onPress={refreshInsight} style={styles.refreshButton}>
-              <Ionicons name="refresh" size={18} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+            <TouchableOpacity 
+              onPress={refreshInsight} 
+              style={styles.refreshButton}
+              activeOpacity={1}
+            >
+              <Ionicons name="refresh" size={16} color={DharmaDesignSystem.colors.primary.deepSaffron} />
             </TouchableOpacity>
             
             <View style={styles.wisdomContent}>
@@ -152,10 +156,9 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   wisdomContainer: {
-    flex: 1,
-    justifyContent: 'flex-start',
     paddingHorizontal: DharmaDesignSystem.spacing.lg,
-    paddingTop: DharmaDesignSystem.spacing.xl,
+    paddingTop: DharmaDesignSystem.spacing.lg,
+    marginBottom: DharmaDesignSystem.spacing.sm,
   },
   wisdomCard: {
     backgroundColor: DharmaDesignSystem.colors.neutrals.white,
@@ -172,10 +175,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: DharmaDesignSystem.spacing.md,
     right: DharmaDesignSystem.spacing.md,
-    padding: DharmaDesignSystem.spacing.sm,
+    padding: DharmaDesignSystem.spacing.xs,
     zIndex: 1,
-    backgroundColor: 'rgba(255, 107, 53, 0.08)',
-    borderRadius: DharmaDesignSystem.borderRadius.circle,
+    opacity: 0.6,
   },
   wisdomContent: {
     alignItems: 'center',
@@ -209,7 +211,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     textAlign: 'center',
-    marginBottom: DharmaDesignSystem.spacing.xxl,
+    marginBottom: DharmaDesignSystem.spacing.lg,
   },
   sourceText: {
     ...DharmaDesignSystem.typography.sizes.caption,
@@ -222,8 +224,8 @@ const styles = StyleSheet.create({
   festivalsCard: {
     backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,
     marginHorizontal: DharmaDesignSystem.spacing.lg,
-    marginTop: DharmaDesignSystem.spacing.xl,
-    marginBottom: DharmaDesignSystem.spacing.xxl,
+    marginTop: DharmaDesignSystem.spacing.sm,
+    marginBottom: DharmaDesignSystem.spacing.xl,
     borderRadius: DharmaDesignSystem.borderRadius.large,
     padding: DharmaDesignSystem.spacing.lg,
     borderWidth: 1,

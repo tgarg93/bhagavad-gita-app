@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../../constants/DharmaDesignSystem';
 
@@ -19,7 +20,12 @@ const DharmaHeader: React.FC<DharmaHeaderProps> = ({
   rightActions,
 }) => {
   return (
-    <View style={styles.header}>
+    <LinearGradient
+      colors={DharmaDesignSystem.colors.gradients.creamWarmth}
+      style={styles.header}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 1 }}
+    >
       <View style={styles.headerContent}>
         {showBackButton && (
           <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
@@ -44,22 +50,21 @@ const DharmaHeader: React.FC<DharmaHeaderProps> = ({
           </View>
         )}
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
     paddingTop: DharmaDesignSystem.spacing.lg,
     paddingBottom: DharmaDesignSystem.spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(230, 81, 0, 0.12)',
-    shadowColor: 'rgba(230, 81, 0, 0.08)',
-    shadowOffset: { width: 0, height: 2 },
+    borderBottomColor: 'rgba(230, 81, 0, 0.15)',
+    shadowColor: 'rgba(230, 81, 0, 0.12)',
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowRadius: 6,
+    elevation: 4,
   },
   headerContent: {
     flexDirection: 'row',

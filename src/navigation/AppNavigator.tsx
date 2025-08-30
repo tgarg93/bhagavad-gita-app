@@ -2,7 +2,9 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import HomeScreen from '../screens/HomeScreen';
 import WisdomHubScreen from '../screens/WisdomHubScreen';
@@ -31,28 +33,41 @@ const TabNavigator = () => {
           let iconName: any;
 
           if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
+            iconName = 'home-outline';
           } else if (route.name === 'Scriptures') {
-            iconName = focused ? 'library' : 'library-outline';
+            iconName = 'library-outline';
           } else if (route.name === 'FestivalCalendar') {
-            iconName = focused ? 'calendar' : 'calendar-outline';
+            iconName = 'calendar-outline';
           } else if (route.name === 'Ask Krishna') {
-            iconName = focused ? 'chatbubble' : 'chatbubble-outline';
+            iconName = 'chatbubble-outline';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: DharmaDesignSystem.colors.primary.deepSaffron,
         tabBarInactiveTintColor: DharmaDesignSystem.colors.neutrals.softAsh,
+        tabBarBackground: () => (
+          <LinearGradient
+            colors={DharmaDesignSystem.colors.gradients.creamWarmth}
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 0,
+              height: DharmaDesignSystem.layout.tabBarHeight,
+            }}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+          />
+        ),
         tabBarStyle: {
-          backgroundColor: DharmaDesignSystem.colors.neutrals.white,
           borderTopWidth: 1,
-          borderTopColor: 'rgba(230, 81, 0, 0.12)',
+          borderTopColor: 'rgba(230, 81, 0, 0.15)',
           height: DharmaDesignSystem.layout.tabBarHeight,
           paddingBottom: DharmaDesignSystem.spacing.sm,
           paddingTop: DharmaDesignSystem.spacing.sm,
-          shadowColor: 'rgba(230, 81, 0, 0.08)',
-          shadowOffset: { width: 0, height: -2 },
+          shadowColor: 'rgba(230, 81, 0, 0.12)',
+          shadowOffset: { width: 0, height: -3 },
           shadowOpacity: 1,
           shadowRadius: 8,
           elevation: 8,

@@ -37,6 +37,7 @@ export const DharmaDesignSystem = {
       twilightWisdom: ['#00796B', '#E91E63'],    // Peacock Teal to Lotus Pink
       goldenHour: ['#FFC107', '#E65100'],        // Turmeric to Deep Saffron
       creamWarmth: ['#FAF3E0', '#F5F1E8'],       // Sandstone Beige to Warm Ivory
+      warmIvory: ['#F5F1E8', '#FEFCF8'],         // Warm Ivory to lightest cream
       sacredGlow: ['#DC143C', '#E91E63'],        // Vermillion to Lotus Pink
       indigoDepth: ['#303F9F', '#00796B'],       // Indigo Blue to Peacock Teal
     },

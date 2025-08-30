@@ -341,10 +341,10 @@ const styles = StyleSheet.create({
     paddingBottom: DharmaDesignSystem.spacing.xl,
   },
   contentSpacer: {
-    height: DharmaDesignSystem.spacing.lg,
+    height: DharmaDesignSystem.spacing.sm,
   },
   section: {
-    marginBottom: DharmaDesignSystem.spacing.xl,
+    marginBottom: DharmaDesignSystem.spacing.lg,
   },
   sectionHeader: {
     flexDirection: 'row',
