@@ -26,10 +26,14 @@ const BhagavadGitaChaptersScreen: React.FC = () => {
   const chapters = getAllChildChapters();
 
   const handleChapterPress = (chapter: EnhancedChapter) => {
-    (navigation as any).navigate('ChapterReading', { 
-      chapterId: chapter.id,
-      chapterNumber: chapter.number
-    });
+    if (chapter.number === 1) {
+      (navigation as any).navigate('BhagavadGitaChapter1');
+    } else {
+      (navigation as any).navigate('ChapterReading', { 
+        chapterId: chapter.id,
+        chapterNumber: chapter.number
+      });
+    }
   };
 
   const getDifficultyColor = (difficulty: string) => {

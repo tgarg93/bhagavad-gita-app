@@ -18,6 +18,8 @@ import PhilosophyDetailScreen from '../screens/PhilosophyDetailScreen';
 import ScriptureDetailScreen from '../screens/ScriptureDetailScreen';
 import BhagavadGitaChaptersScreen from '../screens/BhagavadGitaChaptersScreen';
 import ChapterReadingScreen from '../screens/ChapterReadingScreen';
+import BhagavadGitaChapter1Screen from '../screens/BhagavadGitaChapter1Screen';
+import BhagavadGitaCompleteScreen from '../screens/BhagavadGitaCompleteScreen';
 
 import { DharmaColors } from '../constants/colors';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
@@ -112,6 +114,8 @@ const AppNavigator = () => {
         <Stack.Screen name="ScriptureDetail" component={ScriptureDetailScreen} />
         <Stack.Screen name="BhagavadGitaChapters" component={BhagavadGitaChaptersScreen} />
         <Stack.Screen name="ChapterReading" component={ChapterReadingScreen} />
+        <Stack.Screen name="BhagavadGitaChapter1" component={BhagavadGitaChapter1Screen} />
+        <Stack.Screen name="BhagavadGitaComplete" component={BhagavadGitaCompleteScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

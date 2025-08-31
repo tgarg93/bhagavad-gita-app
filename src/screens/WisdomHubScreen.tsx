@@ -57,7 +57,7 @@ const WisdomHubScreen: React.FC = () => {
     switch (card.category) {
       case 'scriptures':
         if (card.id === 'bhagavad-gita') {
-          (navigation as any).navigate('BhagavadGitaChapters');
+          (navigation as any).navigate('BhagavadGitaComplete');
         } else {
           (navigation as any).navigate('ScriptureDetail', { scriptureId: card.id });
         }
