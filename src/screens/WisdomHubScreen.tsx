@@ -86,6 +86,18 @@ const WisdomHubScreen: React.FC = () => {
     }
   };
 
+  const formatFestivalDate = (date: string, daysUntil: number) => {
+    const festivalDate = new Date(date);
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const formattedDate = `${monthNames[festivalDate.getMonth()]} ${festivalDate.getDate()}`;
+    
+    if (daysUntil === 0) return `${formattedDate} • Today`;
+    if (daysUntil === 1) return `${formattedDate} • Tomorrow`;
+    if (daysUntil > 0) return `${formattedDate} • in ${daysUntil} days`;
+    if (daysUntil === -1) return `${formattedDate} • Yesterday`;
+    return `${formattedDate} • ${Math.abs(daysUntil)} days ago`;
+  };
+
   const renderContentCard = ({ item }: { item: ContentCard }) => {
     const getDifficultyColor = (difficulty: string) => {
       switch (difficulty) {
@@ -96,16 +108,6 @@ const WisdomHubScreen: React.FC = () => {
       }
     };
 
-    const getCategoryIcon = (category: ContentCategory) => {
-      switch (category) {
-        case 'scriptures': return 'library';
-        case 'festivals': return 'calendar';
-        case 'deities': return 'flower';
-        case 'philosophy': return 'bulb';
-        case 'practices': return 'leaf';
-        default: return 'book';
-      }
-    };
 
     return (
       <TouchableOpacity 
@@ -124,14 +126,6 @@ const WisdomHubScreen: React.FC = () => {
             style={styles.cardOverlay}
           />
           
-          {/* Category Icon */}
-          <View style={styles.categoryBadge}>
-            <Ionicons 
-              name={getCategoryIcon(item.category) as any} 
-              size={16} 
-              color={DharmaDesignSystem.colors.neutrals.white} 
-            />
-          </View>
 
           {/* New Badge */}
           {item.isNew && (
@@ -167,33 +161,25 @@ const WisdomHubScreen: React.FC = () => {
             </Text>
           )}
           
+          {/* Festival Date for festival category */}
+          {item.category === 'festivals' && item.festivalDate && item.daysUntil !== undefined && (
+            <Text style={styles.festivalDate} numberOfLines={1}>
+              {formatFestivalDate(item.festivalDate, item.daysUntil)}
+            </Text>
+          )}
+          
           <Text style={styles.cardDescription} numberOfLines={3}>
             {item.description}
           </Text>
           
-          {/* Tags and Metadata */}
-          <View style={styles.cardFooter}>
-            <View style={styles.cardTags}>
-              {item.tags.slice(0, 2).map((tag, index) => (
-                <View key={index} style={styles.tag}>
-                  <Text style={styles.tagText}>{tag}</Text>
-                </View>
-              ))}
-            </View>
-            
-            <View style={styles.cardMeta}>
-              {item.estimatedTime && (
-                <Text style={styles.metaText}>{item.estimatedTime}</Text>
-              )}
-              <View style={[
-                styles.difficultyBadge,
-                { backgroundColor: getDifficultyColor(item.difficulty) }
-              ]}>
-                <Text style={styles.difficultyText}>
-                  {item.difficulty.toUpperCase()}
-                </Text>
+          {/* Reading Time */}
+          <View style={styles.cardMeta}>
+            {item.estimatedTime && (
+              <View style={styles.readingTimeContainer}>
+                <Ionicons name="time-outline" size={14} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+                <Text style={styles.readingTimeText}>{item.estimatedTime}</Text>
               </View>
-            </View>
+            )}
           </View>
         </View>
       </TouchableOpacity>
@@ -290,36 +276,6 @@ const WisdomHubScreen: React.FC = () => {
           )
         ) : (
           <>
-            {/* Featured Content Section */}
-            <View style={styles.section}>
-              <View style={styles.sectionHeader}>
-                <View style={styles.sectionTitleContainer}>
-                  <Ionicons 
-                    name="star" 
-                    size={24} 
-                    color={DharmaDesignSystem.colors.sacred.lotusPink} 
-                    style={styles.sectionIcon}
-                  />
-                  <View>
-                    <Text style={styles.sectionTitle}>Featured</Text>
-                    <Text style={styles.sectionDescription}>Curated content for your spiritual journey</Text>
-                  </View>
-                </View>
-              </View>
-
-              <FlatList
-                data={featuredContent}
-                renderItem={renderContentCard}
-                keyExtractor={(item) => item.id}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.cardsContainer}
-                snapToInterval={CARD_WIDTH + CARD_SPACING}
-                snapToAlignment="start"
-                decelerationRate="fast"
-              />
-            </View>
-
             {/* Content Sections */}
             {sections.map(renderSection)}
           </>
@@ -416,14 +372,6 @@ const styles = StyleSheet.create({
     right: 0,
     height: 80,
   },
-  categoryBadge: {
-    position: 'absolute',
-    top: DharmaDesignSystem.spacing.sm,
-    left: DharmaDesignSystem.spacing.sm,
-    backgroundColor: 'rgba(44, 44, 44, 0.75)',
-    borderRadius: DharmaDesignSystem.borderRadius.large,
-    padding: DharmaDesignSystem.spacing.sm,
-  },
   newBadge: {
     position: 'absolute',
     top: DharmaDesignSystem.spacing.sm,
@@ -485,48 +433,26 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     marginBottom: DharmaDesignSystem.spacing.sm,
   },
-  cardFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-  },
-  cardTags: {
-    flexDirection: 'row',
-    flex: 1,
-    flexWrap: 'wrap',
-  },
-  tag: {
-    backgroundColor: 'rgba(255, 107, 53, 0.08)',
-    borderRadius: DharmaDesignSystem.borderRadius.small,
-    paddingHorizontal: DharmaDesignSystem.spacing.xs,
-    paddingVertical: DharmaDesignSystem.spacing.xs / 2,
-    marginRight: DharmaDesignSystem.spacing.xs,
-    marginBottom: DharmaDesignSystem.spacing.xs,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 107, 53, 0.15)',
-  },
-  tagText: {
-    ...DharmaDesignSystem.typography.sizes.overline,
-    color: DharmaDesignSystem.colors.primary.deepSaffron,
-    fontSize: 10,
-  },
   cardMeta: {
     alignItems: 'flex-end',
   },
-  metaText: {
+  readingTimeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  readingTimeText: {
     ...DharmaDesignSystem.typography.sizes.caption,
-    color: DharmaDesignSystem.colors.neutrals.softAsh,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
+    marginLeft: DharmaDesignSystem.spacing.xs / 2,
+    fontSize: 12,
+    fontWeight: '500',
+  },
+  festivalDate: {
+    ...DharmaDesignSystem.typography.sizes.caption,
+    color: DharmaDesignSystem.colors.primary.peacockTeal,
     marginBottom: DharmaDesignSystem.spacing.xs,
-  },
-  difficultyBadge: {
-    borderRadius: DharmaDesignSystem.borderRadius.small,
-    paddingHorizontal: DharmaDesignSystem.spacing.xs,
-    paddingVertical: DharmaDesignSystem.spacing.xs / 2,
-  },
-  difficultyText: {
-    ...DharmaDesignSystem.typography.sizes.overline,
-    color: DharmaDesignSystem.colors.neutrals.white,
-    fontSize: 9,
+    fontSize: 12,
+    fontWeight: '600',
   },
   searchResultsContainer: {
     marginBottom: DharmaDesignSystem.spacing.xl,

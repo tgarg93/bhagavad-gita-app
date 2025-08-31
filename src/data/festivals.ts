@@ -1184,7 +1184,7 @@ export const festivalData: Festival[] = [
         'Store oil and ghee away from heat sources'
       ]
     },
-    heroImageUrl: '/images/festivals/diwali-hero.jpg',
+    heroImageUrl: require('../../assets/images/covers/diwali-cover.png'),
     galleryImages: [
       '/images/festivals/diwali-diyas.jpg',
       '/images/festivals/rangoli-designs.jpg',
@@ -1322,7 +1322,23 @@ export const getFestivalsByType = (type: FestivalType): Festival[] => {
 };
 
 export const getMajorFestivals = (): Festival[] => {
-  return festivalData.filter(festival => festival.importance === 'major');
+  const today = new Date();
+  return festivalData
+    .filter(festival => festival.importance === 'major')
+    .sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      
+      // Calculate days from today
+      const daysFromTodayA = Math.ceil((dateA.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+      const daysFromTodayB = Math.ceil((dateB.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+      
+      // If festival is in the past (negative days), treat as next year
+      const adjustedDaysA = daysFromTodayA < 0 ? daysFromTodayA + 365 : daysFromTodayA;
+      const adjustedDaysB = daysFromTodayB < 0 ? daysFromTodayB + 365 : daysFromTodayB;
+      
+      return adjustedDaysA - adjustedDaysB;
+    });
 };
 
 export const getTodaysEkadashi = (): Ekadashi | null => {

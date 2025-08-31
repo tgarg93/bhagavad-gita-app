@@ -88,7 +88,7 @@ export const yogaPracticesData: SpiritualPractice[] = [
     name: 'Bhakti Yoga',
     sanskritName: 'भक्ति योग',
     category: 'yoga_paths',
-    description: 'The path of devotion - connecting with the divine through love, surrender, and emotional purification',
+    description: 'The path of devotion through love and surrender',
     detailedExplanation: 'Bhakti Yoga is the path of pure devotion and surrender to the divine. It transforms human emotions into divine love through practices like chanting, singing, prayer, and ritual worship. This path recognizes that the heart\'s natural tendency to love can be directed toward the divine, leading to spiritual purification and union. Bhakti is considered the most accessible path as it requires no special intellectual abilities or physical capabilities, only a sincere heart seeking divine connection.',
     origins: 'Ancient Vedic traditions, systematized in texts like Bhagavata Purana and Narada Bhakti Sutras around 500-1000 CE',
     benefits: [
@@ -229,7 +229,7 @@ export const yogaPracticesData: SpiritualPractice[] = [
     name: 'Karma Yoga',
     sanskritName: 'कर्म योग',
     category: 'yoga_paths',
-    description: 'The path of selfless action - spiritual growth through dedicated work without attachment to results',
+    description: 'Selfless action and dedicated work without attachment',
     detailedExplanation: 'Karma Yoga is the path of selfless service and action performed without ego or attachment to outcomes. It transforms ordinary work into spiritual practice by dedicating all actions to the divine and serving others as expressions of the divine. This path is especially suitable for active personalities who find fulfillment through work and service. The key principle is performing all duties with excellence while surrendering the results to the divine.',
     origins: 'Systematic presentation in Bhagavad Gita around 400 BCE-400 CE, with roots in ancient Vedic concepts of yajna (sacrifice)',
     benefits: [
@@ -355,7 +355,7 @@ export const yogaPracticesData: SpiritualPractice[] = [
     name: 'Raja Yoga',
     sanskritName: 'राज योग',
     category: 'yoga_paths',
-    description: 'The royal path - systematic meditation and mental discipline leading to self-realization',
+    description: 'Systematic meditation and mental discipline path',
     detailedExplanation: 'Raja Yoga, as systematized by Patanjali in the Yoga Sutras, is the scientific approach to spiritual realization through mental discipline and meditation. It consists of eight limbs (Ashtanga): ethical restraints (yama), observances (niyama), physical postures (asana), breath control (pranayama), withdrawal of senses (pratyahara), concentration (dharana), meditation (dhyana), and absorption (samadhi). This comprehensive system addresses all aspects of human development - ethical, physical, mental, and spiritual.',
     origins: 'Systematized by Patanjali in Yoga Sutras around 400 CE, with practices dating back to ancient Vedic times',
     benefits: [

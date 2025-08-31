@@ -161,6 +161,175 @@ export const bhagavadGitaData: Chapter[] = [
     ]
   },
   {
+    id: 'chapter-5',
+    number: 5,
+    name: {
+      sanskrit: 'कर्म संन्यास योग',
+      english: 'Karma Sannyasa Yoga',
+      hindi: 'कर्म संन्यास योग'
+    },
+    summary: 'Krishna clarifies the relationship between renunciation and action, explaining that both paths lead to liberation when practiced with proper understanding.',
+    verseCount: 29,
+    themes: ['Renunciation', 'Action vs Inaction', 'Inner Peace', 'Detachment'],
+    verses: []
+  },
+  {
+    id: 'chapter-6',
+    number: 6,
+    name: {
+      sanskrit: 'आत्म संयम योग',
+      english: 'Atma Samyama Yoga',
+      hindi: 'आत्म संयम योग'
+    },
+    summary: 'The science of meditation and self-discipline. Krishna describes the ideal yogi and the practices needed for self-realization.',
+    verseCount: 47,
+    themes: ['Meditation', 'Self-Control', 'Yoga Practice', 'Inner Peace'],
+    verses: []
+  },
+  {
+    id: 'chapter-7',
+    number: 7,
+    name: {
+      sanskrit: 'परब्रह्म योग',
+      english: 'Parabrahma Yoga',
+      hindi: 'परब्रह्म योग'
+    },
+    summary: 'Krishna reveals his divine nature and how he pervades all of creation. He explains the different types of devotees and their approaches.',
+    verseCount: 30,
+    themes: ['Divine Nature', 'Material and Spiritual Energy', 'Types of Devotees', 'Supreme Knowledge'],
+    verses: []
+  },
+  {
+    id: 'chapter-8',
+    number: 8,
+    name: {
+      sanskrit: 'अक्षर ब्रह्म योग',
+      english: 'Akshara Brahma Yoga',
+      hindi: 'अक्षर ब्रह्म योग'
+    },
+    summary: 'Krishna explains the Supreme Brahman, the individual soul, karma, and the importance of remembering the Divine at death.',
+    verseCount: 28,
+    themes: ['Supreme Brahman', 'Death and Remembrance', 'Cosmic Cycles', 'Liberation'],
+    verses: []
+  },
+  {
+    id: 'chapter-9',
+    number: 9,
+    name: {
+      sanskrit: 'राजविद्या राजगुह्य योग',
+      english: 'Raja-Vidya Raja-Guhya Yoga',
+      hindi: 'राजविद्या राजगुह्य योग'
+    },
+    summary: 'Krishna reveals the most confidential knowledge about devotional service and his position as the Supreme Personality of Godhead.',
+    verseCount: 34,
+    themes: ['Confidential Knowledge', 'Devotional Service', 'Divine Mercy', 'Easy Path to Liberation'],
+    verses: []
+  },
+  {
+    id: 'chapter-10',
+    number: 10,
+    name: {
+      sanskrit: 'विभूति योग',
+      english: 'Vibhuti Yoga',
+      hindi: 'विभूति योग'
+    },
+    summary: 'Krishna describes his various manifestations and opulences throughout creation, helping devotees recognize the Divine presence everywhere.',
+    verseCount: 42,
+    themes: ['Divine Manifestations', 'Opulences of God', 'Recognition of Divine', 'Infinite Nature'],
+    verses: []
+  },
+  {
+    id: 'chapter-11',
+    number: 11,
+    name: {
+      sanskrit: 'विश्वरूप दर्शन योग',
+      english: 'Vishvarupa-Darshana Yoga',
+      hindi: 'विश्वरूप दर्शन योग'
+    },
+    summary: 'Arjuna requests to see Krishna\'s universal form. Krishna grants him divine vision to behold the cosmic form, which both amazes and terrifies Arjuna.',
+    verseCount: 55,
+    themes: ['Universal Form', 'Divine Vision', 'Cosmic Consciousness', 'Awe and Devotion'],
+    verses: []
+  },
+  {
+    id: 'chapter-12',
+    number: 12,
+    name: {
+      sanskrit: 'भक्ति योग',
+      english: 'Bhakti Yoga',
+      hindi: 'भक्ति योग'
+    },
+    summary: 'Krishna explains the superiority of devotional service over impersonal meditation and describes the qualities of pure devotees.',
+    verseCount: 20,
+    themes: ['Devotional Service', 'Personal vs Impersonal', 'Qualities of Devotees', 'Love of God'],
+    verses: []
+  },
+  {
+    id: 'chapter-13',
+    number: 13,
+    name: {
+      sanskrit: 'क्षेत्र क्षेत्रज्ञ विभाग योग',
+      english: 'Kshetra-Kshetrajna Vibhaga Yoga',
+      hindi: 'क्षेत्र क्षेत्रज्ञ विभाग योग'
+    },
+    summary: 'The distinction between the field (body) and the knower of the field (soul) is explained, along with the nature of knowledge.',
+    verseCount: 34,
+    themes: ['Body and Soul', 'Field of Activities', 'Nature of Knowledge', 'Supreme Soul'],
+    verses: []
+  },
+  {
+    id: 'chapter-14',
+    number: 14,
+    name: {
+      sanskrit: 'गुणत्रय विभाग योग',
+      english: 'Gunatraya Vibhaga Yoga',
+      hindi: 'गुणत्रय विभाग योग'
+    },
+    summary: 'Krishna describes the three modes of material nature - goodness, passion, and ignorance - and how they bind the soul.',
+    verseCount: 27,
+    themes: ['Three Modes of Nature', 'Material Bondage', 'Transcendence', 'Spiritual Evolution'],
+    verses: []
+  },
+  {
+    id: 'chapter-15',
+    number: 15,
+    name: {
+      sanskrit: 'पुरुषोत्तम योग',
+      english: 'Purushottama Yoga',
+      hindi: 'पुरुषोत्तम योग'
+    },
+    summary: 'The metaphor of the banyan tree represents material existence. Krishna explains the supreme person who transcends both fallible and infallible.',
+    verseCount: 20,
+    themes: ['Tree of Material Existence', 'Supreme Person', 'Detachment', 'Spiritual Knowledge'],
+    verses: []
+  },
+  {
+    id: 'chapter-16',
+    number: 16,
+    name: {
+      sanskrit: 'दैवासुर सम्पद्विभाग योग',
+      english: 'Daivasura-Sampad-Vibhaga Yoga',
+      hindi: 'दैवासुर सम्पद्विभाग योग'
+    },
+    summary: 'Krishna contrasts divine and demonic natures, explaining the qualities that lead to liberation versus those that lead to bondage.',
+    verseCount: 24,
+    themes: ['Divine vs Demonic Nature', 'Character Development', 'Spiritual Qualities', 'Material Bondage'],
+    verses: []
+  },
+  {
+    id: 'chapter-17',
+    number: 17,
+    name: {
+      sanskrit: 'श्रद्धात्रय विभाग योग',
+      english: 'Shraddhatraya-Vibhaga Yoga',
+      hindi: 'श्रद्धात्रय विभाग योग'
+    },
+    summary: 'The three types of faith, sacrifice, austerity, and charity are explained according to the three modes of nature.',
+    verseCount: 28,
+    themes: ['Three Types of Faith', 'Sacrifice', 'Austerity', 'Charity', 'Spiritual Practice'],
+    verses: []
+  },
+  {
     id: 'chapter-18',
     number: 18,
     name: {

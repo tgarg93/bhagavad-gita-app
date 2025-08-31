@@ -15,6 +15,9 @@ export interface ContentCard {
   progress?: number; // 0-100 percentage
   isFavorite?: boolean;
   isNew?: boolean;
+  // Festival-specific fields
+  festivalDate?: string; // YYYY-MM-DD format
+  daysUntil?: number; // Days until festival (negative if past)
 }
 
 export interface ContentSection {

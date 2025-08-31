@@ -13,8 +13,8 @@ export interface ImageCategory {
 
 // Scripture cover images
 export const scriptureCovers = {
-  bhagavadGita: '/assets/images/covers/bhagavad-gita-cover.jpg', // Traditional Bhagavad Gita artwork
-  ramayana: '/images/covers/ramayana-cover.jpg',
+  bhagavadGita: '/assets/images/covers/bhagavad-gita-cover.png', // Traditional Bhagavad Gita artwork
+  ramayana: '/assets/images/covers/ramayana-cover.png',
   mahabharata: '/images/covers/mahabharata-cover.jpg',
   upanishads: '/images/covers/upanishads-cover.jpg'
 };

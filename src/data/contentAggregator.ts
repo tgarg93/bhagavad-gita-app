@@ -34,21 +34,29 @@ const convertScripturesToCards = (): ContentCard[] => {
 
 const convertFestivalsToCards = (): ContentCard[] => {
   try {
-    return getMajorFestivals().map(festival => ({
-      id: festival.id,
-      title: festival.name,
-      sanskritName: festival.sanskritName,
-      description: festival.significance,
-      category: 'festivals' as ContentCategory,
-      difficulty: 'beginner' as const,
-      heroImage: (festival as any).heroImageUrl || '/images/festivals/default-hero.jpg',
-      iconImage: '/images/festivals/festival-icon.jpg',
-      tags: [festival.type, festival.importance],
-      estimatedTime: `${festival.duration} day${festival.duration > 1 ? 's' : ''}`,
-      progress: 0,
-      isFavorite: false,
-      isNew: festival.date === '2025-08-24' // Today's festivals marked as new
-    }));
+    const today = new Date();
+    return getMajorFestivals().map(festival => {
+      const festivalDate = new Date(festival.date);
+      const daysUntil = Math.ceil((festivalDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+      
+      return {
+        id: festival.id,
+        title: festival.name,
+        sanskritName: festival.sanskritName,
+        description: festival.significance,
+        category: 'festivals' as ContentCategory,
+        difficulty: 'beginner' as const,
+        heroImage: (festival as any).heroImageUrl || '/images/festivals/default-hero.jpg',
+        iconImage: '/images/festivals/festival-icon.jpg',
+        tags: [festival.type, festival.importance],
+        estimatedTime: `${festival.duration} day${festival.duration > 1 ? 's' : ''}`,
+        progress: 0,
+        isFavorite: false,
+        isNew: Math.abs(daysUntil) <= 7, // Mark as new if within 7 days
+        festivalDate: festival.date,
+        daysUntil: daysUntil
+      };
+    });
   } catch (error) {
     console.log('Error converting festivals:', error);
     return [];
@@ -167,44 +175,44 @@ export const getContentSections = (): ContentSection[] => {
   try {
     return [
       {
+        id: 'philosophy-section',
+        title: 'Core Concepts',
+        description: 'Essential foundations of dharmic living',
+        icon: 'bulb-outline',
+        cards: convertPhilosophyToCards().slice(0, 5), // Show first 5 concepts
+        viewAllRoute: 'PhilosophyDetail'
+      },
+      {
         id: 'scriptures-section',
-        title: 'Sacred Scriptures',
-        description: 'Ancient wisdom texts with modern explanations',
+        title: 'Scriptures & Epics',
+        description: 'Ancient wisdom texts and sacred stories',
         icon: 'library-outline',
         cards: convertScripturesToCards(),
         viewAllRoute: 'ScripturesDetail'
       },
       {
-        id: 'festivals-section', 
-        title: 'Festivals & Celebrations',
-        description: 'Rich traditions and their deeper meanings',
-        icon: 'calendar-outline',
-        cards: convertFestivalsToCards().slice(0, 6), // Show first 6 festivals
-        viewAllRoute: 'FestivalCalendar'
-      },
-      {
         id: 'deities-section',
-        title: 'Gods & Deities',
+        title: 'Gods',
         description: 'Divine forms and their teachings',
         icon: 'flower-outline',
         cards: convertDeitiesToCards(),
         viewAllRoute: 'DeitiesDetail'
       },
       {
-        id: 'philosophy-section',
-        title: 'Philosophy & Wisdom',
-        description: 'Core concepts for spiritual living',
-        icon: 'bulb-outline',
-        cards: convertPhilosophyToCards().slice(0, 5), // Show first 5 concepts
-        viewAllRoute: 'PhilosophyDetail'
-      },
-      {
         id: 'practices-section',
-        title: 'Spiritual Practices',
-        description: 'Paths and techniques for inner growth',
+        title: 'Practices',
+        description: 'Paths and techniques for spiritual growth',
         icon: 'leaf-outline',
         cards: convertPracticesToCards(),
         viewAllRoute: 'PracticesDetail'
+      },
+      {
+        id: 'festivals-section', 
+        title: 'Festivals',
+        description: 'Sacred celebrations and their meanings',
+        icon: 'calendar-outline',
+        cards: convertFestivalsToCards().slice(0, 6), // Show first 6 festivals
+        viewAllRoute: 'FestivalCalendar'
       }
     ];
   } catch (error) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
+import DharmaHeader from '../components/ui/DharmaHeader';
 
 interface PracticeDetailScreenProps {
   route: {
@@ -24,28 +25,28 @@ const PracticeDetailScreen: React.FC<PracticeDetailScreenProps> = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { practiceId } = (route.params as any) || { practiceId: 'unknown' };
+  const [fontSize, setFontSize] = useState<'small' | 'medium' | 'large'>('medium');
+
+  const adjustFontSize = () => {
+    const sizes: ('small' | 'medium' | 'large')[] = ['small', 'medium', 'large'];
+    const currentIndex = sizes.indexOf(fontSize);
+    const nextIndex = (currentIndex + 1) % sizes.length;
+    setFontSize(sizes[nextIndex]);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.backButton} 
-          onPress={() => navigation.goBack()}
-        >
-          <Ionicons 
-            name="chevron-back" 
-            size={24} 
-            color={DharmaDesignSystem.colors.neutrals.charcoalBlack} 
-          />
-        </TouchableOpacity>
-        
-        <View style={styles.headerContent}>
-          <Text style={styles.headerTitle}>Practice Details</Text>
-        </View>
-        
-        <View style={styles.headerSpacer} />
-      </View>
+      <DharmaHeader
+        title="Practice Details"
+        subtitle={practiceId.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+        showBackButton={true}
+        onBackPress={() => navigation.goBack()}
+        rightActions={
+          <TouchableOpacity onPress={adjustFontSize} style={styles.fontButton}>
+            <Ionicons name="text" size={20} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+          </TouchableOpacity>
+        }
+      />
 
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         {/* Hero Section */}
@@ -114,29 +115,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: DharmaDesignSystem.spacing.md,
-    paddingVertical: DharmaDesignSystem.spacing.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255, 107, 53, 0.12)',
-  },
-  backButton: {
-    padding: DharmaDesignSystem.spacing.sm,
-  },
-  headerContent: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  headerTitle: {
-    ...DharmaDesignSystem.typography.sizes.headingSM,
-    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
-  },
-  headerSpacer: {
-    width: 40, // Same width as back button for centering
+  fontButton: {
+    padding: DharmaDesignSystem.spacing.xs,
   },
   scrollView: {
     flex: 1,

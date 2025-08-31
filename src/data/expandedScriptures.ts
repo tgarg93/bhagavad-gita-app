@@ -2,7 +2,7 @@
 // Comprehensive collection of Hindu scriptures beyond Bhagavad Gita
 
 // Image imports for proper asset handling
-const bhagavadGitaCover = require('../../assets/images/covers/bhagavad-gita-cover.jpg');
+const bhagavadGitaCover = require('../../assets/images/covers/bhagavad-gita-cover.png');
 
 export interface Scripture {
   id: string;
@@ -110,7 +110,7 @@ export const expandedScripturesData: Scripture[] = [
     name: 'Bhagavad Gita',
     sanskritName: 'श्रीमद्भगवद्गीता',
     category: 'epics',
-    description: 'The divine song - Krishna\'s teachings to Arjuna on the battlefield of Kurukshetra, containing the essence of Hindu philosophy',
+    description: 'Krishna\'s timeless teachings on duty, devotion, and spiritual wisdom',
     significance: 'Considered the most important philosophical text of Hinduism, containing teachings on dharma, karma, devotion, and liberation',
     historicalContext: 'Part of the Mahabharata epic, composed between 400 BCE and 400 CE, represents the culmination of Vedic thought',
     language: 'sanskrit',
@@ -187,7 +187,7 @@ export const expandedScripturesData: Scripture[] = [
     name: 'Ramayana',
     sanskritName: 'रामायण',
     category: 'epics',
-    description: 'The epic tale of Prince Rama\'s life, embodying ideals of dharma, devotion, and righteousness',
+    description: 'Prince Rama\'s heroic journey teaching dharma and righteousness',
     significance: 'One of the greatest epics of world literature, teaching moral values, family relationships, and the triumph of good over evil',
     historicalContext: 'Composed by sage Valmiki around 300 BCE to 300 CE, consisting of nearly 24,000 verses in Sanskrit',
     language: 'sanskrit',
@@ -281,7 +281,7 @@ export const expandedScripturesData: Scripture[] = [
     ],
     relatedScriptures: ['mahabharata', 'vishnu-purana'],
     images: {
-      heroImage: '/images/scriptures/ramayana-hero.jpg',
+      heroImage: require('../../assets/images/covers/ramayana-cover.png'),
       iconImage: '/images/scriptures/ramayana-icon.jpg',
       manuscriptImages: ['/images/scriptures/ramayana-manuscript.jpg']
     },
@@ -311,7 +311,7 @@ export const expandedScripturesData: Scripture[] = [
     name: 'Principal Upanishads',
     sanskritName: 'मुख्य उपनिषद्',
     category: 'upanishads',
-    description: 'The philosophical texts that form the foundation of Vedantic thought, exploring the nature of reality and consciousness',
+    description: 'Ancient philosophical texts exploring reality and consciousness',
     significance: 'The culmination of Vedic thought, containing the highest philosophical teachings about Brahman (ultimate reality) and Atman (individual soul)',
     historicalContext: 'Composed between 800-200 BCE, these texts represent the transition from ritualistic Vedic religion to philosophical inquiry',
     language: 'sanskrit',
@@ -385,7 +385,7 @@ export const expandedScripturesData: Scripture[] = [
     name: 'Vishnu Purana',
     sanskritName: 'विष्णु पुराण',
     category: 'puranas',
-    description: 'One of the eighteen major Puranas, dedicated to Lord Vishnu and his avatars, containing cosmology, genealogies, and spiritual teachings',
+    description: 'Stories of Lord Vishnu\'s avatars and cosmic wisdom',
     significance: 'Provides comprehensive understanding of Vishnu worship, cosmic cycles, and the divine plan for creation and preservation',
     historicalContext: 'Composed between 300-1000 CE, it systematizes much of Hindu cosmology and theology',
     language: 'sanskrit',

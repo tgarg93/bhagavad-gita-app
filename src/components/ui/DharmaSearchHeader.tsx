@@ -24,7 +24,7 @@ const DharmaSearchHeader: React.FC<DharmaSearchHeaderProps> = ({
   const [isFocused, setIsFocused] = useState(false);
   return (
     <LinearGradient
-      colors={DharmaDesignSystem.colors.gradients.warmIvory}
+      colors={DharmaDesignSystem.colors.gradients.creamWarmth}
       style={styles.header}
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
