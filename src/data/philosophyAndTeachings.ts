@@ -377,7 +377,7 @@ export const philosophyData: PhilosophicalConcept[] = [
     },
     podcastEpisodes: [],
     images: {
-      heroImage: '/images/philosophy/karma-hero.jpg',
+      heroImage: require('../../assets/images/covers/karma-cover.png'),
       iconImage: '/images/philosophy/karma-icon.jpg'
     },
     difficulty: 'beginner'

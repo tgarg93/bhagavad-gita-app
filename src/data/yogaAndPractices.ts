@@ -218,7 +218,7 @@ export const yogaPracticesData: SpiritualPractice[] = [
       }
     ],
     images: {
-      heroImage: '/images/practices/bhakti-hero.jpg',
+      heroImage: require('../../assets/images/covers/bhakti-yoga-cover.png'),
       iconImage: '/images/practices/bhakti-icon.jpg',
       instructionalImages: ['/images/practices/puja-setup.jpg', '/images/practices/kirtan.jpg']
     },
@@ -344,7 +344,7 @@ export const yogaPracticesData: SpiritualPractice[] = [
     ],
     videoGuides: [],
     images: {
-      heroImage: '/images/practices/karma-yoga-hero.jpg',
+      heroImage: require('../../assets/images/covers/karma-yoga-cover.png'),
       iconImage: '/images/practices/karma-yoga-icon.jpg',
       instructionalImages: ['/images/practices/seva.jpg', '/images/practices/work-worship.jpg']
     },

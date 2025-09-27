@@ -26,7 +26,7 @@ const HomeScreen: React.FC = () => {
   const [todaysInsight, setTodaysInsight] = useState(getTodaysInsight() || getRandomInsight());
   const [weekTheme, setWeekTheme] = useState(getCurrentWeekTheme());
   const [todaysFestivals, setTodaysFestivals] = useState(getTodaysFestivals());
-  const [upcomingFestivals, setUpcomingFestivals] = useState(getUpcomingFestivals(7));
+  const [upcomingFestivals, setUpcomingFestivals] = useState(getUpcomingFestivals(45));
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const HomeScreen: React.FC = () => {
       setTodaysInsight(getTodaysInsight() || getRandomInsight());
       setWeekTheme(getCurrentWeekTheme());
       setTodaysFestivals(getTodaysFestivals());
-      setUpcomingFestivals(getUpcomingFestivals(7));
+      setUpcomingFestivals(getUpcomingFestivals(45));
     } catch (error) {
       console.log('Error loading daily content:', error);
     } finally {

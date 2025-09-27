@@ -246,7 +246,7 @@ export const deitiesData: Deity[] = [
       }
     ],
     images: {
-      heroImage: '/images/deities/krishna-hero.jpg',
+      heroImage: require('../../assets/images/covers/krishna-cover.png'),
       iconImage: '/images/deities/krishna-icon.jpg',
       galleryImages: [
         '/images/deities/krishna-flute.jpg',
@@ -338,7 +338,7 @@ export const deitiesData: Deity[] = [
     ],
     regionalVariations: [],
     images: {
-      heroImage: '/images/deities/rama-hero.jpg',
+      heroImage: require('../../assets/images/covers/rama-cover.png'),
       iconImage: '/images/deities/rama-icon.jpg',
       galleryImages: ['/images/deities/rama-sita.jpg', '/images/deities/rama-court.jpg']
     }

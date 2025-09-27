@@ -36,9 +36,14 @@ const convertFestivalsToCards = (): ContentCard[] => {
   try {
     const today = new Date();
     return getMajorFestivals().map(festival => {
-      const festivalDate = new Date(festival.date);
-      const daysUntil = Math.ceil((festivalDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-      
+      const festivalStartDate = new Date(festival.date);
+      const festivalEndDate = new Date(festivalStartDate.getTime() + ((festival.duration - 1) * 24 * 60 * 60 * 1000));
+      const daysUntilStart = Math.ceil((festivalStartDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+      const daysUntilEnd = Math.ceil((festivalEndDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+
+      // Check if festival is currently ongoing
+      const isOngoing = today >= festivalStartDate && today <= festivalEndDate;
+
       return {
         id: festival.id,
         title: festival.name,
@@ -46,15 +51,16 @@ const convertFestivalsToCards = (): ContentCard[] => {
         description: festival.significance,
         category: 'festivals' as ContentCategory,
         difficulty: 'beginner' as const,
-        heroImage: (festival as any).heroImageUrl || '/images/festivals/default-hero.jpg',
+        heroImage: (festival as any).heroImageUrl || require('../../assets/images/covers/dharma-cover.png'),
         iconImage: '/images/festivals/festival-icon.jpg',
         tags: [festival.type, festival.importance],
         estimatedTime: `${festival.duration} day${festival.duration > 1 ? 's' : ''}`,
         progress: 0,
         isFavorite: false,
-        isNew: Math.abs(daysUntil) <= 7, // Mark as new if within 7 days
+        isNew: isOngoing || Math.abs(daysUntilStart) <= 7, // Mark as new if ongoing or within 7 days
         festivalDate: festival.date,
-        daysUntil: daysUntil
+        daysUntil: isOngoing ? daysUntilEnd : daysUntilStart, // Days until end if ongoing, otherwise days until start
+        isOngoing: isOngoing
       };
     });
   } catch (error) {
