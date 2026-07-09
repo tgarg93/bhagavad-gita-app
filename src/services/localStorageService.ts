@@ -34,9 +34,61 @@ export interface UserPreferences {
   soundEnabled: boolean;
 }
 
+// Who this person is spiritually — collected at onboarding, enriched over time.
+// The rolling profileSummary is compacted by Gemini from reflections + progress.
+export interface SpiritualProfile {
+  name?: string;
+  familiarity: 'new' | 'some' | 'deep';
+  intentions: string[];
+  interests: string[];
+  dailyGoalMinutes: 5 | 10 | 15 | 20;
+  profileSummary?: string;
+  summaryUpdatedAt?: string;
+  reflectionCountAtSummary?: number;
+  onboarded: boolean;
+}
+
+export const DEFAULT_SPIRITUAL_PROFILE: SpiritualProfile = {
+  familiarity: 'some',
+  intentions: [],
+  interests: [],
+  dailyGoalMinutes: 10,
+  onboarded: false,
+};
+
+// Verse-by-verse reading progress and resume position for the Gita book player
+export interface VerseProgress {
+  readVerses: string[]; // "chapter.verse" keys, e.g. "1.1"
+  lastPageIndex: number; // page index in the continuous book to resume at
+}
+
+// One turn in an ongoing reflection conversation (beyond the first exchange)
+export interface ReflectionTurn {
+  role: 'user' | 'krishna';
+  text: string;
+  at: string;
+}
+
+// A single reflection: the reader's answer to a chapter question, Krishna's
+// response, and any follow-up conversation. `completed` marks the user having
+// explicitly closed the conversation for this question.
+export interface ReflectionEntry {
+  id: string;
+  userId: string;
+  chapterNumber: number;
+  questionIndex: number;
+  question: string;
+  answer: string;
+  krishnaResponse?: string;
+  thread?: ReflectionTurn[];
+  completed?: boolean;
+  createdAt: string;
+}
+
 export interface AppData {
   userProgress: UserProgress | null;
   studyNotes: StudyNote[];
+  reflections: ReflectionEntry[];
   preferences: UserPreferences;
   analytics: {
     appOpens: number;
@@ -49,10 +101,15 @@ class LocalStorageService {
   private static readonly KEYS = {
     USER_PROGRESS: 'bhagavad_gita_user_progress',
     STUDY_NOTES: 'bhagavad_gita_study_notes',
+    REFLECTIONS: 'bhagavad_gita_reflections',
+    VERSE_PROGRESS: 'bhagavad_gita_verse_progress',
+    SPIRITUAL_PROFILE: 'bhagavad_gita_spiritual_profile',
     PREFERENCES: 'bhagavad_gita_preferences',
     ANALYTICS: 'bhagavad_gita_analytics',
     CURRENT_USER: 'bhagavad_gita_current_user',
   };
+
+  private static readonly TOTAL_GITA_VERSES = 700;
 
   // User Authentication (Local)
   static async saveCurrentUser(user: { id: string; username: string; email: string; createdAt: string }) {
@@ -173,6 +230,130 @@ class LocalStorageService {
     }
   }
 
+  // Spiritual profile (onboarding answers + rolling summary)
+  static async getSpiritualProfile(): Promise<SpiritualProfile> {
+    try {
+      const json = await AsyncStorage.getItem(this.KEYS.SPIRITUAL_PROFILE);
+      if (json) return { ...DEFAULT_SPIRITUAL_PROFILE, ...JSON.parse(json) };
+    } catch (error) {
+      console.error('Error getting spiritual profile:', error);
+    }
+    return { ...DEFAULT_SPIRITUAL_PROFILE };
+  }
+
+  static async saveSpiritualProfile(profile: SpiritualProfile) {
+    try {
+      await AsyncStorage.setItem(this.KEYS.SPIRITUAL_PROFILE, JSON.stringify(profile));
+    } catch (error) {
+      console.error('Error saving spiritual profile:', error);
+    }
+  }
+
+  static async updateSpiritualProfile(patch: Partial<SpiritualProfile>): Promise<SpiritualProfile> {
+    const profile = { ...(await this.getSpiritualProfile()), ...patch };
+    await this.saveSpiritualProfile(profile);
+    return profile;
+  }
+
+  // Verse reading progress + resume position (auth-independent)
+  static async getVerseProgress(): Promise<VerseProgress> {
+    try {
+      const json = await AsyncStorage.getItem(this.KEYS.VERSE_PROGRESS);
+      if (json) return JSON.parse(json);
+    } catch (error) {
+      console.error('Error getting verse progress:', error);
+    }
+    return { readVerses: [], lastPageIndex: 0 };
+  }
+
+  private static async saveVerseProgress(progress: VerseProgress) {
+    try {
+      await AsyncStorage.setItem(this.KEYS.VERSE_PROGRESS, JSON.stringify(progress));
+    } catch (error) {
+      console.error('Error saving verse progress:', error);
+    }
+  }
+
+  static async markVerseRead(chapter: number, verse: number) {
+    const key = `${chapter}.${verse}`;
+    const progress = await this.getVerseProgress();
+    if (!progress.readVerses.includes(key)) {
+      progress.readVerses.push(key);
+      await this.saveVerseProgress(progress);
+    }
+  }
+
+  static async saveLastPage(index: number) {
+    const progress = await this.getVerseProgress();
+    if (progress.lastPageIndex !== index) {
+      progress.lastPageIndex = index;
+      await this.saveVerseProgress(progress);
+    }
+  }
+
+  static async getLastPage(): Promise<number> {
+    return (await this.getVerseProgress()).lastPageIndex;
+  }
+
+  // Fraction 0-1 of a chapter's verses that have been read
+  static async getChapterProgress(chapter: number, verseCount: number): Promise<number> {
+    if (verseCount <= 0) return 0;
+    const { readVerses } = await this.getVerseProgress();
+    const prefix = `${chapter}.`;
+    const read = readVerses.filter(k => k.startsWith(prefix)).length;
+    return Math.min(1, read / verseCount);
+  }
+
+  // Fraction 0-1 of the whole Gita that has been read
+  static async getTotalProgress(): Promise<number> {
+    const { readVerses } = await this.getVerseProgress();
+    return Math.min(1, readVerses.length / this.TOTAL_GITA_VERSES);
+  }
+
+  // Reflections
+  static async saveReflection(entry: ReflectionEntry) {
+    try {
+      const all = await this.getAllReflections();
+      const existingIndex = all.findIndex(r => r.id === entry.id);
+      if (existingIndex >= 0) {
+        all[existingIndex] = entry;
+      } else {
+        all.push(entry);
+      }
+      await AsyncStorage.setItem(this.KEYS.REFLECTIONS, JSON.stringify(all));
+    } catch (error) {
+      console.error('Error saving reflection:', error);
+    }
+  }
+
+  static async getAllReflections(): Promise<ReflectionEntry[]> {
+    try {
+      const json = await AsyncStorage.getItem(this.KEYS.REFLECTIONS);
+      return json ? JSON.parse(json) : [];
+    } catch (error) {
+      console.error('Error getting reflections:', error);
+      return [];
+    }
+  }
+
+  // Reflections for a chapter (or all chapters), newest first
+  static async getReflections(chapterNumber?: number): Promise<ReflectionEntry[]> {
+    const all = await this.getAllReflections();
+    const filtered = chapterNumber === undefined
+      ? all
+      : all.filter(r => r.chapterNumber === chapterNumber);
+    return filtered.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  }
+
+  static async deleteReflection(id: string) {
+    try {
+      const all = await this.getAllReflections();
+      await AsyncStorage.setItem(this.KEYS.REFLECTIONS, JSON.stringify(all.filter(r => r.id !== id)));
+    } catch (error) {
+      console.error('Error deleting reflection:', error);
+    }
+  }
+
   // Preferences
   static async savePreferences(preferences: UserPreferences) {
     try {
@@ -253,9 +434,10 @@ class LocalStorageService {
   // Export/Import
   static async exportAllData(): Promise<AppData> {
     try {
-      const [userProgress, studyNotes, preferences, analyticsJson] = await Promise.all([
+      const [userProgress, studyNotes, reflections, preferences, analyticsJson] = await Promise.all([
         AsyncStorage.getItem(this.KEYS.USER_PROGRESS),
         AsyncStorage.getItem(this.KEYS.STUDY_NOTES),
+        AsyncStorage.getItem(this.KEYS.REFLECTIONS),
         AsyncStorage.getItem(this.KEYS.PREFERENCES),
         AsyncStorage.getItem(this.KEYS.ANALYTICS),
       ]);
@@ -263,6 +445,7 @@ class LocalStorageService {
       return {
         userProgress: userProgress ? JSON.parse(userProgress) : null,
         studyNotes: studyNotes ? JSON.parse(studyNotes) : [],
+        reflections: reflections ? JSON.parse(reflections) : [],
         preferences: preferences ? JSON.parse(preferences) : await this.getPreferences(),
         analytics: analyticsJson ? JSON.parse(analyticsJson) : {
           appOpens: 0,
@@ -287,7 +470,11 @@ class LocalStorageService {
       if (data.studyNotes) {
         promises.push(AsyncStorage.setItem(this.KEYS.STUDY_NOTES, JSON.stringify(data.studyNotes)));
       }
-      
+
+      if (data.reflections) {
+        promises.push(AsyncStorage.setItem(this.KEYS.REFLECTIONS, JSON.stringify(data.reflections)));
+      }
+
       if (data.preferences) {
         promises.push(AsyncStorage.setItem(this.KEYS.PREFERENCES, JSON.stringify(data.preferences)));
       }
@@ -309,6 +496,9 @@ class LocalStorageService {
       await AsyncStorage.multiRemove([
         this.KEYS.USER_PROGRESS,
         this.KEYS.STUDY_NOTES,
+        this.KEYS.REFLECTIONS,
+        this.KEYS.VERSE_PROGRESS,
+        this.KEYS.SPIRITUAL_PROFILE,
         this.KEYS.PREFERENCES,
         this.KEYS.ANALYTICS,
         this.KEYS.CURRENT_USER,

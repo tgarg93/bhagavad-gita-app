@@ -29,7 +29,11 @@ class GeminiService {
   async initialize(apiKey?: string): Promise<boolean> {
     try {
       const keyToUse = apiKey || CONFIG.apiKey;
-      
+
+      if (__DEV__) {
+        console.log('Initializing Gemini service, config enabled:', CONFIG.enabled, 'API key available:', !!keyToUse);
+      }
+
       if (!keyToUse || keyToUse.trim() === '') {
         throw new Error('API key is required');
       }
@@ -55,30 +59,34 @@ class GeminiService {
     }
   }
 
-  // Auto-initialize with pre-configured key
+  // Auto-initialize with pre-configured key. Throws on failure so callers can
+  // distinguish auth errors (bad key) from model/network errors.
   async autoInitialize(): Promise<boolean> {
-    if (CONFIG.enabled && CONFIG.apiKey && !this.isInitialized) {
-      try {
-        return await this.initialize();
-      } catch (error) {
-        console.error('Auto-initialization failed:', error);
-        return false;
-      }
+    if (!CONFIG.enabled || !CONFIG.apiKey) {
+      throw new Error('API key is required');
+    }
+    if (!this.isInitialized) {
+      return await this.initialize();
     }
     return this.isInitialized;
   }
 
-  // Start a new chat session with Krishna persona
-  startKrishnaChat(): void {
+  // Start a new chat session with Krishna persona. Optionally seed it with a
+  // compact context block about the person and what they're currently reading.
+  startKrishnaChat(contextBlock?: string): void {
     if (!this.isInitialized || !this.model) {
       throw new Error('Gemini service not initialized');
     }
+
+    const systemText = contextBlock
+      ? `${KRISHNA_PERSONA.systemPrompt}\n\nContext about this person and what they're reading (weave in naturally when relevant — never recite it back). If their name is known, address them by it naturally, though not in every message:\n${contextBlock}`
+      : KRISHNA_PERSONA.systemPrompt;
 
     this.chatSession = this.model.startChat({
       history: [
         {
           role: 'user',
-          parts: [{ text: KRISHNA_PERSONA.systemPrompt }],
+          parts: [{ text: systemText }],
         },
         {
           role: 'model',
@@ -149,9 +157,103 @@ class GeminiService {
     }
   }
 
-  // Get current chat session
+  // Generic one-off generation (no chat session). Used for profile summaries
+  // and other single-shot tasks.
+  async generateOneOff(prompt: string, opts?: { maxOutputTokens?: number }): Promise<string> {
+    if (!this.isInitialized || !this.model) {
+      await this.autoInitialize();
+    }
+    if (!this.model) {
+      throw new Error('Gemini service not initialized');
+    }
+    // Gemini 2.5 Flash spends thinking tokens against maxOutputTokens, so
+    // structured-output tasks need more headroom than chat replies
+    const request = opts?.maxOutputTokens
+      ? {
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: { ...CONFIG.generationConfig, maxOutputTokens: opts.maxOutputTokens },
+        }
+      : prompt;
+    const result = await this.model.generateContent(request);
+    const response = await result.response;
+    return response.text().trim();
+  }
+
+  // One-off Krishna response to a chapter reflection — does NOT touch the
+  // persistent Ask-Krishna chat session. Used by the reflection feature.
+  async generateReflectionResponse(context: {
+    chapterNumber: number;
+    chapterTitle: string;
+    subtitle: string;
+    question: string;
+    answer: string;
+    contextBlock?: string;
+  }): Promise<string> {
+    if (!this.isInitialized || !this.model) {
+      await this.autoInitialize();
+    }
+    if (!this.model) {
+      throw new Error('Gemini service not initialized');
+    }
+
+    const prompt = `${KRISHNA_PERSONA.systemPrompt}
+${context.contextBlock ? `\nContext about this person (weave in naturally when relevant — never recite it back). If their name is known, address them by it naturally, though not in every message:\n${context.contextBlock}\n` : ''}
+You are responding to a personal reflection, not a chat message. The reader has just finished reading Chapter ${context.chapterNumber} of the Bhagavad Gita, "${context.chapterTitle}" (${context.subtitle}).
+
+Reflection question they were asked:
+"${context.question}"
+
+What they wrote:
+"${context.answer}"
+
+Respond as Krishna in 2-4 warm, personal sentences. Engage genuinely with what THEY actually wrote — reflect it back, don't lecture. Connect it gently to the chapter's teaching. End with one soft thought or question that invites them to look a little deeper. Never grade or judge their answer. Do not use markdown formatting.`;
+
+    const result = await this.model.generateContent(prompt);
+    const response = await result.response;
+    return response.text().trim();
+  }
+
+  // Continue a reflection conversation (follow-up turns after the first exchange)
+  async continueReflection(context: {
+    chapterNumber: number;
+    chapterTitle: string;
+    question: string;
+    transcript: { role: 'user' | 'krishna'; text: string }[];
+    contextBlock?: string;
+  }): Promise<string> {
+    if (!this.isInitialized || !this.model) {
+      await this.autoInitialize();
+    }
+    if (!this.model) {
+      throw new Error('Gemini service not initialized');
+    }
+
+    const convo = context.transcript
+      .map(t => (t.role === 'user' ? `They said: "${t.text}"` : `You (Krishna) said: "${t.text}"`))
+      .join('\n');
+
+    const prompt = `${KRISHNA_PERSONA.systemPrompt}
+${context.contextBlock ? `\nContext about this person (weave in naturally when relevant — never recite it back). If their name is known, address them by it naturally, though not in every message:\n${context.contextBlock}\n` : ''}
+You are in an ongoing personal reflection conversation after Chapter ${context.chapterNumber} of the Bhagavad Gita ("${context.chapterTitle}"). The reflection question was:
+"${context.question}"
+
+Conversation so far:
+${convo}
+
+Continue the conversation as Krishna in 2-4 warm sentences. Respond to their latest message specifically. Never grade or judge. Do not use markdown formatting.`;
+
+    const result = await this.model.generateContent(prompt);
+    const response = await result.response;
+    return response.text().trim();
+  }
+
+  // Get current chat session — returns a fresh object so React state updates
+  // always see a new identity (the service mutates its session in place)
   getCurrentSession(): GeminiChatSession {
-    return this.currentSession;
+    return {
+      ...this.currentSession,
+      messages: [...this.currentSession.messages],
+    };
   }
 
   // Clear chat history
@@ -181,6 +283,13 @@ class GeminiService {
     return await this.initialize(apiKey);
   }
 }
+
+// True when an error is an authentication/authorization problem (bad or missing
+// API key) rather than a model/network failure — drives which recovery UI to show
+export const isAuthError = (error: unknown): boolean => {
+  const message = error instanceof Error ? error.message : String(error);
+  return /api key|API_KEY_INVALID|PERMISSION_DENIED|\b401\b|\b403\b/i.test(message);
+};
 
 // Export singleton instance
 export const geminiService = new GeminiService();
