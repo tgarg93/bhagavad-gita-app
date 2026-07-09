@@ -1,15 +1,22 @@
 // Vapi Configuration
 // Update these values with your actual Vapi credentials and assistant settings
+import Constants from 'expo-constants';
+
+// Read from app config extra first (works in EAS builds), then env (dev)
+const VAPI_API_KEY =
+  Constants.expoConfig?.extra?.vapiApiKey || process.env.EXPO_PUBLIC_VAPI_API_KEY || '';
+const VAPI_ASSISTANT_ID =
+  Constants.expoConfig?.extra?.vapiAssistantId || process.env.EXPO_PUBLIC_VAPI_ASSISTANT_ID || '';
 
 export const VAPI_CONFIG = {
   // Enable/disable Vapi functionality (set to false for Expo Go testing)
-  enabled: !!process.env.EXPO_PUBLIC_VAPI_API_KEY, // Auto-enabled when API key is provided
-  
+  enabled: !!VAPI_API_KEY, // Auto-enabled when API key is provided
+
   // Your Vapi public API key (get from https://vapi.ai dashboard)
-  publicApiKey: process.env.EXPO_PUBLIC_VAPI_API_KEY || '', // Set in .env file
-  
+  publicApiKey: VAPI_API_KEY,
+
   // Your Krishna assistant ID (optional - will use inline configuration if not provided)
-  assistantId: process.env.EXPO_PUBLIC_VAPI_ASSISTANT_ID || '', // Set in .env file
+  assistantId: VAPI_ASSISTANT_ID,
   
   // Default Krishna assistant configuration (used if no assistantId provided)
   defaultAssistant: {
