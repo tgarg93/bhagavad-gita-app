@@ -28,7 +28,7 @@ const AnimatedLogo: React.FC<AnimatedLogoProps> = ({
   return (
     <Animated.View style={[styles.container, animatedStyle, style]}>
       <Animated.Image
-        source={require('../../assets/dharma-lotus-logo.png')}
+        source={require('../../assets/dharma-lotus-transparent.png')}
         style={[
           styles.logoImage,
           {

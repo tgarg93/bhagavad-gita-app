@@ -12,7 +12,10 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import DharmaHeader from '../components/ui/DharmaHeader';
+import AudioControls from '../components/AudioControls';
+import TextHighlighter from '../components/TextHighlighter';
 import { getPhilosophyById, PhilosophicalConcept, ConceptSection } from '../data/philosophyAndTeachings';
+import { AudioNarrationService, TextSegment } from '../services/audioNarrationService';
 
 const { width, height } = Dimensions.get('window');
 
@@ -25,10 +28,20 @@ const PhilosophyDetailScreen: React.FC = () => {
   const [fontSize, setFontSize] = useState<'small' | 'medium' | 'large'>('medium');
   const [currentSection, setCurrentSection] = useState(0);
   const [sectionPositions, setSectionPositions] = useState<{[key: number]: number}>({});
+  const [highlightedSegmentId, setHighlightedSegmentId] = useState<string | null>(null);
+  const [audioSegments, setAudioSegments] = useState<TextSegment[]>([]);
+  const [showAudioControls, setShowAudioControls] = useState(false);
 
   useEffect(() => {
     const conceptData = getPhilosophyById(conceptId);
     setConcept(conceptData || null);
+    
+    // Prepare audio segments when concept loads
+    if (conceptData?.sections) {
+      const audioService = AudioNarrationService.getInstance();
+      const segments = audioService.parseContentIntoSegments(conceptData.sections);
+      setAudioSegments(segments);
+    }
   }, [conceptId]);
 
   const adjustFontSize = () => {
@@ -71,15 +84,49 @@ const PhilosophyDetailScreen: React.FC = () => {
     }));
   };
 
+  const handleTextHighlight = (segmentId: string, segmentIndex: number) => {
+    setHighlightedSegmentId(segmentId);
+  };
+
+  const handleScrollToSegment = (segmentIndex: number) => {
+    const segment = audioSegments[segmentIndex];
+    if (!segment || !concept?.sections) return;
+
+    // Find which section this segment belongs to
+    const sectionMatch = segment.id.match(/section-(\d+)/);
+    if (sectionMatch) {
+      const sectionIndex = parseInt(sectionMatch[1]);
+      const sectionY = sectionPositions[sectionIndex];
+      if (sectionY !== undefined && scrollViewRef.current) {
+        scrollViewRef.current.scrollTo({ y: sectionY - 100, animated: true });
+      }
+    }
+  };
+
   const SanskritVerse = ({ sanskrit, transliteration, meaning }: {
     sanskrit: string;
     transliteration: string;
     meaning: string;
   }) => (
     <View style={styles.verseContainer}>
-      <Text style={getTextStyle(styles.sanskritText)}>{sanskrit}</Text>
-      <Text style={getTextStyle(styles.transliterationText)}>{transliteration}</Text>
-      <Text style={getTextStyle(styles.meaningText)}>{meaning}</Text>
+      <TextHighlighter
+        text={sanskrit}
+        highlightedSegmentId={highlightedSegmentId}
+        segments={audioSegments}
+        style={getTextStyle(styles.sanskritText)}
+      />
+      <TextHighlighter
+        text={transliteration}
+        highlightedSegmentId={highlightedSegmentId}
+        segments={audioSegments}
+        style={getTextStyle(styles.transliterationText)}
+      />
+      <TextHighlighter
+        text={meaning}
+        highlightedSegmentId={highlightedSegmentId}
+        segments={audioSegments}
+        style={getTextStyle(styles.meaningText)}
+      />
     </View>
   );
 
@@ -114,9 +161,12 @@ const PhilosophyDetailScreen: React.FC = () => {
         style={styles.sectionContainer}
         onLayout={onSectionLayout(index)}
       >
-        <Text style={getTextStyle(styles.sectionTitle)}>
-          {section.title}
-        </Text>
+        <TextHighlighter
+          text={section.title}
+          highlightedSegmentId={highlightedSegmentId}
+          segments={audioSegments}
+          style={getTextStyle(styles.sectionTitle)}
+        />
         {section.subtitle && (
           <Text style={getTextStyle(styles.sectionSubtitle)}>
             {section.subtitle}
@@ -132,13 +182,21 @@ const PhilosophyDetailScreen: React.FC = () => {
         )}
 
         {section.storyText && (
-          <Text style={getTextStyle(styles.storyText)}>
-            {section.storyText}
-          </Text>
+          <TextHighlighter
+            text={section.storyText}
+            highlightedSegmentId={highlightedSegmentId}
+            segments={audioSegments}
+            style={getTextStyle(styles.storyText)}
+          />
         )}
 
         {section.sectionHeader && (
-          <Text style={getTextStyle(styles.sectionHeader)}>{section.sectionHeader}</Text>
+          <TextHighlighter
+            text={section.sectionHeader}
+            highlightedSegmentId={highlightedSegmentId}
+            segments={audioSegments}
+            style={getTextStyle(styles.sectionHeader)}
+          />
         )}
 
         {section.keyVerse && (
@@ -150,9 +208,12 @@ const PhilosophyDetailScreen: React.FC = () => {
         )}
 
         {section.teachingText && (
-          <Text style={getTextStyle(styles.storyText)}>
-            {section.teachingText}
-          </Text>
+          <TextHighlighter
+            text={section.teachingText}
+            highlightedSegmentId={highlightedSegmentId}
+            segments={audioSegments}
+            style={getTextStyle(styles.storyText)}
+          />
         )}
       </View>
     );
@@ -166,9 +227,17 @@ const PhilosophyDetailScreen: React.FC = () => {
         showBackButton={true}
         onBackPress={() => navigation.goBack()}
         rightActions={
-          <TouchableOpacity onPress={adjustFontSize} style={styles.fontButton}>
-            <Ionicons name="text" size={20} color={DharmaDesignSystem.colors.primary.deepSaffron} />
-          </TouchableOpacity>
+          <View style={styles.headerActions}>
+            <AudioControls
+              content={concept.sections || []}
+              onTextHighlight={handleTextHighlight}
+              onScrollToSegment={handleScrollToSegment}
+              compact={true}
+            />
+            <TouchableOpacity onPress={adjustFontSize} style={styles.fontButton}>
+              <Ionicons name="text" size={20} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+            </TouchableOpacity>
+          </View>
         }
       />
 
@@ -179,6 +248,13 @@ const PhilosophyDetailScreen: React.FC = () => {
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
       >
+        {showAudioControls && (
+          <AudioControls
+            content={concept.sections || []}
+            onTextHighlight={handleTextHighlight}
+            onScrollToSegment={handleScrollToSegment}
+          />
+        )}
         <View style={styles.titleSection}>
           <Text style={getTextStyle(styles.mainTitle)}>{concept.name}</Text>
           <Text style={getTextStyle(styles.sanskritMainTitle)}>{concept.sanskritName}</Text>
@@ -204,6 +280,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: DharmaDesignSystem.spacing.xs,
   },
   fontButton: {
     padding: DharmaDesignSystem.spacing.xs,

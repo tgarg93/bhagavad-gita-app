@@ -57,7 +57,7 @@ const WisdomHubScreen: React.FC = () => {
     switch (card.category) {
       case 'scriptures':
         if (card.id === 'bhagavad-gita') {
-          (navigation as any).navigate('BhagavadGitaComplete');
+          (navigation as any).navigate('GitaVersePlayer');
         } else {
           (navigation as any).navigate('ScriptureDetail', { scriptureId: card.id });
         }
@@ -135,7 +135,7 @@ const WisdomHubScreen: React.FC = () => {
           )}
 
           {/* Progress Indicator */}
-          {item.progress && item.progress > 0 && (
+          {!!item.progress && item.progress > 0 && (
             <View style={styles.progressContainer}>
               <View style={styles.progressBar}>
                 <View 
@@ -155,14 +155,14 @@ const WisdomHubScreen: React.FC = () => {
             {item.title}
           </Text>
           
-          {item.sanskritName && (
+          {!!item.sanskritName && (
             <Text style={styles.cardSanskrit} numberOfLines={1}>
               {item.sanskritName}
             </Text>
           )}
-          
+
           {/* Festival Date for festival category */}
-          {item.category === 'festivals' && item.festivalDate && item.daysUntil !== undefined && (
+          {item.category === 'festivals' && !!item.festivalDate && item.daysUntil !== undefined && (
             <Text style={styles.festivalDate} numberOfLines={1}>
               {formatFestivalDate(item.festivalDate, item.daysUntil)}
             </Text>
@@ -174,7 +174,7 @@ const WisdomHubScreen: React.FC = () => {
           
           {/* Reading Time */}
           <View style={styles.cardMeta}>
-            {item.estimatedTime && (
+            {!!item.estimatedTime && (
               <View style={styles.readingTimeContainer}>
                 <Ionicons name="time-outline" size={14} color={DharmaDesignSystem.colors.primary.deepSaffron} />
                 <Text style={styles.readingTimeText}>{item.estimatedTime}</Text>

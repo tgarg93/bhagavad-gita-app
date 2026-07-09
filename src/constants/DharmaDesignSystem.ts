@@ -74,25 +74,25 @@ export const DharmaDesignSystem = {
       headingXL: { 
         fontSize: 32, 
         lineHeight: 40, 
-        fontWeight: '600',
+        fontWeight: 600,
         fontFamily: 'Poppins' 
       },
       headingLG: { 
         fontSize: 24, 
         lineHeight: 32, 
-        fontWeight: '600',
+        fontWeight: 600,
         fontFamily: 'Poppins' 
       },
       headingMD: { 
         fontSize: 20, 
         lineHeight: 28, 
-        fontWeight: '500',
+        fontWeight: 500,
         fontFamily: 'Poppins' 
       },
       headingSM: { 
         fontSize: 16, 
         lineHeight: 24, 
-        fontWeight: '500',
+        fontWeight: 500,
         fontFamily: 'Poppins' 
       },
       
@@ -100,19 +100,19 @@ export const DharmaDesignSystem = {
       bodyLG: { 
         fontSize: 18, 
         lineHeight: 28, 
-        fontWeight: '400',
+        fontWeight: 400,
         fontFamily: 'Poppins' 
       },
       bodyMD: { 
         fontSize: 16, 
         lineHeight: 24, 
-        fontWeight: '400',
+        fontWeight: 400,
         fontFamily: 'Poppins' 
       },
       bodySM: { 
         fontSize: 14, 
         lineHeight: 20, 
-        fontWeight: '400',
+        fontWeight: 400,
         fontFamily: 'Poppins' 
       },
       
@@ -120,14 +120,14 @@ export const DharmaDesignSystem = {
       sacredQuote: { 
         fontSize: 20, 
         lineHeight: 32, 
-        fontWeight: '400',
+        fontWeight: 400,
         fontFamily: 'Crimson Text',
         fontStyle: 'italic' as const
       },
       sacredSmall: { 
         fontSize: 16, 
         lineHeight: 24, 
-        fontWeight: '400',
+        fontWeight: 400,
         fontFamily: 'Crimson Text',
         fontStyle: 'italic' as const
       },
@@ -136,14 +136,14 @@ export const DharmaDesignSystem = {
       buttonText: { 
         fontSize: 16, 
         lineHeight: 24, 
-        fontWeight: '500',
+        fontWeight: 500,
         letterSpacing: 0.5,
         fontFamily: 'Poppins' 
       },
       navText: { 
         fontSize: 14, 
         lineHeight: 20, 
-        fontWeight: '500',
+        fontWeight: 500,
         letterSpacing: 0.3,
         fontFamily: 'Poppins' 
       },
@@ -152,13 +152,13 @@ export const DharmaDesignSystem = {
       caption: { 
         fontSize: 12, 
         lineHeight: 16, 
-        fontWeight: '400',
+        fontWeight: 400,
         fontFamily: 'Poppins' 
       },
       overline: { 
         fontSize: 10, 
         lineHeight: 14, 
-        fontWeight: '600',
+        fontWeight: 600,
         letterSpacing: 1.5,
         textTransform: 'uppercase' as const,
         fontFamily: 'Poppins' 

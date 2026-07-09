@@ -5,7 +5,9 @@ export interface Festival {
   id: string;
   name: string;
   sanskritName?: string;
-  date: string; // YYYY-MM-DD format
+  date: string; // YYYY-MM-DD format — repointed at load to the next/ongoing occurrence (see bottom of file)
+  occurrences: string[]; // YYYY-MM-DD start date per year; occurrence spans `duration` days from each start
+  emoji: string; // marker shown on calendar days and festival lists
   dateType: 'fixed' | 'lunar' | 'solar';
   type: FestivalType;
   significance: string;
@@ -206,6 +208,8 @@ export const festivalData: Festival[] = [
     name: 'Makar Sankranti',
     sanskritName: 'मकर संक्रान्ति',
     date: '2025-01-14',
+    occurrences: ['2025-01-14', '2026-01-14', '2027-01-15'],
+    emoji: '🪁',
     dateType: 'solar',
     type: 'harvest',
     significance: 'Marks the sun\'s transition into Capricorn, beginning of longer days and the harvest season',
@@ -583,6 +587,8 @@ export const festivalData: Festival[] = [
     name: 'Basant Panchami',
     sanskritName: 'बसन्त पञ्चमी',
     date: '2025-02-03',
+    occurrences: ['2025-02-03', '2026-01-23', '2027-02-11'],
+    emoji: '🪷',
     dateType: 'lunar',
     type: 'spiritual',
     significance: 'Celebration of knowledge, wisdom, and arrival of spring',
@@ -649,6 +655,8 @@ export const festivalData: Festival[] = [
     name: 'Maha Shivratri',
     sanskritName: 'महाशिवरात्रि',
     date: '2025-02-26',
+    occurrences: ['2025-02-26', '2026-02-15', '2027-03-06'],
+    emoji: '🔱',
     dateType: 'lunar',
     type: 'spiritual',
     significance: 'Great night of Lord Shiva, convergence of Shiva and Shakti',
@@ -716,6 +724,8 @@ export const festivalData: Festival[] = [
     name: 'Holi',
     sanskritName: 'होली',
     date: '2025-03-14',
+    occurrences: ['2025-03-13', '2026-03-03', '2027-03-22'],
+    emoji: '🎨',
     dateType: 'lunar',
     type: 'cultural',
     significance: 'Festival of colors, love, and spring',
@@ -783,6 +793,8 @@ export const festivalData: Festival[] = [
     name: 'Ram Navami',
     sanskritName: 'राम नवमी',
     date: '2025-04-06',
+    occurrences: ['2025-04-06', '2026-03-26', '2027-04-15'],
+    emoji: '🏹',
     dateType: 'lunar',
     type: 'deity_celebration',
     significance: 'Birth anniversary of Lord Rama',
@@ -835,6 +847,8 @@ export const festivalData: Festival[] = [
     name: 'Krishna Janmashtami',
     sanskritName: 'कृष्ण जन्माष्टमी',
     date: '2025-08-16',
+    occurrences: ['2025-08-16', '2026-09-04', '2027-08-25'],
+    emoji: '🦚',
     dateType: 'lunar',
     type: 'deity_celebration',
     significance: 'Birth anniversary of Lord Krishna',
@@ -888,6 +902,8 @@ export const festivalData: Festival[] = [
     name: 'Ganesh Chaturthi',
     sanskritName: 'गणेश चतुर्थी',
     date: '2025-08-29',
+    occurrences: ['2025-08-29', '2026-09-07', '2027-09-04'],
+    emoji: '🐘',
     dateType: 'lunar',
     type: 'deity_celebration',
     significance: 'Birth celebration of Lord Ganesha',
@@ -939,6 +955,8 @@ export const festivalData: Festival[] = [
     name: 'Navratri',
     sanskritName: 'नवरात्रि',
     date: '2025-09-22',
+    occurrences: ['2025-09-22', '2026-10-10', '2027-09-30'],
+    emoji: '🦁',
     dateType: 'lunar',
     type: 'deity_celebration',
     significance: 'Nine sacred nights celebrating Goddess Durga and her nine divine forms',
@@ -1488,6 +1506,8 @@ export const festivalData: Festival[] = [
     name: 'Diwali',
     sanskritName: 'दीपावली',
     date: '2025-10-20',
+    occurrences: ['2025-10-20', '2026-11-08', '2027-10-29'],
+    emoji: '🪔',
     dateType: 'lunar',
     type: 'spiritual',
     significance: 'Festival of lights representing the victory of light over darkness, good over evil, and knowledge over ignorance',
@@ -1913,78 +1933,98 @@ export const festivalData: Festival[] = [
   }
 ];
 
-// Ekadashi dates for 2025
-export const ekadashiData: Ekadashi[] = [
-  {
-    id: 'paush-putrada-ekadashi-2025',
-    name: 'Paush Putrada Ekadashi',
-    date: '2025-01-10',
-    significance: 'Grants children and fulfills desires',
-    story: 'Associated with the story of King Suketuman and the blessing of a child',
-    fastingRules: [
-      'Complete fast from sunrise to sunrise next day',
-      'Only water allowed',
-      'Break fast after sunrise on Dwadashi'
-    ],
-    benefits: [
-      'Blessing of children',
-      'Purification of sins',
-      'Spiritual advancement'
-    ]
-  },
-  {
-    id: 'shattila-ekadashi-2025',
-    name: 'Shattila Ekadashi',
-    date: '2025-01-25',
-    significance: 'Use of sesame seeds in six ways',
-    story: 'Story of the power of sesame seeds and devotion',
-    fastingRules: [
-      'Fast with fruits and milk',
-      'Use sesame seeds in worship',
-      'Avoid grains and beans'
-    ],
-    benefits: [
-      'Liberation from sins',
-      'Health and longevity',
-      'Spiritual purification'
-    ]
-  }
-];
+// Ekadashi observances — 2025 entries removed; repopulate with current dates when the feature returns
+export const ekadashiData: Ekadashi[] = [];
 
 // Utility functions
-export const getTodaysFestivals = (): Festival[] => {
-  const today = new Date();
-  return festivalData.filter(festival => {
-    const festivalStartDate = new Date(festival.date);
-    const festivalEndDate = new Date(festivalStartDate.getTime() + ((festival.duration - 1) * 24 * 60 * 60 * 1000));
+const DAY_MS = 24 * 60 * 60 * 1000;
 
-    // Check if today falls within the festival duration
-    return today >= festivalStartDate && today <= festivalEndDate;
-  });
+// Parse YYYY-MM-DD as local midnight (new Date('YYYY-MM-DD') is UTC and can shift a day)
+const parseLocalDate = (dateStr: string): Date => {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  return new Date(year, month - 1, day);
+};
+
+const startOfToday = (): Date => {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+};
+
+export interface FestivalOccurrence {
+  start: Date;
+  end: Date; // inclusive last day
+}
+
+const getOccurrenceRange = (festival: Festival, start: string): FestivalOccurrence => {
+  const startDate = parseLocalDate(start);
+  return {
+    start: startDate,
+    end: new Date(startDate.getTime() + (festival.duration - 1) * DAY_MS),
+  };
+};
+
+// Earliest occurrence that is ongoing or upcoming; null if all occurrences are past
+export const getNextOccurrence = (festival: Festival): FestivalOccurrence | null => {
+  const today = startOfToday();
+  const upcoming = festival.occurrences
+    .map(start => getOccurrenceRange(festival, start))
+    .filter(range => range.end >= today)
+    .sort((a, b) => a.start.getTime() - b.start.getTime());
+  return upcoming[0] ?? null;
+};
+
+// Days until the festival's next occurrence starts (0 if ongoing/today); null if none upcoming
+export const getDaysUntilFestival = (festival: Festival): number | null => {
+  const next = getNextOccurrence(festival);
+  if (!next) return null;
+  return Math.max(0, Math.round((next.start.getTime() - startOfToday().getTime()) / DAY_MS));
+};
+
+export const getTodaysFestivals = (): Festival[] => {
+  const today = startOfToday();
+  return festivalData.filter(festival =>
+    festival.occurrences.some(start => {
+      const range = getOccurrenceRange(festival, start);
+      return today >= range.start && today <= range.end;
+    })
+  );
 };
 
 export const getCurrentlyOngoingFestivals = (): Festival[] => {
   return getTodaysFestivals(); // Same logic for now
 };
 
-export const getUpcomingFestivals = (days: number = 30): Festival[] => {
-  const today = new Date();
-  const futureDate = new Date(today.getTime() + (days * 24 * 60 * 60 * 1000));
+// Festivals sorted by next occurrence (ongoing first, then soonest); never empty
+// while the data contains future occurrences
+export const getUpcomingFestivals = (limit: number = festivalData.length): Festival[] => {
+  return festivalData
+    .map(festival => ({ festival, next: getNextOccurrence(festival) }))
+    .filter((entry): entry is { festival: Festival; next: FestivalOccurrence } => entry.next !== null)
+    .sort((a, b) => a.next.start.getTime() - b.next.start.getTime())
+    .slice(0, limit)
+    .map(entry => entry.festival);
+};
 
-  return festivalData.filter(festival => {
-    const festivalStartDate = new Date(festival.date);
-    const festivalEndDate = new Date(festivalStartDate.getTime() + ((festival.duration - 1) * 24 * 60 * 60 * 1000));
-
-    // Include festivals that are currently ongoing or starting in the future
-    return (festivalEndDate >= today && festivalStartDate <= futureDate);
-  }).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+// Festivals whose occurrence spans the given YYYY-MM-DD day
+export const getFestivalsOnDate = (dateStr: string): Festival[] => {
+  const date = parseLocalDate(dateStr);
+  return festivalData.filter(festival =>
+    festival.occurrences.some(start => {
+      const range = getOccurrenceRange(festival, start);
+      return date >= range.start && date <= range.end;
+    })
+  );
 };
 
 export const getFestivalsByMonth = (month: number, year: number): Festival[] => {
-  return festivalData.filter(festival => {
-    const festivalDate = new Date(festival.date);
-    return festivalDate.getMonth() === month - 1 && festivalDate.getFullYear() === year;
-  });
+  const monthStart = new Date(year, month - 1, 1);
+  const monthEnd = new Date(year, month, 0); // last day of the month
+  return festivalData.filter(festival =>
+    festival.occurrences.some(start => {
+      const range = getOccurrenceRange(festival, start);
+      return range.start <= monthEnd && range.end >= monthStart;
+    })
+  );
 };
 
 export const getFestivalsByType = (type: FestivalType): Festival[] => {
@@ -1992,35 +2032,27 @@ export const getFestivalsByType = (type: FestivalType): Festival[] => {
 };
 
 export const getMajorFestivals = (): Festival[] => {
-  const today = new Date();
   return festivalData
     .filter(festival => festival.importance === 'major')
     .sort((a, b) => {
-      const startDateA = new Date(a.date);
-      const startDateB = new Date(b.date);
-      const endDateA = new Date(startDateA.getTime() + ((a.duration - 1) * 24 * 60 * 60 * 1000));
-      const endDateB = new Date(startDateB.getTime() + ((b.duration - 1) * 24 * 60 * 60 * 1000));
-
-      // Calculate days from today to start of festival
-      const daysFromTodayA = Math.ceil((startDateA.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-      const daysFromTodayB = Math.ceil((startDateB.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-
-      // Check if festivals are currently ongoing
-      const isOngoingA = today >= startDateA && today <= endDateA;
-      const isOngoingB = today >= startDateB && today <= endDateB;
-
-      // Prioritize ongoing festivals, then upcoming festivals, then past festivals as next year
-      if (isOngoingA && !isOngoingB) return -1;
-      if (!isOngoingA && isOngoingB) return 1;
-      if (isOngoingA && isOngoingB) return startDateA.getTime() - startDateB.getTime();
-
-      // For non-ongoing festivals, handle past vs future
-      const adjustedDaysA = daysFromTodayA < 0 ? daysFromTodayA + 365 : daysFromTodayA;
-      const adjustedDaysB = daysFromTodayB < 0 ? daysFromTodayB + 365 : daysFromTodayB;
-
-      return adjustedDaysA - adjustedDaysB;
+      const nextA = getNextOccurrence(a);
+      const nextB = getNextOccurrence(b);
+      // Festivals with no future occurrence sort last
+      const timeA = nextA ? nextA.start.getTime() : Number.MAX_SAFE_INTEGER;
+      const timeB = nextB ? nextB.start.getTime() : Number.MAX_SAFE_INTEGER;
+      return timeA - timeB;
     });
 };
+
+// Keep the legacy `date` field pointing at each festival's ongoing/next occurrence so
+// call sites that read it directly (e.g. contentAggregator) stay correct as years roll over
+festivalData.forEach(festival => {
+  const next = getNextOccurrence(festival);
+  if (next) {
+    const { start } = next;
+    festival.date = `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, '0')}-${String(start.getDate()).padStart(2, '0')}`;
+  }
+});
 
 export const getTodaysEkadashi = (): Ekadashi | null => {
   const today = new Date().toISOString().split('T')[0];

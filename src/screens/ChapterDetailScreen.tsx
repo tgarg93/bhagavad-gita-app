@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { getChapter } from '../data/bhagavadGitaData';
 import { Chapter, Verse } from '../types/content';
+import AudioControls from '../components/AudioControls';
+import TextHighlighter from '../components/TextHighlighter';
+import { AudioNarrationService, TextSegment } from '../services/audioNarrationService';
 
 interface RouteParams {
   chapterId: string;
@@ -22,29 +25,37 @@ const ChapterDetailScreen: React.FC = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { chapterId } = route.params as RouteParams;
-  
+  const scrollViewRef = useRef<ScrollView>(null);
+
   const [chapter, setChapter] = useState<Chapter | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentVerse, setCurrentVerse] = useState<number | null>(null);
+  const [highlightedSegmentId, setHighlightedSegmentId] = useState<string | null>(null);
+  const [audioSegments, setAudioSegments] = useState<TextSegment[]>([]);
 
   useEffect(() => {
     const chapterData = getChapter(parseInt(chapterId.split('-')[1]));
     setChapter(chapterData || null);
+
+    // Prepare audio segments when chapter loads
+    if (chapterData) {
+      const audioService = AudioNarrationService.getInstance();
+      const content = [
+        chapterData.summary,
+        getChildFriendlyExplanation(chapterData.number),
+        ...chapterData.verses?.map(v => v.english) || []
+      ];
+      const segments = audioService.parseContentIntoSegments(content);
+      setAudioSegments(segments);
+    }
   }, [chapterId]);
 
-  const playChapter = () => {
-    setIsPlaying(!isPlaying);
-    // In a real app, this would control audio playback
-    Alert.alert(
-      isPlaying ? '⏸️ Paused' : '🔊 Playing', 
-      isPlaying ? 'Audio paused' : `Playing Chapter ${chapter?.number}: ${chapter?.name.english}`
-    );
+  const handleTextHighlight = (segmentId: string, segmentIndex: number) => {
+    setHighlightedSegmentId(segmentId);
   };
 
-  const playVerse = (verseNumber: number) => {
-    setCurrentVerse(verseNumber);
-    // In a real app, this would play the specific verse audio
-    Alert.alert('🎵 Playing Verse', `Now playing Chapter ${chapter?.number}, Verse ${verseNumber}`);
+  const handleScrollToSegment = (segmentIndex: number) => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ y: 0, animated: true });
+    }
   };
 
   if (!chapter) {
@@ -75,27 +86,43 @@ const ChapterDetailScreen: React.FC = () => {
           <Text style={styles.chapterTitle}>{chapter.name.english}</Text>
         </View>
 
-        <TouchableOpacity 
-          style={styles.playButton}
-          onPress={playChapter}
-        >
-          <LinearGradient
-            colors={['#58cc02', '#89e219']}
-            style={styles.playButtonGradient}
-          >
-            <Ionicons 
-              name={isPlaying ? "pause" : "play"} 
-              size={24} 
-              color="#ffffff" 
-            />
-          </LinearGradient>
-        </TouchableOpacity>
+        {chapter && (
+          <AudioControls
+            content={[
+              chapter.summary,
+              getChildFriendlyExplanation(chapter.number),
+              ...chapter.verses?.map(v => v.english) || []
+            ]}
+            onTextHighlight={handleTextHighlight}
+            onScrollToSegment={handleScrollToSegment}
+            compact={true}
+          />
+        )}
       </View>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Simple Summary */}
         <View style={styles.summaryContainer}>
-          <Text style={styles.summaryText}>{chapter.summary}</Text>
+          <TextHighlighter
+            text={chapter.summary}
+            highlightedSegmentId={highlightedSegmentId}
+            segments={audioSegments}
+            style={styles.summaryText}
+          />
+        </View>
+
+        <View style={styles.explanationContainer}>
+          <Text style={styles.explanationTitle}>Simple Explanation</Text>
+          <TextHighlighter
+            text={getChildFriendlyExplanation(chapter.number)}
+            highlightedSegmentId={highlightedSegmentId}
+            segments={audioSegments}
+            style={styles.explanationText}
+          />
         </View>
 
         {/* Key Verses */}
@@ -106,19 +133,14 @@ const ChapterDetailScreen: React.FC = () => {
                 <Text style={styles.verseLabel}>
                   {verse.verseNumber}
                 </Text>
-                <TouchableOpacity 
-                  style={styles.versePlayButton}
-                  onPress={() => playVerse(verse.verseNumber)}
-                >
-                  <Ionicons 
-                    name={currentVerse === verse.verseNumber ? "pause" : "play"} 
-                    size={20} 
-                    color="#ffffff" 
-                  />
-                </TouchableOpacity>
               </View>
 
-              <Text style={styles.english}>{verse.english}</Text>
+              <TextHighlighter
+                text={verse.english}
+                highlightedSegmentId={highlightedSegmentId}
+                segments={audioSegments}
+                style={styles.english}
+              />
             </View>
           ))}
         </View>
@@ -166,20 +188,6 @@ const styles = StyleSheet.create({
     color: '#4b5563',
     textAlign: 'center',
   },
-  playButton: {
-    shadowColor: '#58cc02',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 6,
-  },
-  playButtonGradient: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   content: {
     flex: 1,
   },
@@ -198,6 +206,32 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: '#4b5563',
     lineHeight: 26,
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+  explanationContainer: {
+    backgroundColor: '#fef3c7',
+    margin: 20,
+    marginTop: 0,
+    padding: 24,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  explanationTitle: {
+    fontSize: 18,
+    color: '#92400e',
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: 12,
+  },
+  explanationText: {
+    fontSize: 16,
+    color: '#92400e',
+    lineHeight: 24,
     fontWeight: '500',
     textAlign: 'center',
   },
@@ -231,16 +265,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     minWidth: 40,
     textAlign: 'center',
-  },
-  versePlayButton: {
-    backgroundColor: '#1cb0f6',
-    padding: 12,
-    borderRadius: 24,
-    shadowColor: '#1cb0f6',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
   },
   english: {
     fontSize: 18,

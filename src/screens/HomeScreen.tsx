@@ -17,7 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { DharmaColors, NavigationColors } from '../constants/colors';
 import { DharmaDesignSystem, createTextStyle, createCardStyle } from '../constants/DharmaDesignSystem';
 import { getTodaysInsight, getCurrentWeekTheme, getRandomInsight } from '../data/dailyInsights';
-import { getTodaysFestivals, getUpcomingFestivals } from '../data/festivals';
+import { getTodaysFestivals, getUpcomingFestivals, getNextOccurrence, getDaysUntilFestival, Festival } from '../data/festivals';
 
 const { width } = Dimensions.get('window');
 
@@ -26,7 +26,7 @@ const HomeScreen: React.FC = () => {
   const [todaysInsight, setTodaysInsight] = useState(getTodaysInsight() || getRandomInsight());
   const [weekTheme, setWeekTheme] = useState(getCurrentWeekTheme());
   const [todaysFestivals, setTodaysFestivals] = useState(getTodaysFestivals());
-  const [upcomingFestivals, setUpcomingFestivals] = useState(getUpcomingFestivals(45));
+  const [upcomingFestivals, setUpcomingFestivals] = useState(getUpcomingFestivals(3));
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const HomeScreen: React.FC = () => {
       setTodaysInsight(getTodaysInsight() || getRandomInsight());
       setWeekTheme(getCurrentWeekTheme());
       setTodaysFestivals(getTodaysFestivals());
-      setUpcomingFestivals(getUpcomingFestivals(45));
+      setUpcomingFestivals(getUpcomingFestivals(3));
     } catch (error) {
       console.log('Error loading daily content:', error);
     } finally {
@@ -55,6 +55,18 @@ const HomeScreen: React.FC = () => {
 
   const navigateToFestivals = () => {
     navigation.navigate('FestivalCalendar' as never);
+  };
+
+  const openFestival = (festival: Festival) => {
+    (navigation as any).navigate('FestivalDetail', { festivalId: festival.id });
+  };
+
+  const daysUntilLabel = (festival: Festival): string | null => {
+    const days = getDaysUntilFestival(festival);
+    if (days === null) return null;
+    if (days === 0) return 'Today';
+    if (days === 1) return 'Tomorrow';
+    return `in ${days} days`;
   };
 
   const navigateToAskKrishna = () => {
@@ -122,22 +134,28 @@ const HomeScreen: React.FC = () => {
             </TouchableOpacity>
           </View>
           
-          {upcomingFestivals.slice(0, 3).map((festival) => (
-            <TouchableOpacity key={festival.id} style={styles.festivalItem} onPress={navigateToFestivals}>
-              <View style={styles.festivalDate}>
-                <Text style={styles.festivalDay}>{new Date(festival.date).getDate()}</Text>
-                <Text style={styles.festivalMonth}>
-                  {new Date(festival.date).toLocaleDateString('en-US', { month: 'short' })}
-                </Text>
-              </View>
-              <View style={styles.festivalDetails}>
-                <Text style={styles.festivalName}>{festival.name}</Text>
-                <Text style={styles.festivalSignificance} numberOfLines={1}>
-                  {festival.significance}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ))}
+          {upcomingFestivals.map((festival) => {
+            const occurrenceStart = getNextOccurrence(festival)?.start ?? new Date(festival.date);
+            return (
+              <TouchableOpacity key={festival.id} style={styles.festivalItem} onPress={() => openFestival(festival)}>
+                <View style={styles.festivalDate}>
+                  <Text style={styles.festivalDay}>{occurrenceStart.getDate()}</Text>
+                  <Text style={styles.festivalMonth}>
+                    {occurrenceStart.toLocaleDateString('en-US', { month: 'short' })}
+                  </Text>
+                </View>
+                <View style={styles.festivalDetails}>
+                  <Text style={styles.festivalName}>{festival.emoji}  {festival.name}</Text>
+                  <Text style={styles.festivalSignificance} numberOfLines={1}>
+                    {festival.significance}
+                  </Text>
+                </View>
+                {daysUntilLabel(festival) && (
+                  <Text style={styles.festivalCountdown}>{daysUntilLabel(festival)}</Text>
+                )}
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -287,6 +305,12 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: DharmaDesignSystem.colors.neutrals.softAsh,
     lineHeight: 18,
+  },
+  festivalCountdown: {
+    ...DharmaDesignSystem.typography.sizes.caption,
+    fontWeight: '600',
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
+    marginLeft: DharmaDesignSystem.spacing.sm,
   },
 });
 

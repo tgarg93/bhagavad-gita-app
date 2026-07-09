@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import {
   View,
   Text,
@@ -8,22 +8,39 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  Modal,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import DharmaHeader from '../components/ui/DharmaHeader';
+import AudioControls from '../components/AudioControls';
+import TextHighlighter from '../components/TextHighlighter';
 import { bhagavadGitaData } from '../data/bhagavadGitaData';
-import { Chapter } from '../types/content';
+import { gitaPreface, gitaChapters, GitaBlock, GitaChapterContent } from '../data/bhagavadGitaContent';
+import { getVerseCount } from '../data/gitaVerses';
+import { gitaReflections } from '../data/bhagavadGitaContent';
+import ChapterReflection from '../components/ChapterReflection';
+import { AudioNarrationService, TextSegment } from '../services/audioNarrationService';
 
 const { width, height } = Dimensions.get('window');
+
+// Preface is section index 0 in the narration content; chapters occupy indices 1-18.
+// All reading content lives in src/data/bhagavadGitaContent.ts.
+const PREFACE_KEY = 0; // chapterPositions key for the preface section
+
+const chapterName = (chapterNumber: number): string =>
+  bhagavadGitaData.find(ch => ch.number === chapterNumber)?.name.english || '';
 
 const BhagavadGitaCompleteScreen: React.FC = () => {
   const navigation = useNavigation();
   const scrollViewRef = useRef<ScrollView>(null);
   const [fontSize, setFontSize] = useState<'small' | 'medium' | 'large'>('medium');
-  const [currentChapter, setCurrentChapter] = useState(1);
+  const [currentChapter, setCurrentChapter] = useState(PREFACE_KEY);
   const [chapterPositions, setChapterPositions] = useState<{[key: number]: number}>({});
+  const [highlightedSegmentId, setHighlightedSegmentId] = useState<string | null>(null);
+  const [audioSegments, setAudioSegments] = useState<TextSegment[]>([]);
+  const [showToc, setShowToc] = useState(false);
 
   const adjustFontSize = () => {
     const sizes: ('small' | 'medium' | 'large')[] = ['small', 'medium', 'large'];
@@ -43,18 +60,69 @@ const BhagavadGitaCompleteScreen: React.FC = () => {
 
   const handleScroll = (event: any) => {
     const scrollY = event.nativeEvent.contentOffset.y;
-    
-    // Find which chapter is currently in view
-    let currentChapterInView = 1;
+
+    // Find which chapter is currently in view (0 = preface)
+    let currentChapterInView = PREFACE_KEY;
     Object.keys(chapterPositions).forEach(chapterNum => {
       const chapterY = chapterPositions[parseInt(chapterNum)];
       if (scrollY >= chapterY - 100) { // 100px buffer for header
         currentChapterInView = parseInt(chapterNum);
       }
     });
-    
+
     if (currentChapterInView !== currentChapter) {
       setCurrentChapter(currentChapterInView);
+    }
+  };
+
+  // Narration content: preface at section index 0, chapter N at section index N,
+  // so segment ids (`section-{i}-...`) line up with chapterPositions keys
+  const narrationContent = useMemo(() => [
+    { title: 'Before You Begin', blocks: gitaPreface.blocks },
+    ...gitaChapters.map(chapter => ({
+      title: `Chapter ${chapter.number}: ${chapterName(chapter.number)}`,
+      blocks: chapter.blocks,
+    })),
+  ], []);
+
+  useEffect(() => {
+    const audioService = AudioNarrationService.getInstance();
+    setAudioSegments(audioService.parseContentIntoSegments(narrationContent));
+  }, [narrationContent]);
+
+  const handleTextHighlight = useCallback((segmentId: string, segmentIndex: number) => {
+    setHighlightedSegmentId(segmentId);
+  }, []);
+
+  const handlePlaybackFinished = useCallback(() => {
+    setHighlightedSegmentId(null);
+  }, []);
+
+  const audioSegmentsRef = useRef<TextSegment[]>([]);
+  audioSegmentsRef.current = audioSegments;
+  const chapterPositionsRef = useRef<{[key: number]: number}>({});
+  chapterPositionsRef.current = chapterPositions;
+
+  const handleScrollToSegment = useCallback((segmentIndex: number) => {
+    const segment = audioSegmentsRef.current[segmentIndex];
+    if (!segment) return;
+
+    // Section index in segment ids maps directly to chapterPositions keys (0 = preface)
+    const sectionMatch = segment.id.match(/section-(\d+)/);
+    if (sectionMatch) {
+      const sectionKey = parseInt(sectionMatch[1]);
+      const chapterY = chapterPositionsRef.current[sectionKey];
+      if (chapterY !== undefined && scrollViewRef.current) {
+        scrollViewRef.current.scrollTo({ y: Math.max(0, chapterY - 100), animated: true });
+      }
+    }
+  }, []);
+
+  const jumpToChapter = (sectionKey: number) => {
+    setShowToc(false);
+    const y = chapterPositionsRef.current[sectionKey];
+    if (y !== undefined && scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ y: Math.max(0, y - 12), animated: true });
     }
   };
 
@@ -66,403 +134,228 @@ const BhagavadGitaCompleteScreen: React.FC = () => {
     }));
   };
 
-  const SanskritVerse = ({ sanskrit, transliteration, meaning }: {
+  const SanskritVerse = ({ sanskrit, transliteration, meaning, reference, blockPrefix }: {
     sanskrit: string;
     transliteration: string;
     meaning: string;
+    reference?: string; // e.g. '2.47' — shown as a citation caption
+    blockPrefix?: string; // narration block id of this verse, e.g. 'section-2-block-5'
   }) => (
     <View style={styles.verseContainer}>
-      <Text style={getTextStyle(styles.sanskritText)}>{sanskrit}</Text>
-      <Text style={getTextStyle(styles.transliterationText)}>{transliteration}</Text>
-      <Text style={getTextStyle(styles.meaningText)}>{meaning}</Text>
+      <TextHighlighter
+        text={sanskrit}
+        blockId={blockPrefix ? `${blockPrefix}-sanskrit` : undefined}
+        highlightedSegmentId={highlightedSegmentId}
+        segments={audioSegments}
+        style={getTextStyle(styles.sanskritText)}
+      />
+      <TextHighlighter
+        text={transliteration}
+        blockId={blockPrefix ? `${blockPrefix}-transliteration` : undefined}
+        highlightedSegmentId={highlightedSegmentId}
+        segments={audioSegments}
+        style={getTextStyle(styles.transliterationText)}
+      />
+      <TextHighlighter
+        text={meaning}
+        blockId={blockPrefix ? `${blockPrefix}-meaning` : undefined}
+        highlightedSegmentId={highlightedSegmentId}
+        segments={audioSegments}
+        style={getTextStyle(styles.meaningText)}
+      />
+      {reference && (
+        <Text style={styles.verseReference}>
+          {/^\d/.test(reference) ? `Bhagavad Gita ${reference}` : reference}
+        </Text>
+      )}
     </View>
   );
 
-  const renderChapter = (chapter: Chapter) => {
-    const chapterContent = getChapterContent(chapter.number);
-    
+  // Renders one section's ordered content blocks; blockIds match the narration
+  // parser's `section-{sectionIndex}-block-{blockIndex}` scheme
+  const renderBlocks = (sectionIndex: number, blocks: GitaBlock[]) =>
+    blocks.map((block, blockIndex) => {
+      const blockId = `section-${sectionIndex}-block-${blockIndex}`;
+      switch (block.type) {
+        case 'header':
+          return (
+            <TextHighlighter
+              key={blockId}
+              text={block.text}
+              blockId={blockId}
+              highlightedSegmentId={highlightedSegmentId}
+              segments={audioSegments}
+              style={getTextStyle(styles.sectionHeader)}
+            />
+          );
+        case 'verse':
+          return (
+            <SanskritVerse
+              key={blockId}
+              sanskrit={block.verse.sanskrit}
+              transliteration={block.verse.transliteration}
+              meaning={block.verse.meaning}
+              reference={block.verse.reference}
+              blockPrefix={blockId}
+            />
+          );
+        case 'prose':
+        case 'teaching':
+          return (
+            <TextHighlighter
+              key={blockId}
+              text={block.text}
+              blockId={blockId}
+              highlightedSegmentId={highlightedSegmentId}
+              segments={audioSegments}
+              style={getTextStyle(styles.storyText)}
+            />
+          );
+        default:
+          return null;
+      }
+    });
+
+  const renderChapter = (chapter: GitaChapterContent) => {
+    const section = `section-${chapter.number}`; // preface occupies section-0
+
     return (
-      <View 
-        key={chapter.id} 
+      <View
+        key={`chapter-${chapter.number}`}
         style={styles.chapterSection}
         onLayout={onChapterLayout(chapter.number)}
       >
-        <Text style={getTextStyle(styles.chapterTitle)}>
-          Chapter {chapter.number}: {chapter.name.english}
-        </Text>
-        <Text style={getTextStyle(styles.chapterSubtitle)}>
-          {chapterContent.subtitle} • {getEstimatedReadingTime(chapter.number)} min read
-        </Text>
-
-        {/* Opening Sanskrit Verse */}
-        <SanskritVerse
-          sanskrit={chapterContent.openingVerse.sanskrit}
-          transliteration={chapterContent.openingVerse.transliteration}
-          meaning={chapterContent.openingVerse.meaning}
+        <TextHighlighter
+          text={`Chapter ${chapter.number}: ${chapterName(chapter.number)}`}
+          blockId={`${section}-title`}
+          highlightedSegmentId={highlightedSegmentId}
+          segments={audioSegments}
+          style={getTextStyle(styles.chapterTitle)}
         />
-
-        {/* Story Content */}
-        <Text style={getTextStyle(styles.storyText)}>
-          {chapterContent.storyText}
+        <Text style={getTextStyle(styles.chapterSubtitle)}>
+          {chapter.subtitle} • {getEstimatedReadingTime(chapter.number)} min read
         </Text>
 
-        {/* Section Header */}
-        {chapterContent.sectionHeader && (
-          <Text style={getTextStyle(styles.sectionHeader)}>{chapterContent.sectionHeader}</Text>
-        )}
+        {renderBlocks(chapter.number, chapter.blocks)}
 
-        {/* Key Teaching Verse */}
-        {chapterContent.keyVerse && (
-          <SanskritVerse
-            sanskrit={chapterContent.keyVerse.sanskrit}
-            transliteration={chapterContent.keyVerse.transliteration}
-            meaning={chapterContent.keyVerse.meaning}
+        {/* End-of-chapter reflection prompts */}
+        {gitaReflections[chapter.number] && (
+          <ChapterReflection
+            chapterNumber={chapter.number}
+            chapterTitle={chapterName(chapter.number)}
+            subtitle={chapter.subtitle}
+            questions={gitaReflections[chapter.number]}
           />
-        )}
-
-        {/* Teaching Content */}
-        {chapterContent.teachingText && (
-          <Text style={getTextStyle(styles.storyText)}>
-            {chapterContent.teachingText}
-          </Text>
         )}
       </View>
     );
   };
 
-  const getChapterContent = (chapterNumber: number) => {
-    const chapterContentMap: {[key: number]: any} = {
-      1: {
-        subtitle: "Arjuna's Crisis of Faith",
-        openingVerse: {
-          sanskrit: "धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः",
-          transliteration: "dharma-kṣetre kuru-kṣetre samavetā yuyutsavaḥ",
-          meaning: "On the field of dharma, on the field of the Kurus, assembled, desiring to fight"
-        },
-        storyText: "On the sacred field where right and wrong would be decided, two armies gathered, ready for war. This place, Kurukshetra, wasn't just any battlefield - it was a dharma-kshetra (field of righteousness) where the fate of dharma itself would be determined. Arjuna, the greatest warrior alive, stands between two massive armies ready for battle. But when he looks across the field, he sees his teachers, cousins, and friends on the other side. His heart breaks.",
-        sectionHeader: "Arjuna's Despair",
-        keyVerse: {
-          sanskrit: "अर्जुन उवाच",
-          transliteration: "arjuna uvāca",
-          meaning: "Arjuna said"
-        },
-        teachingText: "When Arjuna spoke, his words revealed the deepest human struggle - what happens when our dharma (righteous duty) conflicts with our emotions and love for others. Overwhelmed with doubt and confusion, this mighty warrior sits down in his chariot, unable to fight. This is called vishada (deep despair) - when we're so confused about right and wrong that we can't act at all."
-      },
-      2: {
-        subtitle: "The Secret of Who You Really Are",
-        openingVerse: {
-          sanskrit: "अशोच्यान्न्वशोचस्त्वं प्रज्ञावादांश्च भाषसे",
-          transliteration: "aśocyān anvaśocas tvaṁ prajñā-vādāṁś ca bhāṣase",
-          meaning: "You grieve for those who should not be grieved for, yet you speak words of wisdom"
-        },
-        storyText: "Krishna gently points out Arjuna's confusion: 'You're worried about the wrong things, even though you understand many wise concepts.' This is how viveka (discrimination between real and unreal) begins - learning what deserves our worry and what doesn't. Krishna gently explains the most important truth: 'Arjuna, you think you're just this body, but you're so much more. You are an eternal soul that never dies.'",
-        sectionHeader: "The Eternal Soul Teaching",
-        keyVerse: {
-          sanskrit: "वासांसि जीर्णानि यथा विहाय नवानि गृह्णाति नरोऽपराणि",
-          transliteration: "vāsāṁsi jīrṇāni yathā vihāya navāni gṛhṇāti naro 'parāṇi",
-          meaning: "As a person puts on new clothes, giving up old ones, the soul takes new bodies, giving up old ones"
-        },
-        teachingText: "Just like you change clothes when they get old, your atman (eternal soul) changes bodies. The real you - your consciousness, your essence - never dies. Understanding this truth about your atman frees you from the fear of death and the attachment to temporary things."
-      },
-      3: {
-        subtitle: "The Path of Selfless Action",
-        openingVerse: {
-          sanskrit: "श्रेयान्स्वधर्मो विगुणः परधर्मात्स्वनुष्ठितात्",
-          transliteration: "śreyān sva-dharmo viguṇaḥ para-dharmāt sv-anuṣṭhitāt",
-          meaning: "Better is one's own duty, though imperfectly performed, than the duty of another well performed"
-        },
-        storyText: "Krishna teaches about karma yoga - the path of selfless action. 'Your dharma (duty) might not be perfect, but it's yours to fulfill. Don't try to copy someone else's path - that leads to confusion and fear.' This is about finding your authentic purpose and living it fully.",
-        sectionHeader: "The Secret of Nishkama Karma",
-        keyVerse: {
-          sanskrit: "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन",
-          transliteration: "karmaṇy evādhikāras te mā phaleṣu kadācana",
-          meaning: "You have a right to perform your prescribed duty, but not to the fruits of action"
-        },
-        teachingText: "This is the golden key to happiness: Do your karma (action/duty) with love and skill, but don't demand specific results. This is nishkama karma (desireless action) - the secret to living without stress while still caring deeply about what you do."
-      },
-      4: {
-        subtitle: "The Divine Teacher's Secret",
-        openingVerse: {
-          sanskrit: "यदा यदा हि धर्मस्य ग्लानिर्भवति भारत",
-          transliteration: "yadā yadā hi dharmasya glānir bhavati bhārata",
-          meaning: "Whenever there is decline in religious practice, O descendant of Bharata"
-        },
-        storyText: "Krishna reveals his divine nature and the cyclical nature of his appearances on Earth. 'I am not an ordinary person, Arjuna. I am the Divine itself, appearing in human form to guide you back to truth.'",
-        sectionHeader: "The Avatar's Promise",
-        keyVerse: {
-          sanskrit: "अभ्युत्थानमधर्मस्य तदात्मानं सृजाम्यहम्",
-          transliteration: "abhyutthānam adharmasya tadātmānaṁ sṛjāmy aham",
-          meaning: "And a predominant rise of irreligion, at that time I descend Myself"
-        },
-        teachingText: "'Whenever dharma declines and adharma rises, I manifest myself to protect the good and establish righteousness.' This promise gives hope that divine help always comes when the world needs it most."
-      },
-      5: {
-        subtitle: "Renunciation and Action United",
-        openingVerse: {
-          sanskrit: "संन्यासं कर्मणां कृष्ण पुनर्योगं च शंससि",
-          transliteration: "sannyāsaṁ karmaṇāṁ kṛṣṇa punar yogaṁ ca śaṁsasi",
-          meaning: "O Krishna, you praise both renunciation of action and also the yoga of action"
-        },
-        storyText: "Arjuna is confused: 'Krishna, you're telling me to give up action, but also to act without attachment. Which path should I follow?' Krishna clarifies that both paths lead to the same destination, but the path of selfless action (karma yoga) is more practical for most people because complete renunciation requires perfect knowledge.",
-        sectionHeader: "The Practical Path",
-        keyVerse: {
-          sanskrit: "सर्वारम्भपरित्यागी यो मद्भक्तः स मे प्रियः",
-          transliteration: "sarvārambha-parityāgī yo mad-bhaktaḥ sa me priyaḥ",
-          meaning: "One who renounces all material activities and is devoted to Me is very dear to Me"
-        },
-        teachingText: "The secret is not to stop acting, but to act without ego and attachment. When you work as an offering to the Divine, even ordinary tasks become spiritual practice. This transforms your entire life into yoga."
-      },
-      6: {
-        subtitle: "The Science of Meditation",
-        openingVerse: {
-          sanskrit: "उद्धरेदात्मनात्मानं नात्मानमवसादयेत्",
-          transliteration: "uddhared ātmanātmānaṁ nātmānam avasādayet",
-          meaning: "One should lift oneself by one's own efforts and should not degrade oneself"
-        },
-        storyText: "Krishna teaches the science of meditation and self-discipline. 'The mind can be your best friend or your worst enemy. A controlled mind leads to peace and self-realization, while an uncontrolled mind creates suffering.' He describes how to sit, how to breathe, and how to focus the mind.",
-        sectionHeader: "The Perfect Yogi",
-        keyVerse: {
-          sanskrit: "योगी युञ्जीत सततमात्मानं रहसि स्थितः",
-          transliteration: "yogī yuñjīta satatam ātmānaṁ rahasi sthitaḥ",
-          meaning: "The yogi should constantly engage himself in meditation in a secluded place"
-        },
-        teachingText: "The ideal yogi is balanced in all situations - not too happy in success, not too sad in failure. Such a person has achieved yoga (union with the Divine) and sees the same divine presence in everyone."
-      },
-      7: {
-        subtitle: "Knowing the Divine Nature",
-        openingVerse: {
-          sanskrit: "मय्यासक्तमनाः पार्थ योगं युञ्जन्मदाश्रयः",
-          transliteration: "mayy āsakta-manāḥ pārtha yogaṁ yuñjan mad-āśrayaḥ",
-          meaning: "O Arjuna, with mind attached to Me and taking shelter in Me"
-        },
-        storyText: "Krishna reveals his divine nature and how he pervades all of creation. 'I am the taste in water, Arjuna. I am the light in the moon and sun. I am the sound in ether and ability in humans. Everything you experience is actually My energy in different forms.'",
-        sectionHeader: "The Divine in Everything",
-        keyVerse: {
-          sanskrit: "रसोऽहमप्सु कौन्तेय प्रभास्मि शशिसूर्ययोः",
-          transliteration: "raso 'ham apsu kaunteya prabhāsmi śaśi-sūryayoḥ",
-          meaning: "O Arjuna, I am the taste in water, the light in the moon and sun"
-        },
-        teachingText: "Understanding this divine presence everywhere helps us develop devotion naturally. When you see the Divine in everything, life becomes a constant meditation and every moment becomes sacred."
-      },
-      8: {
-        subtitle: "Remembering the Divine",
-        openingVerse: {
-          sanskrit: "अक्षरं ब्रह्म परमं स्वभावोऽध्यात्ममुच्यते",
-          transliteration: "akṣaraṁ brahma paramaṁ svabhāvo 'dhyātmam ucyate",
-          meaning: "The indestructible, transcendental living entity is called Brahman"
-        },
-        storyText: "Krishna explains the Supreme Brahman and the importance of remembering the Divine, especially at the moment of death. 'Whatever you think of at death, that state you will attain. So remember Me always, and fight.'",
-        sectionHeader: "The Moment of Death",
-        keyVerse: {
-          sanskrit: "अन्तकाले च मामेव स्मरन्मुक्त्वा कलेवरम्",
-          transliteration: "anta-kāle ca mām eva smaran muktvā kalevaram",
-          meaning: "And whoever, at the time of death, remembers Me alone while giving up the body"
-        },
-        teachingText: "The practice is to remember the Divine throughout life, so it becomes natural at death. This constant remembrance (smaraṇa) transforms consciousness and leads to liberation."
-      },
-      9: {
-        subtitle: "The Most Confidential Knowledge",
-        openingVerse: {
-          sanskrit: "इदं तु ते गुह्यतमं प्रवक्ष्याम्यनसूयवे",
-          transliteration: "idaṁ tu te guhyatamaṁ pravakṣyāmy anasūyave",
-          meaning: "I shall now declare to you this most confidential knowledge"
-        },
-        storyText: "This chapter reveals the most confidential knowledge - bhakti yoga, the path of pure devotion. Krishna shows his incredible mercy: 'Even if you make mistakes, even if you're not perfect, if you love Me with a sincere heart, I will take care of everything.'",
-        sectionHeader: "The Easy Path",
-        keyVerse: {
-          sanskrit: "पत्रं पुष्पं फलं तोयं यो मे भक्त्या प्रयच्छति",
-          transliteration: "patraṁ puṣpaṁ phalaṁ toyaṁ yo me bhaktyā prayacchati",
-          meaning: "Whoever offers Me with devotion a leaf, a flower, fruit or water"
-        },
-        teachingText: "Krishna promises that whoever offers even a leaf, flower, fruit or water with love, he accepts. This means devotion matters more than expensive offerings. Love is the currency of the spiritual world."
-      },
-      10: {
-        subtitle: "The Infinite Manifestations",
-        openingVerse: {
-          sanskrit: "भूय एव महाबाहो शृणु मे परमं वचः",
-          transliteration: "bhūya eva mahā-bāho śṛṇu me paramaṁ vacaḥ",
-          meaning: "Listen again, O mighty-armed Arjuna, to My supreme word"
-        },
-        storyText: "Krishna describes his various manifestations and opulences throughout creation. 'I am the beginning, middle and end of all beings. Among lights, I am the radiant sun. Among mountains, I am Meru. Among warriors, I am Arjuna.'",
-        sectionHeader: "Recognizing the Divine Everywhere",
-        keyVerse: {
-          sanskrit: "यद्यद्विभूतिमत्सत्त्वं श्रीमदूर्जितमेव वा",
-          transliteration: "yad yad vibhūtimat sattvaṁ śrīmad ūrjitam eva vā",
-          meaning: "Whatever opulent, beautiful or glorious manifestation you see"
-        },
-        teachingText: "This teaching helps devotees recognize the divine presence everywhere. When you see something beautiful, powerful, or wise, remember that it's a spark of Krishna's infinite nature."
-      },
-      11: {
-        subtitle: "The Universal Form",
-        openingVerse: {
-          sanskrit: "दिव्यं ददामि ते चक्षुः पश्य मे योगमैश्वरम्",
-          transliteration: "divyaṁ dadāmi te cakṣuḥ paśya me yogam aiśvaram",
-          meaning: "I give you divine eyes; now behold My mystic opulence"
-        },
-        storyText: "Arjuna requests to see Krishna's universal form. Krishna grants him divine vision to behold the cosmic form - containing all of creation within it. Arjuna sees the entire universe, past, present and future, in Krishna's form. It's both magnificent and terrifying.",
-        sectionHeader: "Divine Vision and Human Limitation",
-        keyVerse: {
-          sanskrit: "तेनैव रूपेण चतुर्भुजेन सहस्रबाहो भव विश्वमूर्ते",
-          transliteration: "tenaiva rūpeṇa catur-bhujena sahasra-bāho bhava viśva-mūrte",
-          meaning: "O universal form, O thousand-armed one, please appear in that four-armed form"
-        },
-        teachingText: "After seeing the cosmic form, Arjuna is overwhelmed and asks Krishna to return to his familiar human form. This teaches us that while the Divine is infinite, it also appears in personal, approachable forms out of love for devotees."
-      },
-      12: {
-        subtitle: "The Path of Love",
-        openingVerse: {
-          sanskrit: "एवं सततयुक्ता ये भक्तास्त्वां पर्युपासते",
-          transliteration: "evaṁ satata-yuktā ye bhaktās tvāṁ paryupāsate",
-          meaning: "Those devotees who are always engaged in worshiping You with love"
-        },
-        storyText: "Krishna explains the superiority of devotional service over impersonal meditation. 'Those who worship Me with love are closer to perfection than those who try to meditate on the impersonal Divine. Love is easier and more natural than philosophical analysis.'",
-        sectionHeader: "Qualities of Pure Devotees",
-        keyVerse: {
-          sanskrit: "अद्वेष्टा सर्वभूतानां मैत्रः करुण एव च",
-          transliteration: "adveṣṭā sarva-bhūtānāṁ maitraḥ karuṇa eva ca",
-          meaning: "One who is not envious but friendly and compassionate to all"
-        },
-        teachingText: "The qualities of pure devotees include being friendly to all, compassionate, forgiving, always satisfied, and surrendered to the Divine. These qualities naturally develop through devotional practice."
-      },
-      13: {
-        subtitle: "The Field and the Knower",
-        openingVerse: {
-          sanskrit: "इदं शरीरं कौन्तेय क्षेत्रमित्यभिधीयते",
-          transliteration: "idaṁ śarīraṁ kaunteya kṣetram ity abhidhīyate",
-          meaning: "This body, O Arjuna, is called the field"
-        },
-        storyText: "Krishna explains the distinction between the field (body) and the knower of the field (soul). 'Your body is like a field where experiences happen, but you - the consciousness - are the farmer who witnesses everything. Don't confuse the field with the farmer.'",
-        sectionHeader: "True Knowledge",
-        keyVerse: {
-          sanskrit: "ज्ञानं ज्ञेयं ज्ञानगम्यं हृदि सर्वस्य धिष्ठितम्",
-          transliteration: "jñānaṁ jñeyaṁ jñāna-gamyaṁ hṛdi sarvasya dhiṣṭhitam",
-          meaning: "Knowledge, the object of knowledge, and the goal of knowledge are situated in the heart"
-        },
-        teachingText: "True knowledge means understanding the difference between the temporary (body, mind, emotions) and the eternal (soul, consciousness). This discrimination leads to freedom from suffering."
-      },
-      14: {
-        subtitle: "The Three Modes of Nature",
-        openingVerse: {
-          sanskrit: "परं भूयः प्रवक्ष्यामि ज्ञानानां ज्ञानमुत्तमम्",
-          transliteration: "paraṁ bhūyaḥ pravakṣyāmi jñānānāṁ jñānam uttamam",
-          meaning: "I shall again explain the supreme knowledge, the best of all knowledge"
-        },
-        storyText: "Krishna describes the three modes of material nature - sattva (goodness), rajas (passion), and tamas (ignorance) - and how they influence our thoughts, feelings, and actions. 'Understanding these modes helps you transcend their influence and achieve spiritual freedom.'",
-        sectionHeader: "Transcending the Modes",
-        keyVerse: {
-          sanskrit: "गुणानेतानतीत्य त्रीन्देही देहसमुद्भवान्",
-          transliteration: "guṇān etān atītya trīn dehī deha-samudbhavān",
-          meaning: "When the embodied being transcends these three modes"
-        },
-        teachingText: "By transcending the three modes through devotional service, one achieves liberation even while living in the body. Such a person is unaffected by the dualities of material existence."
-      },
-      15: {
-        subtitle: "The Tree of Material Existence",
-        openingVerse: {
-          sanskrit: "ऊर्ध्वमूलमधःशाखमश्वत्थं प्राहुरव्ययम्",
-          transliteration: "ūrdhva-mūlam adhaḥ-śākham aśvatthaṁ prāhur avyayam",
-          meaning: "They speak of an eternal banyan tree with roots upward and branches downward"
-        },
-        storyText: "Krishna uses the metaphor of an upside-down banyan tree to describe material existence. 'This world is like a tree with roots in the spiritual realm and branches extending into matter. To find true happiness, you must trace back to the roots.'",
-        sectionHeader: "The Supreme Person",
-        keyVerse: {
-          sanskrit: "यो मामेवमसम्मूढो जानाति पुरुषोत्तमम्",
-          transliteration: "yo mām evam asammūḍho jānāti puruṣottamam",
-          meaning: "Whoever knows Me thus as the Supreme Person, without doubting"
-        },
-        teachingText: "Krishna reveals himself as Purushottama - the Supreme Person who transcends both the fallible and infallible. He is the source and goal of all existence."
-      },
-      16: {
-        subtitle: "Divine and Demonic Natures",
-        openingVerse: {
-          sanskrit: "अभयं सत्त्वसंशुद्धिर्ज्ञानयोगव्यवस्थितिः",
-          transliteration: "abhayaṁ sattva-saṁśuddhir jñāna-yoga-vyavasthitiḥ",
-          meaning: "Fearlessness, purification of consciousness, cultivation of spiritual knowledge"
-        },
-        storyText: "Krishna contrasts divine and demonic natures. Divine qualities include fearlessness, purity, charity, self-control, and compassion. Demonic qualities include pride, arrogance, anger, and harshness. 'Cultivate divine qualities to progress spiritually.'",
-        sectionHeader: "The Path to Liberation",
-        keyVerse: {
-          sanskrit: "दैवी सम्पद्विमोक्षाय निबन्धायासुरी मता",
-          transliteration: "daivī sampad vimokṣāya nibandhāyāsurī matā",
-          meaning: "Divine nature leads to liberation, while demonic nature leads to bondage"
-        },
-        teachingText: "The choice is always ours - we can cultivate divine qualities through spiritual practice, or fall into demonic patterns through selfishness and ignorance. Spiritual progress requires conscious effort to develop positive qualities."
-      },
-      17: {
-        subtitle: "The Three Types of Faith",
-        openingVerse: {
-          sanskrit: "ये शास्त्रविधिमुत्सृज्य यजन्ते श्रद्धयान्विताः",
-          transliteration: "ye śāstra-vidhim utsṛjya yajante śraddhayānvitāḥ",
-          meaning: "Those who perform sacrifice with faith but disregard scriptural injunctions"
-        },
-        storyText: "Krishna explains that faith exists in three types according to the three modes of nature. Even people who don't follow scriptures have faith - but the quality of faith determines the results of their spiritual practices.",
-        sectionHeader: "True and False Austerity",
-        keyVerse: {
-          sanskrit: "श्रद्धया परया तप्तं तपस्तत्त्रिविधं नरैः",
-          transliteration: "śraddhayā parayā taptaṁ tapas tat tri-vidhaṁ naraiḥ",
-          meaning: "This threefold austerity is performed by men with supreme faith"
-        },
-        teachingText: "True austerity purifies the mind and heart, while false austerity (motivated by ego or show) only increases suffering. The key is the intention behind spiritual practices."
-      },
-      18: {
-        subtitle: "The Ultimate Teaching",
-        openingVerse: {
-          sanskrit: "संन्यासस्य महाबाहो तत्त्वमिच्छामि वेदितुम्",
-          transliteration: "sannyāsasya mahā-bāho tattvam icchāmi veditum",
-          meaning: "O mighty-armed one, I wish to understand the truth of renunciation"
-        },
-        storyText: "The final chapter synthesizes all teachings. Krishna addresses Arjuna's final questions about renunciation and provides the ultimate instruction. This is the culmination of all spiritual knowledge.",
-        sectionHeader: "The Final Instruction",
-        keyVerse: {
-          sanskrit: "सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज",
-          transliteration: "sarva-dharmān parityajya mām ekaṁ śaraṇaṁ vraja",
-          meaning: "Abandon all varieties of religion and just surrender unto Me"
-        },
-        teachingText: "Krishna's final instruction: 'Give up all complex spiritual calculations and simply surrender to Me with love. I will take care of everything else.' This is sharanagati - complete surrender - the essence of all spiritual practice."
-      }
-    };
-    
-    // For chapters not specifically defined, create content from the chapter data
-    const fallbackContent = {
-      subtitle: bhagavadGitaData.find(ch => ch.number === chapterNumber)?.summary || "",
-      openingVerse: {
-        sanskrit: "ॐ",
-        transliteration: "oṁ",
-        meaning: "The sacred sound representing the Divine"
-      },
-      storyText: bhagavadGitaData.find(ch => ch.number === chapterNumber)?.summary || "",
-      sectionHeader: null,
-      keyVerse: null,
-      teachingText: null
-    };
-    
-    return chapterContentMap[chapterNumber] || fallbackContent;
+
+  // Reading time computed from actual content length; ~110 wpm reflects the slow,
+  // contemplative pace of scripture with Sanskrit verses. 0 = preface
+  const getEstimatedReadingTime = (sectionKey: number): number => {
+    const blocks =
+      sectionKey === PREFACE_KEY
+        ? gitaPreface.blocks
+        : gitaChapters.find(ch => ch.number === sectionKey)?.blocks || [];
+    const text = blocks
+      .map(block => (block.type === 'verse' ? block.verse.meaning : block.text))
+      .join(' ');
+    const words = text.trim().split(/\s+/).length;
+    // Each Sanskrit verse adds ~half a minute of slow reading beyond its English meaning
+    const verseCount = blocks.filter(block => block.type === 'verse').length;
+    return Math.max(2, Math.round(words / 110 + verseCount * 0.5));
   };
 
-  const getEstimatedReadingTime = (chapterNumber: number): number => {
-    // Estimated reading times based on chapter length
-    const readingTimes: {[key: number]: number} = {
-      1: 12, 2: 20, 3: 18, 4: 16, 5: 14, 6: 22, 7: 15, 8: 17, 9: 19,
-      10: 21, 11: 25, 12: 16, 13: 18, 14: 15, 15: 17, 16: 14, 17: 16, 18: 24
-    };
-    return readingTimes[chapterNumber] || 15;
-  };
+  const tocEntries = useMemo(() => [
+    {
+      key: PREFACE_KEY,
+      title: 'Before You Begin',
+      subtitle: 'Preface',
+    },
+    ...gitaChapters.map(chapter => ({
+      key: chapter.number,
+      title: chapterName(chapter.number),
+      subtitle: chapter.subtitle,
+    })),
+  ], []);
+
+  const renderTocModal = () => (
+    <Modal
+      visible={showToc}
+      animationType="slide"
+      presentationStyle="pageSheet"
+      onRequestClose={() => setShowToc(false)}
+    >
+      <SafeAreaView style={styles.tocContainer}>
+        <View style={styles.tocHeader}>
+          <Text style={styles.tocTitle}>Contents</Text>
+          <TouchableOpacity onPress={() => setShowToc(false)} style={styles.tocCloseButton}>
+            <Ionicons name="close" size={24} color={DharmaDesignSystem.colors.neutrals.charcoalBlack} />
+          </TouchableOpacity>
+        </View>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.tocList}>
+          {tocEntries.map(entry => {
+            const isActive = currentChapter === entry.key;
+            return (
+              <TouchableOpacity
+                key={entry.key}
+                style={[styles.tocItem, isActive && styles.tocItemActive]}
+                onPress={() => jumpToChapter(entry.key)}
+              >
+                <View style={[styles.tocBadge, isActive && styles.tocBadgeActive]}>
+                  <Text style={[styles.tocBadgeText, isActive && styles.tocBadgeTextActive]}>
+                    {entry.key === PREFACE_KEY ? 'ॐ' : entry.key}
+                  </Text>
+                </View>
+                <View style={styles.tocDetails}>
+                  <Text style={[styles.tocName, isActive && styles.tocNameActive]}>{entry.title}</Text>
+                  <Text style={styles.tocSubtitle} numberOfLines={1}>{entry.subtitle}</Text>
+                </View>
+                <Text style={styles.tocTime}>{getEstimatedReadingTime(entry.key)} min</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </SafeAreaView>
+    </Modal>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
       <DharmaHeader
-        title={`Chapter ${currentChapter}`}
+        title={currentChapter === PREFACE_KEY ? 'Preface' : `Chapter ${currentChapter}`}
         subtitle="Bhagavad Gita"
         showBackButton={true}
         onBackPress={() => navigation.goBack()}
         rightActions={
-          <TouchableOpacity onPress={adjustFontSize} style={styles.fontButton}>
-            <Ionicons name="text" size={20} color={DharmaDesignSystem.colors.primary.deepSaffron} />
-          </TouchableOpacity>
+          <View style={styles.headerActions}>
+            <AudioControls
+              content={narrationContent}
+              onTextHighlight={handleTextHighlight}
+              onScrollToSegment={handleScrollToSegment}
+              onPlaybackFinished={handlePlaybackFinished}
+              compact={true}
+            />
+            <TouchableOpacity onPress={() => setShowToc(true)} style={styles.fontButton}>
+              <Ionicons name="list" size={20} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={adjustFontSize} style={styles.fontButton}>
+              <Ionicons name="text" size={20} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+            </TouchableOpacity>
+            {/* Flip back to the verse-by-verse (Verse view) */}
+            <TouchableOpacity
+              onPress={() => (navigation as any).navigate('GitaVersePlayer')}
+              style={styles.fontButton}
+            >
+              <Ionicons name="albums-outline" size={20} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+            </TouchableOpacity>
+          </View>
         }
       />
 
-      <ScrollView 
+      <ScrollView
         ref={scrollViewRef}
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -476,11 +369,38 @@ const BhagavadGitaCompleteScreen: React.FC = () => {
           <Text style={getTextStyle(styles.bookSubtitle)}>Complete Story with Sacred Verses</Text>
         </View>
 
+        {/* Preface */}
+        <View style={styles.chapterSection} onLayout={onChapterLayout(PREFACE_KEY)}>
+          <TextHighlighter
+            text="Before You Begin"
+            blockId={`section-${PREFACE_KEY}-title`}
+            highlightedSegmentId={highlightedSegmentId}
+            segments={audioSegments}
+            style={getTextStyle(styles.chapterTitle)}
+          />
+          <Text style={getTextStyle(styles.chapterSubtitle)}>
+            {gitaPreface.subtitle} • {getEstimatedReadingTime(PREFACE_KEY)} min read
+          </Text>
+          {renderBlocks(PREFACE_KEY, gitaPreface.blocks)}
+        </View>
+
         {/* Dynamic Chapter Rendering */}
-        {bhagavadGitaData.map(chapter => renderChapter(chapter))}
+        {gitaChapters.map(chapter => renderChapter(chapter))}
 
         <View style={styles.bottomSpacer} />
       </ScrollView>
+
+      {/* Docked playback bar — renders only while narration is playing/paused */}
+      <View style={styles.playerBarContainer} pointerEvents="box-none">
+        <AudioControls
+          content={narrationContent}
+          onTextHighlight={handleTextHighlight}
+          onScrollToSegment={handleScrollToSegment}
+          onPlaybackFinished={handlePlaybackFinished}
+        />
+      </View>
+
+      {renderTocModal()}
     </SafeAreaView>
   );
 };
@@ -495,6 +415,11 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: DharmaDesignSystem.spacing.lg,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: DharmaDesignSystem.spacing.xs,
   },
   fontButton: {
     padding: DharmaDesignSystem.spacing.sm,
@@ -521,6 +446,24 @@ const styles = StyleSheet.create({
   },
   chapterSection: {
     marginBottom: DharmaDesignSystem.spacing.xxl,
+  },
+  allVersesRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: DharmaDesignSystem.spacing.sm,
+    backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,
+    borderRadius: DharmaDesignSystem.borderRadius.medium,
+    borderWidth: 1,
+    borderColor: 'rgba(230, 81, 0, 0.25)',
+    paddingVertical: DharmaDesignSystem.spacing.md,
+    paddingHorizontal: DharmaDesignSystem.spacing.md,
+    marginTop: DharmaDesignSystem.spacing.md,
+  },
+  allVersesText: {
+    ...DharmaDesignSystem.typography.sizes.bodyMD,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
+    fontWeight: '600',
+    flex: 1,
   },
   chapterTitle: {
     ...DharmaDesignSystem.typography.sizes.headingLG,
@@ -564,6 +507,12 @@ const styles = StyleSheet.create({
     color: DharmaDesignSystem.colors.primary.peacockTeal,
     fontWeight: '500',
   },
+  verseReference: {
+    ...DharmaDesignSystem.typography.sizes.caption,
+    color: DharmaDesignSystem.colors.neutrals.softAsh,
+    marginTop: DharmaDesignSystem.spacing.xs,
+    letterSpacing: 0.4,
+  },
   storyText: {
     ...DharmaDesignSystem.typography.sizes.bodyLG,
     color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
@@ -590,7 +539,96 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   bottomSpacer: {
-    height: DharmaDesignSystem.spacing.xxl,
+    height: 140, // room for the docked playback bar
+  },
+  playerBarContainer: {
+    position: 'absolute',
+    left: DharmaDesignSystem.spacing.md,
+    right: DharmaDesignSystem.spacing.md,
+    bottom: DharmaDesignSystem.spacing.lg,
+  },
+  // Table of contents
+  tocContainer: {
+    flex: 1,
+    backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
+  },
+  tocHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: DharmaDesignSystem.spacing.lg,
+    paddingVertical: DharmaDesignSystem.spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(230, 81, 0, 0.15)',
+  },
+  tocTitle: {
+    ...DharmaDesignSystem.typography.sizes.headingMD,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
+    fontWeight: '600',
+  },
+  tocCloseButton: {
+    padding: DharmaDesignSystem.spacing.xs,
+  },
+  tocList: {
+    paddingHorizontal: DharmaDesignSystem.spacing.md,
+    paddingVertical: DharmaDesignSystem.spacing.md,
+    paddingBottom: DharmaDesignSystem.spacing.xxl,
+  },
+  tocItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: DharmaDesignSystem.spacing.sm,
+    paddingHorizontal: DharmaDesignSystem.spacing.sm,
+    borderRadius: DharmaDesignSystem.borderRadius.medium,
+    marginBottom: DharmaDesignSystem.spacing.xs,
+  },
+  tocItemActive: {
+    backgroundColor: 'rgba(230, 81, 0, 0.08)',
+  },
+  tocBadge: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,
+    borderWidth: 1,
+    borderColor: 'rgba(230, 81, 0, 0.25)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: DharmaDesignSystem.spacing.md,
+  },
+  tocBadgeActive: {
+    backgroundColor: DharmaDesignSystem.colors.primary.deepSaffron,
+    borderColor: DharmaDesignSystem.colors.primary.deepSaffron,
+  },
+  tocBadgeText: {
+    ...DharmaDesignSystem.typography.sizes.bodyMD,
+    fontWeight: '600',
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
+  },
+  tocBadgeTextActive: {
+    color: DharmaDesignSystem.colors.neutrals.white,
+  },
+  tocDetails: {
+    flex: 1,
+    marginRight: DharmaDesignSystem.spacing.sm,
+  },
+  tocName: {
+    ...DharmaDesignSystem.typography.sizes.bodyMD,
+    fontWeight: '600',
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
+  },
+  tocNameActive: {
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
+  },
+  tocSubtitle: {
+    ...DharmaDesignSystem.typography.sizes.bodySM,
+    color: DharmaDesignSystem.colors.neutrals.softAsh,
+    marginTop: 2,
+  },
+  tocTime: {
+    ...DharmaDesignSystem.typography.sizes.caption,
+    color: DharmaDesignSystem.colors.neutrals.softAsh,
+    fontWeight: '600',
   },
 });
 

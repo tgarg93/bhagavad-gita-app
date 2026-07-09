@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,9 @@ import { DharmaColors } from '../constants/colors';
 import { bhagavadGitaData } from '../data/bhagavadGitaData';
 import { Verse } from '../types/content';
 import { VapiService } from '../services/vapiService';
+import AudioControls from '../components/AudioControls';
+import TextHighlighter from '../components/TextHighlighter';
+import { AudioNarrationService, TextSegment } from '../services/audioNarrationService';
 
 interface RouteParams {
   chapterId: string;
@@ -25,11 +28,14 @@ const { width } = Dimensions.get('window');
 const VerseDetailScreen: React.FC = () => {
   const route = useRoute();
   const { chapterId, verseId } = route.params as RouteParams;
+  const scrollViewRef = useRef<ScrollView>(null);
   const [verse, setVerse] = useState<Verse | null>(null);
   const [showTransliteration, setShowTransliteration] = useState(true);
   const [showCommentary, setShowCommentary] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [vapiService] = useState(() => VapiService.getInstance());
+  const [highlightedSegmentId, setHighlightedSegmentId] = useState<string | null>(null);
+  const [audioSegments, setAudioSegments] = useState<TextSegment[]>([]);
 
   useEffect(() => {
     loadVerse();
@@ -40,6 +46,20 @@ const VerseDetailScreen: React.FC = () => {
     if (chapter) {
       const foundVerse = chapter.verses?.find(v => v.id === verseId);
       setVerse(foundVerse || null);
+
+      // Prepare audio segments when verse loads
+      if (foundVerse) {
+        const audioService = AudioNarrationService.getInstance();
+        const content = [
+          foundVerse.sanskrit,
+          foundVerse.transliteration,
+          foundVerse.english,
+          ...(foundVerse.hindi ? [foundVerse.hindi] : []),
+          ...(foundVerse.commentary?.map(c => c.text) || [])
+        ];
+        const segments = audioService.parseContentIntoSegments(content);
+        setAudioSegments(segments);
+      }
     }
   };
 
@@ -83,6 +103,16 @@ const VerseDetailScreen: React.FC = () => {
     }
   };
 
+  const handleTextHighlight = (segmentId: string, segmentIndex: number) => {
+    setHighlightedSegmentId(segmentId);
+  };
+
+  const handleScrollToSegment = (segmentIndex: number) => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ y: 0, animated: true });
+    }
+  };
+
   if (!verse) {
     return (
       <SafeAreaView style={styles.container}>
@@ -95,7 +125,8 @@ const VerseDetailScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView 
+      <ScrollView
+        ref={scrollViewRef}
         style={styles.scrollView}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
@@ -105,28 +136,49 @@ const VerseDetailScreen: React.FC = () => {
           <Text style={styles.verseReference}>
             Chapter {verse.chapterNumber}, Verse {verse.verseNumber}
           </Text>
-          
-          {/* Voice Narration Button */}
-          <TouchableOpacity
-            style={styles.playButton}
-            onPress={isPlaying ? handleStopNarration : handlePlayNarration}
-            disabled={isPlaying}
-          >
-            <Ionicons
-              name={isPlaying ? 'stop' : 'play'}
-              size={24}
-              color={DharmaColors.text.inverse}
+
+          <View style={styles.audioControlsContainer}>
+            {/* Audio Controls */}
+            <AudioControls
+              content={[
+                verse.sanskrit,
+                verse.transliteration,
+                verse.english,
+                ...(verse.hindi ? [verse.hindi] : []),
+                ...(verse.commentary?.map(c => c.text) || [])
+              ]}
+              onTextHighlight={handleTextHighlight}
+              onScrollToSegment={handleScrollToSegment}
+              compact={false}
             />
-            <Text style={styles.playButtonText}>
-              {isPlaying ? 'Stop Narration' : 'Listen'}
-            </Text>
-          </TouchableOpacity>
+
+            {/* Voice Narration Button */}
+            <TouchableOpacity
+              style={styles.playButton}
+              onPress={isPlaying ? handleStopNarration : handlePlayNarration}
+              disabled={isPlaying}
+            >
+              <Ionicons
+                name={isPlaying ? 'stop' : 'play'}
+                size={20}
+                color={DharmaColors.text.inverse}
+              />
+              <Text style={styles.playButtonText}>
+                {isPlaying ? 'Voice' : 'Voice'}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Sanskrit Text */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Sanskrit</Text>
-          <Text style={styles.sanskritText}>{verse.sanskrit}</Text>
+          <TextHighlighter
+            text={verse.sanskrit}
+            highlightedSegmentId={highlightedSegmentId}
+            segments={audioSegments}
+            style={styles.sanskritText}
+          />
         </View>
 
         {/* Transliteration */}
@@ -143,21 +195,36 @@ const VerseDetailScreen: React.FC = () => {
             />
           </TouchableOpacity>
           {showTransliteration && (
-            <Text style={styles.transliterationText}>{verse.transliteration}</Text>
+            <TextHighlighter
+              text={verse.transliteration}
+              highlightedSegmentId={highlightedSegmentId}
+              segments={audioSegments}
+              style={styles.transliterationText}
+            />
           )}
         </View>
 
         {/* English Translation */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>English Translation</Text>
-          <Text style={styles.englishText}>{verse.english}</Text>
+          <TextHighlighter
+            text={verse.english}
+            highlightedSegmentId={highlightedSegmentId}
+            segments={audioSegments}
+            style={styles.englishText}
+          />
         </View>
 
         {/* Hindi Translation */}
         {verse.hindi && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Hindi Translation</Text>
-            <Text style={styles.hindiText}>{verse.hindi}</Text>
+            <TextHighlighter
+              text={verse.hindi}
+              highlightedSegmentId={highlightedSegmentId}
+              segments={audioSegments}
+              style={styles.hindiText}
+            />
           </View>
         )}
 
@@ -230,6 +297,10 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     marginBottom: 32,
+  },
+  audioControlsContainer: {
+    alignItems: 'center',
+    gap: 16,
   },
   verseReference: {
     fontSize: 16,

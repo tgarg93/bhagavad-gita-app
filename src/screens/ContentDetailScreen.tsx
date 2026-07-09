@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DharmaColors } from '../constants/colors';
 import { ContentCard, ContentCategory } from '../types/contentTypes';
+import AudioControls from '../components/AudioControls';
+import TextHighlighter from '../components/TextHighlighter';
+import { AudioNarrationService, TextSegment } from '../services/audioNarrationService';
 
 // Import data sources
 import { getScriptureById } from '../data/expandedScriptures';
@@ -32,10 +35,13 @@ const ContentDetailScreen: React.FC = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { contentId, category } = route.params as RouteParams;
-  
+  const scrollViewRef = useRef<ScrollView>(null);
+
   const [content, setContent] = useState<any>(null);
   const [selectedSection, setSelectedSection] = useState<string>('overview');
   const [isLoading, setIsLoading] = useState(true);
+  const [highlightedSegmentId, setHighlightedSegmentId] = useState<string | null>(null);
+  const [audioSegments, setAudioSegments] = useState<TextSegment[]>([]);
 
   useEffect(() => {
     loadContent();
@@ -64,6 +70,56 @@ const ContentDetailScreen: React.FC = () => {
 
     setContent(data);
     setIsLoading(false);
+
+    // Prepare audio segments when content loads
+    if (data) {
+      const audioService = AudioNarrationService.getInstance();
+      const contentForAudio = getContentTextForAudio(data, category);
+      const segments = audioService.parseContentIntoSegments(contentForAudio);
+      setAudioSegments(segments);
+    }
+  };
+
+  const getContentTextForAudio = (data: any, category: ContentCategory): string[] => {
+    const texts: string[] = [];
+
+    // Add common fields
+    if (data.description) texts.push(data.description);
+    if (data.detailedDescription) texts.push(data.detailedDescription);
+    if (data.detailedExplanation) texts.push(data.detailedExplanation);
+
+    // Add category-specific content
+    switch (category) {
+      case 'scriptures':
+        if (data.historicalContext) texts.push(data.historicalContext);
+        if (data.culturalSignificance) texts.push(data.culturalSignificance);
+        if (data.philosophicalThemes) texts.push(data.philosophicalThemes);
+        if (data.teachingsOverview) texts.push(data.teachingsOverview);
+        break;
+      case 'deities':
+        if (data.mythology) texts.push(data.mythology);
+        if (data.worship) texts.push(data.worship);
+        if (data.significance) texts.push(data.significance);
+        break;
+      case 'philosophy':
+        if (data.significance) texts.push(data.significance);
+        break;
+      case 'practices':
+        if (data.origins) texts.push(data.origins);
+        break;
+    }
+
+    return texts.filter(text => text && text.length > 0);
+  };
+
+  const handleTextHighlight = (segmentId: string, segmentIndex: number) => {
+    setHighlightedSegmentId(segmentId);
+  };
+
+  const handleScrollToSegment = (segmentIndex: number) => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ y: 0, animated: true });
+    }
   };
 
   const renderOverview = () => {
@@ -72,14 +128,22 @@ const ContentDetailScreen: React.FC = () => {
     return (
       <View style={styles.sectionContent}>
         <Text style={styles.sectionTitle}>Overview</Text>
-        <Text style={styles.descriptionText}>
-          {content.description || content.detailedExplanation}
-        </Text>
+        <TextHighlighter
+          text={content.description || content.detailedExplanation}
+          highlightedSegmentId={highlightedSegmentId}
+          segments={audioSegments}
+          style={styles.descriptionText}
+        />
 
         {content.significance && (
           <>
             <Text style={styles.subSectionTitle}>Significance</Text>
-            <Text style={styles.bodyText}>{content.significance}</Text>
+            <TextHighlighter
+              text={content.significance}
+              highlightedSegmentId={highlightedSegmentId}
+              segments={audioSegments}
+              style={styles.bodyText}
+            />
           </>
         )}
 
@@ -287,12 +351,26 @@ const ContentDetailScreen: React.FC = () => {
         <Text style={styles.headerTitle} numberOfLines={1}>
           {content.name || content.title}
         </Text>
-        <TouchableOpacity style={styles.favoriteButton}>
-          <Ionicons name="heart-outline" size={24} color={DharmaColors.text.primary} />
-        </TouchableOpacity>
+        <View style={styles.headerActions}>
+          {content && (
+            <AudioControls
+              content={getContentTextForAudio(content, category)}
+              onTextHighlight={handleTextHighlight}
+              onScrollToSegment={handleScrollToSegment}
+              compact={true}
+            />
+          )}
+          <TouchableOpacity style={styles.favoriteButton}>
+            <Ionicons name="heart-outline" size={24} color={DharmaColors.text.primary} />
+          </TouchableOpacity>
+        </View>
       </View>
 
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Hero Section */}
         <View style={styles.heroSection}>
           <Image
@@ -351,6 +429,11 @@ const styles = StyleSheet.create({
     color: DharmaColors.text.primary,
     textAlign: 'center',
     marginHorizontal: 16,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   favoriteButton: {
     padding: 4,
