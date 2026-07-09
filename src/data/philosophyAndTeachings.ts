@@ -1,6 +1,8 @@
 // Philosophy and Teachings Data for Dharma App
 // Core Hindu philosophical concepts and life teachings
 
+import { NarrativeSection, SourceNote } from './narrativeTypes';
+
 export interface PhilosophicalConcept {
   id: string;
   name: string;
@@ -25,28 +27,17 @@ export interface PhilosophicalConcept {
     infographics?: string[];
   };
   difficulty: 'beginner' | 'intermediate' | 'advanced';
-  // New narrative structure
+  // Narrative reading experience (Gita-style sections)
   sections?: ConceptSection[];
+  // Primary texts the content was verified against (rendered as a footer card)
+  sources?: SourceNote[];
+  // Chapter-style reflection questions (exactly 3, Gita pattern)
+  reflectionQuestions?: string[];
 }
 
-export interface ConceptSection {
-  id: string;
-  title: string;
-  subtitle?: string;
-  openingVerse?: {
-    sanskrit: string;
-    transliteration: string;
-    meaning: string;
-  };
-  storyText?: string;
-  sectionHeader?: string;
-  keyVerse?: {
-    sanskrit: string;
-    transliteration: string;
-    meaning: string;
-  };
-  teachingText?: string;
-}
+// The shared narrative shape now lives in narrativeTypes.ts (reused by
+// festivals and deities); ConceptSection remains as an alias for existing code.
+export type ConceptSection = NarrativeSection;
 
 export interface PracticalApplication {
   situation: string;
@@ -380,7 +371,133 @@ export const philosophyData: PhilosophicalConcept[] = [
       heroImage: require('../../assets/images/covers/karma-cover.png'),
       iconImage: '/images/philosophy/karma-icon.jpg'
     },
-    difficulty: 'beginner'
+    difficulty: 'beginner',
+    // Verse translations follow Swami Sivananda's public-domain rendering
+    // (bundled in gitaVerses.json), lightly trimmed for reading flow.
+    sections: [
+      {
+        id: 'karma-opening',
+        title: 'The Weight of Every Action',
+        subtitle: 'An Arrow Leaving the Bow',
+        storyText: 'When Arjuna collapsed on the battlefield, unable to act, Krishna did not begin with metaphysics or heaven. He began with action. Before speaking of the soul\'s immortality or the paths of devotion, he addressed the thing Arjuna could not escape: a choice had to be made, and even refusing to choose would itself be a choice. This is where the teaching of karma begins — not as a cosmic scoreboard of rewards and punishments, but as the simple, unavoidable truth that you are always acting, and every action leaves something behind. An arrow, once released, cannot be called back. But the archer chooses where to aim.'
+      },
+      {
+        id: 'karma-meaning',
+        title: 'What Karma Really Means',
+        subtitle: 'A Seed Becoming a Tree',
+        storyText: 'Karma comes from the Sanskrit root "kri" — to do, to act. It simply means action. Yet centuries of use have buried it under misreadings: fate, luck, punishment, "what goes around comes around." The oldest teaching is more precise and more empowering. The Brihadaranyaka Upanishad says of a person: "As is his desire, so is his will; and as is his will, so is his deed; and whatever deed he does, that he will reap" (4.4.5). Desire shapes intention, intention shapes action, and action shapes who you become. Karma is not something that happens TO you. It is the trail you are laying down, one choice at a time, in the direction your attention is already pointing.',
+        teachingText: 'Notice the chain begins with desire, not deed. This is why Hindu thought insists that intention matters as much as action: two people can perform the identical act — one from love, one from calculation — and plant entirely different seeds. If you want to know your future, the Upanishad suggests, do not consult the stars. Watch what you are doing, and wanting, today.'
+      },
+      {
+        id: 'karma-right-to-action',
+        title: 'Your Right Is to the Action Alone',
+        subtitle: 'Hands Working, Palms Open',
+        keyVerse: {
+          sanskrit: 'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥',
+          transliteration: 'karmaṇy evādhikāras te mā phaleṣhu kadāchana, mā karma-phala-hetur bhūr mā te saṅgo \'stv akarmaṇi',
+          meaning: 'Your right is to work only, but never to its results; let not the results of action be your motive, nor let your attachment be to inaction.',
+          source: 'Bhagavad Gita 2.47 (tr. Swami Sivananda)'
+        },
+        storyText: 'This is the most quoted verse in the Gita, and the most misunderstood. Krishna is not telling Arjuna to stop caring about results — a general who doesn\'t care about victory should leave the field. He is making a surgical distinction: effort is yours; outcome is not. A thousand factors you cannot see — other people\'s choices, timing, chance, history — stand between your action and its fruit. When you stake your peace on the part you cannot control, anxiety is the only possible harvest.',
+        teachingText: 'Think of something you\'re working toward right now — a promotion, a child\'s happiness, a body healed. The verse asks: can you pour yourself into the work itself, wholly, and hold the outcome with open palms? This is not lowering the bar. People who work this way usually work better — steadier under pressure, more honest about feedback, less crushed by setbacks — because their fuel is the work, not the scoreboard.'
+      },
+      {
+        id: 'karma-no-inaction',
+        title: 'The Myth of Doing Nothing',
+        subtitle: 'A River That Cannot Stop Flowing',
+        keyVerse: {
+          sanskrit: 'न हि कश्चित्क्षणमपि जातु तिष्ठत्यकर्मकृत्। कार्यते ह्यवशः कर्म सर्वः प्रकृतिजैर्गुणैः॥',
+          transliteration: 'na hi kaśhchit kṣhaṇam api jātu tiṣhṭhaty akarma-kṛit, kāryate hy avaśhaḥ karma sarvaḥ prakṛiti-jair guṇaiḥ',
+          meaning: 'Verily, no one can remain even for a moment without performing action; everyone is made to act by the qualities born of Nature.',
+          source: 'Bhagavad Gita 3.5 (tr. Swami Sivananda)'
+        },
+        storyText: 'Arjuna\'s first instinct was to walk away — to renounce the battle and become a beggar rather than act in such a terrible situation. Krishna\'s reply dismantles the fantasy: there is no such thing as opting out. Your heart beats, your mind judges, your silence speaks, your absence is felt. The person who "stays neutral" while a friend is slandered has acted. The citizen who doesn\'t vote has voted. Even the renunciant sitting motionless in a cave is acting — breathing, thinking, choosing to remain.',
+        teachingText: 'This teaching is bracing because it removes the comfortable illusion of the sidelines. Where in your life are you telling yourself "I\'m not doing anything" — about a strained relationship, an injustice at work, a habit quietly growing? The Gita\'s point is not to induce guilt but clarity: since you are acting either way, act consciously. A deliberate choice, even a hard one, plants better seeds than a drift.'
+      },
+      {
+        id: 'karma-skill',
+        title: 'Yoga Is Skill in Action',
+        subtitle: 'A Potter\'s Steady Hands at the Wheel',
+        keyVerse: {
+          sanskrit: 'बुद्धियुक्तो जहातीह उभे सुकृतदुष्कृते। तस्माद्योगाय युज्यस्व योगः कर्मसु कौशलम्॥',
+          transliteration: 'buddhi-yukto jahātīha ubhe sukṛita-duṣhkṛite, tasmād yogāya yujyasva yogaḥ karmasu kauśhalam',
+          meaning: 'Endowed with wisdom and evenness of mind, one casts off in this life both good and evil deeds; therefore devote yourself to Yoga — Yoga is skill in action.',
+          source: 'Bhagavad Gita 2.50 (tr. Swami Sivananda)'
+        },
+        storyText: 'Krishna gives karma yoga its famous definition: yogah karmasu kaushalam — yoga is skill in action. The skill is not technical mastery; it is evenness. A verse earlier he describes it: "Perform action, abandoning attachment, balanced in success and failure; evenness of mind is called Yoga" (Gita 2.48). Watch a surgeon, a musician, a parent soothing a feverish child at 3 a.m. — the ones who are truly skillful have a stillness at the center of their effort. They are fully engaged and strangely unhurried, because none of their energy is leaking into "what if this fails?"',
+        teachingText: 'Evenness is trainable, and daily life is the gym. The next time something goes well, notice the surge of "I am wonderful" — and let it pass through without grabbing it. The next time something flops, notice "I am terrible" — and let that pass too. What remains when both waves settle is the steady worker the Gita calls the yogi. From that steadiness, your next action is cleaner than the last.'
+      },
+      {
+        id: 'karma-offering',
+        title: 'Action as Offering',
+        subtitle: 'A Lotus Leaf Untouched by Water',
+        openingVerse: {
+          sanskrit: 'यज्ञार्थात्कर्मणोऽन्यत्र लोकोऽयं कर्मबन्धनः। तदर्थं कर्म कौन्तेय मुक्तसंगः समाचर॥',
+          transliteration: 'yajñārthāt karmaṇo \'nyatra loko \'yaṁ karma-bandhanaḥ, tad-arthaṁ karma kaunteya mukta-saṅgaḥ samāchara',
+          meaning: 'The world is bound by actions other than those performed as sacrifice; therefore perform action for that sake alone, free from attachment.',
+          source: 'Bhagavad Gita 3.9 (tr. Swami Sivananda)'
+        },
+        storyText: 'Here Krishna reveals karma\'s escape hatch. Action binds when it is performed for the small self — my gain, my credit, my comfort. The same action performed as yajna, as offering, does not bind at all. The cook who feeds her family as an act of love, the engineer who builds as service to people he will never meet, the volunteer who asks for nothing — they act as much as anyone, often more. But the Gita says their action leaves no residue, "as a lotus leaf is not tainted by water" (Gita 5.10). The leaf lives in the pond; it is simply not soaked by it.',
+        teachingText: 'Try this quiet experiment: choose one routine task tomorrow — a meeting, the dishes, a commute — and perform it deliberately as an offering, to God, to the people it serves, or simply to something larger than your own advantage. Nothing external changes. Everything internal does. The task stops being a transaction and becomes, briefly, worship.'
+      },
+      {
+        id: 'karma-mystery',
+        title: 'The Deep Mystery of Action',
+        subtitle: 'Paths Crossing in a Dense Forest',
+        keyVerse: {
+          sanskrit: 'कर्मणो ह्यपि बोद्धव्यं बोद्धव्यं च विकर्मणः। अकर्मणश्च बोद्धव्यं गहना कर्मणो गतिः॥',
+          transliteration: 'karmaṇo hy api boddhavyaṁ boddhavyaṁ cha vikarmaṇaḥ, akarmaṇaśh cha boddhavyaṁ gahanā karmaṇo gatiḥ',
+          meaning: 'The true nature of action should be known, of forbidden action, and of inaction — the way of action is hard to understand.',
+          source: 'Bhagavad Gita 4.17 (tr. Swami Sivananda)'
+        },
+        storyText: 'Gahana karmano gatih — deep, dense, hard to fathom is the course of action. Even Krishna, in the middle of explaining karma, pauses to admit its mystery. A harsh word spoken in love can heal; a kind word spoken in cowardice can wound. Help given carelessly can weaken the helped. The epics are full of this ambiguity: Yudhishthira\'s truthfulness enables a deception at Kurukshetra; Karna\'s legendary generosity, offered to the wrong request, costs him his armor and his life.',
+        teachingText: 'This is why karma cannot be reduced to a rulebook. The teaching asks for something harder than compliance: discernment. Before a significant act, the tradition suggests three lamps to examine it by — Is my intention clean? Does it serve more than myself? Would I act this way if no one ever knew? None guarantees a perfect outcome; the way of action stays deep. But a person who keeps asking becomes, over years, someone whose actions can be trusted — including by themselves.'
+      },
+      {
+        id: 'karma-no-effort-lost',
+        title: 'No Sincere Effort Is Ever Lost',
+        subtitle: 'Rain Disappearing into Soil, Green Shoots Later',
+        keyVerse: {
+          sanskrit: 'नेहाभिक्रमनाशोऽस्ति प्रत्यवायो न विद्यते। स्वल्पमप्यस्य धर्मस्य त्रायते महतो भयात्॥',
+          transliteration: 'nehābhikrama-nāśho \'sti pratyavāyo na vidyate, svalpam apy asya dharmasya trāyate mahato bhayāt',
+          meaning: 'In this path there is no loss of effort, nor any harm; even a little of this practice protects one from great fear.',
+          source: 'Bhagavad Gita 2.40 (tr. Swami Sivananda)'
+        },
+        storyText: 'Perhaps karma\'s gentlest promise: on this path, nothing sincere is wasted. The world\'s accounting is unreliable — honest work goes unnoticed, kindness is forgotten, discipline shows no result for years. The Gita\'s accounting is different. Every genuine effort changes the one who makes it, and that change is never repossessed. The patience you practiced in a job that ended badly is still in your hands. The steadiness you built caring for someone who didn\'t recover is still in your spine.',
+        teachingText: 'Recall an effort of yours that "failed" — the venture that folded, the relationship that ended anyway, the practice you kept for a year and then dropped. Look honestly at what it left behind in you: a capacity, a scar that became sensitivity, a proof that you can endure. Karma\'s ledger records in a currency the world doesn\'t display. Even a little, Krishna says, protects from great fear.'
+      },
+      {
+        id: 'karma-worship',
+        title: 'Your Work as Worship',
+        subtitle: 'Ordinary Tools on an Altar',
+        keyVerse: {
+          sanskrit: 'यतः प्रवृत्तिर्भूतानां येन सर्वमिदं ततम्। स्वकर्मणा तमभ्यर्च्य सिद्धिं विन्दति मानवः॥',
+          transliteration: 'yataḥ pravṛittir bhūtānāṁ yena sarvam idaṁ tatam, sva-karmaṇā tam abhyarchya siddhiṁ vindati mānavaḥ',
+          meaning: 'He from whom all beings have evolved and by whom all this is pervaded — worshipping Him with one\'s own duty, a person attains perfection.',
+          source: 'Bhagavad Gita 18.46 (tr. Swami Sivananda)'
+        },
+        storyText: 'In the Gita\'s final chapter, the teaching of karma completes its arc. It began with a frightened warrior being told he could not escape action. It ends with the revelation that action itself — your own ordinary work, done as offering — is a form of worship equal to any ritual. Not someone else\'s more impressive work: yours. Sva-karmana, "by one\'s own action," Krishna says, a person worships the source of all beings and finds perfection.',
+        teachingText: 'And also this, from the same teaching: "One should raise oneself by one\'s own self; the self alone is one\'s friend, and the self alone is one\'s enemy" (Gita 6.5). Karma places your life firmly in your own hands — not because you control outcomes, but because you always control the next action, and the next action is where your character, your habits, and by the Upanishad\'s chain, your destiny are being written. The wheel is turning either way. The teaching simply hands you the wheel.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Bhagavad Gita',
+        locator: 'Chapters 2–6 and 18 (verses 2.40, 2.47, 2.48, 2.50, 3.5, 3.9, 4.17, 5.10, 6.5, 18.46)',
+        translation: 'Swami Sivananda (public domain; bundled gitaVerses.json)',
+      },
+      {
+        text: 'Brihadaranyaka Upanishad',
+        locator: '4.4.5 (desire → will → deed → destiny)',
+        translation: 'Max Müller, Sacred Books of the East (public domain)',
+        url: 'https://www.brhat.in/openlibrary/special/brihadaranyaka-upanishad/4-4-5',
+      },
+    ],
+    reflectionQuestions: [
+      'Krishna says your right is to the action alone, never to its fruits. Where in your life are you working hard but gripping the result so tightly it hurts — and what would it mean to give your best there and release the rest?',
+      'The Upanishads teach: as your deed is, so you become. What small action do you repeat almost daily that is quietly shaping who you are — and is it shaping you toward the person you want to become?',
+      'Think of a sincere effort of yours that seemingly failed. Looking back honestly, what did it leave behind in you that the world\'s accounting never recorded?'
+    ]
   },
   {
     id: 'ahimsa',

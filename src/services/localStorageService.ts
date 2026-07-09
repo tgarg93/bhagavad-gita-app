@@ -86,16 +86,23 @@ export interface ReflectionTurn {
   at: string;
 }
 
+// What kind of content a reflection belongs to. Entries with no contentType
+// (everything stored before Phase D) are legacy Gita chapter reflections.
+export type ReflectionContentType = 'gita' | 'festival' | 'deity' | 'concept';
+
 // A single reflection: the reader's answer to a chapter question, Krishna's
 // response, and any follow-up conversation. `completed` marks the user having
 // explicitly closed the conversation for this question.
 export interface ReflectionEntry {
   id: string;
   userId: string;
-  chapterNumber: number;
+  chapterNumber?: number; // present ⇒ Gita chapter entry (incl. all legacy entries)
   questionIndex: number;
   question: string;
   answer: string;
+  contentType?: ReflectionContentType; // absent ⇒ 'gita'
+  contentId?: string; // e.g. 'ganesha', 'karma', 'diwali-2025'
+  contentTitle?: string; // human label for context summaries
   krishnaResponse?: string;
   thread?: ReflectionTurn[];
   completed?: boolean;
@@ -360,6 +367,17 @@ class LocalStorageService {
       ? all
       : all.filter(r => r.chapterNumber === chapterNumber);
     return filtered.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  }
+
+  // Reflections for a non-Gita content item (festival/deity/concept), newest first
+  static async getReflectionsByContent(
+    contentType: ReflectionContentType,
+    contentId: string
+  ): Promise<ReflectionEntry[]> {
+    const all = await this.getAllReflections();
+    return all
+      .filter(r => r.contentType === contentType && r.contentId === contentId)
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   }
 
   static async deleteReflection(id: string) {

@@ -11,14 +11,17 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
-import LocalStorageService, { ReflectionEntry, ReflectionTurn } from '../services/localStorageService';
+import LocalStorageService, { ReflectionContentType, ReflectionEntry, ReflectionTurn } from '../services/localStorageService';
 import { geminiService, isAuthError } from '../services/geminiService';
 import krishnaContext from '../services/krishnaContextService';
 import { userKnowledge } from '../services/userKnowledgeService';
 
 interface ChapterReflectionProps {
-  chapterNumber: number;
-  chapterTitle: string;
+  // Gita chapters pass chapterNumber; other content passes contentType+contentId.
+  chapterNumber?: number;
+  contentType?: ReflectionContentType;
+  contentId?: string;
+  chapterTitle: string; // content title for non-Gita (festival/deity/concept name)
   subtitle: string;
   questions: string[];
 }
@@ -61,6 +64,8 @@ const Bubble: React.FC<{ role: 'krishna' | 'user'; text: string }> = ({ role, te
 // going, and taps "Complete" to move to the next question.
 const ChapterReflection: React.FC<ChapterReflectionProps> = ({
   chapterNumber,
+  contentType,
+  contentId,
   chapterTitle,
   subtitle,
   questions,
@@ -79,7 +84,12 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
   );
 
   const loadReflections = useCallback(async () => {
-    const stored = await LocalStorageService.getReflections(chapterNumber);
+    const stored =
+      contentType && contentId
+        ? await LocalStorageService.getReflectionsByContent(contentType, contentId)
+        : chapterNumber != null
+          ? await LocalStorageService.getReflections(chapterNumber)
+          : []; // misconfigured mount: neither key — don't load every reflection
     setReflections(stored);
     // Active question = first not-yet-completed one (an answered-but-open
     // conversation stays active so the user can continue or complete it)
@@ -91,7 +101,7 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
     }
     setQuestionIndex(next);
     setLoaded(true);
-  }, [chapterNumber, questions.length]);
+  }, [chapterNumber, contentType, contentId, questions.length]);
 
   useEffect(() => {
     loadReflections();
@@ -125,7 +135,7 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
     })();
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chapterNumber]);
+  }, [contentId ?? chapterNumber]);
 
   const answeredCount = useMemo(
     () => questions.filter((_, i) => entryFor(i)?.completed).length,
@@ -161,11 +171,16 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
         entry = {
           id: genId(),
           userId,
-          chapterNumber,
           questionIndex,
           question: activeQuestion,
           answer: text,
           createdAt: new Date().toISOString(),
+          // Gita entries keep the legacy shape (bare chapterNumber); other
+          // content is keyed by contentType + contentId
+          ...(chapterNumber != null ? { chapterNumber } : {}),
+          ...(contentType && contentId
+            ? { contentType, contentId, contentTitle: chapterTitle }
+            : {}),
         };
         await LocalStorageService.saveReflection(entry);
         await markChapterReflectedOn(userId);
@@ -222,6 +237,9 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
   };
 
   const markChapterReflectedOn = async (userId: string) => {
+    // chaptersCompleted is a Gita-chapter counter; non-Gita reflections earn
+    // progression through the reflections count alone
+    if (chapterNumber == null) return;
     try {
       const progress = await LocalStorageService.getUserProgress(userId);
       if (progress && !progress.chaptersCompleted.includes(chapterNumber)) {
@@ -317,7 +335,11 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
         <View style={styles.exchange}>
           <Bubble
             role="krishna"
-            text="Carry these thoughts with you — we will speak again in the next chapter."
+            text={
+              chapterNumber != null
+                ? 'Carry these thoughts with you — we will speak again in the next chapter.'
+                : 'Carry these thoughts with you into your day — I am always here when you wish to talk.'
+            }
           />
         </View>
       )}

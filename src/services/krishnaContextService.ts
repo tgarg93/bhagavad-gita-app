@@ -109,7 +109,10 @@ class KrishnaContextService {
       this.summaryRefreshInFlight = true;
       const recent = reflections
         .slice(0, 8)
-        .map(r => `Ch${r.chapterNumber} Q: ${r.question}\nThey wrote: ${r.answer.slice(0, MAX_REFLECTION_CHARS)}`)
+        .map(r => {
+          const where = r.chapterNumber != null ? `Ch${r.chapterNumber}` : `[${r.contentTitle ?? r.contentId ?? 'reading'}]`;
+          return `${where} Q: ${r.question}\nThey wrote: ${r.answer.slice(0, MAX_REFLECTION_CHARS)}`;
+        })
         .join('\n---\n');
 
       const factsLine = userKnowledge
@@ -117,7 +120,7 @@ class KrishnaContextService {
         .map(f => `${f.label.toLowerCase()}: ${f.value}`)
         .join('; ');
 
-      const prompt = `You maintain a short private memory profile of a person on a spiritual learning journey through the Bhagavad Gita. Based on their onboarding and recent personal reflections below, write an updated profile summary in under 120 words: the themes they wrestle with, what seems to matter to them, and how they engage. Plain prose, third person, warm but factual. No headers, no markdown. Do not restate the known facts; focus on themes and inner movement.
+      const prompt = `You maintain a short private memory profile of a person on a spiritual learning journey through Hindu scripture and tradition. Based on their onboarding and recent personal reflections below, write an updated profile summary in under 120 words: the themes they wrestle with, what seems to matter to them, and how they engage. Plain prose, third person, warm but factual. No headers, no markdown. Do not restate the known facts; focus on themes and inner movement.
 
 Onboarding: familiarity ${profile.familiarity}; intentions: ${profile.intentions.join(', ') || 'unknown'}; interests: ${profile.interests.join(', ') || 'unknown'}.
 Known facts about them: ${factsLine || 'none yet'}.

@@ -1,6 +1,8 @@
 // Hindu Festival Calendar Data for Dharma App
 // Comprehensive collection of Hindu festivals, observances, and sacred days
 
+import { NarrativeSection, SourceNote } from './narrativeTypes';
+
 export interface Festival {
   id: string;
   name: string;
@@ -37,6 +39,13 @@ export interface Festival {
   familyActivities: FamilyActivity[];
   culturalImpact: string;
   relatedFestivals: string[]; // IDs of related festivals
+  // Narrative reading experience (Gita-style sections) — seed content only
+  sections?: NarrativeSection[];
+  // Primary texts the content was verified against (rendered as a footer card)
+  sources?: SourceNote[];
+  // Chapter-style reflection questions — not authored yet for festivals;
+  // the detail screen renders them if/when present
+  reflectionQuestions?: string[];
 }
 
 export type FestivalType = 
@@ -208,7 +217,7 @@ export const festivalData: Festival[] = [
     name: 'Makar Sankranti',
     sanskritName: 'मकर संक्रान्ति',
     date: '2025-01-14',
-    occurrences: ['2025-01-14', '2026-01-14', '2027-01-15'],
+    occurrences: ['2025-01-14', '2026-01-14', '2027-01-15', '2028-01-15'], // verified vs Drik Panchang, Jul 2026
     emoji: '🪁',
     dateType: 'solar',
     type: 'harvest',
@@ -587,7 +596,7 @@ export const festivalData: Festival[] = [
     name: 'Basant Panchami',
     sanskritName: 'बसन्त पञ्चमी',
     date: '2025-02-03',
-    occurrences: ['2025-02-03', '2026-01-23', '2027-02-11'],
+    occurrences: ['2025-02-03', '2026-01-23', '2027-02-11', '2028-01-31'], // verified vs Drik Panchang, Jul 2026
     emoji: '🪷',
     dateType: 'lunar',
     type: 'spiritual',
@@ -655,7 +664,7 @@ export const festivalData: Festival[] = [
     name: 'Maha Shivratri',
     sanskritName: 'महाशिवरात्रि',
     date: '2025-02-26',
-    occurrences: ['2025-02-26', '2026-02-15', '2027-03-06'],
+    occurrences: ['2025-02-26', '2026-02-15', '2027-03-06', '2028-02-23'], // verified vs Drik Panchang, Jul 2026
     emoji: '🔱',
     dateType: 'lunar',
     type: 'spiritual',
@@ -724,7 +733,8 @@ export const festivalData: Festival[] = [
     name: 'Holi',
     sanskritName: 'होली',
     date: '2025-03-14',
-    occurrences: ['2025-03-13', '2026-03-03', '2027-03-22'],
+    // Start = Holika Dahan evening; Rangwali Holi is the following day
+    occurrences: ['2025-03-13', '2026-03-03', '2027-03-21', '2028-03-10'], // verified vs Drik Panchang, Jul 2026 (2027 corrected 03-22→03-21)
     emoji: '🎨',
     dateType: 'lunar',
     type: 'cultural',
@@ -793,7 +803,7 @@ export const festivalData: Festival[] = [
     name: 'Ram Navami',
     sanskritName: 'राम नवमी',
     date: '2025-04-06',
-    occurrences: ['2025-04-06', '2026-03-26', '2027-04-15'],
+    occurrences: ['2025-04-06', '2026-03-26', '2027-04-15', '2028-04-03'], // verified vs Drik Panchang, Jul 2026
     emoji: '🏹',
     dateType: 'lunar',
     type: 'deity_celebration',
@@ -847,7 +857,8 @@ export const festivalData: Festival[] = [
     name: 'Krishna Janmashtami',
     sanskritName: 'कृष्ण जन्माष्टमी',
     date: '2025-08-16',
-    occurrences: ['2025-08-16', '2026-09-04', '2027-08-25'],
+    // 2027 splits by tradition: Smarta Aug 24, Vaishnava Aug 25 (we list Vaishnava)
+    occurrences: ['2025-08-16', '2026-09-04', '2027-08-25', '2028-08-13'], // verified vs Drik Panchang, Jul 2026
     emoji: '🦚',
     dateType: 'lunar',
     type: 'deity_celebration',
@@ -877,22 +888,233 @@ export const festivalData: Festival[] = [
     scripture: 'Bhagavad Gita',
     duration: 1,
     importance: 'major',
-    rituals: [],
+    rituals: [
+      {
+        id: 'janmashtami-midnight-puja',
+        name: 'Midnight Birth Celebration (Nishita Puja)',
+        description: 'The heart of Janmashtami: welcoming Krishna at the midnight hour of his birth with bathing, dressing, offerings, and arati.',
+        timeOfDay: 'night',
+        materials: [
+          'A small murti or picture of baby Krishna (Laddu Gopal)',
+          'Panchamrit (milk, yogurt, ghee, honey, sugar)',
+          'Fresh clothes and a small cradle or swing (jhula)',
+          'Makhan (white butter) and mishri (rock sugar)',
+          'Tulsi leaves, flowers, incense, and a ghee lamp'
+        ],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'Before midnight, gently bathe the baby Krishna murti with panchamrit, then with clean water.',
+            explanation: 'The abhishek recreates the loving welcome of a newborn; the five nectars represent the sweetness of devotion.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Dress Krishna in new clothes, adorn with a peacock feather if you have one, and place him in the cradle.',
+            explanation: 'Devotees receive Krishna not as a distant god but as a child of the house.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'At midnight, rock the cradle gently, offer makhan-mishri and tulsi, and perform arati with the ghee lamp.',
+            explanation: 'Krishna was born at midnight in Mathura; the arati at that exact hour is the festival\'s central moment.'
+          },
+          {
+            stepNumber: 4,
+            instruction: 'Sing a bhajan or simply chant the mantra 108 times (or any number you can offer with attention), then share the prasad.',
+            explanation: 'The celebration ends by distributing the sweetness — prasad is blessing made shareable.'
+          }
+        ],
+        mantras: [
+          {
+            sanskrit: 'ॐ नमो भगवते वासुदेवाय',
+            transliteration: 'oṁ namo bhagavate vāsudevāya',
+            meaning: 'Om, salutations to the Blessed Lord Vasudeva (Krishna)',
+            pronunciation: 'om na-mo bha-ga-va-te vaa-su-de-vaa-ya'
+          }
+        ],
+        significance: 'Marks the exact midnight hour of Krishna\'s birth in Kamsa\'s prison, as told in the Bhagavata Purana (Canto 10, Chapter 3).',
+        tips: [
+          'If midnight is impractical with young children, hold the celebration at their bedtime and explain the midnight tradition',
+          'Keep the arati simple and unhurried — attention matters more than elaborateness'
+        ],
+        commonMistakes: [
+          'Treating the puja as a performance rather than a welcome',
+          'Skipping the sharing of prasad, which completes the offering'
+        ]
+      },
+      {
+        id: 'janmashtami-fast-and-jhanki',
+        name: 'The Day-long Fast and Jhanki',
+        description: 'Many devotees fast until midnight and spend the day preparing a jhanki — a small tableau of Krishna\'s birth and childhood scenes.',
+        timeOfDay: 'all_day',
+        materials: [
+          'Fruits, milk, and water for a phalahar (fruit) fast',
+          'Craft materials for the jhanki: a small prison scene, the Yamuna river, Gokul village',
+          'Krishna storybook or the Bhagavata Purana\'s tenth canto'
+        ],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'Begin the day with a sankalpa (intention): a simple fast — fruits and milk — offered for the day.',
+            explanation: 'The fast turns ordinary hunger into remembrance; every pang points to midnight.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Through the day, build the jhanki together: Kamsa\'s prison, baby Krishna in a basket, Vasudeva crossing the rain-swollen Yamuna, and peaceful Gokul on the far shore.',
+            explanation: 'Building the scenes is embodied storytelling — the story enters through the hands.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Read or tell the birth story aloud in the evening, then keep vigil with bhajans until the midnight arati.',
+            explanation: 'The vigil recreates the waiting of Devaki and Vasudeva through the long imprisoned night.'
+          }
+        ],
+        significance: 'The fast-until-midnight and vigil mirror the story itself: darkness, waiting, and the sudden arrival of joy.',
+        tips: ['Those who cannot fast strictly may simply eat lightly and skip grains — the remembrance is the point'],
+        commonMistakes: ['Making the fast a feat of endurance rather than an act of attention']
+      }
+    ],
     fullStory: 'Krishna Janmashtami celebrates the birth of Lord Krishna, the eighth avatar of Vishnu, born in Mathura to Devaki and Vasudeva. Krishna\'s birth at midnight in a prison cell, his miraculous escape to Gokul, and his divine childhood filled with miracles and teachings form the essence of this celebration. The festival includes fasting, midnight prayers, and joyous celebrations that recreate the scenes from Krishna\'s life.',
+    sections: [
+      {
+        id: 'janmashtami-midnight',
+        title: 'The Darkest Night of the Month',
+        subtitle: 'A Prison Cell Lit from Within',
+        storyText: 'Janmashtami falls on the eighth night of the waning moon of Bhadrapada — close to the month\'s darkest hour. The timing is the first teaching. Krishna is not born at dawn in a palace; he is born at midnight in a prison, to parents chained by a tyrant. Hindu tradition placed the year\'s most joyous birth in the year\'s heaviest darkness deliberately: divinity arrives precisely where things look most hopeless. Devotees who fast through the day and keep vigil to midnight are not performing an austerity — they are rehearsing the story\'s deepest claim, that the night is worth waiting through.'
+      },
+      {
+        id: 'janmashtami-prophecy',
+        title: 'The Prophecy and the Prison',
+        subtitle: 'Kamsa Gripping the Reins of His Sister\'s Chariot',
+        storyText: 'The Bhagavata Purana (Canto 10, Chapter 1) opens the story at a wedding. Kamsa, the ruthless king of Mathura, is lovingly driving the chariot of his newly married sister Devaki when a voice from the sky stops him cold: the eighth child of this very sister will be his death. In an instant, affection becomes terror. He raises his sword against Devaki; her husband Vasudeva saves her with a desperate promise — every child they bear will be handed to Kamsa. The king imprisons them both, and one by one, six newborns are taken and killed. The seventh is mysteriously lost. And then Devaki conceives an eighth time, and the prison begins, impossibly, to feel like a temple.',
+        teachingText: 'Kamsa\'s tragedy is instructive: the prophecy did not doom him — his response to it did. Fear made him cruel, and his cruelty manufactured the very enemy he feared. When you receive threatening news, watch what it makes of you. Fear that turns to control and harm builds the prison; and it is always the fearful one who ends up living in it.'
+      },
+      {
+        id: 'janmashtami-birth',
+        title: 'The Midnight Birth',
+        subtitle: 'Vasudeva Carrying a Basket Across the Yamuna',
+        storyText: 'At midnight, in the blackest hour, the child is born — and the Bhagavata Purana says the prison filled with light. Devaki and Vasudeva behold their newborn for a moment in his four-armed divine form, crowned and holding conch, discus, club, and lotus, before he becomes an ordinary, impossibly beautiful baby (Canto 10, Chapter 3). The guards fall into enchanted sleep. The shackles open. The barred doors swing wide. Carrying his son in a basket on his head, Vasudeva walks out into a monsoon night, and the rain-swollen Yamuna parts to give him passage while the great serpent Shesha spreads his hoods as an umbrella. In sleeping Gokul, he lays Krishna beside the cowherd queen Yashoda and returns with her newborn daughter. When Kamsa comes to kill the eighth child, she slips from his hands and rises as the goddess Yogamaya, laughing: "The one who will destroy you is already born, elsewhere" (Canto 10, Chapter 4).',
+        teachingText: 'Notice what the story insists on: when the divine chooses to move, every lock in the world is already open. The chains, the doors, the river — none of them were ever the real obstacle. What actually carries the child to safety is a father\'s trembling, faithful walk through the rain. Grace opens the way; someone still has to do the walking.'
+      },
+      {
+        id: 'janmashtami-why-born',
+        title: 'Why God Takes Birth',
+        subtitle: 'The Charioteer Revealing Himself',
+        keyVerse: {
+          sanskrit: 'यदा यदा हि धर्मस्य ग्लानिर्भवति भारत। अभ्युत्थानमधर्मस्य तदाऽऽत्मानं सृजाम्यहम्॥ परित्राणाय साधूनां विनाशाय च दुष्कृताम्। धर्मसंस्थापनार्थाय संभवामि युगे युगे॥',
+          transliteration: 'yadā yadā hi dharmasya glānir bhavati bhārata, abhyutthānam adharmasya tadātmānaṁ sṛijāmy aham; paritrāṇāya sādhūnāṁ vināśhāya cha duṣhkṛitām, dharma-sansthāpanārthāya sambhavāmi yuge yuge',
+          meaning: 'Whenever there is a decline of righteousness and a rise of unrighteousness, O Arjuna, then I manifest Myself. For the protection of the good, for the destruction of the wicked, and for the establishment of righteousness, I am born in every age.',
+          source: 'Bhagavad Gita 4.7–8 (tr. Swami Sivananda)'
+        },
+        storyText: 'Decades after that midnight, the child born in Kamsa\'s prison stood on the battlefield of Kurukshetra as Arjuna\'s charioteer and explained his own birth. These two verses — recited in millions of homes every Janmashtami — are Krishna\'s answer to why the infinite takes a body at all: not as a one-time miracle, but as a standing promise. Whenever darkness gathers past bearing, in every age, the light is born again.',
+        teachingText: 'The promise has an inner reading too. The prison is any heart shut tight by fear; midnight is any hour when hope runs lowest. Janmashtami asks you to keep one lamp lit in that darkness — because the story\'s whole claim is that this is exactly when and where the divine chooses to be born.'
+      },
+      {
+        id: 'janmashtami-butter',
+        title: 'The God Who Steals Butter',
+        subtitle: 'A Clay Pot Hanging High, Boys Climbing in a Pyramid',
+        storyText: 'The story does not end at the rescue — it erupts into joy. In Gokul and Vrindavan, the divine child grows up as a mischievous cowherd boy who raids every kitchen for fresh makhan, white butter — the Bhagavata\'s tenth canto lovingly records the exasperated cowherd women lining up to complain to Yashoda while secretly hoping he raids their homes next. This is why Janmashtami tastes of butter and rock sugar, and why in Maharashtra young men build swaying human pyramids to smash a dahi handi hung high above the street — recreating the toddler gangs Krishna organized to reach the hanging pots.',
+        teachingText: 'Hindu tradition\'s boldest move is here: the same God who parts rivers wants to be loved as the baby you rock, the child you scold, the friend whose mischief you forgive. The butter thief teaches that the divine is not only approached through awe — sometimes it climbs through your kitchen window. Let your practice this Janmashtami include delight: sweetness shared, songs sung too loudly, a pot broken open. Joy, too, is worship.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Bhagavata Purana (Srimad Bhagavatam)',
+        locator: 'Canto 10, Chapters 1–4 (Kamsa\'s prophecy, the birth, the crossing to Gokul, Yogamaya); Chapters 8–9 (the butter stories)',
+        translation: 'Retold from the Sanskrit tradition; cross-checked against public translations (vedabase.io, wisdomlib.org)',
+        url: 'https://vedabase.io/en/library/sb/10/3/',
+      },
+      {
+        text: 'Bhagavad Gita',
+        locator: '4.7–8 (why the divine takes birth)',
+        translation: 'Swami Sivananda (public domain; bundled gitaVerses.json)',
+      },
+      {
+        text: 'Drik Panchang',
+        locator: 'Janmashtami dates 2026–2028 (Smarta/Vaishnava conventions noted)',
+        url: 'https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html',
+      },
+    ],
     mythology: [
       'Divine birth in Kamsa\'s prison to destroy evil',
       'Miraculous escape to Gokul and childhood with Yashoda',
       'Krishna\'s divine leelas (pastimes) and teachings'
     ],
     historicalContext: 'Ancient festival celebrating one of Hinduism\'s most beloved deities, central to Bhagavad Gita teachings.',
-    scriptureReferences: [],
+    scriptureReferences: [
+      {
+        id: 'janmashtami-gita-4-7',
+        text: 'bhagavad_gita',
+        chapter: 4,
+        verse: 7,
+        relevance: 'Krishna\'s own explanation of why the divine takes birth — recited across homes on Janmashtami',
+        quote: 'Whenever there is a decline of righteousness and an increase of unrighteousness, O Arjuna, then I manifest Myself.'
+      },
+      {
+        id: 'janmashtami-gita-4-8',
+        text: 'bhagavad_gita',
+        chapter: 4,
+        verse: 8,
+        relevance: 'The standing promise of divine descent in every age',
+        quote: 'For the protection of the good, for the destruction of the wicked, and for the establishment of righteousness, I am born in every age.'
+      },
+      {
+        id: 'janmashtami-bhagavata-birth',
+        text: 'puranas',
+        section: 'Bhagavata Purana, Canto 10, Chapters 1–4',
+        relevance: 'The full birth narrative: Kamsa\'s prophecy, the midnight birth in prison, Vasudeva crossing the Yamuna, and Yogamaya\'s warning'
+      }
+    ],
     regionalVariations: [],
     modernAdaptations: [
       'Dahi Handi competitions with safety measures',
       'Krishna themed cultural programs',
       'Bhagavad Gita study circles'
     ],
-    familyActivities: [],
+    familyActivities: [
+      {
+        id: 'janmashtami-jhanki',
+        title: 'Build a Janmashtami Jhanki Together',
+        description: 'Create a small tableau of the birth story: Kamsa\'s prison, baby Krishna in a basket, the parting Yamuna, and Gokul on the far shore. Tell the story as you build each scene.',
+        ageGroup: 'all_ages',
+        duration: '1-2 hours',
+        materials: ['A tray or table corner', 'Clay or paper figures', 'Blue cloth or paper for the Yamuna', 'A tiny basket', 'Flowers and diyas'],
+        instructions: [
+          'Lay out the four scenes left to right so the story reads like a journey',
+          'Let children place Vasudeva\'s basket in the river and "part" the waters',
+          'Finish by placing baby Krishna in Gokul and lighting a diya beside him',
+          'Tell or read the birth story aloud over the completed jhanki'
+        ],
+        learningObjective: 'Children absorb the birth narrative through their hands, and learn that darkness in the story is always crossed, never final'
+      },
+      {
+        id: 'janmashtami-home-dahi-handi',
+        title: 'A Home Dahi Handi',
+        description: 'Hang a small pot with makhan-mishri just out of the children\'s reach and let them work together — stools, teamwork, laughter — to bring it down, the way young Krishna\'s friends did.',
+        ageGroup: 'children',
+        duration: '30 minutes',
+        materials: ['A small clay pot or bowl', 'White butter and rock sugar', 'String to hang it', 'Cushions for safe landings'],
+        instructions: [
+          'Hang the pot at a stretch-but-reachable height',
+          'The rule: it can only be reached by helping each other',
+          'Share the makhan-mishri as prasad afterward'
+        ],
+        learningObjective: 'The sweetest things are reached together — and God enjoys being played with, not only prayed to'
+      },
+      {
+        id: 'janmashtami-midnight-lamp',
+        title: 'The Midnight Lamp',
+        description: 'Before bed (or at midnight for older children), each family member lights one diya in the darkest corner of the home and names one dark thing they are trusting will pass.',
+        ageGroup: 'all_ages',
+        duration: '15 minutes',
+        materials: ['One diya or candle per person'],
+        instructions: [
+          'Turn the lights off first and sit in the dark for one quiet minute',
+          'Light the lamps one by one, each person speaking their hope aloud or silently',
+          'Leave the lamps burning together while a Krishna bhajan plays'
+        ],
+        learningObjective: 'The festival\'s core teaching, embodied: light is born exactly where the dark feels heaviest'
+      }
+    ],
     culturalImpact: 'Teaches devotion, divine love, and the importance of dharma through Krishna\'s teachings.',
     relatedFestivals: ['holi-2025', 'diwali-2025'],
     heroImageUrl: require('../../assets/images/covers/krishna-cover.png'),
@@ -902,7 +1124,7 @@ export const festivalData: Festival[] = [
     name: 'Ganesh Chaturthi',
     sanskritName: 'गणेश चतुर्थी',
     date: '2025-08-29',
-    occurrences: ['2025-08-29', '2026-09-07', '2027-09-04'],
+    occurrences: ['2025-08-29', '2026-09-14', '2027-09-04', '2028-08-23'], // verified vs Drik Panchang, Jul 2026 (2026 corrected 09-07→09-14)
     emoji: '🐘',
     dateType: 'lunar',
     type: 'deity_celebration',
@@ -955,7 +1177,7 @@ export const festivalData: Festival[] = [
     name: 'Navratri',
     sanskritName: 'नवरात्रि',
     date: '2025-09-22',
-    occurrences: ['2025-09-22', '2026-10-10', '2027-09-30'],
+    occurrences: ['2025-09-22', '2026-10-11', '2027-09-30', '2028-09-19'], // verified vs Drik Panchang, Jul 2026 (2026 corrected 10-10→10-11, Ghatasthapana)
     emoji: '🦁',
     dateType: 'lunar',
     type: 'deity_celebration',
@@ -1506,7 +1728,7 @@ export const festivalData: Festival[] = [
     name: 'Diwali',
     sanskritName: 'दीपावली',
     date: '2025-10-20',
-    occurrences: ['2025-10-20', '2026-11-08', '2027-10-29'],
+    occurrences: ['2025-10-20', '2026-11-08', '2027-10-29', '2028-10-17'], // verified vs Drik Panchang, Jul 2026
     emoji: '🪔',
     dateType: 'lunar',
     type: 'spiritual',

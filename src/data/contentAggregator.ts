@@ -5,7 +5,7 @@ import { ContentCard, ContentSection, ContentCategory } from '../types/contentTy
 import { expandedScripturesData } from './expandedScriptures';
 import { getMajorFestivals } from './festivals';
 import { getMajorDeities } from './godsAndDeities';
-import { getCoreConceptsData, getEthicalValuesData } from './philosophyAndTeachings';
+import { getCoreConceptsData, getEthicalValuesData, getSpiritualPathsData } from './philosophyAndTeachings';
 import { getYogaPathsData, getBeginnerPractices } from './yogaAndPractices';
 
 // Convert data to unified ContentCard format
@@ -126,7 +126,23 @@ const convertPhilosophyToCards = (): ContentCard[] => {
       isNew: false
     }));
 
-    return [...coreConceptsCards, ...ethicalValuesCards];
+    const spiritualPathsCards = getSpiritualPathsData().map(concept => ({
+      id: concept.id,
+      title: concept.name,
+      sanskritName: concept.sanskritName,
+      description: concept.description,
+      category: 'philosophy' as ContentCategory,
+      difficulty: concept.difficulty,
+      heroImage: concept.images.heroImage,
+      iconImage: concept.images.iconImage,
+      tags: concept.keyAspects.slice(0, 3),
+      estimatedTime: concept.audioGuide.duration,
+      progress: 0,
+      isFavorite: false,
+      isNew: false
+    }));
+
+    return [...coreConceptsCards, ...spiritualPathsCards, ...ethicalValuesCards];
   } catch (error) {
     console.log('Error converting philosophy:', error);
     return [];

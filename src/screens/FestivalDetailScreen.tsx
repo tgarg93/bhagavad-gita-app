@@ -12,6 +12,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
+import NarrativeSections from '../components/NarrativeSections';
+import SourcesCard from '../components/SourcesCard';
+import ChapterReflection from '../components/ChapterReflection';
 import {
   festivalData,
   getNextOccurrence,
@@ -174,10 +177,17 @@ const FestivalDetailScreen: React.FC = () => {
               </View>
             ))}
 
-          {festival.fullStory &&
+          {/* Immersive narrative when authored (seed content); flat story otherwise */}
+          {festival.sections && festival.sections.length > 0 ? (
+            <View style={styles.narrativeBlock}>
+              <NarrativeSections sections={festival.sections} />
+            </View>
+          ) : (
+            festival.fullStory &&
             renderSection('The Story', (
               <Text style={styles.storyText}>{festival.fullStory}</Text>
-            ))}
+            ))
+          )}
 
           {festival.mythology?.length > 0 &&
             renderSection('Mythology & Legends', (
@@ -206,10 +216,71 @@ const FestivalDetailScreen: React.FC = () => {
               </View>
             ))}
 
+          {festival.rituals?.length > 0 &&
+            renderSection('Rituals & How to Celebrate', (
+              <View>
+                {festival.rituals.map(ritual => (
+                  <View key={ritual.id} style={styles.card}>
+                    <Text style={styles.ritualName}>{ritual.name}</Text>
+                    <Text style={styles.ritualSignificance}>{ritual.significance}</Text>
+                    {ritual.materials.length > 0 && (
+                      <Text style={styles.ritualMaterials}>
+                        You'll need: {ritual.materials.join(', ')}
+                      </Text>
+                    )}
+                    {ritual.steps.map(step => (
+                      <View key={step.stepNumber} style={styles.bulletRow}>
+                        <Text style={styles.stepNumber}>{step.stepNumber}.</Text>
+                        <Text style={styles.bulletText}>{step.instruction}</Text>
+                      </View>
+                    ))}
+                    {ritual.mantras?.map((mantra, i) => (
+                      <View key={i} style={styles.ritualMantra}>
+                        <Text style={styles.ritualMantraSanskrit}>{mantra.sanskrit}</Text>
+                        <Text style={styles.ritualMantraTranslit}>{mantra.transliteration}</Text>
+                        <Text style={styles.ritualMantraMeaning}>{mantra.meaning}</Text>
+                      </View>
+                    ))}
+                  </View>
+                ))}
+              </View>
+            ))}
+
+          {festival.familyActivities?.length > 0 &&
+            renderSection('With Family', (
+              <View>
+                {festival.familyActivities.map(activity => (
+                  <View key={activity.id} style={styles.card}>
+                    <Text style={styles.ritualName}>{activity.title}</Text>
+                    <Text style={styles.bodyText}>{activity.description}</Text>
+                    <Text style={styles.activityMeta}>
+                      {activity.ageGroup.replace(/_/g, ' ')} · {activity.duration}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            ))}
+
           {festival.culturalImpact &&
             renderSection('Cultural Impact', (
               <Text style={styles.bodyText}>{festival.culturalImpact}</Text>
             ))}
+
+          {festival.sources && festival.sources.length > 0 && (
+            <View style={styles.narrativeBlock}>
+              <SourcesCard sources={festival.sources} />
+            </View>
+          )}
+
+          {festival.reflectionQuestions && festival.reflectionQuestions.length > 0 && (
+            <ChapterReflection
+              contentType="festival"
+              contentId={festival.id}
+              chapterTitle={festival.name}
+              subtitle={festival.significance}
+              questions={festival.reflectionQuestions}
+            />
+          )}
         </View>
       </ScrollView>
     </View>
@@ -329,6 +400,68 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: layout.containerPadding,
     paddingTop: spacing.lg,
+  },
+  // NarrativeSections/SourcesCard pad themselves (spacing.lg); cancel the
+  // content container's padding so their gutters match the other screens
+  narrativeBlock: {
+    marginHorizontal: -layout.containerPadding,
+  },
+  ritualName: {
+    ...typography.sizes.headingSM,
+    color: colors.primary.deepSaffron,
+    fontWeight: '600',
+    marginBottom: spacing.xs,
+  },
+  ritualSignificance: {
+    ...typography.sizes.bodyMD,
+    color: colors.neutrals.charcoalBlack,
+    fontStyle: 'italic',
+    marginBottom: spacing.sm,
+  },
+  ritualMaterials: {
+    ...typography.sizes.bodySM,
+    fontWeight: '400',
+    color: colors.neutrals.softAsh,
+    marginBottom: spacing.sm,
+  },
+  stepNumber: {
+    ...typography.sizes.bodyMD,
+    color: colors.primary.deepSaffron,
+    fontWeight: '600',
+    marginRight: spacing.sm,
+  },
+  ritualMantra: {
+    backgroundColor: 'rgba(255, 193, 7, 0.05)',
+    borderRadius: borderRadius.medium,
+    padding: spacing.md,
+    marginTop: spacing.sm,
+    borderLeftWidth: 4,
+    borderLeftColor: colors.primary.turmericYellow,
+  },
+  ritualMantraSanskrit: {
+    ...typography.sizes.sacredQuote,
+    color: colors.primary.deepSaffron,
+    textAlign: 'center',
+  },
+  ritualMantraTranslit: {
+    ...typography.sizes.bodySM,
+    fontWeight: '400',
+    color: colors.neutrals.softAsh,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    marginTop: spacing.xs,
+  },
+  ritualMantraMeaning: {
+    ...typography.sizes.bodyMD,
+    color: colors.primary.peacockTeal,
+    textAlign: 'center',
+    marginTop: spacing.xs,
+  },
+  activityMeta: {
+    ...typography.sizes.caption,
+    color: colors.neutrals.softAsh,
+    marginTop: spacing.sm,
+    textTransform: 'capitalize',
   },
   section: {
     marginBottom: spacing.xl,

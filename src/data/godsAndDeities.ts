@@ -1,6 +1,8 @@
 // Gods and Deities Data for Dharma App
 // Comprehensive collection of Hindu deities with mythology, teachings, and cultural significance
 
+import { NarrativeSection, SourceNote } from './narrativeTypes';
+
 export interface Deity {
   id: string;
   name: string;
@@ -26,10 +28,16 @@ export interface Deity {
   familyConnections: FamilyConnection[]; // Relationships with other deities
   regionalVariations: RegionalVariation[];
   images: {
-    heroImage: string;
+    heroImage: string | number; // remote path or require()'d bundled asset
     iconImage: string;
     galleryImages: string[];
   };
+  // Narrative reading experience (Gita-style sections) — seed content only
+  sections?: NarrativeSection[];
+  // Primary texts the content was verified against (rendered as a footer card)
+  sources?: SourceNote[];
+  // Chapter-style reflection questions (exactly 3, Gita pattern)
+  reflectionQuestions?: string[];
 }
 
 export interface Mantra {
@@ -359,8 +367,16 @@ export const deitiesData: Deity[] = [
         sanskrit: 'ॐ गं गणपतये नमः',
         transliteration: 'Om Gam Ganapataye Namaha',
         meaning: 'Salutations to Lord Ganesha',
-        purpose: 'For removing obstacles and new beginnings',
+        purpose: 'For removing obstacles and new beginnings (from the Ganapati Atharvashirsha)',
         benefits: ['Obstacle removal', 'Success in ventures', 'Wisdom', 'Good fortune']
+      },
+      {
+        id: 'ganesha-gayatri',
+        sanskrit: 'एकदन्ताय विद्महे वक्रतुण्डाय धीमहि। तन्नो दन्तिः प्रचोदयात्॥',
+        transliteration: 'ekadantāya vidmahe vakratuṇḍāya dhīmahi, tanno dantiḥ pracodayāt',
+        meaning: 'May we know the one-tusked lord; may we meditate on the one with the curved trunk; may that tusked one inspire and illumine us',
+        purpose: 'The Ganesha Gayatri — for clarity and inspiration in study and work (from the Ganapati Atharvashirsha)',
+        benefits: ['Mental clarity', 'Focus in learning', 'Inspiration']
       }
     ],
     prayers: [],
@@ -391,7 +407,32 @@ export const deitiesData: Deity[] = [
         quote: 'He is the lord of obstacles, both creator and destroyer of impediments'
       }
     ],
-    stories: [],
+    stories: [
+      {
+        id: 'ganesha-birth',
+        title: 'The Boy at the Door',
+        content: 'Before her bath, Parvati shaped a boy from the turmeric paste of her own body and breathed life into him — a son entirely her own. She set him at the door with one instruction: let no one enter. When Shiva himself returned to Kailasa, the boy — who had never seen him — barred the way. Words became a standoff, the standoff a battle, and in his fury Shiva severed the boy\'s head with his trident. Parvati\'s grief shook the three worlds, and her condition for their survival was absolute: her son would live again. Shiva\'s attendants were sent north and returned with the head of an elephant, which Shiva joined to the boy\'s body, restoring his life. He then did something greater than repair — he adopted the boy fully, named him Ganesha, lord of his own ganas, and decreed that in every undertaking, this child would be honored first.',
+        moralLesson: 'Even a terrible rupture can end in a larger belonging: what began in anger ended with the wounded one honored first among all. Devotion to duty — even a doorkeeper\'s — is never wasted.',
+        category: 'origin',
+        relatedScripture: 'Shiva Purana, Rudra Samhita, Kumara Khanda, chapters 13–18'
+      },
+      {
+        id: 'ganesha-race',
+        title: 'The Race Around the World',
+        content: 'When the time came for Ganesha and his brother Kartikeya to marry, a contest was set: whoever first circled the world would wed first. Kartikeya mounted his peacock and streaked across oceans and mountains. Ganesha, astride a mouse, could never win such a race — so he did not run it. He walked slowly around his seated parents, Shiva and Parvati, folded his hands, and declared his circuit complete: "My parents are the whole world." The assembly fell silent, then erupted — the wisdom was undeniable. Ganesha was married first, to Siddhi (attainment) and Buddhi (wisdom), whose names describe exactly what his insight had won.',
+        moralLesson: 'Understanding outruns speed. The one who grasps what truly matters finishes first without hurrying — and reverence for those who gave you life is itself a way of holding the whole world.',
+        category: 'teaching',
+        relatedScripture: 'Shiva Purana, Rudra Samhita, Kumara Khanda, chapters 19–20'
+      },
+      {
+        id: 'ganesha-scribe',
+        title: 'The Scribe of the Mahabharata',
+        content: 'When the sage Vyasa prepared to compose the Mahabharata — a poem vaster than anything yet attempted — he needed a scribe who could keep pace with his mind. Ganesha agreed, on one condition: Vyasa must dictate without pausing, or Ganesha would stop writing forever. Vyasa accepted — with a counter-condition of his own: Ganesha must fully understand every verse before setting it down. So whenever Vyasa needed to think ahead, he would speak a verse so dense and knotted that even Ganesha had to pause to unravel it, and in those pauses the sage composed on. Between the two conditions — unbroken flow and complete understanding — the world\'s longest epic was written. A beloved tradition adds that when his pen failed mid-verse, Ganesha broke off his own tusk to keep writing rather than break his word.',
+        moralLesson: 'Never write — or speak, or act — faster than you understand. And a commitment sincerely made is worth more than the instrument you sacrifice to keep it.',
+        category: 'teaching',
+        relatedScripture: 'Mahabharata, Adi Parva, Section 1 (K.M. Ganguli translation)'
+      }
+    ],
     worship: {
       bestTimes: ['Tuesday', 'Wednesday', 'Morning'],
       offerings: ['Modak', 'Red flowers', 'Durva grass', 'Coconut'],
@@ -413,10 +454,71 @@ export const deitiesData: Deity[] = [
     ],
     regionalVariations: [],
     images: {
-      heroImage: '/images/deities/ganesha-hero.jpg',
+      // TODO cover shopping list: replace with a real ganesha-cover.png
+      heroImage: require('../../assets/images/covers/dharma-cover.png'),
       iconImage: '/images/deities/ganesha-icon.jpg',
       galleryImages: []
-    }
+    },
+    sections: [
+      {
+        id: 'ganesha-threshold',
+        title: 'The God of Thresholds',
+        subtitle: 'A Doorway Garlanded with Marigolds',
+        storyText: 'Before a Hindu wedding begins, before a shop opens its first ledger, before a child writes the first letter of the alphabet, one name is spoken: Ganesha. He is Vighnaharta, the remover of obstacles, and every threshold belongs to him — doorways, journeys, new ventures, first pages. This custom traces straight back to his origin story, where Shiva decreed that the boy he had wounded and restored would be worshipped first among all the gods. The teaching hidden in the custom is quietly profound: every beginning carries fear, and the tradition answers fear not with a pep talk but with a companion.',
+        teachingText: 'Notice what you do at your own thresholds. Do you rush through beginnings — new jobs, new relationships, new years — or do you pause and consecrate them? Beginning with prayer, or even a deliberate breath of intention, changes the spirit of everything that follows. That is Ganesha\'s first lesson, and you don\'t need an elephant\'s head to practice it.'
+      },
+      {
+        id: 'ganesha-born-of-devotion',
+        title: 'Born at a Door, Remade by Grace',
+        subtitle: 'Parvati Shaping a Boy from Turmeric',
+        storyText: 'The Shiva Purana tells Ganesha\'s birth without softening it. Parvati creates a son from the turmeric paste of her own body and posts him at her door; Shiva, unrecognized and enraged, beheads the boy; Parvati\'s grief threatens the cosmos; and the child is restored with an elephant\'s head, then raised higher than he stood before — first among the ganas, first in every prayer. It is a family story of terrible misunderstanding and greater repair, and Hindu tradition placed it at the very front of all worship.',
+        teachingText: 'Every family carries a version of this story — the clash that came from not recognizing each other, the wound that seemed unforgivable. The Purana\'s answer is not that the wound didn\'t matter, but that repair can be so complete it transforms the wounded one\'s place in the family. Where in your life is a beheaded relationship waiting for an elephant\'s head — an imperfect, unlikely, generous repair that restores more than was lost?'
+      },
+      {
+        id: 'ganesha-iconography',
+        title: 'Reading the Elephant-Headed Form',
+        subtitle: 'Large Ears, Small Eyes, One Tusk',
+        storyText: 'Ganesha\'s form is a teaching you can read. The elephant head: wisdom, memory, and gentleness joined to strength. The large ears: listen more. The small eyes: concentrate, see one thing deeply. The trunk: strong enough to uproot a tree, delicate enough to lift a blade of grass — true skill bends to the task. The single tusk: keep what serves, sacrifice what must be given (he is Ekadanta, the one-tusked). The large belly: digest all of life, sweet and bitter alike. The modak in his hand: the sweetness of the inner life, earned by practice. And beneath this mountain of a god, his vehicle — a small mouse: even the restless, scurrying mind can carry wisdom, once wisdom is seated firmly upon it.',
+        teachingText: 'Pick one feature and live it for a week. Listen like the ears. Focus like the eyes. Adapt like the trunk. The murti is not a portrait; it is a curriculum.'
+      },
+      {
+        id: 'ganesha-wisdom-over-speed',
+        title: 'Wisdom Outruns the World',
+        subtitle: 'A Boy on a Mouse Beating a Peacock',
+        storyText: 'In the contest with his brother Kartikeya — who circled the actual globe on a peacock — Ganesha won by walking around his parents and calling them his world. The story is beloved by children, but its edge is for adults: we spend years racing peacocks, circling the world for validation, while the thing that actually completes us sits quietly at home. Ganesha\'s prize was marriage to Siddhi and Buddhi — attainment and wisdom — the Purana\'s way of saying what insight weds you to.',
+        teachingText: 'What race are you running right now, and who set its course? Sometimes the dharmic move is not to run faster but to redefine the circuit — to walk around what you love and call it enough. Ask yourself Ganesha\'s question before your next sprint: is the finish line I\'m chasing actually the world, or is my world somewhere I stopped looking?'
+      },
+      {
+        id: 'ganesha-patron-of-learning',
+        title: 'Patron of the First Page',
+        subtitle: 'A Broken Tusk Held Like a Pen',
+        storyText: 'It is fitting that the Mahabharata — the epic that contains the Bhagavad Gita — begins with Ganesha holding the pen. His two conditions with Vyasa carry his whole philosophy of learning: never stop the flow, and never write faster than you understand. Students across India still invoke him before study, and writers before a blank page, because both know the twin dangers he guards against — abandoning the work, and doing it mindlessly.',
+        teachingText: 'Bring his two conditions to whatever you are learning now. Flow: touch the work daily, even briefly, without breaking the chain. Understanding: never let your output — notes, opinions, replies — outrun your comprehension. And when your instrument fails mid-verse, remember the tusk: the tools are replaceable; the commitment is not.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Shiva Purana',
+        locator: 'Rudra Samhita, Kumara Khanda, chapters 13–20 (birth, restoration, and marriage of Ganesha)',
+        translation: 'J.L. Shastri, Motilal Banarsidass / wisdomlib.org',
+        url: 'https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226120.html',
+      },
+      {
+        text: 'Mahabharata',
+        locator: 'Adi Parva, Section 1 (Ganesha as Vyasa\'s scribe)',
+        translation: 'K.M. Ganguli (public domain)',
+      },
+      {
+        text: 'Ganapati Atharvashirsha (Ganapati Upanishad)',
+        locator: 'Om Gam Ganapataye mantra; Ganesha Gayatri',
+        translation: 'traditional text',
+      },
+    ],
+    reflectionQuestions: [
+      'Ganesha guards thresholds — every beginning is sacred to him. What are you beginning right now, and how might you honor that beginning instead of rushing through it?',
+      'In the race with his brother, Ganesha won by circling his parents and calling them his world. What race are you running that might be the wrong circuit — and what would "walking around what you love" look like instead?',
+      'Ganesha would not write faster than he understood. Where in your life is your output — words, decisions, commitments — outrunning your understanding?'
+    ]
   }
 ];
 

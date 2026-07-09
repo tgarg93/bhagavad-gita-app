@@ -13,8 +13,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import DharmaHeader from '../components/ui/DharmaHeader';
 import AudioControls from '../components/AudioControls';
-import TextHighlighter from '../components/TextHighlighter';
-import { getPhilosophyById, PhilosophicalConcept, ConceptSection } from '../data/philosophyAndTeachings';
+import NarrativeSections from '../components/NarrativeSections';
+import SourcesCard from '../components/SourcesCard';
+import ChapterReflection from '../components/ChapterReflection';
+import { getPhilosophyById, PhilosophicalConcept } from '../data/philosophyAndTeachings';
 import { AudioNarrationService, TextSegment } from '../services/audioNarrationService';
 
 const { width, height } = Dimensions.get('window');
@@ -103,33 +105,6 @@ const PhilosophyDetailScreen: React.FC = () => {
     }
   };
 
-  const SanskritVerse = ({ sanskrit, transliteration, meaning }: {
-    sanskrit: string;
-    transliteration: string;
-    meaning: string;
-  }) => (
-    <View style={styles.verseContainer}>
-      <TextHighlighter
-        text={sanskrit}
-        highlightedSegmentId={highlightedSegmentId}
-        segments={audioSegments}
-        style={getTextStyle(styles.sanskritText)}
-      />
-      <TextHighlighter
-        text={transliteration}
-        highlightedSegmentId={highlightedSegmentId}
-        segments={audioSegments}
-        style={getTextStyle(styles.transliterationText)}
-      />
-      <TextHighlighter
-        text={meaning}
-        highlightedSegmentId={highlightedSegmentId}
-        segments={audioSegments}
-        style={getTextStyle(styles.meaningText)}
-      />
-    </View>
-  );
-
   if (!concept) {
     return (
       <SafeAreaView style={styles.container}>
@@ -152,71 +127,6 @@ const PhilosophyDetailScreen: React.FC = () => {
       return concept.sections[currentSection]?.title || concept.name;
     }
     return concept.name;
-  };
-
-  const renderSection = (section: ConceptSection, index: number) => {
-    return (
-      <View 
-        key={section.id} 
-        style={styles.sectionContainer}
-        onLayout={onSectionLayout(index)}
-      >
-        <TextHighlighter
-          text={section.title}
-          highlightedSegmentId={highlightedSegmentId}
-          segments={audioSegments}
-          style={getTextStyle(styles.sectionTitle)}
-        />
-        {section.subtitle && (
-          <Text style={getTextStyle(styles.sectionSubtitle)}>
-            {section.subtitle}
-          </Text>
-        )}
-
-        {section.openingVerse && (
-          <SanskritVerse
-            sanskrit={section.openingVerse.sanskrit}
-            transliteration={section.openingVerse.transliteration}
-            meaning={section.openingVerse.meaning}
-          />
-        )}
-
-        {section.storyText && (
-          <TextHighlighter
-            text={section.storyText}
-            highlightedSegmentId={highlightedSegmentId}
-            segments={audioSegments}
-            style={getTextStyle(styles.storyText)}
-          />
-        )}
-
-        {section.sectionHeader && (
-          <TextHighlighter
-            text={section.sectionHeader}
-            highlightedSegmentId={highlightedSegmentId}
-            segments={audioSegments}
-            style={getTextStyle(styles.sectionHeader)}
-          />
-        )}
-
-        {section.keyVerse && (
-          <SanskritVerse
-            sanskrit={section.keyVerse.sanskrit}
-            transliteration={section.keyVerse.transliteration}
-            meaning={section.keyVerse.meaning}
-          />
-        )}
-
-        {section.teachingText && (
-          <TextHighlighter
-            text={section.teachingText}
-            highlightedSegmentId={highlightedSegmentId}
-            segments={audioSegments}
-            style={getTextStyle(styles.storyText)}
-          />
-        )}
-      </View>
-    );
   };
 
   return (
@@ -263,10 +173,30 @@ const PhilosophyDetailScreen: React.FC = () => {
 
         {/* Render narrative sections if available, otherwise fallback to structured content */}
         {concept.sections && concept.sections.length > 0 ? (
-          concept.sections.map((section, index) => renderSection(section, index))
+          <NarrativeSections
+            sections={concept.sections}
+            highlightedSegmentId={highlightedSegmentId}
+            audioSegments={audioSegments}
+            getTextStyle={getTextStyle}
+            onSectionLayout={onSectionLayout}
+          />
         ) : (
           <View style={styles.fallbackContent}>
             <Text style={getTextStyle(styles.storyText)}>{concept.detailedExplanation}</Text>
+          </View>
+        )}
+
+        {concept.sources && concept.sources.length > 0 && <SourcesCard sources={concept.sources} />}
+
+        {concept.reflectionQuestions && concept.reflectionQuestions.length > 0 && (
+          <View style={styles.reflectionContainer}>
+            <ChapterReflection
+              contentType="concept"
+              contentId={concept.id}
+              chapterTitle={concept.name}
+              subtitle={concept.description}
+              questions={concept.reflectionQuestions}
+            />
           </View>
         )}
 
@@ -320,48 +250,6 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     fontStyle: 'italic',
   },
-  sectionContainer: {
-    paddingHorizontal: DharmaDesignSystem.spacing.lg,
-    marginBottom: DharmaDesignSystem.spacing.xl,
-  },
-  sectionTitle: {
-    ...DharmaDesignSystem.typography.sizes.headingLG,
-    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
-    marginBottom: DharmaDesignSystem.spacing.xs,
-    fontWeight: '600',
-  },
-  sectionSubtitle: {
-    ...DharmaDesignSystem.typography.sizes.bodyMD,
-    color: DharmaDesignSystem.colors.neutrals.softAsh,
-    fontStyle: 'italic',
-    marginBottom: DharmaDesignSystem.spacing.md,
-    textAlign: 'center',
-  },
-  verseContainer: {
-    backgroundColor: 'rgba(255, 193, 7, 0.05)',
-    borderRadius: DharmaDesignSystem.borderRadius.medium,
-    padding: DharmaDesignSystem.spacing.md,
-    marginVertical: DharmaDesignSystem.spacing.md,
-    borderLeftWidth: 4,
-    borderLeftColor: DharmaDesignSystem.colors.primary.turmericYellow,
-  },
-  sanskritText: {
-    ...DharmaDesignSystem.typography.sizes.sacredQuote,
-    color: DharmaDesignSystem.colors.primary.deepSaffron,
-    marginBottom: DharmaDesignSystem.spacing.xs,
-    fontWeight: '500',
-  },
-  transliterationText: {
-    ...DharmaDesignSystem.typography.sizes.bodySM,
-    color: DharmaDesignSystem.colors.neutrals.softAsh,
-    fontStyle: 'italic',
-    marginBottom: DharmaDesignSystem.spacing.xs,
-  },
-  meaningText: {
-    ...DharmaDesignSystem.typography.sizes.bodyMD,
-    color: DharmaDesignSystem.colors.primary.peacockTeal,
-    fontWeight: '500',
-  },
   storyText: {
     ...DharmaDesignSystem.typography.sizes.bodyLG,
     color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
@@ -369,14 +257,10 @@ const styles = StyleSheet.create({
     marginBottom: DharmaDesignSystem.spacing.lg,
     textAlign: 'justify',
   },
-  sectionHeader: {
-    ...DharmaDesignSystem.typography.sizes.headingMD,
-    color: DharmaDesignSystem.colors.primary.deepSaffron,
-    marginTop: DharmaDesignSystem.spacing.lg,
-    marginBottom: DharmaDesignSystem.spacing.md,
-    fontWeight: '600',
-  },
   fallbackContent: {
+    paddingHorizontal: DharmaDesignSystem.spacing.lg,
+  },
+  reflectionContainer: {
     paddingHorizontal: DharmaDesignSystem.spacing.lg,
   },
   loadingContainer: {

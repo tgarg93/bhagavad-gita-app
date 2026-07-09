@@ -179,11 +179,11 @@ class GeminiService {
     return response.text().trim();
   }
 
-  // One-off Krishna response to a chapter reflection — does NOT touch the
-  // persistent Ask-Krishna chat session. Used by the reflection feature.
+  // One-off Krishna response to a content reflection (Gita chapter, festival,
+  // deity, or concept) — does NOT touch the persistent Ask-Krishna chat session.
   async generateReflectionResponse(context: {
-    chapterNumber: number;
-    chapterTitle: string;
+    chapterNumber?: number; // present for Gita chapters only
+    chapterTitle: string; // content title otherwise
     subtitle: string;
     question: string;
     answer: string;
@@ -196,9 +196,14 @@ class GeminiService {
       throw new Error('Gemini service not initialized');
     }
 
+    const readingLine =
+      context.chapterNumber != null
+        ? `The reader has just finished reading Chapter ${context.chapterNumber} of the Bhagavad Gita, "${context.chapterTitle}" (${context.subtitle}).`
+        : `The reader has just finished reading about ${context.chapterTitle} (${context.subtitle}).`;
+
     const prompt = `${KRISHNA_PERSONA.systemPrompt}
 ${context.contextBlock ? `\nContext about this person (weave in naturally when relevant — never recite it back). If their name is known, address them by it naturally, though not in every message:\n${context.contextBlock}\n` : ''}
-You are responding to a personal reflection, not a chat message. The reader has just finished reading Chapter ${context.chapterNumber} of the Bhagavad Gita, "${context.chapterTitle}" (${context.subtitle}).
+You are responding to a personal reflection, not a chat message. ${readingLine}
 
 Reflection question they were asked:
 "${context.question}"
@@ -206,7 +211,7 @@ Reflection question they were asked:
 What they wrote:
 "${context.answer}"
 
-Respond as Krishna in 2-4 warm, personal sentences. Engage genuinely with what THEY actually wrote — reflect it back, don't lecture. Connect it gently to the chapter's teaching. End with one soft thought or question that invites them to look a little deeper. Never grade or judge their answer. Do not use markdown formatting.`;
+Respond as Krishna in 2-4 warm, personal sentences. Engage genuinely with what THEY actually wrote — reflect it back, don't lecture. Connect it gently to the teaching they just read. End with one soft thought or question that invites them to look a little deeper. Never grade or judge their answer. Do not use markdown formatting.`;
 
     const result = await this.model.generateContent(prompt);
     const response = await result.response;
@@ -215,8 +220,8 @@ Respond as Krishna in 2-4 warm, personal sentences. Engage genuinely with what T
 
   // Continue a reflection conversation (follow-up turns after the first exchange)
   async continueReflection(context: {
-    chapterNumber: number;
-    chapterTitle: string;
+    chapterNumber?: number; // present for Gita chapters only
+    chapterTitle: string; // content title otherwise
     question: string;
     transcript: { role: 'user' | 'krishna'; text: string }[];
     contextBlock?: string;
@@ -232,9 +237,14 @@ Respond as Krishna in 2-4 warm, personal sentences. Engage genuinely with what T
       .map(t => (t.role === 'user' ? `They said: "${t.text}"` : `You (Krishna) said: "${t.text}"`))
       .join('\n');
 
+    const afterLine =
+      context.chapterNumber != null
+        ? `after Chapter ${context.chapterNumber} of the Bhagavad Gita ("${context.chapterTitle}")`
+        : `after reading about ${context.chapterTitle}`;
+
     const prompt = `${KRISHNA_PERSONA.systemPrompt}
 ${context.contextBlock ? `\nContext about this person (weave in naturally when relevant — never recite it back). If their name is known, address them by it naturally, though not in every message:\n${context.contextBlock}\n` : ''}
-You are in an ongoing personal reflection conversation after Chapter ${context.chapterNumber} of the Bhagavad Gita ("${context.chapterTitle}"). The reflection question was:
+You are in an ongoing personal reflection conversation ${afterLine}. The reflection question was:
 "${context.question}"
 
 Conversation so far:
