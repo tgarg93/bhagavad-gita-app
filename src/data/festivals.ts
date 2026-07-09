@@ -224,6 +224,58 @@ export const festivalData: Festival[] = [
     significance: 'Marks the sun\'s transition into Capricorn, beginning of longer days and the harvest season',
     description: 'A joyous harvest festival celebrating the sun god Surya and marking the end of winter solstice',
     fullStory: 'Makar Sankranti is one of the few Hindu festivals that follows the solar calendar, making it fall on the same date every year. This sacred day marks the sun\'s northward journey (Uttarayana) and entry into the zodiac sign of Capricorn (Makar). According to Hindu astronomy, this transition is highly auspicious as it signifies the beginning of the gods\' day and the gradual lengthening of daylight hours. The festival celebrates the triumph of light over darkness, both literally and metaphorically, representing spiritual awakening and the soul\'s journey towards enlightenment.',
+    sections: [
+      {
+        id: 'sankranti-sun-turns',
+        title: 'The Day the Sun Turns Home',
+        subtitle: 'A Low Winter Sun Beginning Its Long Climb',
+        keyVerse: {
+          sanskrit: 'अग्निर्ज्योतिरहः शुक्लः षण्मासा उत्तरायणम्। तत्र प्रयाता गच्छन्ति ब्रह्म ब्रह्मविदो जनाः॥',
+          transliteration: 'agnir jyotir ahaḥ śhuklaḥ ṣhaṇ-māsā uttarāyaṇam, tatra prayātā gachchhanti brahma brahma-vido janāḥ',
+          meaning: 'Fire, light, daytime, the bright fortnight, the six months of the sun\'s northern path — departing then, the knowers of Brahman go to Brahman.',
+          source: 'Bhagavad Gita 8.24 (tr. Swami Sivananda)'
+        },
+        storyText: 'Most Hindu festivals ride the moon; Makar Sankranti rides the sun — which is why it alone lands on nearly the same date every year. It marks the sun\'s entry into Makara (Capricorn) and the felt beginning of uttarayana, the six-month northern journey when days lengthen and light gains. The tradition ranked this half of the year as the gods\' own daytime, and the Gita numbers the northern path among the luminous circumstances of a blessed departure. Sankranti means "transition" — and the festival\'s quiet teaching is that transitions themselves can be holy.',
+        teachingText: 'The year\'s light turns on this day by a few seconds — imperceptible, and decisive. Most real turnarounds look like this: no drama on the day itself, only a changed direction that compounds. Sankranti honors the turn, not the arrival. What direction, turned today by one degree, would change your year by June?'
+      },
+      {
+        id: 'sankranti-bhishma',
+        title: 'The Grandfather Who Waited for the Light',
+        subtitle: 'An Old Warrior on a Bed of Arrows, Watching the Sky',
+        storyText: 'The Mahabharata gives uttarayana its most solemn witness. Bhishma — grandsire of both armies, bound by the boon of choosing his own hour of death — fell in battle pierced by countless arrows, and lay on that bed of arrows for weeks, alive by will alone. He was waiting: the sun was still in its southern course, and he had resolved to release his life only when it turned north (Mahabharata, Bhishma Parva; his passing, Anushasana Parva). When uttarayana came, he taught his final teachings to Yudhishthira and let go — timing even his death to the side of the light.',
+        teachingText: 'Bhishma\'s vigil is the festival\'s deepest layer: some things should not be ended in the dark season — a role, a relationship, a chapter. If an ending is yours to time, time it like Bhishma: settle your teachings, wait for the light to turn, and leave on the upswing. And where you cannot choose the timing, you can still choose his posture — patience, clarity, and a last act of generosity.'
+      },
+      {
+        id: 'sankranti-tilgul',
+        title: 'Sesame, Jaggery, and a Yearly Peace Treaty',
+        subtitle: 'Sweets Pressed into a Neighbor\'s Palm',
+        storyText: 'In Maharashtra the festival travels in a phrase: "Til-gul ghya, god god bola" — take this sesame and jaggery, and speak sweetly. Neighbors, rivals, and estranged relatives press the little sweets into each other\'s hands as a one-line annual treaty: whatever bitterness the old year held, let the new light begin with sweet speech. The ingredients are winter\'s own medicine — warming sesame, iron-rich jaggery — so that the custom feeds body and bond in one gesture. Across India the day takes other names and pots — Pongal boiling over in the south, Lohri\'s bonfire in Punjab, Magh Bihu\'s feasts in Assam — one turning sun, many kitchens.',
+        teachingText: 'The genius of til-gul is that it makes reconciliation cheap, sweet, and expected — no summit required, just a sweet and a sentence. Keep the custom literally: choose one person the year soured, and open with sweetness before the light gets any older.'
+      },
+      {
+        id: 'sankranti-kites',
+        title: 'A Sky Full of Kites',
+        subtitle: 'Ten Thousand Paper Birds over Winter Rooftops',
+        storyText: 'On Sankranti morning, the skies of Gujarat and Rajasthan fill edge to edge with kites — a festival of aspiration flown from every rooftop. The custom began, tradition says, as a way to spend the day in the newly-strengthening sun, and became India\'s most exuberant metaphor: the string in your hand, the paper self climbing the returning light. There is craft in it that any practitioner recognizes — too slack and the kite falls, too tight and it snaps; height comes from reading the wind, not fighting it.',
+        teachingText: 'Kite-flying is the festival\'s take-home physics of the spirit: lift requires both anchoring and release. Your practice is the string — hold it too loosely and the aspiration drifts off; grip it and it breaks. On the day the light turns, fly something: name one aspiration for the brightening half of the year, and give it exactly enough string.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Bhagavad Gita',
+        locator: '8.24 (the northern path of the sun)',
+        translation: 'Swami Sivananda (public domain)',
+      },
+      {
+        text: 'Mahabharata',
+        locator: 'Bhishma Parva (the bed of arrows); Anushasana Parva (Bhishma\'s passing at uttarayana)',
+        translation: 'K.M. Ganguli (public domain)',
+      },
+      {
+        text: 'Living tradition',
+        locator: 'Til-gul exchange (Maharashtra), kite flying (Gujarat/Rajasthan), Pongal/Lohri/Magh Bihu parallels — festival practice, labeled as tradition',
+      },
+    ],
     mythology: [
       'Legend of King Bhagiratha who brought the sacred Ganga to earth, and devotees take holy dips to purify their souls',
       'Story of Lord Vishnu vanquishing the demon Sankrasur, hence the name Sankranti meaning "transition"',
@@ -766,37 +818,179 @@ export const festivalData: Festival[] = [
     rituals: [
       {
         id: 'holika-dahan',
-        name: 'Holika Dahan',
-        description: 'Bonfire ceremony on Holi eve',
+        name: 'Holika Dahan — The Bonfire of Devotion',
+        description: 'The eve-of-Holi bonfire commemorating Prahlada\'s deliverance: what was meant to burn the devotee burned the deception instead.',
         timeOfDay: 'evening',
-        materials: ['Wood', 'Dried leaves', 'Coconut', 'Grains'],
+        materials: ['Wood and dried leaves (community pyre or a small home fire)', 'A coconut', 'New grains of the spring harvest (wheat, chana)', 'Roli, rice, and a thread for the pyre'],
         steps: [
-          'Collect wood and combustible materials',
-          'Arrange in bonfire formation',
-          'Light the fire after sunset',
-          'Offer prayers for good over evil',
-          'Sing traditional Holi songs'
-        ]
+          {
+            stepNumber: 1,
+            instruction: 'Before lighting, circle the pyre with water or thread and offer roli, rice, and flowers.',
+            explanation: 'The pyre is consecrated first — this is a rite about fire\'s moral direction, not just a blaze.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Light the fire after sunset at the muhurta; offer the coconut and roast the new grains in the flames.',
+            explanation: 'The first grains of spring pass through the fire — harvest gratitude woven into the Prahlada story.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Circle the fire (parikrama), and name — aloud or silently — one "Holika" of your own: a deception, fear, or resentment you are handing to the flames.',
+            explanation: 'Holika sat in the fire wearing stolen protection; whatever in us survives only by deception belongs in this fire.'
+          },
+          {
+            stepNumber: 4,
+            instruction: 'Carry a little of the fire\'s warmth home — traditionally an ember or ash — and greet the night as the eve of color.',
+            explanation: 'The night burns away the old; the morning paints the new.'
+          }
+        ],
+        mantras: [
+          {
+            sanskrit: 'ॐ नमो भगवते नरसिंहाय',
+            transliteration: 'oṁ namo bhagavate narasiṁhāya',
+            meaning: 'Om, salutations to Lord Narasimha (the protector of Prahlada)',
+            pronunciation: 'om na-mo bha-ga-va-te na-ra-sim-haa-ya'
+          }
+        ],
+        significance: 'Holika Dahan enacts the Bhagavata\'s promise: devotion is fireproof, and the trap set for the innocent consumes its setter.',
+        tips: ['If a community pyre isn\'t available, a single candle with the same intention keeps the rite complete'],
+        commonMistakes: ['Treating the fire as spectacle and skipping the naming — the parikrama with intention is the ritual\'s heart']
+      },
+      {
+        id: 'rangwali-holi',
+        name: 'Rangwali Holi — The Play of Colors',
+        description: 'The morning of color-play: hierarchy suspended, grievances dissolved, everyone repainted equal.',
+        timeOfDay: 'morning',
+        materials: ['Natural gulal (herbal colors)', 'Water, pichkaris (water guns) if playing wet', 'Old white clothes', 'Gujiya and thandai for afterward'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'Begin by putting color on your elders\' feet, then let them smear your cheeks in blessing.',
+            explanation: 'The play opens with respect — color flows down as blessing before it flies in all directions.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Play — generously, gently, and with anyone: the tradition\'s rule is "bura na mano, Holi hai" (take no offense, it\'s Holi).',
+            explanation: 'For one morning, status, age, and old quarrels are all the same color.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Before washing, seek out anyone you\'ve been distant from this year and mark them with color.',
+            explanation: 'Holi is the traditional day of mending: a smear of gulal has ended feuds no apology could.'
+          }
+        ],
+        significance: 'Under the colors, everyone is the same — the festival\'s enacted theology of equality and forgiveness.',
+        tips: ['Natural colors (turmeric, beetroot, flower-based) honor both skin and rivers'],
+        commonMistakes: ['Forcing color on the unwilling — consent is part of the play\'s sweetness']
       }
     ],
     fullStory: 'Holi, the Festival of Colors, celebrates the victory of good over evil and the arrival of spring. Based on the legend of Prahlada and the demoness Holika, this joyous festival brings people together to play with colors, dance, and celebrate love and harmony. The festival begins with Holika Dahan, a bonfire ceremony, followed by the colorful celebration known as Rangwali Holi.',
+    sections: [
+      {
+        id: 'holi-fire-first',
+        title: 'The Fire Before the Color',
+        subtitle: 'A Bonfire at Dusk, Gulal Waiting for Dawn',
+        storyText: 'Holi is remembered as India\'s most joyful morning — clouds of pink and green, drenched laughter, strangers made family by pigment. But the festival begins the night before, with fire. Holika Dahan, the burning of Holika, is the sober root beneath the riot of color: a story about a child who would not stop loving God, the father who tried to kill him for it, and the fire that could tell the difference between them. The tradition insists on the order — the fire first, then the color. Something must burn before the celebration is honest.'
+      },
+      {
+        id: 'holi-prahlada',
+        title: 'The Boy Who Would Not Stop',
+        subtitle: 'A Child Serene in a Furious Court',
+        storyText: 'The Bhagavata Purana\'s seventh canto tells of Hiranyakashipu, a king whose boon made him nearly unkillable and whose pride made him demand worship as God himself. His own small son, Prahlada, gently refused — he loved Vishnu, and said so, in his father\'s court, again and again. The king tried everything: poison, trampling elephants, serpents, cliffs. The boy, absorbed in remembrance, kept surviving. So the king\'s sister Holika, who owned a boon that fire could not burn her, took the child onto her lap and sat in a pyre. The fire made its judgment: the protection left the deceiver and shielded the innocent. Holika burned; Prahlada walked out untouched, still praying.',
+        teachingText: 'Notice what protected Prahlada: not strength, not cleverness — remembrance. His mind was so given to the divine that fear found no purchase. And notice what failed: a real magical protection, voided by misuse. The story\'s law is exact — grace stolen for cruelty stops being grace. Whatever advantage you hold, its protection lasts only as long as its purpose is clean.'
+      },
+      {
+        id: 'holi-narasimha',
+        title: 'The Pillar That Opened',
+        subtitle: 'Neither Man Nor Beast, Neither Day Nor Night',
+        storyText: 'The story\'s climax answers the tyrant\'s boon point by point. Hiranyakashipu could not be killed by man or beast, indoors or out, by day or night, on earth or sky, by any weapon. "Where is your Vishnu?" he roared, striking a palace pillar. "Is he in this?" The pillar split — and Narasimha emerged: half man, half lion, neither. At twilight — neither day nor night. On the threshold — neither in nor out. Onto his lap — neither earth nor sky. With claws — no weapon. The loopholes that made a tyrant fearless became the exact coordinates of his ending (Bhagavata Purana, Canto 7, chapters 8–10). Then the terrible form grew gentle for one person only: the boy, who came forward without fear and was blessed.',
+        teachingText: 'Every fortress of self-justification has the same architecture as the boon — clauses and conditions that feel airtight. The story\'s warning is that reality honors the letter of our rationalizations while ending their spirit. And its comfort is the counter-image: what terrifies the arrogant is tender toward the trusting.'
+      },
+      {
+        id: 'holi-krishna-colors',
+        title: 'Why the Colors',
+        subtitle: 'A Dark-Skinned Boy Painting a Fair-Skinned Girl',
+        storyText: 'The color-play\'s beloved origin is a Krishna story, kept warm in the Braj tradition. The dark-skinned child Krishna complained to his mother Yashoda: why is Radha so fair while I am dark? Yashoda, laughing, offered a mother\'s solution — go paint her whatever color you like. Krishna did, gleefully, and Radha painted him back, and the cowherd village dissolved into the first Holi. In Braj — Mathura, Vrindavan, Barsana — Holi still runs for days, the great equalizer descended from one mother\'s joke: if the difference bothers you, color over it with love.',
+        teachingText: 'The theology hiding in the play: smeared with gulal, every face — rich, poor, old, young, every shade — turns the same colors. For one morning, India repaints itself into what the sages said it always was: one consciousness in a billion disguises. "Bura na mano, Holi hai" — take no offense — is the day\'s liturgy: the permission to touch, laugh, and forgive across every line the other 364 days maintain.'
+      },
+      {
+        id: 'holi-spring',
+        title: 'The Festival of Beginning Again',
+        subtitle: 'New Wheat Roasting Over the Embers',
+        storyText: 'Beneath the stories, Holi is spring itself made ritual. It falls on the full moon of Phalguna, winter\'s funeral: the new wheat is roasted in the Holika embers, tasted as the year\'s first offering; the fire consumes the old season\'s deadwood; and the next morning the world is repainted from scratch. Farmers, poets, and sages have all read it the same way — the year turns, the ledger closes, the colors start over. Old grudges are traditionally settled by nightfall of Rangwali Holi, because carrying last year\'s grievance into the new spring is considered a failure of the festival itself.',
+        teachingText: 'Holi\'s two days are a complete curriculum of renewal: burn what deceives (the fire), then color what remains (the play). Most of us attempt renewal in the wrong order — repainting over what should have burned, or burning without ever getting to the joy. This spring, honor the sequence: name the thing for the fire first. The colors land brighter on cleared ground.'
+      }
+    ],
     mythology: [
       'Story of Prahlada, Hiranyakashipu, and Holika',
       'Krishna and Radha\'s divine love play with colors',
       'Legend of the ogress Dhundhi being driven away by children\'s noise'
     ],
     historicalContext: 'Ancient spring festival mentioned in Vedic texts, evolving into the modern celebration of unity and joy.',
-    scriptureReferences: [],
+    scriptureReferences: [
+      {
+        id: 'holi-bhagavata-prahlada',
+        text: 'puranas',
+        section: 'Bhagavata Purana, Canto 7, chapters 5–8',
+        relevance: 'Prahlada\'s unshakable devotion and the attempts on his life — the festival\'s core story'
+      },
+      {
+        id: 'holi-bhagavata-narasimha',
+        text: 'puranas',
+        section: 'Bhagavata Purana, Canto 7, chapters 8–10',
+        relevance: 'Narasimha\'s emergence from the pillar and the end of Hiranyakashipu'
+      }
+    ],
     regionalVariations: [],
     modernAdaptations: [
       'Eco-friendly natural colors',
       'Water conservation initiatives',
       'Community celebrations in parks and societies'
     ],
-    familyActivities: [],
+    familyActivities: [
+      {
+        id: 'holi-natural-colors',
+        title: 'Make Your Own Gulal',
+        description: 'Grind and mix natural colors the old way — turmeric for yellow, beetroot for pink, dried flowers and herbs for the rest.',
+        ageGroup: 'all_ages',
+        duration: '1 hour',
+        materials: ['Turmeric + gram flour (yellow)', 'Beetroot juice + cornstarch (pink)', 'Dried rose or marigold petals', 'Mixing bowls'],
+        instructions: [
+          'Mix each color with a base of flour or cornstarch until powder-soft',
+          'Dry in the sun on trays, then bottle and label together',
+          'Tell the Krishna-Radha story while you grind: the first Holi colors were homemade too'
+        ],
+        learningObjective: 'Celebration and care for skin, rivers, and earth are not opposites — the oldest way was the gentlest'
+      },
+      {
+        id: 'holi-one-mending',
+        title: 'The Mending Color',
+        description: 'Each family member privately chooses one person they\'ve grown distant from this year, and marks them with gulal on Holi morning.',
+        ageGroup: 'all_ages',
+        duration: 'Ongoing through Holi morning',
+        materials: ['A pinch of gulal reserved for the purpose'],
+        instructions: [
+          'Choose the person the night before, at the Holika fire',
+          'On Holi morning, approach first — before they do — and offer the color with both hands',
+          '"Bura na mano, Holi hai" does the rest'
+        ],
+        learningObjective: 'The festival\'s deepest tradition: a smear of color mends what months of silence could not'
+      }
+    ],
     culturalImpact: 'Breaks social barriers, promotes unity, and celebrates the diversity of life through colors.',
     relatedFestivals: ['maha-shivratri-2025'],
-    heroImageUrl: require('../../assets/images/covers/dharma-cover.png'),
+    heroImageUrl: require('../../assets/images/covers/dharma-cover.png'), // TODO cover shopping list: holi-cover.png
+    sources: [
+      {
+        text: 'Bhagavata Purana',
+        locator: 'Canto 7, chapters 5–10 (Prahlada, Holika episode, Narasimha)',
+        translation: 'cross-checked against public translations (vedabase.io / wisdomlib.org)',
+      },
+      {
+        text: 'Braj tradition',
+        locator: 'Krishna–Radha color play; Barsana/Vrindavan Holi — living tradition, labeled as such',
+      },
+    ],
   },
   {
     id: 'ram-navami-2025',
@@ -1152,25 +1346,193 @@ export const festivalData: Festival[] = [
     deity: 'Lord Ganesha',
     duration: 11,
     importance: 'major',
-    rituals: [],
+    rituals: [
+      {
+        id: 'ganesh-sthapana',
+        name: 'Sthapana — Welcoming Ganesha Home',
+        description: 'Installing the Ganesha murti with pranapratishtha (invoking the living presence), the festival\'s opening act.',
+        timeOfDay: 'morning',
+        materials: [
+          'A clay Ganesha murti (eco-friendly, unpainted or natural colors)',
+          'A raised platform (chowki) with red or yellow cloth',
+          'Durva grass, red flowers, sindoor',
+          'Modak or ladoo for the first offering',
+          'Incense, ghee lamp, and a small bell'
+        ],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'Clean the space, lay the cloth on the chowki, and place the murti facing into the home.',
+            explanation: 'Ganesha is received as an honored guest — the home\'s best corner becomes his seat.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Invoke him with the mantra and offer durva grass, flowers, and sindoor.',
+            explanation: 'Durva grass is Ganesha\'s signature offering — humble, common, and dearest to him.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Offer 21 modaks (or however many you made) and perform arati with the family.',
+            explanation: 'The modak\'s hard shell and sweet heart mirror the effort and reward of practice.'
+          },
+          {
+            stepNumber: 4,
+            instruction: 'Commit to a daily rhythm for his stay: morning and evening arati, fresh offerings.',
+            explanation: 'For 1½, 5, 7, or 11 days the murti is family — daily attention is the point of hosting him.'
+          }
+        ],
+        mantras: [
+          {
+            sanskrit: 'वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ। निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥',
+            transliteration: 'vakratuṇḍa mahākāya sūryakoṭi samaprabha, nirvighnaṁ kuru me deva sarva-kāryeṣhu sarvadā',
+            meaning: 'O curved-trunk, mighty-bodied one, radiant as ten million suns — make all my endeavors free of obstacles, always',
+            pronunciation: 'vak-ra-tun-da ma-haa-kaa-ya soor-ya-ko-ti sa-ma-pra-bha'
+          }
+        ],
+        significance: 'Pranapratishtha treats the murti not as a statue but as a guest whose living presence transforms the home for the festival\'s duration.',
+        tips: ['Choose natural clay over plaster — the immersion returns him to the earth cleanly'],
+        commonMistakes: ['Installing the murti and then neglecting the daily rhythm — the hosting, not the installing, is the practice']
+      },
+      {
+        id: 'ganesh-visarjan',
+        name: 'Visarjan — The Farewell',
+        description: 'The immersion procession that ends the festival: Ganesha is danced to the water and released, with the promise "come again early next year."',
+        timeOfDay: 'evening',
+        materials: ['The murti', 'A bucket or tub of water for home visarjan', 'Final modak offering', 'Flowers'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'Perform the final arati and offer the last modak; each family member speaks a private farewell or request.',
+            explanation: 'The farewell makes the festival\'s teaching explicit: even the divine guest is not clung to.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Carry the murti in procession — around the block or just around the home — singing "Ganpati Bappa Morya, pudhchya varshi laukar ya!"',
+            explanation: '"Beloved Ganesha, come again early next year!" — grief and joy in a single chant.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Immerse the murti in water (a home tub for clay murtis) and watch it dissolve.',
+            explanation: 'The clay returns to earth and water: form dissolving back into the formless, the festival\'s deepest lesson made visible.'
+          }
+        ],
+        significance: 'Visarjan enacts non-attachment: welcome wholeheartedly, host lovingly, release completely — the whole spiritual art in one procession.',
+        tips: ['A clay murti dissolved in a home tub can water the garden afterward — the cycle completed'],
+        commonMistakes: ['Treating visarjan as disposal rather than farewell — the send-off deserves as much love as the welcome']
+      }
+    ],
     fullStory: 'Ganesh Chaturthi celebrates the birth of Lord Ganesha, the beloved elephant-headed deity who removes obstacles and grants wisdom. This festival involves bringing beautifully crafted Ganesha idols into homes and communities, worshipping them for 1-11 days, and then ceremonially immersing them in water bodies. The festival combines devotion, artistry, community spirit, and environmental consciousness.',
+    sections: [
+      {
+        id: 'ganesh-chaturthi-guest',
+        title: 'The God Who Comes to Stay',
+        subtitle: 'A Clay Murti Crossing a Threshold in Someone\'s Arms',
+        storyText: 'Most festivals visit a temple; Ganesh Chaturthi brings the temple home. For up to eleven days, households across India host Ganesha bodily — a clay murti carried in over the threshold, seated in the best corner, woken with arati, fed modaks, sung to at dusk. The theology is in the hospitality: through pranapratishtha, the invocation of living presence, the family does not worship a statue but hosts a guest. Children learn the divine not as an abstraction but as someone staying in the house — someone you make sweets for.'
+      },
+      {
+        id: 'ganesh-chaturthi-birth',
+        title: 'The Birthday Being Celebrated',
+        subtitle: 'Parvati\'s Hands Shaping a Boy from Turmeric',
+        storyText: 'The birth the festival honors is the Shiva Purana\'s fierce and tender story: Parvati shaping a son from the turmeric paste of her own body, the boy\'s unbending loyalty at her door, Shiva\'s terrible mistake, and the repair that outgrew the wound — an elephant\'s head, command of the ganas, and the decree that this child would be worshipped first among all gods (Rudra Samhita, Kumara Khanda, chapters 13–18). Chaturthi, the fourth day of the waxing moon of Bhadrapada, is kept as the day that grace took form.',
+        teachingText: 'Every murti brought home on Chaturthi re-enacts the story\'s ending: the wounded one enthroned first. Families who have weathered their own ruptures know why India loves this birthday — it celebrates not a perfect family, but a repaired one.'
+      },
+      {
+        id: 'ganesh-chaturthi-moon',
+        title: 'Why You Don\'t Watch the Moon Tonight',
+        subtitle: 'A Laughing Moon Behind a Cloud',
+        storyText: 'Tradition holds that on one Chaturthi night, the moon laughed at Ganesha — at the elephant-headed god astride a mouse, his belly full of modaks. Ganesha\'s response was a curse: whoever looks at the moon this night will suffer false accusation. The tradition\'s proof-story is Krishna himself, who glimpsed the Chaturthi moon and was promptly accused of stealing the Syamantaka jewel — a slander he had to labor to disprove (the Syamantaka episode: Bhagavata Purana, Canto 10, chapters 56–57). To this day, devout families avoid the moon on Ganesh Chaturthi.',
+        teachingText: 'Beneath the folk charm sits a sharp teaching about mockery: the moon — beautiful, high, cool — laughed at a form it found absurd, and the curse it earned is the one mockery always earns: mistrust. Whoever laughs at appearances will be judged by appearances. The elephant head the moon mocked belongs to the god of wisdom; the joke was on the laugher.'
+      },
+      {
+        id: 'ganesh-chaturthi-public',
+        title: 'The Festival That Built a Movement',
+        subtitle: 'A Pandal Rising in a City Square',
+        storyText: 'For centuries Ganesh Chaturthi was a household affair. In 1893, with the British Raj banning political assembly, Lokmanya Tilak saw what the colonial law could not touch: a religious gathering. He transformed the family festival into sarvajanik — public — Ganeshotsav: huge community murtis, pandals in every neighborhood, ten days of lectures, music, and unity that the Raj could not disperse. The festival became a school of self-rule. The great public celebrations of Mumbai and Pune — lakhs of people dancing one murti to the sea — descend directly from that act of devotional defiance.',
+        teachingText: 'Tilak\'s insight was Ganesha\'s own teaching in political form: when the direct road is blocked, the remover of obstacles finds the door no one can close. Ask what gathering, festival, or shared joy in your own community could carry more weight than it appears to — celebration is an underrated form of strength.'
+      },
+      {
+        id: 'ganesh-chaturthi-visarjan',
+        title: 'The Art of Letting Go',
+        subtitle: 'A Murti Dissolving into Water at Dusk',
+        storyText: 'The festival\'s genius is its ending. After days of intimacy — feeding, singing, decorating — the family carries their guest to the water and lets him dissolve. The chant on every procession holds both halves of the heart: "Ganpati Bappa Morya, pudhchya varshi laukar ya" — beloved Ganesha, come again early next year. Grief and trust in one breath. The clay returns to the riverbed it came from; the form returns to the formless; and the family walks home lighter, having practiced, with their own hands, the hardest spiritual skill there is.',
+        teachingText: 'Visarjan is rehearsal for every farewell your life will ask of you: children leaving, seasons ending, the body itself one day returned. The festival\'s instruction is precise — love fully while the guest is here, release fully when the time comes, and trust the return. Welcome. Host. Release. Repeat.'
+      }
+    ],
     mythology: [
       'Birth of Ganesha from Parvati\'s turmeric paste',
       'How Ganesha got his elephant head',
       'Ganesha as the scribe of the Mahabharata'
     ],
     historicalContext: 'Originally a family celebration, transformed into a public festival by Lokmanya Tilak during India\'s freedom struggle.',
-    scriptureReferences: [],
+    scriptureReferences: [
+      {
+        id: 'ganesh-chaturthi-shiva-purana',
+        text: 'puranas',
+        section: 'Shiva Purana, Rudra Samhita, Kumara Khanda, chapters 13–18',
+        relevance: 'The birth of Ganesha, the elephant head, and the decree of first worship — the story the festival celebrates'
+      },
+      {
+        id: 'ganesh-chaturthi-syamantaka',
+        text: 'puranas',
+        section: 'Bhagavata Purana, Canto 10, chapters 56–57',
+        relevance: 'The Syamantaka jewel episode — Krishna falsely accused after seeing the Chaturthi moon, the basis of the moon-avoidance tradition'
+      }
+    ],
     regionalVariations: [],
     modernAdaptations: [
       'Eco-friendly clay idols',
       'Water-soluble paints',
       'Community environmental initiatives'
     ],
-    familyActivities: [],
+    familyActivities: [
+      {
+        id: 'ganesh-clay-murti',
+        title: 'Shape Your Own Clay Ganesha',
+        description: 'Make the family murti from natural clay, the way Parvati made her son from turmeric paste — imperfect, handmade, and entirely yours.',
+        ageGroup: 'all_ages',
+        duration: '1-2 hours',
+        materials: ['Natural clay (river or craft clay)', 'A board to work on', 'Water bowl', 'Durva grass and flowers to decorate'],
+        instructions: [
+          'Tell the birth story while shaping: body first, then the head placed on — the story in clay',
+          'Let each child add one feature: the trunk, the big ears, the modak in his hand',
+          'Dry, install with the family sthapana, and immerse this same murti at visarjan'
+        ],
+        learningObjective: 'What you shape with your own hands you love differently — and releasing it teaches the festival\'s whole lesson'
+      },
+      {
+        id: 'ganesh-modak-making',
+        title: 'A Modak Assembly Line',
+        description: 'Make ukdiche modak (steamed rice-flour dumplings with jaggery-coconut filling) together — the sweet Ganesha loves best.',
+        ageGroup: 'all_ages',
+        duration: '1 hour',
+        materials: ['Rice flour', 'Jaggery and grated coconut', 'Cardamom', 'A steamer'],
+        instructions: [
+          'Elders make the dough, children fill and pleat (crooked pleats taste the same)',
+          'Offer the first 21 to Ganesha before anyone eats',
+          'Tell the story of the modak: hard shell, sweet heart — effort outside, reward within'
+        ],
+        learningObjective: 'Offering the first and best of what you make — before tasting it yourself — is the oldest form of gratitude'
+      }
+    ],
     culturalImpact: 'Promotes community unity, artistic expression, and environmental awareness.',
     relatedFestivals: ['diwali-2025'],
-    heroImageUrl: require('../../assets/images/covers/dharma-cover.png'),
+    heroImageUrl: require('../../assets/images/covers/dharma-cover.png'), // TODO cover shopping list: ganesh-chaturthi-cover.png
+    sources: [
+      {
+        text: 'Shiva Purana',
+        locator: 'Rudra Samhita, Kumara Khanda, chapters 13–18 (birth and first-worship decree)',
+        translation: 'J.L. Shastri, Motilal Banarsidass / wisdomlib.org',
+      },
+      {
+        text: 'Bhagavata Purana',
+        locator: 'Canto 10, chapters 56–57 (Syamantaka jewel; the moon-curse tradition)',
+        translation: 'cross-checked against public translations',
+      },
+      {
+        text: 'Modern history',
+        locator: 'Lokmanya Tilak\'s sarvajanik Ganeshotsav, 1893 — documented history, not scripture',
+      },
+    ],
   },
   {
     id: 'navratri-2025',
@@ -1184,6 +1546,46 @@ export const festivalData: Festival[] = [
     significance: 'Nine sacred nights celebrating Goddess Durga and her nine divine forms',
     description: 'The most vibrant festival honoring the divine feminine power through nine nights of worship, dance, and spiritual devotion',
     fullStory: 'Navratri, meaning "nine nights," is one of the most significant Hindu festivals dedicated to the worship of Goddess Durga and her nine manifestations known as Navdurga. This festival celebrates the victory of good over evil, as embodied by Goddess Durga\'s triumph over the buffalo demon Mahishasura. Each of the nine days is dedicated to a different form of the goddess, representing various aspects of divine feminine energy (Shakti). The festival is observed through fasting, prayer, dance (Garba and Dandiya), and community celebrations that bring people together in joyous worship. Navratri occurs twice a year, with Sharad Navratri (autumn) being the most widely celebrated, marking the triumph of light over darkness as winter approaches.',
+    sections: [
+      {
+        id: 'navratri-nine-nights',
+        title: 'Nine Nights for the Mother',
+        subtitle: 'A Sprouting Pot Beside an Unbroken Flame',
+        storyText: 'Twice a year, at the hinge of the seasons, India clears nine nights for the Goddess. Sharad Navratri opens with Ghatasthapana: a clay pot is filled with soil and sown with barley, a lamp is lit beside it and — in many homes — kept burning through all nine nights. By Vijayadashami the pot is green with shoots. The symbols do the teaching before a single prayer is spoken: the Goddess as the pot of life sprouting in the dark, the vigil-flame as devotion that does not go out. Nights, not days — because the festival honors power exactly where it is hardest to see.'
+      },
+      {
+        id: 'navratri-why-she-fights',
+        title: 'The Battle Being Remembered',
+        subtitle: 'Durga\'s Lion Mid-Leap Against the Buffalo Demon',
+        storyText: 'The nine nights commemorate the Devi Mahatmya\'s central war: Mahishasura, the shape-shifting buffalo demon whose boon protected him from man and god alike, and Durga — born of the pooled radiance of every deva, armed with all their weapons — who fought him through nine nights of shifting forms and slew him as the tenth day dawned (Devi Mahatmya, chapters 2–3). Vijayadashami, "the tenth of victory," is that dawn. The whole structure of the festival is the battle\'s shape: nine nights of holding steady while the deception cycles, and then the morning where truth pins it.',
+        teachingText: 'Whatever you are contending with this season — a habit, a fear, a long injustice — Navratri\'s counsel is the Goddess\'s method: do not chase every disguise it wears. Keep the vigil. Nine nights of steadiness beat nine days of frantic pursuit, and the tenth morning belongs to the one who did not waver.'
+      },
+      {
+        id: 'navratri-garba',
+        title: 'Dancing Around the Lamp',
+        subtitle: 'Concentric Circles Turning Around a Clay Lantern',
+        storyText: 'In Gujarat, the nine nights become the world\'s largest dance. Garba takes its name from the garbha-deep — the "womb lamp," a perforated clay pot with a flame inside — placed at the center while dancers circle it in rings, hundreds or thousands turning as one. The choreography is cosmology: the lamp is the Goddess as the still light of life; the circling dancers are creation itself, wheeling around her. Every clap and turn says what the philosophers wrote in Sanskrit — the divine feminine is the unmoving center of all this motion.',
+        teachingText: 'Notice that no one dances AT the lamp; they dance around it, together, in rings open to anyone. It is worship as community joy — the theology made kinetic. Whatever your tradition of celebration, Navratri asks: what is at the center of your circling? A garba circle with nothing at the center is just exercise.'
+      },
+      {
+        id: 'navratri-kanya-vijaya',
+        title: 'The Goddess at the Door',
+        subtitle: 'Young Girls Seated as Honored Guests',
+        storyText: 'On Ashtami or Navami, the festival performs its most literal theology: kanya puja. Young girls are invited in, their feet washed, tikka placed on their brows, and fed the best food in the house — worshipped, for one morning, as living embodiments of the Goddess. It is the Devi Mahatmya\'s great litany — "to the Goddess who abides in ALL beings" — enforced at household scale, and it lands with an edge in a world that does not always treat its daughters as divine. Then comes Vijayadashami: the demon falls, Ravana burns in the north, and the sprouted barley from the first night is distributed — nine nights of the dark made visibly, tenderly green.',
+        teachingText: 'Kanya puja asks the festival\'s sharpest question on its way out the door: is your reverence portable? It is easy to honor the Goddess in a pandal; the practice is honoring her in the beings around you — starting with the ones your culture is most tempted to overlook.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Devi Mahatmya (Markandeya Purana)',
+        locator: 'Chapters 2–3 (Durga\'s birth and the Mahishasura battle); Chapter 5 (the Goddess in all beings)',
+        translation: 'cross-checked against public translations (devimahatmya.com / wisdomlib.org)',
+      },
+      {
+        text: 'Living tradition',
+        locator: 'Ghatasthapana, garba/garbha-deep, kanya puja, Vijayadashami — festival practice, labeled as tradition',
+      },
+    ],
     mythology: [
       'The epic battle between Goddess Durga and the shape-shifting demon Mahishasura, who could only be defeated by divine feminine power',
       'The emergence of the nine forms of Durga (Navdurga) from the combined energies of all gods to restore cosmic balance',
@@ -1735,6 +2137,52 @@ export const festivalData: Festival[] = [
     significance: 'Festival of lights representing the victory of light over darkness, good over evil, and knowledge over ignorance',
     description: 'The most celebrated Hindu festival, known as the Festival of Lights, marking the return of Lord Rama to Ayodhya after 14 years of exile',
     fullStory: 'Diwali, derived from "Deepavali" meaning "row of lights," is celebrated over five days, each with its own significance. The festival commemorates multiple legends: Lord Rama\'s return to Ayodhya after defeating Ravana, Lord Krishna\'s victory over the demon Narakasura, and Goddess Lakshmi\'s emergence from the ocean of milk. The lighting of diyas (oil lamps) symbolizes the inner light that protects us from spiritual darkness. This festival transcends religious boundaries and is celebrated with great enthusiasm across India and the world.',
+    sections: [
+      {
+        id: 'diwali-darkest-night',
+        title: 'Lamps on the Darkest Night',
+        subtitle: 'A Single Diya Multiplied into Ten Thousand',
+        storyText: 'Deepavali — "a row of lamps" — falls, by design, on Amavasya: the new-moon night of Kartika, the darkest night of one of the year\'s darkest months. The festival\'s founding gesture is defiance rendered in clay and ghee: precisely when the sky gives no light, every threshold, window, and rooftop answers with its own. One diya is a flame; a row of diyas is a philosophy. The Upanishads had already given the night its prayer: tamaso mā jyotir gamaya — "from darkness, lead me to light" (Brihadaranyaka Upanishad 1.3.28). Diwali is that verse, performed by a billion hands.'
+      },
+      {
+        id: 'diwali-return',
+        title: 'The Return of the King',
+        subtitle: 'Ayodhya Lit End to End for a Homecoming',
+        storyText: 'The most beloved of Diwali\'s stories is a homecoming. Fourteen years of exile — the forest, the abduction of Sita, the bridge to Lanka, the war, Ravana\'s fall (Valmiki Ramayana, Yuddha Kanda) — and then, at last, the flight home. Tradition holds that Rama, Sita, and Lakshmana returned to Ayodhya on the new-moon night of Kartika, and the city, refusing to let its king come home in darkness, lit every street and sill with rows of lamps. The diyas of every Diwali since are Ayodhya\'s welcome, renewed: light kept burning for the good that is on its way back.',
+        teachingText: 'Everyone has an exile running — a person, a hope, a version of themselves that has been fourteen years in the forest. Ayodhya\'s posture is the teaching: prepare the welcome before the return is visible. Light the lamp for what you are still waiting for; the lamp is how the waiting stays alive.'
+      },
+      {
+        id: 'diwali-lakshmi',
+        title: 'Inviting the Goddess of Abundance',
+        subtitle: 'A Doorway Rangoli, Small Footprints Walking In',
+        storyText: 'On the main night, homes across India perform Lakshmi Puja — for the goddess of wealth and well-being who, the Puranas tell, emerged radiant from the churning of the cosmic ocean. Doorways are washed and painted with rangoli; tiny footprints are stenciled walking inward; windows glow; account books open to new pages. The theology of the customs is precise: Lakshmi visits homes that are clean, lit, and harmonious — abundance is invited, not seized. The same churning that yielded poison first (Shiva\'s story) yields the goddess later: prosperity, the sequence says, comes to those who stayed through the difficult part.',
+        teachingText: 'The customs are a checklist worth taking literally once a year: clear the clutter, settle the quarrels, light the entrance, open a fresh page. Whether or not the goddess walks in, the household that did those four things has already prospered. Lakshmi\'s footprints point inward — abundance is a direction, not an amount.'
+      },
+      {
+        id: 'diwali-five-days',
+        title: 'Five Days, One Arc',
+        subtitle: 'A Festival Shaped like a Complete Life',
+        storyText: 'Diwali is not a night but an arc of five: Dhanteras, honoring health and the wealth that serves it; Naraka Chaturdashi, when Krishna slew the demon Narakasura at dawn and sixteen thousand captives walked free — evil ended, dawn baths taken in celebration; Lakshmi Puja on the dark moon itself; Govardhan Puja, remembering Krishna lifting the mountain to shelter his village; and Bhai Dooj, sisters and brothers blessing one another to close the arc. Health, liberation, abundance, protection, family — the five days are a complete curriculum of what a lit life contains.',
+        teachingText: 'The arc\'s order is its wisdom: health before wealth, freeing what is captive before inviting abundance, gratitude and family as the closing note. Use the five days as an annual audit — one evening per theme — and Diwali becomes less a party than a yearly re-consecration of everything the lamps stand for.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Valmiki Ramayana',
+        locator: 'Yuddha Kanda (Ravana\'s fall and the return to Ayodhya); the lamp-lit welcome is tradition built on this return',
+        translation: 'valmikiramayan.net (public)',
+      },
+      {
+        text: 'Brihadaranyaka Upanishad',
+        locator: '1.3.28 (tamaso mā jyotir gamaya — from darkness, lead me to light)',
+        translation: 'standard public-domain rendering',
+      },
+      {
+        text: 'Bhagavata Purana',
+        locator: 'Canto 10, chapter 59 (Narakasura); Canto 8 (Lakshmi from the churning); Canto 10, chapters 24–25 (Govardhan)',
+        translation: 'cross-checked against public translations',
+      },
+    ],
     mythology: [
       'Return of Lord Rama to Ayodhya: After 14 years of exile and victory over Ravana, the people of Ayodhya lit oil lamps to welcome their beloved king',
       'Victory over Narakasura: Lord Krishna defeated the demon king Narakasura, freeing 16,000 captive princesses and bringing peace to the world',
