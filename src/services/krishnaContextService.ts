@@ -5,6 +5,7 @@
 import LocalStorageService from './localStorageService';
 import { getProgression } from './progressionService';
 import { geminiService } from './geminiService';
+import { userKnowledge } from './userKnowledgeService';
 
 export interface CurrentContent {
   type: 'verse' | 'chapter' | 'festival' | 'none';
@@ -57,6 +58,9 @@ class KrishnaContextService {
       if (profile.intentions.length) who.push(`intentions: ${profile.intentions.join(', ')}`);
       if (profile.interests.length) who.push(`interests: ${profile.interests.join(', ')}`);
       who.push(`daily practice goal: ${profile.dailyGoalMinutes} minutes`);
+      for (const fact of userKnowledge.knownStructuredLines(profile)) {
+        who.push(`${fact.label.toLowerCase()}: ${fact.value}`);
+      }
       lines.push(`About them — ${who.join('; ')}.`);
     }
 
@@ -108,9 +112,15 @@ class KrishnaContextService {
         .map(r => `Ch${r.chapterNumber} Q: ${r.question}\nThey wrote: ${r.answer.slice(0, MAX_REFLECTION_CHARS)}`)
         .join('\n---\n');
 
-      const prompt = `You maintain a short private memory profile of a person on a spiritual learning journey through the Bhagavad Gita. Based on their onboarding and recent personal reflections below, write an updated profile summary in under 120 words: the themes they wrestle with, what seems to matter to them, and how they engage. Plain prose, third person, warm but factual. No headers, no markdown.
+      const factsLine = userKnowledge
+        .knownStructuredLines(profile)
+        .map(f => `${f.label.toLowerCase()}: ${f.value}`)
+        .join('; ');
+
+      const prompt = `You maintain a short private memory profile of a person on a spiritual learning journey through the Bhagavad Gita. Based on their onboarding and recent personal reflections below, write an updated profile summary in under 120 words: the themes they wrestle with, what seems to matter to them, and how they engage. Plain prose, third person, warm but factual. No headers, no markdown. Do not restate the known facts; focus on themes and inner movement.
 
 Onboarding: familiarity ${profile.familiarity}; intentions: ${profile.intentions.join(', ') || 'unknown'}; interests: ${profile.interests.join(', ') || 'unknown'}.
+Known facts about them: ${factsLine || 'none yet'}.
 ${profile.profileSummary ? `Previous summary: ${profile.profileSummary}` : ''}
 
 Recent reflections:

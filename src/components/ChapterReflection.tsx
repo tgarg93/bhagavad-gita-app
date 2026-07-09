@@ -14,6 +14,7 @@ import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import LocalStorageService, { ReflectionEntry, ReflectionTurn } from '../services/localStorageService';
 import { geminiService, isAuthError } from '../services/geminiService';
 import krishnaContext from '../services/krishnaContextService';
+import { userKnowledge } from '../services/userKnowledgeService';
 
 interface ChapterReflectionProps {
   chapterNumber: number;
@@ -153,6 +154,7 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
     const contextBlock = await krishnaContext.buildContextBlock().catch(() => undefined);
 
     let entry = entryFor(questionIndex);
+    const isFirstAnswer = !entry; // entry is reassigned inside the try
     try {
       if (!entry) {
         // First exchange for this question
@@ -199,6 +201,10 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
           }];
         }
         await LocalStorageService.saveReflection(entry);
+      }
+      if (isFirstAnswer && activeQuestion) {
+        // Opportunistic profile extraction — fire-and-forget, catches internally
+        userKnowledge.maybeExtractFromReflection(activeQuestion, text);
       }
       krishnaContext.maybeRefreshSummary();
     } finally {

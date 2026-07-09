@@ -11,7 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import KrishnaGuide from '../components/KrishnaGuide';
-import LocalStorageService, { SpiritualProfile, DEFAULT_SPIRITUAL_PROFILE } from '../services/localStorageService';
+import LocalStorageService, { SpiritualProfile } from '../services/localStorageService';
 
 interface OnboardingScreenProps {
   onComplete: () => void;
@@ -81,15 +81,17 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
     (step === 4 && dailyGoal !== null);
 
   const finish = async () => {
-    await LocalStorageService.saveSpiritualProfile({
-      ...DEFAULT_SPIRITUAL_PROFILE,
-      name: firstName || undefined, // first name only
+    // Merge, don't overwrite: replaying onboarding ("Edit my answers") must
+    // preserve the rolling summary and structured knowledge learned since.
+    const patch: Partial<SpiritualProfile> = {
       familiarity: familiarity ?? 'some',
       intentions,
       interests,
       dailyGoalMinutes: dailyGoal ?? 10,
       onboarded: true,
-    });
+    };
+    if (firstName) patch.name = firstName; // first name only; skip keeps any earlier name
+    await LocalStorageService.updateSpiritualProfile(patch);
     onComplete();
   };
 

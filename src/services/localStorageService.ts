@@ -34,6 +34,19 @@ export interface UserPreferences {
   soundEnabled: boolean;
 }
 
+// Where a structured profile value came from. User edits outrank extraction:
+// an 'extracted' write must never replace a 'user' value.
+export type KnowledgeSource = 'onboarding' | 'extracted' | 'user';
+
+// One structured user-knowledge value, keyed in SpiritualProfile.structuredProfile
+// by a UserKnowledgeKey from src/data/userKnowledgeSchema.ts (kept as string here
+// to avoid coupling storage to the schema module).
+export interface StructuredField {
+  value: string;
+  source: KnowledgeSource;
+  updatedAt: string;
+}
+
 // Who this person is spiritually — collected at onboarding, enriched over time.
 // The rolling profileSummary is compacted by Gemini from reflections + progress.
 export interface SpiritualProfile {
@@ -45,6 +58,10 @@ export interface SpiritualProfile {
   profileSummary?: string;
   summaryUpdatedAt?: string;
   reflectionCountAtSummary?: number;
+  // Structured facts learned over time (userKnowledgeService owns all writes —
+  // updateSpiritualProfile merges shallowly, so patching this map directly
+  // from elsewhere would clobber sibling entries).
+  structuredProfile?: Record<string, StructuredField>;
   onboarded: boolean;
 }
 
