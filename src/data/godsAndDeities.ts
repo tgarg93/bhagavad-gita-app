@@ -519,6 +519,503 @@ export const deitiesData: Deity[] = [
       'In the race with his brother, Ganesha won by circling his parents and calling them his world. What race are you running that might be the wrong circuit — and what would "walking around what you love" look like instead?',
       'Ganesha would not write faster than he understood. Where in your life is your output — words, decisions, commitments — outrunning your understanding?'
     ]
+  },
+  {
+    id: 'shiva',
+    name: 'Shiva',
+    sanskritName: 'शिव',
+    titles: ['Mahadeva', 'Neelakantha', 'Nataraja', 'Bholenath', 'Shankara'],
+    category: 'major',
+    description: 'The auspicious one — destroyer of what must end, lord of meditation and transformation',
+    mythology: 'Shiva is the great paradox of the Hindu imagination: the ascetic who sits in unbroken meditation on Mount Kailasa and the householder devoted to Parvati and their sons; the destroyer whose destruction clears the ground for every new beginning; the wild dancer whose steps keep the cosmos in rhythm. He drank the world\'s poison to save it, carries the Ganga\'s crushing descent in his hair, and answers the simplest sincere offering — a leaf, a little water — faster than any elaborate rite. In him the tradition holds together everything it knows about endings: that they are terrifying, necessary, and in the deepest sense compassionate.',
+    attributes: ['Meditation', 'Transformation', 'Detachment', 'Compassion', 'Cosmic rhythm'],
+    symbols: ['Trishula (trident)', 'Damaru (drum)', 'Crescent moon', 'Third eye', 'Serpent', 'Ganga in his hair', 'Rudraksha beads'],
+    mantras: [
+      {
+        id: 'shiva-panchakshari',
+        sanskrit: 'ॐ नमः शिवाय',
+        transliteration: 'oṁ namaḥ śivāya',
+        meaning: 'Om, salutations to Shiva (the auspicious one)',
+        purpose: 'The five-syllable (panchakshari) mantra — the heart of Shaiva practice, rooted in the Yajurveda\'s Rudradhyaya',
+        benefits: ['Inner stillness', 'Letting go', 'Steadiness in change']
+      },
+      {
+        id: 'shiva-mahamrityunjaya',
+        sanskrit: 'ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्। उर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय मामृतात्॥',
+        transliteration: 'oṁ tryambakaṁ yajāmahe sugandhiṁ puṣṭi-vardhanam, urvārukam iva bandhanān mṛtyor mukṣīya māmṛtāt',
+        meaning: 'We worship the three-eyed one, fragrant, who nourishes all beings; as a ripe cucumber is released from its stem, may he free us from death, for immortality',
+        purpose: 'The Mahamrityunjaya ("great death-conquering") mantra — Rig Veda 7.59.12 — chanted for healing, protection, and fearlessness before endings',
+        benefits: ['Fearlessness', 'Healing', 'Peace with mortality']
+      }
+    ],
+    prayers: [],
+    iconography: {
+      appearance: 'Ash-smeared ascetic with matted hair holding the crescent moon and the Ganga, a third eye on his forehead, serpent around his neck',
+      clothing: 'Tiger skin, rudraksha beads',
+      colors: ['White (ash)', 'Blue (throat)'],
+      objects: ['Trishula', 'Damaru'],
+      vehicle: 'Nandi (bull)',
+      posture: 'Seated in meditation, or dancing as Nataraja within a ring of fire',
+      facesAndArms: 'Commonly one face, two or four arms; as Nataraja, four arms in the cosmic dance'
+    },
+    teachings: [
+      'Destruction is a form of compassion — endings clear the ground for beginnings',
+      'Hold the world\'s poison in your throat: absorb harm without passing it on',
+      'The greatest power sits perfectly still',
+      'Bear what descends on you the way Shiva bears the Ganga — break its fall for others',
+      'The sincere and simple offering outweighs the elaborate one'
+    ],
+    festivals: ['maha-shivratri-2025'],
+    scriptureReferences: [
+      {
+        id: 'shiva-rigveda',
+        text: 'vedas',
+        section: 'Rig Veda 7.59.12 (Tryambakam / Mahamrityunjaya)',
+        relevance: 'The oldest layer of Shiva devotion — Rudra, the three-eyed one, invoked to free us from death',
+        quote: 'We worship the three-eyed one... as a ripe cucumber is released from its stem, may he free us from death, for immortality'
+      },
+      {
+        id: 'shiva-bhagavata-poison',
+        text: 'puranas',
+        section: 'Bhagavata Purana, Canto 8, Chapters 6–7',
+        relevance: 'The churning of the ocean and Shiva drinking the halahala poison'
+      }
+    ],
+    stories: [
+      {
+        id: 'shiva-neelakantha',
+        title: 'The Blue-Throated God',
+        content: 'When the gods and demons churned the cosmic ocean for the nectar of immortality, the first thing that surfaced was not nectar but halahala — a poison so virulent it began to burn the three worlds. The churners fled. The poison spread. And Shiva, who wanted nothing from the churning — no nectar, no treasure, no share — came forward and gathered the world\'s poison into his palm and drank it. Parvati pressed his throat so the poison would lodge there, harming no one, not even him fatally. It stained his throat blue forever, and the worlds went back to churning for their nectar. He kept nothing but the mark: Neelakantha, the blue-throated one.',
+        moralLesson: 'Greatness is measured by what you are willing to absorb, not what you manage to acquire. To hold pain in your throat — neither swallowing it into yourself nor spitting it onto others — is the rarest strength.',
+        category: 'teaching',
+        relatedScripture: 'Bhagavata Purana, Canto 8, Chapters 6–7 (also Shiva Purana)'
+      },
+      {
+        id: 'shiva-ganga',
+        title: 'Bearing the River',
+        content: 'King Bhagiratha performed centuries of penance to bring the celestial river Ganga down to earth, so her waters could liberate the souls of his ancestors. But Ganga\'s descent posed a problem no one could solve: falling from heaven at full force, she would shatter the earth itself. Only one being could break that fall. Shiva stood beneath the plunging river and received her full force on his head, where she wandered, tamed, through the labyrinth of his matted hair before flowing gently to the plains. The impact that would have destroyed the world became, on his head, an ornament.',
+        moralLesson: 'Sometimes love means standing where the blow will land. Whoever absorbs the shock so that others receive only the blessing — a parent, a leader, a friend — is doing Shiva\'s work with the Ganga.',
+        category: 'teaching',
+        relatedScripture: 'Valmiki Ramayana, Bala Kanda, sargas 42–44'
+      },
+      {
+        id: 'shiva-nataraja',
+        title: 'The Lord of the Dance',
+        content: 'As Nataraja, Shiva dances the cosmos into being and out of it. In his upper right hand, the damaru drum beats creation into rhythm; in his upper left burns the fire of dissolution. His lower right hand is raised: "do not fear." His lower left points to his lifted foot: "here is refuge." And beneath his dancing feet lies the dwarf Apasmara — forgetfulness, ignorance — subdued not by rage but by rhythm. The ring of flames around him is the universe itself, rising and falling with his steps. The image, beloved of the South Indian Shaiva tradition, holds the whole teaching in bronze: creation and destruction are one dance, and at its center is a face of perfect calm.',
+        moralLesson: 'Life creates and destroys in the same motion — resisting the rhythm is what hurts. Find the still face at the center of your own dance, and even loss becomes a step.',
+        category: 'teaching',
+        relatedScripture: 'Shaiva tradition (Chidambaram; Ananda Tandava iconography)'
+      }
+    ],
+    worship: {
+      bestTimes: ['Monday', 'Pradosh (twilight)', 'Maha Shivratri'],
+      offerings: ['Bilva (bel) leaves', 'Water and milk on the linga', 'White flowers'],
+      rituals: ['Abhishekam (pouring water/milk)', 'Om Namah Shivaya japa', 'Night vigil on Shivratri'],
+      fasting: ['Mondays', 'Maha Shivratri'],
+      pilgrimage: ['Kashi Vishwanath (Varanasi)', 'Kedarnath', 'The twelve Jyotirlingas'],
+      dailyPractices: ['Meditation', 'Panchakshari mantra']
+    },
+    audioUrl: '/audio/pronunciation/shiva.mp3',
+    podcastEpisodes: [],
+    significance: 'Shiva teaches that transformation — even painful endings — is sacred, and that the deepest power is still, simple, and willing to absorb the world\'s poison for love of it',
+    modernRelevance: 'For anyone navigating loss, change, or burnout, Shiva models absorbing difficulty without transmitting it, letting endings compost into beginnings, and the discipline of stillness',
+    familyConnections: [
+      { relationTo: 'ganesha', relationship: 'Father', description: 'Father of Ganesha, whose elephant head he gave' },
+      { relationTo: 'krishna', relationship: 'Fellow aspect of the divine', description: 'In the Gita (10.23) Krishna names Shiva (Shankara) as his own splendor among the Rudras' }
+    ],
+    regionalVariations: [],
+    images: {
+      // TODO cover shopping list: replace with a real shiva-cover.png
+      heroImage: require('../../assets/images/covers/dharma-cover.png'),
+      iconImage: '/images/deities/shiva-icon.jpg',
+      galleryImages: []
+    },
+    sections: [
+      {
+        id: 'shiva-stillness',
+        title: 'The God Who Sits Still',
+        subtitle: 'A Snow Peak, a Closed Eye, the World Below',
+        storyText: 'Every other god is busy. Vishnu preserves, Brahma creates, Indra storms, Lakshmi bestows. Shiva sits. On the frozen summit of Kailasa, eyes half-closed, ash-smeared, unmoving — the tradition\'s boldest claim rendered as a posture: that beneath all doing there is a being, and the one who touches it holds more power in stillness than the busy hold in motion. He is called Mahadeva, the great god, yet owns nothing but a tiger skin, a trident, and a drum. When the demons and devas need someone to drink the world\'s poison, they do not go to the palaces. They climb to the silent one.',
+        teachingText: 'Your life likely resembles the busy gods\' — preserving, creating, storming. Shiva asks a subversive question: when did you last sit with nothing to do and nothing to become? Five minutes of genuine stillness — not rest-as-recovery-for-more-work, but stillness for its own sake — is his practice. Everything else in his story flows from that seat.'
+      },
+      {
+        id: 'shiva-poison',
+        title: 'Drinking the Poison',
+        subtitle: 'A Blue Throat Above a Saved World',
+        storyText: 'The churning of the ocean is the tradition\'s great parable of ambition: gods and demons together, straining for the nectar of immortality. And the first yield of all that striving was poison — halahala, enough to burn the three worlds. It is an honest story about effort: churn anything hard enough — a career, a family, a country — and the poison surfaces before the nectar. Everyone fled it. Shiva, who had not churned and wanted no nectar, drank it, and Parvati held his throat so it would lodge there and go no further. The worlds resumed their churning. He kept only the blue stain.',
+        teachingText: 'Every family, team, and community produces halahala — resentment, grief, blame — before it produces nectar. Someone must metabolize it without passing it on. Notice who does that where you live and work; notice when it is you. The teaching is exacting: hold it in the throat. Neither swallow it into your depths, nor spray it onward. That narrow place between suppression and transmission is where Shiva lives.'
+      },
+      {
+        id: 'shiva-ganga-bearer',
+        title: 'The One Who Breaks the Fall',
+        subtitle: 'A River Landing in Matted Hair',
+        storyText: 'Bhagiratha\'s ancestors could only be liberated by the Ganga\'s waters, and his penance finally persuaded her to descend. But grace at full force is indistinguishable from catastrophe: the river\'s fall from heaven would have split the earth. So Shiva stood beneath the descent, took the impact on his head, and let the torrent wander through his hair until it emerged as a river the earth could bear (Valmiki Ramayana, Bala Kanda, sargas 42–44). The Ganga that blesses the plains is the Ganga after Shiva — the same power, made survivable.',
+        teachingText: 'Think of what has descended on your family line — money or its absence, expectations, old grief. Someone in every lineage stands where Shiva stood and breaks the fall, so what reaches the next generation blesses instead of shatters. Naming who did that for you is gratitude; choosing to do it for those after you is dharma.'
+      },
+      {
+        id: 'shiva-householder',
+        title: 'The Ascetic Who Married',
+        subtitle: 'Kailasa as a Family Home',
+        storyText: 'The wild, ash-smeared renunciant is also the tradition\'s most beloved family man. Parvati won him not by beauty — he burned Kama, desire itself, to ash with his third eye when desire was aimed at him — but by tapasya, matching his austerity with her own until he recognized an equal. Their marriage joins what the world calls opposites: the hermit and the queen\'s daughter, stillness and devotion. Their household on Kailasa — Parvati, Ganesha, Kartikeya, the bull Nandi at the door — became the model of a family built around a meditative center rather than around busyness.',
+        teachingText: 'Shiva refutes the idea that depth requires leaving. He is fully ascetic and fully married; the meditation does not end when the family begins. What would it mean for your household to have a still center — one practice, one hour, one corner of the home where the churning stops? The tradition\'s answer to work-life balance is not balance but a center.'
+      },
+      {
+        id: 'shiva-simple-offering',
+        title: 'The Easily-Pleased Lord',
+        subtitle: 'One Bilva Leaf and a Handful of Water',
+        storyText: 'Of all the great gods, Shiva is Bholenath — the innocent, the easily pleased. His worship requires no priest, no wealth, no elaborate rite: a bilva leaf, water poured over a stone linga, his name said with attention. The tradition delights in stories of accidental worship — a hunter who unknowingly dropped bilva leaves on a linga through a night of fear and was liberated by dawn. The theological point is serious: the divine measures sincerity, not production value. The god who owns nothing cannot be impressed by what you own.',
+        teachingText: 'Whatever your practice is becoming, Shiva keeps it honest: could you do it with one leaf and a palmful of water? If your spiritual life has grown elaborate — apps, courses, gear — strip it once a week to the bare act: sit, pour, say the name, mean it. Bholenath asks for nothing else, which is exactly what makes the offering complete.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Rig Veda',
+        locator: '7.59.12 (Tryambakam / Mahamrityunjaya mantra)',
+        translation: 'public-domain renderings; cross-checked',
+        url: 'https://greenmesg.org/stotras/vedas/rigveda/mandala7/sukta59/rudra-om_tryambakam_yajamahe.php',
+      },
+      {
+        text: 'Bhagavata Purana',
+        locator: 'Canto 8, Chapters 6–7 (churning of the ocean; halahala)',
+        translation: 'cross-checked against public translations (vedabase.io / wisdomlib.org)',
+      },
+      {
+        text: 'Valmiki Ramayana',
+        locator: 'Bala Kanda, sargas 42–44 (Bhagiratha and the descent of the Ganga)',
+        translation: 'valmikiramayan.net (public)',
+        url: 'https://www.valmikiramayan.net/utf8/baala/sarga43/bala_43_prose.htm',
+      },
+      {
+        text: 'Shaiva tradition',
+        locator: 'Nataraja / Ananda Tandava iconography (Chidambaram); Bholenath and bilva-leaf devotion',
+        translation: 'traditional; presented as tradition, not scripture quotation',
+      },
+    ],
+    reflectionQuestions: [
+      'Shiva held the world\'s poison in his throat — absorbing it without passing it on. Where in your life are you swallowing poison too deep, or spraying it onward? What would holding it "in the throat" look like?',
+      'The Ganga would have shattered the earth if Shiva had not broken her fall. Who broke the fall of what descended toward you — and for whom are you now the one standing beneath the river?',
+      'Shiva is worshipped with one leaf and a handful of water. If your practice were stripped to a single sincere act, what would it be?'
+    ]
+  },
+  {
+    id: 'hanuman',
+    name: 'Hanuman',
+    sanskritName: 'हनुमान्',
+    titles: ['Maruti', 'Anjaneya', 'Pavanputra', 'Bajrangbali', 'Sankata Mochana'],
+    category: 'major',
+    description: 'The devoted one — boundless strength in perfect service, remover of distress',
+    mythology: 'Son of the wind god Vayu and Anjana, Hanuman is the Ramayana\'s greatest devotee and its mightiest hero — and the tradition\'s insistence that those are the same thing. He leapt an ocean on the strength of remembering whose work he was doing, burned Lanka with the tail meant to humiliate him, and carried a mountain when he could not identify a herb. Yet his defining image is not any feat: it is Hanuman kneeling, hands folded, eyes on Rama. His strength is total because his ego is absent; nothing of him is spent maintaining himself.',
+    attributes: ['Devotion', 'Strength', 'Courage', 'Humility', 'Service', 'Celibate discipline'],
+    symbols: ['Gada (mace)', 'Mountain in hand', 'Open chest revealing Rama and Sita', 'Flying posture'],
+    mantras: [
+      {
+        id: 'hanuman-mula',
+        sanskrit: 'ॐ श्री हनुमते नमः',
+        transliteration: 'oṁ śrī hanumate namaḥ',
+        meaning: 'Om, salutations to Shri Hanuman',
+        purpose: 'For courage, protection, and strength in service',
+        benefits: ['Courage under fear', 'Strength for duty', 'Protection']
+      },
+      {
+        id: 'hanuman-chalisa',
+        sanskrit: 'श्रीगुरु चरन सरोज रज निज मनु मुकुरु सुधारि। बरनउँ रघुबर बिमल जसु जो दायकु फल चारि॥',
+        transliteration: 'śrī-guru carana saroja raja nija manu mukuru sudhāri, baranaū̃ raghubara bimala jasu jo dāyaku phala cāri',
+        meaning: 'Cleansing the mirror of my mind with the dust of my guru\'s lotus feet, I sing the pure glory of the best of Raghus — the giver of life\'s four fruits (opening of the Hanuman Chalisa)',
+        purpose: 'The Hanuman Chalisa (Tulsidas, 16th century) — forty verses recited daily by millions for strength and protection',
+        benefits: ['Daily discipline', 'Fearlessness', 'Devotional focus']
+      }
+    ],
+    prayers: [],
+    iconography: {
+      appearance: 'Powerful monkey-faced figure, often colored sindoor-orange, muscular and humble at once',
+      clothing: 'Loincloth of a renunciant, sacred thread',
+      colors: ['Orange (sindoor)', 'Red'],
+      objects: ['Gada (mace)', 'Sanjivani mountain'],
+      vehicle: 'None — he flies by his own power, son of the wind',
+      posture: 'Kneeling before Rama, flying with the mountain, or tearing open his chest to reveal Rama and Sita within',
+      facesAndArms: 'One face, two arms (Panchamukhi five-faced form in some traditions)'
+    },
+    teachings: [
+      'Strength exists for service, not display',
+      'You are stronger than you remember — you only need to be reminded of whose work you do',
+      'Devotion turns obstacles into milestones',
+      'When you cannot tell which herb heals, carry the whole mountain',
+      'The servant\'s seat is higher than the throne'
+    ],
+    festivals: [],
+    scriptureReferences: [
+      {
+        id: 'hanuman-sundara',
+        text: 'ramayana',
+        section: 'Sundara Kanda',
+        relevance: 'The "beautiful chapter" — Hanuman\'s leap to Lanka and the finding of Sita; recited whole for courage in crisis'
+      }
+    ],
+    stories: [
+      {
+        id: 'hanuman-leap',
+        title: 'The Leap Across the Ocean',
+        content: 'A hundred yojanas of ocean lay between the searching vanaras and Lanka, where Sita was held. The mightiest among them weighed their strength aloud and fell short. Hanuman sat apart, silent — he had forgotten what he could do. As a child he had been cursed to forget his powers until someone reminded him of them. The old bear Jambavan came to him and simply recounted who he was: son of the wind, who once leapt for the sun itself. As the words landed, Hanuman began to grow. He grew until the mountain he stood on sank beneath his gathering force, and then he threw himself across the sky — outracing his father the wind, meeting tests from the serpent-mother Surasa and the shadow-demon Simhika midair, refusing rest on the golden mountain Mainaka — until Lanka rose before him.',
+        moralLesson: 'Most of what we call inability is forgetting. Everyone needs a Jambavan — and everyone must sometimes be one: the friend who reminds another of powers they have stopped believing in.',
+        category: 'adventure',
+        relatedScripture: 'Valmiki Ramayana, Sundara Kanda, sarga 1 (Jambavan\'s reminder: Kishkindha Kanda, sargas 65–67)'
+      },
+      {
+        id: 'hanuman-sun',
+        title: 'The Child Who Leapt for the Sun',
+        content: 'As an infant, Hanuman woke hungry and saw the rising sun — round, glowing, surely the ripest fruit ever hung in a tree. So he leapt for it. The child of the wind rose through the sky toward the sun itself, and the alarmed king of the gods struck him down with the thunderbolt, breaking his jaw — hanu — giving him the name he carries. His father Vayu, the wind, withdrew from the world in grief until the gods made amends the only way that could satisfy a father: each granted the child a boon. Strength beyond measure, speed beyond the wind, life beyond death. The appetite that looked like recklessness became, blessed and disciplined, the power that would one day cross an ocean.',
+        moralLesson: 'The hungers that get children into trouble are the same energies that, rightly directed, become greatness. Do not curse the leap — train it.',
+        category: 'origin',
+        relatedScripture: 'Valmiki Ramayana, Uttara Kanda (Hanuman\'s childhood, as recounted to Rama)'
+      },
+      {
+        id: 'hanuman-mountain',
+        title: 'Carrying the Mountain',
+        content: 'When Lakshmana lay dying on the battlefield, only one herb could save him — sanjivani, growing on a single Himalayan slope a subcontinent away, and only before dawn. Hanuman crossed the distance in the dark, reached the mountain, and faced an honest problem: the herbs all looked alike, and there was no time to be wrong. So he made the choice that has delighted India ever since — he wrapped his arms around the mountain, tore it from the earth, and carried the whole thing back across the sky, letting the physicians find the herb while Lakshmana still breathed.',
+        moralLesson: 'When you cannot identify the one thing that will help someone you love, bring everything you have. Wholeheartedness forgives imprecision; hesitation does not.',
+        category: 'adventure',
+        relatedScripture: 'Valmiki Ramayana, Yuddha Kanda (sanjivani episode)'
+      }
+    ],
+    worship: {
+      bestTimes: ['Tuesday', 'Saturday', 'Hanuman Jayanti'],
+      offerings: ['Sindoor', 'Ladoo and bananas', 'Oil lamps'],
+      rituals: ['Hanuman Chalisa recitation', 'Sundara Kanda reading in times of difficulty'],
+      fasting: ['Tuesdays'],
+      pilgrimage: ['Hanuman Garhi (Ayodhya)', 'Sankata Mochana (Varanasi)', 'Namakkal Anjaneyar'],
+      dailyPractices: ['Chalisa', 'Physical discipline offered as service']
+    },
+    audioUrl: '/audio/pronunciation/hanuman.mp3',
+    podcastEpisodes: [],
+    significance: 'Hanuman embodies the union the tradition prizes most: limitless capability wholly surrendered to loving service — strength that never curdles into ego because it never serves itself',
+    modernRelevance: 'The patron of everyone who doubts their own capacity: his powers return the moment someone reminds him whose work he is doing. Beloved of students, athletes, and anyone facing what looks like an uncrossable ocean',
+    familyConnections: [
+      { relationTo: 'rama', relationship: 'Beloved lord', description: 'Hanuman\'s entire being is organized around service to Rama' },
+      { relationTo: 'shiva', relationship: 'Aspect/blessing', description: 'Widely revered in tradition as an aspect or blessing of Shiva (Rudra)' }
+    ],
+    regionalVariations: [],
+    images: {
+      // TODO cover shopping list: replace with a real hanuman-cover.png (interim: Ramayana cover)
+      heroImage: require('../../assets/images/covers/ramayana-cover.png'),
+      iconImage: '/images/deities/hanuman-icon.jpg',
+      galleryImages: []
+    },
+    sections: [
+      {
+        id: 'hanuman-forgotten-strength',
+        title: 'The Strength You Forgot You Had',
+        subtitle: 'An Old Bear Speaking to a Silent Monkey',
+        storyText: 'The Ramayana\'s most quietly devastating scene is not a battle. The vanaras sit defeated at the ocean\'s edge — the strongest among them can leap ninety yojanas, and Lanka lies at a hundred. Hanuman sits apart, saying nothing. He does not volunteer because it does not occur to him that he can do it: a childhood curse made him forget his own powers until reminded. Then Jambavan, the ancient bear, walks over and does the only heroic thing left to old age — he remembers on another\'s behalf. Son of the wind. The infant who leapt for the sun. The one for whom this ocean is a puddle. And Hanuman grows with every sentence, because the words are not flattery; they are facts he had misplaced.',
+        teachingText: 'The curse of forgotten strength is not mythology — it is Monday morning. Capability you demonstrated for years disappears from your self-image after one season of defeat. Hanuman\'s teaching here is double: seek your Jambavans, the ones who state your powers as facts; and be one, because reminding someone of their strength is not encouragement, it is testimony.'
+      },
+      {
+        id: 'hanuman-whose-work',
+        title: 'Strength That Serves',
+        subtitle: 'A Mace Laid at Two Pairs of Feet',
+        storyText: 'Everything Hanuman does is enormous — oceans leapt, cities burned, mountains carried — and none of it is for himself. This is the engineering secret of his character: strength without ego has no drag. The mighty in the epics who serve themselves — Ravana above all, with his ten heads of self-regard — spend most of their power maintaining their own image. Hanuman spends nothing on himself. Asked how he crossed the impossible ocean, his answer is always the same: by Rama\'s name and Rama\'s work. The strength is real, but the frictionlessness comes from the devotion.',
+        teachingText: 'Watch what happens to your own capability when the work is genuinely for something beyond you — the meeting where you stop defending your idea and start serving the problem. Ego is drag. Hanuman\'s question for any undertaking: whose work is this? When the honest answer is "something larger than me," you will find, like him, that you are suddenly bigger than the obstacle.'
+      },
+      {
+        id: 'hanuman-in-lanka',
+        title: 'Alone in the Enemy City',
+        subtitle: 'A Small Monkey in Golden Lanka at Night',
+        storyText: 'Having crossed the ocean as a giant, Hanuman enters Lanka the opposite way — shrunk to the size of a cat, slipping through the golden city by night. The Sundara Kanda lingers on his searching: palace by palace, room by room, through Ravana\'s sleeping splendor, discipline holding against despair as Sita is nowhere. When he finally finds her under the ashoka tree — guarded, grieving, refusing Ravana — he faces a subtle problem: how does a monkey appear before a captive queen without terrifying her? He begins softly, from the branches, singing Rama\'s story — her own story — until hope arrives before he does. Then he presents the ring.',
+        teachingText: 'Power got him to Lanka; gentleness accomplished the mission. Approaching someone in despair takes Hanuman\'s branch-singing: not bursting in with solutions, but letting the familiar story of what they love reach them first. The Sundara Kanda is recited in Indian homes precisely in seasons of crisis — a manual for carrying hope into dark places without breaking anything.'
+      },
+      {
+        id: 'hanuman-chest',
+        title: 'What Lives in the Chest',
+        subtitle: 'Pearls Torn, a Chest Opened',
+        storyText: 'At Rama\'s coronation, gifts flowed. Sita gave Hanuman a necklace of pearls beyond price. He held it to his ear, bit a pearl open, frowned, bit another, discarding each — searching. Asked what he was doing, he said: I keep nothing that does not contain Rama. The court laughed at the simple monkey. And Hanuman, in the telling beloved of the later tradition, tore open his own chest — and there, seated in his heart, were Rama and Sita. The court stopped laughing. Whatever one makes of the image, its claim is exact: the measure of devotion is not what you wear or say, but what an honest opening of your chest would reveal.',
+        teachingText: 'This story is later tradition rather than Valmiki, and the tradition kept it because it asks the only question that matters: if your chest were opened — your calendar, your accounts, your browser history, your 3 a.m. thoughts — what would be found enthroned there? Hanuman\'s answer had the advantage of being true. The practice is to make yours true too, one relocation of the heart at a time.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Valmiki Ramayana',
+        locator: 'Sundara Kanda, sarga 1 (the leap); Kishkindha Kanda, sargas 65–67 (Jambavan\'s reminder); Yuddha Kanda (sanjivani); Uttara Kanda (childhood)',
+        translation: 'valmikiramayan.net (public)',
+        url: 'https://www.valmikiramayan.net/utf8/sundara/sarga1/sundara_1_prose.htm',
+      },
+      {
+        text: 'Hanuman Chalisa',
+        locator: 'Tulsidas (16th century), opening doha',
+        translation: 'traditional Awadhi text',
+      },
+      {
+        text: 'Later tradition',
+        locator: 'The pearl-necklace / opened-chest story — devotional tradition, labeled as such (not Valmiki)',
+      },
+    ],
+    reflectionQuestions: [
+      'Hanuman forgot his own strength until Jambavan reminded him. What capability have you stopped believing you have — and who in your life states your strengths as facts?',
+      'Hanuman\'s power had no drag because none of it served his ego. In your current work, how much of your energy goes to the task, and how much to maintaining your image?',
+      'If your chest were opened like Hanuman\'s — your time, attention, and quiet thoughts examined — what would be found enthroned at the center?'
+    ]
+  },
+  {
+    id: 'durga',
+    name: 'Durga',
+    sanskritName: 'दुर्गा',
+    titles: ['Devi', 'Ambika', 'Chandika', 'Mahishasura-Mardini', 'Sherawali'],
+    category: 'major',
+    description: 'The invincible mother — the combined power of all the gods, fierce in protection, tender in love',
+    mythology: 'When the buffalo demon Mahishasura, unbeatable by any man or god, overran the heavens, the gods did something unprecedented: they pooled their essence. From their combined radiance a light gathered and took form — a woman of blinding beauty riding a lion, each of her many arms carrying a god\'s own weapon, given freely. Durga is not one god\'s consort or another\'s daughter in this, her defining story: she is what the divine looks like when everything holy stops competing and combines. She laughed at the demon\'s marriage proposals, fought him through his shape-shifting deceits, and freed the worlds. The Devi Mahatmya, recited every Navratri, calls her the one who is present in all beings — as consciousness, as power, as mother, as peace.',
+    attributes: ['Protection', 'Fierce compassion', 'Courage', 'Motherly love', 'Righteous power'],
+    symbols: ['Lion or tiger mount', 'Trident', 'Discus, sword, bow — the gods\' pooled weapons', 'Lotus', 'Conch'],
+    mantras: [
+      {
+        id: 'durga-ya-devi',
+        sanskrit: 'या देवी सर्वभूतेषु शक्तिरूपेण संस्थिता। नमस्तस्यै नमस्तस्यै नमस्तस्यै नमो नमः॥',
+        transliteration: 'yā devī sarva-bhūteṣhu śhakti-rūpeṇa saṁsthitā, namas tasyai namas tasyai namas tasyai namo namaḥ',
+        meaning: 'To the Goddess who abides in all beings in the form of power — salutations to her, salutations to her, salutations to her, again and again',
+        purpose: 'From the Devi Mahatmya, Chapter 5 — the great litany recognizing the Goddess in every being',
+        benefits: ['Recognizing sacred power everywhere', 'Strength', 'Reverence for all beings']
+      },
+      {
+        id: 'durga-bija',
+        sanskrit: 'ॐ दुं दुर्गायै नमः',
+        transliteration: 'oṁ duṁ durgāyai namaḥ',
+        meaning: 'Om, salutations to Durga (with her seed syllable duṁ)',
+        purpose: 'Durga\'s bija mantra — for protection and courage in difficulty',
+        benefits: ['Protection', 'Fearlessness', 'Resolve']
+      }
+    ],
+    prayers: [],
+    iconography: {
+      appearance: 'Radiant golden goddess with eight to ten arms, serene face above weapons in motion',
+      clothing: 'Red sari, crown, warrior\'s ornaments',
+      colors: ['Red', 'Gold'],
+      objects: ['Trident (from Shiva)', 'Discus (from Vishnu)', 'Bow (from Vayu)', 'Sword', 'Conch', 'Lotus'],
+      vehicle: 'Lion (or tiger)',
+      posture: 'Riding the lion mid-battle, spear poised over Mahishasura — or enthroned as the serene mother',
+      facesAndArms: 'One serene face; eight, ten, or eighteen arms bearing the gods\' weapons'
+    },
+    teachings: [
+      'When the holy combine instead of compete, the impossible becomes routine',
+      'Fierceness and motherliness are one love in two weathers',
+      'Evil shape-shifts; clarity must outlast every disguise',
+      'The Goddess abides in all beings — treat every being accordingly',
+      'Do not fight on the deceiver\'s terms; hold your ground until the true form shows'
+    ],
+    festivals: ['navratri-2025'],
+    scriptureReferences: [
+      {
+        id: 'durga-dm-birth',
+        text: 'puranas',
+        section: 'Devi Mahatmya (Markandeya Purana, ch. 81–93), Chapter 2',
+        relevance: 'Durga\'s birth from the combined radiance of all the gods, each granting her their weapon'
+      },
+      {
+        id: 'durga-dm-mahisha',
+        text: 'puranas',
+        section: 'Devi Mahatmya, Chapters 2–3',
+        relevance: 'The battle with Mahishasura through his shape-shifting, ending with the buffalo demon slain'
+      },
+      {
+        id: 'durga-dm-yadevi',
+        text: 'puranas',
+        section: 'Devi Mahatmya, Chapter 5',
+        relevance: 'The Ya Devi litany: the Goddess present in all beings as power, consciousness, peace, and mother',
+        quote: 'To the Goddess who abides in all beings in the form of power — salutations to her, again and again'
+      }
+    ],
+    stories: [
+      {
+        id: 'durga-birth',
+        title: 'Born of Combined Light',
+        content: 'Mahishasura had a boon: no man and no god could kill him. Armed with that loophole, the buffalo demon drove the gods from heaven. Defeated, they gathered — Vishnu, Shiva, Brahma, Indra, all of them — and their anger and resolve poured out of them as light. The streams of radiance fused into a single blaze, and the blaze took form: a woman. Shiva\'s light became her face, Vishnu\'s her arms, Agni\'s her eyes. Then, one by one, the gods handed her their own weapons — Shiva his trident, Vishnu his discus, Vayu his bow, Himavan a lion to ride. She was not created as their servant; she was revealed as their source. The demon\'s loophole had missed her entirely: she was no man and no mere god.',
+        moralLesson: 'What no power can do alone, pooled power does easily — but pooling requires each god to hand over his own weapon. The rarest strength in any family or team is the willingness to give your best tool to someone better positioned to wield it.',
+        category: 'origin',
+        relatedScripture: 'Devi Mahatmya (Markandeya Purana), Chapter 2'
+      },
+      {
+        id: 'durga-mahishasura',
+        title: 'The Slaying of Mahishasura',
+        content: 'The battle was a study in deception against clarity. Mahishasura came as a buffalo, and when cornered became a lion, then a man with a sword, then an elephant, then a buffalo again — each form abandoned the instant it began to lose. Durga fought unhurried, her face serene above the storm of her arms, drinking from her cup between blows, laughing at his transformations. The texts insist on that serenity: fury in her limbs, calm in her eyes. Finally, as the demon struggled halfway out of the buffalo form — caught mid-deception, neither one thing nor the other — she pinned him with her foot, pierced him with the trident, and ended it.',
+        moralLesson: 'Deceit survives by changing shape the moment it is nearly caught — in a manipulator, an addiction, a self-justification. Durga\'s method: do not chase each new form; hold steady, stay calm above the effort, and strike when the deception is caught between disguises.',
+        category: 'adventure',
+        relatedScripture: 'Devi Mahatmya (Markandeya Purana), Chapters 2–3'
+      },
+      {
+        id: 'durga-in-all-beings',
+        title: 'The Goddess in All Beings',
+        content: 'After the victory, the gods did not merely thank her — they sang the hymn that became the Devi Mahatmya\'s heart: "To the Goddess who abides in all beings as consciousness... as power... as peace... as faith... as memory... as compassion... as mother — salutations to her, salutations to her, salutations to her, again and again." Verse upon verse, the same structure, a different presence each time. The theology is radical: Durga is not only on the battlefield. She is in every being — in the neighbor as patience, in the stranger as hunger, in the child as sleep, in you as whatever power you have ever felt move through you.',
+        moralLesson: 'If the Goddess abides in all beings, then reverence is not a temple activity — every encounter is an encounter with her. The hymn is a training: to see power, patience, and peace in others as visitations, and treat them accordingly.',
+        category: 'teaching',
+        relatedScripture: 'Devi Mahatmya (Markandeya Purana), Chapter 5'
+      }
+    ],
+    worship: {
+      bestTimes: ['Navratri (both spring and autumn)', 'Friday', 'Ashtami days'],
+      offerings: ['Red flowers (hibiscus)', 'Red chunri (cloth)', 'Fruits and halwa-puri'],
+      rituals: ['Devi Mahatmya (Durga Saptashati) recitation', 'Kanya puja (honoring young girls)', 'Ghatasthapana at Navratri'],
+      fasting: ['Navratri fasts', 'Fridays'],
+      pilgrimage: ['Vaishno Devi', 'Kamakhya', 'The Shakti Pithas'],
+      dailyPractices: ['Ya Devi recitation', 'Honoring the feminine as sacred']
+    },
+    audioUrl: '/audio/pronunciation/durga.mp3',
+    podcastEpisodes: [],
+    significance: 'Durga is the tradition\'s answer to whether the sacred can be both mother and warrior: one love, expressed as tenderness toward the vulnerable and as fire toward whatever threatens them',
+    modernRelevance: 'For anyone who must be both gentle and unyielding — parents, caregivers, leaders, anyone protecting something fragile in a hard world — Durga models fierce compassion without cruelty and calm without passivity',
+    familyConnections: [
+      { relationTo: 'shiva', relationship: 'Consort (as Parvati)', description: 'Durga is the fierce form of the Goddess who is also Parvati, Shiva\'s consort' },
+      { relationTo: 'ganesha', relationship: 'Mother (as Parvati)', description: 'As Parvati, mother of Ganesha' }
+    ],
+    regionalVariations: [],
+    images: {
+      // TODO cover shopping list: replace with a real durga-cover.png (interim: Navratri cover)
+      heroImage: require('../../assets/images/covers/navratri-cover.png'),
+      iconImage: '/images/deities/durga-icon.jpg',
+      galleryImages: []
+    },
+    sections: [
+      {
+        id: 'durga-when-gods-pool',
+        title: 'When the Gods Stopped Competing',
+        subtitle: 'Streams of Light Fusing into a Woman on a Lion',
+        storyText: 'The Devi Mahatmya opens with the divine order defeated. Mahishasura\'s boon — invulnerable to man and god — had found the loophole in heaven\'s power, and the gods, individually magnificent, were individually useless. What saved the worlds was not a bigger god but a different geometry: they combined. Radiance poured from every divine body, fused, and took the form of a woman — and then came the detail the text lingers on: each god handed her his signature weapon. Shiva gave the trident. Vishnu gave the discus. Not copies — their own. Durga rides out armed with everything heaven owns, freely given.',
+        teachingText: 'Notice what the story requires before the rescue: every powerful being had to admit his individual power was not enough, and hand his best weapon to another. Where in your family or work is the crisis persisting because everyone fights it separately, each guarding their own trident? Durga is born wherever that surrender into combination happens.'
+      },
+      {
+        id: 'durga-fierce-mother',
+        title: 'The Mother Who Carries Weapons',
+        subtitle: 'A Serene Face Above Ten Armed Hands',
+        storyText: 'Durga\'s iconography holds a deliberate contradiction: the face of a serene mother above arms full of weapons mid-battle. India has never seen a conflict between the two. Ask anyone raised on her images — she fights like that because she is a mother; the fierceness is the tenderness, pointed at what threatens the child. The texts underline it: she battles Mahishasura with a calm face, even laughing, because rage is absent — protection is total but hatred never arrives. This is what the tradition means by fierce compassion: love with a sword, wielded without cruelty.',
+        teachingText: 'Most of us split these energies — gentle until pushed into rage that we later regret, or so calm we fail to protect what needs us. Durga is the integration: total ferocity in defense of the vulnerable, zero hatred toward the attacker. Next time you must confront someone, try her posture — the serene face above the armed hands. Firm action, quiet eyes.'
+      },
+      {
+        id: 'durga-shapeshifter',
+        title: 'Fighting the Shape-Shifter',
+        subtitle: 'A Buffalo Becoming a Lion Becoming a Man',
+        storyText: 'Mahishasura never fought fair — that was the point of him. Buffalo, lion, swordsman, elephant, buffalo again: each form abandoned at the moment of losing, so the fight could never end. Durga\'s response was not to match his changes but to refuse their premise. She held her ground, stayed serene, and let each disguise exhaust itself — striking finally when he was caught halfway between forms, neither buffalo nor man, the deception itself exposed. The Devi Mahatmya was composed by people who understood that evil\'s chief weapon is not strength but redefinition.',
+        teachingText: 'Everything destructive in a life shape-shifts when confronted: the addiction becomes "just relaxing," the cruel relationship becomes "passionate," the compromise becomes "pragmatism." Chasing each new form is exhausting by design. Durga\'s method: name the thing once, clearly, and hold that clarity while the disguises cycle. The moment of half-transformation — when the old excuse is dying and the new one isn\'t ready — is when truth can pin it.'
+      },
+      {
+        id: 'durga-nine-nights',
+        title: 'Nine Nights of the Mother',
+        subtitle: 'A Lamp Lit Beside a Sprouting Pot of Grain',
+        storyText: 'Twice a year, at the great turning of the seasons, India gives Durga nine nights — Navratri. A pot of grain is sprouted, a lamp kept burning, and night by night the Goddess is honored in her forms: fierce Durga, wealth-giving Lakshmi, wisdom-bestowing Saraswati, by one beloved arrangement three nights each. On Ashtami, young girls are worshipped as her living embodiment — the theology of "the Goddess abides in all beings" made into a household act. The festival ends in Vijayadashami, the day of victory, when Mahishasura falls and, in the north, Ravana burns: all the traditions agreeing that after nine nights of honoring the sacred feminine, the tenth day belongs to triumph.',
+        teachingText: 'Navratri\'s structure is itself the teaching: protection first (Durga), then abundance (Lakshmi), then wisdom (Saraswati) — in that order, because abundance without protection is looted and wisdom without abundance starves. Audit your own life in her sequence. And the kanya puja asks the sharpest question: do you actually treat the ordinary beings around you as places where the Goddess lives?'
+      }
+    ],
+    sources: [
+      {
+        text: 'Devi Mahatmya (Markandeya Purana, chapters 81–93)',
+        locator: 'Chapter 2 (birth from combined radiance; the gods\' weapons), Chapters 2–3 (Mahishasura battle and slaying), Chapter 5 (Ya Devi litany)',
+        translation: 'cross-checked against public translations (devimahatmya.com, wisdomlib.org)',
+        url: 'https://devimahatmya.com/book/chapter-3-the-slaying-of-mahisasura/',
+      },
+      {
+        text: 'Navratri tradition',
+        locator: 'Nine-nights structure, kanya puja, Vijayadashami — living tradition, labeled as such',
+      },
+    ],
+    reflectionQuestions: [
+      'Durga was born when the gods pooled their power and handed over their own weapons. What is your "trident" — and is there a struggle in your life that persists because everyone involved is fighting it separately?',
+      'Her iconography joins a serene face with armed hands: total protection, zero hatred. When you last had to be fierce, which came out — the weapons, the serenity, or both?',
+      'Mahishasura survived by shape-shifting every time he was nearly caught. What in your life keeps changing its name each time you confront it — and what would naming it once, clearly, sound like?'
+    ]
   }
 ];
 

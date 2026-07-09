@@ -15,7 +15,7 @@ import {
   Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import { bhagavadGitaData } from '../data/bhagavadGitaData';
@@ -237,6 +237,51 @@ const GitaVersePlayerScreen: React.FC = () => {
       setPlayingChapter(null);
     }
   }, [isPlaying, isPaused, audioService]);
+
+  // --- Transport: keep the voice and the page in sync --------------------
+  const narrationActive = isPlaying || isPaused;
+
+  // Page skip: while narrating within the playing chapter, move the voice with
+  // the page; leaving the chapter (cover/reflection/elsewhere) stops narration
+  const skipPage = useCallback(async (direction: 1 | -1) => {
+    const target = activeIndex + direction;
+    if (target < 0 || target >= pages.length) return;
+    const page = pages[target];
+    if (narrationActive) {
+      if (page.kind === 'verse' && page.chapter === playingChapter) {
+        const segsPerVerse = mode === 'all' ? 2 : 1;
+        setHighlightedSegmentId(
+          `section-${page.verseIndex}-block-0-${mode === 'all' ? 'sanskrit' : 'meaning'}`
+        );
+        await audioService.seekToSegment(page.verseIndex * segsPerVerse);
+      } else {
+        await audioService.stopNarration();
+        setIsPlaying(false);
+        setIsPaused(false);
+        setHighlightedSegmentId(null);
+        setPlayingChapter(null);
+      }
+    }
+    scrollToIndex(target);
+  }, [activeIndex, pages, narrationActive, playingChapter, mode, audioService, scrollToIndex]);
+
+  // Podcast-style ±10 seconds within the playing chapter's narration
+  const seekBySeconds = useCallback(async (deltaSeconds: number) => {
+    if (!narrationActive || playingChapter == null) return;
+    const total = audioService.getEstimatedTotalDuration();
+    if (total <= 0) return;
+    const targetMs = Math.max(0, Math.min(audioService.getElapsedDuration() + deltaSeconds * 1000, total - 1));
+    await audioService.seekToProgress(targetMs / total);
+    const seg = audioService.getCurrentSegment();
+    if (seg) {
+      setHighlightedSegmentId(seg.id);
+      const m = seg.id.match(/section-(\d+)/);
+      if (m) {
+        const page = verseStartIndex[playingChapter] + parseInt(m[1]);
+        listRef.current?.scrollToIndex({ index: page, animated: true });
+      }
+    }
+  }, [narrationActive, playingChapter, audioService, verseStartIndex]);
 
   const jumpToChapter = (chapter: number) => {
     setShowChapters(false);
@@ -485,8 +530,20 @@ const GitaVersePlayerScreen: React.FC = () => {
           </View>
 
           <View style={styles.transport}>
-            <TouchableOpacity onPress={() => scrollToIndex(activeIndex - 1)} style={styles.transportBtn}>
+            <TouchableOpacity onPress={() => skipPage(-1)} style={styles.transportBtn}>
               <Ionicons name="play-skip-back" size={22} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => seekBySeconds(-10)}
+              style={styles.transportBtn}
+              disabled={!narrationActive}
+            >
+              <MaterialIcons
+                name="replay-10"
+                size={24}
+                color={DharmaDesignSystem.colors.primary.deepSaffron}
+                style={!narrationActive && styles.transportDisabled}
+              />
             </TouchableOpacity>
             <TouchableOpacity onPress={handlePlayPause} style={styles.playBtn}>
               <Ionicons
@@ -496,7 +553,19 @@ const GitaVersePlayerScreen: React.FC = () => {
                 style={isPlaying ? undefined : { marginLeft: 3 }}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => scrollToIndex(activeIndex + 1)} style={styles.transportBtn}>
+            <TouchableOpacity
+              onPress={() => seekBySeconds(10)}
+              style={styles.transportBtn}
+              disabled={!narrationActive}
+            >
+              <MaterialIcons
+                name="forward-10"
+                size={24}
+                color={DharmaDesignSystem.colors.primary.deepSaffron}
+                style={!narrationActive && styles.transportDisabled}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => skipPage(1)} style={styles.transportBtn}>
               <Ionicons name="play-skip-forward" size={22} color={DharmaDesignSystem.colors.primary.deepSaffron} />
             </TouchableOpacity>
           </View>
@@ -658,8 +727,9 @@ const styles = StyleSheet.create({
   modeOptionActive: { backgroundColor: colors.primary.deepSaffron },
   modeText: { ...typography.sizes.caption, color: colors.primary.deepSaffron, fontWeight: '600' },
   modeTextActive: { color: '#FFFFFF' },
-  transport: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  transport: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   transportBtn: { padding: spacing.xs },
+  transportDisabled: { opacity: 0.35 },
   playBtn: {
     width: 48, height: 48, borderRadius: 24,
     backgroundColor: colors.primary.deepSaffron,

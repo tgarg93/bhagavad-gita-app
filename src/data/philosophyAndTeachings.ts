@@ -746,10 +746,466 @@ export const philosophyData: PhilosophicalConcept[] = [
     },
     podcastEpisodes: [],
     images: {
-      heroImage: '/images/philosophy/moksha-hero.jpg',
+      // TODO cover shopping list: replace with a real moksha-cover.png
+      heroImage: require('../../assets/images/covers/dharma-cover.png'),
       iconImage: '/images/philosophy/moksha-icon.jpg'
     },
-    difficulty: 'advanced'
+    difficulty: 'advanced',
+    // Verse translations follow Swami Sivananda's public-domain rendering
+    // (bundled in gitaVerses.json), lightly trimmed for reading flow.
+    sections: [
+      {
+        id: 'moksha-opening',
+        title: 'The Open Cage',
+        subtitle: 'A Bird Beside a Door Left Ajar',
+        storyText: 'Every teaching in the Hindu tradition eventually points at one destination: moksha, liberation. But liberation from what? Not from the world — from the cage of mistaken identity: the conviction that you are only this body, this résumé, this bundle of fears aging toward an ending. The tradition\'s startling claim is that the cage door is not locked. It never was. The soul is already free — unborn, undying, untouched — and the entire spiritual project is not to earn freedom but to stop believing in the bars. Moksha is not somewhere you go after death. It is what remains when the misunderstanding drops.'
+      },
+      {
+        id: 'moksha-beyond-sorrow',
+        title: 'The Place Beyond All Evil',
+        subtitle: 'A Traveler Setting Down a Heavy Pack',
+        keyVerse: {
+          sanskrit: 'कर्मजं बुद्धियुक्ता हि फलं त्यक्त्वा मनीषिणः। जन्मबन्धविनिर्मुक्ताः पदं गच्छन्त्यनामयम्॥',
+          transliteration: 'karma-jaṁ buddhi-yuktā hi phalaṁ tyaktvā manīṣhiṇaḥ, janma-bandha-vinirmuktāḥ padaṁ gachchhanty anāmayam',
+          meaning: 'The wise, having abandoned the fruits of their actions, freed from the bonds of birth, go to the place beyond all evil.',
+          source: 'Bhagavad Gita 2.51 (tr. Swami Sivananda)'
+        },
+        storyText: 'The Gita\'s first mention of the goal comes wrapped in the teaching of karma: the wise who release the fruits of action are "freed from the bonds of birth" and reach the place anamayam — beyond affliction, beyond sorrow. Notice the mechanics: bondage is made of clinging, so liberation is made of release. Nothing is added to the liberated person; things are set down. The Upanishads had said it a generation of texts earlier: as desire is, so is destiny — and the one whose desires have resolved into the Self "goes to the Self" (Brihadaranyaka Upanishad 4.4.5–6).',
+        teachingText: 'You have tasted anamayam already — moments when a long-carried weight was set down and the world turned vivid: after honest confession, after forgiving, after finally releasing an outcome. The tradition asks you to take those moments seriously as data. They are not moods; they are glimpses of your actual condition with the clinging briefly removed.'
+      },
+      {
+        id: 'moksha-lit-within',
+        title: 'Lit from Within',
+        subtitle: 'A Lamp Burning in a Windless Room',
+        keyVerse: {
+          sanskrit: 'योऽन्तःसुखोऽन्तरारामस्तथान्तर्ज्योतिरेव यः। स योगी ब्रह्मनिर्वाणं ब्रह्मभूतोऽधिगच्छति॥',
+          transliteration: 'yo \'ntaḥ-sukho \'ntar-ārāmas tathāntar-jyotir eva yaḥ, sa yogī brahma-nirvāṇaṁ brahma-bhūto \'dhigachchhati',
+          meaning: 'He who is happy within, who rejoices within, who is illuminated within — that yogi attains absolute freedom, becoming Brahman himself.',
+          source: 'Bhagavad Gita 5.24 (tr. Swami Sivananda)'
+        },
+        storyText: 'The Gita gives liberation a diagnostic: where does your light come from? The unliberated life is lit from outside — happiness switched on and off by praise, purchases, outcomes, other people\'s moods. The liberated one is antar-jyotih, lit from within: happy within, rejoicing within, illuminated within. This is not a personality trait but a relocation of the source. The sage Yajnavalkya, asked what light a person sees by when sun, moon, and fire are all gone, answered: the Self is his light (Brihadaranyaka Upanishad 4.3.6).',
+        teachingText: 'Run the diagnostic honestly for a day. Track each surge of happiness and each collapse: what switched it? If every switch is external, nothing is wrong with you — that is simply the starting condition. The practices — meditation, offering the fruits, devotion — are all ways of drilling toward the inner light until some of your illumination no longer depends on the weather.'
+      },
+      {
+        id: 'moksha-what-you-remember',
+        title: 'What You Remember at the End',
+        subtitle: 'A Lamp Carried Toward a Doorway',
+        keyVerse: {
+          sanskrit: 'अन्तकाले च मामेव स्मरन्मुक्त्वा कलेवरम्। यः प्रयाति स मद्भावं याति नास्त्यत्र संशयः॥',
+          transliteration: 'anta-kāle cha mām eva smaran muktvā kalevaram, yaḥ prayāti sa mad-bhāvaṁ yāti nāsty atra sanśhayaḥ',
+          meaning: 'Whoever, leaving the body, goes forth remembering Me alone at the time of death attains My being; of this there is no doubt.',
+          source: 'Bhagavad Gita 8.5 (tr. Swami Sivananda)'
+        },
+        storyText: 'The Gita\'s eighth chapter faces the question directly: what happens at death? Krishna\'s answer is neither morbid nor mystical — it is about momentum. Whatever the mind has practiced remembering, it remembers at the end; and what it remembers at the end shapes where it goes. The tradition drew the practical conclusion with complete seriousness: you cannot summon at the last hour a remembrance you never rehearsed. The whole of spiritual practice is, in one sense, rehearsal — training the mind\'s default direction so that its final movement is toward the light.',
+        teachingText: 'Set aside the metaphysics and the teaching still stands: you are always practicing something, and the practiced thing is what surfaces under pressure. What does your mind rehearse in its idle moments — grievance, anxiety, acquisition? That is the current default. The remembrance practices — a name, a breath, a verse returned to daily — are how the tradition re-aims the arrow before it must fly.'
+      },
+      {
+        id: 'moksha-no-return',
+        title: 'The Abode Without Return',
+        subtitle: 'Light That Needs No Sun',
+        keyVerse: {
+          sanskrit: 'न तद्भासयते सूर्यो न शशाङ्को न पावकः। यद्गत्वा न निवर्तन्ते तद्धाम परमं मम॥',
+          transliteration: 'na tad bhāsayate sūryo na śhaśhāṅko na pāvakaḥ, yad gatvā na nivartante tad dhāma paramaṁ mama',
+          meaning: 'Neither sun nor moon nor fire illumines that place; having gone there, they do not return — that is My supreme abode.',
+          source: 'Bhagavad Gita 15.6 (tr. Swami Sivananda)'
+        },
+        storyText: 'Everything in samsara cycles — seasons, moods, fortunes, births. The tradition\'s image for conditioned existence is the wheel; even heaven, in Hindu cosmology, is temporary, a pleasant stay that ends when merit runs out. Moksha alone is described as the place from which "they do not return." Not because a door locks behind you, but because there is nothing left to pull you back: the fuel of returning — unfinished desire — is spent. The light there needs no sun because it is the light by which suns are seen.',
+        teachingText: 'The mark of everything unliberated is that it wears off — the vacation, the achievement, the purchase, each demanding a next one. Moksha is the tradition\'s name for the only satisfaction that does not wear off, because it is not an experience the self has but the self\'s own nature, uncovered. Chasing states that wear off is not wrong; it is simply the wheel. Noticing the wheel is the first step off it.'
+      },
+      {
+        id: 'moksha-liberated-life',
+        title: 'Liberated While Living',
+        subtitle: 'Serene Eyes in the Middle of the Marketplace',
+        keyVerse: {
+          sanskrit: 'ब्रह्मभूतः प्रसन्नात्मा न शोचति न काङ्क्षति। समः सर्वेषु भूतेषु मद्भक्तिं लभते पराम्॥',
+          transliteration: 'brahma-bhūtaḥ prasannātmā na śhochati na kāṅkṣhati, samaḥ sarveṣhu bhūteṣhu mad-bhaktiṁ labhate parām',
+          meaning: 'Becoming Brahman, serene in the Self, he neither grieves nor desires; the same to all beings, he attains supreme devotion to Me.',
+          source: 'Bhagavad Gita 18.54 (tr. Swami Sivananda)'
+        },
+        storyText: 'The tradition\'s boldest idea is jivanmukti: liberation while alive. The liberated one does not vanish in a flash of light — she goes on cooking, working, raising children, but from a different center. The Gita\'s portrait: serene, beyond grasping and grieving, "the same to all beings" — because she no longer sorts people by what they can give or take from her. And then the surprise in the verse\'s last line: this freedom does not end in cool detachment but flowers into supreme devotion. The freed heart, wanting nothing, finally loves without agenda.',
+        teachingText: 'Liberation, scaled to a Tuesday: act fully, cling to nothing, meet everyone as the same light in different lamps, and let love — not need — be what remains. You will manage it for moments at first. The tradition\'s patient claim is that the moments join. Moksha is not the abandonment of your life; it is your life, finally unclenched.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Bhagavad Gita',
+        locator: 'Verses 2.51, 5.24, 8.5, 15.6, 18.54 (also 4.9)',
+        translation: 'Swami Sivananda (public domain)',
+      },
+      {
+        text: 'Brihadaranyaka Upanishad',
+        locator: '4.4.5–6 (desire and destiny; the desireless reach the Self); 4.3.6 (the Self as one\'s light)',
+        translation: 'Max Müller, Sacred Books of the East (public domain)',
+        url: 'https://www.brhat.in/openlibrary/special/brihadaranyaka-upanishad/4-4-5',
+      },
+    ],
+    reflectionQuestions: [
+      'The Gita\'s diagnostic for freedom is where your light comes from. Track an ordinary day honestly: how much of your happiness is switched on and off from outside — and when have you felt lit from within?',
+      'Whatever the mind rehearses is what surfaces under pressure. What does your mind practice in its idle moments — and is that what you would want to arise at life\'s hardest hour?',
+      'Everything unliberated wears off and demands a next one. What are you currently chasing that you already suspect will wear off — and what, in your experience, has never worn off?'
+    ]
+  },
+  {
+    id: 'three-gunas',
+    name: 'The Three Gunas',
+    sanskritName: 'त्रिगुण',
+    category: 'core_concepts',
+    description: 'The three strands of nature — clarity, restlessness, and inertia — that color every mood, meal, and motive',
+    detailedExplanation: 'The Gita\'s fourteenth chapter teaches that all of nature — including your moods, appetites, and motivations — is woven from three strands (gunas): sattva (clarity, lightness, harmony), rajas (restlessness, passion, drive), and tamas (inertia, dullness, darkness). None of them is you: the self is the witness the strands bind. But at any moment one predominates, and the practical art is learning to recognize which one is driving, and to feed the strand you want to grow. Freedom, finally, lies beyond all three — but the road there runs through cultivating sattva.',
+    etymology: 'Guna means "strand" or "quality" — the threads a rope is twisted from; prakriti (nature) is the rope',
+    keyAspects: [
+      'Sattva: clarity, lightness, knowledge, harmony',
+      'Rajas: passion, drive, restlessness, craving',
+      'Tamas: inertia, dullness, confusion, sleep',
+      'You cannot fight a guna head-on — you feed a different one',
+      'The self is the witness of the strands, not the strands'
+    ],
+    practicalApplications: [
+      {
+        situation: 'A foggy, unmotivated morning (tamas)',
+        application: 'Don\'t reach for willpower (rajas) or self-blame; change the inputs — light, movement, a shower, fresh food',
+        benefits: ['Momentum without force', 'Self-compassion', 'Practical energy management'],
+        tips: ['Sunlight and a walk beat scolding yourself', 'Tamas yields to gentle rajas, then rajas can settle into sattva']
+      },
+      {
+        situation: 'A racing, scattered workday (rajas)',
+        application: 'Schedule stillness like a meeting: one unhurried meal, one screen-free walk, three conscious breaths between tasks',
+        benefits: ['Clearer decisions', 'Less burnout', 'Recovered attention'],
+        tips: ['Rajas is useful for launching, terrible for judging — postpone big decisions until the mind settles']
+      },
+      {
+        situation: 'Choosing food, media, and company',
+        application: 'Everything you consume is guna-flavored; audit inputs by the state they leave behind, not the pleasure during',
+        benefits: ['Deliberate mood-shaping', 'Better company', 'Cleaner attention'],
+        tips: ['Ask after each input: lighter, agitated, or duller?', 'Change one input at a time']
+      }
+    ],
+    relatedConcepts: ['karma', 'dharma', 'moksha'],
+    scriptureReferences: [
+      {
+        id: 'gunas-gita-14-5',
+        text: 'Bhagavad Gita',
+        reference: 'Chapter 14, Verse 5',
+        quote: 'These qualities born of Nature — sattva, rajas, and tamas — bind fast in the body the indestructible embodied one.',
+        context: 'Krishna names the three strands and their binding power'
+      },
+      {
+        id: 'gunas-gita-14-17',
+        text: 'Bhagavad Gita',
+        reference: 'Chapter 14, Verse 17',
+        quote: 'From sattva arises knowledge, from rajas greed; heedlessness, delusion, and ignorance arise from tamas.',
+        context: 'The fruits of each strand'
+      },
+      {
+        id: 'gunas-gita-14-26',
+        text: 'Bhagavad Gita',
+        reference: 'Chapter 14, Verse 26',
+        quote: 'He who serves Me with unwavering devotion crosses beyond the gunas and is fit to become Brahman.',
+        context: 'The way beyond all three strands'
+      }
+    ],
+    modernRelevance: 'The gunas are a working psychology of energy: why some days are clear, some frantic, some leaden — and how food, media, sleep, and company tip the balance. They replace self-blame with input management.',
+    commonMisunderstandings: [
+      'That tamas is "bad" — rest, sleep, and grounding are tamas rightly used; the problem is being ruled by it',
+      'That sattva is the goal — the Gita\'s goal is beyond all three; sattva binds too, by attachment to happiness and knowledge (14.6)',
+      'That your guna is fixed — the balance shifts hourly with inputs, and can be deliberately cultivated'
+    ],
+    examples: [
+      {
+        id: 'gunas-kitchen',
+        title: 'One Kitchen, Three Meals',
+        scenario: 'The same cook prepares fresh sabzi with attention (sattva), a fiery midnight snack grabbed standing up (rajas), and reheated leftovers eaten cold from the fridge (tamas).',
+        explanation: 'Gita 17.8–10 classifies food by the state it produces — vitality and clarity, craving and agitation, or dullness.',
+        lesson: 'You are not just what you eat but how and why you eat it.'
+      }
+    ],
+    meditation: {
+      technique: 'Guna-watching',
+      duration: '10 minutes',
+      instructions: [
+        'Sit and simply name the current weather: clear, restless, or foggy — without judgment',
+        'Watch it change even within the sitting; note what thoughts feed which strand',
+        'End by resting as the one who watched all three — the witness none of them touch'
+      ],
+      benefits: ['Self-knowledge without self-blame', 'Emotional weather literacy', 'Glimpses of the witness'],
+      audioUrl: '/audio/meditations/guna-watching.mp3'
+    },
+    audioGuide: {
+      narrator: 'Guna Wisdom',
+      duration: '20 minutes',
+      audioUrl: '/audio/guides/gunas-guide.mp3',
+      topics: ['The three strands', 'Feeding sattva', 'Beyond the gunas']
+    },
+    podcastEpisodes: [],
+    images: {
+      // TODO cover shopping list: replace with a real three-gunas-cover.png
+      heroImage: require('../../assets/images/covers/dharma-cover.png'),
+      iconImage: '/images/philosophy/gunas-icon.jpg'
+    },
+    difficulty: 'beginner',
+    sections: [
+      {
+        id: 'gunas-opening',
+        title: 'The Weather of the Mind',
+        subtitle: 'Three Skies Over One Mountain',
+        storyText: 'Some mornings you wake clear: the tea tastes bright, work flows, patience comes easily. Other mornings you wake already running: mind racing, jaw tight, five browser tabs before breakfast. And some mornings you wake in fog: heavy, unwilling, reaching for the phone to numb the grayness. Same person, same bed — three different worlds. The Gita\'s fourteenth chapter gives this everyday mystery its oldest and most useful map: three strands, three gunas, weave all of nature — sattva, clarity; rajas, restlessness; tamas, inertia — and at every moment one of them is dyeing your entire experience its color.'
+      },
+      {
+        id: 'gunas-three-strands',
+        title: 'Naming the Strands',
+        subtitle: 'Three Threads Twisted into One Rope',
+        keyVerse: {
+          sanskrit: 'सत्त्वं रजस्तम इति गुणाः प्रकृतिसंभवाः। निबध्नन्ति महाबाहो देहे देहिनमव्ययम्॥',
+          transliteration: 'sattvaṁ rajas tama iti guṇāḥ prakṛiti-sambhavāḥ, nibadhnanti mahā-bāho dehe dehinam avyayam',
+          meaning: 'Sattva, rajas, and tamas — these qualities born of Nature bind fast in the body the indestructible embodied one.',
+          source: 'Bhagavad Gita 14.5 (tr. Swami Sivananda)'
+        },
+        storyText: 'Guna means strand — the threads a rope is twisted from. Sattva is light and clear: the mind in sattva learns easily, loves easily, sees far. Rajas is motion and heat: the mind in rajas wants, launches, acquires, cannot sit still. Tamas is weight and dark: the mind in tamas postpones, numbs, sleeps, forgets why it came into the room. The Gita\'s crucial claim is that all three bind — even sattva, which "binds by attachment to happiness and knowledge" (14.6). The strands are not a ladder from sin to virtue; they are a description of the rope. And you are not the rope — you are the one it binds.',
+        teachingText: 'Learn to name your weather in real time — not "I am lazy" but "tamas is heavy this hour"; not "I am so driven" but "rajas is burning." The naming matters because it separates the witness from the weather. You cannot steer a storm you believe you are.'
+      },
+      {
+        id: 'gunas-fruits',
+        title: 'What Each Strand Grows',
+        subtitle: 'Three Seeds, Three Harvests',
+        keyVerse: {
+          sanskrit: 'सत्त्वात्सञ्जायते ज्ञानं रजसो लोभ एव च। प्रमादमोहौ तमसो भवतोऽज्ञानमेव च॥',
+          transliteration: 'sattvāt sañjāyate jñānaṁ rajaso lobha eva cha, pramāda-mohau tamaso bhavato \'jñānam eva cha',
+          meaning: 'From sattva arises knowledge, from rajas greed; heedlessness and delusion arise from tamas, and ignorance too.',
+          source: 'Bhagavad Gita 14.17 (tr. Swami Sivananda)'
+        },
+        storyText: 'The strands are recognizable by their harvests. A season ruled by sattva leaves knowledge behind — you end it wiser, steadier, kinder. A season ruled by rajas leaves greed — however much was gained, the wanting grew faster. A season ruled by tamas leaves confusion — time passed and nothing can quite be accounted for. The Gita even describes the diagnostic light: "When the light of knowledge shines through every gate of this body, know that sattva is predominant" (14.11). The gates are the senses; in sattva, the eyes themselves feel washed.',
+        teachingText: 'Audit your last year by harvest, not by activity. Which months left knowledge, which left hunger, which left fog? This is more honest than judging by busyness — rajas always looks productive from inside. The harvest tells you which strand was actually holding the reins.'
+      },
+      {
+        id: 'gunas-feeding',
+        title: 'You Cannot Fight a Guna — You Feed Another',
+        subtitle: 'Tending a Fire Instead of Battling the Dark',
+        storyText: 'Here is the teaching\'s great practical mercy: the strands do not yield to willpower. You cannot scold tamas into clarity — the scolding just adds agitation to the fog. You cannot suppress rajas by force — suppression is itself rajasic. The gunas respond only to diet, in the widest sense: food, sleep, company, media, work, and thought are each guna-flavored, and whichever strand you feed grows. The Gita\'s seventeenth chapter maps even faith and food onto the strands (17.3, 17.8–10): fresh, nourishing food feeds sattva; bitter, burning excess feeds rajas; stale, lifeless stuff feeds tamas. The same is true of everything you consume with eyes and ears.',
+        teachingText: 'Pick the strand you want more of and feed it one input at a time. Foggy? Don\'t fight the fog — add light: a walk, water, one fresh meal, ten minutes of something true. Frantic? Don\'t suppress the fire — stop fueling it: one meal seated, one hour unplugged. Working with inputs instead of willpower is the whole craft, and it is why the tradition cares so much about what you eat, watch, and keep company with.'
+      },
+      {
+        id: 'gunas-in-action',
+        title: 'Three Ways of Doing the Same Task',
+        subtitle: 'The Same Letter Written Three Times',
+        keyVerse: {
+          sanskrit: 'नियतं सङ्गरहितमरागद्वेषतः कृतम्। अफलप्रेप्सुना कर्म यत्तत्सात्त्विकमुच्यते॥',
+          transliteration: 'niyataṁ saṅga-rahitam arāga-dveṣhataḥ kṛitam, aphala-prepsunā karma yat tat sāttvikam uchyate',
+          meaning: 'Action that is ordained, done without attachment, without like or dislike, without desire for reward — that is called sattvic.',
+          source: 'Bhagavad Gita 18.23 (tr. Swami Sivananda)'
+        },
+        storyText: 'The eighteenth chapter applies the strands to work itself. The same email can be written three ways: sattvic — clear, needed, sent without drama; rajasic — fired off to win, wound, or impress, refreshed every minute for a reply; tamasic — avoided for a week, then dashed off carelessly at midnight. Same task, three actors, three karmic residues. The Gita extends this to the doer, the understanding, even the happiness each strand produces: rajasic happiness is "nectar at first, poison in the end," and sattvic happiness "poison at first, nectar in the end" (14.37–38 region; the discipline that tastes bitter on day one and sweet in year one).',
+        teachingText: 'Before your next significant act, take one breath and ask which of the three actors is about to do it. The act may not change; the doer can. That single breath of self-location — am I clear, burning, or foggy right now? — is the most portable practice this teaching offers.'
+      },
+      {
+        id: 'gunas-beyond',
+        title: 'Beyond the Weather',
+        subtitle: 'The Sky That Holds All Three',
+        keyVerse: {
+          sanskrit: 'मां च योऽव्यभिचारेण भक्तियोगेन सेवते। स गुणान्समतीत्यैतान् ब्रह्मभूयाय कल्पते॥',
+          transliteration: 'māṁ cha yo \'vyabhichāreṇa bhakti-yogena sevate, sa guṇān samatītyaitān brahma-bhūyāya kalpate',
+          meaning: 'He who serves Me with unwavering devotion crosses beyond these gunas and is fit to become Brahman.',
+          source: 'Bhagavad Gita 14.26 (tr. Swami Sivananda)'
+        },
+        storyText: 'Arjuna asks the obvious question: what does the person beyond the strands look like? Krishna\'s portrait (14.22–25) is quietly radical: not someone who has only good weather, but someone who no longer argues with any of it — "he neither hates the presence of light, activity, or delusion, nor longs for them when absent." The strands keep cycling; the watcher stops being spun. And the door beyond, Krishna says, is devotion: love aimed past the weather at the sky itself. Cultivate sattva, yes — but hold even sattva lightly, because clear days bind too, with silken threads.',
+        teachingText: 'The practice matures in three stages: first, name the weather; then, feed the weather you want; finally, rest as the sky. On some ordinary afternoon, watching irritation arise and pass without becoming it, you will taste the third stage — the freedom the whole teaching points to, which no strand can bind because it was never made of thread.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Bhagavad Gita',
+        locator: 'Chapter 14 (verses 14.5, 14.6, 14.9, 14.11, 14.17, 14.22–26); Chapter 17 (17.3, 17.8–10); Chapter 18 (18.23)',
+        translation: 'Swami Sivananda (public domain)',
+      },
+    ],
+    reflectionQuestions: [
+      'Name today\'s weather honestly: has it been mostly clear, restless, or foggy — and looking at what you ate, watched, and kept company with, what have you been feeding?',
+      'Audit a recent season of your life by its harvest: did it leave knowledge, hunger, or fog behind? What does that tell you about which strand held the reins?',
+      'Recall a moment you watched a mood arise and pass without becoming it. What made that witnessing possible — and what would help you visit that sky more often?'
+    ]
+  },
+  {
+    id: 'bhakti-paths',
+    name: 'Bhakti & the Paths of Yoga',
+    sanskritName: 'भक्ति योग',
+    category: 'spiritual_paths',
+    description: 'The way of love — and how the paths of action, knowledge, and devotion braid into one road home',
+    detailedExplanation: 'The Gita teaches not one spiritual path but several, suited to different temperaments: karma yoga, the way of selfless action; jnana yoga, the way of discriminating knowledge; dhyana yoga, the way of meditation; and bhakti yoga, the way of love. Its mature teaching is that these are not rival roads but one braided path — action offered with love, knowledge warmed by love, meditation resting in love. Bhakti, defined by the Narada Bhakti Sutras as "supreme love" for the divine, is both a path and the fragrance of every path completed: the Gita\'s final counsel is surrender in love (18.66).',
+    etymology: 'Bhakti from the Sanskrit root "bhaj" — to share, to partake, to adore: love that participates in what it loves',
+    keyAspects: [
+      'Karma yoga: acting without attachment, as offering',
+      'Jnana yoga: discerning the real from the passing',
+      'Dhyana yoga: steadying the mind in meditation',
+      'Bhakti yoga: loving the divine with the whole heart',
+      'The paths braid — love is both a road and every road\'s destination'
+    ],
+    practicalApplications: [
+      {
+        situation: 'Choosing a practice that fits your temperament',
+        application: 'Doers begin with karma yoga, thinkers with study, feelers with devotion, quiet natures with meditation — then let the paths braid',
+        benefits: ['A practice you\'ll actually keep', 'No forced mold', 'Natural growth'],
+        tips: ['Start where your energy already flows', 'Borrow one element from another path each month']
+      },
+      {
+        situation: 'Devotion in a busy household',
+        application: 'Offer the ordinary: cook as offering, name the divine while commuting, keep one small altar moment morning and night',
+        benefits: ['Practice without extra hours', 'A warmer home', 'Steady remembrance'],
+        tips: ['Gita 9.26: a leaf, a flower, water — sincerity outweighs scale']
+      },
+      {
+        situation: 'Dry spells when love won\'t come',
+        application: 'Climb down the Gita\'s ladder (12.8–12): if absorption is too much, practice; if practice fails, work for the divine; if that fails, just release the fruits',
+        benefits: ['No shame in dry seasons', 'Always a next rung', 'Resilient practice'],
+        tips: ['Dryness is weather, not verdict', 'The ladder goes down as graciously as up']
+      }
+    ],
+    relatedConcepts: ['karma', 'dharma', 'moksha', 'three-gunas'],
+    scriptureReferences: [
+      {
+        id: 'bhakti-gita-9-22',
+        text: 'Bhagavad Gita',
+        reference: 'Chapter 9, Verse 22',
+        quote: 'For those who worship Me alone, thinking of no other, ever united — I carry what they lack and preserve what they have.',
+        context: 'Krishna\'s promise to the devoted'
+      },
+      {
+        id: 'bhakti-gita-9-26',
+        text: 'Bhagavad Gita',
+        reference: 'Chapter 9, Verse 26',
+        quote: 'Whoever offers Me with devotion a leaf, a flower, a fruit, or water — that offering of love from the pure-hearted, I accept.',
+        context: 'The democratization of worship: sincerity over scale'
+      },
+      {
+        id: 'bhakti-narada-2',
+        text: 'Narada Bhakti Sutras',
+        reference: 'Sutra 2',
+        quote: 'sā tv asmin parama-prema-rūpā — It (bhakti) is of the form of supreme love for Him.',
+        context: 'The classical definition of devotion'
+      },
+      {
+        id: 'bhakti-gita-18-66',
+        text: 'Bhagavad Gita',
+        reference: 'Chapter 18, Verse 66',
+        quote: 'Abandon all duties and take refuge in Me alone; I will liberate you from all sins — do not grieve.',
+        context: 'The Gita\'s final verse of teaching: surrender in love'
+      }
+    ],
+    modernRelevance: 'In an age that treats spirituality as self-optimization, bhakti reframes it as relationship: practice not to improve yourself but because you love something greater — which, paradoxically, transforms the self more deeply than any program.',
+    commonMisunderstandings: [
+      'That bhakti is for the uneducated while jnana is for the wise — the Gita ranks single-minded love as the way even the cosmic form is truly known (11.54)',
+      'That the paths compete — the Gita braids them: act with love, know with love, sit with love',
+      'That devotion means emotionalism — the Sutras call bhakti supreme love, which includes steadiness, service, and discipline'
+    ],
+    examples: [
+      {
+        id: 'bhakti-four-temperaments',
+        title: 'Four Friends, One Mountain',
+        scenario: 'Four friends climb the same mountain: one builds the trail as she goes (karma), one studies the map (jnana), one walks in silence (dhyana), one sings the whole way up (bhakti).',
+        explanation: 'All four summit. The Gita\'s genius is recognizing that temperament chooses the trail, and love completes every trail.',
+        lesson: 'Choose the path that matches your nature — then let it braid with the others.'
+      }
+    ],
+    meditation: {
+      technique: 'Offering meditation',
+      duration: '15 minutes',
+      instructions: [
+        'Sit before an image, flame, or simply the felt sense of the sacred',
+        'Offer, one by one: the day\'s work, a worry, a joy, a person you love — placing each in larger hands',
+        'Close with the leaf-flower-fruit-water verse (9.26): offer something tiny, completely'
+      ],
+      benefits: ['Softened grip on outcomes', 'Warmth in practice', 'A relationship, not a regimen'],
+      audioUrl: '/audio/meditations/offering.mp3'
+    },
+    audioGuide: {
+      narrator: 'Bhakti Wisdom',
+      duration: '25 minutes',
+      audioUrl: '/audio/guides/bhakti-guide.mp3',
+      topics: ['The four paths', 'The ladder of 12.8-12', 'Love as the final teaching']
+    },
+    podcastEpisodes: [],
+    images: {
+      heroImage: require('../../assets/images/covers/bhakti-yoga-cover.png'),
+      iconImage: '/images/philosophy/bhakti-icon.jpg'
+    },
+    difficulty: 'beginner',
+    sections: [
+      {
+        id: 'bhakti-opening',
+        title: 'The Way of Love',
+        subtitle: 'A Song Rising from the Foot of the Mountain',
+        storyText: 'Every tradition must answer a hard question: is the spiritual summit only for spiritual athletes — the ones who can renounce, reason, and meditate for decades? The Gita\'s answer transformed India: no. There is a path that asks for nothing you don\'t already have, because its only instrument is the heart. Bhakti — from the root bhaj, to share, to adore — is the way of love. The Narada Bhakti Sutras, the classical manual of this path, define it in five Sanskrit words: sā tv asmin parama-prema-rūpā — "it is of the form of supreme love for Him." Not technique. Not attainment. Love, aimed all the way up.'
+      },
+      {
+        id: 'bhakti-four-paths',
+        title: 'Four Roads Up One Mountain',
+        subtitle: 'Trailhead Signs Pointing to the Same Peak',
+        storyText: 'The Gita is a map of several yogas — several disciplines of union. Karma yoga: for the doer, whose temple is work offered without clinging. Jnana yoga: for the thinker, who discriminates the eternal from the passing until only the real remains. Dhyana yoga: for the quiet one, who stills the restless mind "as a lamp in a windless place." And bhakti yoga: for the lover, who simply cannot stop adoring. The tradition\'s honesty here is remarkable — it looked at human beings, saw four temperaments, and refused to force one mold on all. The question is not "which path is highest?" but "which trailhead is nearest to where you already stand?"',
+        teachingText: 'Identify your native trailhead honestly. When life is hardest, do you cope by doing, understanding, quieting, or loving? That reflex is your yoga. Start there — a practice aligned with temperament survives; a borrowed one impresses for a month and dies.'
+      },
+      {
+        id: 'bhakti-carried',
+        title: 'The Promise of Being Carried',
+        subtitle: 'Strong Hands Beneath a Tired Traveler',
+        keyVerse: {
+          sanskrit: 'अनन्याश्चिन्तयन्तो मां ये जनाः पर्युपासते। तेषां नित्याभियुक्तानां योगक्षेमं वहाम्यहम्॥',
+          transliteration: 'ananyāśh chintayanto māṁ ye janāḥ paryupāsate, teṣhāṁ nityābhiyuktānāṁ yoga-kṣhemaṁ vahāmy aham',
+          meaning: 'For those who worship Me alone, thinking of no other, ever united — I secure what they lack and preserve what they have.',
+          source: 'Bhagavad Gita 9.22 (tr. Swami Sivananda)'
+        },
+        storyText: 'Nine chapters into the Gita, Krishna makes the promise on which the whole devotional tradition stands: yoga-kshemam vahamy aham — "I carry their acquisition and their security." Every other path leaves the seeker holding the project of themselves. Bhakti alone transfers the luggage. Generations of India\'s householders — farmers, mothers, clerks with no leisure for philosophy — have run their lives on this verse: do your part with love, and what you cannot manage is managed. It is not a license for passivity; it is the end of carrying everything alone.',
+        teachingText: 'Make the experiment the verse invites: pick one worry you have white-knuckled for months, do your honest part today, and each time the mind reaches to re-grip it, say inwardly: carried. The devotional claim is not that problems vanish but that the aloneness inside them does.'
+      },
+      {
+        id: 'bhakti-leaf',
+        title: 'A Leaf, a Flower, a Fruit, Some Water',
+        subtitle: 'Small Offerings on an Open Palm',
+        keyVerse: {
+          sanskrit: 'पत्रं पुष्पं फलं तोयं यो मे भक्त्या प्रयच्छति। तदहं भक्त्युपहृतमश्नामि प्रयतात्मनः॥',
+          transliteration: 'patraṁ puṣhpaṁ phalaṁ toyaṁ yo me bhaktyā prayachchhati, tad ahaṁ bhakty-upahṛitam aśhnāmi prayatātmanaḥ',
+          meaning: 'Whoever offers Me with devotion a leaf, a flower, a fruit, or water — that offering of love from the pure-hearted, I accept.',
+          source: 'Bhagavad Gita 9.26 (tr. Swami Sivananda)'
+        },
+        storyText: 'With this verse the Gita quietly overthrew religious economics. In a world of costly sacrifices and priestly gatekeeping, Krishna names a complete offering: a leaf. A flower. A fruit. Water. Things the poorest person on earth can find in an hour. The only ingredient that matters — bhaktya, with love — cannot be bought at any price. The tradition\'s stories delight in this inversion: Krishna choosing the widow Shabari\'s tasted berries over royal feasts, Vidura\'s simple greens over Duryodhana\'s banquet. The size of the gift measures the giver\'s wealth; the love in it measures the gift.',
+        teachingText: 'Whatever your practice, this verse keeps it honest and possible. No time, no money, no Sanskrit? A glass of water placed with full attention is a complete act of worship. Do one leaf-sized offering daily — food cooked with love, a task done as gift — and watch how the smallness of the vessel stops mattering.'
+      },
+      {
+        id: 'bhakti-ladder',
+        title: 'The Ladder That Reaches All the Way Down',
+        subtitle: 'Rungs Descending into Reach',
+        storyText: 'The twelfth chapter contains the Gita\'s gentlest engineering: a ladder for those who cannot do the highest thing. Fix your mind wholly on Me, Krishna begins — and immediately anticipates the honest reply: I can\'t. Then practice remembering and forgetting and remembering again, he says. Can\'t sustain that either? Then work for Me — let your hands do what your mind cannot hold. Even that too much? Then simply do your own work and release the fruits (12.8–12). Every rung is honored; no one is turned away for starting low. And the chapter ends with love\'s portrait: the devotee "from whom the world feels no fear," friendly, compassionate, free of possessiveness — beloved not for feats but for gentleness.',
+        teachingText: 'In dry seasons, climb DOWN with dignity instead of quitting in shame. Can\'t feel devotion? Practice remembering. Can\'t practice? Offer your work. Can\'t offer? Just release one outcome today. The ladder\'s genius is that its lowest rung — letting go of one result — is available on your worst day, and it is still the path.'
+      },
+      {
+        id: 'bhakti-braid',
+        title: 'Where All the Paths Braid',
+        subtitle: 'Three Streams Becoming One River',
+        keyVerse: {
+          sanskrit: 'भक्त्या त्वनन्यया शक्यमहमेवंविधोऽर्जुन। ज्ञातुं द्रष्टुं च तत्त्वेन प्रवेष्टुं च परंतप॥',
+          transliteration: 'bhaktyā tv ananyayā śhakyam aham evaṁ-vidho \'rjuna, jñātuṁ draṣhṭuṁ cha tattvena praveṣhṭuṁ cha parantapa',
+          meaning: 'But by single-minded devotion I can be known, seen, and in truth entered into, O Arjuna.',
+          source: 'Bhagavad Gita 11.54 (tr. Swami Sivananda)'
+        },
+        storyText: 'After granting Arjuna the overwhelming vision of the cosmic form — the vision philosophy strains toward — Krishna reveals what actually opened the door: not austerity, not study, not sacrifice, "but by single-minded devotion I can be known." The paths, walked far enough, braid. Karma yoga matures when action becomes offering — which is love. Jnana matures when the knower falls silent before what is known — which is love. Meditation matures when stillness becomes presence with the beloved — which is love. And the Gita\'s very last teaching verse hands Arjuna the braided rope: "Abandon all dharmas and take refuge in Me alone... do not grieve" (18.66).',
+        teachingText: 'Wherever you started — doing, thinking, sitting — notice love quietly becoming the point. The task done for its own sake starts feeling like a gift to someone. That shift is not a distraction from your path; it is your path ripening. Follow the warmth. Every road on the map was always a road home.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Bhagavad Gita',
+        locator: 'Verses 9.22, 9.26, 11.54, 12.8–12, 12.13–19, 18.66; path chapters 2–6 (karma/jnana/dhyana)',
+        translation: 'Swami Sivananda (public domain)',
+      },
+      {
+        text: 'Narada Bhakti Sutras',
+        locator: 'Sutras 1–2 (bhakti defined as parama-prema, supreme love)',
+        translation: 'cross-checked against public translations',
+        url: 'https://vedabase.net/nbs/2.htm',
+      },
+    ],
+    reflectionQuestions: [
+      'When life is hardest, do you instinctively cope by doing, understanding, quieting, or loving? What would a practice built on that native reflex look like?',
+      'Krishna promises to carry what the devoted cannot. What is one worry you have been white-knuckling alone — and what would "doing your part, then handing it over" actually mean this week?',
+      'A leaf offered with love is a complete offering. What is one ordinary act in your day that you could turn into an offering — and to whom or what would you offer it?'
+    ]
   }
 ];
 

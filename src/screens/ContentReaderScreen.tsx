@@ -16,7 +16,7 @@ import {
   Platform,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import {
@@ -199,6 +199,53 @@ const ContentReaderScreen: React.FC = () => {
     await startPlayback(from);
   }, [isPlaying, isPaused, pages, activeIndex, startPlayback, audioService, scrollToIndex]);
 
+  // --- Transport: keep the voice and the page in sync --------------------
+  const narrationActive = isPlaying || isPaused;
+
+  const firstSegmentOfSection = useCallback(
+    (sectionIdx: number) => audioSegments.findIndex(s => s.id.startsWith(`section-${sectionIdx}-`)),
+    [audioSegments]
+  );
+
+  // Page skip: when narrating, move the voice with the page (or stop it when
+  // leaving the sections); when idle, just turn the page
+  const skipPage = useCallback(async (direction: 1 | -1) => {
+    const target = activeIndex + direction;
+    if (target < 0 || target >= pages.length) return;
+    const page = pages[target];
+    if (narrationActive) {
+      if (page.kind === 'section') {
+        const segIdx = firstSegmentOfSection(page.sectionIndex);
+        if (segIdx >= 0) {
+          setHighlightedSegmentId(audioSegments[segIdx].id); // covers the paused case
+          await audioService.seekToSegment(segIdx);
+        }
+      } else {
+        // Skipping onto cover/reflection/sources ends the narration
+        await audioService.stopNarration();
+        setIsPlaying(false);
+        setIsPaused(false);
+        setHighlightedSegmentId(null);
+      }
+    }
+    scrollToIndex(target);
+  }, [activeIndex, pages, narrationActive, firstSegmentOfSection, audioSegments, audioService, scrollToIndex]);
+
+  // Podcast-style ±10 seconds, resolved to the nearest segment boundary
+  const seekBySeconds = useCallback(async (deltaSeconds: number) => {
+    if (!narrationActive) return;
+    const total = audioService.getEstimatedTotalDuration();
+    if (total <= 0) return;
+    const targetMs = Math.max(0, Math.min(audioService.getElapsedDuration() + deltaSeconds * 1000, total - 1));
+    await audioService.seekToProgress(targetMs / total);
+    const seg = audioSegments[audioService.getCurrentState().currentSegmentIndex];
+    if (seg) {
+      setHighlightedSegmentId(seg.id);
+      const m = seg.id.match(/section-(\d+)/);
+      if (m) scrollToIndex(1 + parseInt(m[1]));
+    }
+  }, [narrationActive, audioService, audioSegments, scrollToIndex]);
+
   const askKrishnaAboutThis = () => {
     setShowMenu(false);
     if (!content) return;
@@ -369,8 +416,20 @@ const ContentReaderScreen: React.FC = () => {
       {/* Playback bar (transport only) */}
       <View style={styles.playbackBar}>
         <View style={styles.transport}>
-          <TouchableOpacity onPress={() => scrollToIndex(activeIndex - 1)} style={styles.transportBtn}>
+          <TouchableOpacity onPress={() => skipPage(-1)} style={styles.transportBtn}>
             <Ionicons name="play-skip-back" size={22} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => seekBySeconds(-10)}
+            style={styles.transportBtn}
+            disabled={!narrationActive}
+          >
+            <MaterialIcons
+              name="replay-10"
+              size={26}
+              color={DharmaDesignSystem.colors.primary.deepSaffron}
+              style={!narrationActive && styles.transportDisabled}
+            />
           </TouchableOpacity>
           <TouchableOpacity onPress={handlePlayPause} style={styles.playBtn}>
             <Ionicons
@@ -380,7 +439,19 @@ const ContentReaderScreen: React.FC = () => {
               style={isPlaying ? undefined : { marginLeft: 3 }}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => scrollToIndex(activeIndex + 1)} style={styles.transportBtn}>
+          <TouchableOpacity
+            onPress={() => seekBySeconds(10)}
+            style={styles.transportBtn}
+            disabled={!narrationActive}
+          >
+            <MaterialIcons
+              name="forward-10"
+              size={26}
+              color={DharmaDesignSystem.colors.primary.deepSaffron}
+              style={!narrationActive && styles.transportDisabled}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => skipPage(1)} style={styles.transportBtn}>
             <Ionicons name="play-skip-forward" size={22} color={DharmaDesignSystem.colors.primary.deepSaffron} />
           </TouchableOpacity>
         </View>
@@ -503,8 +574,9 @@ const styles = StyleSheet.create({
     borderTopColor: 'rgba(230, 81, 0, 0.12)',
     backgroundColor: colors.neutrals.warmIvory,
   },
-  transport: { flexDirection: 'row', alignItems: 'center', gap: spacing.xl },
+  transport: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   transportBtn: { padding: spacing.xs },
+  transportDisabled: { opacity: 0.35 },
   playBtn: {
     width: 48, height: 48, borderRadius: 24,
     backgroundColor: colors.primary.deepSaffron,
