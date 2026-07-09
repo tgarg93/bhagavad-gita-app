@@ -8,11 +8,11 @@ import { geminiService } from './geminiService';
 import { userKnowledge } from './userKnowledgeService';
 
 export interface CurrentContent {
-  type: 'verse' | 'chapter' | 'festival' | 'none';
+  type: 'verse' | 'chapter' | 'festival' | 'deity' | 'concept' | 'none';
   chapter?: number;
   verse?: number;
   title?: string;
-  snippet?: string; // e.g. the verse's English translation
+  snippet?: string; // e.g. the verse's English translation or section excerpt
 }
 
 const MAX_SNIPPET = 400;
@@ -84,8 +84,15 @@ class KrishnaContextService {
       );
     } else if (c.type === 'chapter' && c.chapter) {
       lines.push(`They are currently reading Bhagavad Gita Chapter ${c.chapter}${c.title ? ` (${c.title})` : ''}.`);
-    } else if (c.type === 'festival' && c.title) {
-      lines.push(`They are currently reading about the festival ${c.title}.`);
+    } else if ((c.type === 'festival' || c.type === 'deity' || c.type === 'concept') && c.title) {
+      const what =
+        c.type === 'festival' ? `the festival ${c.title}` :
+        c.type === 'deity' ? `${c.title}` :
+        `the concept of ${c.title}`;
+      lines.push(
+        `They are currently reading about ${what}` +
+        (c.snippet ? `: "${c.snippet.slice(0, MAX_SNIPPET)}"` : '.')
+      );
     }
 
     return lines.join('\n');

@@ -12,7 +12,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
-import NarrativeSections from '../components/NarrativeSections';
 import SourcesCard from '../components/SourcesCard';
 import ChapterReflection from '../components/ChapterReflection';
 import {
@@ -118,6 +117,30 @@ const FestivalDetailScreen: React.FC = () => {
         </View>
 
         <View style={styles.content}>
+          {/* Seed festivals open the story in the paged reader — prominent, right under the date */}
+          {festival.sections && festival.sections.length > 0 && (
+            <TouchableOpacity
+              style={styles.readStoryCard}
+              onPress={() =>
+                (navigation as any).navigate('ContentReader', {
+                  contentType: 'festival',
+                  contentId: festival.id,
+                })
+              }
+            >
+              <View style={styles.readStoryIcon}>
+                <Ionicons name="book" size={24} color="#FFFFFF" />
+              </View>
+              <View style={styles.readStoryText}>
+                <Text style={styles.readStoryTitle}>Read the story</Text>
+                <Text style={styles.readStorySub}>
+                  {festival.sections.length} parts · the origin of {festival.name}
+                </Text>
+              </View>
+              <Ionicons name="arrow-forward" size={22} color={colors.primary.deepSaffron} />
+            </TouchableOpacity>
+          )}
+
           {festival.significance &&
             renderSection('Significance', (
               <View style={styles.accentBlock}>
@@ -177,17 +200,11 @@ const FestivalDetailScreen: React.FC = () => {
               </View>
             ))}
 
-          {/* Immersive narrative when authored (seed content); flat story otherwise */}
-          {festival.sections && festival.sections.length > 0 ? (
-            <View style={styles.narrativeBlock}>
-              <NarrativeSections sections={festival.sections} />
-            </View>
-          ) : (
-            festival.fullStory &&
+          {/* Flat story for festivals without reader sections */}
+          {!festival.sections?.length && festival.fullStory &&
             renderSection('The Story', (
               <Text style={styles.storyText}>{festival.fullStory}</Text>
-            ))
-          )}
+            ))}
 
           {festival.mythology?.length > 0 &&
             renderSection('Mythology & Legends', (
@@ -266,7 +283,8 @@ const FestivalDetailScreen: React.FC = () => {
               <Text style={styles.bodyText}>{festival.culturalImpact}</Text>
             ))}
 
-          {festival.sources && festival.sources.length > 0 && (
+          {/* Sources live on the reader's final page for seed festivals */}
+          {festival.sources && festival.sources.length > 0 && !festival.sections?.length && (
             <View style={styles.narrativeBlock}>
               <SourcesCard sources={festival.sources} />
             </View>
@@ -401,11 +419,34 @@ const styles = StyleSheet.create({
     paddingHorizontal: layout.containerPadding,
     paddingTop: spacing.lg,
   },
-  // NarrativeSections/SourcesCard pad themselves (spacing.lg); cancel the
-  // content container's padding so their gutters match the other screens
+  // SourcesCard pads itself (spacing.lg); cancel the content container's
+  // padding so its gutters match the other screens
   narrativeBlock: {
     marginHorizontal: -layout.containerPadding,
   },
+  readStoryCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    backgroundColor: colors.neutrals.warmIvory,
+    borderRadius: borderRadius.large,
+    borderWidth: 1,
+    borderColor: 'rgba(230, 81, 0, 0.3)',
+    padding: spacing.md,
+    marginBottom: spacing.xl,
+    ...shadows.soft,
+  },
+  readStoryIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: colors.primary.deepSaffron,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  readStoryText: { flex: 1 },
+  readStoryTitle: { ...typography.sizes.headingSM, color: colors.neutrals.charcoalBlack, fontWeight: '700' },
+  readStorySub: { ...typography.sizes.bodySM, fontWeight: '400', color: colors.neutrals.softAsh, marginTop: 2 },
   ritualName: {
     ...typography.sizes.headingSM,
     color: colors.primary.deepSaffron,

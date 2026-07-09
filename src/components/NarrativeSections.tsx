@@ -18,6 +18,13 @@ interface NarrativeSectionsProps {
   getTextStyle?: (base: any) => any;
   // Lets the host screen track section positions for scroll-sync
   onSectionLayout?: (index: number) => (event: any) => void;
+  // Global index of sections[0] within the narration content built by
+  // sectionsToNarrationContent (readerContent.ts). When set, deterministic
+  // blockIds are passed to TextHighlighter so audio highlighting works:
+  //   section-{gi}-title · -block-0/-3 (verses, -sanskrit/-meaning) ·
+  //   -block-1 (story) · -block-2 (header) · -block-4 (teaching).
+  // When undefined, behavior is identical to before (no highlighting).
+  sectionIndexOffset?: number;
 }
 
 const identity = (s: any) => s;
@@ -28,11 +35,13 @@ const NarrativeSections: React.FC<NarrativeSectionsProps> = ({
   audioSegments = [],
   getTextStyle = identity,
   onSectionLayout,
+  sectionIndexOffset,
 }) => {
-  const Verse = ({ verse }: { verse: NarrativeVerse }) => (
+  const Verse = ({ verse, blockId }: { verse: NarrativeVerse; blockId?: string }) => (
     <View style={styles.verseContainer}>
       <TextHighlighter
         text={verse.sanskrit}
+        blockId={blockId ? `${blockId}-sanskrit` : undefined}
         highlightedSegmentId={highlightedSegmentId}
         segments={audioSegments}
         style={getTextStyle(styles.sanskritText)}
@@ -45,6 +54,7 @@ const NarrativeSections: React.FC<NarrativeSectionsProps> = ({
       />
       <TextHighlighter
         text={verse.meaning}
+        blockId={blockId ? `${blockId}-meaning` : undefined}
         highlightedSegmentId={highlightedSegmentId}
         segments={audioSegments}
         style={getTextStyle(styles.meaningText)}
@@ -55,54 +65,64 @@ const NarrativeSections: React.FC<NarrativeSectionsProps> = ({
 
   return (
     <>
-      {sections.map((section, index) => (
-        <View
-          key={section.id}
-          style={styles.sectionContainer}
-          onLayout={onSectionLayout?.(index)}
-        >
-          <TextHighlighter
-            text={section.title}
-            highlightedSegmentId={highlightedSegmentId}
-            segments={audioSegments}
-            style={getTextStyle(styles.sectionTitle)}
-          />
-          {section.subtitle && (
-            <Text style={getTextStyle(styles.sectionSubtitle)}>{section.subtitle}</Text>
-          )}
-
-          {section.openingVerse && <Verse verse={section.openingVerse} />}
-
-          {section.storyText && (
+      {sections.map((section, index) => {
+        const gi = sectionIndexOffset != null ? sectionIndexOffset + index : null;
+        const bid = (suffix: string) => (gi != null ? `section-${gi}-${suffix}` : undefined);
+        return (
+          <View
+            key={section.id}
+            style={styles.sectionContainer}
+            onLayout={onSectionLayout?.(index)}
+          >
             <TextHighlighter
-              text={section.storyText}
+              text={section.title}
+              blockId={bid('title')}
               highlightedSegmentId={highlightedSegmentId}
               segments={audioSegments}
-              style={getTextStyle(styles.storyText)}
+              style={getTextStyle(styles.sectionTitle)}
             />
-          )}
+            {section.subtitle && (
+              <Text style={getTextStyle(styles.sectionSubtitle)}>{section.subtitle}</Text>
+            )}
 
-          {section.sectionHeader && (
-            <TextHighlighter
-              text={section.sectionHeader}
-              highlightedSegmentId={highlightedSegmentId}
-              segments={audioSegments}
-              style={getTextStyle(styles.sectionHeader)}
-            />
-          )}
+            {section.openingVerse && (
+              <Verse verse={section.openingVerse} blockId={bid('block-0')} />
+            )}
 
-          {section.keyVerse && <Verse verse={section.keyVerse} />}
+            {section.storyText && (
+              <TextHighlighter
+                text={section.storyText}
+                blockId={bid('block-1')}
+                highlightedSegmentId={highlightedSegmentId}
+                segments={audioSegments}
+                style={getTextStyle(styles.storyText)}
+              />
+            )}
 
-          {section.teachingText && (
-            <TextHighlighter
-              text={section.teachingText}
-              highlightedSegmentId={highlightedSegmentId}
-              segments={audioSegments}
-              style={getTextStyle(styles.storyText)}
-            />
-          )}
-        </View>
-      ))}
+            {section.sectionHeader && (
+              <TextHighlighter
+                text={section.sectionHeader}
+                blockId={bid('block-2')}
+                highlightedSegmentId={highlightedSegmentId}
+                segments={audioSegments}
+                style={getTextStyle(styles.sectionHeader)}
+              />
+            )}
+
+            {section.keyVerse && <Verse verse={section.keyVerse} blockId={bid('block-3')} />}
+
+            {section.teachingText && (
+              <TextHighlighter
+                text={section.teachingText}
+                blockId={bid('block-4')}
+                highlightedSegmentId={highlightedSegmentId}
+                segments={audioSegments}
+                style={getTextStyle(styles.storyText)}
+              />
+            )}
+          </View>
+        );
+      })}
     </>
   );
 };

@@ -484,7 +484,7 @@ export const philosophyData: PhilosophicalConcept[] = [
       {
         text: 'Bhagavad Gita',
         locator: 'Chapters 2–6 and 18 (verses 2.40, 2.47, 2.48, 2.50, 3.5, 3.9, 4.17, 5.10, 6.5, 18.46)',
-        translation: 'Swami Sivananda (public domain; bundled gitaVerses.json)',
+        translation: 'Swami Sivananda (public domain)',
       },
       {
         text: 'Brihadaranyaka Upanishad',

@@ -131,6 +131,7 @@ class LocalStorageService {
     PREFERENCES: 'bhagavad_gita_preferences',
     ANALYTICS: 'bhagavad_gita_analytics',
     CURRENT_USER: 'bhagavad_gita_current_user',
+    READER_POSITIONS: 'content_reader_positions',
   };
 
   private static readonly TOTAL_GITA_VERSES = 700;
@@ -317,6 +318,31 @@ class LocalStorageService {
 
   static async getLastPage(): Promise<number> {
     return (await this.getVerseProgress()).lastPageIndex;
+  }
+
+  // Resume positions for the generic content reader, keyed `${contentType}:${contentId}`
+  static async getReaderPosition(key: string): Promise<number> {
+    try {
+      const json = await AsyncStorage.getItem(this.KEYS.READER_POSITIONS);
+      const positions: Record<string, number> = json ? JSON.parse(json) : {};
+      return positions[key] ?? 0;
+    } catch (error) {
+      console.error('Error getting reader position:', error);
+      return 0;
+    }
+  }
+
+  static async saveReaderPosition(key: string, index: number) {
+    try {
+      const json = await AsyncStorage.getItem(this.KEYS.READER_POSITIONS);
+      const positions: Record<string, number> = json ? JSON.parse(json) : {};
+      if (positions[key] !== index) {
+        positions[key] = index;
+        await AsyncStorage.setItem(this.KEYS.READER_POSITIONS, JSON.stringify(positions));
+      }
+    } catch (error) {
+      console.error('Error saving reader position:', error);
+    }
   }
 
   // Fraction 0-1 of a chapter's verses that have been read
@@ -537,6 +563,7 @@ class LocalStorageService {
         this.KEYS.PREFERENCES,
         this.KEYS.ANALYTICS,
         this.KEYS.CURRENT_USER,
+        this.KEYS.READER_POSITIONS,
       ]);
     } catch (error) {
       console.error('Error clearing all data:', error);

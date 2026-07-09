@@ -18,6 +18,7 @@ import { DharmaColors } from '../constants/colors';
 import { DharmaDesignSystem, createTextStyle, createGradientColors } from '../constants/DharmaDesignSystem';
 import DharmaSearchHeader from '../components/ui/DharmaSearchHeader';
 import { getContentSections, getFeaturedContent, searchContent } from '../data/contentAggregator';
+import { hasReaderContent } from '../data/readerContent';
 import { ContentSection, ContentCard, ContentCategory } from '../types/contentTypes';
 
 const { width } = Dimensions.get('window');
@@ -67,10 +68,19 @@ const WisdomHubScreen: React.FC = () => {
         (navigation as any).navigate('FestivalCalendar', { selectedFestival: card.id });
         break;
       case 'deities':
-        (navigation as any).navigate('DeityDetail', { deityId: card.id });
+        // Seed content opens the paged reader (Gita pattern); others the detail screen
+        if (hasReaderContent('deity', card.id)) {
+          (navigation as any).navigate('ContentReader', { contentType: 'deity', contentId: card.id });
+        } else {
+          (navigation as any).navigate('DeityDetail', { deityId: card.id });
+        }
         break;
       case 'philosophy':
-        (navigation as any).navigate('PhilosophyDetail', { conceptId: card.id });
+        if (hasReaderContent('concept', card.id)) {
+          (navigation as any).navigate('ContentReader', { contentType: 'concept', contentId: card.id });
+        } else {
+          (navigation as any).navigate('PhilosophyDetail', { conceptId: card.id });
+        }
         break;
       case 'practices':
         (navigation as any).navigate('PracticeDetail', { practiceId: card.id });

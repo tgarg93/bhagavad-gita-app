@@ -1026,7 +1026,7 @@ export const festivalData: Festival[] = [
       {
         text: 'Bhagavad Gita',
         locator: '4.7–8 (why the divine takes birth)',
-        translation: 'Swami Sivananda (public domain; bundled gitaVerses.json)',
+        translation: 'Swami Sivananda (public domain)',
       },
       {
         text: 'Drik Panchang',
