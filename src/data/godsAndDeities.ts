@@ -1164,6 +1164,583 @@ export const deitiesData: Deity[] = [
       'Her iconography joins a serene face with armed hands: total protection, zero hatred. When you last had to be fierce, which came out — the weapons, the serenity, or both?',
       'Mahishasura survived by shape-shifting every time he was nearly caught. What in your life keeps changing its name each time you confront it — and what would naming it once, clearly, sound like?'
     ]
+  },
+  {
+    id: 'brahma',
+    name: 'Brahma',
+    sanskritName: 'ब्रह्मा',
+    titles: ['Prajapati', 'Svayambhu (Self-Born)', 'Chaturmukha (Four-Faced)', 'Vidhata'],
+    category: 'major',
+    description: 'The creator the world forgot to worship — and why that is the point',
+    mythology: 'Brahma is the maker: born from a lotus that grew out of Vishnu\'s navel as the new cosmos stirred, he shaped the worlds, the sages, and the beings who fill them. His four heads face the four directions and voice the four Vedas. And yet — the question every child eventually asks — for the creator of everything, he has almost no temples. The Puranas tell of pride corrected: a lie told in a contest with Shiva, a curse earned at a great yajna. The deeper answer is structural: creation happens once, but preservation and transformation never stop. The tradition worships the work that is still going on.',
+    attributes: ['Creation', 'Knowledge of the Vedas', 'Time in vast cycles', 'The mind\'s generative power'],
+    symbols: ['Lotus', 'Four Vedas', 'Kamandalu (water pot)', 'Prayer beads'],
+    mantras: [
+      {
+        id: 'brahma-gayatri-note',
+        sanskrit: 'ॐ वेदात्मनाय विद्महे हिरण्यगर्भाय धीमहि। तन्नो ब्रह्मा प्रचोदयात्॥',
+        transliteration: 'oṁ vedātmanāya vidmahe hiraṇyagarbhāya dhīmahi, tanno brahmā pracodayāt',
+        meaning: 'We know the soul of the Vedas; we meditate on the golden womb; may Brahma inspire us',
+        purpose: 'Brahma Gayatri — invoked for learning and creative work',
+        benefits: ['Clarity in study', 'Creative beginnings', 'Reverence for knowledge']
+      }
+    ],
+    prayers: [],
+    iconography: {
+      appearance: 'A mature, bearded figure with four faces, calm and scholarly rather than martial',
+      clothing: 'Red or gold garments of a priest',
+      colors: ['Red', 'Gold'],
+      objects: ['The four Vedas', 'Kamandalu', 'Akshamala (rosary)', 'Lotus'],
+      vehicle: 'Hamsa — the swan said to separate milk from water, discrimination itself',
+      posture: 'Seated on a lotus',
+      facesAndArms: 'Four faces, four arms'
+    },
+    teachings: [
+      'Beginning is divine work — but nothing runs on its founding energy forever',
+      'Knowledge (his consort is Saraswati) must sit beside creation or creation misfires',
+      'Even gods answer for pride',
+      'Time is vaster than any project: a day of Brahma outlasts civilizations'
+    ],
+    festivals: [],
+    scriptureReferences: [
+      {
+        id: 'brahma-bhagavata',
+        text: 'puranas',
+        section: 'Canto 3, Chapters 8–9',
+        relevance: 'The lotus from Vishnu\'s navel and Brahma\'s awakening as the cosmos begins'
+      }
+    ],
+    stories: [
+      {
+        id: 'brahma-lotus',
+        title: 'The Lotus from the Navel',
+        content: 'Between cosmic ages, Vishnu rests on the serpent Shesha upon the causal waters — everything that will exist, folded and sleeping. As creation stirs, a lotus grows from his navel, rises through the dark, and opens. Seated in it is Brahma, blinking at an empty universe. He climbs down the stem to find its source and cannot reach the bottom; he rises and cannot find its top. So he does the first act of the new creation: he sits where he is and turns inward. In that meditation he perceives Vishnu, receives the knowledge folded into the waters, and begins to make the worlds.',
+        moralLesson: 'Even the creator begins by admitting what he does not know and sitting still with the question. Every genuine beginning starts in humility, not certainty.',
+        category: 'origin',
+        relatedScripture: 'Bhagavata Purana, Canto 3, Chapters 8–9'
+      },
+      {
+        id: 'brahma-pillar',
+        title: 'The Pillar Without End',
+        content: 'Brahma and Vishnu once argued over which of them was supreme. As they quarreled, an immense pillar of light erupted between them, without visible top or bottom. They agreed to search: Vishnu dove as a boar toward its base, Brahma flew as a swan toward its summit. Vishnu returned and admitted he found no bottom. Brahma, unable to reach the top, met a falling ketaki flower and persuaded it to testify that he had — a small, polished lie. The pillar split open: it was Shiva, the light itself. For the lie, Brahma lost the right to be worshipped; the honest Vishnu was honored. The flower, for its part, was banned from Shiva\'s altars.',
+        moralLesson: 'The tradition\'s explanation for its own empty Brahma temples is a warning it aims at every creator: the maker who must also be declared supreme unmakes himself. Honesty about your limits is worth more than your greatest work.',
+        category: 'teaching',
+        relatedScripture: 'Shiva Purana, Vidyeshvara Samhita (the Lingodbhava story)'
+      }
+    ],
+    worship: {
+      bestTimes: ['Kartik Purnima (at Pushkar)'],
+      offerings: ['Lotus flowers'],
+      rituals: ['Rare — the Pushkar temple in Rajasthan is his one major living shrine'],
+      fasting: [],
+      pilgrimage: ['Brahma Temple, Pushkar (Rajasthan)'],
+      dailyPractices: ['Study itself is his worship — beginning any learning with reverence']
+    },
+    audioUrl: '/audio/pronunciation/brahma.mp3',
+    podcastEpisodes: [],
+    significance: 'Brahma completes the Trimurti — creation beside Vishnu\'s preservation and Shiva\'s dissolution — and his near-absence from worship is itself one of the tradition\'s sharpest teachings about pride, and about honoring ongoing work over founding glory',
+    modernRelevance: 'Every founder, artist, and parent knows Brahma\'s predicament: the beginning is essential and then the beginning is over. His story asks what a creator is for after the creating — and answers: knowledge, humility, and letting the work be maintained by others',
+    familyConnections: [
+      { relationTo: 'saraswati', relationship: 'Consort', description: 'Creation keeps knowledge beside it — Brahma is rarely depicted without Saraswati\'s wisdom nearby' },
+      { relationTo: 'shiva', relationship: 'Trimurti', description: 'The pillar-of-light story binds their roles: creation humbled before the unmeasurable' }
+    ],
+    regionalVariations: [],
+    images: {
+      // TODO cover shopping list: brahma-cover.png
+      heroImage: require('../../assets/images/covers/generic-cover.jpg'),
+      iconImage: '/images/deities/brahma-icon.jpg',
+      galleryImages: []
+    },
+    sections: [
+      {
+        id: 'brahma-question',
+        title: 'The God With No Temples',
+        subtitle: 'The question every child asks first',
+        storyText: 'Here is a puzzle the tradition planted on purpose: Hinduism worships the preserver in ten thousand temples and the destroyer in ten thousand more — and the creator of everything has, for practical purposes, one, at Pushkar in Rajasthan. Ask why and you will hear the stories: the contest with Shiva where Brahma\'s pride produced a small lie, or the yajna where a curse fell. But sit with it longer and a structural answer emerges. Creation is finished. Preservation and transformation are happening right now, in your body, your family, your world — and the tradition pours its devotion toward the work that is still going on.',
+        teachingText: 'This is not disrespect; Brahma opens the cosmology of nearly every Purana. It is a priority: honor beginnings, worship continuations. Any parent who has launched a child, any founder who has handed off a company, knows the Brahma position — essential, then over. The tradition\'s quiet counsel to everyone in it: what you started must matter less to you than what it became.',
+        citation: 'Shiva Purana, Vidyeshvara Samhita (Lingodbhava); Padma Purana (the Pushkar tradition)'
+      },
+      {
+        id: 'brahma-lotus-section',
+        title: 'Born on a Lotus, Looking for the Bottom',
+        subtitle: 'The first act of the first being',
+        storyText: 'The Bhagavata Purana opens creation like this: Vishnu rests on the cosmic waters, and from his navel grows a lotus. In it wakes Brahma — alone, in the dark, with no memory and no instructions. He climbs down the stem to find where it comes from and finds no bottom. He climbs up and finds no top. And so the first conscious act of the new universe is not making; it is meditation. Brahma sits in his lotus and turns inward, and only after perceiving the one he grew from does he begin to create.',
+        sectionHeader: 'Creation begins in humility',
+        teachingText: 'The tradition could have made its creator omniscient from the first instant. Instead it gave him our situation: waking into a world he did not choose, unable to see his own source, having to begin anyway. His answer — sit, look inward, then work — is the pattern for every creative act since. You do not need to see the bottom of the stem to make something worthy on top of it.',
+        citation: 'Bhagavata Purana, Canto 3, Chapters 8–9'
+      },
+      {
+        id: 'brahma-heads',
+        title: 'Four Heads, Four Vedas, One Swan',
+        subtitle: 'What the iconography is saying',
+        storyText: 'Brahma\'s four heads face the four directions and speak the four Vedas — knowledge looking every way at once. In his hands: the Vedas, a rosary counting time, a water pot holding the causal waters, a lotus. No weapons; he is the only major deity who carries none. And beneath him, his vahana: the hamsa, the swan the tradition credits with the ability to drink milk mixed with water and leave the water behind — discrimination, the power to separate what matters from what merely surrounds it.',
+        teachingText: 'Read as a diagram, Brahma is a theory of creative work: wide attention, deep sources, patience with time, and no force — creation cannot be done at swordpoint. The swan completes it: a maker\'s central skill is neither speed nor volume but knowing, in the mixture of everything available, which part is the milk.',
+        citation: 'Standard Puranic iconography; the hamsa-discrimination motif is proverbial across Sanskrit literature'
+      },
+      {
+        id: 'brahma-time',
+        title: 'A Day of Brahma',
+        subtitle: 'The largest clock ever imagined',
+        storyText: 'The Puranas measure the universe in Brahma\'s time. One day of Brahma — one kalpa — is a thousand cycles of the four ages: 4.32 billion human years. At its end the worlds dissolve into night; at dawn they are made again. Brahma lives a hundred such years, and then he too ends, and after a pause, another begins. The tradition arrived at time-spans of this scale — with cosmoses born and dissolved in endless series — while most of the world still counted history in a few thousand years.',
+        sectionHeader: 'What the big clock is for',
+        teachingText: 'This is not trivia; it is therapy. Every anxiety you have is happening inside an afternoon of a single day of a being who has days without number. The scale is not meant to make you feel small — atman was never small — but to right-size the things that claim to be enormous: this quarter, this failure, this feud. The tradition keeps a clock that makes empires look brief, precisely so its people can hold their crises lightly.',
+        citation: 'Kalpa reckoning: Bhagavata Purana, Canto 3, Chapter 11; Vishnu Purana, Book 1'
+      }
+    ],
+    sources: [
+      {
+        text: 'Bhagavata Purana',
+        locator: 'Canto 3, Chapters 8–11 (lotus birth, creation, time reckoning)',
+        translation: 'wisdomlib.org (public)',
+      },
+      {
+        text: 'Shiva Purana',
+        locator: 'Vidyeshvara Samhita (Lingodbhava — the pillar of light and the ketaki lie)',
+        translation: 'J.L. Shastri edition / wisdomlib.org',
+      },
+      {
+        text: 'Padma Purana',
+        locator: 'Srishti Khanda (the Pushkar yajna tradition)',
+      },
+    ],
+    reflectionQuestions: [
+      'Brahma\'s work was essential and then it was over — and the tradition honors what is still running. What have you created that you now need to release into others\' maintenance?',
+      'The creator\'s first act was to sit with what he could not see and begin anyway. Where are you waiting for full understanding before starting something that only needs your honest beginning?',
+      'A day of Brahma makes empires look brief. Name the worry that is loudest this week — how does it look against the largest clock you can imagine?'
+    ]
+  },
+  {
+    id: 'parvati',
+    name: 'Parvati',
+    sanskritName: 'पार्वती',
+    titles: ['Uma', 'Gauri', 'Shailaputri (Daughter of the Mountain)', 'Annapurna', 'Aparna'],
+    category: 'goddesses',
+    description: 'The mountain\'s daughter who out-disciplined the great ascetic — love as tapasya',
+    mythology: 'Parvati is Shakti choosing a human-scale story. In a former life she was Sati, who died defending her husband Shiva\'s honor at her father\'s sacrifice. Reborn as the daughter of Himavan, king of mountains, she loved Shiva again from childhood — but Shiva had become the arch-ascetic, sealed in grief and meditation. Beauty did not move him; the love-god who tried was burned to ash. So Parvati matched him: she went into the mountains and practiced austerities so fierce the sages came to learn from her, until Shiva himself came down to test, and then to marry, the one being whose discipline equaled his. Their household — with Ganesha and Kartikeya — is the tradition\'s image of divinity domesticated: the absolute, at home.',
+    attributes: ['Devotion as discipline', 'Motherhood', 'Persistence', 'The power (Shakti) within stillness'],
+    symbols: ['Mountain', 'Lion', 'Trident (shared with Shiva)', 'The half of Ardhanarishvara'],
+    mantras: [
+      {
+        id: 'parvati-mula',
+        sanskrit: 'ॐ पार्वत्यै नमः',
+        transliteration: 'oṁ pārvatyai namaḥ',
+        meaning: 'Om, salutations to Parvati',
+        purpose: 'For steadfast love, family harmony, and strength in commitment',
+        benefits: ['Perseverance', 'Harmony at home', 'Devoted focus']
+      }
+    ],
+    prayers: [],
+    iconography: {
+      appearance: 'A serene golden-complexioned goddess, often beside Shiva or with her sons',
+      clothing: 'Red sari of the auspicious married woman',
+      colors: ['Red', 'Gold', 'Green'],
+      objects: ['Lotus', 'Mirror', 'Trident when fierce'],
+      vehicle: 'Lion',
+      posture: 'Seated with Shiva on Kailash, or standing in austerity on one foot',
+      facesAndArms: 'One face, two or four arms; as Ardhanarishvara, the left half of Shiva\'s own body'
+    },
+    teachings: [
+      'What beauty cannot win, discipline can',
+      'Love is not a feeling but a practice sustained through winters',
+      'The householder\'s life is a spiritual arena equal to the ascetic\'s cave',
+      'Shakti — power — is the goddess\'s to give: Shiva without Parvati, says the tradition, is shava, a corpse'
+    ],
+    festivals: [],
+    scriptureReferences: [
+      {
+        id: 'parvati-shiva-purana',
+        text: 'puranas',
+        section: 'Rudra Samhita, Parvati Khanda',
+        relevance: 'Her birth, austerities, the burning of Kama, and the marriage to Shiva'
+      }
+    ],
+    stories: [
+      {
+        id: 'parvati-tapasya',
+        title: 'The Girl Who Out-Fasted the Ascetic',
+        content: 'When beauty failed and the love-god lay in ashes for trying, Parvati changed strategy entirely. She left the palace for the mountain and began tapasya: summers inside four fires under the naked sun, winters standing in freezing streams, years eating only leaves — until she gave up even leaves, earning the name Aparna, "she of not even a leaf." The sages who thought they knew austerity came to watch a princess redefine it. At last a young brahmin arrived and tested her, cataloguing Shiva\'s flaws: an ash-smeared, snake-wearing, graveyard-haunting beggar. Parvati rose to leave rather than hear him slandered — and the brahmin caught her hand, revealing himself as Shiva, won.',
+        moralLesson: 'She did not wait to be chosen; she became impossible to overlook — not by adornment but by discipline. And the final test was loyalty: she won him the moment she refused to profit from his criticism.',
+        category: 'adventure',
+        relatedScripture: 'Shiva Purana, Rudra Samhita (Parvati Khanda); Kalidasa\'s Kumarasambhava, Canto 5'
+      },
+      {
+        id: 'parvati-annapurna',
+        title: 'The Day Shiva Begged for Food',
+        content: 'Shiva once declared, in the way of ascetics, that the world was maya — illusion — and food merely part of it. Parvati, goddess of the manifest world, decided to demonstrate. She vanished, and with her all nourishment vanished from the three worlds. Crops stood empty; hunger arrived like a season. The great renouncer discovered that transcendence is easier on a full stomach, took up a begging bowl, and walked to Kashi — where Parvati had set up a kitchen and was feeding everyone. Shiva held out his bowl. She filled it, smiling. He has acknowledged the necessity of Annapurna, the food-filled one, ever since.',
+        moralLesson: 'A gentle correction to every spirituality that scorns the material: the body is the vehicle of every realization, and whoever feeds beings serves the absolute as surely as whoever meditates on it.',
+        category: 'teaching',
+        relatedScripture: 'Annapurna tradition of Kashi (Skanda Purana, Kashi Khanda; devotional tradition)'
+      }
+    ],
+    worship: {
+      bestTimes: ['Teej', 'Navratri (as forms of Devi)', 'Mondays with Shiva'],
+      offerings: ['Red flowers', 'Bangles and sindoor', 'Sweets'],
+      rituals: ['Teej fasts kept by women for marital wellbeing', 'Gauri puja'],
+      fasting: ['Hartalika Teej'],
+      pilgrimage: ['Kailash-Mansarovar', 'Annapurna Temple (Varanasi)', 'Meenakshi Temple (Madurai — as Meenakshi)'],
+      dailyPractices: ['Care of the household offered as sadhana']
+    },
+    audioUrl: '/audio/pronunciation/parvati.mp3',
+    podcastEpisodes: [],
+    significance: 'Parvati is Shakti — the power without which, the tradition says outright, Shiva is a corpse — choosing marriage, motherhood, and the household as her arena, and thereby consecrating ordinary family life as a full spiritual path',
+    modernRelevance: 'The patron of everyone whose spiritual practice looks like packed lunches and sustained commitment rather than mountaintops: Parvati\'s claim is that the household, done with her intensity, is the mountaintop',
+    familyConnections: [
+      { relationTo: 'shiva', relationship: 'Consort', description: 'Won through austerity; together they are Ardhanarishvara, one body halved' },
+      { relationTo: 'ganesha', relationship: 'Mother', description: 'Shaped him from turmeric paste as guardian of her door' },
+      { relationTo: 'durga', relationship: 'Fierce form', description: 'Durga and Kali arise from the same Shakti Parvati embodies gently' }
+    ],
+    regionalVariations: [],
+    images: {
+      // TODO cover shopping list: parvati-cover.png
+      heroImage: require('../../assets/images/covers/generic-cover.jpg'),
+      iconImage: '/images/deities/parvati-icon.jpg',
+      galleryImages: []
+    },
+    sections: [
+      {
+        id: 'parvati-love-as-discipline',
+        title: 'Love as a Discipline',
+        subtitle: 'What do you do when beauty fails?',
+        storyText: 'The story begins with a strategy that fails. Parvati, advised by the gods, first approaches Shiva the conventional way: presence, charm, flowers in season, the love-god Kama enlisted to loose his arrow at the meditating ascetic. Shiva opens his third eye and burns Kama to ash without rising. The lesson lands on Parvati like a door closing — and she makes the decision that defines her: if the ascetic cannot be moved by beauty, she will meet him in his own arena. She walks into the mountains and begins austerities that shame the professionals: fire in summer, ice-water in winter, then not even leaves for food.',
+        sectionHeader: 'The proposal that was a test',
+        teachingText: 'When Shiva finally comes to her, disguised, he tries one last door: he insults himself, listing every reason a princess should not marry a graveyard ascetic. Parvati turns to leave rather than hear it — loyalty even against apparent self-interest — and the disguise falls. The tradition is precise about what won him: not the fasting itself but what the fasting proved, that her love was a discipline and not a mood. It is the least sentimental great love story ever told, and the most useful.',
+        citation: 'Shiva Purana, Rudra Samhita (Parvati Khanda); Kalidasa, Kumarasambhava, Cantos 3–5'
+      },
+      {
+        id: 'parvati-half-of-shiva',
+        title: 'Half of God\'s Own Body',
+        subtitle: 'Ardhanarishvara — the argument in one image',
+        storyText: 'In one of the tradition\'s boldest images, Shiva and Parvati are shown as a single standing figure split down the middle: his half ash-white, matted-locked, still; her half golden, silk-clad, ornamented. Ardhanarishvara — the Lord who is half woman. The image is a theological argument: consciousness and energy, stillness and manifestation, the ascetic and the world are not rivals but halves of one body, and neither is complete alone. The tradition says it in a proverb sharp enough to sting: Shiva without Shakti is shava — a corpse.',
+        teachingText: 'Whatever your own polarity — the contemplative half that wants the cave and the engaged half that loves the world — Ardhanarishvara refuses the choice. The complete life is not won by amputating either half but by letting them share a spine. Every householder who meditates and every meditator who shows up for family dinner is practicing this image.',
+        citation: 'Ardhanarishvara iconography: Puranic and Agamic tradition; the Shiva/shava wordplay is proverbial in Shakta texts (cf. Saundarya Lahari 1)'
+      },
+      {
+        id: 'parvati-annapurna-section',
+        title: 'The Goddess of the Full Plate',
+        subtitle: 'When the renouncer held out a bowl',
+        storyText: 'The Annapurna story is Parvati\'s wit at its sharpest. Shiva, in ascetic mood, dismisses the material world as illusion — food included. Parvati does not argue; she withdraws. And with the goddess of manifestation gone, food itself goes. The world hungers, and eventually the great transcender of maya walks to Kashi with a begging bowl, to the kitchen his wife has opened there, and holds it out. She serves him with a smile that has lasted three thousand years. In Varanasi her temple stands to this day: Annapurna, she who is full of food.',
+        sectionHeader: 'The holiness of the ordinary',
+        teachingText: 'This is the tradition auditing its own excesses. Wherever spirituality drifts toward contempt for the body, the meal, the household — Annapurna is the correction: try transcending without lunch. Feeding people is not the errand you run so that someone else can do the real spiritual work. It is the real spiritual work, done in its most honest form.',
+        citation: 'Annapurna of Kashi: Skanda Purana (Kashi Khanda) and living Varanasi tradition'
+      },
+      {
+        id: 'parvati-mother',
+        title: 'The Mother of New Beginnings',
+        subtitle: 'A household on a mountaintop',
+        storyText: 'Kailash, as the Puranas paint it, is the strangest household in literature: the ascetic father with snakes for ornaments, the mountain-princess mother, one son with an elephant\'s head shaped by her own hands from turmeric paste, another born to command the armies of heaven, a lion, a bull, a mouse, and a peacock in the yard. It should not work, and it is the most beloved family in the tradition. Parvati is its center of gravity — the one who turned the great renouncer into a father, absolute stillness into a home.',
+        teachingText: 'The tradition could have left divinity solitary and abstract. Instead its most worshipped god is half of a marriage, and the goddess who arranged that is the patron of everyone who has ever built a family out of unlikely materials. Ask her blessing not for a perfect household but for a whole one — held together, like hers, by a love that outlasted every winter it stood in.',
+        citation: 'The Kailash household: Shiva Purana, Rudra Samhita (Kumara Khanda); Ganesha\'s shaping: same, Kumara Khanda'
+      }
+    ],
+    sources: [
+      {
+        text: 'Shiva Purana',
+        locator: 'Rudra Samhita — Sati Khanda and Parvati Khanda (rebirth, tapasya, marriage); Kumara Khanda (Ganesha, Kartikeya)',
+        translation: 'J.L. Shastri edition / wisdomlib.org',
+      },
+      {
+        text: 'Kumarasambhava (Kalidasa)',
+        locator: 'Cantos 3–5 (Kama\'s burning; Parvati\'s austerities; the disguised test) — classical literary retelling',
+      },
+      {
+        text: 'Skanda Purana',
+        locator: 'Kashi Khanda (the Annapurna tradition of Varanasi)',
+      },
+    ],
+    reflectionQuestions: [
+      'Parvati stopped trying to be noticed and became undeniable through discipline. Where in your life are you decorating the surface when the real work is practice?',
+      'Ardhanarishvara joins the still half and the engaged half in one body. Which half of yourself have you been treating as the enemy — and what would sharing a spine with it look like?',
+      'Annapurna\'s lesson: feeding people is the real spiritual work. What ordinary care that you provide have you been discounting as "not the real thing"?'
+    ]
+  },
+  {
+    id: 'lakshmi',
+    name: 'Lakshmi',
+    sanskritName: 'लक्ष्मी',
+    titles: ['Shri', 'Padma (Lotus)', 'Chanchala (The Restless)', 'Bhagyalakshmi'],
+    category: 'goddesses',
+    description: 'Wealth as a current, not a pond — the goddess who stays only where she flows',
+    mythology: 'When the gods and asuras churned the ocean of milk for the nectar of immortality, treasures rose one by one — and among the last, seated on a blooming lotus, came Shri Lakshmi, radiance itself. Every power in the universe wanted her; she looked past them all and chose Vishnu, the preserver — beauty and abundance electing to stand beside responsibility. She is the goddess of wealth in every sense the word will bear: money, yes, and also harvest, health, children, beauty, and the luster on a well-kept doorstep. Her nickname is the tradition\'s economics lesson: Chanchala, the restless one. Lakshmi does not stay where she is hoarded. She stays where she moves.',
+    attributes: ['Abundance', 'Auspiciousness', 'Generosity', 'Beauty in order', 'Restlessness where hoarded'],
+    symbols: ['Lotus', 'Gold coins flowing from her palm', 'Elephants pouring water', 'Owl'],
+    mantras: [
+      {
+        id: 'lakshmi-mula',
+        sanskrit: 'ॐ श्रीं महालक्ष्म्यै नमः',
+        transliteration: 'oṁ śrīṁ mahālakṣmyai namaḥ',
+        meaning: 'Om, with the seed-syllable of abundance, salutations to great Lakshmi',
+        purpose: 'For prosperity that circulates — invoked at Diwali and on Fridays',
+        benefits: ['Material wellbeing', 'Generosity of spirit', 'Gratitude for what flows']
+      }
+    ],
+    prayers: [],
+    iconography: {
+      appearance: 'A golden goddess of serene beauty seated or standing on a red lotus',
+      clothing: 'Red and gold sari — the colors of auspicious abundance',
+      colors: ['Gold', 'Red', 'Pink'],
+      objects: ['Lotuses in two hands', 'Gold coins streaming from one palm', 'A blessing gesture in the last'],
+      vehicle: 'Owl (Uluka) — seeing in darkness, a warning about wealth\'s blindness',
+      posture: 'On a lotus above the waters, flanked by elephants pouring water over her',
+      facesAndArms: 'One face, four arms'
+    },
+    teachings: [
+      'Wealth is a current: dam it and it stagnates, circulate it and it multiplies',
+      'Abundance chooses responsibility — Lakshmi picked Vishnu the sustainer',
+      'Prosperity enters clean, lit, welcoming spaces: order is an offering',
+      'The owl\'s warning: riches without vision is night'
+    ],
+    festivals: ['diwali-2025'],
+    scriptureReferences: [
+      {
+        id: 'lakshmi-vishnu-purana',
+        text: 'puranas',
+        section: 'Book 1, Chapter 9',
+        relevance: 'Her emergence from the churning ocean and choice of Vishnu'
+      }
+    ],
+    stories: [
+      {
+        id: 'lakshmi-churning',
+        title: 'Risen from the Churned Ocean',
+        content: 'The churning of the milk ocean had already yielded wonders and horrors — the moon, the wish-giving cow, the world-poison that Shiva swallowed. Then the waters parted and Shri rose: seated on an open lotus, radiant enough that the churning stopped. The sages hymned her; celestial elephants poured sacred water over her; every god and asura straightened his posture. She held a garland, the choosing kind, and walked past power after power — past strength, past wealth, past cleverness — and placed it on Vishnu, the one whose work is to sustain. Abundance, given a free choice, chose the maintainer.',
+        moralLesson: 'Prosperity is not won by the strongest grip; it settles on whoever can be trusted to sustain things. Become the kind of steward Lakshmi garlands.',
+        category: 'origin',
+        relatedScripture: 'Vishnu Purana, Book 1, Chapter 9; Bhagavata Purana, Canto 8'
+      },
+      {
+        id: 'lakshmi-restless',
+        title: 'Why She Is Called the Restless One',
+        content: 'A proverb-story told across India: a miser once prayed so hard that Lakshmi consented to live in his house. He sealed his doors so she could never leave, stopped giving, stopped spending, stopped even lighting the lamps lest the oil run down. The house grew dark and airless — and one morning the miser found it empty of everything: comfort, guests, laughter, and finally the goddess herself, gone through the crack no lock can close. Lakshmi is Chanchala, the restless. She is not offended by wealth — she IS wealth. She is offended by stagnation.',
+        moralLesson: 'The tradition\'s whole economics in one image: abundance is a flow that dies in a sealed vessel. Generosity is not the opposite of prosperity but its maintenance.',
+        category: 'teaching',
+        relatedScripture: 'Pan-Indian proverb tradition; the Chanchala epithet appears throughout Sanskrit devotional literature'
+      }
+    ],
+    worship: {
+      bestTimes: ['Diwali night (Lakshmi Puja)', 'Fridays', 'Sharad Purnima'],
+      offerings: ['Lotus', 'Rice and coins', 'Sweets', 'Lit lamps in rows'],
+      rituals: ['Diwali Lakshmi Puja with the house cleaned and lit', 'Kolam/rangoli at the threshold to welcome her'],
+      fasting: ['Vaibhav Lakshmi vrat (Fridays)'],
+      pilgrimage: ['Padmavati Temple (Tiruchanur)', 'Mahalakshmi (Kolhapur)', 'Ashtalakshmi (Chennai)'],
+      dailyPractices: ['Keeping the threshold clean and lit', 'Giving before accumulating']
+    },
+    audioUrl: '/audio/pronunciation/lakshmi.mp3',
+    podcastEpisodes: [],
+    significance: 'Lakshmi sanctifies prosperity — the tradition refuses to make wealth shameful — while binding it to motion, stewardship, and light: she is why Diwali\'s lamps are lit and why the miser\'s dark house empties',
+    modernRelevance: 'In an economy of hoarded fortunes and anxious scarcity, Lakshmi\'s theology reads like radical advice: wealth is a current to be kept moving, order and generosity are how you invite it, and an owl rides with it to warn you what riches without vision become',
+    familyConnections: [
+      { relationTo: 'krishna', relationship: 'Consort across avatars', description: 'Where Vishnu descends, she follows — as Sita beside Rama, as Rukmini beside Krishna' },
+      { relationTo: 'saraswati', relationship: 'Counterpart', description: 'Wealth and wisdom, the tradition jokes, rarely share a house — a proverb about balancing both' }
+    ],
+    regionalVariations: [],
+    images: {
+      // TODO cover shopping list: lakshmi-cover.png
+      heroImage: require('../../assets/images/covers/generic-cover.jpg'),
+      iconImage: '/images/deities/lakshmi-icon.jpg',
+      galleryImages: []
+    },
+    sections: [
+      {
+        id: 'lakshmi-choice',
+        title: 'What Abundance Chooses',
+        subtitle: 'A garland walked past every power',
+        storyText: 'When Lakshmi rose from the churned ocean, the entire assembly of gods and demons stood as suitors. The story slows down here on purpose: she carries a garland — the ancient gesture by which a woman chose — and reviews the candidates. Strength is there, and cunning, and raw force fresh from the churning. She passes them all and garlands Vishnu: the god whose entire job description is maintenance. Not the most dazzling. The most reliable.',
+        sectionHeader: 'The steward\'s secret',
+        teachingText: 'The tradition is telling you how prosperity actually works. Abundance does not stay with whoever grabs hardest; it settles where things are sustained — the tended shop, the maintained friendship, the balanced ledger, the kept promise. If you want Lakshmi\'s garland, the story says, do not perform brilliance. Demonstrate stewardship.',
+        citation: 'Vishnu Purana 1.9; Bhagavata Purana, Canto 8 (samudra manthan)'
+      },
+      {
+        id: 'lakshmi-flow',
+        title: 'The Restless One',
+        subtitle: 'Why hoarded wealth goes stale',
+        storyText: 'Of all her thousand names, the tradition\'s most honest is Chanchala — the restless, the one who does not stay put. Folk tale after folk tale repeats the pattern: the miser who seals the goddess into his house and wakes to find everything gone; the generous household whose lamps somehow never run out of oil. Her iconography says it without words: coins stream from her open palm continuously. Not a vault. A fountain.',
+        teachingText: 'This is a complete theory of wealth in one epithet. Money, energy, knowledge, love — everything Lakshmi governs behaves the same way: it lives in circulation and dies in storage. The practical instruction hiding in the theology: build channels, not dams. Give from the flow and the flow continues; pinch it shut and you are the miser in the dark house, holding a full vault and nothing else.',
+        citation: 'Chanchala epithet: pan-Indian devotional and proverb tradition; flowing-coin iconography is standard Lakshmi imagery'
+      },
+      {
+        id: 'lakshmi-diwali',
+        title: 'Why the Lamps Are for Her',
+        subtitle: 'The theology of a clean, lit house',
+        storyText: 'On Diwali night, hundreds of millions of households do the same three things: clean the house to its corners, draw a welcome at the threshold, and set lamps in every window. The stated reason is one of the tradition\'s loveliest images — Lakshmi walks the earth that night, and she enters homes that are clean, bright, and open. Ledgers are opened fresh; doorways are decorated; the dark and cluttered corner is, for one night at least, abolished.',
+        sectionHeader: 'Order as invitation',
+        teachingText: 'Strip the metaphor and it still runs: prosperity in every form favors prepared, ordered, welcoming systems. The cleaned house is the audited ledger, the maintained tool, the answered email, the tidy codebase. Lakshmi Puja is the annual rehearsal of a daily truth — abundance is not summoned by wanting; it is welcomed by readiness. Light the corner you have been avoiding.',
+        citation: 'Diwali Lakshmi Puja: pan-Indian living tradition; see also Sri Sukta (Rig Veda khila) — the ancient hymn recited at her worship'
+      },
+      {
+        id: 'lakshmi-owl',
+        title: 'The Owl at Her Feet',
+        subtitle: 'The warning built into the blessing',
+        storyText: 'It is easy to miss, at the foot of all that gold: Lakshmi\'s vahana is an owl. The tradition chose it deliberately and lets the double meaning stand. The owl sees in the dark — wealth rightly held illuminates places nothing else reaches. And the owl is blind in daylight — the being who cannot see precisely when everything is bright. Sanskrit proverb sharpened the point long ago: riches without wisdom is an owl at noon.',
+        teachingText: 'Every gift in this tradition ships with its own warning label, and the owl is Lakshmi\'s. Wealth amplifies; it does not educate. It will light the dark or blind you at noon depending entirely on what you bring to it. Which is why the goddess of fortune is traditionally worshipped alongside Ganesha, remover of obstacles and lord of wisdom — the tradition refusing to hand you the gold without the sight.',
+        citation: 'Uluka vahana: standard Lakshmi iconography, especially in Bengal; the paired Lakshmi–Ganesha Diwali worship is living tradition'
+      }
+    ],
+    sources: [
+      {
+        text: 'Vishnu Purana',
+        locator: 'Book 1, Chapter 9 (emergence from the ocean, choice of Vishnu)',
+        translation: 'H.H. Wilson (public domain) / wisdomlib.org',
+      },
+      {
+        text: 'Bhagavata Purana',
+        locator: 'Canto 8 (samudra manthan)',
+        translation: 'wisdomlib.org (public)',
+      },
+      {
+        text: 'Sri Sukta',
+        locator: 'Rig Veda khila (appendix hymn) — the classical Lakshmi hymn',
+        translation: 'traditional; public-domain renderings',
+      },
+    ],
+    reflectionQuestions: [
+      'Lakshmi garlanded the sustainer, not the strongest. In your work and relationships, are you performing brilliance or demonstrating stewardship — and which have you been rewarded for lately?',
+      'She is Chanchala — she leaves sealed vaults. Where in your life are you damming a flow (money, knowledge, affection) that would multiply if you let it move?',
+      'The owl sees in darkness and goes blind at noon. When resources were most abundant in your life, what did you stop seeing?'
+    ]
+  },
+  {
+    id: 'saraswati',
+    name: 'Saraswati',
+    sanskritName: 'सरस्वती',
+    titles: ['Sharada', 'Vagdevi (Goddess of Speech)', 'Veenapani', 'Hamsavahini'],
+    category: 'goddesses',
+    description: 'The river that became the goddess of everything that flows: speech, music, learning',
+    mythology: 'Saraswati is the oldest of the great goddesses still worshipped — she enters the Rig Veda as a mighty river, praised as "best of mothers, best of rivers, best of goddesses," and as the waters themselves went underground in legend, she flowed instead into everything else that moves like water: speech, thought, music, learning. She is the tradition\'s statement that knowledge is sacred in itself. Dressed in white with no gold at all, seated on a white lotus with a veena in her hands, a book and a rosary beside her, a swan at her feet — she is the one great deity who owns almost nothing, and the one whom students, musicians, and writers cannot do without.',
+    attributes: ['Knowledge', 'Speech and eloquence', 'Music', 'Purity of focus', 'The wealth that grows when given'],
+    symbols: ['Veena', 'Book', 'White lotus', 'Swan', 'Flowing water'],
+    mantras: [
+      {
+        id: 'saraswati-vandana',
+        sanskrit: 'या कुन्देन्दुतुषारहारधवला या शुभ्रवस्त्रावृता',
+        transliteration: 'yā kundendu-tuṣāra-hāra-dhavalā yā śubhra-vastrāvṛtā',
+        meaning: 'She who is white as jasmine, the moon, and snow, robed in white… (opening of the Saraswati Vandana)',
+        purpose: 'Recited before study, music practice, and examinations',
+        benefits: ['Clarity of mind', 'Eloquence', 'Steadiness in learning']
+      }
+    ],
+    prayers: [],
+    iconography: {
+      appearance: 'A luminous goddess in plain white, serene and absorbed, without ornament',
+      clothing: 'White sari — the absence of distraction',
+      colors: ['White'],
+      objects: ['Veena (played with two hands)', 'Book (the Vedas)', 'Crystal rosary'],
+      vehicle: 'Hamsa — the swan of discrimination; sometimes the peacock, warned against vanity',
+      posture: 'Seated on a white lotus by flowing water',
+      facesAndArms: 'One face, four arms'
+    },
+    teachings: [
+      'Knowledge is the one wealth that grows when you give it away',
+      'Plain white amid the golden gods: learning needs no ornament',
+      'Speech is a river — it nourishes or floods depending on its banks',
+      'Music and mathematics sit in the same lap'
+    ],
+    festivals: ['basant-panchami-2025'],
+    scriptureReferences: [
+      {
+        id: 'saraswati-rigveda',
+        text: 'vedas',
+        section: '6.61; 2.41.16',
+        relevance: 'The river hymns — "best of mothers, best of rivers, best of goddesses" — the goddess\'s oldest layer'
+      }
+    ],
+    stories: [
+      {
+        id: 'saraswati-river',
+        title: 'The River That Went Underground',
+        content: 'In the Rig Veda, Saraswati is no metaphor: she is a vast river of the northwest, "surpassing in majesty and might all other waters," on whose banks the hymns themselves were composed. Tradition holds that as ages passed the river dwindled and vanished into the desert — and the tradition\'s response is the whole story: the goddess did not die with her waters. She went underground like her river and surfaced as every other kind of flow — the stream of speech, the current of thought, the river of music running through a raga. At Prayag, where two visible rivers meet, the tradition insists a third joins them invisibly: Saraswati, still flowing where only the mind can see.',
+        moralLesson: 'What is truly essential does not perish when its first form does — it changes channel. The river became learning itself, and her worshippers dip into it daily.',
+        category: 'origin',
+        relatedScripture: 'Rig Veda 6.61, 7.95; the Triveni Sangam tradition of Prayag'
+      },
+      {
+        id: 'saraswati-basant',
+        title: 'The Day the Books Rest',
+        content: 'On Vasant Panchami, the fifth day of spring, Saraswati\'s worshippers do something almost paradoxical: students place their books, pens, and instruments at her altar — and do not study. The tools rest at the goddess\'s feet for the day. Small children are brought to write their first letters that morning, a grain of rice or a slate under a guiding hand, the alphabet begun as a sacrament. Mustard fields bloom yellow, her devotees wear yellow, and for one day the whole apparatus of learning is treated not as a grind but as a grace.',
+        moralLesson: 'The tradition knows that tools become burdens unless regularly re-consecrated. Rest the instruments, honor the source, and begin again as if writing your first letter.',
+        category: 'teaching',
+        relatedScripture: 'Vasant Panchami / Vidyarambham living tradition across India'
+      }
+    ],
+    worship: {
+      bestTimes: ['Vasant Panchami', 'Before examinations and performances', 'Navratri\'s final days (South India: Saraswati Puja)'],
+      offerings: ['White flowers', 'Yellow sweets on Vasant Panchami', 'The tools of one\'s learning, laid at the altar'],
+      rituals: ['Vidyarambham — a child\'s first letters written at her altar', 'Books and instruments rested and honored'],
+      fasting: [],
+      pilgrimage: ['Basar Saraswati Temple (Telangana)', 'Sharada Peeth (tradition)', 'Koothanur (Tamil Nadu)'],
+      dailyPractices: ['Saraswati Vandana before study or practice', 'Treating books and instruments with physical respect']
+    },
+    audioUrl: '/audio/pronunciation/saraswati.mp3',
+    podcastEpisodes: [],
+    significance: 'Saraswati consecrates knowledge as an end in itself — the tradition\'s oldest goddess presiding over its most renewable wealth, the only treasure that multiplies by being given away',
+    modernRelevance: 'Patron of every student, musician, coder, and writer: her plain white amid the golden pantheon is a standing argument that in an economy of noise and ornament, undivided attention is the rarest luxury',
+    familyConnections: [
+      { relationTo: 'brahma', relationship: 'Consort', description: 'Creation keeps knowledge beside it; what Brahma makes, Saraswati makes intelligible' },
+      { relationTo: 'lakshmi', relationship: 'Counterpart', description: 'Wisdom and wealth — the tradition\'s proverb jokes that they rarely share a roof, a warning to court both' }
+    ],
+    regionalVariations: [],
+    images: {
+      // TODO cover shopping list: saraswati-cover.png
+      heroImage: require('../../assets/images/covers/generic-cover.jpg'),
+      iconImage: '/images/deities/saraswati-icon.jpg',
+      galleryImages: []
+    },
+    sections: [
+      {
+        id: 'saraswati-oldest',
+        title: 'The Oldest Goddess Still Worshipped',
+        subtitle: 'From riverbank to raga',
+        storyText: 'Before she held a veena, Saraswati held a watershed. In the Rig Veda — humanity\'s oldest religious text in continuous use — she is a physical river, hymned with awe: best of mothers, best of rivers, best of goddesses. The sages composed on her banks; her water was the first thing the tradition called sacred. Then, over centuries, the river of legend dwindled into the desert — and the goddess performed the most graceful pivot in religious history. She went underground and resurfaced as every flow that remained: speech, memory, mathematics, music. The river became the current of thought itself.',
+        teachingText: 'There is a teaching in the transformation beyond the history: what is essential survives the loss of its original container. When a chapter of your life dries up — a career, a role, a place — the Saraswati move is not to mourn the riverbed but to ask where the water went. It is usually still flowing, one channel over.',
+        citation: 'Rig Veda 6.61 and 2.41.16, tr. Griffith (public domain); the vanished-river and Triveni traditions'
+      },
+      {
+        id: 'saraswati-white',
+        title: 'Why She Wears No Gold',
+        subtitle: 'The iconography of attention',
+        storyText: 'Stand her beside the other great goddesses and the contrast is the message. Lakshmi streams gold; Durga bristles with borrowed weapons; Saraswati wears plain white and owns, by divine standards, almost nothing — a stringed instrument, a book, a rosary, a swan. Every element is about undivided attention: white, the color before distraction; the veena, mastery that takes ten thousand quiet hours; the book, the patient accumulation of understanding; the rosary, repetition; the swan, discrimination — the fabled ability to drink the milk and leave the water.',
+        sectionHeader: 'The luxury of focus',
+        teachingText: 'The tradition dressed its knowledge-goddess in the absence of ornament on purpose: learning does not need decoration, and mostly cannot survive it. In an age engineered to shatter attention, Saraswati\'s plain white is almost political. The instruction hiding in the image: to learn anything real, subtract. One instrument, one book, one repetition at a time, and the swan\'s ruthless question of everything you consume — milk, or water?',
+        citation: 'Standard Saraswati iconography; Saraswati Vandana (traditional invocation) for the whiteness imagery'
+      },
+      {
+        id: 'saraswati-speech',
+        title: 'The Goddess in Your Mouth',
+        subtitle: 'Speech as a river with banks',
+        storyText: 'Her deepest identification is with vak — speech, the power of the word. The Vedic tradition regarded speech not as labels pasted on things but as a creative force: the hymns were heard, not composed, and to speak truly was to participate in the world\'s making. Saraswati is that power personified, which is why she is Vagdevi, goddess of the word, and why a traditional blessing says she should dwell on a person\'s tongue. When someone speaks with unusual grace or truth, the old idiom is literal: Saraswati sits in their mouth.',
+        teachingText: 'A river nourishes when it has banks and floods when it does not — and speech is exactly such a river. The daily practice her tradition suggests is an audit of the word: is what I am about to say true? Is it useful? Does it flow toward or away from understanding? To honor Saraswati is not to speak beautifully; it is to treat the power of the word as sacred enough to bank.',
+        citation: 'Vak in the Vedic tradition: Rig Veda 10.125 (the Vak Sukta); Vagdevi epithet, traditional'
+      },
+      {
+        id: 'saraswati-giving',
+        title: 'The Wealth That Grows When Given',
+        subtitle: 'Vasant Panchami and the first letters',
+        storyText: 'On Vasant Panchami, when the mustard fields turn the color of her festival, small children across India are carried to her altar to write their first letters — a finger guided through the alphabet in a plate of rice. The tradition calls it Vidyarambham, the beginning of knowledge, and treats it with the gravity of a sacrament, because it is one: the child is being inducted into the one form of wealth with a miraculous property. Split any other treasure and each share shrinks. Split knowledge — teach it — and both shares grow.',
+        sectionHeader: 'The teacher\'s economy',
+        teachingText: 'A Sanskrit proverb states her economics plainly: knowledge is the wealth that thieves cannot steal, kings cannot tax, and giving cannot diminish — it grows by being spent. This is why the guru sits so high in this tradition, and why the truest Saraswati worship is not the flowers but the explaining: every time you teach what you know, you are performing her puja in its original form.',
+        citation: 'Vidyarambham / Vasant Panchami: living tradition; the knowledge-wealth proverb: Subhashita tradition (traditional Sanskrit verse)'
+      }
+    ],
+    sources: [
+      {
+        text: 'Rig Veda',
+        locator: '6.61 and 2.41.16 (the river hymns); 10.125 (Vak Sukta, the speech hymn)',
+        translation: 'Ralph T.H. Griffith (public domain)',
+      },
+      {
+        text: 'Saraswati Vandana',
+        locator: 'Traditional invocation ("yā kundendu…") recited before study',
+        translation: 'traditional text',
+      },
+      {
+        text: 'Living tradition',
+        locator: 'Vasant Panchami / Vidyarambham first-letters ceremony; Triveni Sangam (Prayag) tradition of the invisible river',
+      },
+    ],
+    reflectionQuestions: [
+      'The river goddess survived losing her river by flowing into new channels. What dried-up chapter of your life still holds water that could flow somewhere new?',
+      'Saraswati wears white amid golden gods: learning needs subtraction, not ornament. What would you remove from your days to give one real pursuit your undivided attention?',
+      'Knowledge grows when given away. What do you know well that you have never taught anyone — and who is waiting, perhaps without knowing it, for you to be their Jambavan?'
+    ]
   }
 ];
 

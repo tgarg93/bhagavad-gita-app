@@ -172,12 +172,21 @@ export const philosophyData: PhilosophicalConcept[] = [
     difficulty: 'beginner',
     sections: [
       {
+        id: 'overview-road',
+        title: 'The Road Ahead',
+        subtitle: 'How this journey is built, and why',
+        storyText: 'Before the first lesson, look at the road itself. This journey has five stages, and their order is deliberate. You will start with ideas — dharma, karma, moksha, the gunas — because they are the grammar of the whole tradition; every story, god, and festival speaks in them. Then one story that uses them all: the Bhagavad Gita, walked chapter by chapter, where the ideas stop being abstractions and become one man\'s hardest morning. Third come the gods — after the ideas on purpose, because faces make sense once you know what they are faces of. Fourth, practice: the paths of action, devotion, and knowledge, matched to your temperament, because knowing was never the point — living is. And last, the festivals, because celebration is where understanding becomes belonging: lamps, color, food, family.',
+        sectionHeader: 'How to walk it',
+        teachingText: 'Go in order if you can — each stage prepares the ground for the next — but nothing is locked, and nothing is graded. A few quiet minutes a day is enough; the path remembers where you left off. That\'s the road. Now — what is this tradition, exactly?',
+      },
+      {
         id: 'overview-name',
         title: 'A Religion With No Founder',
         subtitle: 'The river that named a civilization',
         storyText: 'Every other major religion can point to a beginning — a founder, a revelation, a date. Hinduism cannot, and that is the first thing to understand about it. It grew the way a river system grows: countless streams, some four thousand years old, feeding one another until no one could say where the water began. Even the name came from outside. Persian travelers used "Hindu" — their pronunciation of Sindhu, the river Indus — for the people who lived beyond that river. The people themselves had no single name for what they practiced, because they did not think of it as a single thing.',
         sectionHeader: 'What it calls itself',
         teachingText: 'The tradition\'s own name for itself is Sanatana Dharma — the eternal way. Not eternal because it refuses to change (it never stops changing), but because it organizes itself around questions that do not age: What am I, really? Why is there suffering? What happens when I die? How should I live? Hold onto that. Hinduism is not a set of answers you must accept; it is a very old, very patient conversation about those questions — and you are allowed to join it from wherever you stand.',
+        citation: '"Hindu" from Persian for the Sindhu (Indus) river — standard etymology; "Sanatana Dharma" as the tradition\'s self-designation',
       },
       {
         id: 'overview-books',
@@ -191,6 +200,7 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'All the Upanishads are cows; the milker is Krishna, the cowherd\'s son',
         },
         teachingText: 'A traditional verse says the Upanishads are cows and the Gita is their milk, drawn by Krishna himself — everything essential, made drinkable. That is why this app\'s journey walks you through the Gita chapter by chapter: it is the tradition\'s own summary of its deepest shelf. The epics and Puranas, meanwhile, are where most families actually live — the stories your grandmother told are scripture too, just from the shelf built for hearts rather than philosophers.',
+        citation: 'Cows-and-milk verse: Gita Mahatmya 6 (traditional); upanishad = "sitting down near," standard etymology',
       },
       {
         id: 'overview-gods',
@@ -204,6 +214,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         storyText: 'The Rig Veda — the oldest book on the oldest shelf — already answered the question outsiders never stop asking. Naming Indra, Mitra, Varuna, Agni, the hymn concludes: what exists is One; sages give it many names. Everything else about the gods unfolds from that line. The one reality the Upanishads call Brahman meets human beings through faces: Brahma who creates, Vishnu who preserves, Shiva who dissolves; the Goddess — Durga, Lakshmi, Saraswati — who is power, abundance, and wisdom; and the avatars, the divine descents like Rama and Krishna, who walk into history when dharma falters.',
         sectionHeader: 'The face you love',
         teachingText: 'The tradition even has a word for the most personal part of this: ishta-devata, the "chosen deity" — the face of the divine your own heart answers to. A family of Krishna devotees and a family of Shiva devotees are not practicing rival religions; they are loving the same ocean through different rivers. When you meet the deities later in this journey, you are not being introduced to a crowd of gods. You are being shown the same light through different windows.',
+        citation: 'Rig Veda 1.164.46, tr. Griffith (public domain); avatars: Bhagavad Gita 4.7–8',
       },
       {
         id: 'overview-goal',
@@ -217,6 +228,7 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'That thou art — you are That',
         },
         teachingText: 'And moksha itself? The Upanishads state the destination in three syllables a father spoke to his son: tat tvam asi — you are That. The atman within you and Brahman behind everything were never two. Liberation is not going somewhere after death; it is waking up to what was always true. Every practice in this tradition — every ritual, every chant, every pilgrimage — is, at bottom, an alarm clock.',
+        citation: 'Purusharthas: Dharmashastra tradition; tat tvam asi: Chandogya Upanishad 6.8.7, tr. Müller (public domain)',
       },
       {
         id: 'overview-paths',
@@ -224,13 +236,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         subtitle: 'Many rivers, one ocean',
         storyText: 'By now you may suspect the answer: there is no single right one, and the tradition says so on purpose. Historically, Hindus have organized their devotion in great streams — Vaishnavas centered on Vishnu and his avatars, Shaivas on Shiva, Shaktas on the Goddess, Smartas honoring all the faces as one. And across all of them run the yogas, the paths matched to temperament: karma yoga for those who find the divine through work, bhakti yoga through love, jnana yoga through inquiry, dhyana through stillness. The Gita blesses this plurality outright — by whatever path people come to me, Krishna says, I welcome them.',
         sectionHeader: 'Your family\'s way',
-        teachingText: 'This is also why your family\'s Hinduism may look different from your friend\'s — different deities on the altar, different festival foods, different rules about fasting. None of that is corruption or confusion. It is the design. This is one common map; ask your family how they walk it. Their answers are part of the tradition too — the living part.',
-      },
-      {
-        id: 'overview-begin',
-        title: 'Where You Begin',
-        subtitle: 'The road from here',
-        storyText: 'Everything you just read is the map; the journey in this app walks it. The concepts ahead — dharma, karma, moksha, the gunas — are the ideas beneath everything. The Gita, chapter by chapter, is the milk of the Upanishads. The deities are the faces of the One. The practices are the paths matched to your temperament, and the festivals are where all of it turns into lamps, color, food, and family. Four thousand years of conversation are waiting. Take the next step.',
+        teachingText: 'This is also why your family\'s Hinduism may look different from your friend\'s — different deities on the altar, different festival foods, different rules about fasting. None of that is corruption or confusion. It is the design. This is one common map; ask your family how they walk it. Their answers are part of the tradition too — the living part. Four thousand years of conversation are waiting. Take the next step.',
+        citation: '"By whatever path…": Bhagavad Gita 4.11, tr. Sivananda (public domain)',
       },
     ],
     sources: [

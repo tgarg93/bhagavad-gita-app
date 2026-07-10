@@ -40,7 +40,19 @@ const MODULE_1_CONCEPTS = [
   'samsara',
 ];
 
-const MODULE_3_DEITIES = ['krishna', 'ganesha', 'shiva', 'hanuman', 'durga', 'rama'];
+const MODULE_3_DEITIES = [
+  'krishna',
+  'ganesha',
+  'shiva',
+  'hanuman',
+  'durga',
+  'rama',
+  // The divine family completed (appended — earlier ids keep their positions)
+  'brahma',
+  'parvati',
+  'lakshmi',
+  'saraswati',
+];
 
 // Navigate to a journey item, handling the one tab-route (FestivalCalendar
 // lives inside MainTabs and cannot be pushed/replaced on the stack)

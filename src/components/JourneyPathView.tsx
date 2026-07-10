@@ -191,6 +191,26 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
 
   const body = (
     <View style={styles.container}>
+      {/* Why the path is ordered this way — the map before the walking */}
+      <View style={styles.introCard}>
+        <Text style={styles.introTitle}>How this path is laid</Text>
+        <Text style={styles.introLead}>
+          Not a syllabus — a walk. Each stage prepares the ground for the next.
+        </Text>
+        {[
+          'Ideas first — dharma, karma, moksha are the grammar; everything else speaks it.',
+          'Then one story that uses them all: the Gita, walked chapter by chapter.',
+          'With the ideas in hand, the gods stop being a crowd and become faces.',
+          'Knowing becomes doing — the practices, matched to your temperament.',
+          'And finally the festivals, where it all turns into lamps, food, and family.',
+        ].map((line, i) => (
+          <View key={i} style={styles.introRow}>
+            <Text style={styles.introNum}>{i + 1}</Text>
+            <Text style={styles.introLine}>{line}</Text>
+          </View>
+        ))}
+      </View>
+
       {modules.map(({ module, items, done }) => {
         const isOpen = !!expanded[module];
         return (
@@ -282,6 +302,51 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingTop: spacing.md,
     paddingBottom: spacing.xxl,
+  },
+  introCard: {
+    backgroundColor: colors.neutrals.white,
+    borderRadius: borderRadius.large,
+    borderWidth: 1,
+    borderColor: 'rgba(230, 81, 0, 0.12)',
+    padding: spacing.md + 2,
+    marginBottom: spacing.sm + 4,
+  },
+  introTitle: {
+    ...typography.sizes.headingSM,
+    color: colors.neutrals.charcoalBlack,
+    fontWeight: '700',
+    marginBottom: 2,
+  },
+  introLead: {
+    fontSize: 13,
+    lineHeight: 19,
+    fontStyle: 'italic',
+    color: colors.neutrals.softAsh,
+    marginBottom: spacing.sm + 2,
+  },
+  introRow: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+    marginBottom: 7,
+  },
+  introNum: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: 'rgba(230, 81, 0, 0.1)',
+    color: colors.primary.deepSaffron,
+    fontSize: 11,
+    fontWeight: '800',
+    textAlign: 'center',
+    lineHeight: 18,
+    overflow: 'hidden',
+    marginTop: 1,
+  },
+  introLine: {
+    flex: 1,
+    fontSize: 13,
+    lineHeight: 19,
+    color: colors.neutrals.charcoalBlack,
   },
   card: {
     backgroundColor: colors.neutrals.white,
