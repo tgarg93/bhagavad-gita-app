@@ -56,7 +56,12 @@ const HomeScreen: React.FC = () => {
         setNextStep(next);
         setJourneyTotal(path.length);
         setJourneyDone(path.filter(item => map[item.id]).length);
+        // "Begin the path" from onboarding lands here — carry it through
+        if (journeyService.consumePendingStart() && next) {
+          navigateToJourneyItem(navigation, next);
+        }
       })();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
   );
 
@@ -146,16 +151,28 @@ const HomeScreen: React.FC = () => {
             <View style={styles.continueGo}>
               <Ionicons name="play" size={18} color="#FFFFFF" style={{ marginLeft: 2 }} />
             </View>
+            <TouchableOpacity
+              style={styles.viewPathBtn}
+              onPress={() => (navigation as any).navigate('JourneyPath')}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
+              <Text style={styles.viewPathText}>View path</Text>
+              <Ionicons name="chevron-forward" size={12} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+            </TouchableOpacity>
           </TouchableOpacity>
         )}
         {!nextStep && journeyTotal > 0 && journeyDone >= journeyTotal && (
-          <View style={styles.continueCard}>
+          <TouchableOpacity
+            style={styles.continueCard}
+            activeOpacity={0.85}
+            onPress={() => (navigation as any).navigate('JourneyPath')}
+          >
             <View style={styles.continueText}>
               <Text style={styles.continueEyebrow}>THE PATH</Text>
               <Text style={styles.continueTitle}>Every step complete 🙏</Text>
               <Text style={styles.continueMeta}>{journeyTotal} of {journeyTotal} — walk it again anytime</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         )}
 
         {/* Daily Wisdom Card - verse of the day */}
@@ -232,6 +249,21 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
+  },
+  viewPathBtn: {
+    position: 'absolute',
+    top: 6,
+    right: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 1,
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+  },
+  viewPathText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
   },
   continueCard: {
     flexDirection: 'row',

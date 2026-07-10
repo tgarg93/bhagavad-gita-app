@@ -25,6 +25,7 @@ import BhagavadGitaCompleteScreen from '../screens/BhagavadGitaCompleteScreen';
 import GitaVersePlayerScreen from '../screens/GitaVersePlayerScreen';
 import ContentReaderScreen from '../screens/ContentReaderScreen';
 import ProfileTabScreen from '../screens/ProfileTabScreen';
+import JourneyPathScreen from '../screens/JourneyPathScreen';
 
 import { DharmaColors } from '../constants/colors';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
@@ -156,6 +157,7 @@ const AppNavigator = () => {
         <Stack.Screen name="BhagavadGitaComplete" component={BhagavadGitaCompleteScreen} />
         <Stack.Screen name="GitaVersePlayer" component={GitaVersePlayerScreen} />
         <Stack.Screen name="ContentReader" component={ContentReaderScreen} />
+        <Stack.Screen name="JourneyPath" component={JourneyPathScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -11,7 +11,9 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import KrishnaGuide from '../components/KrishnaGuide';
+import JourneyPathView from '../components/JourneyPathView';
 import LocalStorageService, { SpiritualProfile } from '../services/localStorageService';
+import journeyService from '../services/journeyService';
 
 interface OnboardingScreenProps {
   onComplete: () => void;
@@ -46,7 +48,7 @@ const GOAL_OPTIONS: { value: SpiritualProfile['dailyGoalMinutes']; label: string
   { value: 20, label: '20 min / day', sub: 'Immersed' },
 ];
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 6;
 
 const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   const [step, setStep] = useState(0);
@@ -68,6 +70,9 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
     firstName
       ? `One last thing, ${firstName} — how much time shall we spend together each day?`
       : 'One last thing — how much time shall we spend together each day?',
+    firstName
+      ? `Here is the road we'll walk together, ${firstName} — five stages, one step at a time.`
+      : "Here is the road we'll walk together — five stages, one step at a time.",
   ];
 
   const toggle = (list: string[], setList: (v: string[]) => void, value: string) =>
@@ -183,15 +188,34 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
               renderOption(dailyGoal === o.value, o.label, o.sub, () => setDailyGoal(o.value), String(o.value))
             )}
         </View>
+
+        {step === 5 && <JourneyPathView scrollable={false} />}
       </ScrollView>
 
-      <TouchableOpacity
-        style={[styles.continueBtn, !canContinue && styles.continueBtnDisabled]}
-        onPress={next}
-        disabled={!canContinue}
-      >
-        <Text style={styles.continueText}>{step === TOTAL_STEPS - 1 ? "I'm committed" : 'Continue'}</Text>
-      </TouchableOpacity>
+      {step < 5 ? (
+        <TouchableOpacity
+          style={[styles.continueBtn, !canContinue && styles.continueBtnDisabled]}
+          onPress={next}
+          disabled={!canContinue}
+        >
+          <Text style={styles.continueText}>{step === 4 ? "I'm committed" : 'Continue'}</Text>
+        </TouchableOpacity>
+      ) : (
+        <View style={styles.pathFooter}>
+          <TouchableOpacity
+            style={styles.continueBtn}
+            onPress={() => {
+              journeyService.setPendingStart();
+              finish();
+            }}
+          >
+            <Text style={styles.continueText}>Begin the path</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={finish} style={styles.skipBtn}>
+            <Text style={styles.skipText}>Skip for now — explore on my own</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -279,6 +303,10 @@ const styles = StyleSheet.create({
     ...typography.sizes.bodySM,
     color: colors.neutrals.softAsh,
     textDecorationLine: 'underline',
+  },
+  pathFooter: {
+    paddingBottom: spacing.sm,
+    alignItems: 'stretch',
   },
   continueBtn: {
     margin: spacing.lg,

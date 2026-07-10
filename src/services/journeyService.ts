@@ -33,6 +33,21 @@ class JourneyService {
     return JourneyService.instance;
   }
 
+  // One-shot "Begin the path" intent. Onboarding renders outside the
+  // navigator, so it can't navigate into the first item itself — it sets
+  // this flag and HomeScreen consumes it on its first focus.
+  private pendingStart = false;
+
+  setPendingStart(): void {
+    this.pendingStart = true;
+  }
+
+  consumePendingStart(): boolean {
+    const value = this.pendingStart;
+    this.pendingStart = false;
+    return value;
+  }
+
   getPath(): JourneyItem[] {
     return buildJourneyPath();
   }
