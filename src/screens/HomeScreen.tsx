@@ -130,40 +130,47 @@ const HomeScreen: React.FC = () => {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Continue your path — the guided journey's next step */}
+        {/* Continue your path — the guided journey's next step. Resume and
+            "view path" live in separate full-width bands so neither steals
+            taps meant for the other. */}
         {nextStep && (
-          <TouchableOpacity
-            style={styles.continueCard}
-            activeOpacity={0.85}
-            onPress={() => navigateToJourneyItem(navigation, nextStep)}
-          >
-            <Image
-              source={typeof nextStep.cover === 'string' ? { uri: nextStep.cover } : nextStep.cover}
-              style={continueThumbStyle}
-            />
-            <View style={styles.continueText}>
-              <Text style={styles.continueEyebrow}>CONTINUE YOUR PATH</Text>
-              <Text style={styles.continueTitle} numberOfLines={1}>{nextStep.title}</Text>
-              <Text style={styles.continueMeta} numberOfLines={1}>
-                {JOURNEY_MODULES[nextStep.module]} · {journeyDone} of {journeyTotal}
-              </Text>
-            </View>
-            <View style={styles.continueGo}>
-              <Ionicons name="play" size={18} color="#FFFFFF" style={{ marginLeft: 2 }} />
-            </View>
+          <View style={styles.continueCard}>
             <TouchableOpacity
-              style={styles.viewPathBtn}
-              onPress={() => (navigation as any).navigate('JourneyPath')}
-              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              style={styles.continueBody}
+              activeOpacity={0.85}
+              onPress={() => navigateToJourneyItem(navigation, nextStep)}
             >
-              <Text style={styles.viewPathText}>View path</Text>
-              <Ionicons name="chevron-forward" size={12} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+              <Image
+                source={typeof nextStep.cover === 'string' ? { uri: nextStep.cover } : nextStep.cover}
+                style={continueThumbStyle}
+              />
+              <View style={styles.continueText}>
+                <Text style={styles.continueEyebrow}>CONTINUE YOUR PATH</Text>
+                <Text style={styles.continueTitle} numberOfLines={1}>{nextStep.title}</Text>
+                <Text style={styles.continueMeta} numberOfLines={1}>
+                  {JOURNEY_MODULES[nextStep.module]}
+                </Text>
+              </View>
+              <View style={styles.continueGo}>
+                <Ionicons name="play" size={18} color="#FFFFFF" style={{ marginLeft: 2 }} />
+              </View>
             </TouchableOpacity>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.pathFooter}
+              activeOpacity={0.7}
+              onPress={() => (navigation as any).navigate('JourneyPath')}
+            >
+              <Text style={styles.pathFooterLabel}>View full path</Text>
+              <View style={styles.pathFooterRight}>
+                <Text style={styles.pathFooterCount}>{journeyDone} of {journeyTotal}</Text>
+                <Ionicons name="chevron-forward" size={13} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+              </View>
+            </TouchableOpacity>
+          </View>
         )}
         {!nextStep && journeyTotal > 0 && journeyDone >= journeyTotal && (
           <TouchableOpacity
-            style={styles.continueCard}
+            style={[styles.continueCard, styles.continueBody]}
             activeOpacity={0.85}
             onPress={() => (navigation as any).navigate('JourneyPath')}
           >
@@ -250,33 +257,45 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
   },
-  viewPathBtn: {
-    position: 'absolute',
-    top: 6,
-    right: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 1,
-    paddingVertical: 2,
-    paddingHorizontal: 4,
-  },
-  viewPathText: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: DharmaDesignSystem.colors.primary.deepSaffron,
-  },
   continueCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: DharmaDesignSystem.spacing.md,
     backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,
     borderRadius: DharmaDesignSystem.borderRadius.large,
     borderWidth: 1,
     borderColor: 'rgba(230, 81, 0, 0.25)',
-    padding: DharmaDesignSystem.spacing.md,
     marginHorizontal: DharmaDesignSystem.spacing.md,
     marginTop: DharmaDesignSystem.spacing.md,
+    overflow: 'hidden',
     ...DharmaDesignSystem.shadows.soft,
+  },
+  continueBody: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: DharmaDesignSystem.spacing.md,
+    padding: DharmaDesignSystem.spacing.md,
+  },
+  pathFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    minHeight: 42,
+    paddingHorizontal: DharmaDesignSystem.spacing.md,
+    paddingVertical: DharmaDesignSystem.spacing.sm,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(230, 81, 0, 0.15)',
+  },
+  pathFooterLabel: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
+  },
+  pathFooterRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+  },
+  pathFooterCount: {
+    fontSize: 12,
+    color: DharmaDesignSystem.colors.neutrals.softAsh,
   },
   continueText: { flex: 1 },
   continueEyebrow: {
