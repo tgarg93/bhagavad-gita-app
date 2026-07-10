@@ -603,7 +603,7 @@ export const deitiesData: Deity[] = [
     regionalVariations: [],
     images: {
       // TODO cover shopping list: replace with a real ganesha-cover.png
-      heroImage: require('../../assets/images/covers/dharma-cover.png'),
+      heroImage: require('../../assets/images/covers/generic-cover.jpg'),
       iconImage: '/images/deities/ganesha-icon.jpg',
       galleryImages: []
     },
@@ -774,7 +774,7 @@ export const deitiesData: Deity[] = [
     regionalVariations: [],
     images: {
       // TODO cover shopping list: replace with a real shiva-cover.png
-      heroImage: require('../../assets/images/covers/dharma-cover.png'),
+      heroImage: require('../../assets/images/covers/generic-cover.jpg'),
       iconImage: '/images/deities/shiva-icon.jpg',
       galleryImages: []
     },

@@ -51,7 +51,7 @@ const convertFestivalsToCards = (): ContentCard[] => {
         description: festival.significance,
         category: 'festivals' as ContentCategory,
         difficulty: 'beginner' as const,
-        heroImage: (festival as any).heroImageUrl || require('../../assets/images/covers/dharma-cover.png'),
+        heroImage: (festival as any).heroImageUrl || require('../../assets/images/covers/generic-cover.jpg'),
         iconImage: '/images/festivals/festival-icon.jpg',
         tags: [festival.type, festival.importance],
         estimatedTime: `${festival.duration} day${festival.duration > 1 ? 's' : ''}`,

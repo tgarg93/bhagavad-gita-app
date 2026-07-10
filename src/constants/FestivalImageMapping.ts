@@ -9,14 +9,14 @@ export const FestivalImageMapping = {
   'navratri-2025': require('../../assets/images/covers/navratri-cover.png'),
 
   // Festivals using general dharma cover
-  'makar-sankranti-2025': require('../../assets/images/covers/dharma-cover.png'),
-  'basant-panchami-2025': require('../../assets/images/covers/dharma-cover.png'),
-  'maha-shivratri-2025': require('../../assets/images/covers/dharma-cover.png'),
-  'holi-2025': require('../../assets/images/covers/dharma-cover.png'),
-  'ganesh-chaturthi-2025': require('../../assets/images/covers/dharma-cover.png'),
+  'makar-sankranti-2025': require('../../assets/images/covers/generic-cover.jpg'),
+  'basant-panchami-2025': require('../../assets/images/covers/generic-cover.jpg'),
+  'maha-shivratri-2025': require('../../assets/images/covers/generic-cover.jpg'),
+  'holi-2025': require('../../assets/images/covers/generic-cover.jpg'),
+  'ganesh-chaturthi-2025': require('../../assets/images/covers/generic-cover.jpg'),
 
   // Default fallback image
-  default: require('../../assets/images/covers/dharma-cover.png'),
+  default: require('../../assets/images/covers/generic-cover.jpg'),
 };
 
 // Helper function to get festival hero image

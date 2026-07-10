@@ -11,9 +11,9 @@ const FALLBACK: ImageSourcePropType = require('../../assets/images/covers/bhagav
 // Key 0 = the "Before You Begin" preface cover.
 const CHAPTER_COVERS: { [key: number]: ImageSourcePropType } = {
   0: FALLBACK,
-  1: FALLBACK,
-  2: FALLBACK,
-  3: FALLBACK,
+  1: require('../../assets/gita-covers/chapter-1.jpg'),
+  2: require('../../assets/gita-covers/chapter-2.jpg'),
+  3: require('../../assets/gita-covers/chapter-3.jpg'),
   4: FALLBACK,
   5: FALLBACK,
   6: FALLBACK,

@@ -7,6 +7,7 @@ import { getDeityById } from './godsAndDeities';
 import { festivalData, getUpcomingFestivals } from './festivals';
 import { getYogaPathsData } from './yogaAndPractices';
 import { hasReaderContent } from './readerContent';
+import { getChapterCover } from './gitaChapterCovers';
 
 export type JourneyModule = 1 | 2 | 3 | 4 | 5;
 
@@ -26,8 +27,7 @@ export const JOURNEY_MODULES: Record<JourneyModule, string> = {
   5: 'Unity in Diversity',
 };
 
-const FALLBACK_COVER = require('../../assets/images/covers/dharma-cover.png');
-const GITA_COVER = require('../../assets/images/covers/bhagavad-gita-cover.png');
+const FALLBACK_COVER = require('../../assets/images/covers/generic-cover.jpg');
 
 const MODULE_1_CONCEPTS = [
   'dharma',
@@ -82,7 +82,7 @@ export function buildJourneyPath(): JourneyItem[] {
       module: 2,
       title: `Gita Chapter ${ch}${chapter ? ` · ${chapter.name.english}` : ''}`,
       route: { name: 'GitaVersePlayer', params: { chapter: ch } },
-      cover: GITA_COVER,
+      cover: getChapterCover(ch) as number,
     });
   }
 

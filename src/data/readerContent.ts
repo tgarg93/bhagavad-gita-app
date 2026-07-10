@@ -22,7 +22,7 @@ export interface ReaderContent {
   readerLabel: string; // cover eyebrow, e.g. 'Philosophy'
 }
 
-const FALLBACK_COVER = require('../../assets/images/covers/dharma-cover.png');
+const FALLBACK_COVER = require('../../assets/images/covers/generic-cover.jpg');
 
 const asCover = (img: unknown): number =>
   typeof img === 'number' ? img : FALLBACK_COVER;

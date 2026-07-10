@@ -583,7 +583,7 @@ export const philosophyData: PhilosophicalConcept[] = [
     podcastEpisodes: [],
     images: {
       // TODO cover shopping list: ahimsa-cover.png
-      heroImage: require('../../assets/images/covers/dharma-cover.png'),
+      heroImage: require('../../assets/images/covers/ahimsa-cover.png'),
       iconImage: '/images/philosophy/ahimsa-icon.jpg'
     },
     difficulty: 'beginner',
@@ -738,7 +738,7 @@ export const philosophyData: PhilosophicalConcept[] = [
     podcastEpisodes: [],
     images: {
       // TODO cover shopping list: samsara-cover.png
-      heroImage: require('../../assets/images/covers/dharma-cover.png'),
+      heroImage: require('../../assets/images/covers/samsara-cover.png'),
       iconImage: '/images/philosophy/samsara-icon.jpg'
     },
     difficulty: 'intermediate',
@@ -894,7 +894,7 @@ export const philosophyData: PhilosophicalConcept[] = [
     podcastEpisodes: [],
     images: {
       // TODO cover shopping list: replace with a real moksha-cover.png
-      heroImage: require('../../assets/images/covers/dharma-cover.png'),
+      heroImage: require('../../assets/images/covers/moksha-cover.png'),
       iconImage: '/images/philosophy/moksha-icon.jpg'
     },
     difficulty: 'advanced',
@@ -1086,7 +1086,7 @@ export const philosophyData: PhilosophicalConcept[] = [
     podcastEpisodes: [],
     images: {
       // TODO cover shopping list: replace with a real three-gunas-cover.png
-      heroImage: require('../../assets/images/covers/dharma-cover.png'),
+      heroImage: require('../../assets/images/covers/three-gunas-cover.png'),
       iconImage: '/images/philosophy/gunas-icon.jpg'
     },
     difficulty: 'beginner',
@@ -1270,7 +1270,7 @@ export const philosophyData: PhilosophicalConcept[] = [
     },
     podcastEpisodes: [],
     images: {
-      heroImage: require('../../assets/images/covers/bhakti-yoga-cover.png'),
+      heroImage: require('../../assets/images/covers/bhakti-paths-cover.png'),
       iconImage: '/images/philosophy/bhakti-icon.jpg'
     },
     difficulty: 'beginner',

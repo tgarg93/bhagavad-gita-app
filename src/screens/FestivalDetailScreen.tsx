@@ -76,7 +76,7 @@ const FestivalDetailScreen: React.FC = () => {
         {/* Hero */}
         <View style={styles.heroContainer}>
           <Image
-            source={festival.heroImageUrl || require('../../assets/images/covers/dharma-cover.png')}
+            source={festival.heroImageUrl || require('../../assets/images/covers/generic-cover.jpg')}
             style={styles.heroImage}
           />
           <LinearGradient

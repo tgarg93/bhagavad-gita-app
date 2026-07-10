@@ -206,7 +206,7 @@ const FestivalCalendarScreen: React.FC = () => {
             {/* Hero Image */}
             <View style={styles.festivalImageContainer}>
               <Image
-                source={item.heroImageUrl || require('../../assets/images/covers/dharma-cover.png')}
+                source={item.heroImageUrl || require('../../assets/images/covers/generic-cover.jpg')}
                 style={styles.festivalHeroImage}
               />
               <View style={styles.festivalOverlay}>

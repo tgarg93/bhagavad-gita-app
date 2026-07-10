@@ -592,7 +592,7 @@ export const festivalData: Festival[] = [
         'Keep away from electrical lines while flying kites'
       ]
     },
-    heroImageUrl: require('../../assets/images/covers/dharma-cover.png'),
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'),
     galleryImages: [
       '/images/festivals/kite-flying.jpg',
       '/images/festivals/til-ladoo.jpg',
@@ -811,7 +811,7 @@ export const festivalData: Festival[] = [
     familyActivities: [],
     culturalImpact: 'Promotes education, arts, and cultural learning among all age groups.',
     relatedFestivals: ['makar-sankranti-2025'],
-    heroImageUrl: require('../../assets/images/covers/dharma-cover.png'),
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'),
   },
   {
     id: 'maha-shivratri-2025',
@@ -983,7 +983,7 @@ export const festivalData: Festival[] = [
     familyActivities: [],
     culturalImpact: 'Promotes spiritual awakening, self-discipline, and devotion to the divine.',
     relatedFestivals: ['holi-2025'],
-    heroImageUrl: require('../../assets/images/covers/dharma-cover.png'),
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'),
   },
   {
     id: 'holi-2025',
@@ -1184,7 +1184,7 @@ export const festivalData: Festival[] = [
     ],
     culturalImpact: 'Breaks social barriers, promotes unity, and celebrates the diversity of life through colors.',
     relatedFestivals: ['maha-shivratri-2025'],
-    heroImageUrl: require('../../assets/images/covers/dharma-cover.png'), // TODO cover shopping list: holi-cover.png
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: holi-cover.png
     sources: [
       {
         text: 'Bhagavata Purana',
@@ -1807,7 +1807,7 @@ export const festivalData: Festival[] = [
     ],
     culturalImpact: 'Promotes community unity, artistic expression, and environmental awareness.',
     relatedFestivals: ['diwali-2025'],
-    heroImageUrl: require('../../assets/images/covers/dharma-cover.png'), // TODO cover shopping list: ganesh-chaturthi-cover.png
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: ganesh-chaturthi-cover.png
     sources: [
       {
         text: 'Shiva Purana',
