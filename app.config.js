@@ -25,7 +25,7 @@ export default {
     ],
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.dharma.app",
+      bundleIdentifier: "com.tushargarg.dharma",
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
         NSMicrophoneUsageDescription: "This app needs microphone access to enable voice conversations with Krishna",
@@ -39,7 +39,7 @@ export default {
         backgroundColor: "#fff7ed"
       },
       edgeToEdgeEnabled: true,
-      package: "com.dharma.app"
+      package: "com.tushargarg.dharma"
     },
     extra: {
       geminiApiKey: process.env.EXPO_PUBLIC_GEMINI_API_KEY,
