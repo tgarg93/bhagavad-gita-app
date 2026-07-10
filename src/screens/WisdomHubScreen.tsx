@@ -112,13 +112,7 @@ const WisdomHubScreen: React.FC = () => {
     }
   };
 
-  const handleViewAll = (section: ContentSection) => {
-    if (section.viewAllRoute) {
-      (navigation as any).navigate(section.viewAllRoute);
-    }
-  };
-
-  const formatFestivalDate = (date: string, daysUntil: number) => {
+  const formatFestivalDate =(date: string, daysUntil: number) => {
     const festivalDate = new Date(date);
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const formattedDate = `${monthNames[festivalDate.getMonth()]} ${festivalDate.getDate()}`;
@@ -246,19 +240,11 @@ const WisdomHubScreen: React.FC = () => {
               color={DharmaDesignSystem.colors.primary.deepSaffron} 
               style={styles.sectionIcon}
             />
-            <View>
+            <View style={styles.sectionTitleText}>
               <Text style={styles.sectionTitle}>{section.title}</Text>
               <Text style={styles.sectionDescription}>{section.description}</Text>
             </View>
           </View>
-          
-          <TouchableOpacity 
-            style={styles.viewAllButton}
-            onPress={() => handleViewAll(section)}
-          >
-            <Text style={styles.viewAllText}>View All</Text>
-            <Ionicons name="chevron-forward" size={16} color={DharmaDesignSystem.colors.primary.deepSaffron} />
-          </TouchableOpacity>
         </View>
 
         <FlatList
@@ -363,6 +349,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
+  sectionTitleText: {
+    flex: 1,
+  },
   sectionIcon: {
     marginRight: DharmaDesignSystem.spacing.sm,
   },
@@ -375,21 +364,6 @@ const styles = StyleSheet.create({
     ...DharmaDesignSystem.typography.sizes.caption,
     color: DharmaDesignSystem.colors.neutrals.softAsh,
     letterSpacing: 0.3,
-  },
-  viewAllButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: DharmaDesignSystem.spacing.sm,
-    paddingHorizontal: DharmaDesignSystem.spacing.sm,
-    borderRadius: DharmaDesignSystem.borderRadius.small,
-    backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 107, 53, 0.15)',
-  },
-  viewAllText: {
-    ...DharmaDesignSystem.typography.sizes.navText,
-    color: DharmaDesignSystem.colors.primary.deepSaffron,
-    marginRight: DharmaDesignSystem.spacing.xs,
   },
   cardsContainer: {
     paddingLeft: DharmaDesignSystem.spacing.lg,

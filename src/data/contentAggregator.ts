@@ -201,8 +201,7 @@ export const getContentSections = (): ContentSection[] => {
         title: 'Core Concepts',
         description: 'Essential foundations of dharmic living',
         icon: 'bulb-outline',
-        cards: convertPhilosophyToCards().slice(0, 5), // Show first 5 concepts
-        viewAllRoute: 'PhilosophyDetail'
+        cards: convertPhilosophyToCards(),
       },
       {
         id: 'scriptures-section',
@@ -210,7 +209,6 @@ export const getContentSections = (): ContentSection[] => {
         description: 'Ancient wisdom texts and sacred stories',
         icon: 'library-outline',
         cards: convertScripturesToCards(),
-        viewAllRoute: 'ScripturesDetail'
       },
       {
         id: 'deities-section',
@@ -218,7 +216,6 @@ export const getContentSections = (): ContentSection[] => {
         description: 'Divine forms and their teachings',
         icon: 'flower-outline',
         cards: convertDeitiesToCards(),
-        viewAllRoute: 'DeitiesDetail'
       },
       {
         id: 'practices-section',
@@ -226,15 +223,13 @@ export const getContentSections = (): ContentSection[] => {
         description: 'Paths and techniques for spiritual growth',
         icon: 'leaf-outline',
         cards: convertPracticesToCards(),
-        viewAllRoute: 'PracticesDetail'
       },
       {
-        id: 'festivals-section', 
+        id: 'festivals-section',
         title: 'Festivals',
         description: 'Sacred celebrations and their meanings',
         icon: 'calendar-outline',
-        cards: convertFestivalsToCards().slice(0, 6), // Show first 6 festivals
-        viewAllRoute: 'FestivalCalendar'
+        cards: convertFestivalsToCards(),
       }
     ];
   } catch (error) {

@@ -26,7 +26,6 @@ export interface ContentSection {
   description: string;
   icon: string;
   cards: ContentCard[];
-  viewAllRoute?: string;
 }
 
 export type ContentCategory = 
