@@ -11,7 +11,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DharmaColors } from '../constants/colors';
@@ -19,7 +19,19 @@ import { DharmaDesignSystem, createTextStyle, createGradientColors } from '../co
 import DharmaSearchHeader from '../components/ui/DharmaSearchHeader';
 import { getContentSections, getFeaturedContent, searchContent } from '../data/contentAggregator';
 import { hasReaderContent } from '../data/readerContent';
+import journeyService from '../services/journeyService';
 import { ContentSection, ContentCard, ContentCategory } from '../types/contentTypes';
+
+// Map a WisdomHub card onto its journey-completion key (null = not tracked)
+const journeyIdForCard = (card: ContentCard): string | null => {
+  switch (card.category) {
+    case 'philosophy': return `concept:${card.id}`;
+    case 'deities': return `deity:${card.id}`;
+    case 'festivals': return `festival:${card.id}`;
+    case 'practices': return `practice:${card.id}`;
+    default: return null;
+  }
+};
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.75;
@@ -32,6 +44,16 @@ const WisdomHubScreen: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<ContentCard[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [completionMap, setCompletionMap] = useState<Record<string, string>>({});
+
+  // Refresh journey completion whenever the tab regains focus
+  useFocusEffect(
+    React.useCallback(() => {
+      journeyService.getCompletionMap().then(setCompletionMap);
+    }, [])
+  );
+
+  const gitaChaptersDone = Object.keys(completionMap).filter(k => k.startsWith('gita:')).length;
 
   useEffect(() => {
     loadContent();
@@ -118,6 +140,16 @@ const WisdomHubScreen: React.FC = () => {
       }
     };
 
+    // Journey decoration: the Gita card shows chapter progress; everything
+    // else gets a checkmark once its journey item is complete
+    const isGitaCard = item.category === 'scriptures' && item.id === 'bhagavad-gita';
+    const journeyId = journeyIdForCard(item);
+    const isCompleted = isGitaCard
+      ? gitaChaptersDone >= 18
+      : journeyId != null && !!completionMap[journeyId];
+    const progressValue = isGitaCard
+      ? Math.round((gitaChaptersDone / 18) * 100)
+      : item.progress ?? 0;
 
     return (
       <TouchableOpacity 
@@ -144,18 +176,25 @@ const WisdomHubScreen: React.FC = () => {
             </View>
           )}
 
+          {/* Journey completion checkmark */}
+          {isCompleted && (
+            <View style={styles.completedBadge}>
+              <Ionicons name="checkmark" size={16} color="#FFFFFF" />
+            </View>
+          )}
+
           {/* Progress Indicator */}
-          {!!item.progress && item.progress > 0 && (
+          {!isCompleted && progressValue > 0 && (
             <View style={styles.progressContainer}>
               <View style={styles.progressBar}>
-                <View 
+                <View
                   style={[
-                    styles.progressFill, 
-                    { width: `${item.progress}%` }
-                  ]} 
+                    styles.progressFill,
+                    { width: `${progressValue}%` }
+                  ]}
                 />
               </View>
-              <Text style={styles.progressText}>{item.progress}%</Text>
+              <Text style={styles.progressText}>{progressValue}%</Text>
             </View>
           )}
         </View>
@@ -390,6 +429,19 @@ const styles = StyleSheet.create({
     borderRadius: DharmaDesignSystem.borderRadius.small,
     paddingHorizontal: DharmaDesignSystem.spacing.xs,
     paddingVertical: DharmaDesignSystem.spacing.xs / 2,
+  },
+  completedBadge: {
+    position: 'absolute',
+    top: DharmaDesignSystem.spacing.sm,
+    left: DharmaDesignSystem.spacing.sm,
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: DharmaDesignSystem.colors.primary.peacockTeal,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
   },
   newBadgeText: {
     ...DharmaDesignSystem.typography.sizes.overline,

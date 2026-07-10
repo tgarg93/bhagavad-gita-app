@@ -16,6 +16,7 @@ import AudioControls from '../components/AudioControls';
 import TextHighlighter from '../components/TextHighlighter';
 import { getPracticeById, SpiritualPractice } from '../data/yogaAndPractices';
 import { AudioNarrationService, TextSegment } from '../services/audioNarrationService';
+import journeyService from '../services/journeyService';
 
 interface PracticeDetailScreenProps {
   route: {
@@ -41,6 +42,9 @@ const PracticeDetailScreen: React.FC<PracticeDetailScreenProps> = () => {
 
     // Prepare audio segments when practice loads
     if (practiceData) {
+      // Journey completion for practices is visit-based (v1 semantics —
+      // practices have no paged reader; an end-of-scroll upgrade can come later)
+      journeyService.markCompleted(`practice:${practiceData.id}`);
       const audioService = AudioNarrationService.getInstance();
       const content = [
         practiceData.description,

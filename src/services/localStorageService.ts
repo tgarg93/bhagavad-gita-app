@@ -77,7 +77,34 @@ export const DEFAULT_SPIRITUAL_PROFILE: SpiritualProfile = {
 export interface VerseProgress {
   readVerses: string[]; // "chapter.verse" keys, e.g. "1.1"
   lastPageIndex: number; // page index in the continuous book to resume at
+  // Version of the page layout lastPageIndex refers to; bumped when pages are
+  // inserted into the book (e.g. per-chapter celebration pages) so the stored
+  // index can be migrated once
+  pageLayoutVersion?: number;
 }
+
+// Journey activity for the reading streak (UserProgress.dailyStreak is legacy
+// and never written; this record is the live source)
+export interface JourneyActivity {
+  lastActiveDate: string; // YYYY-MM-DD
+  streak: number;
+}
+
+// Local notification preferences (all types default ON)
+export interface NotificationSettings {
+  dailyWisdom: boolean;
+  journeyNudge: boolean;
+  festivals: boolean;
+  streak: boolean;
+  permissionAsked?: boolean;
+}
+
+export const DEFAULT_NOTIFICATION_SETTINGS: NotificationSettings = {
+  dailyWisdom: true,
+  journeyNudge: true,
+  festivals: true,
+  streak: true,
+};
 
 // One turn in an ongoing reflection conversation (beyond the first exchange)
 export interface ReflectionTurn {
@@ -132,6 +159,9 @@ class LocalStorageService {
     ANALYTICS: 'bhagavad_gita_analytics',
     CURRENT_USER: 'bhagavad_gita_current_user',
     READER_POSITIONS: 'content_reader_positions',
+    CONTENT_COMPLETION: 'content_completion',
+    JOURNEY_ACTIVITY: 'journey_activity',
+    NOTIFICATION_SETTINGS: 'notification_settings',
   };
 
   private static readonly TOTAL_GITA_VERSES = 700;
@@ -320,6 +350,15 @@ class LocalStorageService {
     return (await this.getVerseProgress()).lastPageIndex;
   }
 
+  // One-time remap of the stored book position when page kinds are inserted
+  // into the Gita layout (stamps the layout version so it runs only once)
+  static async migrateLastPageIndex(newIndex: number, layoutVersion: number) {
+    const progress = await this.getVerseProgress();
+    progress.lastPageIndex = newIndex;
+    progress.pageLayoutVersion = layoutVersion;
+    await this.saveVerseProgress(progress);
+  }
+
   // Resume positions for the generic content reader, keyed `${contentType}:${contentId}`
   static async getReaderPosition(key: string): Promise<number> {
     try {
@@ -342,6 +381,71 @@ class LocalStorageService {
       }
     } catch (error) {
       console.error('Error saving reader position:', error);
+    }
+  }
+
+  // ——— Journey completion (one flag per journey item, first-completion wins) ———
+
+  static async getContentCompletion(): Promise<Record<string, string>> {
+    try {
+      const json = await AsyncStorage.getItem(this.KEYS.CONTENT_COMPLETION);
+      return json ? JSON.parse(json) : {};
+    } catch (error) {
+      console.error('Error getting content completion:', error);
+      return {};
+    }
+  }
+
+  static async markContentCompleted(journeyItemId: string): Promise<boolean> {
+    try {
+      const map = await this.getContentCompletion();
+      if (map[journeyItemId]) return false; // keep the first completion timestamp
+      map[journeyItemId] = new Date().toISOString();
+      await AsyncStorage.setItem(this.KEYS.CONTENT_COMPLETION, JSON.stringify(map));
+      return true;
+    } catch (error) {
+      console.error('Error marking content completed:', error);
+      return false;
+    }
+  }
+
+  // ——— Journey activity / streak ———
+
+  static async getJourneyActivity(): Promise<JourneyActivity> {
+    try {
+      const json = await AsyncStorage.getItem(this.KEYS.JOURNEY_ACTIVITY);
+      if (json) return JSON.parse(json);
+    } catch (error) {
+      console.error('Error getting journey activity:', error);
+    }
+    return { lastActiveDate: '', streak: 0 };
+  }
+
+  static async saveJourneyActivity(activity: JourneyActivity) {
+    try {
+      await AsyncStorage.setItem(this.KEYS.JOURNEY_ACTIVITY, JSON.stringify(activity));
+    } catch (error) {
+      console.error('Error saving journey activity:', error);
+    }
+  }
+
+  // ——— Notification settings ———
+
+  static async getNotificationSettings(): Promise<NotificationSettings> {
+    try {
+      const json = await AsyncStorage.getItem(this.KEYS.NOTIFICATION_SETTINGS);
+      if (json) return { ...DEFAULT_NOTIFICATION_SETTINGS, ...JSON.parse(json) };
+    } catch (error) {
+      console.error('Error getting notification settings:', error);
+    }
+    return { ...DEFAULT_NOTIFICATION_SETTINGS };
+  }
+
+  static async saveNotificationSettings(settings: NotificationSettings) {
+    try {
+      await AsyncStorage.setItem(this.KEYS.NOTIFICATION_SETTINGS, JSON.stringify(settings));
+    } catch (error) {
+      console.error('Error saving notification settings:', error);
     }
   }
 
@@ -564,6 +668,9 @@ class LocalStorageService {
         this.KEYS.ANALYTICS,
         this.KEYS.CURRENT_USER,
         this.KEYS.READER_POSITIONS,
+        this.KEYS.CONTENT_COMPLETION,
+        this.KEYS.JOURNEY_ACTIVITY,
+        this.KEYS.NOTIFICATION_SETTINGS,
       ]);
     } catch (error) {
       console.error('Error clearing all data:', error);

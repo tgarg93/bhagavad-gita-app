@@ -14,7 +14,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
@@ -33,6 +33,9 @@ import krishnaContext from '../services/krishnaContextService';
 import { AudioNarrationService, NarrationCallbacks } from '../services/audioNarrationService';
 import TextHighlighter from '../components/TextHighlighter';
 import ChapterReflection from '../components/ChapterReflection';
+import JourneyCelebration from '../components/JourneyCelebration';
+import journeyService from '../services/journeyService';
+import { navigateToJourneyItem } from '../data/journeyPath';
 
 const { width } = Dimensions.get('window');
 const TOTAL_GITA_VERSES = 700;
@@ -52,15 +55,23 @@ type Page =
   | { kind: 'cover'; chapter: number } // chapter 0 = preface cover
   | { kind: 'preface' }
   | { kind: 'verse'; chapter: number; verse: GitaFullVerse; verseIndex: number }
-  | { kind: 'reflection'; chapter: number; questionIndex: number }; // one page per question
+  | { kind: 'reflection'; chapter: number; questionIndex: number } // one page per question
+  | { kind: 'celebration'; chapter: number }; // end-of-chapter journey moment
+
+// Layout version for VerseProgress.lastPageIndex: v2 = per-chapter celebration
+// pages inserted after each reflection block
+const PAGE_LAYOUT_VERSION = 2;
 
 const GitaVersePlayerScreen: React.FC = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const requestedChapter = (route.params as { chapter?: number } | undefined)?.chapter;
 
   // Build the whole-book page list + index maps once
-  const { pages, coverIndex } = useMemo(() => {
+  const { pages, coverIndex, celebrationIndex } = useMemo(() => {
     const pages: Page[] = [];
     const coverIndex: { [chapter: number]: number } = {};
+    const celebrationIndex: { [chapter: number]: number } = {};
     coverIndex[0] = pages.length;
     pages.push({ kind: 'cover', chapter: 0 });
     pages.push({ kind: 'preface' });
@@ -73,8 +84,10 @@ const GitaVersePlayerScreen: React.FC = () => {
       (gitaReflections[ch] || []).forEach((_, questionIndex) =>
         pages.push({ kind: 'reflection', chapter: ch, questionIndex })
       );
+      celebrationIndex[ch] = pages.length;
+      pages.push({ kind: 'celebration', chapter: ch });
     }
-    return { pages, coverIndex };
+    return { pages, coverIndex, celebrationIndex };
   }, []);
 
   const verseStartIndex = useMemo(() => {
@@ -103,11 +116,32 @@ const GitaVersePlayerScreen: React.FC = () => {
   const [highlightedSegmentId, setHighlightedSegmentId] = useState<string | null>(null);
   const [playingChapter, setPlayingChapter] = useState<number | null>(null);
 
-  // Resume last spot on mount
+  // Resume last spot on mount (or open at a requested chapter), migrating the
+  // stored index once when the page layout gains new page kinds
   useEffect(() => {
     (async () => {
-      const last = await LocalStorageService.getLastPage();
-      const idx = last > 0 && last < pages.length ? last : 0;
+      let idx: number;
+      if (requestedChapter && coverIndex[requestedChapter] != null) {
+        idx = coverIndex[requestedChapter];
+      } else {
+        const progress = await LocalStorageService.getVerseProgress();
+        let last = progress.lastPageIndex;
+        if ((progress.pageLayoutVersion ?? 1) < PAGE_LAYOUT_VERSION) {
+          // Stored index predates the inserted celebration pages: it counts
+          // non-celebration pages only. Map it to the k-th non-celebration
+          // page of the new layout, then stamp the version.
+          let count = -1;
+          let migrated = 0;
+          for (let i = 0; i < pages.length; i++) {
+            if (pages[i].kind === 'celebration') continue;
+            count++;
+            if (count === last) { migrated = i; break; }
+          }
+          last = migrated;
+          await LocalStorageService.migrateLastPageIndex(migrated, PAGE_LAYOUT_VERSION);
+        }
+        idx = last > 0 && last < pages.length ? last : 0;
+      }
       setInitialIndex(idx);
       setActiveIndex(idx);
       setTotalProgress(await LocalStorageService.getTotalProgress());
@@ -116,6 +150,14 @@ const GitaVersePlayerScreen: React.FC = () => {
     return () => { audioService.cleanup(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Re-navigation with a different chapter while already mounted
+  useEffect(() => {
+    if (ready && requestedChapter && coverIndex[requestedChapter] != null) {
+      listRef.current?.scrollToIndex({ index: coverIndex[requestedChapter], animated: false });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestedChapter]);
 
   const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
     if (viewableItems.length > 0 && viewableItems[0].index != null) {
@@ -135,6 +177,10 @@ const GitaVersePlayerScreen: React.FC = () => {
           title: chapterName(page.chapter),
           snippet: page.verse.english,
         });
+      }
+      if (page?.kind === 'celebration') {
+        // Reaching the chapter's celebration page IS completing the chapter
+        journeyService.markCompleted(`gita:${page.chapter}`);
       }
     }
   }).current;
@@ -324,6 +370,9 @@ const GitaVersePlayerScreen: React.FC = () => {
       const count = (gitaReflections[ch] || []).length;
       return { title: `Chapter ${ch}`, sub: `Reflection ${activePage.questionIndex + 1} of ${count}`, progress: 1 };
     }
+    if (activePage.kind === 'celebration') {
+      return { title: `Chapter ${ch}`, sub: 'Complete', progress: 1 };
+    }
     return { title: `Chapter ${ch}`, sub: '', progress: 0 };
   })();
 
@@ -448,11 +497,11 @@ const GitaVersePlayerScreen: React.FC = () => {
     );
   };
 
-  // Jump to the first page after this chapter's reflection block
+  // Skip the reflection block — landing on the chapter's celebration page,
+  // so skipping still completes the chapter on the journey
   const skipReflections = useCallback((chapter: number) => {
-    const target = chapter < 18 ? coverIndex[chapter + 1] : pages.length - 1;
-    scrollToIndex(target);
-  }, [coverIndex, pages.length, scrollToIndex]);
+    scrollToIndex(celebrationIndex[chapter] ?? pages.length - 1);
+  }, [celebrationIndex, pages.length, scrollToIndex]);
 
   const renderReflection = (chapter: number, questionIndex: number) => (
     <KeyboardAvoidingView style={styles.page} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -474,12 +523,31 @@ const GitaVersePlayerScreen: React.FC = () => {
     </KeyboardAvoidingView>
   );
 
+  const renderCelebration = (chapter: number) => (
+    <View style={styles.page}>
+      <JourneyCelebration
+        completedItemId={`gita:${chapter}`}
+        completedTitle={`Chapter ${chapter} · ${chapterName(chapter)}`}
+        onNext={next => {
+          if (next.id === `gita:${chapter + 1}`) {
+            // Next chapter of the same book — turn the page inline
+            scrollToIndex(coverIndex[chapter + 1]);
+          } else {
+            navigateToJourneyItem(navigation, next, true);
+          }
+        }}
+        onBackToLearn={() => (navigation as any).navigate('MainTabs', { screen: 'Scriptures' })}
+      />
+    </View>
+  );
+
   const renderItem = ({ item }: { item: Page }) => {
     switch (item.kind) {
       case 'cover': return renderCover(item.chapter);
       case 'preface': return renderPreface();
       case 'verse': return renderVerse(item.chapter, item.verse, item.verseIndex);
       case 'reflection': return renderReflection(item.chapter, item.questionIndex);
+      case 'celebration': return renderCelebration(item.chapter);
     }
   };
 

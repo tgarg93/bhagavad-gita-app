@@ -11,23 +11,54 @@ import {
   Platform,
   Image,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaColors, NavigationColors } from '../constants/colors';
 import { DharmaDesignSystem, createTextStyle, createCardStyle } from '../constants/DharmaDesignSystem';
-import { getTodaysInsight, getCurrentWeekTheme, getRandomInsight } from '../data/dailyInsights';
+import { getCurrentWeekTheme } from '../data/dailyInsights';
+import { getDailyVerse, getRandomVerse, DailyVerse } from '../data/dailyVerse';
 import { getTodaysFestivals, getUpcomingFestivals, getNextOccurrence, getDaysUntilFestival, Festival } from '../data/festivals';
+import journeyService from '../services/journeyService';
+import { JourneyItem, JOURNEY_MODULES, navigateToJourneyItem } from '../data/journeyPath';
 
 const { width } = Dimensions.get('window');
 
+// Typed separately: inside StyleSheet.create the style resolves to a union
+// that Image's style prop rejects
+const continueThumbStyle = {
+  width: 52,
+  height: 52,
+  borderRadius: DharmaDesignSystem.borderRadius.medium,
+  resizeMode: 'cover',
+} as const;
+
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
-  const [todaysInsight, setTodaysInsight] = useState(getTodaysInsight() || getRandomInsight());
+  const [todaysVerse, setTodaysVerse] = useState<DailyVerse>(getDailyVerse());
   const [weekTheme, setWeekTheme] = useState(getCurrentWeekTheme());
   const [todaysFestivals, setTodaysFestivals] = useState(getTodaysFestivals());
   const [upcomingFestivals, setUpcomingFestivals] = useState(getUpcomingFestivals(3));
   const [refreshing, setRefreshing] = useState(false);
+  const [nextStep, setNextStep] = useState<JourneyItem | null>(null);
+  const [journeyDone, setJourneyDone] = useState(0);
+  const [journeyTotal, setJourneyTotal] = useState(0);
+
+  // Refresh the journey position whenever Home regains focus
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        const [next, map] = await Promise.all([
+          journeyService.getNextUnfinished(),
+          journeyService.getCompletionMap(),
+        ]);
+        const path = journeyService.getPath();
+        setNextStep(next);
+        setJourneyTotal(path.length);
+        setJourneyDone(path.filter(item => map[item.id]).length);
+      })();
+    }, [])
+  );
 
   useEffect(() => {
     loadDailyContent();
@@ -37,7 +68,7 @@ const HomeScreen: React.FC = () => {
   const loadDailyContent = async () => {
     setRefreshing(true);
     try {
-      setTodaysInsight(getTodaysInsight() || getRandomInsight());
+      setTodaysVerse(getDailyVerse());
       setWeekTheme(getCurrentWeekTheme());
       setTodaysFestivals(getTodaysFestivals());
       setUpcomingFestivals(getUpcomingFestivals(3));
@@ -74,7 +105,7 @@ const HomeScreen: React.FC = () => {
   };
 
   const refreshInsight = () => {
-    setTodaysInsight(getRandomInsight());
+    setTodaysVerse(getRandomVerse());
   };
 
   const formatDate = (date: Date): string => {
@@ -94,33 +125,62 @@ const HomeScreen: React.FC = () => {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Daily Wisdom Card - Top Positioned */}
+        {/* Continue your path — the guided journey's next step */}
+        {nextStep && (
+          <TouchableOpacity
+            style={styles.continueCard}
+            activeOpacity={0.85}
+            onPress={() => navigateToJourneyItem(navigation, nextStep)}
+          >
+            <Image
+              source={typeof nextStep.cover === 'string' ? { uri: nextStep.cover } : nextStep.cover}
+              style={continueThumbStyle}
+            />
+            <View style={styles.continueText}>
+              <Text style={styles.continueEyebrow}>CONTINUE YOUR PATH</Text>
+              <Text style={styles.continueTitle} numberOfLines={1}>{nextStep.title}</Text>
+              <Text style={styles.continueMeta} numberOfLines={1}>
+                Module {nextStep.module} · {JOURNEY_MODULES[nextStep.module]} · {journeyDone} of {journeyTotal} steps
+              </Text>
+            </View>
+            <View style={styles.continueGo}>
+              <Ionicons name="play" size={18} color="#FFFFFF" style={{ marginLeft: 2 }} />
+            </View>
+          </TouchableOpacity>
+        )}
+        {!nextStep && journeyTotal > 0 && journeyDone >= journeyTotal && (
+          <View style={styles.continueCard}>
+            <View style={styles.continueText}>
+              <Text style={styles.continueEyebrow}>THE PATH</Text>
+              <Text style={styles.continueTitle}>Every step complete 🙏</Text>
+              <Text style={styles.continueMeta}>{journeyTotal} of {journeyTotal} — walk it again anytime</Text>
+            </View>
+          </View>
+        )}
+
+        {/* Daily Wisdom Card - verse of the day */}
         <View style={styles.wisdomContainer}>
           <View style={styles.wisdomCard}>
-            <TouchableOpacity 
-              onPress={refreshInsight} 
+            <TouchableOpacity
+              onPress={refreshInsight}
               style={styles.refreshButton}
               activeOpacity={1}
             >
               <Ionicons name="refresh" size={16} color={DharmaDesignSystem.colors.primary.deepSaffron} />
             </TouchableOpacity>
-            
+
             <View style={styles.wisdomContent}>
-              {todaysInsight.sanskrit && (
-                <Text style={styles.sanskritText}>{todaysInsight.sanskrit}</Text>
+              {!!todaysVerse.sanskrit && (
+                <Text style={styles.sanskritText}>{todaysVerse.sanskrit}</Text>
               )}
-              
-              {todaysInsight.transliteration && (
-                <Text style={styles.transliterationText}>{todaysInsight.transliteration}</Text>
+
+              {!!todaysVerse.transliteration && (
+                <Text style={styles.transliterationText}>{todaysVerse.transliteration}</Text>
               )}
-              
-              {todaysInsight.translation && (
-                <Text style={styles.translationText}>{todaysInsight.translation}</Text>
-              )}
-              
-              <Text style={styles.meaningText}>{todaysInsight.content}</Text>
-              
-              <Text style={styles.sourceText}>{todaysInsight.source}</Text>
+
+              <Text style={styles.meaningText}>{todaysVerse.english}</Text>
+
+              <Text style={styles.sourceText}>{todaysVerse.reference}</Text>
             </View>
           </View>
         </View>
@@ -172,6 +232,46 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
+  },
+  continueCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: DharmaDesignSystem.spacing.md,
+    backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,
+    borderRadius: DharmaDesignSystem.borderRadius.large,
+    borderWidth: 1,
+    borderColor: 'rgba(230, 81, 0, 0.25)',
+    padding: DharmaDesignSystem.spacing.md,
+    marginHorizontal: DharmaDesignSystem.spacing.md,
+    marginTop: DharmaDesignSystem.spacing.md,
+    ...DharmaDesignSystem.shadows.soft,
+  },
+  continueText: { flex: 1 },
+  continueEyebrow: {
+    ...DharmaDesignSystem.typography.sizes.caption,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
+    fontWeight: '700',
+    letterSpacing: 0.8,
+  },
+  continueTitle: {
+    ...DharmaDesignSystem.typography.sizes.headingSM,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
+    fontWeight: '700',
+    marginTop: 1,
+  },
+  continueMeta: {
+    ...DharmaDesignSystem.typography.sizes.caption,
+    fontWeight: '400',
+    color: DharmaDesignSystem.colors.neutrals.softAsh,
+    marginTop: 2,
+  },
+  continueGo: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: DharmaDesignSystem.colors.primary.deepSaffron,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   wisdomContainer: {
     paddingHorizontal: DharmaDesignSystem.spacing.lg,

@@ -31,6 +31,9 @@ import { AudioNarrationService, NarrationCallbacks } from '../services/audioNarr
 import NarrativeSections from '../components/NarrativeSections';
 import SourcesCard from '../components/SourcesCard';
 import ChapterReflection from '../components/ChapterReflection';
+import JourneyCelebration from '../components/JourneyCelebration';
+import journeyService from '../services/journeyService';
+import { navigateToJourneyItem } from '../data/journeyPath';
 
 const { width } = Dimensions.get('window');
 
@@ -51,7 +54,8 @@ type ReaderPage =
   | { kind: 'cover' }
   | { kind: 'section'; section: NarrativeSection; sectionIndex: number }
   | { kind: 'reflection'; questionIndex: number } // one page per question
-  | { kind: 'sources' };
+  | { kind: 'sources' }
+  | { kind: 'celebration' };
 
 const ContentReaderScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -73,6 +77,7 @@ const ContentReaderScreen: React.FC = () => {
       pages.push({ kind: 'reflection', questionIndex })
     );
     if (content.sources.length > 0) pages.push({ kind: 'sources' });
+    pages.push({ kind: 'celebration' }); // appended last — stored positions unaffected
     return pages;
   }, [content]);
 
@@ -130,6 +135,10 @@ const ContentReaderScreen: React.FC = () => {
           title: content.title,
           snippet: `${page.section.title}. ${page.section.storyText ?? ''}`,
         });
+      }
+      if (page?.kind === 'celebration') {
+        // Reaching the celebration page IS completing the content
+        journeyService.markCompleted(positionKey);
       }
     }
   }).current;
@@ -295,6 +304,7 @@ const ContentReaderScreen: React.FC = () => {
         progress: 1,
       };
     }
+    if (activePage.kind === 'celebration') return { sub: 'Complete', progress: 1 };
     return { sub: 'Sources', progress: 1 };
   })();
 
@@ -381,12 +391,24 @@ const ContentReaderScreen: React.FC = () => {
     </View>
   );
 
+  const renderCelebration = () => (
+    <View style={styles.page}>
+      <JourneyCelebration
+        completedItemId={positionKey}
+        completedTitle={content.title}
+        onNext={next => navigateToJourneyItem(navigation, next, true)}
+        onBackToLearn={() => (navigation as any).navigate('MainTabs', { screen: 'Scriptures' })}
+      />
+    </View>
+  );
+
   const renderItem = ({ item }: { item: ReaderPage }) => {
     switch (item.kind) {
       case 'cover': return renderCover();
       case 'section': return renderSection(item.section, item.sectionIndex);
       case 'reflection': return renderReflection(item.questionIndex);
       case 'sources': return renderSources();
+      case 'celebration': return renderCelebration();
     }
   };
 
