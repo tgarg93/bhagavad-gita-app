@@ -75,14 +75,20 @@ const HomeScreen: React.FC = () => {
         }
       })();
       return () => {
-        audioService.stopNarration();
+        audioService.stopSpeaking();
+        setSpeaking(false);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
   );
 
   const hearVerse = async () => {
-    if (speaking) return;
+    if (speaking) {
+      // expo-speech doesn't fire onDone on interrupt — reset state ourselves
+      await audioService.stopSpeaking();
+      setSpeaking(false);
+      return;
+    }
     setSpeaking(true);
     try {
       await audioService.speakOnce(`${todaysVerse.english}. ${todaysVerse.reference}`, () =>

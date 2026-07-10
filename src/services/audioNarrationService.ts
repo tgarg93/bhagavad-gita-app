@@ -400,6 +400,12 @@ export class AudioNarrationService {
     return type === 'sanskrit' ? 'hi-IN' : 'en-IN';
   }
 
+  // Unconditional stop for one-off utterances — speakOnce doesn't go through
+  // the segment queue, so stopNarration's speechId guard never fires for it
+  async stopSpeaking(): Promise<void> {
+    await this.backend.stop();
+  }
+
   // One-off utterance outside the segment queue (e.g. the Daily Chai verse).
   // Uses the same session activation and voice preference as full narration.
   async speakOnce(text: string, onDone?: () => void): Promise<void> {
