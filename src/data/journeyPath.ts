@@ -31,6 +31,7 @@ const FALLBACK_COVER = require('../../assets/images/covers/generic-cover.jpg');
 
 const MODULE_1_CONCEPTS = [
   'hinduism-overview', // Module 0 in spirit: the map before the journey
+  'branches-of-hinduism', // the map's second half: the streams
   'dharma',
   'karma',
   'moksha',
@@ -38,6 +39,11 @@ const MODULE_1_CONCEPTS = [
   'bhakti-paths',
   'ahimsa',
   'samsara',
+  // The deeper beliefs, once the foundations are walked
+  'maya',
+  'brahman-atman',
+  'prana',
+  'guru',
 ];
 
 const MODULE_3_DEITIES = [
