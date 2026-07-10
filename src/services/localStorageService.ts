@@ -54,6 +54,8 @@ export interface SpiritualProfile {
   familiarity: 'new' | 'some' | 'deep';
   intentions: string[];
   interests: string[];
+  // The family's ishta-devata / devotional stream from onboarding ('' = unanswered)
+  familyStream?: string;
   dailyGoalMinutes: 5 | 10 | 15 | 20;
   profileSummary?: string;
   summaryUpdatedAt?: string;
@@ -71,6 +73,7 @@ export const DEFAULT_SPIRITUAL_PROFILE: SpiritualProfile = {
   familiarity: 'some',
   intentions: [],
   interests: [],
+  familyStream: '',
   dailyGoalMinutes: 10,
   onboarded: false,
 };

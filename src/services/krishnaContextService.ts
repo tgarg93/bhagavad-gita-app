@@ -57,6 +57,9 @@ class KrishnaContextService {
       who.push(`familiarity with Hindu teachings: ${profile.familiarity}`);
       if (profile.intentions.length) who.push(`intentions: ${profile.intentions.join(', ')}`);
       if (profile.interests.length) who.push(`interests: ${profile.interests.join(', ')}`);
+      if (profile.familyStream && profile.familyStream !== 'Not sure') {
+        who.push(`family's devotional tradition centers on: ${profile.familyStream}`);
+      }
       who.push(`daily practice goal: ${profile.dailyGoalMinutes} minutes`);
       for (const fact of userKnowledge.knownStructuredLines(profile)) {
         who.push(`${fact.label.toLowerCase()}: ${fact.value}`);
@@ -129,7 +132,7 @@ class KrishnaContextService {
 
       const prompt = `You maintain a short private memory profile of a person on a spiritual learning journey through Hindu scripture and tradition. Based on their onboarding and recent personal reflections below, write an updated profile summary in under 120 words: the themes they wrestle with, what seems to matter to them, and how they engage. Plain prose, third person, warm but factual. No headers, no markdown. Do not restate the known facts; focus on themes and inner movement.
 
-Onboarding: familiarity ${profile.familiarity}; intentions: ${profile.intentions.join(', ') || 'unknown'}; interests: ${profile.interests.join(', ') || 'unknown'}.
+Onboarding: familiarity ${profile.familiarity}; intentions: ${profile.intentions.join(', ') || 'unknown'}; interests: ${profile.interests.join(', ') || 'unknown'}; family tradition: ${profile.familyStream || 'unknown'}.
 Known facts about them: ${factsLine || 'none yet'}.
 ${profile.profileSummary ? `Previous summary: ${profile.profileSummary}` : ''}
 

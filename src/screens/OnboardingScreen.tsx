@@ -33,12 +33,17 @@ const INTENTION_OPTIONS = [
   'Personal growth',
 ];
 
-const INTEREST_OPTIONS = [
-  'Krishna',
-  'Meditation',
-  'Festivals',
-  'Philosophy',
-  'Scriptures',
+// The question only this app would ask: the family's ishta-devata. Family
+// tradition is a different signal than current intentions, and it seeds the
+// Branches course's "ask your family" thread.
+const FAMILY_STREAM_OPTIONS: { value: string; label: string; sub: string }[] = [
+  { value: 'Krishna', label: 'Krishna', sub: 'Flute, stories, Janmashtami' },
+  { value: 'Shiva', label: 'Shiva', sub: 'The ascetic, Shivratri nights' },
+  { value: 'The Goddess', label: 'The Goddess', sub: 'Durga, Lakshmi, Navratri' },
+  { value: 'Ganesha', label: 'Ganesha', sub: 'First prayers, new beginnings' },
+  { value: 'Rama & Hanuman', label: 'Rama & Hanuman', sub: 'The Ramayana household' },
+  { value: 'A mix of many', label: 'A mix of many', sub: 'Different faces on one altar' },
+  { value: 'Not sure', label: 'Not sure', sub: 'And that\'s perfectly fine' },
 ];
 
 const GOAL_OPTIONS: { value: SpiritualProfile['dailyGoalMinutes']; label: string; sub: string }[] = [
@@ -54,7 +59,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   const [step, setStep] = useState(0);
   const [familiarity, setFamiliarity] = useState<SpiritualProfile['familiarity'] | null>(null);
   const [intentions, setIntentions] = useState<string[]>([]);
-  const [interests, setInterests] = useState<string[]>([]);
+  const [familyStream, setFamilyStream] = useState<string | null>(null);
   const [name, setName] = useState('');
   const [dailyGoal, setDailyGoal] = useState<SpiritualProfile['dailyGoalMinutes'] | null>(null);
 
@@ -66,7 +71,9 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
       ? `Lovely to meet you, ${firstName}. How familiar are you with Hindu teachings?`
       : 'How familiar are you with Hindu teachings?',
     'Wonderful. What brings you here? Choose all that speak to you.',
-    'And what draws you most? I’ll keep these close as we walk together.',
+    firstName
+      ? `Every family holds the divine through a face, ${firstName}. Growing up, whose was closest in your home?`
+      : 'Every family holds the divine through a face. Growing up, whose was closest in your home?',
     firstName
       ? `One last thing, ${firstName} — how much time shall we spend together each day?`
       : 'One last thing — how much time shall we spend together each day?',
@@ -82,7 +89,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
     (step === 0 && firstName.length > 0) ||
     (step === 1 && familiarity !== null) ||
     (step === 2 && intentions.length > 0) ||
-    (step === 3 && interests.length > 0) ||
+    (step === 3 && familyStream !== null) ||
     (step === 4 && dailyGoal !== null);
 
   const finish = async () => {
@@ -91,7 +98,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
     const patch: Partial<SpiritualProfile> = {
       familiarity: familiarity ?? 'some',
       intentions,
-      interests,
+      familyStream: familyStream ?? '',
       dailyGoalMinutes: dailyGoal ?? 10,
       onboarded: true,
     };
@@ -179,8 +186,8 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
             )}
 
           {step === 3 &&
-            INTEREST_OPTIONS.map(o =>
-              renderOption(interests.includes(o), o, undefined, () => toggle(interests, setInterests, o), o)
+            FAMILY_STREAM_OPTIONS.map(o =>
+              renderOption(familyStream === o.value, o.label, o.sub, () => setFamilyStream(o.value), o.value)
             )}
 
           {step === 4 &&
