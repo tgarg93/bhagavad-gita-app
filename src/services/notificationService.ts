@@ -9,7 +9,7 @@ import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 import LocalStorageService, { NotificationSettings } from './localStorageService';
 import journeyService from './journeyService';
-import { getDailyVerse } from '../data/dailyVerse';
+import { getDailyAtom } from '../data/dailyAtoms';
 import { getUpcomingFestivals, getNextOccurrence } from '../data/festivals';
 
 const at = (date: Date, hour: number, minute = 0): Date => {
@@ -105,16 +105,18 @@ class NotificationService {
       await Notifications.cancelAllScheduledNotificationsAsync();
       let scheduled = 0;
 
-      // 1) Morning daily wisdom — 7 one-shots, each with that day's verse
+      // 1) Morning Daily Chai — 7 one-shots, each with that day's atom hook,
+      //    tapping deep-links straight into the brief
       if (settings.dailyWisdom) {
         for (let day = 0; day < 7; day++) {
           const fireDate = at(daysFromNow(day), 8, 0);
           if (fireDate.getTime() <= Date.now()) continue; // today 8am already past
-          const verse = getDailyVerse(fireDate);
+          const atom = getDailyAtom(fireDate);
           await Notifications.scheduleNotificationAsync({
             content: {
-              title: 'Today’s wisdom 🪷',
-              body: `“${verse.english}” — ${verse.reference}`,
+              title: '☕ Your chai is ready',
+              body: atom.hook,
+              data: { url: 'dailychai' },
             },
             trigger: {
               type: Notifications.SchedulableTriggerInputTypes.DATE,
@@ -134,6 +136,7 @@ class NotificationService {
               content: {
                 title: 'Your path awaits 🛕',
                 body: `Next step: ${next.title}. A few quiet minutes is all it takes.`,
+                data: { url: 'journey' },
               },
               trigger: {
                 type: Notifications.SchedulableTriggerInputTypes.DATE,
@@ -156,6 +159,7 @@ class NotificationService {
               content: {
                 title: `${festival.emoji} ${festival.name} is in 3 days`,
                 body: 'Read the story and get ready to celebrate.',
+                data: { url: 'festival', festivalId: festival.id },
               },
               trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: threeBefore },
             });
@@ -167,6 +171,7 @@ class NotificationService {
               content: {
                 title: `${festival.emoji} Today is ${festival.name}!`,
                 body: festival.significance,
+                data: { url: 'festival', festivalId: festival.id },
               },
               trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: morningOf },
             });
@@ -183,6 +188,7 @@ class NotificationService {
             content: {
               title: `🔥 ${streak}-day streak on the line`,
               body: 'One small step tonight keeps your journey unbroken.',
+              data: { url: 'journey' },
             },
             trigger: {
               type: Notifications.SchedulableTriggerInputTypes.DATE,

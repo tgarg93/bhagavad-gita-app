@@ -164,6 +164,7 @@ class LocalStorageService {
     CONTENT_COMPLETION: 'content_completion',
     JOURNEY_ACTIVITY: 'journey_activity',
     NOTIFICATION_SETTINGS: 'notification_settings',
+    CHAI_LAST_OPENED: 'daily_chai_last_opened',
   };
 
   private static readonly TOTAL_GITA_VERSES = 700;
@@ -383,6 +384,23 @@ class LocalStorageService {
       }
     } catch (error) {
       console.error('Error saving reader position:', error);
+    }
+  }
+
+  // ——— Daily Chai (the date the brief was last opened, YYYY-MM-DD) ———
+  static async getChaiLastOpened(): Promise<string | null> {
+    try {
+      return await AsyncStorage.getItem(this.KEYS.CHAI_LAST_OPENED);
+    } catch {
+      return null;
+    }
+  }
+
+  static async saveChaiLastOpened(dateKey: string) {
+    try {
+      await AsyncStorage.setItem(this.KEYS.CHAI_LAST_OPENED, dateKey);
+    } catch (error) {
+      console.error('Error saving chai opened date:', error);
     }
   }
 

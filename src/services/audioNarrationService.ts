@@ -400,6 +400,24 @@ export class AudioNarrationService {
     return type === 'sanskrit' ? 'hi-IN' : 'en-IN';
   }
 
+  // One-off utterance outside the segment queue (e.g. the Daily Chai verse).
+  // Uses the same session activation and voice preference as full narration.
+  async speakOnce(text: string, onDone?: () => void): Promise<void> {
+    await this.initialize();
+    await this.backend.stop();
+    const voice = await this.getBestVoice('meaning');
+    await this.backend.speak(
+      text,
+      {
+        language: this.getSpeechLanguage('meaning'),
+        pitch: this.getSpeechPitch('meaning'),
+        rate: this.getSpeechRate('meaning'),
+        voice,
+      },
+      { onStart: () => {}, onDone: onDone ?? (() => {}), onError: () => onDone?.() }
+    );
+  }
+
   private getSpeechPitch(type: string): number {
     const pitchMap = {
       'sanskrit': 0.95, // Slightly lower for reverence

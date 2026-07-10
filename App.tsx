@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import AppNavigator from './src/navigation/AppNavigator';
+import * as Notifications from 'expo-notifications';
+import AppNavigator, { navigationRef } from './src/navigation/AppNavigator';
 import SplashScreen from './src/screens/SplashScreen';
 import OnboardingScreen from './src/screens/OnboardingScreen';
 import { AudioNarrationService } from './src/services/audioNarrationService';
@@ -41,6 +42,31 @@ export default function App() {
     journeyService.touchActivity().then(() => {
       notificationService.rescheduleAll();
     });
+
+    // Notification taps deep-link into the app. Retries briefly on cold
+    // start until the navigation container is mounted and ready.
+    const navigateFromNotification = (data: Record<string, unknown> | undefined, attempt = 0) => {
+      if (!data?.url) return;
+      if (!navigationRef.isReady()) {
+        if (attempt < 20) setTimeout(() => navigateFromNotification(data, attempt + 1), 250);
+        return;
+      }
+      const nav = navigationRef as any;
+      if (data.url === 'dailychai') nav.navigate('DailyChai');
+      else if (data.url === 'journey') nav.navigate('JourneyPath');
+      else if (data.url === 'festival' && data.festivalId) {
+        nav.navigate('FestivalDetail', { festivalId: data.festivalId });
+      }
+    };
+    const tapSub = Notifications.addNotificationResponseReceivedListener(response => {
+      navigateFromNotification(response.notification.request.content.data as any);
+    });
+    Notifications.getLastNotificationResponseAsync()
+      .then(response => {
+        if (response) navigateFromNotification(response.notification.request.content.data as any);
+      })
+      .catch(() => {});
+    return () => tapSub.remove();
   }, []);
 
   // Handle splash animation completion

@@ -16,10 +16,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaColors, NavigationColors } from '../constants/colors';
 import { DharmaDesignSystem, createTextStyle, createCardStyle } from '../constants/DharmaDesignSystem';
-import { getCurrentWeekTheme } from '../data/dailyInsights';
-import { getDailyVerse, getRandomVerse, DailyVerse } from '../data/dailyVerse';
+import { getDailyAtom } from '../data/dailyAtoms';
 import { getTodaysFestivals, getUpcomingFestivals, getNextOccurrence, getDaysUntilFestival, Festival } from '../data/festivals';
 import journeyService from '../services/journeyService';
+import { getProgression, Progression } from '../services/progressionService';
+import LocalStorageService from '../services/localStorageService';
 import { JourneyItem, JOURNEY_MODULES, navigateToJourneyItem } from '../data/journeyPath';
 
 const { width } = Dimensions.get('window');
@@ -35,8 +36,9 @@ const continueThumbStyle = {
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
-  const [todaysVerse, setTodaysVerse] = useState<DailyVerse>(getDailyVerse());
-  const [weekTheme, setWeekTheme] = useState(getCurrentWeekTheme());
+  const [todaysAtom] = useState(getDailyAtom());
+  const [chaiDoneToday, setChaiDoneToday] = useState(false);
+  const [progression, setProgression] = useState<Progression | null>(null);
   const [todaysFestivals, setTodaysFestivals] = useState(getTodaysFestivals());
   const [upcomingFestivals, setUpcomingFestivals] = useState(getUpcomingFestivals(3));
   const [refreshing, setRefreshing] = useState(false);
@@ -56,6 +58,11 @@ const HomeScreen: React.FC = () => {
         setNextStep(next);
         setJourneyTotal(path.length);
         setJourneyDone(path.filter(item => map[item.id]).length);
+        // Spiritual status + today's chai state refresh with focus too
+        getProgression().then(setProgression);
+        const today = new Date();
+        const key = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        LocalStorageService.getChaiLastOpened().then(last => setChaiDoneToday(last === key));
         // "Begin the path" from onboarding lands here — carry it through
         if (journeyService.consumePendingStart() && next) {
           navigateToJourneyItem(navigation, next);
@@ -73,8 +80,6 @@ const HomeScreen: React.FC = () => {
   const loadDailyContent = async () => {
     setRefreshing(true);
     try {
-      setTodaysVerse(getDailyVerse());
-      setWeekTheme(getCurrentWeekTheme());
       setTodaysFestivals(getTodaysFestivals());
       setUpcomingFestivals(getUpcomingFestivals(3));
     } catch (error) {
@@ -109,20 +114,6 @@ const HomeScreen: React.FC = () => {
     navigation.navigate('Ask Krishna' as never);
   };
 
-  const refreshInsight = () => {
-    setTodaysVerse(getRandomVerse());
-  };
-
-  const formatDate = (date: Date): string => {
-    return date.toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
-
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView 
@@ -130,6 +121,46 @@ const HomeScreen: React.FC = () => {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        {/* Spiritual status — identity, not streaks. Taps through to the
+            Profile tab's level card for the full picture. */}
+        {progression && (
+          <TouchableOpacity
+            style={styles.statusRow}
+            activeOpacity={0.7}
+            onPress={() => (navigation as any).navigate('MainTabs', { screen: 'Profile' })}
+          >
+            <Text style={styles.statusEmblem}>🪷</Text>
+            <View style={styles.statusText}>
+              <Text style={styles.statusLevel}>{progression.level.sanskrit}</Text>
+              <Text style={styles.statusSub}>
+                {progression.level.english} · Level {progression.level.level} of 7
+              </Text>
+            </View>
+            <Ionicons name="chevron-forward" size={16} color={DharmaDesignSystem.colors.neutrals.softAsh} />
+          </TouchableOpacity>
+        )}
+
+        {/* Daily Chai — the morning brief's front door */}
+        <TouchableOpacity
+          style={styles.chaiCard}
+          activeOpacity={0.85}
+          onPress={() => (navigation as any).navigate('DailyChai')}
+        >
+          <Text style={styles.chaiCup}>☕</Text>
+          <View style={styles.chaiText}>
+            <Text style={styles.chaiEyebrow}>DAILY CHAI</Text>
+            <Text style={styles.chaiHook} numberOfLines={2}>{todaysAtom.hook}</Text>
+            <Text style={styles.chaiMeta}>
+              {chaiDoneToday ? 'Read today — sip again' : 'Under a minute'}
+            </Text>
+          </View>
+          {chaiDoneToday ? (
+            <Ionicons name="checkmark-circle" size={22} color={DharmaDesignSystem.colors.primary.peacockTeal} />
+          ) : (
+            <Ionicons name="chevron-forward" size={18} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+          )}
+        </TouchableOpacity>
+
         {/* Continue your path — the guided journey's next step. Resume and
             "view path" live in separate full-width bands so neither steals
             taps meant for the other. */}
@@ -181,33 +212,6 @@ const HomeScreen: React.FC = () => {
             </View>
           </TouchableOpacity>
         )}
-
-        {/* Daily Wisdom Card - verse of the day */}
-        <View style={styles.wisdomContainer}>
-          <View style={styles.wisdomCard}>
-            <TouchableOpacity
-              onPress={refreshInsight}
-              style={styles.refreshButton}
-              activeOpacity={1}
-            >
-              <Ionicons name="refresh" size={16} color={DharmaDesignSystem.colors.primary.deepSaffron} />
-            </TouchableOpacity>
-
-            <View style={styles.wisdomContent}>
-              {!!todaysVerse.sanskrit && (
-                <Text style={styles.sanskritText}>{todaysVerse.sanskrit}</Text>
-              )}
-
-              {!!todaysVerse.transliteration && (
-                <Text style={styles.transliterationText}>{todaysVerse.transliteration}</Text>
-              )}
-
-              <Text style={styles.meaningText}>{todaysVerse.english}</Text>
-
-              <Text style={styles.sourceText}>{todaysVerse.reference}</Text>
-            </View>
-          </View>
-        </View>
 
         {/* Upcoming Festivals Card */}
         <View style={styles.festivalsCard}>
@@ -324,71 +328,66 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  wisdomContainer: {
-    paddingHorizontal: DharmaDesignSystem.spacing.lg,
-    paddingTop: DharmaDesignSystem.spacing.lg,
-    marginBottom: DharmaDesignSystem.spacing.sm,
-  },
-  wisdomCard: {
-    backgroundColor: DharmaDesignSystem.colors.neutrals.white,
-    borderRadius: DharmaDesignSystem.borderRadius.xLarge,
-    padding: DharmaDesignSystem.spacing.xl,
-    borderWidth: 2,
-    borderColor: 'rgba(230, 81, 0, 0.12)',
-    ...DharmaDesignSystem.shadows.cultural,
-    position: 'relative',
-    // Add subtle gradient background
-    background: 'linear-gradient(135deg, rgba(255, 248, 240, 0.9) 0%, rgba(245, 241, 232, 0.9) 100%)',
-  },
-  refreshButton: {
-    position: 'absolute',
-    top: DharmaDesignSystem.spacing.md,
-    right: DharmaDesignSystem.spacing.md,
-    padding: DharmaDesignSystem.spacing.xs,
-    zIndex: 1,
-    opacity: 0.6,
-  },
-  wisdomContent: {
+  statusRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: DharmaDesignSystem.spacing.md,
+    gap: DharmaDesignSystem.spacing.sm,
+    marginHorizontal: DharmaDesignSystem.spacing.md,
+    marginTop: DharmaDesignSystem.spacing.sm,
+    paddingHorizontal: DharmaDesignSystem.spacing.xs,
+    paddingVertical: DharmaDesignSystem.spacing.xs,
   },
-  sanskritText: {
-    ...DharmaDesignSystem.typography.sizes.sacredQuote,
-    color: DharmaDesignSystem.colors.primary.deepSaffron,
-    textAlign: 'center',
-    marginBottom: DharmaDesignSystem.spacing.md,
-    letterSpacing: 1,
-    fontWeight: '400',
+  statusEmblem: {
+    fontSize: 22,
   },
-  transliterationText: {
-    ...DharmaDesignSystem.typography.sizes.bodyMD,
-    fontWeight: '300',
-    color: DharmaDesignSystem.colors.neutrals.softAsh,
-    textAlign: 'center',
-    marginBottom: DharmaDesignSystem.spacing.md,
-    fontStyle: 'italic',
+  statusText: {
+    flex: 1,
   },
-  translationText: {
-    ...DharmaDesignSystem.typography.sizes.sacredSmall,
-    fontWeight: '400',
-    color: DharmaDesignSystem.colors.primary.peacockTeal,
-    textAlign: 'center',
-    marginBottom: DharmaDesignSystem.spacing.xl,
-  },
-  meaningText: {
-    ...DharmaDesignSystem.typography.sizes.bodyMD,
-    fontWeight: '400',
+  statusLevel: {
+    ...DharmaDesignSystem.typography.sizes.headingSM,
     color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
-    textAlign: 'center',
-    marginBottom: DharmaDesignSystem.spacing.lg,
+    fontWeight: '700',
   },
-  sourceText: {
+  statusSub: {
+    fontSize: 12,
+    color: DharmaDesignSystem.colors.neutrals.softAsh,
+  },
+  chaiCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: DharmaDesignSystem.spacing.md,
+    backgroundColor: '#FFF3E0',
+    borderRadius: DharmaDesignSystem.borderRadius.large,
+    borderWidth: 1,
+    borderColor: 'rgba(230, 81, 0, 0.25)',
+    padding: DharmaDesignSystem.spacing.md,
+    marginHorizontal: DharmaDesignSystem.spacing.md,
+    marginTop: DharmaDesignSystem.spacing.sm,
+    ...DharmaDesignSystem.shadows.soft,
+  },
+  chaiCup: {
+    fontSize: 28,
+  },
+  chaiText: {
+    flex: 1,
+  },
+  chaiEyebrow: {
     ...DharmaDesignSystem.typography.sizes.caption,
-    fontWeight: '600',
     color: DharmaDesignSystem.colors.primary.deepSaffron,
-    textAlign: 'center',
-    letterSpacing: 1,
-    textTransform: 'uppercase',
+    fontWeight: '700',
+    letterSpacing: 0.8,
+  },
+  chaiHook: {
+    ...DharmaDesignSystem.typography.sizes.headingSM,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
+    fontWeight: '700',
+    marginTop: 1,
+  },
+  chaiMeta: {
+    ...DharmaDesignSystem.typography.sizes.caption,
+    fontWeight: '400',
+    color: DharmaDesignSystem.colors.neutrals.softAsh,
+    marginTop: 2,
   },
   festivalsCard: {
     backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,

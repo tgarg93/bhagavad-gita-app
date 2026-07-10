@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Image } from 'react-native';
@@ -26,6 +26,11 @@ import GitaVersePlayerScreen from '../screens/GitaVersePlayerScreen';
 import ContentReaderScreen from '../screens/ContentReaderScreen';
 import ProfileTabScreen from '../screens/ProfileTabScreen';
 import JourneyPathScreen from '../screens/JourneyPathScreen';
+import DailyChaiScreen from '../screens/DailyChaiScreen';
+
+// Module-level ref so services (notification taps) can navigate once the
+// container is ready
+export const navigationRef = createNavigationContainerRef();
 
 import { DharmaColors } from '../constants/colors';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
@@ -141,7 +146,7 @@ const TabNavigator = () => {
 
 const AppNavigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="MainTabs" component={TabNavigator} />
         <Stack.Screen name="ChapterDetail" component={ChapterDetailScreen} />
@@ -158,6 +163,7 @@ const AppNavigator = () => {
         <Stack.Screen name="GitaVersePlayer" component={GitaVersePlayerScreen} />
         <Stack.Screen name="ContentReader" component={ContentReaderScreen} />
         <Stack.Screen name="JourneyPath" component={JourneyPathScreen} />
+        <Stack.Screen name="DailyChai" component={DailyChaiScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
