@@ -7,7 +7,6 @@ import {
   TextInput,
   ActivityIndicator,
   Image,
-  ScrollView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
@@ -24,6 +23,11 @@ interface ChapterReflectionProps {
   chapterTitle: string; // content title for non-Gita (festival/deity/concept name)
   subtitle: string;
   questions: string[];
+  // Paged mode: render exactly ONE question (used by the paged readers where
+  // each question is its own page); the parent drives page advance and skip.
+  singleQuestionIndex?: number;
+  onQuestionComplete?: () => void; // parent advances to the next page
+  onSkipAll?: () => void; // parent jumps past the whole reflection block
 }
 
 const genId = () => `refl-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
@@ -33,6 +37,37 @@ const FALLBACK_STARTERS = [
   'In my family…',
   'Honestly, I’m not sure — but…',
 ];
+
+// One personalized-starters Gemini call per content item per app session —
+// in the paged readers several question pages mount at once and must share it.
+const suggestionsCache = new Map<string, Promise<string[][]>>();
+
+const fetchSuggestions = (cacheKey: string, questions: string[]): Promise<string[][]> => {
+  const cached = suggestionsCache.get(cacheKey);
+  if (cached) return cached;
+  const promise = (async () => {
+    const contextBlock = await krishnaContext.buildContextBlock();
+    const list = questions.map((q, i) => `${i + 1}. ${q}`).join('\n');
+    const raw = await geminiService.generateOneOff(
+      `${contextBlock}\n\nFor each reflection question below, write 3 short first-person answer starters this specific person might genuinely begin with (max 12 words each, unfinished sentences are good). Return STRICT JSON only: an array of arrays of strings, one inner array per question, no markdown.\n\nQuestions:\n${list}`,
+      { maxOutputTokens: 4096 } // thinking tokens count against the cap; 800 truncated the JSON
+    );
+    // Robust extraction: take the outermost JSON array even if the model
+    // wraps it in prose or fences, or trails off
+    const cleaned = raw.replace(/```json|```/g, '').trim();
+    const start = cleaned.indexOf('[');
+    const end = cleaned.lastIndexOf(']');
+    if (start < 0 || end <= start) throw new Error('no JSON array in response');
+    const parsed = JSON.parse(cleaned.slice(start, end + 1));
+    if (!Array.isArray(parsed)) throw new Error('unexpected suggestions shape');
+    console.log('[reflection] personalized starters loaded');
+    return parsed.map((arr: any) => (Array.isArray(arr) ? arr.slice(0, 3).map(String) : []));
+  })();
+  // Allow a retry on the next mount if the call fails
+  promise.catch(() => suggestionsCache.delete(cacheKey));
+  suggestionsCache.set(cacheKey, promise);
+  return promise;
+};
 
 // A chat bubble with the speaker's avatar: Krishna on the left, the reader on
 // the right (empty person avatar for now).
@@ -69,7 +104,11 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
   chapterTitle,
   subtitle,
   questions,
+  singleQuestionIndex,
+  onQuestionComplete,
+  onSkipAll,
 }) => {
+  const singleMode = singleQuestionIndex != null;
   const [reflections, setReflections] = useState<ReflectionEntry[]>([]);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answer, setAnswer] = useState('');
@@ -91,6 +130,12 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
           ? await LocalStorageService.getReflections(chapterNumber)
           : []; // misconfigured mount: neither key — don't load every reflection
     setReflections(stored);
+    if (singleMode) {
+      // Paged mode: this instance owns exactly one question
+      setQuestionIndex(singleQuestionIndex!);
+      setLoaded(true);
+      return;
+    }
     // Active question = first not-yet-completed one (an answered-but-open
     // conversation stays active so the user can continue or complete it)
     let next = 0;
@@ -101,38 +146,20 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
     }
     setQuestionIndex(next);
     setLoaded(true);
-  }, [chapterNumber, contentType, contentId, questions.length]);
+  }, [chapterNumber, contentType, contentId, questions.length, singleMode, singleQuestionIndex]);
 
   useEffect(() => {
     loadReflections();
   }, [loadReflections]);
 
-  // One batched call for personalized answer starters for all questions
+  // One batched call for personalized answer starters for all questions,
+  // shared across mounted question pages via the module-level cache
   useEffect(() => {
     let cancelled = false;
-    (async () => {
-      try {
-        const contextBlock = await krishnaContext.buildContextBlock();
-        const list = questions.map((q, i) => `${i + 1}. ${q}`).join('\n');
-        const raw = await geminiService.generateOneOff(
-          `${contextBlock}\n\nFor each reflection question below, write 3 short first-person answer starters this specific person might genuinely begin with (max 12 words each, unfinished sentences are good). Return STRICT JSON only: an array of arrays of strings, one inner array per question, no markdown.\n\nQuestions:\n${list}`,
-          { maxOutputTokens: 4096 } // thinking tokens count against the cap; 800 truncated the JSON
-        );
-        // Robust extraction: take the outermost JSON array even if the model
-        // wraps it in prose or fences, or trails off
-        const cleaned = raw.replace(/```json|```/g, '').trim();
-        const start = cleaned.indexOf('[');
-        const end = cleaned.lastIndexOf(']');
-        if (start < 0 || end <= start) throw new Error('no JSON array in response');
-        const parsed = JSON.parse(cleaned.slice(start, end + 1));
-        if (!cancelled && Array.isArray(parsed)) {
-          setSuggestions(parsed.map((arr: any) => (Array.isArray(arr) ? arr.slice(0, 3).map(String) : [])));
-          console.log('[reflection] personalized starters loaded');
-        }
-      } catch (error) {
-        console.log('Starter suggestions unavailable, using fallbacks:', error);
-      }
-    })();
+    const cacheKey = `${contentType ?? 'gita'}:${contentId ?? chapterNumber}`;
+    fetchSuggestions(cacheKey, questions)
+      .then(result => { if (!cancelled) setSuggestions(result); })
+      .catch(error => console.log('Starter suggestions unavailable, using fallbacks:', error));
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentId ?? chapterNumber]);
@@ -234,6 +261,7 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
     entry.completed = true;
     await LocalStorageService.saveReflection(entry);
     await loadReflections();
+    if (singleMode) onQuestionComplete?.();
   };
 
   const markChapterReflectedOn = async (userId: string) => {
@@ -263,14 +291,28 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
       <View style={styles.headerRow}>
         <Ionicons name="leaf-outline" size={20} color={DharmaDesignSystem.colors.primary.deepSaffron} />
         <Text style={styles.headerTitle}>Pause & Reflect</Text>
-        <Text style={styles.headerCount}>{answeredCount}/{questions.length}</Text>
+        <Text style={styles.headerCount}>
+          {singleMode
+            ? `Question ${singleQuestionIndex! + 1} of ${questions.length}`
+            : `${answeredCount}/${questions.length}`}
+        </Text>
       </View>
 
-      {/* Completed + active conversations */}
+      {onSkipAll && (
+        <TouchableOpacity style={styles.skipAll} onPress={onSkipAll}>
+          <Text style={styles.skipAllText}>Skip reflections for now</Text>
+          <Ionicons name="arrow-forward" size={14} color={DharmaDesignSystem.colors.neutrals.softAsh} />
+        </TouchableOpacity>
+      )}
+
+      {/* Completed + active conversations (paged mode shows only its own question) */}
       {questions.map((question, i) => {
+        if (singleMode && i !== questionIndex) return null;
         const entry = entryFor(i);
-        if (!entry && i !== questionIndex) return null;
-        if (i > questionIndex) return null;
+        if (!singleMode) {
+          if (!entry && i !== questionIndex) return null;
+          if (i > questionIndex) return null;
+        }
         return (
           <View key={i} style={styles.exchange}>
             <Bubble role="krishna" text={question} />
@@ -288,19 +330,20 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
         </View>
       )}
 
-      {/* Suggestion pills — pre-fill the input for editing */}
-      {activeQuestion !== null && !submitting && !answer && (
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.pillsRow}>
+      {/* Suggestion pills — stacked vertically: a horizontal scroller can never
+          win the gesture inside the horizontally-paged readers */}
+      {activeQuestion !== null && !submitting && !answer && !(singleMode && activeEntry?.completed) && (
+        <View style={styles.pillsStack}>
           {activeSuggestions.map((s, i) => (
             <TouchableOpacity key={i} style={styles.pill} onPress={() => setAnswer(s)}>
-              <Text style={styles.pillText} numberOfLines={1}>{s}</Text>
+              <Text style={styles.pillText} numberOfLines={2}>{s}</Text>
             </TouchableOpacity>
           ))}
-        </ScrollView>
+        </View>
       )}
 
-      {/* Input + Complete */}
-      {activeQuestion !== null && !submitting && (
+      {/* Input + Complete (hidden once this page's question is completed in paged mode) */}
+      {activeQuestion !== null && !submitting && !(singleMode && activeEntry?.completed) && (
         <>
           <View style={styles.inputRow}>
             <TextInput
@@ -324,14 +367,18 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
             <TouchableOpacity style={styles.completeBtn} onPress={completeQuestion}>
               <Ionicons name="checkmark-circle-outline" size={18} color={DharmaDesignSystem.colors.primary.peacockTeal} />
               <Text style={styles.completeBtnText}>
-                {questionIndex < questions.length - 1 ? 'Complete — next question' : 'Complete'}
+                {questionIndex < questions.length - 1
+                  ? (singleMode ? 'Complete — continue' : 'Complete — next question')
+                  : 'Complete'}
               </Text>
             </TouchableOpacity>
           )}
         </>
       )}
 
-      {allDone && (
+      {(singleMode
+        ? singleQuestionIndex === questions.length - 1 && !!activeEntry?.completed
+        : allDone) && (
         <View style={styles.exchange}>
           <Bubble
             role="krishna"
@@ -441,10 +488,23 @@ const styles = StyleSheet.create({
     color: colors.neutrals.softAsh,
     fontStyle: 'italic',
   },
-  pillsRow: {
+  pillsStack: {
     gap: spacing.sm,
     paddingVertical: spacing.xs,
     marginBottom: spacing.sm,
+  },
+  skipAll: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    gap: spacing.xs,
+    marginBottom: spacing.sm,
+  },
+  skipAllText: {
+    ...typography.sizes.bodySM,
+    fontWeight: '400',
+    color: colors.neutrals.softAsh,
+    textDecorationLine: 'underline',
   },
   pill: {
     backgroundColor: colors.neutrals.warmIvory,

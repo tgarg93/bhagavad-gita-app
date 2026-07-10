@@ -50,7 +50,7 @@ const readingMinutes = (sections: NarrativeSection[]): number => {
 type ReaderPage =
   | { kind: 'cover' }
   | { kind: 'section'; section: NarrativeSection; sectionIndex: number }
-  | { kind: 'reflection' }
+  | { kind: 'reflection'; questionIndex: number } // one page per question
   | { kind: 'sources' };
 
 const ContentReaderScreen: React.FC = () => {
@@ -69,7 +69,9 @@ const ContentReaderScreen: React.FC = () => {
     content.sections.forEach((section, sectionIndex) =>
       pages.push({ kind: 'section', section, sectionIndex })
     );
-    if (content.reflectionQuestions.length > 0) pages.push({ kind: 'reflection' });
+    content.reflectionQuestions.forEach((_, questionIndex) =>
+      pages.push({ kind: 'reflection', questionIndex })
+    );
     if (content.sources.length > 0) pages.push({ kind: 'sources' });
     return pages;
   }, [content]);
@@ -287,7 +289,12 @@ const ContentReaderScreen: React.FC = () => {
         progress: partCount > 0 ? (activePage.sectionIndex + 1) / partCount : 0,
       };
     }
-    if (activePage.kind === 'reflection') return { sub: 'Reflection', progress: 1 };
+    if (activePage.kind === 'reflection') {
+      return {
+        sub: `Reflection ${activePage.questionIndex + 1} of ${content.reflectionQuestions.length}`,
+        progress: 1,
+      };
+    }
     return { sub: 'Sources', progress: 1 };
   })();
 
@@ -334,7 +341,13 @@ const ContentReaderScreen: React.FC = () => {
     </View>
   );
 
-  const renderReflection = () => (
+  // Jump past the reflection block: to the sources page when present, else the end
+  const skipReflections = () => {
+    const sourcesIdx = pages.findIndex(p => p.kind === 'sources');
+    scrollToIndex(sourcesIdx >= 0 ? sourcesIdx : pages.length - 1);
+  };
+
+  const renderReflection = (questionIndex: number) => (
     <KeyboardAvoidingView style={styles.page} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -347,6 +360,9 @@ const ContentReaderScreen: React.FC = () => {
           chapterTitle={content.title}
           subtitle={content.subtitle}
           questions={content.reflectionQuestions}
+          singleQuestionIndex={questionIndex}
+          onQuestionComplete={() => scrollToIndex(activeIndex + 1)}
+          onSkipAll={skipReflections}
         />
       </ScrollView>
     </KeyboardAvoidingView>
@@ -369,7 +385,7 @@ const ContentReaderScreen: React.FC = () => {
     switch (item.kind) {
       case 'cover': return renderCover();
       case 'section': return renderSection(item.section, item.sectionIndex);
-      case 'reflection': return renderReflection();
+      case 'reflection': return renderReflection(item.questionIndex);
       case 'sources': return renderSources();
     }
   };

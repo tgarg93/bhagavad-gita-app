@@ -253,6 +253,9 @@ const styles = StyleSheet.create({
   },
   nameInput: {
     ...typography.sizes.bodyLG,
+    // TextInput + custom font + inherited lineHeight clips glyphs on device
+    lineHeight: undefined,
+    minHeight: 56,
     backgroundColor: colors.neutrals.white,
     borderRadius: borderRadius.large,
     borderWidth: 2,

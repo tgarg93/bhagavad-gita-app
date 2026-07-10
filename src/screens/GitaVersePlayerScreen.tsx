@@ -52,7 +52,7 @@ type Page =
   | { kind: 'cover'; chapter: number } // chapter 0 = preface cover
   | { kind: 'preface' }
   | { kind: 'verse'; chapter: number; verse: GitaFullVerse; verseIndex: number }
-  | { kind: 'reflection'; chapter: number };
+  | { kind: 'reflection'; chapter: number; questionIndex: number }; // one page per question
 
 const GitaVersePlayerScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -70,7 +70,9 @@ const GitaVersePlayerScreen: React.FC = () => {
       getChapterVerses(ch).forEach((verse, verseIndex) =>
         pages.push({ kind: 'verse', chapter: ch, verse, verseIndex })
       );
-      pages.push({ kind: 'reflection', chapter: ch });
+      (gitaReflections[ch] || []).forEach((_, questionIndex) =>
+        pages.push({ kind: 'reflection', chapter: ch, questionIndex })
+      );
     }
     return { pages, coverIndex };
   }, []);
@@ -318,7 +320,10 @@ const GitaVersePlayerScreen: React.FC = () => {
         progress: count > 0 ? (activePage.verseIndex + 1) / count : 0,
       };
     }
-    if (activePage.kind === 'reflection') return { title: `Chapter ${ch}`, sub: 'Reflection', progress: 1 };
+    if (activePage.kind === 'reflection') {
+      const count = (gitaReflections[ch] || []).length;
+      return { title: `Chapter ${ch}`, sub: `Reflection ${activePage.questionIndex + 1} of ${count}`, progress: 1 };
+    }
     return { title: `Chapter ${ch}`, sub: '', progress: 0 };
   })();
 
@@ -443,7 +448,13 @@ const GitaVersePlayerScreen: React.FC = () => {
     );
   };
 
-  const renderReflection = (chapter: number) => (
+  // Jump to the first page after this chapter's reflection block
+  const skipReflections = useCallback((chapter: number) => {
+    const target = chapter < 18 ? coverIndex[chapter + 1] : pages.length - 1;
+    scrollToIndex(target);
+  }, [coverIndex, pages.length, scrollToIndex]);
+
+  const renderReflection = (chapter: number, questionIndex: number) => (
     <KeyboardAvoidingView style={styles.page} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -455,6 +466,9 @@ const GitaVersePlayerScreen: React.FC = () => {
           chapterTitle={chapterName(chapter)}
           subtitle={gitaChapters.find(c => c.number === chapter)?.subtitle || ''}
           questions={gitaReflections[chapter] || []}
+          singleQuestionIndex={questionIndex}
+          onQuestionComplete={() => scrollToIndex(activeIndex + 1)}
+          onSkipAll={() => skipReflections(chapter)}
         />
       </ScrollView>
     </KeyboardAvoidingView>
@@ -465,7 +479,7 @@ const GitaVersePlayerScreen: React.FC = () => {
       case 'cover': return renderCover(item.chapter);
       case 'preface': return renderPreface();
       case 'verse': return renderVerse(item.chapter, item.verse, item.verseIndex);
-      case 'reflection': return renderReflection(item.chapter);
+      case 'reflection': return renderReflection(item.chapter, item.questionIndex);
     }
   };
 
