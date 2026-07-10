@@ -99,6 +99,8 @@ export class AudioNarrationService {
     return AudioNarrationService.instance;
   }
 
+  private sessionActivated = false;
+
   async initialize() {
     try {
       // Configure the audio session so TTS plays even with the iOS silent switch on.
@@ -116,6 +118,28 @@ export class AudioNarrationService {
     } catch (error) {
       console.warn('Error configuring audio session:', error);
       this.callbacks?.onError('Could not configure audio output');
+    }
+
+    // setAudioModeAsync only CONFIGURES the session; iOS activates it when
+    // expo-av actually plays something. expo-speech (AVSpeechSynthesizer)
+    // never triggers that activation, so on device the mute switch silences
+    // narration. Playing a brief silent sound once activates the Playback
+    // session, after which speech ignores the silent switch.
+    if (!this.sessionActivated) {
+      try {
+        const { sound } = await Audio.Sound.createAsync(
+          require('../../assets/audio/silence.wav'),
+          { shouldPlay: true, volume: 0 }
+        );
+        this.sessionActivated = true;
+        setTimeout(() => {
+          sound.unloadAsync().catch(() => {});
+        }, 300);
+        console.log('[narration] audio session activated');
+      } catch (error) {
+        // Never block narration on this — worst case is today's behavior
+        console.warn('[narration] audio session activation failed:', error);
+      }
     }
   }
 
