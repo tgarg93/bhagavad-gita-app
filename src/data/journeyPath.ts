@@ -30,6 +30,7 @@ export const JOURNEY_MODULES: Record<JourneyModule, string> = {
 const FALLBACK_COVER = require('../../assets/images/covers/generic-cover.jpg');
 
 const MODULE_1_CONCEPTS = [
+  'hinduism-overview', // Module 0 in spirit: the map before the journey
   'dharma',
   'karma',
   'moksha',
