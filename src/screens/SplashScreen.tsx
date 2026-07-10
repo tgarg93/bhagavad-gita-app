@@ -87,27 +87,6 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onAnimationComplete }) => {
           Ancient Wisdom, Modern Life
         </Animated.Text>
       </View>
-
-      {/* Decorative Elements */}
-      <Animated.View 
-        style={[
-          styles.decorativeElement, 
-          styles.topElement,
-          { opacity: logoOpacity }
-        ]}
-      >
-        <View style={styles.decorativeDot} />
-      </Animated.View>
-      
-      <Animated.View 
-        style={[
-          styles.decorativeElement, 
-          styles.bottomElement,
-          { opacity: logoOpacity }
-        ]}
-      >
-        <View style={styles.decorativeDot} />
-      </Animated.View>
     </View>
   );
 };
@@ -117,6 +96,9 @@ const styles = StyleSheet.create({
     flex: 1,
     width,
     height,
+    // Solid cream base: the gradient above animates its opacity, and without
+    // this the white root flashes through at the fade edges
+    backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
   },
   backgroundContainer: {
     position: 'absolute',
@@ -154,26 +136,6 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     textAlign: 'center',
     marginTop: DharmaDesignSystem.spacing.xs,
-  },
-  decorativeElement: {
-    position: 'absolute',
-    width: 6,
-    height: 6,
-  },
-  topElement: {
-    top: height * 0.2,
-    right: width * 0.15,
-  },
-  bottomElement: {
-    bottom: height * 0.2,
-    left: width * 0.15,
-  },
-  decorativeDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: DharmaDesignSystem.colors.primary.turmericYellow,
-    opacity: 0.6,
   },
 });
 
