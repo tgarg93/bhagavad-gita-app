@@ -120,6 +120,12 @@ const NarrativeSections: React.FC<NarrativeSectionsProps> = ({
                 style={getTextStyle(styles.storyText)}
               />
             )}
+
+            {section.citation && (
+              <View style={styles.citationRule}>
+                <Text style={styles.citationText}>{section.citation}</Text>
+              </View>
+            )}
           </View>
         );
       })}
@@ -190,6 +196,18 @@ const styles = StyleSheet.create({
     marginTop: DharmaDesignSystem.spacing.lg,
     marginBottom: DharmaDesignSystem.spacing.md,
     fontWeight: '600',
+  },
+  citationRule: {
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(33, 33, 33, 0.1)',
+    paddingTop: DharmaDesignSystem.spacing.sm,
+    marginTop: DharmaDesignSystem.spacing.xs,
+  },
+  citationText: {
+    fontSize: 12,
+    lineHeight: 17,
+    fontStyle: 'italic',
+    color: DharmaDesignSystem.colors.neutrals.softAsh,
   },
 });
 

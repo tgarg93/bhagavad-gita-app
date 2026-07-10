@@ -54,7 +54,6 @@ type ReaderPage =
   | { kind: 'cover' }
   | { kind: 'section'; section: NarrativeSection; sectionIndex: number }
   | { kind: 'reflection'; questionIndex: number } // one page per question
-  | { kind: 'sources' }
   | { kind: 'celebration' };
 
 const ContentReaderScreen: React.FC = () => {
@@ -76,7 +75,6 @@ const ContentReaderScreen: React.FC = () => {
     content.reflectionQuestions.forEach((_, questionIndex) =>
       pages.push({ kind: 'reflection', questionIndex })
     );
-    if (content.sources.length > 0) pages.push({ kind: 'sources' });
     pages.push({ kind: 'celebration' }); // appended last — stored positions unaffected
     return pages;
   }, [content]);
@@ -304,8 +302,7 @@ const ContentReaderScreen: React.FC = () => {
         progress: 1,
       };
     }
-    if (activePage.kind === 'celebration') return { sub: 'Complete', progress: 1 };
-    return { sub: 'Sources', progress: 1 };
+    return { sub: 'Complete', progress: 1 };
   })();
 
   // --- Renderers --------------------------------------------------------
@@ -347,14 +344,20 @@ const ContentReaderScreen: React.FC = () => {
           audioSegments={audioSegments}
           getTextStyle={getTextStyle}
         />
+        {/* Bibliography rides at the foot of the final text page — sources
+            are footnotes here, not a destination of their own */}
+        {sectionIndex === content.sections.length - 1 && content.sources.length > 0 && (
+          <View style={styles.sourcesCardWrap}>
+            <SourcesCard sources={content.sources} />
+          </View>
+        )}
       </ScrollView>
     </View>
   );
 
-  // Jump past the reflection block: to the sources page when present, else the end
+  // Jump past the reflection block, straight to the celebration
   const skipReflections = () => {
-    const sourcesIdx = pages.findIndex(p => p.kind === 'sources');
-    scrollToIndex(sourcesIdx >= 0 ? sourcesIdx : pages.length - 1);
+    scrollToIndex(pages.length - 1);
   };
 
   const renderReflection = (questionIndex: number) => (
@@ -378,19 +381,6 @@ const ContentReaderScreen: React.FC = () => {
     </KeyboardAvoidingView>
   );
 
-  const renderSources = () => (
-    <View style={styles.page}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.sourcesScroll}>
-        <Ionicons name="library-outline" size={40} color={DharmaDesignSystem.colors.primary.deepSaffron} />
-        <Text style={styles.sourcesTitle}>Sources</Text>
-        <Text style={styles.sourcesNote}>Every story you just read traces to these texts.</Text>
-        <View style={styles.sourcesCardWrap}>
-          <SourcesCard sources={content.sources} />
-        </View>
-      </ScrollView>
-    </View>
-  );
-
   const renderCelebration = () => (
     <View style={styles.page}>
       <JourneyCelebration
@@ -408,7 +398,6 @@ const ContentReaderScreen: React.FC = () => {
       case 'cover': return renderCover();
       case 'section': return renderSection(item.section, item.sectionIndex);
       case 'reflection': return renderReflection(item.questionIndex);
-      case 'sources': return renderSources();
       case 'celebration': return renderCelebration();
     }
   };
@@ -579,30 +568,11 @@ const styles = StyleSheet.create({
   },
   coverBeginText: { ...typography.sizes.buttonText, color: colors.primary.deepSaffron, fontWeight: '700' },
   // Reflection page reuses pageScroll padding; ChapterReflection pads itself
-  // Sources page
-  sourcesScroll: {
-    flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: spacing.xxl,
-  },
-  sourcesTitle: {
-    ...typography.sizes.headingLG,
-    color: colors.neutrals.charcoalBlack,
-    fontWeight: '600',
+  sourcesCardWrap: {
+    alignSelf: 'stretch',
+    paddingHorizontal: spacing.lg,
     marginTop: spacing.md,
-    marginBottom: spacing.xs,
   },
-  sourcesNote: {
-    ...typography.sizes.bodyMD,
-    fontWeight: '400',
-    color: colors.neutrals.softAsh,
-    fontStyle: 'italic',
-    marginBottom: spacing.lg,
-    textAlign: 'center',
-    paddingHorizontal: spacing.xl,
-  },
-  sourcesCardWrap: { alignSelf: 'stretch' },
   // Playback bar
   playbackBar: {
     flexDirection: 'row',

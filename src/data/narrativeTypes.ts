@@ -23,6 +23,9 @@ export interface NarrativeSection {
   sectionHeader?: string;
   keyVerse?: NarrativeVerse;
   teachingText?: string;
+  // One-line footnote for this section's claims, rendered at the foot of the
+  // page ("Shiva Purana, Rudra Samhita · tr. wisdomlib.org")
+  citation?: string;
 }
 
 // A human-readable SOURCES entry rendered at the foot of seed content.
