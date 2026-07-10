@@ -11,7 +11,16 @@ import {
   Platform,
   Alert,
   ActivityIndicator,
+  Image,
 } from 'react-native';
+
+// Typed separately so Image's style prop accepts it (StyleSheet unions don't)
+const krishnaAvatarStyle = {
+  width: 28,
+  height: 28,
+  borderRadius: 14,
+  resizeMode: 'cover',
+} as const;
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaColors } from '../constants/colors';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
@@ -196,7 +205,10 @@ const AskKrishnaScreen: React.FC = () => {
       ]}
     >
       {!message.isUser && (
-        <Text style={styles.krishnaHeader}>Krishna</Text>
+        <View style={styles.krishnaHeaderRow}>
+          <Image source={require('../../assets/krishna-avatar.png')} style={krishnaAvatarStyle} />
+          <Text style={styles.krishnaHeader}>Krishna</Text>
+        </View>
       )}
       <Text style={[
         styles.messageText,
@@ -304,7 +316,10 @@ const AskKrishnaScreen: React.FC = () => {
         
         {chatSession.isTyping && (
           <View style={styles.typingContainer}>
-            <Text style={styles.krishnaHeader}>Krishna</Text>
+            <View style={styles.krishnaHeaderRow}>
+              <Image source={require('../../assets/krishna-avatar.png')} style={krishnaAvatarStyle} />
+              <Text style={styles.krishnaHeader}>Krishna</Text>
+            </View>
             <View style={styles.typingBubble}>
               <ActivityIndicator size="small" color={DharmaColors.primary[400]} />
               <Text style={styles.typingText}>thinking...</Text>
@@ -399,11 +414,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: DharmaColors.background.tertiary,
   },
+  krishnaHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 8,
+  },
   krishnaHeader: {
     fontSize: 12,
     fontWeight: '600',
     color: DharmaColors.primary[400],
-    marginBottom: 8,
     letterSpacing: 0.5,
   },
   messageText: {

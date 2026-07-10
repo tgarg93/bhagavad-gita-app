@@ -13,9 +13,9 @@ interface KrishnaGuideProps {
 const KrishnaGuide: React.FC<KrishnaGuideProps> = ({ message, size = 64, children }) => (
   <View style={styles.row}>
     <Image
-      source={require('../../assets/krishna-logo.png')}
-      style={{ width: size, height: size }}
-      resizeMode="contain"
+      source={require('../../assets/krishna-avatar.png')}
+      style={{ width: size, height: size, borderRadius: size / 2 }}
+      resizeMode="cover"
     />
     <View style={styles.bubbleWrap}>
       <View style={styles.bubbleTail} />

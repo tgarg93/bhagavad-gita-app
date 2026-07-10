@@ -75,7 +75,7 @@ const Bubble: React.FC<{ role: 'krishna' | 'user'; text: string }> = ({ role, te
   if (role === 'krishna') {
     return (
       <View style={styles.krishnaRow}>
-        <Image source={require('../../assets/krishna-logo.png')} style={styles.avatar} resizeMode="contain" />
+        <Image source={require('../../assets/krishna-avatar.png')} style={styles.avatar} resizeMode="cover" />
         <View style={styles.krishnaBubble}>
           <Text style={styles.krishnaBubbleText}>{text}</Text>
         </View>
@@ -432,6 +432,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: AVATAR,
     height: AVATAR,
+    borderRadius: AVATAR / 2,
   },
   krishnaBubble: {
     flex: 1,
