@@ -26,7 +26,6 @@ import GitaVersePlayerScreen from '../screens/GitaVersePlayerScreen';
 import ContentReaderScreen from '../screens/ContentReaderScreen';
 import ProfileTabScreen from '../screens/ProfileTabScreen';
 import JourneyPathScreen from '../screens/JourneyPathScreen';
-import DailyChaiScreen from '../screens/DailyChaiScreen';
 
 // Module-level ref so services (notification taps) can navigate once the
 // container is ready
@@ -163,7 +162,6 @@ const AppNavigator = () => {
         <Stack.Screen name="GitaVersePlayer" component={GitaVersePlayerScreen} />
         <Stack.Screen name="ContentReader" component={ContentReaderScreen} />
         <Stack.Screen name="JourneyPath" component={JourneyPathScreen} />
-        <Stack.Screen name="DailyChai" component={DailyChaiScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

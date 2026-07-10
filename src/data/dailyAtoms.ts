@@ -17,6 +17,14 @@ export interface AtomLink {
   params?: Record<string, unknown>;
 }
 
+export const ATOM_TAGS: Record<AtomType, string> = {
+  why: 'Why do we…?',
+  saying: 'A saying to carry',
+  word: 'Sanskrit word',
+  story: 'Story moment',
+  festival: 'Festival lens',
+};
+
 export interface DailyAtom {
   id: string;
   type: AtomType;

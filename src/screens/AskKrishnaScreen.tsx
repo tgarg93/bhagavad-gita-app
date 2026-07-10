@@ -22,8 +22,11 @@ import { geminiService, isAuthError, GeminiMessage, GeminiChatSession } from '..
 import { KRISHNA_PERSONA, ERROR_MESSAGES, RATE_LIMITS } from '../config/geminiConfig';
 import { useFocusEffect } from '@react-navigation/native';
 import krishnaContext, { CurrentContent } from '../services/krishnaContextService';
+import { getDailyAtom } from '../data/dailyAtoms';
 
 const AskKrishnaScreen: React.FC = () => {
+  // Today's chai question leads the suggestions — the brief's hand-off
+  const todaysPrompt = React.useRef(getDailyAtom().krishnaPrompt).current;
   const [chatSession, setChatSession] = useState<GeminiChatSession>({
     messages: [],
     isActive: false,
@@ -39,7 +42,7 @@ const AskKrishnaScreen: React.FC = () => {
   const seededContentRef = useRef<string>('');
   const scrollViewRef = useRef<ScrollView>(null);
 
-  const suggestedQuestions = KRISHNA_PERSONA.conversationStarters;
+  const suggestedQuestions = [todaysPrompt, ...KRISHNA_PERSONA.conversationStarters];
 
   useEffect(() => {
     initializeChat();

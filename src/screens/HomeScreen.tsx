@@ -16,11 +16,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaColors, NavigationColors } from '../constants/colors';
 import { DharmaDesignSystem, createTextStyle, createCardStyle } from '../constants/DharmaDesignSystem';
-import { getDailyAtom } from '../data/dailyAtoms';
+import { getDailyAtom, ATOM_TAGS } from '../data/dailyAtoms';
+import { getDailyVerse } from '../data/dailyVerse';
 import { getTodaysFestivals, getUpcomingFestivals, getNextOccurrence, getDaysUntilFestival, Festival } from '../data/festivals';
 import journeyService from '../services/journeyService';
 import { getProgression, Progression } from '../services/progressionService';
 import LocalStorageService from '../services/localStorageService';
+import { AudioNarrationService } from '../services/audioNarrationService';
 import { JourneyItem, JOURNEY_MODULES, navigateToJourneyItem } from '../data/journeyPath';
 
 const { width } = Dimensions.get('window');
@@ -37,7 +39,9 @@ const continueThumbStyle = {
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
   const [todaysAtom] = useState(getDailyAtom());
-  const [chaiDoneToday, setChaiDoneToday] = useState(false);
+  const [todaysVerse] = useState(getDailyVerse());
+  const [speaking, setSpeaking] = useState(false);
+  const audioService = React.useRef(AudioNarrationService.getInstance()).current;
   const [progression, setProgression] = useState<Progression | null>(null);
   const [todaysFestivals, setTodaysFestivals] = useState(getTodaysFestivals());
   const [upcomingFestivals, setUpcomingFestivals] = useState(getUpcomingFestivals(3));
@@ -58,19 +62,36 @@ const HomeScreen: React.FC = () => {
         setNextStep(next);
         setJourneyTotal(path.length);
         setJourneyDone(path.filter(item => map[item.id]).length);
-        // Spiritual status + today's chai state refresh with focus too
+        // Spiritual status refreshes with focus; seeing Home IS reading the
+        // chai, so mark it opened and credit the day's activity
         getProgression().then(setProgression);
         const today = new Date();
         const key = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-        LocalStorageService.getChaiLastOpened().then(last => setChaiDoneToday(last === key));
+        LocalStorageService.saveChaiLastOpened(key);
+        journeyService.touchActivity();
         // "Begin the path" from onboarding lands here — carry it through
         if (journeyService.consumePendingStart() && next) {
           navigateToJourneyItem(navigation, next);
         }
       })();
+      return () => {
+        audioService.stopNarration();
+      };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
   );
+
+  const hearVerse = async () => {
+    if (speaking) return;
+    setSpeaking(true);
+    try {
+      await audioService.speakOnce(`${todaysVerse.english}. ${todaysVerse.reference}`, () =>
+        setSpeaking(false)
+      );
+    } catch {
+      setSpeaking(false);
+    }
+  };
 
   useEffect(() => {
     loadDailyContent();
@@ -140,26 +161,49 @@ const HomeScreen: React.FC = () => {
           </TouchableOpacity>
         )}
 
-        {/* Daily Chai — the morning brief's front door */}
-        <TouchableOpacity
-          style={styles.chaiCard}
-          activeOpacity={0.85}
-          onPress={() => (navigation as any).navigate('DailyChai')}
-        >
-          <Text style={styles.chaiCup}>☕</Text>
-          <View style={styles.chaiText}>
-            <Text style={styles.chaiEyebrow}>DAILY CHAI</Text>
-            <Text style={styles.chaiHook} numberOfLines={2}>{todaysAtom.hook}</Text>
-            <Text style={styles.chaiMeta}>
-              {chaiDoneToday ? 'Read today — sip again' : 'Under a minute'}
-            </Text>
+        {/* Daily Chai — the brief lives right here. Bodies aren't tappable;
+            the bare header icons are the only actions. */}
+        <View style={styles.chaiCard}>
+          <View style={styles.chaiCardTop}>
+            <Text style={styles.chaiTag}>☕ DAILY CHAI · {ATOM_TAGS[todaysAtom.type].toUpperCase()}</Text>
+            {todaysAtom.link && (
+              <TouchableOpacity
+                onPress={() => (navigation as any).navigate(todaysAtom.link!.route, todaysAtom.link!.params)}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              >
+                <Ionicons name="book-outline" size={20} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+              </TouchableOpacity>
+            )}
           </View>
-          {chaiDoneToday ? (
-            <Ionicons name="checkmark-circle" size={22} color={DharmaDesignSystem.colors.primary.peacockTeal} />
-          ) : (
-            <Ionicons name="chevron-forward" size={18} color={DharmaDesignSystem.colors.primary.deepSaffron} />
-          )}
-        </TouchableOpacity>
+          <Text style={styles.chaiHook}>{todaysAtom.hook}</Text>
+          <Text style={styles.chaiBody}>{todaysAtom.body}</Text>
+          <Text style={styles.chaiCitation}>{todaysAtom.citation}</Text>
+        </View>
+
+        {/* Verse of the day — English carries, Sanskrit ornaments */}
+        <View style={styles.chaiCard}>
+          <View style={styles.chaiCardTop}>
+            <Text style={styles.chaiTag}>TODAY'S VERSE</Text>
+            <View style={styles.chaiIcons}>
+              <TouchableOpacity onPress={hearVerse} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+                <Ionicons
+                  name={speaking ? 'volume-high' : 'play'}
+                  size={20}
+                  color={DharmaDesignSystem.colors.primary.deepSaffron}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => (navigation as any).navigate('GitaVersePlayer', { chapter: todaysVerse.chapter })}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              >
+                <Ionicons name="book-outline" size={20} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <Text style={styles.verseEnglish}>“{todaysVerse.english}”</Text>
+          <Text style={styles.verseSanskrit} numberOfLines={2}>{todaysVerse.sanskrit}</Text>
+          <Text style={styles.chaiCitation}>{todaysVerse.reference} · Sivananda translation</Text>
+        </View>
 
         {/* Continue your path — the guided journey's next step. Resume and
             "view path" live in separate full-width bands so neither steals
@@ -353,41 +397,62 @@ const styles = StyleSheet.create({
     color: DharmaDesignSystem.colors.neutrals.softAsh,
   },
   chaiCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: DharmaDesignSystem.spacing.md,
-    backgroundColor: '#FFF3E0',
+    backgroundColor: DharmaDesignSystem.colors.neutrals.white,
     borderRadius: DharmaDesignSystem.borderRadius.large,
     borderWidth: 1,
-    borderColor: 'rgba(230, 81, 0, 0.25)',
+    borderColor: 'rgba(230, 81, 0, 0.14)',
     padding: DharmaDesignSystem.spacing.md,
     marginHorizontal: DharmaDesignSystem.spacing.md,
     marginTop: DharmaDesignSystem.spacing.sm,
     ...DharmaDesignSystem.shadows.soft,
   },
-  chaiCup: {
-    fontSize: 28,
+  chaiCardTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 6,
   },
-  chaiText: {
-    flex: 1,
-  },
-  chaiEyebrow: {
-    ...DharmaDesignSystem.typography.sizes.caption,
-    color: DharmaDesignSystem.colors.primary.deepSaffron,
-    fontWeight: '700',
+  chaiTag: {
+    fontSize: 10.5,
+    fontWeight: '800',
     letterSpacing: 0.8,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
+    flexShrink: 1,
+    paddingRight: DharmaDesignSystem.spacing.sm,
+  },
+  chaiIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
   },
   chaiHook: {
     ...DharmaDesignSystem.typography.sizes.headingSM,
     color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     fontWeight: '700',
-    marginTop: 1,
+    marginBottom: 6,
   },
-  chaiMeta: {
-    ...DharmaDesignSystem.typography.sizes.caption,
-    fontWeight: '400',
+  chaiBody: {
+    fontSize: 14,
+    lineHeight: 21,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
+    marginBottom: 8,
+  },
+  chaiCitation: {
+    fontSize: 11.5,
+    fontStyle: 'italic',
     color: DharmaDesignSystem.colors.neutrals.softAsh,
-    marginTop: 2,
+  },
+  verseEnglish: {
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: '600',
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
+    marginBottom: 6,
+  },
+  verseSanskrit: {
+    fontSize: 12,
+    color: DharmaDesignSystem.colors.neutrals.softAsh,
+    marginBottom: 6,
   },
   festivalsCard: {
     backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,

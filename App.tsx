@@ -52,7 +52,7 @@ export default function App() {
         return;
       }
       const nav = navigationRef as any;
-      if (data.url === 'dailychai') nav.navigate('DailyChai');
+      if (data.url === 'dailychai') nav.navigate('MainTabs', { screen: 'Home' });
       else if (data.url === 'journey') nav.navigate('JourneyPath');
       else if (data.url === 'festival' && data.festivalId) {
         nav.navigate('FestivalDetail', { festivalId: data.festivalId });
