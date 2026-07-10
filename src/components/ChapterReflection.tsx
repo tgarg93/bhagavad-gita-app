@@ -71,8 +71,9 @@ const fetchSuggestions = (cacheKey: string, questions: string[]): Promise<string
 };
 
 // A chat bubble with the speaker's avatar: Krishna on the left, the reader on
-// the right (empty person avatar for now).
-const Bubble: React.FC<{ role: 'krishna' | 'user'; text: string }> = ({ role, text }) => {
+// the right (profile photo when set). Exported — the Ask Krishna chat uses
+// the same bubbles so every conversation with Krishna looks identical.
+export const Bubble: React.FC<{ role: 'krishna' | 'user'; text: string }> = ({ role, text }) => {
   if (role === 'krishna') {
     return (
       <View style={styles.krishnaRow}>

@@ -11,28 +11,19 @@ import {
   Platform,
   Alert,
   ActivityIndicator,
-  Image,
 } from 'react-native';
-
-// Typed separately so Image's style prop accepts it (StyleSheet unions don't)
-const krishnaAvatarStyle = {
-  width: 28,
-  height: 28,
-  borderRadius: 14,
-  resizeMode: 'cover',
-} as const;
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaColors } from '../constants/colors';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import DharmaHeader from '../components/ui/DharmaHeader';
 import DharmaHeaderAction from '../components/ui/DharmaHeaderAction';
+import { Bubble } from '../components/ChapterReflection';
 import { geminiService, isAuthError, GeminiMessage, GeminiChatSession } from '../services/geminiService';
 import { KRISHNA_PERSONA, ERROR_MESSAGES, RATE_LIMITS } from '../config/geminiConfig';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import krishnaContext, { CurrentContent } from '../services/krishnaContextService';
 
 const AskKrishnaScreen: React.FC = () => {
-  const navigation = useNavigation();
   const [chatSession, setChatSession] = useState<GeminiChatSession>({
     messages: [],
     isActive: false,
@@ -195,29 +186,10 @@ const AskKrishnaScreen: React.FC = () => {
     );
   };
 
+  // Same bubbles as the reflection conversations — avatar beside the bubble
   const renderMessage = (message: GeminiMessage) => (
-    <View
-      key={message.id}
-      style={[
-        styles.messageContainer,
-        message.isUser ? styles.userMessage : styles.krishnaMessage
-      ]}
-    >
-      {!message.isUser && (
-        <View style={styles.krishnaHeaderRow}>
-          <Image source={require('../../assets/krishna-avatar.png')} style={krishnaAvatarStyle} />
-          <Text style={styles.krishnaHeader}>Krishna</Text>
-        </View>
-      )}
-      <Text style={[
-        styles.messageText,
-        message.isUser ? styles.userMessageText : styles.krishnaMessageText
-      ]}>
-        {message.text}
-      </Text>
-      <Text style={styles.timestamp}>
-        {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-      </Text>
+    <View key={message.id} style={styles.messageSpacing}>
+      <Bubble role={message.isUser ? 'user' : 'krishna'} text={message.text} />
     </View>
   );
 
@@ -279,18 +251,11 @@ const AskKrishnaScreen: React.FC = () => {
       <DharmaHeader
         title="Ask Krishna"
         rightActions={
-          <View style={{ flexDirection: 'row', gap: DharmaDesignSystem.spacing.sm }}>
-            <DharmaHeaderAction
-              iconName="person-circle-outline"
-              onPress={() => (navigation as any).navigate('Profile')}
-              variant="subtle"
-            />
-            <DharmaHeaderAction
-              iconName="refresh"
-              onPress={clearChat}
-              variant="subtle"
-            />
-          </View>
+          <DharmaHeaderAction
+            iconName="refresh"
+            onPress={clearChat}
+            variant="subtle"
+          />
         }
       />
 
@@ -314,15 +279,9 @@ const AskKrishnaScreen: React.FC = () => {
         {chatSession.messages.map(renderMessage)}
         
         {chatSession.isTyping && (
-          <View style={styles.typingContainer}>
-            <View style={styles.krishnaHeaderRow}>
-              <Image source={require('../../assets/krishna-avatar.png')} style={krishnaAvatarStyle} />
-              <Text style={styles.krishnaHeader}>Krishna</Text>
-            </View>
-            <View style={styles.typingBubble}>
-              <ActivityIndicator size="small" color={DharmaColors.primary[400]} />
-              <Text style={styles.typingText}>thinking...</Text>
-            </View>
+          <View style={styles.typingRow}>
+            <ActivityIndicator size="small" color={DharmaDesignSystem.colors.primary.deepSaffron} />
+            <Text style={styles.typingText}>Krishna is reflecting…</Text>
           </View>
         )}
         
@@ -392,70 +351,16 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 40,
   },
-  messageContainer: {
-    marginBottom: 20,
-    maxWidth: '85%',
+  messageSpacing: {
+    marginBottom: DharmaDesignSystem.spacing.md,
   },
-  userMessage: {
-    alignSelf: 'flex-end',
-    backgroundColor: DharmaColors.primary[500],
-    borderRadius: 20,
-    borderBottomRightRadius: 4,
-    padding: 16,
-  },
-  krishnaMessage: {
-    alignSelf: 'flex-start',
-    backgroundColor: DharmaColors.background.secondary,
-    borderRadius: 20,
-    borderBottomLeftRadius: 4,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: DharmaColors.background.tertiary,
-  },
-  krishnaHeaderRow: {
+  typingRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    marginBottom: 8,
-  },
-  krishnaHeader: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: DharmaColors.primary[400],
-    letterSpacing: 0.5,
-  },
-  messageText: {
-    fontSize: 16,
-    lineHeight: 22,
-    fontWeight: '300',
-  },
-  userMessageText: {
-    color: DharmaColors.text.inverse,
-  },
-  krishnaMessageText: {
-    color: DharmaColors.text.primary,
-  },
-  timestamp: {
-    fontSize: 10,
-    color: DharmaColors.text.muted,
-    marginTop: 8,
-    textAlign: 'right',
-  },
-  typingContainer: {
-    alignSelf: 'flex-start',
-    maxWidth: '85%',
-    marginBottom: 20,
-  },
-  typingBubble: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: DharmaColors.background.secondary,
-    borderRadius: 20,
-    borderBottomLeftRadius: 4,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: DharmaColors.background.tertiary,
     gap: 8,
+    // Aligns the indicator with Krishna's bubbles (avatar 36 + gap 4)
+    marginLeft: 40,
+    marginBottom: DharmaDesignSystem.spacing.md,
   },
   typingText: {
     fontSize: 14,
