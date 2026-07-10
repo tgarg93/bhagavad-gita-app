@@ -27,6 +27,7 @@ export default {
       supportsTablet: true,
       bundleIdentifier: "com.dharma.app",
       infoPlist: {
+        ITSAppUsesNonExemptEncryption: false,
         NSMicrophoneUsageDescription: "This app needs microphone access to enable voice conversations with Krishna",
         NSPhotoLibraryUsageDescription: "Choose a profile photo from your library",
         NSCameraUsageDescription: "This app may need camera access for video calls (optional)"
