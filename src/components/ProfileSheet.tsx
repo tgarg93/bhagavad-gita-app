@@ -11,12 +11,14 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  Switch,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import KrishnaGuide from './KrishnaGuide';
 import OnboardingScreen from '../screens/OnboardingScreen';
-import LocalStorageService, { SpiritualProfile, ReflectionEntry } from '../services/localStorageService';
+import LocalStorageService, { SpiritualProfile, ReflectionEntry, NotificationSettings } from '../services/localStorageService';
+import notificationService from '../services/notificationService';
 import { getProgression, Progression } from '../services/progressionService';
 import krishnaContext from '../services/krishnaContextService';
 import { userKnowledge } from '../services/userKnowledgeService';
@@ -37,10 +39,24 @@ const ProfileSheet: React.FC<ProfileSheetProps> = ({ visible, onClose }) => {
   const [progression, setProgression] = useState<Progression | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
 
+  const [reminders, setReminders] = useState<NotificationSettings | null>(null);
+  const [remindersPermitted, setRemindersPermitted] = useState(true);
+
   const load = useCallback(async () => {
     setProfile(await LocalStorageService.getSpiritualProfile());
     setProgression(await getProgression());
+    setReminders(await notificationService.getSettings());
+    setRemindersPermitted(await notificationService.hasPermission());
   }, []);
+
+  const toggleReminder = async (key: keyof NotificationSettings, value: boolean) => {
+    const updated = await notificationService.updateSettings({ [key]: value });
+    setReminders(updated);
+    if (value && !(await notificationService.hasPermission())) {
+      await notificationService.ensurePermissions();
+      setRemindersPermitted(await notificationService.hasPermission());
+    }
+  };
 
   useEffect(() => {
     if (visible) load();
@@ -352,6 +368,37 @@ const ProfileSheet: React.FC<ProfileSheetProps> = ({ visible, onClose }) => {
             </View>
           )}
 
+          {reminders && (
+            <View style={styles.remindersCard}>
+              <Text style={styles.summaryLabel}>Reminders</Text>
+              {!remindersPermitted && (
+                <Text style={styles.remindersHint}>
+                  Notifications are off for this app — enable them in iOS Settings for reminders to arrive.
+                </Text>
+              )}
+              {(
+                [
+                  { key: 'dailyWisdom', label: 'Morning wisdom', sub: 'A daily Gita verse at 8:00' },
+                  { key: 'journeyNudge', label: 'Journey nudge', sub: 'Your next step, evenings you’ve been away' },
+                  { key: 'festivals', label: 'Festival reminders', sub: '3 days before and on the day' },
+                  { key: 'streak', label: 'Streak protection', sub: 'A gentle 9pm nudge when a streak is at risk' },
+                ] as { key: keyof NotificationSettings; label: string; sub: string }[]
+              ).map(row => (
+                <View key={row.key} style={styles.reminderRow}>
+                  <View style={styles.reminderText}>
+                    <Text style={styles.reminderLabel}>{row.label}</Text>
+                    <Text style={styles.reminderSub}>{row.sub}</Text>
+                  </View>
+                  <Switch
+                    value={!!reminders[row.key]}
+                    onValueChange={v => toggleReminder(row.key, v)}
+                    trackColor={{ true: colors.primary.deepSaffron, false: undefined }}
+                  />
+                </View>
+              ))}
+            </View>
+          )}
+
           {__DEV__ && (
             <View style={styles.devSection}>
               <Text style={styles.devTitle}>Dev Tools</Text>
@@ -566,6 +613,33 @@ const styles = StyleSheet.create({
   },
   summaryLabel: { ...typography.sizes.caption, color: colors.primary.peacockTeal, fontWeight: '700', marginBottom: spacing.xs },
   summaryText: { ...typography.sizes.bodyMD, color: colors.neutrals.charcoalBlack, lineHeight: 22, fontStyle: 'italic' },
+  remindersCard: {
+    marginTop: spacing.lg,
+    backgroundColor: colors.neutrals.warmIvory,
+    borderRadius: borderRadius.medium,
+    padding: spacing.md,
+    borderLeftWidth: 2,
+    borderLeftColor: colors.primary.deepSaffron,
+  },
+  remindersHint: {
+    ...typography.sizes.bodySM,
+    fontWeight: '400',
+    color: colors.primary.deepSaffron,
+    marginTop: spacing.xs,
+    marginBottom: spacing.xs,
+  },
+  reminderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: spacing.md,
+    paddingVertical: spacing.sm,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'rgba(0, 0, 0, 0.08)',
+  },
+  reminderText: { flex: 1 },
+  reminderLabel: { ...typography.sizes.bodyMD, fontWeight: '600', color: colors.neutrals.charcoalBlack },
+  reminderSub: { ...typography.sizes.caption, fontWeight: '400', color: colors.neutrals.softAsh, marginTop: 1 },
   devSection: {
     marginTop: spacing.xl,
     padding: spacing.md,

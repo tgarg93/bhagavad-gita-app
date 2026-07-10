@@ -29,7 +29,7 @@ export interface Festival {
   regionalVariations: RegionalVariation[];
   importance: 'major' | 'regional' | 'minor';
   rituals: Ritual[];
-  starterPack: StarterPack;
+  starterPack?: StarterPack; // commerce concept, currently unrendered — only the deep festivals carry one
   imageUrl?: string;
   heroImageUrl?: string;
   galleryImages?: string[];
@@ -678,21 +678,123 @@ export const festivalData: Festival[] = [
     rituals: [
       {
         id: 'saraswati-puja',
-        name: 'Saraswati Worship',
-        description: 'Worship of knowledge and wisdom',
+        name: 'Saraswati Puja — Blessing the Tools of Learning',
+        description: 'The heart of the day: books, instruments, and pens placed before the goddess of knowledge for her blessing.',
         timeOfDay: 'morning',
-        materials: ['Yellow flowers', 'Books', 'Musical instruments', 'White cloth'],
+        materials: ['Yellow flowers (marigold, mustard blossom)', 'Books, notebooks, and musical instruments', 'A Saraswati image on white or yellow cloth', 'Yellow sweets (kesari halwa, boondi)'],
         steps: [
-          'Clean and decorate study area',
-          'Place Saraswati image/idol',
-          'Offer yellow flowers and sweets',
-          'Read from sacred texts',
-          'Play music or recite prayers'
+          {
+            stepNumber: 1,
+            instruction: 'Clean the study or work corner and spread a fresh white or yellow cloth.',
+            explanation: 'Saraswati is invited into the place where learning actually happens — the desk is the altar.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Place her image, and before it the family\'s books, instruments, brushes, and pens.',
+            explanation: 'The tools of knowledge themselves receive the worship — they rest, honored, for the day.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Offer yellow flowers and sweets, and recite the Saraswati Vandana together.',
+            explanation: 'Yellow is spring\'s color — the mustard fields in bloom — and the color of ripened understanding.'
+          },
+          {
+            stepNumber: 4,
+            instruction: 'Read a few lines from a beloved book or play a few phrases of music as the closing offering.',
+            explanation: 'Knowledge is honored by being used beautifully, not only bowed to.'
+          }
         ],
-        mantras: ['ॐ सरस्वत्यै नमः', 'या कुन्देन्दु तुषार हार धवला']
+        mantras: [
+          {
+            sanskrit: 'ॐ ऐं सरस्वत्यै नमः',
+            transliteration: 'oṁ aiṁ sarasvatyai namaḥ',
+            meaning: 'Om, salutations to Saraswati (with her seed syllable aiṁ)',
+            pronunciation: 'om aim sa-ras-wat-yai na-mah'
+          },
+          {
+            sanskrit: 'या कुन्देन्दुतुषारहारधवला या शुभ्रवस्त्रावृता',
+            transliteration: 'yā kundendu-tuṣhāra-hāra-dhavalā yā śhubhra-vastrāvṛitā',
+            meaning: 'She who is fair as jasmine, the moon, and a garland of snow, robed in radiant white… (opening of the Saraswati Vandana)',
+            pronunciation: 'yaa kun-den-du tu-shaa-ra haa-ra dha-va-laa'
+          }
+        ],
+        significance: 'Saraswati Puja consecrates the year\'s learning: students traditionally rest their books before her today and begin new studies tomorrow with her blessing.',
+        tips: ['Let each family member place one tool of their craft — laptop, ladle, or flute all qualify'],
+        commonMistakes: ['Treating it as students-only — Saraswati blesses every craft that requires skill and understanding']
+      },
+      {
+        id: 'vidyarambha',
+        name: 'Vidyarambha — A Child\'s First Letters',
+        description: 'The tender initiation rite: a young child writes their first letters on this day, guided by an elder\'s hand.',
+        timeOfDay: 'morning',
+        materials: ['A tray of rice or a slate', 'The child\'s first pencil or a golden ring to trace with'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'Seat the child on a parent\'s or grandparent\'s lap facing the Saraswati image.',
+            explanation: 'Learning begins held — knowledge enters a child through relationship before it enters through books.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Guide the child\'s finger to trace the first letters (traditionally "ॐ" or the start of the alphabet) in the rice.',
+            explanation: 'The first act of writing is made sacred, unhurried, and celebrated — the opposite of a test.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'End with sweets and loud applause — the child should remember this as a day of delight.',
+            explanation: 'The rite\'s whole purpose: welding the memory of learning to the feeling of joy.'
+          }
+        ],
+        significance: 'Vidyarambha ("the beginning of knowledge") makes a child\'s entry into literacy a blessing rather than a hurdle — education framed from the first stroke as sacred inheritance.',
+        tips: ['It\'s never too late — adults beginning a new skill can trace their own "first letters" today'],
+        commonMistakes: ['Correcting the child\'s strokes — today, every mark they make is perfect']
       }
     ],
     fullStory: 'Basant Panchami marks the arrival of spring and is dedicated to Goddess Saraswati, the deity of knowledge, music, arts, and learning. This auspicious day falls on the fifth day (Panchami) of the bright fortnight in the Hindu month of Magha. Yellow is the predominant color of the festival, symbolizing the mustard fields that bloom during this time of year. Students place their books and musical instruments near the goddess to seek her blessings for wisdom and skill.',
+    sections: [
+      {
+        id: 'basant-spring-fifth',
+        title: 'The Fifth Day of Spring',
+        subtitle: 'Mustard Fields Turning Gold to the Horizon',
+        storyText: 'Basant Panchami arrives on the fifth day of the waxing moon of Magha, when north India\'s winter first loosens its grip and the mustard fields turn the plains yellow to the horizon. The festival\'s color is taken straight from those fields: yellow clothes, yellow rice, yellow sweets, marigolds everywhere. But the tradition made a striking choice about what spring\'s first day should celebrate — not fertility, not harvest, but knowledge. As the earth wakes, the mind is asked to wake with it: new studies begun, instruments blessed, children taught their first letters. Spring, says the festival, is above all the season of the opening mind.'
+      },
+      {
+        id: 'basant-saraswati',
+        title: 'The Goddess Born of Thought',
+        subtitle: 'A White-Robed Figure with a Veena by a River',
+        storyText: 'Saraswati is unlike any other great goddess: she carries no weapon. Born, the Puranas tell, from the mind of Brahma the creator — who found his new universe silent and formless until she gave it speech, music, and order — she holds instead a veena, a book, and a rosary, and rides a white swan said to be able to separate milk from water: discrimination itself, the mind\'s power to tell the true from the mixed. Her white robes refuse ornament; knowledge needs none. She is also the memory of a real river — the Saraswati of the Rig Veda, "best of mothers, best of rivers, best of goddesses" — whose waters became, in the tradition\'s imagination, the flowing of wisdom itself.',
+        teachingText: 'The unarmed goddess is the festival\'s quiet thesis: knowledge is a power that needs no weapon, and the swan\'s discrimination — telling truth from noise — may be the most protective skill a person can own. Ask what your swan currently drinks: what mixture of milk and water does your daily attention take in undivided?'
+      },
+      {
+        id: 'basant-first-letters',
+        title: 'First Letters in a Tray of Rice',
+        subtitle: 'A Grandparent\'s Hand Guiding a Small Finger',
+        storyText: 'The festival\'s most tender custom is vidyarambha: a young child, seated in a grandparent\'s lap before the goddess, traces their first-ever letters in a tray of rice, everyone applauding as if a kingdom had been won. The tradition understood something modern education sometimes forgets — that a person\'s relationship with learning is set by its first emotional taste. So it engineered the first taste to be sweet: lap, laughter, sweets, blessing. Books themselves rest before the goddess today; even they get a holiday, honored as vessels.',
+        teachingText: 'Whatever your age, you have "first letters" waiting — the language not started, the instrument in its case, the skill postponed. Basant Panchami\'s counsel is to begin it the vidyarambha way: held by encouragement, celebrated for the first clumsy stroke, sweet from the first taste. Beginnings deserve ceremony, not judgment.'
+      },
+      {
+        id: 'basant-kites',
+        title: 'Yellow Kites on a New Wind',
+        subtitle: 'A Spring Sky Stitched with Color',
+        storyText: 'In Punjab and across the north, Basant Panchami fills the sky with kites — spring\'s first winds put to joyful use. The pairing is old and apt: the festival of the mind and the sport of the string. A kite is thought made visible — it climbs on invisible currents, needs both anchor and freedom, and falls the moment its holder stops paying attention. Children learn the year\'s first lesson in the physics of aspiration off their own rooftops, dressed in yellow, shouting at the sky.',
+        teachingText: 'Fly something today — literally if you can, or the inner kind: one aspiration for the bright half of the year, named and given its first length of string. Saraswati\'s festival adds the condition that makes aspirations fly: study the wind. Enthusiasm without knowledge is a kite without a tail.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Puranic tradition',
+        locator: 'Saraswati\'s emergence from Brahma (Matsya Purana and others); her iconography — veena, book, swan — traditional',
+      },
+      {
+        text: 'Rig Veda',
+        locator: '2.41.16 (ambitame, nadītame, devitame Sarasvati — best of mothers, rivers, goddesses)',
+        translation: 'public-domain renderings',
+      },
+      {
+        text: 'Living tradition',
+        locator: 'Vidyarambha first-letters rite; yellow of the Magha mustard bloom; Punjab kite-flying — festival practice, labeled as tradition',
+      },
+    ],
     mythology: [
       'Birth of Goddess Saraswati from the consciousness of Brahma',
       'Legend of the sacred river Saraswati flowing on this day',
@@ -747,21 +849,124 @@ export const festivalData: Festival[] = [
     rituals: [
       {
         id: 'shiva-abhishekam',
-        name: 'Shiva Abhishekam',
-        description: 'Ritual bathing of Shiva Lingam',
-        timeOfDay: 'all_day',
-        materials: ['Milk', 'Honey', 'Ghee', 'Yogurt', 'Water', 'Bel leaves'],
+        name: 'Abhishekam — Bathing the Linga',
+        description: 'The night\'s central act: pouring water, milk, and the five nectars over the Shiva linga while the name is chanted.',
+        timeOfDay: 'night',
+        materials: ['A Shiva linga (or any stone consecrated for the night)', 'Water, milk, yogurt, honey, ghee', 'Bilva (bel) leaves', 'Incense and a ghee lamp'],
         steps: [
-          'Clean the Shiva Lingam',
-          'Pour milk while chanting mantras',
-          'Follow with honey, ghee, yogurt',
-          'Offer bel leaves',
-          'Light incense and lamps'
+          {
+            stepNumber: 1,
+            instruction: 'Clean the linga and the space; sit for one silent minute before beginning.',
+            explanation: 'Shivratri is a night of stillness — the ritual begins in the quiet it points to.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Pour water, then milk, then the remaining offerings slowly over the linga, chanting Om Namah Shivaya throughout.',
+            explanation: 'The continuous pouring is a meditation: attention held in an unbroken stream, like the offering itself.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Offer bilva leaves — ideally whole three-leafed sprigs, placed stem-down.',
+            explanation: 'The trifoliate bilva is Shiva\'s dearest offering, honored as his three eyes or the three gunas surrendered.'
+          },
+          {
+            stepNumber: 4,
+            instruction: 'Light the lamp and incense, and either keep vigil in rounds of chanting or sit in silent meditation.',
+            explanation: 'Each of the night\'s four praharas (watches) traditionally gets its own round of worship.'
+          }
         ],
-        mantras: ['ॐ नमः शिवाय', 'ॐ त्र्यम्बकं यजामहे']
+        mantras: [
+          {
+            sanskrit: 'ॐ नमः शिवाय',
+            transliteration: 'oṁ namaḥ śhivāya',
+            meaning: 'Om, salutations to Shiva',
+            pronunciation: 'om na-mah shi-vaa-ya'
+          },
+          {
+            sanskrit: 'ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्। उर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय मामृतात्॥',
+            transliteration: 'oṁ tryambakaṁ yajāmahe sugandhiṁ puṣhṭi-vardhanam, urvārukam iva bandhanān mṛityor mukṣhīya māmṛitāt',
+            meaning: 'We worship the three-eyed one, fragrant, who nourishes all beings; as a ripe cucumber is released from its stem, may he free us from death, for immortality (Rig Veda 7.59.12)',
+            pronunciation: 'om tri-yam-ba-kam ya-jaa-ma-hey'
+          }
+        ],
+        significance: 'The abhishekam re-enacts the world\'s gratitude to the god who drank its poison — cooling streams poured over the one who holds the halahala in his throat.',
+        tips: ['A single glass of water poured with full attention is a complete abhishekam — Shiva is Bholenath, the easily pleased'],
+        commonMistakes: ['Rushing the pour — the slowness IS the offering']
+      },
+      {
+        id: 'shivratri-vigil',
+        name: 'The Night Vigil (Jagarana)',
+        description: 'Staying awake through the Great Night — in chanting, meditation, or quiet reading — traditionally in four watches.',
+        timeOfDay: 'night',
+        materials: ['A lamp kept burning', 'A mala for japa', 'Warm covering for the long sitting'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'After the evening abhishekam, resolve (sankalpa) to keep watch — the whole night, or honestly as much as you can.',
+            explanation: 'The vigil is a metaphor enacted: staying awake in the world\'s deepest dark is the spiritual project itself.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Divide the night into watches: chant one round, meditate one round, read or listen to Shiva\'s stories in another.',
+            explanation: 'The traditional four praharas each carry their own worship — variety keeps the watcher awake.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Break the fast and the vigil at dawn, with gratitude.',
+            explanation: 'The night ends the way every dark night ends — and having watched it through changes the watcher.'
+          }
+        ],
+        significance: 'Legend says even accidental wakefulness this night bears fruit — the hunter who stayed awake in a bilva tree, unknowingly dropping its leaves on a linga below, was liberated by dawn (Shiva Purana). Attention itself, however imperfect, is the offering.',
+        tips: ['Keeping vigil with family or a temple community makes the night joyful rather than grim'],
+        commonMistakes: ['Turning the vigil into an endurance contest — a loving half-night outweighs a resentful whole one']
       }
     ],
-    fullStory: 'Maha Shivratri, the Great Night of Shiva, is the most sacred festival dedicated to Lord Shiva. It occurs on the new moon night in the month of Phalguna, when devotees observe fasting, vigil, and worship throughout the night. This festival celebrates the marriage of Shiva and Parvati and commemorates the divine dance of creation, preservation, and destruction.',
+    fullStory: 'Maha Shivratri, the Great Night of Shiva, is the most sacred festival dedicated to Lord Shiva. It occurs on the fourteenth night of the waning moon in the month of Phalguna, when devotees observe fasting, vigil, and worship throughout the night. This festival celebrates the marriage of Shiva and Parvati and commemorates the divine dance of creation, preservation, and destruction.',
+    sections: [
+      {
+        id: 'shivratri-great-night',
+        title: 'The Great Night',
+        subtitle: 'One Lamp Burning Against the Darkest Sky',
+        storyText: 'Most festivals celebrate a day; Maha Shivratri consecrates a night — the fourteenth of the waning moon of Phalguna, one of the darkest nights of the year, when devotees deliberately stay awake. Every other festival fills the dark with lamps and firecrackers; Shivratri lets the dark stand, and asks you to remain conscious inside it. The tradition offers several stories for why — the night Shiva married Parvati, the night he danced the Tandava, the night he drank the poison — but the practice beneath them all is one: fasting, vigil, and the name, through the four watches until dawn.'
+      },
+      {
+        id: 'shivratri-why-vigil',
+        title: 'Why Stay Awake?',
+        subtitle: 'Eyes Open in the Fourth Watch',
+        storyText: 'The vigil is the festival\'s teaching in physical form. The yogic traditions hold that on this night the planet\'s energies favor inner ascent, and that remaining awake — spine vertical, attention gathered — lets a person receive what sleep would spill. The devotional traditions say it more simply: love keeps watch. Anyone who has sat through the night beside a sick child or waited for a dawn train knows the strange clarity of the small hours; Shivratri claims those hours for the deepest kind of waiting. Shiva is the still point, and the night\'s stillness is the year\'s best doorway to him.',
+        teachingText: 'You need not manage the whole night to taste the teaching. Sit awake, intentionally, one hour past your usual sleep tonight — no screen, one lamp, the name or the breath. The hour that follows tiredness, watchers report, is where the quiet lives. Shivratri institutionalizes that discovery once a year.'
+      },
+      {
+        id: 'shivratri-hunter',
+        title: 'The Hunter in the Bilva Tree',
+        subtitle: 'Leaves Falling One by One onto a Stone Below',
+        storyText: 'The Shiva Purana\'s beloved Shivratri story stars no sage but a hunter — a rough man who had never worshipped anything. Benighted in the forest and afraid of beasts, he climbed a bilva tree and, to stay awake through the cold night, plucked its leaves one by one and dropped them below. Unknown to him, a Shiva linga stood at the tree\'s foot; unknowing, hungry, and frightened, he kept an accidental all-night vigil, showering it with Shiva\'s favorite leaves on Shiva\'s own night. By dawn, the story insists, his heart had changed — and heaven counted the night as perfect worship.',
+        teachingText: 'The hunter\'s story is the tradition at its most generous: intention matters, but attention counts even when it doesn\'t know itself as worship. Whatever kept you awake and watchful through your own hard nights — grief, fear, care — may have been closer to prayer than you knew. Tonight, do knowingly what the hunter did by accident.'
+      },
+      {
+        id: 'shivratri-wedding',
+        title: 'The Marriage of Stillness and Power',
+        subtitle: 'A Wild Bridegroom Arriving to Meet a Radiant Bride',
+        storyText: 'The night\'s most joyful reading: Maha Shivratri as the wedding anniversary of Shiva and Parvati (Shiva Purana, Rudra Samhita). Parvati won the unwinnable — the ash-smeared ascetic who had burned desire itself — not by beauty but by matching his discipline with her own tapasya. Their wedding procession is the tradition\'s wildest scene: Shiva arriving on his bull with an entourage of ghosts and misfits, the mountain-king\'s court aghast, Parvati serene. Shakti — power, energy, life — married Shiva — stillness, consciousness — and the philosophers have read the whole cosmos as that marriage ever since.',
+        teachingText: 'The union is also inner counsel: your stillness and your power are meant to be wedded, not alternated. Meditation that never acts is Shiva without Shakti; action that never stills is Shakti without Shiva. Shivratri, falling weeks before the action-festival of Holi, holds the still pole of the pair. Ask which pole your life over-weights, and what a wedding of the two would change.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Shiva Purana',
+        locator: 'Koti Rudra Samhita (the hunter\'s Shivratri legend); Rudra Samhita (the marriage of Shiva and Parvati)',
+        translation: 'J.L. Shastri, Motilal Banarsidass / wisdomlib.org',
+      },
+      {
+        text: 'Rig Veda',
+        locator: '7.59.12 (Mahamrityunjaya mantra, chanted through the vigil)',
+        translation: 'public-domain renderings',
+      },
+      {
+        text: 'Living tradition',
+        locator: 'Four-prahara night worship, bilva offering, fasting and jagarana — festival practice, labeled as tradition',
+      },
+    ],
     mythology: [
       'Divine marriage of Shiva and Parvati',
       'Night when Shiva performed the cosmic dance of Tandava',
@@ -1026,8 +1231,94 @@ export const festivalData: Festival[] = [
     scripture: 'Ramayana',
     duration: 1,
     importance: 'major',
-    rituals: [],
+    rituals: [
+      {
+        id: 'ram-navami-noon',
+        name: 'The Noon Birth Celebration',
+        description: 'Rama was born at midday — the festival\'s central worship happens as the sun reaches its height, with a cradle, the Ram Raksha, and panakam.',
+        timeOfDay: 'afternoon',
+        materials: ['A small murti or picture of baby Rama (or Rama with Sita, Lakshmana, and Hanuman)', 'A cradle or swing decorated with flowers', 'Panakam (jaggery-lime-cardamom water) and fruits', 'Tulsi leaves, a ghee lamp'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'In the morning, bathe and dress the murti and prepare the flower-decked cradle.',
+            explanation: 'Rama is welcomed as Ayodhya welcomed him — as the longed-for child of the whole house.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'As noon approaches, place the baby Rama in the cradle and rock it gently while singing bhajans.',
+            explanation: 'Madhyahna — midday — is the traditional hour of the birth; the rocking marks the moment.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Offer panakam and fruit, perform arati, and recite the Ram Raksha Stotra or a Ramayana passage.',
+            explanation: 'Panakam, the cooling jaggery drink, suits the spring heat of Chaitra — celebration matched to season.'
+          },
+          {
+            stepNumber: 4,
+            instruction: 'Share the prasad, and if you can, read aloud one story of Rama before evening.',
+            explanation: 'Ram Navami is above all a storytelling festival — the epic is the worship.'
+          }
+        ],
+        mantras: [
+          {
+            sanskrit: 'श्री राम जय राम जय जय राम',
+            transliteration: 'śhrī rāma jaya rāma jaya jaya rāma',
+            meaning: 'Glory to Rama, victory to Rama — the thirteen-syllable Ram mantra beloved of saints from Samartha Ramdas to Gandhi',
+            pronunciation: 'shree raa-ma ja-ya raa-ma ja-ya ja-ya raa-ma'
+          }
+        ],
+        significance: 'The noon celebration marks the moment the Valmiki Ramayana gives for Rama\'s birth — Chaitra Shukla Navami, the ninth day of the bright fortnight, under the Punarvasu star.',
+        tips: ['South Indian homes often also celebrate Sita-Rama kalyanam (their wedding) today — a family day end to end'],
+        commonMistakes: ['Letting the day pass without a story told aloud — the Ramayana was composed to be heard']
+      }
+    ],
     fullStory: 'Ram Navami celebrates the birth of Lord Rama, the seventh avatar of Vishnu and the epitome of righteousness (dharma). Born to King Dasharatha and Queen Kausalya in Ayodhya, Rama\'s life story as told in the Ramayana exemplifies the ideal qualities of a son, husband, king, and human being. This festival marks the culmination of nine days of spiritual observance and is celebrated with great devotion across India.',
+    sections: [
+      {
+        id: 'ram-navami-ninth-day',
+        title: 'The Ninth Day of Spring\'s New Year',
+        subtitle: 'Ayodhya Decked in Mango Leaves at Midday',
+        storyText: 'Ram Navami crowns the nine days of Chaitra Navratri: the Hindu lunar year opens, nine nights honor the Goddess, and on the ninth day — Chaitra Shukla Navami — Rama is born at noon in Ayodhya. The placement is deliberate poetry: the year begins, the divine feminine is honored, and then dharma itself takes human birth. Across India the day is kept with cradles rocked at midday, the Ram Raksha recited, panakam cooling the first spring heat, and everywhere — in temples, courtyards, and now car stereos — the story being told again.'
+      },
+      {
+        id: 'ram-navami-yajna',
+        title: 'The King Who Longed for a Son',
+        subtitle: 'Sacred Fire, and a Golden Vessel of Kheer',
+        storyText: 'The Valmiki Ramayana opens the story with an ache: Dasharatha, king of Ayodhya, mighty and beloved, has three queens and no child. On his sages\' counsel he performs the putrakameshti yajna — the fire rite for offspring (Bala Kanda, sargas 8–16). From the flames rises a radiant being bearing a vessel of divine kheer for the queens. Kausalya bears Rama, Kaikeyi bears Bharata, Sumitra bears the twins Lakshmana and Shatrughna. Heaven, meanwhile, has its own reason: the gods, oppressed by Ravana — untouchable by divine hands through his boon — have asked Vishnu to be born as a man. The king\'s longing and the world\'s need meet in one child.',
+        teachingText: 'The tradition loves this convergence: Rama is born because a father ached for a son AND because the world ached for a rescuer — private longing and cosmic purpose in one birth. It reads every birth that way. The child given to you, or the one you were, arrives carrying both a family\'s hope and some purpose the family cannot yet see.'
+      },
+      {
+        id: 'ram-navami-noon-birth',
+        title: 'Born at Noon',
+        subtitle: 'The Sun at Its Height Over Ayodhya',
+        storyText: 'Krishna arrives at midnight in a prison; Rama arrives at high noon in a rejoicing palace (Bala Kanda, sarga 18: Chaitra Shukla Navami, Punarvasu nakshatra, the sun exalted). The tradition reads the contrast as a teaching about how dharma comes into the world: sometimes as hidden rescue in the dark, sometimes as open glory in full daylight. Rama is the noon-born — the standard held up publicly, the ideal that does not hide. Ayodhya\'s celebration lasted days; the Ramayana lingers on the city\'s joy the way it will later linger on the city\'s grief at his exile.',
+        teachingText: 'Midnight births and noon births both happen in a life — some of your best chapters begin in secret difficulty, others in open blessing. Ram Navami honors the noon kind: the visible commitments, publicly made — a marriage, a vow, a stand taken in daylight. What in your life needs to be born at noon, where everyone can see it and hold you to it?'
+      },
+      {
+        id: 'ram-navami-story-festival',
+        title: 'A Festival Made of Story',
+        subtitle: 'A Katha Teller\'s Raised Hand, an Audience Leaning In',
+        storyText: 'More than any ritual, Ram Navami is kept by narration. For centuries the days around it have been the great season of Ram Katha — the Ramayana told aloud by kathakars to town squares, Tulsidas\'s Ramcharitmanas sung in Awadhi, nine-day recitation marathons ending today. The tradition\'s insight is that Rama\'s power is transmitted narratively: you cannot summarize a character into someone\'s heart, you can only tell the story until the listener has walked the exile, waited with Bharata, leapt with Hanuman, and come home. The epic ends with its own instruction: this story, heard, purifies.',
+        teachingText: 'Keep the festival its own way: tell someone the story. A child at bedtime, a friend over dinner — the exile, the sandals, Shabari\'s berries, the bridge. You will find the teller receives the story again in the telling. That, for three thousand years, is how Rama has traveled.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Valmiki Ramayana',
+        locator: 'Bala Kanda, sargas 8–16 (putrakameshti yajna), sarga 18 (the birth: Chaitra Shukla Navami, Punarvasu)',
+        translation: 'valmikiramayan.net (public)',
+        url: 'https://www.valmikiramayan.net/',
+      },
+      {
+        text: 'Ramcharitmanas',
+        locator: 'Tulsidas (16th c.) — the Ram Katha tradition and noon-birth celebration; named as devotional tradition',
+      },
+      {
+        text: 'Drik Panchang',
+        locator: 'Ram Navami dates 2026–2028 and madhyahna muhurta convention',
+      },
+    ],
     mythology: [
       'Divine birth of Rama to destroy evil and establish dharma',
       'The story of King Dasharatha\'s penance for a son',

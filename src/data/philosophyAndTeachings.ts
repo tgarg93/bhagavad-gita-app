@@ -582,10 +582,83 @@ export const philosophyData: PhilosophicalConcept[] = [
     },
     podcastEpisodes: [],
     images: {
-      heroImage: '/images/philosophy/ahimsa-hero.jpg',
+      // TODO cover shopping list: ahimsa-cover.png
+      heroImage: require('../../assets/images/covers/dharma-cover.png'),
       iconImage: '/images/philosophy/ahimsa-icon.jpg'
     },
-    difficulty: 'beginner'
+    difficulty: 'beginner',
+    sections: [
+      {
+        id: 'ahimsa-opening',
+        title: 'The Strength That Refuses to Wound',
+        subtitle: 'An Open Hand Where a Fist Could Be',
+        storyText: 'Ahimsa is usually translated "non-violence," and the translation undersells it. The word is a-himsa — the absence of the wish to harm — and the tradition means it in full: not wounding with the hand, not wounding with the tongue, not wounding, finally, even with the thought. It is often mistaken for weakness, and the Mahabharata — a text soaked in the moral complexities of war — answers that mistake with its most sweeping superlative: "Ahimsa is the highest dharma, the highest self-control, the highest gift, the highest austerity, the highest sacrifice" (Mahabharata 13.117.37–38). The epic of the great war reserves its supreme praise for the one who harms nothing.'
+      },
+      {
+        id: 'ahimsa-three-gates',
+        title: 'Three Gates of Harm',
+        subtitle: 'Thought, Word, and Hand',
+        storyText: 'The tradition analyzes violence the way a physician traces a disease: to its origin. By the time a hand strikes, the harm is old — it lived first as a thought, then as words. So ahimsa is practiced at three gates. The hand\'s gate is the easiest: most of us pass it daily. The tongue\'s gate is harder — the tradition counts sarcasm, gossip, and the well-aimed "honest" remark as himsa in fluent disguise. The mind\'s gate is hardest of all: the rehearsed grievance, the imagined argument won, the quiet wish to see someone fail. The Gita lists ahimsa among the marks of true knowledge (13.7–12) and among the divine endowments (16.2) — in both lists it keeps company with truthfulness and absence of anger, its gatekeeper virtues.',
+        teachingText: 'Audit your three gates for one day, gently. Most people find the hand clean, the tongue occasionally armed, and the mind running a low-grade war no one else can see. Begin where the tradition begins: not by suppressing the violent thought, but by noticing it without enlisting.'
+      },
+      {
+        id: 'ahimsa-gita-virtue',
+        title: 'Harmlessness in the Gita\'s Lists',
+        subtitle: 'A Virtue Named Among the Divine Endowments',
+        keyVerse: {
+          sanskrit: 'अहिंसा सत्यमक्रोधस्त्यागः शान्तिरपैशुनम्। दया भूतेष्वलोलुप्त्वं मार्दवं ह्रीरचापलम्॥',
+          transliteration: 'ahinsā satyam akrodhas tyāgaḥ śhāntir apaiśhunam, dayā bhūteṣhv aloluptvaṁ mārdavaṁ hrīr achāpalam',
+          meaning: 'Harmlessness, truth, absence of anger, renunciation, peacefulness, absence of crookedness, compassion for beings, non-covetousness, gentleness, modesty, absence of fickleness.',
+          source: 'Bhagavad Gita 16.2 (tr. Swami Sivananda)'
+        },
+        storyText: 'Notice the company ahimsa keeps in the Gita\'s sixteenth chapter: truth, absence of anger, compassion, gentleness. The tradition understood these as one organism — you cannot practice harmlessness while cultivating anger, and you cannot be truly truthful while wishing harm, because harm distorts what you are willing to see. And there is a paradox the Gita holds without flinching: this teaching is given on a battlefield, to a warrior being told to fight. Ahimsa in the Gita is not the refusal of all conflict; it is the purging of hatred from whatever conflict dharma requires. Arjuna must fight — without the wish to harm.',
+        teachingText: 'This is the adult version of the teaching: some roles — parent, judge, soldier, surgeon, manager — require acts that cause pain. Ahimsa asks not that you abandon the role but that you empty it of cruelty: the discipline without the contempt, the boundary without the punishment, the truth without the twist of the knife.'
+      },
+      {
+        id: 'ahimsa-yoga-sutra',
+        title: 'The Sutra\'s Astonishing Promise',
+        subtitle: 'A Predator Grown Calm in a Sage\'s Presence',
+        storyText: 'Patanjali\'s Yoga Sutras make ahimsa the first of the five yamas — the restraints on which all further practice stands — and attach to it the tradition\'s most beautiful promise: "In the presence of one established in ahimsa, hostility is abandoned" (Yoga Sutra 2.35). Not managed. Abandoned — by others. The claim is that harmlessness, perfected, becomes an atmosphere: animals calm, arguments deflate, aggressive people find their aggression has nowhere to land. India\'s lore is full of sages whose presence tamed predators; modern life offers the same evidence at lower voltage — everyone knows one person around whom conflict simply doesn\'t escalate.',
+        teachingText: 'You have felt this atmosphere around certain people, and its opposite around others. The sutra says it is trainable. The training is unglamorous: a thousand small refusals to add heat — until your presence itself becomes the de-escalation. Ask yourself which rooms get calmer when you enter, and which get tenser, and treat the answer as a progress report.'
+      },
+      {
+        id: 'ahimsa-self',
+        title: 'The Forgotten Direction: Inward',
+        subtitle: 'A Mirror Treated Gently',
+        storyText: 'The subtlest himsa is the one aimed at yourself. The inner voice that calls you an idiot for a small mistake, the punishing schedule, the refusal of rest, the standards you would never impose on a friend — the tradition counts all of it as violence, and notes that it never stays contained. Those who wound themselves leak the wounding outward: the harsh self-critic becomes the harsh parent, the person at war with their own body wars quietly with everyone else\'s ease. The Gita\'s counsel that "the self alone is one\'s friend, the self alone is one\'s enemy" (6.5) makes the choice explicit — befriending yourself is not indulgence; it is where ahimsa begins.',
+        teachingText: 'Listen to your inner commentary for a day as if it were spoken aloud to someone you love. Where it fails that test, it is himsa — and practicing gentler inner speech is not self-esteem homework but the root practice of non-violence. A person cannot give the world a peace they refuse themselves.'
+      },
+      {
+        id: 'ahimsa-daily',
+        title: 'A Day of Practiced Harmlessness',
+        subtitle: 'Small Choices, Repeated, Becoming a Nature',
+        storyText: 'Because ahimsa is a direction rather than a destination, the tradition renders it as daily choices: the pause before the sharp reply; the gossip declined; the benefit of the doubt extended one more time; consumption examined — food, purchases, entertainment — for the harm hidden in its supply chain; the insect escorted out rather than crushed, less for the insect\'s sake than for what the escorting practices in you. Gandhi, who took this ancient vow into politics, insisted ahimsa was "the weapon of the strong": it takes no strength to strike back, and all of it not to.',
+        teachingText: 'Choose one gate and one week: a week of unarmed speech, or a week of unhostile thought toward one difficult person, or a week of gentleness toward yourself. Small, specific, finishable. The tradition\'s claim is that harmlessness practiced narrow becomes, over years, a nature — and that nature, per the sutra, changes every room it enters.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Mahabharata',
+        locator: 'Anushasana Parva, 13.117.37–38 (ahimsā paramo dharmaḥ — the superlatives of ahimsa)',
+        translation: 'verified via wisdomlib.org Sanskrit text',
+        url: 'https://www.wisdomlib.org/hinduism/book/mahabharata-sanskrit/d/doc1034970.html',
+      },
+      {
+        text: 'Bhagavad Gita',
+        locator: '13.7–12 (marks of knowledge), 16.2 (divine endowments), 6.5 (the self as friend)',
+        translation: 'Swami Sivananda (public domain)',
+      },
+      {
+        text: 'Yoga Sutras of Patanjali',
+        locator: '2.30 (ahimsa first among the yamas), 2.35 (hostility abandoned in the presence of the harmless)',
+        translation: 'standard public renderings',
+      },
+    ],
+    reflectionQuestions: [
+      'Of the three gates — hand, tongue, and thought — which one does harm still pass through in your life, and with whom?',
+      'The Yoga Sutras promise that hostility dissolves around one established in harmlessness. Which rooms get calmer when you enter them — and which get tenser? What do you make of that?',
+      'Where is your inner voice violent toward you in ways you would never accept toward a friend — and what would one week of unarmed inner speech sound like?'
+    ]
   },
   {
     id: 'samsara',
@@ -664,10 +737,84 @@ export const philosophyData: PhilosophicalConcept[] = [
     },
     podcastEpisodes: [],
     images: {
-      heroImage: '/images/philosophy/samsara-hero.jpg',
+      // TODO cover shopping list: samsara-cover.png
+      heroImage: require('../../assets/images/covers/dharma-cover.png'),
       iconImage: '/images/philosophy/samsara-icon.jpg'
     },
-    difficulty: 'intermediate'
+    difficulty: 'intermediate',
+    sections: [
+      {
+        id: 'samsara-opening',
+        title: 'The Wheel That Keeps Turning',
+        subtitle: 'A River Bending Back to Its Source',
+        storyText: 'Samsara — from the Sanskrit "to flow together, to wander through" — is the tradition\'s name for the great circulation: birth, growth, decay, death, and birth again, world upon world, life upon life. But before it is a doctrine about reincarnation, it is an observation anyone can verify: everything in experience cycles. Seasons return. Moods return. The argument you had with your father returns, wearing your child\'s face. The tradition\'s claim is simply that the circulation does not stop at the body\'s edge — the traveler continues, changing vehicles.'
+      },
+      {
+        id: 'samsara-changing-clothes',
+        title: 'Worn-Out Clothes',
+        subtitle: 'A Traveler Folding One Garment, Reaching for Another',
+        keyVerse: {
+          sanskrit: 'वासांसि जीर्णानि यथा विहाय नवानि गृह्णाति नरोऽपराणि। तथा शरीराणि विहाय जीर्णान्यन्यानि संयाति नवानि देही॥',
+          transliteration: 'vāsānsi jīrṇāni yathā vihāya navāni gṛihṇāti naro \'parāṇi, tathā śharīrāṇi vihāya jīrṇāny anyāni sanyāti navāni dehī',
+          meaning: 'Just as a man casts off worn-out clothes and puts on new ones, so the embodied Self casts off worn-out bodies and enters others that are new.',
+          source: 'Bhagavad Gita 2.22 (tr. Swami Sivananda)'
+        },
+        storyText: 'The Gita\'s most famous image for samsara is domestic, almost gentle: changing clothes. A verse earlier, Krishna points out that you have already survived several such changes within this one life — "as the embodied soul passes through childhood, youth, and old age in this body, so too does it pass into another body; the steadfast one does not grieve" (2.13). The child\'s body you once wore is gone as completely as any past life; something continuous wore it and outlasted it, and is reading this now.',
+        teachingText: 'Whatever you conclude about literal rebirth, the verse\'s comfort is empirically available: you have already died to several selves — the child, the adolescent, the person before the loss — and the wearer persisted. The next great change is, on this teaching, more wardrobe than annihilation. The steadfast one does not grieve; the practical one gets acquainted with the wearer.'
+      },
+      {
+        id: 'samsara-engine',
+        title: 'What Drives the Wheel',
+        subtitle: 'Desire as the Axle',
+        storyText: 'The wheel is not spun by punishment; it is spun by wanting. The Brihadaranyaka Upanishad traces the mechanics in one breath: a person "consists of desires; as is the desire, so is the will; as is the will, so is the deed; and whatever deed he does, that he will reap" (4.4.5) — and then completes the circuit: the one still holding unfinished desire returns to fulfill it, while "of the one without desire... his vital energies do not depart; being Brahman itself, he goes to Brahman." Samsara, in other words, is unfinished business. Each life is the previous life\'s wanting, given a new body to want with.',
+        teachingText: 'Scale it down to watch it work: notice how today\'s restlessness is mostly yesterday\'s unfinished desires re-arising — the unanswered message, the unbought thing, the unproven point. That is the wheel, in miniature, turning daily. The tradition\'s exit is not to crush desire but to complete and outgrow it: want deeper things until the shallow wanting quiets.'
+      },
+      {
+        id: 'samsara-even-heaven',
+        title: 'Even Heaven Is on the Wheel',
+        subtitle: 'Palaces of the Gods, Also Turning',
+        keyVerse: {
+          sanskrit: 'आब्रह्मभुवनाल्लोकाः पुनरावर्तिनोऽर्जुन। मामुपेत्य तु कौन्तेय पुनर्जन्म न विद्यते॥',
+          transliteration: 'ā-brahma-bhuvanāl lokāḥ punar āvartino \'rjuna, mām upetya tu kaunteya punar janma na vidyate',
+          meaning: 'All worlds, up to the realm of Brahma, are subject to return, O Arjuna; but reaching Me, there is no rebirth.',
+          source: 'Bhagavad Gita 8.16 (tr. Swami Sivananda)'
+        },
+        storyText: 'Hindu cosmology makes a move that startles first-time readers: even heaven is inside samsara. The pleasant worlds earned by good karma are real, says the Gita — and temporary. When the merit runs out, the stay ends, and the wheel resumes (8.15–16). This is the tradition\'s deepest critique of the spiritual transaction: piety aimed at reward is just shopping at a higher altitude. What the Gita calls "a place of pain and impermanence" is not earth specifically — it is anywhere the meter is running.',
+        teachingText: 'The modern translation writes itself: every achieved paradise — the promotion, the body, the house, the reputation — is a heaven with an expiry date, enjoyable and unstable. Noticing this is not cynicism; it is accuracy. The unconditioned, says the teaching, is not another better place on the wheel. It is the axle\'s stillness — available, the sages insist, in the middle of any turning life.'
+      },
+      {
+        id: 'samsara-not-punishment',
+        title: 'A School, Not a Sentence',
+        subtitle: 'The Same Lesson Returning Until Learned',
+        storyText: 'It is easy to hear samsara as a prison sentence — trapped on the wheel until release. The tradition\'s working attitude is closer to a school: the wheel returns you, with great precision, to whatever you have not yet learned. The pattern you fled in one relationship waits in the next; the lesson dodged in one decade re-enrolls you in the following one. Rebirth, on this reading, is the curriculum continuing between terms. Nothing is vindictive about it — the fire that burns the hand is also the fire that cooks the food. The wheel is neutral; the learning is optional; the repetition is not.',
+        teachingText: 'Find your own recurring curriculum: the situation that keeps arriving with different casting — the same boss twice, the same argument in every friendship, the same crisis each spring. The tradition\'s counsel is to stop asking "why does this keep happening to me" and start asking "what does this keep asking of me." Wheels release what has finished learning.'
+      },
+      {
+        id: 'samsara-stepping-off',
+        title: 'The Still Point',
+        subtitle: 'The Axle at the Center of the Turning',
+        storyText: 'Samsara is only half the teaching; the other half is that the wheel has an exit — or more precisely, a center. Moksha is not somewhere else; it is the stillness at the axle, and the Gita\'s entire counsel — act without clinging, remember the divine, love without agenda — is the inward walk from rim to hub. At the rim, every turn of fortune flings you; nearer the center, the same wheel turns and you merely watch it turn. "Having attained Me," says Krishna, "these great souls do not take birth again in this place of pain and impermanence" (8.15) — and the devotional traditions add, tenderly, that some who are free keep riding the wheel anyway, for love of those still on it.',
+        teachingText: 'You can test the geometry today. In the next upheaval, notice where you are standing: at the rim (flung, reactive, "why me") or nearer the axle (moved, but watching). Every practice in this app — the reading, the reflections, the remembering — is a step inward. The wheel is not the enemy. Forgetting there is a center is.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Bhagavad Gita',
+        locator: '2.13, 2.22 (the embodied one changes bodies), 8.15–16 (all worlds return; reaching Me, no rebirth)',
+        translation: 'Swami Sivananda (public domain)',
+      },
+      {
+        text: 'Brihadaranyaka Upanishad',
+        locator: '4.4.5–6 (desire → will → deed → destiny; the desireless go to Brahman)',
+        translation: 'Max Müller, Sacred Books of the East (public domain)',
+        url: 'https://www.brhat.in/openlibrary/special/brihadaranyaka-upanishad/4-4-5',
+      },
+    ],
+    reflectionQuestions: [
+      'You have already outlived several of your own bodies — the child, the adolescent, the person before the great change. What in you wore all of them and is still here?',
+      'What lesson keeps re-enrolling you — the same situation arriving with different casting? What might it be asking of you that you haven\'t yet answered?',
+      'In your last upheaval, where were you standing on the wheel — flung at the rim, or watching from nearer the axle? What helps you move inward?'
+    ]
   },
   {
     id: 'moksha',

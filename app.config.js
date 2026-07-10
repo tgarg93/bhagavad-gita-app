@@ -12,7 +12,8 @@ export default {
     platforms: ["ios", "android"],
     description: "Comprehensive Hindu wisdom platform with scriptures, festival calendar, daily insights, and AI-powered spiritual guidance.",
     plugins: [
-      "expo-dev-client"
+      "expo-dev-client",
+      "expo-notifications"
     ],
     splash: {
       image: "./assets/dharma-lotus-transparent.png",

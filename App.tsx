@@ -6,6 +6,8 @@ import OnboardingScreen from './src/screens/OnboardingScreen';
 import { AudioNarrationService } from './src/services/audioNarrationService';
 import LocalStorageService from './src/services/localStorageService';
 import krishnaContext from './src/services/krishnaContextService';
+import journeyService from './src/services/journeyService';
+import notificationService from './src/services/notificationService';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,6 +32,13 @@ export default function App() {
       .then(profile => setNeedsOnboarding(!profile.onboarded))
       .catch(() => setNeedsOnboarding(false));
     krishnaContext.maybeRefreshSummary();
+
+    // Journey streak + notification refresh (reschedules only when permission
+    // is already granted — the prompt itself happens at warmer moments)
+    notificationService.init();
+    journeyService.touchActivity().then(() => {
+      notificationService.rescheduleAll();
+    });
   }, []);
 
   // Handle splash animation completion

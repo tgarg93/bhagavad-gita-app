@@ -200,10 +200,26 @@ export const deitiesData: Deity[] = [
       {
         id: 'govardhan-lift',
         title: 'Lifting Govardhan Hill',
-        content: 'When Indra sent torrential rains to punish the people of Vrindavan for not worshipping him, young Krishna lifted the entire Govardhan hill on his little finger for seven days and nights, providing shelter to all the villagers, their cattle, and animals. This miraculous act demonstrated that divine protection comes not from fear-based worship but from pure devotion and righteousness.',
-        moralLesson: 'True divinity protects those who are innocent and devoted, regardless of conventional power structures',
+        content: 'When the villagers of Vrindavan, at young Krishna\'s urging, redirected their annual offering from Indra, the storm-king, to Govardhan hill itself — the land that actually fed their cows — Indra answered with seven days of annihilating rain. Krishna lifted the entire hill on the little finger of his left hand and held it, a stone umbrella over every villager, calf, and bird of Vrindavan, until Indra\'s pride broke before his clouds did. The proud god descended and begged forgiveness of the boy.',
+        moralLesson: 'Honor what actually sustains you rather than what merely demands tribute — and true protection shelters everyone under one roof, without asking who deserves it.',
         category: 'miracle',
-        relatedScripture: 'Bhagavata Purana'
+        relatedScripture: 'Bhagavata Purana, Canto 10, Chapters 24–25'
+      },
+      {
+        id: 'krishna-mouthful-of-universe',
+        title: 'The Universe in His Mouth',
+        content: 'The village boys came complaining to Yashoda: your son has been eating dirt. Krishna denied it with a toddler\'s wounded innocence, and Yashoda, unconvinced, commanded him: open your mouth. He did. And inside the small muddy mouth she saw the whole of it — the wheeling galaxies, the oceans, the mountains, time itself, Vrindavan, herself standing there looking into the mouth of her son who contained her. For one unbearable moment the cowherd mother saw everything. Then Krishna, out of kindness, spread his maya of mother-love over her again, and she forgot — and picked him up, and worried only whether he was hungry.',
+        moralLesson: 'The infinite hides inside the ordinary things we scold and feed and put to bed. And forgetting can be a mercy: love needs someone to hold, not everything to comprehend.',
+        category: 'miracle',
+        relatedScripture: 'Bhagavata Purana, Canto 10, Chapter 8'
+      },
+      {
+        id: 'krishna-kaliya',
+        title: 'Dancing on the Serpent',
+        content: 'The serpent Kaliya had poisoned the Yamuna\'s deepest pool; trees on its banks died, birds fell from the air above it. Krishna dove in. Dragged under, wrapped in coils, the boy expanded until the serpent\'s grip broke — and then, rather than kill him, Krishna rose onto Kaliya\'s many hoods and danced. Each time a hood rose in defiance, his foot found it in rhythm, until the serpent, exhausted, understood, and his wives rose from the water to sing to the dancer. Krishna spared him, and sent him where his poison could harm no one.',
+        moralLesson: 'What poisons your waters must be confronted — but the goal is the poison\'s end, not the poisoner\'s destruction. Grace defeats venom by dancing on it, not by becoming it.',
+        category: 'adventure',
+        relatedScripture: 'Bhagavata Purana, Canto 10, Chapter 16'
       }
     ],
     worship: {
@@ -261,7 +277,68 @@ export const deitiesData: Deity[] = [
         '/images/deities/krishna-govardhan.jpg',
         '/images/deities/krishna-gita.jpg'
       ]
-    }
+    },
+    sections: [
+      {
+        id: 'krishna-whole-divine',
+        title: 'The God Who Is Everything at Once',
+        subtitle: 'A Flute, a Chariot, a Mountain, a Mouthful of Stars',
+        storyText: 'Every deity in the tradition carries an aspect of the divine; Krishna\'s devotees make a bolder claim — that in him the whole of it came at once. He is the butter thief and the speaker of the Gita, the flute player of Vrindavan and the strategist of Kurukshetra, the child in Yashoda\'s lap and — when she looked into his mouth — the container of Yashoda, Vrindavan, and every galaxy. The Bhagavata Purana\'s tenth canto, the most beloved book in devotional Hinduism, insists on holding all of these together: the point of Krishna is that the absolute is also adorable, and the adorable is also absolute.',
+        teachingText: 'Krishna\'s completeness is a teaching about your own life: the sacred does not wait for your solemn moments. It is as present in play, mischief, music, and love as in scripture and battle-duty. A spirituality with room for the flute as well as the sermon is the one this god embodies.'
+      },
+      {
+        id: 'krishna-prison-to-pasture',
+        title: 'Born in a Prison, Raised in a Pasture',
+        subtitle: 'A Basket Crossing the Yamuna at Midnight',
+        storyText: 'His story begins where Janmashtami\'s does: the tyrant Kamsa, the prophecy, the prison birth at midnight, the locks opening, and Vasudeva carrying the child across the flooding Yamuna to safety in Gokul (Bhagavata Purana, Canto 10, Chapters 1–4). What the tradition savors is the sequel: the rescued god grew up not in a palace preparing his revenge, but in a cowherd village — barefoot, butter-smeared, beloved. The divine chose ordinary rural childhood: churning, herding, flooding rivers, village festivals. Every dusty detail of common life was good enough for God to live in.',
+        teachingText: 'Krishna\'s pastoral years dignify every unglamorous stretch of a life. If the divine spent years herding cows and stealing butter before speaking the Gita, then your own ordinary seasons — the commutes, the childcare, the unremarkable years — are not the waiting room of your real life. They may be the part heaven remembers most fondly.'
+      },
+      {
+        id: 'krishna-butter-and-love',
+        title: 'The Thief Who Steals Only from Those Who Love Him',
+        subtitle: 'A Toppled Pot, White Footprints Leading Away',
+        storyText: 'The butter theft is the tradition\'s most cherished paradox: the Lord of the universe, sneaking. The gopis of Vrindavan hung their butter pots higher, and he built pyramids of friends; they locked the doors, and he was inside anyway; they marched to Yashoda to complain, and stood there hoping he\'d raid their kitchens next. The Bhagavata\'s poets understood exactly what they were doing: butter is the heart\'s sweetness, churned from a whole life, and Krishna steals only what is already his — and only from homes that love him. Where there is no love, he does not even trespass.',
+        teachingText: 'The butter thief inverts the whole economy of worship: the divine is not fed by your offerings — it is hungry for your love specifically, and delights in taking it playfully rather than receiving it formally. Prayer, in Vrindavan\'s dialect, is leaving the window unlatched.'
+      },
+      {
+        id: 'krishna-flute',
+        title: 'The Sound That Calls Everyone Home',
+        subtitle: 'A Bamboo Flute at Dusk, Cows Turning Their Heads',
+        storyText: 'Of all Krishna\'s emblems, the tradition loves the flute most. At dusk in Vrindavan he would play, and the Bhagavata describes the whole world leaning toward the sound — cows lifting their heads, rivers slowing, the gopis leaving whatever was in their hands (Canto 10, Chapter 21). The saints read the symbol lovingly: a flute is a reed emptied of itself — hollowed, holed, and only therefore musical. Whoever becomes empty enough, the divine breath plays through.',
+        teachingText: 'The flute asks the question all contemplatives eventually face: what fills you that the music cannot pass through? The ego\'s knots are the reed\'s blockages. The practices — reflection, offering, remembrance — are the slow hollowing. And the promise is Vrindavan\'s: emptied, a life doesn\'t become vacant. It becomes the instrument.'
+      },
+      {
+        id: 'krishna-charioteer',
+        title: 'The God Who Took the Reins',
+        subtitle: 'Two Armies Waiting, a Conversation Beginning',
+        keyVerse: {
+          sanskrit: 'ईश्वरः सर्वभूतानां हृद्देशेऽर्जुन तिष्ठति। भ्रामयन्सर्वभूतानि यन्त्रारूढानि मायया॥',
+          transliteration: 'īśhvaraḥ sarva-bhūtānāṁ hṛid-deśhe \'rjuna tiṣhṭhati, bhrāmayan sarva-bhūtāni yantrārūḍhāni māyayā',
+          meaning: 'The Lord dwells in the hearts of all beings, O Arjuna, causing all beings to revolve by His power, as if mounted on a machine.',
+          source: 'Bhagavad Gita 18.61 (tr. Swami Sivananda)'
+        },
+        storyText: 'When the great war came, Krishna made a choice that defines him: offered the pick between his armies and himself unarmed, the wise took the unarmed god. He drove Arjuna\'s chariot — held the reins, took no weapon, and in the field between two armies delivered the Bhagavad Gita. The arrangement is the theology: the divine does not fight your battle for you, and does not abandon you to it. It sits at the front of your chariot, holding the horses, speaking truth exactly when despair strikes — and near the end tells you where it has been all along: in the heart, of everyone, always (18.61).',
+        teachingText: 'Whatever battlefield you are facing, Krishna\'s position is the promise: not a substitute who fights instead of you, not a spectator — a charioteer. Guidance at the reins, the fighting still yours. The Gita is what the charioteer says. This whole app, in a sense, is an attempt to keep that voice within reach of your chariot.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Bhagavata Purana (Srimad Bhagavatam)',
+        locator: 'Canto 10 — Chapters 1–4 (birth), 8 (universe in his mouth), 16 (Kaliya), 21 (the flute), 24–25 (Govardhan)',
+        translation: 'cross-checked against public translations (vedabase.io / wisdomlib.org)',
+        url: 'https://vedabase.io/en/library/sb/10/8/',
+      },
+      {
+        text: 'Bhagavad Gita',
+        locator: '18.61 (the Lord in all hearts); the Gita entire as Krishna\'s teaching at Kurukshetra',
+        translation: 'Swami Sivananda (public domain)',
+      },
+    ],
+    reflectionQuestions: [
+      'Krishna lived years of ordinary village life before speaking the Gita. Which "unremarkable" season of your own life might heaven remember most fondly — and what did it quietly build in you?',
+      'The flute makes music only because it is empty. What fills you that the music cannot pass through — and what would one small hollowing look like?',
+      'Krishna drives the chariot but does not fight the battle. In your current struggle, what belongs to the charioteer — and what part is unavoidably yours to fight?'
+    ]
   },
   {
     id: 'rama',
@@ -315,9 +392,26 @@ export const deitiesData: Deity[] = [
       {
         id: 'rama-exile',
         title: 'Accepting Exile with Grace',
-        content: 'When Queen Kaikeyi demanded that Rama be exiled and Bharata be crowned instead, Rama immediately accepted without protest. He gave up his rightful throne, royal comforts, and comfortable life to honor his father\'s promise, showing that duty to parents and truth supersedes personal desires.',
-        moralLesson: 'True nobility lies in sacrificing personal gain for higher principles',
-        category: 'teaching'
+        content: 'On the eve of his coronation, Rama learned that his father\'s old promise to Queen Kaikeyi had been called in: fourteen years of forest exile for him, the throne for his brother Bharata. The court wept; the city wept; his father collapsed. Rama\'s face, the Valmiki Ramayana insists, did not change. He unbuckled the royal ornaments as calmly as he had put them on, touched his father\'s feet, comforted the very queen who had ruined him, and walked out of Ayodhya the same man who was to have ruled it that morning. His crown was never the source of his stature.',
+        moralLesson: 'Character is what remains when position is stripped away. The one who is the same person crowned or exiled has something no decree can revoke.',
+        category: 'teaching',
+        relatedScripture: 'Valmiki Ramayana, Ayodhya Kanda'
+      },
+      {
+        id: 'rama-bharata-sandals',
+        title: 'The Sandals on the Throne',
+        content: 'Bharata, for whom the throne was seized, wanted none of it. He marched to the forest with the whole court to beg Rama\'s return. Rama refused — the fourteen years were his father\'s word, and his father\'s word did not die with his father. So Bharata asked for Rama\'s sandals, carried them back on his own head, and placed them on the throne of Ayodhya. For fourteen years Bharata ruled from a hut outside the city, as regent to a pair of sandals, refusing the royal umbrella, waiting. Two brothers each refusing a kingdom for the other\'s sake — the tradition ranks this contest of renunciation among its most sacred scenes.',
+        moralLesson: 'Power is safest with those who genuinely do not want it. And an institution can be held faithfully in trust — authority as service rendered to something absent — when love, not appetite, sits on the throne.',
+        category: 'teaching',
+        relatedScripture: 'Valmiki Ramayana, Ayodhya Kanda (sandals: sargas 112–115 region)'
+      },
+      {
+        id: 'rama-shabari',
+        title: 'Shabari\'s Tasted Berries',
+        content: 'Searching for the abducted Sita, grief-worn and far from every comfort, Rama came to the ashram of Shabari — an old tribal woman who had waited decades for this visit, told by her departed guru that Rama himself would one day come. She had nothing to offer but wild berries, and she offered them in the only way her love knew: tasting each one first, keeping only the sweet ones for him. By every rule of ritual purity, half-eaten food from a forest woman was unofferable. Rama ate them as the finest meal of his exile, and the tradition never tired of the scene: the prince of dharma, schooled in every scripture, honoring a devotion that broke the rules because it kept the only rule that matters.',
+        moralLesson: 'Love\'s etiquette outranks ritual\'s etiquette. What is offered with a whole heart is pure by definition — and the truly great receive it that way.',
+        category: 'teaching',
+        relatedScripture: 'Valmiki Ramayana, Aranya Kanda, sarga 74 (and the beloved retellings)'
       }
     ],
     worship: {
@@ -349,7 +443,61 @@ export const deitiesData: Deity[] = [
       heroImage: require('../../assets/images/covers/rama-cover.png'),
       iconImage: '/images/deities/rama-icon.jpg',
       galleryImages: ['/images/deities/rama-sita.jpg', '/images/deities/rama-court.jpg']
-    }
+    },
+    sections: [
+      {
+        id: 'rama-ideal',
+        title: 'The Man Who Never Broke',
+        subtitle: 'A Straight Line Drawn Through a Crooked World',
+        storyText: 'Rama\'s title is unique among the gods: Maryada Purushottama — the supreme man of boundaries, the one who never once crossed the line of dharma. Where Krishna bends rules with a smile, Rama holds them with his life. The Valmiki Ramayana presents him not as a god acting a part but as a man — tempted, bereaved, furious, heartbroken — who at every fork chooses the harder right over the easier wrong. That is precisely why India gave him its highest reverence: anyone can admire a god\'s perfection; Rama\'s perfection is the kind a human being could bleed for and still choose.',
+        teachingText: 'Rama\'s question for your life is the boundary question: what line would you not cross at any price — not when it costs a kingdom, not when it costs fourteen years? A person who has answered it walks differently. The Ramayana is one long demonstration of that walk.'
+      },
+      {
+        id: 'rama-word',
+        title: 'A Father\'s Word, Kept by the Son',
+        subtitle: 'Royal Ornaments Set Down Without a Tremor',
+        storyText: 'The exile (Ayodhya Kanda) turns on a single principle: a promise does not expire because keeping it became expensive. Dasharatha\'s old boon to Kaikeyi was legally his to break and emotionally everyone\'s to excuse — the whole city begged Rama to ignore it. He would not, because the word of the house of Raghu was the house of Raghu: "Rama does not speak two ways." He kept a promise he never made, at a price he did not owe, to preserve a thing no one could see — and the tradition judged that invisible thing worth more than the visible throne.',
+        teachingText: 'Every family and institution runs on invisible collateral: the confidence that its word means something. Each kept promise deposits; each clever escape withdraws. Rama\'s extreme is a compass, not a demand — but ask what your own word is currently worth to the people who hold it, and what one expensive kept promise would do to that account.'
+      },
+      {
+        id: 'rama-exile-years',
+        title: 'Fourteen Years of Forest',
+        subtitle: 'A Palace Prince Learning the Names of Trees',
+        storyText: 'The exile was not an interlude; it was the making. In the forest (Aranya Kanda), the prince became something Ayodhya could never have taught him: a man acquainted with hardship, with hermits and tribal chiefs, with hunger, with the grief of losing Sita to Ravana\'s deceit. His alliances there — Guha the boatman, the vulture Jatayu who died defending Sita, Shabari with her berries, Hanuman and the vanaras — were friendships of the excluded, and they, not Ayodhya\'s armies, won the war. When he returned to rule, he ruled as a king who had slept on the ground of his own kingdom.',
+        teachingText: 'The forest years reframe every derailment: the demotion, the illness, the season everything was taken away. Rama\'s exile suggests the wilderness is where your future allies are met and your real education happens — and that the ones who return from it rule differently. What did (or does) your forest teach that the palace never could?'
+      },
+      {
+        id: 'rama-bridge',
+        title: 'The Bridge and the Squirrel',
+        subtitle: 'An Ocean Crossed Stone by Floating Stone',
+        storyText: 'To reach Lanka and Sita, an ocean had to be crossed. The army of monkeys and bears built a bridge of floating stones (Yuddha Kanda) — and the tradition\'s favorite worker on it is the smallest: a squirrel, rolling in sand and shaking it between the stones. When the great monkeys laughed, Rama picked the squirrel up and stroked its back — the stripes squirrels carry to this day, says the beloved tale. The bridge held. The war was won by an alliance in which every contribution, from Hanuman\'s mountain-carrying to the squirrel\'s sand, counted as sacred.',
+        teachingText: 'Every great work is a bridge of odd stones — and its Rama is the one who makes the smallest contributor feel stroked on the back, not laughed at. In whatever you are building, notice who is carrying sand. The leader\'s hand on the squirrel is why the army stays an army.'
+      },
+      {
+        id: 'rama-name',
+        title: 'The Name That Outlived the Man',
+        subtitle: 'Two Syllables Carried Across Centuries',
+        storyText: 'Rama\'s final gift to India is the smallest: his name. "Ram-nam" became the tradition\'s most portable practice — the greeting of villages, the chant of Kabir\'s weavers and Tulsidas\'s verses, the word Gandhi carried, the sound accompanying millions to the funeral ground: "Ramanama satya hai." The tradition even claims the name outweighs the man — the stones of the bridge floated, one telling goes, because his name was written on them, while stones Rama threw himself sank. Whatever else is beyond reach on a given day — scripture, temple, teacher — two syllables are not.',
+        teachingText: 'The practice is as simple as it sounds and older than any app: a name, said with attention, as often as remembered — walking, waiting, worrying. Pick your name for the divine (Rama\'s or another) and let it run under a single ordinary day. That thread, the tradition promises, is strong enough to hold everything else.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Valmiki Ramayana',
+        locator: 'Ayodhya Kanda (exile; Bharata and the sandals, sargas 112–115 region); Aranya Kanda (forest years; Shabari, sarga 74); Yuddha Kanda (the bridge, war, and return)',
+        translation: 'valmikiramayan.net (public); the squirrel and floating-name stones are beloved later tradition, labeled as such',
+        url: 'https://www.valmikiramayan.net/',
+      },
+      {
+        text: 'Devotional tradition',
+        locator: 'Ram-nam practice: Kabir, Tulsidas (Ramcharitmanas), Gandhi — named as tradition, not scripture quotation',
+      },
+    ],
+    reflectionQuestions: [
+      'Rama had one line he would not cross at any price. Do you know yours? What has holding it — or not yet naming it — cost you?',
+      'The forest, not the palace, made Rama the king he became. What has your hardest season taught you that comfort never could — and who were the allies you met only there?',
+      'On Rama\'s bridge, the squirrel\'s sand counted as sacred work. In what you\'re building now, who is carrying sand — and when did you last stroke the squirrel\'s back?'
+    ]
   },
   {
     id: 'ganesha',

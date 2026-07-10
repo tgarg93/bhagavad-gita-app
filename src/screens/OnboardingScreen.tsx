@@ -92,6 +92,13 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
     };
     if (firstName) patch.name = firstName; // first name only; skip keeps any earlier name
     await LocalStorageService.updateSpiritualProfile(patch);
+    // A completed onboarding is the warm moment to ask about reminders
+    try {
+      const { notificationService } = require('../services/notificationService');
+      notificationService.ensurePermissions();
+    } catch {
+      // notifications module unavailable (pre-rebuild) — fine
+    }
     onComplete();
   };
 
