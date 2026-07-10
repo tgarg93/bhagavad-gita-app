@@ -396,6 +396,7 @@ const ContentReaderScreen: React.FC = () => {
       <JourneyCelebration
         completedItemId={positionKey}
         completedTitle={content.title}
+        active={pages[activeIndex]?.kind === 'celebration'}
         onNext={next => navigateToJourneyItem(navigation, next, true)}
         onBackToLearn={() => (navigation as any).navigate('MainTabs', { screen: 'Scriptures' })}
       />
@@ -437,6 +438,7 @@ const ContentReaderScreen: React.FC = () => {
         <FlatList
           ref={listRef}
           data={pages}
+          extraData={activeIndex}
           keyExtractor={(_, i) => `p-${i}`}
           renderItem={renderItem}
           horizontal

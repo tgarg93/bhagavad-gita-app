@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import LocalStorageService from '../services/localStorageService';
 import journeyService from '../services/journeyService';
 import { JourneyItem, JOURNEY_MODULES } from '../data/journeyPath';
+import MarigoldShower from './MarigoldShower';
 
 // The end-of-content celebration: Krishna (the app's ever-present mentor)
 // marks the moment and points to the next step on the guided journey.
@@ -14,6 +15,9 @@ interface JourneyCelebrationProps {
   completedTitle: string;
   onNext: (item: JourneyItem) => void;
   onBackToLearn: () => void;
+  // The page mounts off-screen inside the reader's pager; the celebration
+  // sequence should only start once it actually scrolls into view
+  active?: boolean;
 }
 
 // Static template lines — zero-latency, offline. {name} is filled from the
@@ -64,10 +68,51 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
   completedTitle,
   onNext,
   onBackToLearn,
+  active = true,
 }) => {
   const [message, setMessage] = useState('');
   const [next, setNext] = useState<JourneyItem | null>(null);
   const [pathDone, setPathDone] = useState(false);
+  const [started, setStarted] = useState(false);
+  const startedRef = useRef(false);
+
+  // Entrance choreography: ring settles in, checkmark springs, text rises
+  const ringAnim = useRef(new Animated.Value(0)).current;
+  const checkAnim = useRef(new Animated.Value(0)).current;
+  const labelAnim = useRef(new Animated.Value(0)).current;
+  const titleAnim = useRef(new Animated.Value(0)).current;
+  const messageAnim = useRef(new Animated.Value(0)).current;
+  const nextAnim = useRef(new Animated.Value(0)).current;
+  const backAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (!active || startedRef.current) return;
+    startedRef.current = true; // once per arrival — no replay on swipe-back
+    setStarted(true);
+
+    const rise = (value: Animated.Value, delay: number, duration = 450) =>
+      Animated.timing(value, { toValue: 1, duration, delay, useNativeDriver: true });
+
+    Animated.parallel([
+      Animated.timing(ringAnim, { toValue: 1, duration: 550, useNativeDriver: true }),
+      Animated.sequence([
+        Animated.delay(500),
+        Animated.spring(checkAnim, { toValue: 1, friction: 4, tension: 80, useNativeDriver: true }),
+      ]),
+      rise(labelAnim, 750),
+      rise(titleAnim, 900),
+      rise(messageAnim, 1100, 500),
+      rise(nextAnim, 1350, 500),
+      rise(backAnim, 1600, 500),
+    ]).start();
+  }, [active, ringAnim, checkAnim, labelAnim, titleAnim, messageAnim, nextAnim, backAnim]);
+
+  const riseStyle = (value: Animated.Value) => ({
+    opacity: value,
+    transform: [
+      { translateY: value.interpolate({ inputRange: [0, 1], outputRange: [14, 0] }) },
+    ],
+  });
 
   useEffect(() => {
     (async () => {
@@ -92,44 +137,74 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.avatarRing}>
+      <Animated.View
+        style={[
+          styles.avatarRing,
+          {
+            opacity: ringAnim,
+            transform: [
+              { scale: ringAnim.interpolate({ inputRange: [0, 1], outputRange: [0.85, 1] }) },
+            ],
+          },
+        ]}
+      >
         <Image
           source={require('../../assets/krishna-avatar.png')}
           style={styles.avatar}
         />
-        <View style={styles.checkBadge}>
+        <Animated.View
+          style={[
+            styles.checkBadge,
+            {
+              opacity: checkAnim.interpolate({ inputRange: [0, 0.15, 1], outputRange: [0, 1, 1] }),
+              transform: [{ scale: checkAnim }],
+            },
+          ]}
+        >
           <Ionicons name="checkmark" size={22} color="#FFFFFF" />
-        </View>
-      </View>
+        </Animated.View>
+      </Animated.View>
 
-      <Text style={styles.completedLabel}>Completed</Text>
-      <Text style={styles.completedTitle}>{completedTitle}</Text>
+      <Animated.Text style={[styles.completedLabel, riseStyle(labelAnim)]}>
+        Completed
+      </Animated.Text>
+      <Animated.Text style={[styles.completedTitle, riseStyle(titleAnim)]}>
+        {completedTitle}
+      </Animated.Text>
 
-      {!!message && <Text style={styles.message}>{message}</Text>}
+      {!!message && (
+        <Animated.Text style={[styles.message, riseStyle(messageAnim)]}>{message}</Animated.Text>
+      )}
 
       {pathDone ? (
-        <Text style={styles.pathDone}>
+        <Animated.Text style={[styles.pathDone, riseStyle(nextAnim)]}>
           You have walked the entire path — every step, complete. 🙏
-        </Text>
+        </Animated.Text>
       ) : (
         next && (
-          <TouchableOpacity style={styles.nextBtn} onPress={() => onNext(next)}>
-            <View style={styles.nextText}>
-              <Text style={styles.nextLabel}>
-                Next · {JOURNEY_MODULES[next.module]}
-              </Text>
-              <Text style={styles.nextTitle} numberOfLines={1}>
-                {next.title}
-              </Text>
-            </View>
-            <Ionicons name="arrow-forward" size={22} color="#FFFFFF" />
-          </TouchableOpacity>
+          <Animated.View style={[styles.nextBtnWrap, riseStyle(nextAnim)]}>
+            <TouchableOpacity style={styles.nextBtn} onPress={() => onNext(next)}>
+              <View style={styles.nextText}>
+                <Text style={styles.nextLabel}>
+                  Next · {JOURNEY_MODULES[next.module]}
+                </Text>
+                <Text style={styles.nextTitle} numberOfLines={1}>
+                  {next.title}
+                </Text>
+              </View>
+              <Ionicons name="arrow-forward" size={22} color="#FFFFFF" />
+            </TouchableOpacity>
+          </Animated.View>
         )
       )}
 
-      <TouchableOpacity style={styles.backBtn} onPress={onBackToLearn}>
-        <Text style={styles.backBtnText}>Back to Learn</Text>
-      </TouchableOpacity>
+      <Animated.View style={{ opacity: backAnim }}>
+        <TouchableOpacity style={styles.backBtn} onPress={onBackToLearn}>
+          <Text style={styles.backBtnText}>Back to Learn</Text>
+        </TouchableOpacity>
+      </Animated.View>
+
+      <MarigoldShower play={started} />
     </View>
   );
 };
@@ -205,6 +280,9 @@ const styles = StyleSheet.create({
     color: colors.primary.peacockTeal,
     textAlign: 'center',
     marginBottom: spacing.lg,
+  },
+  nextBtnWrap: {
+    alignSelf: 'stretch',
   },
   nextBtn: {
     flexDirection: 'row',

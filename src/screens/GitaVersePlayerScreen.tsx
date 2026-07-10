@@ -528,6 +528,7 @@ const GitaVersePlayerScreen: React.FC = () => {
       <JourneyCelebration
         completedItemId={`gita:${chapter}`}
         completedTitle={`Chapter ${chapter} · ${chapterName(chapter)}`}
+        active={activeIndex === celebrationIndex[chapter]}
         onNext={next => {
           if (next.id === `gita:${chapter + 1}`) {
             // Next chapter of the same book — turn the page inline
@@ -579,6 +580,7 @@ const GitaVersePlayerScreen: React.FC = () => {
         <FlatList
           ref={listRef}
           data={pages}
+          extraData={activeIndex}
           keyExtractor={(_, i) => `p-${i}`}
           renderItem={renderItem}
           horizontal
