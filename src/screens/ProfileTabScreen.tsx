@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -12,16 +12,21 @@ import {
   Platform,
   Alert,
   Switch,
+  Image,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
-import KrishnaGuide from './KrishnaGuide';
-import OnboardingScreen from '../screens/OnboardingScreen';
+import KrishnaGuide from '../components/KrishnaGuide';
+import OnboardingScreen from './OnboardingScreen';
 import LocalStorageService, { SpiritualProfile, ReflectionEntry, NotificationSettings } from '../services/localStorageService';
 import notificationService from '../services/notificationService';
 import { getProgression, Progression } from '../services/progressionService';
 import krishnaContext from '../services/krishnaContextService';
 import { userKnowledge } from '../services/userKnowledgeService';
+import { profilePhotoStore, useProfilePhoto } from '../services/profilePhotoStore';
 import {
   CATEGORIES,
   USER_KNOWLEDGE_FIELDS,
@@ -29,12 +34,17 @@ import {
   UserKnowledgeKey,
 } from '../data/userKnowledgeSchema';
 
-interface ProfileSheetProps {
-  visible: boolean;
-  onClose: () => void;
-}
+// Typed separately: inside StyleSheet.create the style resolves to a union
+// that Image's style prop rejects
+const PHOTO_SIZE = 112;
+const photoStyle = {
+  width: PHOTO_SIZE,
+  height: PHOTO_SIZE,
+  borderRadius: PHOTO_SIZE / 2,
+  resizeMode: 'cover',
+} as const;
 
-const ProfileSheet: React.FC<ProfileSheetProps> = ({ visible, onClose }) => {
+const ProfileTabScreen: React.FC = () => {
   const [profile, setProfile] = useState<SpiritualProfile | null>(null);
   const [progression, setProgression] = useState<Progression | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -58,9 +68,50 @@ const ProfileSheet: React.FC<ProfileSheetProps> = ({ visible, onClose }) => {
     }
   };
 
-  useEffect(() => {
-    if (visible) load();
-  }, [visible, load]);
+  // Reload whenever the tab regains focus
+  useFocusEffect(
+    useCallback(() => {
+      load();
+    }, [load])
+  );
+
+
+  // ---- Profile photo (Partiful-style) --------------------------------------
+  const photoUri = useProfilePhoto();
+
+  const pickProfilePhoto = async () => {
+    try {
+      const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permission.granted) {
+        Alert.alert(
+          'Photos access needed',
+          'Enable photo access for Dharma in iOS Settings to set a profile picture.'
+        );
+        return;
+      }
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['images'],
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.8,
+      });
+      if (result.canceled || !result.assets?.[0]?.uri) return;
+
+      // Copy into the app's documents dir with a timestamped name (busts the
+      // Image cache) and clean up the previous photo file
+      const previous = profilePhotoStore.getUri();
+      const dest = `${FileSystem.documentDirectory}profile-photo-${Date.now()}.jpg`;
+      await FileSystem.copyAsync({ from: result.assets[0].uri, to: dest });
+      await LocalStorageService.updateSpiritualProfile({ profilePhotoUri: dest });
+      profilePhotoStore.setUri(dest);
+      if (previous && previous.startsWith(FileSystem.documentDirectory ?? '')) {
+        FileSystem.deleteAsync(previous, { idempotent: true }).catch(() => {});
+      }
+    } catch (error) {
+      console.log('[profile] photo pick failed:', error);
+      Alert.alert('Could not set photo', 'Something went wrong picking the image.');
+    }
+  };
 
   // ---- "What Krishna knows of you" completion card ------------------------
   const [expandedKey, setExpandedKey] = useState<UserKnowledgeKey | null>(null);
@@ -191,13 +242,9 @@ const ProfileSheet: React.FC<ProfileSheetProps> = ({ visible, onClose }) => {
   };
 
   return (
-    <Modal visible={visible} animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Your Journey</Text>
-          <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
-            <Ionicons name="close" size={24} color={DharmaDesignSystem.colors.neutrals.charcoalBlack} />
-          </TouchableOpacity>
         </View>
 
         <KeyboardAvoidingView
@@ -205,6 +252,27 @@ const ProfileSheet: React.FC<ProfileSheetProps> = ({ visible, onClose }) => {
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
         <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
+          {/* Partiful-style photo header */}
+          <View style={styles.photoHeader}>
+            <View style={styles.photoWrap}>
+              {photoUri ? (
+                <Image
+                  source={{ uri: photoUri }}
+                  style={photoStyle}
+                  onError={() => profilePhotoStore.setUri(undefined)}
+                />
+              ) : (
+                <View style={styles.photoPlaceholder}>
+                  <Ionicons name="person" size={52} color={DharmaDesignSystem.colors.neutrals.softAsh} />
+                </View>
+              )}
+              <TouchableOpacity style={styles.cameraBadge} onPress={pickProfilePhoto}>
+                <Ionicons name="camera" size={17} color="#FFFFFF" />
+              </TouchableOpacity>
+            </View>
+            {!!profile?.name && <Text style={styles.photoName}>{profile.name}</Text>}
+          </View>
+
           <KrishnaGuide message={`${greeting} ${levelLine}`} />
 
           {progression && (
@@ -479,7 +547,6 @@ const ProfileSheet: React.FC<ProfileSheetProps> = ({ visible, onClose }) => {
           />
         </Modal>
       </SafeAreaView>
-    </Modal>
   );
 };
 
@@ -497,8 +564,45 @@ const styles = StyleSheet.create({
     borderBottomColor: 'rgba(230, 81, 0, 0.15)',
   },
   headerTitle: { ...typography.sizes.headingMD, color: colors.neutrals.charcoalBlack, fontWeight: '600' },
-  closeBtn: { padding: spacing.xs },
   body: { padding: spacing.lg, paddingBottom: spacing.xxl },
+  // Partiful-style photo header
+  photoHeader: {
+    alignItems: 'center',
+    marginBottom: spacing.lg,
+  },
+  photoWrap: {
+    width: PHOTO_SIZE,
+    height: PHOTO_SIZE,
+  },
+  photoPlaceholder: {
+    width: PHOTO_SIZE,
+    height: PHOTO_SIZE,
+    borderRadius: PHOTO_SIZE / 2,
+    backgroundColor: colors.neutrals.gentleMist,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: 'rgba(230, 81, 0, 0.2)',
+  },
+  cameraBadge: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: colors.primary.deepSaffron,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: colors.neutrals.sandstoneBeige,
+  },
+  photoName: {
+    ...typography.sizes.headingLG,
+    color: colors.neutrals.charcoalBlack,
+    fontWeight: '700',
+    marginTop: spacing.sm,
+  },
   levelCard: {
     backgroundColor: colors.neutrals.warmIvory,
     borderRadius: borderRadius.large,
@@ -659,4 +763,4 @@ const styles = StyleSheet.create({
   devBtnText: { ...typography.sizes.bodySM, color: colors.neutrals.charcoalBlack },
 });
 
-export default ProfileSheet;
+export default ProfileTabScreen;

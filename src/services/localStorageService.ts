@@ -62,6 +62,8 @@ export interface SpiritualProfile {
   // updateSpiritualProfile merges shallowly, so patching this map directly
   // from elsewhere would clobber sibling entries).
   structuredProfile?: Record<string, StructuredField>;
+  // file:// URI of the user's profile photo in the app documents directory
+  profilePhotoUri?: string;
   onboarded: boolean;
 }
 

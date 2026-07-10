@@ -14,6 +14,7 @@ import LocalStorageService, { ReflectionContentType, ReflectionEntry, Reflection
 import { geminiService, isAuthError } from '../services/geminiService';
 import krishnaContext from '../services/krishnaContextService';
 import { userKnowledge } from '../services/userKnowledgeService';
+import { useProfilePhoto } from '../services/profilePhotoStore';
 
 interface ChapterReflectionProps {
   // Gita chapters pass chapterNumber; other content passes contentType+contentId.
@@ -87,9 +88,21 @@ const Bubble: React.FC<{ role: 'krishna' | 'user'; text: string }> = ({ role, te
       <View style={styles.userBubble}>
         <Text style={styles.userBubbleText}>{text}</Text>
       </View>
-      <View style={styles.userAvatar}>
-        <Ionicons name="person" size={16} color={DharmaDesignSystem.colors.neutrals.softAsh} />
-      </View>
+      <UserAvatar />
+    </View>
+  );
+};
+
+// The reader's own face beside their words, once a profile photo is set
+const userPhotoAvatarStyle = { width: 30, height: 30, borderRadius: 15 } as const;
+const UserAvatar: React.FC = () => {
+  const photoUri = useProfilePhoto();
+  if (photoUri) {
+    return <Image source={{ uri: photoUri }} style={userPhotoAvatarStyle} />;
+  }
+  return (
+    <View style={styles.userAvatar}>
+      <Ionicons name="person" size={16} color={DharmaDesignSystem.colors.neutrals.softAsh} />
     </View>
   );
 };

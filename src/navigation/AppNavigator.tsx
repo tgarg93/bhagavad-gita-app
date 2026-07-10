@@ -2,9 +2,10 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { profilePhotoStore, useProfilePhoto } from '../services/profilePhotoStore';
 
 import HomeScreen from '../screens/HomeScreen';
 import WisdomHubScreen from '../screens/WisdomHubScreen';
@@ -23,12 +24,38 @@ import BhagavadGitaChapter1Screen from '../screens/BhagavadGitaChapter1Screen';
 import BhagavadGitaCompleteScreen from '../screens/BhagavadGitaCompleteScreen';
 import GitaVersePlayerScreen from '../screens/GitaVersePlayerScreen';
 import ContentReaderScreen from '../screens/ContentReaderScreen';
+import ProfileTabScreen from '../screens/ProfileTabScreen';
 
 import { DharmaColors } from '../constants/colors';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+// Profile tab icon: the user's photo when set (Partiful-style), else a person icon
+const ProfileTabIcon: React.FC<{ size: number; color: string; focused: boolean }> = ({
+  size,
+  color,
+  focused,
+}) => {
+  const photoUri = useProfilePhoto();
+  if (photoUri) {
+    return (
+      <Image
+        source={{ uri: photoUri }}
+        style={{
+          width: size + 4,
+          height: size + 4,
+          borderRadius: (size + 4) / 2,
+          borderWidth: focused ? 2 : 0,
+          borderColor: DharmaDesignSystem.colors.primary.deepSaffron,
+        }}
+        onError={() => profilePhotoStore.setUri(undefined)}
+      />
+    );
+  }
+  return <Ionicons name={focused ? 'person-circle' : 'person-circle-outline'} size={size + 2} color={color} />;
+};
 
 const TabNavigator = () => {
   return (
@@ -45,6 +72,8 @@ const TabNavigator = () => {
             iconName = 'calendar-outline';
           } else if (route.name === 'Ask Krishna') {
             iconName = 'chatbubble-outline';
+          } else if (route.name === 'Profile') {
+            return <ProfileTabIcon size={size} color={color} focused={focused} />;
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -95,10 +124,15 @@ const TabNavigator = () => {
         component={FestivalCalendarScreen}
         options={{ tabBarLabel: 'Festivals' }}
       />
-      <Tab.Screen 
-        name="Ask Krishna" 
+      <Tab.Screen
+        name="Ask Krishna"
         component={AskKrishnaScreen}
         options={{ tabBarLabel: 'Ask Krishna' }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileTabScreen}
+        options={{ tabBarLabel: 'You' }}
       />
     </Tab.Navigator>
   );

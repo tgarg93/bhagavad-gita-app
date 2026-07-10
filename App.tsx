@@ -8,6 +8,7 @@ import LocalStorageService from './src/services/localStorageService';
 import krishnaContext from './src/services/krishnaContextService';
 import journeyService from './src/services/journeyService';
 import notificationService from './src/services/notificationService';
+import { profilePhotoStore } from './src/services/profilePhotoStore';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,6 +36,7 @@ export default function App() {
 
     // Journey streak + notification refresh (reschedules only when permission
     // is already granted — the prompt itself happens at warmer moments)
+    profilePhotoStore.init();
     notificationService.init();
     journeyService.touchActivity().then(() => {
       notificationService.rescheduleAll();

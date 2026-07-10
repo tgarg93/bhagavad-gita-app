@@ -28,11 +28,11 @@ import DharmaHeader from '../components/ui/DharmaHeader';
 import DharmaHeaderAction from '../components/ui/DharmaHeaderAction';
 import { geminiService, isAuthError, GeminiMessage, GeminiChatSession } from '../services/geminiService';
 import { KRISHNA_PERSONA, ERROR_MESSAGES, RATE_LIMITS } from '../config/geminiConfig';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import krishnaContext, { CurrentContent } from '../services/krishnaContextService';
-import ProfileSheet from '../components/ProfileSheet';
 
 const AskKrishnaScreen: React.FC = () => {
+  const navigation = useNavigation();
   const [chatSession, setChatSession] = useState<GeminiChatSession>({
     messages: [],
     isActive: false,
@@ -44,7 +44,6 @@ const AskKrishnaScreen: React.FC = () => {
   const [showApiKeyInput, setShowApiKeyInput] = useState(false);
   const [initErrorIsAuth, setInitErrorIsAuth] = useState(false);
   const [initErrorDetail, setInitErrorDetail] = useState<string | null>(null);
-  const [showProfile, setShowProfile] = useState(false);
   const [discussing, setDiscussing] = useState<CurrentContent>({ type: 'none' });
   const seededContentRef = useRef<string>('');
   const scrollViewRef = useRef<ScrollView>(null);
@@ -283,7 +282,7 @@ const AskKrishnaScreen: React.FC = () => {
           <View style={{ flexDirection: 'row', gap: DharmaDesignSystem.spacing.sm }}>
             <DharmaHeaderAction
               iconName="person-circle-outline"
-              onPress={() => setShowProfile(true)}
+              onPress={() => (navigation as any).navigate('Profile')}
               variant="subtle"
             />
             <DharmaHeaderAction
@@ -374,7 +373,6 @@ const AskKrishnaScreen: React.FC = () => {
         </View>
       </KeyboardAvoidingView>
 
-      <ProfileSheet visible={showProfile} onClose={() => setShowProfile(false)} />
     </SafeAreaView>
   );
 };
