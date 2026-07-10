@@ -140,7 +140,7 @@ const HomeScreen: React.FC = () => {
               <Text style={styles.continueEyebrow}>CONTINUE YOUR PATH</Text>
               <Text style={styles.continueTitle} numberOfLines={1}>{nextStep.title}</Text>
               <Text style={styles.continueMeta} numberOfLines={1}>
-                Module {nextStep.module} · {JOURNEY_MODULES[nextStep.module]} · {journeyDone} of {journeyTotal} steps
+                {JOURNEY_MODULES[nextStep.module]} · {journeyDone} of {journeyTotal}
               </Text>
             </View>
             <View style={styles.continueGo}>
