@@ -36,7 +36,7 @@ const JourneyPathScreen: React.FC = () => {
         <View style={styles.headerCenter}>
           <Text style={styles.title}>Your path</Text>
           <Text style={styles.subtitle}>
-            5 stages · {done} of {total} complete
+            {done} of {total} steps walked
           </Text>
         </View>
         <View style={styles.backBtn} />

@@ -172,14 +172,6 @@ export const philosophyData: PhilosophicalConcept[] = [
     difficulty: 'beginner',
     sections: [
       {
-        id: 'overview-road',
-        title: 'The Road Ahead',
-        subtitle: 'How this journey is built, and why',
-        storyText: 'Before the first lesson, look at the road itself. This journey has five stages, and their order is deliberate. You will start with ideas — dharma, karma, moksha, the gunas — because they are the grammar of the whole tradition; every story, god, and festival speaks in them. Then one story that uses them all: the Bhagavad Gita, walked chapter by chapter, where the ideas stop being abstractions and become one man\'s hardest morning. Third come the gods — after the ideas on purpose, because faces make sense once you know what they are faces of. Fourth, practice: the paths of action, devotion, and knowledge, matched to your temperament, because knowing was never the point — living is. And last, the festivals, because celebration is where understanding becomes belonging: lamps, color, food, family.',
-        sectionHeader: 'How to walk it',
-        teachingText: 'Go in order if you can — each stage prepares the ground for the next — but nothing is locked, and nothing is graded. A few quiet minutes a day is enough; the path remembers where you left off. That\'s the road. Now — what is this tradition, exactly?',
-      },
-      {
         id: 'overview-name',
         title: 'A Religion With No Founder',
         subtitle: 'The river that named a civilization',

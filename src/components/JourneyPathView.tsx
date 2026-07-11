@@ -3,12 +3,14 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'rea
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import journeyService from '../services/journeyService';
+import { getProgression } from '../services/progressionService';
 import { JourneyItem, JourneyModule, JOURNEY_MODULES } from '../data/journeyPath';
 
-// The full guided journey as five module milestone cards — progress ring,
-// expandable checklist, cover-art tiles. Used as the onboarding finale
-// (inert rows, embedded in onboarding's own ScrollView) and as the
-// JourneyPath screen (its own ScrollView, rows navigate).
+// The guided journey as one continuous rail: spiritual-title milestones and
+// accordion stage cards hang on a single vertical line — teal where the
+// walker has been, saffron ahead. One central tracker only (the host screen's
+// "n of m steps"); position is carried by the rail itself. Used by the
+// onboarding finale (inert rows) and the JourneyPath screen (rows navigate).
 
 interface JourneyPathViewProps {
   onItemPress?: (item: JourneyItem) => void;
@@ -26,110 +28,31 @@ const MODULE_EMOJI: Record<JourneyModule, string> = {
   5: '🎉',
 };
 
-const { colors, typography, spacing, borderRadius } = DharmaDesignSystem;
-
-const RING = 46;
-const RING_STROKE = 4;
-const R = RING / 2;
-
-// Circular progress from plain Views (no SVG dependency): a pie built from
-// two rotating half-disc wedges (each clipped to its half of the circle,
-// with the rotation origin moved to the circle center via a translate
-// sandwich), then an inner disc turns the pie into a ring.
-const ProgressRing: React.FC<{ fraction: number; emoji: string }> = ({ fraction, emoji }) => {
-  const pct = Math.max(0, Math.min(1, fraction));
-  const color = pct >= 1 ? colors.primary.peacockTeal : colors.primary.deepSaffron;
-  const rightDeg = Math.min(pct * 360, 180); // sweeps the right half first
-  const leftDeg = Math.max(pct * 360 - 180, 0);
-  return (
-    <View style={ringStyles.circle}>
-      <View style={ringStyles.rightWrap} pointerEvents="none">
-        <View
-          style={[
-            ringStyles.leftHalfDisc,
-            {
-              backgroundColor: color,
-              transform: [{ translateX: R / 2 }, { rotate: `${rightDeg}deg` }, { translateX: -R / 2 }],
-            },
-          ]}
-        />
-      </View>
-      <View style={ringStyles.leftWrap} pointerEvents="none">
-        <View
-          style={[
-            ringStyles.rightHalfDisc,
-            {
-              backgroundColor: color,
-              transform: [{ translateX: -R / 2 }, { rotate: `${leftDeg}deg` }, { translateX: R / 2 }],
-            },
-          ]}
-        />
-      </View>
-      <View style={ringStyles.inner}>
-        <Text style={ringStyles.emoji}>{emoji}</Text>
-      </View>
-    </View>
-  );
+// Why each stage sits where it does — the rationale lives on the card itself
+const MODULE_WHY: Record<JourneyModule, string> = {
+  1: 'Ideas first — they\'re the grammar everything else speaks.',
+  2: 'One story that uses every idea: the Gita, chapter by chapter.',
+  3: 'With the ideas in hand, the gods become faces, not a crowd.',
+  4: 'Knowing becomes doing — practice matched to your temperament.',
+  5: 'And the festivals, where it all turns into lamps, food, and family.',
 };
 
-const ringStyles = StyleSheet.create({
-  circle: {
-    width: RING,
-    height: RING,
-    borderRadius: R,
-    backgroundColor: 'rgba(230, 81, 0, 0.15)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  // Clips to the right half of the circle
-  rightWrap: {
-    position: 'absolute',
-    left: R,
-    top: 0,
-    width: R,
-    height: RING,
-    overflow: 'hidden',
-  },
-  // A left-half disc parked (invisible) in the clipped-away zone; rotating
-  // it about the circle center sweeps a wedge into view
-  leftHalfDisc: {
-    position: 'absolute',
-    left: -R,
-    top: 0,
-    width: R,
-    height: RING,
-    borderTopLeftRadius: R,
-    borderBottomLeftRadius: R,
-  },
-  leftWrap: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    width: R,
-    height: RING,
-    overflow: 'hidden',
-  },
-  rightHalfDisc: {
-    position: 'absolute',
-    left: R,
-    top: 0,
-    width: R,
-    height: RING,
-    borderTopRightRadius: R,
-    borderBottomRightRadius: R,
-  },
-  inner: {
-    width: RING - RING_STROKE * 2,
-    height: RING - RING_STROKE * 2,
-    borderRadius: R - RING_STROKE,
-    backgroundColor: colors.neutrals.white,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  emoji: {
-    fontSize: 17,
-  },
-});
+// Spiritual titles as rail milestones, placed roughly where walking earns
+// them. Titles come from engagement (reading, reflecting), so the mapping is
+// soft — the sub-lines say so in spirit.
+const MILESTONES: { beforeModule: JourneyModule | null; level: number; label: string; sub: string }[] = [
+  { beforeModule: 1, level: 1, label: 'Jigyasu — The Curious', sub: 'Every walker starts here.' },
+  { beforeModule: 2, level: 2, label: 'Shishya — The Student', sub: 'The foundations are yours; the story begins.' },
+  { beforeModule: 3, level: 3, label: 'Sadhaka — The Practitioner', sub: 'The Gita is the long climb.' },
+  { beforeModule: 4, level: 4, label: 'Bhakta — The Devoted', sub: 'The faces of the divine are familiar now.' },
+  { beforeModule: 5, level: 5, label: 'Jnani — The Knower', sub: 'Practice has made the knowing yours.' },
+  { beforeModule: null, level: 7, label: 'Guru — The Guide', sub: '…through Rishi, for those who keep returning.' },
+];
+
+const { colors, typography, spacing, borderRadius } = DharmaDesignSystem;
+
+const RAIL_TEAL = colors.primary.peacockTeal;
+const RAIL_AHEAD = 'rgba(230, 81, 0, 0.22)';
 
 const coverStyle = { width: '100%', height: '100%' } as const;
 
@@ -157,6 +80,29 @@ const ItemTile: React.FC<{ item: JourneyItem; state: 'done' | 'current' | 'todo'
   );
 };
 
+// One row of the rail: a fixed-width column drawing the vertical line
+// (optionally with a milestone dot), then the block content beside it
+const RailRow: React.FC<{
+  walked: boolean;
+  dot?: 'attained' | 'ahead';
+  children: React.ReactNode;
+}> = ({ walked, dot, children }) => (
+  <View style={styles.railRow}>
+    <View style={styles.railCol}>
+      <View style={[styles.railLine, { backgroundColor: walked ? RAIL_TEAL : RAIL_AHEAD }]} />
+      {dot && (
+        <View
+          style={[
+            styles.railDot,
+            dot === 'attained' ? styles.railDotAttained : styles.railDotAhead,
+          ]}
+        />
+      )}
+    </View>
+    <View style={styles.railContent}>{children}</View>
+  </View>
+);
+
 const JourneyPathView: React.FC<JourneyPathViewProps> = ({
   onItemPress,
   scrollable = true,
@@ -165,11 +111,15 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
   const path = useMemo(() => journeyService.getPath(), []);
   const [completion, setCompletion] = useState<Record<string, string>>({});
   const [expanded, setExpanded] = useState<Partial<Record<JourneyModule, boolean>>>({});
+  const [levelNumber, setLevelNumber] = useState(1);
   const [loaded, setLoaded] = useState(false);
 
   const load = useCallback(async () => {
     const map = await journeyService.getCompletionMap();
     setCompletion(map);
+    getProgression()
+      .then(p => setLevelNumber(p.level.level))
+      .catch(() => {});
     if (!loaded) {
       // Open the module the walker is currently in (first unfinished item)
       const current = path.find(item => !map[item.id]);
@@ -183,107 +133,125 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
   }, [load, refreshSignal]);
 
   const currentId = path.find(item => !completion[item.id])?.id;
+  // Module the walker stands in; 6 = whole path complete (rail fully teal)
+  const currentModule: number = currentId
+    ? path.find(item => item.id === currentId)!.module
+    : 6;
 
-  const modules = ([1, 2, 3, 4, 5] as JourneyModule[]).map(module => {
-    const items = path.filter(item => item.module === module);
-    return { module, items, done: items.filter(item => completion[item.id]).length };
-  });
+  const modules = ([1, 2, 3, 4, 5] as JourneyModule[]).map(module => ({
+    module,
+    items: path.filter(item => item.module === module),
+  }));
+
+  const renderStageCard = (module: JourneyModule, items: JourneyItem[]) => {
+    const isOpen = !!expanded[module];
+    const isCurrent = currentModule === module;
+    return (
+      <View style={[styles.card, isCurrent && styles.cardCurrent]}>
+        <TouchableOpacity
+          style={styles.cardHead}
+          onPress={() => setExpanded(prev => ({ ...prev, [module]: !prev[module] }))}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.cardEmoji}>{MODULE_EMOJI[module]}</Text>
+          <View style={styles.cardInfo}>
+            <Text style={styles.cardEyebrow}>Stage {module}</Text>
+            <Text style={styles.cardName}>{JOURNEY_MODULES[module]}</Text>
+            <Text style={styles.cardWhy}>{MODULE_WHY[module]}</Text>
+          </View>
+          <Ionicons
+            name={isOpen ? 'chevron-down' : 'chevron-forward'}
+            size={18}
+            color={colors.neutrals.softAsh}
+          />
+        </TouchableOpacity>
+
+        {isOpen && (
+          <View style={styles.items}>
+            {items.map(item => {
+              const state: 'done' | 'current' | 'todo' = completion[item.id]
+                ? 'done'
+                : item.id === currentId
+                  ? 'current'
+                  : 'todo';
+              const row = (
+                <>
+                  <ItemTile item={item} state={state} />
+                  <Text
+                    style={[
+                      styles.itemTitle,
+                      state === 'done' && styles.itemTitleDone,
+                      state === 'current' && styles.itemTitleCurrent,
+                    ]}
+                    numberOfLines={2}
+                  >
+                    {item.title}
+                  </Text>
+                  {state === 'current' && (
+                    <View style={styles.nextPill}>
+                      <Text style={styles.nextPillText}>Next</Text>
+                    </View>
+                  )}
+                </>
+              );
+              return onItemPress ? (
+                <TouchableOpacity
+                  key={item.id}
+                  style={styles.itemRow}
+                  onPress={() => onItemPress(item)}
+                  activeOpacity={0.7}
+                >
+                  {row}
+                </TouchableOpacity>
+              ) : (
+                <View key={item.id} style={styles.itemRow}>
+                  {row}
+                </View>
+              );
+            })}
+          </View>
+        )}
+      </View>
+    );
+  };
+
+  const renderMilestone = (m: (typeof MILESTONES)[number]) => {
+    const attained = levelNumber >= m.level;
+    return (
+      <View style={styles.milestone}>
+        <Text style={[styles.milestoneLabel, attained && styles.milestoneLabelAttained]}>
+          {m.label}
+        </Text>
+        <Text style={styles.milestoneSub}>{m.sub}</Text>
+      </View>
+    );
+  };
 
   const body = (
     <View style={styles.container}>
-      {/* Why the path is ordered this way — the map before the walking */}
-      <View style={styles.introCard}>
-        <Text style={styles.introTitle}>How this path is laid</Text>
-        <Text style={styles.introLead}>
-          Not a syllabus — a walk. Each stage prepares the ground for the next.
-        </Text>
-        {[
-          'Ideas first — dharma, karma, moksha are the grammar; everything else speaks it.',
-          'Then one story that uses them all: the Gita, walked chapter by chapter.',
-          'With the ideas in hand, the gods stop being a crowd and become faces.',
-          'Knowing becomes doing — the practices, matched to your temperament.',
-          'And finally the festivals, where it all turns into lamps, food, and family.',
-        ].map((line, i) => (
-          <View key={i} style={styles.introRow}>
-            <Text style={styles.introNum}>{i + 1}</Text>
-            <Text style={styles.introLine}>{line}</Text>
-          </View>
-        ))}
-      </View>
-
-      {modules.map(({ module, items, done }) => {
-        const isOpen = !!expanded[module];
+      {modules.map(({ module, items }) => {
+        const milestone = MILESTONES.find(m => m.beforeModule === module)!;
+        // Rail is teal for everything strictly before the current stage
+        const milestoneWalked = currentModule >= module;
+        const cardWalked = currentModule > module;
         return (
-          <View key={module} style={styles.card}>
-            <TouchableOpacity
-              style={styles.cardHead}
-              onPress={() => setExpanded(prev => ({ ...prev, [module]: !prev[module] }))}
-              activeOpacity={0.7}
+          <React.Fragment key={module}>
+            <RailRow
+              walked={milestoneWalked}
+              dot={levelNumber >= milestone.level ? 'attained' : 'ahead'}
             >
-              <ProgressRing fraction={items.length ? done / items.length : 0} emoji={MODULE_EMOJI[module]} />
-              <View style={styles.cardInfo}>
-                <Text style={styles.cardEyebrow}>Stage {module}</Text>
-                <Text style={styles.cardName}>{JOURNEY_MODULES[module]}</Text>
-                <Text style={styles.cardProgress}>
-                  {done} of {items.length}
-                  {done === items.length && items.length > 0 ? ' · complete' : ''}
-                </Text>
-              </View>
-              <Ionicons
-                name={isOpen ? 'chevron-down' : 'chevron-forward'}
-                size={18}
-                color={colors.neutrals.softAsh}
-              />
-            </TouchableOpacity>
-
-            {isOpen && (
-              <View style={styles.items}>
-                {items.map(item => {
-                  const state: 'done' | 'current' | 'todo' = completion[item.id]
-                    ? 'done'
-                    : item.id === currentId
-                      ? 'current'
-                      : 'todo';
-                  const row = (
-                    <>
-                      <ItemTile item={item} state={state} />
-                      <Text
-                        style={[
-                          styles.itemTitle,
-                          state === 'done' && styles.itemTitleDone,
-                          state === 'current' && styles.itemTitleCurrent,
-                        ]}
-                        numberOfLines={2}
-                      >
-                        {item.title}
-                      </Text>
-                      {state === 'current' && (
-                        <View style={styles.nextPill}>
-                          <Text style={styles.nextPillText}>Next</Text>
-                        </View>
-                      )}
-                    </>
-                  );
-                  return onItemPress ? (
-                    <TouchableOpacity
-                      key={item.id}
-                      style={styles.itemRow}
-                      onPress={() => onItemPress(item)}
-                      activeOpacity={0.7}
-                    >
-                      {row}
-                    </TouchableOpacity>
-                  ) : (
-                    <View key={item.id} style={styles.itemRow}>
-                      {row}
-                    </View>
-                  );
-                })}
-              </View>
-            )}
-          </View>
+              {renderMilestone(milestone)}
+            </RailRow>
+            <RailRow walked={cardWalked}>{renderStageCard(module, items)}</RailRow>
+          </React.Fragment>
         );
       })}
+      <RailRow
+        walked={currentModule > 5}
+        dot={levelNumber >= 7 ? 'attained' : 'ahead'}
+      >
+        {renderMilestone(MILESTONES[MILESTONES.length - 1])}
+      </RailRow>
     </View>
   );
 
@@ -303,50 +271,59 @@ const styles = StyleSheet.create({
     paddingTop: spacing.md,
     paddingBottom: spacing.xxl,
   },
-  introCard: {
-    backgroundColor: colors.neutrals.white,
-    borderRadius: borderRadius.large,
-    borderWidth: 1,
-    borderColor: 'rgba(230, 81, 0, 0.12)',
-    padding: spacing.md + 2,
-    marginBottom: spacing.sm + 4,
+  railRow: {
+    flexDirection: 'row',
   },
-  introTitle: {
-    ...typography.sizes.headingSM,
-    color: colors.neutrals.charcoalBlack,
-    fontWeight: '700',
-    marginBottom: 2,
+  railCol: {
+    width: 26,
+    alignItems: 'flex-start',
   },
-  introLead: {
-    fontSize: 13,
-    lineHeight: 19,
-    fontStyle: 'italic',
-    color: colors.neutrals.softAsh,
+  railLine: {
+    position: 'absolute',
+    left: 7,
+    top: 0,
+    bottom: 0,
+    width: 3,
+    borderRadius: 2,
+  },
+  railDot: {
+    position: 'absolute',
+    left: 1,
+    top: 2,
+    width: 15,
+    height: 15,
+    borderRadius: 8,
+    borderWidth: 3,
+    backgroundColor: colors.neutrals.sandstoneBeige,
+  },
+  railDotAttained: {
+    backgroundColor: colors.primary.peacockTeal,
+    borderColor: colors.primary.peacockTeal,
+  },
+  railDotAhead: {
+    borderColor: colors.primary.deepSaffron,
+  },
+  railContent: {
+    flex: 1,
+    minWidth: 0,
+  },
+  milestone: {
     marginBottom: spacing.sm + 2,
   },
-  introRow: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    marginBottom: 7,
-  },
-  introNum: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
-    backgroundColor: 'rgba(230, 81, 0, 0.1)',
-    color: colors.primary.deepSaffron,
-    fontSize: 11,
+  milestoneLabel: {
+    fontSize: 12,
     fontWeight: '800',
-    textAlign: 'center',
-    lineHeight: 18,
-    overflow: 'hidden',
-    marginTop: 1,
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
+    color: colors.primary.deepSaffron,
   },
-  introLine: {
-    flex: 1,
-    fontSize: 13,
-    lineHeight: 19,
-    color: colors.neutrals.charcoalBlack,
+  milestoneLabelAttained: {
+    color: colors.primary.peacockTeal,
+  },
+  milestoneSub: {
+    fontSize: 11,
+    color: colors.neutrals.softAsh,
+    marginTop: 1,
   },
   card: {
     backgroundColor: colors.neutrals.white,
@@ -361,10 +338,18 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 2,
   },
+  cardCurrent: {
+    borderColor: 'rgba(230, 81, 0, 0.5)',
+    shadowColor: colors.primary.deepSaffron,
+    shadowOpacity: 0.18,
+  },
   cardHead: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.md,
+    gap: spacing.sm + 4,
+  },
+  cardEmoji: {
+    fontSize: 22,
   },
   cardInfo: {
     flex: 1,
@@ -382,11 +367,12 @@ const styles = StyleSheet.create({
     color: colors.neutrals.charcoalBlack,
     fontWeight: '700',
   },
-  cardProgress: {
-    fontSize: 12,
+  cardWhy: {
+    fontSize: 11.5,
     lineHeight: 16,
-    color: colors.neutrals.softAsh,
-    marginTop: 1,
+    fontStyle: 'italic',
+    color: '#6E6357',
+    marginTop: 2,
   },
   items: {
     marginTop: spacing.sm + 4,
