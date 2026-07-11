@@ -9,6 +9,8 @@ import {
   TextInput,
   ActivityIndicator,
   Image,
+  Animated,
+  AccessibilityInfo,
 } from 'react-native';
 
 // Typed separately: inside StyleSheet.create the style resolves to a union
@@ -27,6 +29,8 @@ import LocalStorageService, { SpiritualProfile } from '../services/localStorageS
 import journeyService from '../services/journeyService';
 import { getDailyAtom } from '../data/dailyAtoms';
 import DailyChaiCard from '../components/DailyChaiCard';
+import ProgressRungs from '../components/ProgressRungs';
+import { LEVELS, LEVEL_MEANINGS } from '../services/progressionService';
 
 interface OnboardingScreenProps {
   onComplete: () => void;
@@ -66,7 +70,7 @@ const GOAL_OPTIONS: { value: SpiritualProfile['dailyGoalMinutes']; label: string
   { value: 20, label: '20 min / day', sub: 'Immersed' },
 ];
 
-const TOTAL_STEPS = 8;
+const TOTAL_STEPS = 9;
 
 const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   const [step, setStep] = useState(0);
@@ -91,12 +95,15 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
       ? `One last thing, ${firstName} — how much time shall we spend together each day?`
       : 'One last thing — how much time shall we spend together each day?',
     firstName
+      ? `Every seeker in every Upanishad began exactly where you stand now, ${firstName}.`
+      : 'Every seeker in every Upanishad began exactly where you stand now.',
+    firstName
       ? `Here is the road we'll walk together, ${firstName} — five stages, one step at a time.`
       : "Here is the road we'll walk together — five stages, one step at a time.",
     firstName
       ? `One more thing, ${firstName} — each morning I'll have chai waiting for you: one small sip of wisdom and the day's verse, right on your Home screen. Under a minute, I promise.`
       : "One more thing — each morning I'll have chai waiting for you: one small sip of wisdom and the day's verse, right on your Home screen. Under a minute, I promise.",
-    '', // step 7 is the quiet transition screen — no bubble
+    '', // step 8 is the quiet transition screen — no bubble
   ];
 
   const toggle = (list: string[], setList: (v: string[]) => void, value: string) =>
@@ -108,8 +115,9 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
     (step === 2 && intentions.length > 0) ||
     (step === 3 && familyStream !== null) ||
     (step === 4 && dailyGoal !== null) ||
-    step === 5 || // the path finale just needs a look, not an answer
-    step === 6; // so does the chai preview
+    step === 5 || // the Jigyasu identity card just needs a look, not an answer
+    step === 6 || // so does the journey finale
+    step === 7; // and the chai preview
 
   const finish = async () => {
     // Merge, don't overwrite: replaying onboarding ("Edit my answers") must
@@ -133,7 +141,27 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
     onComplete();
   };
 
+  // Jigyasu → journey hand-off: the identity card rises and shrinks as if it
+  // becomes the rail's first milestone, then the journey view enters with
+  // that milestone settling in (JourneyPathView's entrance prop).
+  const jigyasuExit = useRef(new Animated.Value(0)).current;
+
   const next = () => {
+    if (step === 5) {
+      AccessibilityInfo.isReduceMotionEnabled().then(reduced => {
+        if (reduced) {
+          setStep(6);
+          return;
+        }
+        Animated.timing(jigyasuExit, { toValue: 1, duration: 320, useNativeDriver: true }).start(
+          () => {
+            jigyasuExit.setValue(0); // reset in case the walker comes back
+            setStep(6);
+          }
+        );
+      });
+      return;
+    }
     if (step < TOTAL_STEPS - 1) setStep(step + 1);
     else finish();
   };
@@ -208,7 +236,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
       </View>
 
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-        {step < 7 && <KrishnaGuide message={stepMessages[step]} />}
+        {step < 8 && <KrishnaGuide message={stepMessages[step]} />}
 
         <View style={styles.options}>
           {step === 0 && (
@@ -251,9 +279,38 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
             )}
         </View>
 
-        {step === 5 && <JourneyPathView scrollable={false} />}
+        {step === 5 && (
+          <Animated.View
+            style={[
+              styles.jigyasuWrap,
+              {
+                opacity: jigyasuExit.interpolate({ inputRange: [0, 1], outputRange: [1, 0] }),
+                transform: [
+                  { scale: jigyasuExit.interpolate({ inputRange: [0, 1], outputRange: [1, 0.7] }) },
+                  { translateY: jigyasuExit.interpolate({ inputRange: [0, 1], outputRange: [0, -60] }) },
+                ],
+              },
+            ]}
+          >
+            <View style={styles.jigyasuCard}>
+              <Text style={styles.jigyasuEmblem}>🪷</Text>
+              <Text style={styles.jigyasuEyebrow}>YOU BEGIN AS</Text>
+              <Text style={styles.jigyasuName}>Jigyasu</Text>
+              <Text style={styles.jigyasuEnglish}>The Curious · Level 1 of 7</Text>
+              <Text style={styles.jigyasuMeaning}>{LEVEL_MEANINGS[1]}</Text>
+              <ProgressRungs level={LEVELS[0]} nextLevel={LEVELS[1]} progressToNext={0} />
+            </View>
+          </Animated.View>
+        )}
 
         {step === 6 && (
+          <>
+            <Text style={styles.journeyHeading}>YOUR SPIRITUAL JOURNEY</Text>
+            <JourneyPathView scrollable={false} entrance />
+          </>
+        )}
+
+        {step === 7 && (
           <View style={styles.rhythmWrap}>
             {/* Live preview of today's actual chai — the same unified card the
                 Home screen shows, compact and action-less */}
@@ -261,7 +318,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
           </View>
         )}
 
-        {step === 7 && (
+        {step === 8 && (
           <View style={styles.transitionWrap}>
             <Text style={styles.transitionEyebrow}>YOUR FIRST STEP</Text>
             {firstStepCover != null && (
@@ -284,13 +341,15 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
         )}
       </ScrollView>
 
-      {step < 7 && (
+      {step < 8 && (
         <TouchableOpacity
           style={[styles.continueBtn, !canContinue && styles.continueBtnDisabled]}
           onPress={next}
           disabled={!canContinue}
         >
-          <Text style={styles.continueText}>{step === 4 ? "I'm committed" : 'Continue'}</Text>
+          <Text style={styles.continueText}>
+            {step === 4 ? "I'm committed" : step === 5 ? 'See your journey →' : 'Continue'}
+          </Text>
         </TouchableOpacity>
       )}
     </SafeAreaView>
@@ -383,6 +442,59 @@ const styles = StyleSheet.create({
   },
   rhythmWrap: {
     paddingHorizontal: spacing.md,
+  },
+  jigyasuWrap: {
+    paddingHorizontal: spacing.md,
+  },
+  jigyasuCard: {
+    backgroundColor: colors.neutrals.white,
+    borderRadius: borderRadius.large,
+    borderWidth: 1.5,
+    borderColor: 'rgba(230, 81, 0, 0.18)',
+    padding: spacing.xl,
+    alignItems: 'center',
+    ...shadows.soft,
+  },
+  jigyasuEmblem: {
+    fontSize: 34,
+    lineHeight: 42,
+  },
+  jigyasuEyebrow: {
+    fontSize: 10.5,
+    lineHeight: 14,
+    fontWeight: '800',
+    letterSpacing: 1.6,
+    color: colors.primary.deepSaffron,
+    marginTop: spacing.sm,
+    marginBottom: 2,
+  },
+  jigyasuName: {
+    fontSize: 32,
+    lineHeight: 40,
+    fontWeight: '800',
+    color: colors.neutrals.charcoalBlack,
+  },
+  jigyasuEnglish: {
+    fontSize: 14,
+    lineHeight: 20,
+    fontStyle: 'italic',
+    color: colors.neutrals.softAsh,
+    marginBottom: spacing.md,
+  },
+  jigyasuMeaning: {
+    fontSize: 14,
+    lineHeight: 21,
+    color: colors.neutrals.charcoalBlack,
+    marginBottom: spacing.lg,
+  },
+  journeyHeading: {
+    fontSize: 11,
+    lineHeight: 15,
+    fontWeight: '800',
+    letterSpacing: 1.6,
+    color: colors.primary.deepSaffron,
+    textAlign: 'center',
+    marginBottom: spacing.sm,
   },
   transitionWrap: {
     alignItems: 'center',

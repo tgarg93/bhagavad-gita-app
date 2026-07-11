@@ -1,5 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Animated,
+  AccessibilityInfo,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import journeyService from '../services/journeyService';
@@ -18,6 +27,10 @@ interface JourneyPathViewProps {
   // Bump to re-read completion (e.g. on screen focus). The view can't use
   // useFocusEffect itself — onboarding renders it outside any navigator.
   refreshSignal?: number;
+  // Onboarding hand-off: the Jigyasu identity card just morphed into this
+  // view, so the first milestone lands with a settle-in pulse and the rest
+  // of the rail fades in beneath it.
+  entrance?: boolean;
 }
 
 const MODULE_EMOJI: Record<JourneyModule, string> = {
@@ -107,8 +120,35 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
   onItemPress,
   scrollable = true,
   refreshSignal = 0,
+  entrance = false,
 }) => {
   const path = useMemo(() => journeyService.getPath(), []);
+
+  // Entrance choreography (onboarding hand-off): first milestone settles in
+  // from slightly oversized — the Jigyasu card "became" it — then the rest
+  // of the rail rises beneath. Static when reduce-motion is on.
+  const milestoneIn = useRef(new Animated.Value(entrance ? 0 : 1)).current;
+  const restIn = useRef(new Animated.Value(entrance ? 0 : 1)).current;
+  useEffect(() => {
+    if (!entrance) return;
+    let cancelled = false;
+    AccessibilityInfo.isReduceMotionEnabled().then(reduced => {
+      if (cancelled) return;
+      if (reduced) {
+        milestoneIn.setValue(1);
+        restIn.setValue(1);
+        return;
+      }
+      Animated.sequence([
+        Animated.spring(milestoneIn, { toValue: 1, friction: 5, tension: 60, useNativeDriver: true }),
+        Animated.timing(restIn, { toValue: 1, duration: 450, useNativeDriver: true }),
+      ]).start();
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [entrance]);
   const [completion, setCompletion] = useState<Record<string, string>>({});
   const [expanded, setExpanded] = useState<Partial<Record<JourneyModule, boolean>>>({});
   const [levelNumber, setLevelNumber] = useState(1);
@@ -227,31 +267,58 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
     );
   };
 
+  const firstMilestone = MILESTONES.find(m => m.beforeModule === 1)!;
   const body = (
     <View style={styles.container}>
-      {modules.map(({ module, items }) => {
-        const milestone = MILESTONES.find(m => m.beforeModule === module)!;
-        // Rail is teal for everything strictly before the current stage
-        const milestoneWalked = currentModule >= module;
-        const cardWalked = currentModule > module;
-        return (
-          <React.Fragment key={module}>
-            <RailRow
-              walked={milestoneWalked}
-              dot={levelNumber >= milestone.level ? 'attained' : 'ahead'}
-            >
-              {renderMilestone(milestone)}
-            </RailRow>
-            <RailRow walked={cardWalked}>{renderStageCard(module, items)}</RailRow>
-          </React.Fragment>
-        );
-      })}
       <RailRow
-        walked={currentModule > 5}
-        dot={levelNumber >= 7 ? 'attained' : 'ahead'}
+        walked={currentModule >= 1}
+        dot={levelNumber >= firstMilestone.level ? 'attained' : 'ahead'}
       >
-        {renderMilestone(MILESTONES[MILESTONES.length - 1])}
+        <Animated.View
+          style={{
+            opacity: milestoneIn,
+            transform: [
+              { scale: milestoneIn.interpolate({ inputRange: [0, 1], outputRange: [1.25, 1] }) },
+            ],
+          }}
+        >
+          {renderMilestone(firstMilestone)}
+        </Animated.View>
       </RailRow>
+      <Animated.View
+        style={{
+          opacity: restIn,
+          transform: [
+            { translateY: restIn.interpolate({ inputRange: [0, 1], outputRange: [14, 0] }) },
+          ],
+        }}
+      >
+        {modules.map(({ module, items }) => {
+          const milestone = MILESTONES.find(m => m.beforeModule === module)!;
+          // Rail is teal for everything strictly before the current stage
+          const milestoneWalked = currentModule >= module;
+          const cardWalked = currentModule > module;
+          return (
+            <React.Fragment key={module}>
+              {module !== 1 && (
+                <RailRow
+                  walked={milestoneWalked}
+                  dot={levelNumber >= milestone.level ? 'attained' : 'ahead'}
+                >
+                  {renderMilestone(milestone)}
+                </RailRow>
+              )}
+              <RailRow walked={cardWalked}>{renderStageCard(module, items)}</RailRow>
+            </React.Fragment>
+          );
+        })}
+        <RailRow
+          walked={currentModule > 5}
+          dot={levelNumber >= 7 ? 'attained' : 'ahead'}
+        >
+          {renderMilestone(MILESTONES[MILESTONES.length - 1])}
+        </RailRow>
+      </Animated.View>
     </View>
   );
 

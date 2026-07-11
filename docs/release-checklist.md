@@ -14,7 +14,7 @@ Manual smoke tests until automated coverage lands (Wave 2). Run the **Simulator 
 
 **Fresh install** (delete app from simulator first):
 - [ ] Splash: cream throughout, no white flash, no stray dots
-- [ ] Onboarding: all 6 steps advance; name skip works; family-stream question single-selects; step 5 shows path with intro card
+- [ ] Onboarding: all 9 steps advance; name skip works; family-stream question single-selects; step 5 = Jigyasu identity card (outlined empty rung, labels aligned under rungs); "See your journey →" morphs the card into the path (first milestone settles in); path step titled YOUR SPIRITUAL JOURNEY
 - [ ] **Begin the path** → lands in "What is Hinduism?" reader
 - [ ] Fresh install again → **Skip for now** → lands on Home
 
@@ -23,11 +23,13 @@ Manual smoke tests until automated coverage lands (Wave 2). Run the **Simulator 
 - [ ] Daily Chai card (ONE card): correct type for today's weekday (Sun/Wed verse, Mon why, Tue saying, Thu story, Fri question, Sat word) with that type's layout + accent tint; citation line; 📖 opens the linked content (only when link exists)
 - [ ] Chai ▶: plays and **toggles off on second tap** — on word/saying days the Devanagari speaks first (Hindi voice), then the English; verse days English-first; stop mid-Sanskrit kills the whole sequence
 - [ ] Verse day: 📖 opens that Gita chapter
-- [ ] Continue card body → next journey item; **View full path** footer → path screen
+- [ ] Continue card body → next journey item; **View your journey** footer → path screen
 
 **Journey:**
-- [ ] Path screen: intro card, correct totals, current module expanded, NEXT framed item; rows navigate
+- [ ] Path screen (titled "Your Spiritual Journey"): intro card, correct totals, current module expanded, NEXT framed item; rows navigate
 - [ ] Complete an item (swipe to its end) → marigold celebration plays once (not again on swipe-back); checkmark appears on path; Continue card advances
+- [ ] Celebration shows the rung progress strip: "+N points · M to {next}" with the fill animating from the session's starting position (no "+0" when nothing was earned)
+- [ ] Level-up: dev-preset points just below a threshold (Profile → dev tools), finish a lesson crossing it → gold takeover overlay with the new name + meaning + marigolds; "Continue as {name}" dismisses; does NOT re-fire on the next lesson
 
 **Readers:**
 - [ ] Content reader: cover → sections with footnote citations → last text page ends with Sources card → reflections (skippable) → celebration

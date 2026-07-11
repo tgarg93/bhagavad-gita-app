@@ -210,7 +210,7 @@ const HomeScreen: React.FC = () => {
               activeOpacity={0.7}
               onPress={() => (navigation as any).navigate('JourneyPath')}
             >
-              <Text style={styles.pathFooterLabel}>View full path</Text>
+              <Text style={styles.pathFooterLabel}>View your journey</Text>
               <View style={styles.pathFooterRight}>
                 <Text style={styles.pathFooterCount}>{journeyDone} of {journeyTotal}</Text>
                 <Ionicons name="chevron-forward" size={13} color={DharmaDesignSystem.colors.primary.deepSaffron} />

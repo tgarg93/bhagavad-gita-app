@@ -34,7 +34,7 @@ const JourneyPathScreen: React.FC = () => {
           <Ionicons name="chevron-back" size={26} color={DharmaDesignSystem.colors.primary.deepSaffron} />
         </TouchableOpacity>
         <View style={styles.headerCenter}>
-          <Text style={styles.title}>Your path</Text>
+          <Text style={styles.title}>Your Spiritual Journey</Text>
           <Text style={styles.subtitle}>
             {done} of {total} steps walked
           </Text>

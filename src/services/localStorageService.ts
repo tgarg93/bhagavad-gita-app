@@ -168,6 +168,7 @@ class LocalStorageService {
     JOURNEY_ACTIVITY: 'journey_activity',
     NOTIFICATION_SETTINGS: 'notification_settings',
     CHAI_LAST_OPENED: 'daily_chai_last_opened',
+    LEVEL_LAST_CELEBRATED: 'level_last_celebrated',
   };
 
   private static readonly TOTAL_GITA_VERSES = 700;
@@ -404,6 +405,25 @@ class LocalStorageService {
       await AsyncStorage.setItem(this.KEYS.CHAI_LAST_OPENED, dateKey);
     } catch (error) {
       console.error('Error saving chai opened date:', error);
+    }
+  }
+
+  // ——— Level-up ceremony bookkeeping: the highest level already celebrated ———
+  static async getLastCelebratedLevel(): Promise<number> {
+    try {
+      const raw = await AsyncStorage.getItem(this.KEYS.LEVEL_LAST_CELEBRATED);
+      const n = raw ? parseInt(raw, 10) : NaN;
+      return Number.isFinite(n) && n >= 1 ? n : 1; // everyone starts celebrated as Jigyasu
+    } catch {
+      return 1;
+    }
+  }
+
+  static async saveLastCelebratedLevel(level: number) {
+    try {
+      await AsyncStorage.setItem(this.KEYS.LEVEL_LAST_CELEBRATED, String(level));
+    } catch (error) {
+      console.error('Error saving last celebrated level:', error);
     }
   }
 

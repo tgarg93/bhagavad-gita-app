@@ -103,7 +103,9 @@ const ContentReaderScreen: React.FC = () => {
     [narrationContent, audioService]
   );
 
-  // Resume last spot on mount
+  // Resume last spot on mount; snapshot progression points so the celebration
+  // can show how far this reading moved you
+  const pointsAtStartRef = useRef<number | undefined>(undefined);
   useEffect(() => {
     (async () => {
       const last = await LocalStorageService.getReaderPosition(positionKey);
@@ -111,6 +113,8 @@ const ContentReaderScreen: React.FC = () => {
       setInitialIndex(idx);
       setActiveIndex(idx);
       setReady(true);
+      const { getProgression } = require('../services/progressionService');
+      pointsAtStartRef.current = (await getProgression()).points;
     })();
     return () => { audioService.cleanup(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -394,6 +398,7 @@ const ContentReaderScreen: React.FC = () => {
         completedItemId={positionKey}
         completedTitle={content.title}
         active={pages[activeIndex]?.kind === 'celebration'}
+        pointsAtStart={pointsAtStartRef.current}
         onNext={next => navigateToJourneyItem(navigation, next, true)}
         onBackToLearn={() => (navigation as any).navigate('MainTabs', { screen: 'Scriptures' })}
       />

@@ -116,6 +116,9 @@ const GitaVersePlayerScreen: React.FC = () => {
   const [highlightedSegmentId, setHighlightedSegmentId] = useState<string | null>(null);
   const [playingChapter, setPlayingChapter] = useState<number | null>(null);
 
+  // Snapshot of progression points at mount — celebrations show session gains
+  const pointsAtStartRef = useRef<number | undefined>(undefined);
+
   // Resume last spot on mount (or open at a requested chapter), migrating the
   // stored index once when the page layout gains new page kinds
   useEffect(() => {
@@ -146,6 +149,9 @@ const GitaVersePlayerScreen: React.FC = () => {
       setActiveIndex(idx);
       setTotalProgress(await LocalStorageService.getTotalProgress());
       setReady(true);
+      // Snapshot progression so celebrations can show this session's gains
+      const { getProgression } = require('../services/progressionService');
+      pointsAtStartRef.current = (await getProgression()).points;
     })();
     return () => { audioService.cleanup(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -546,6 +552,7 @@ const GitaVersePlayerScreen: React.FC = () => {
         completedItemId={`gita:${chapter}`}
         completedTitle={`Chapter ${chapter} · ${chapterName(chapter)}`}
         active={activeIndex === celebrationIndex[chapter]}
+        pointsAtStart={pointsAtStartRef.current}
         onNext={next => {
           if (next.id === `gita:${chapter + 1}`) {
             // Next chapter of the same book — turn the page inline

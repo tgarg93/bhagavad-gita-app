@@ -17,8 +17,10 @@ Six steps in one state machine (`OnboardingScreen`), Krishna asking each questio
 | 2 | Intentions (multi-select, 5 options) | `intentions` |
 | 3 | **Family stream** — "Growing up, whose face was closest in your home?" (single-select: Krishna, Shiva, The Goddess, Ganesha, Rama & Hanuman, A mix of many, Not sure) | `familyStream` |
 | 4 | Daily goal (5/10/15/20 min) — CTA "I'm committed" | `dailyGoalMinutes` |
-| 5 | Journey finale: path view (rail + milestones) → Continue | — |
-| 6 | **Daily rhythm send-off**: Krishna introduces Daily Chai + the verse; live mini-preview of today's chai card; then **auto-advances** (~4s) into the first lesson ("Let's get started with '{next step}'…" + spinner) via `setPendingStart()` + finish. Only escape: "I'll explore on my own" text link → Home | `onboarded: true` |
+| 5 | **Jigyasu identity card**: 🪷 "YOU BEGIN AS Jigyasu — The Curious · Level 1 of 7" + `LEVEL_MEANINGS[1]` + the rung strip (outlined current rung, empty). CTA "See your journey →" — the card **morphs** (rise/shrink/fade, skipped under reduce-motion) into… | — |
+| 6 | **Your Spiritual Journey** finale: path view (rail + milestones), entered with the Jigyasu milestone settling in (`entrance` prop) → Continue | — |
+| 7 | Daily rhythm: Krishna introduces Daily Chai; live preview of today's unified chai card → Continue | — |
+| 8 | **Send-off**: **auto-advances** (~2.5s) into the first lesson ("Getting started with '{next step}'…" + spinner) via `setPendingStart()` + finish. Only escape: "I'll explore on my own" text link → Home | `onboarded: true` |
 
 - `finish()` **merges** the patch (never overwrites the rolling summary/knowledge). Completing onboarding is the warm moment for the notification-permission ask.
 - **Begin handoff**: onboarding can't navigate (outside navigator) → `journeyService.setPendingStart()`; HomeScreen's focus effect consumes the flag and opens the first unfinished item. Skip lands on Home.
@@ -30,6 +32,8 @@ Six steps in one state machine (`OnboardingScreen`), Krishna asking each questio
 - **Completion = reaching an item's celebration page** (viewability callback fires `journeyService.markCompleted(id)`). First completion wins; id-keyed, permanent.
 - **Next = first unfinished in path order** (wraps). Home's Continue card, notifications, and celebrations all derive from it.
 - **Celebration page** (last page of every reader): entrance choreography (ring settle → checkmark spring → staggered text) + one-shot marigold shower (16 petals, ~2.5s, respects reduce-motion). Fires when the page scrolls into view, **once per arrival**. Next button turns the page to the next journey item; chapter→chapter stays inline in the Gita player.
+- **Progress strip on the celebration** (`ProgressRungs`, shared with onboarding): current rung outlined + inner fill at `progressToNext`, completed rungs small solid, ahead rungs small track-tinted; only current + next rungs are large and named. Readers snapshot `getProgression().points` on mount so the fill animates from where the session started; line reads "+N points · M to {next}" (plain "points"; "+0" omitted; at Guru: "The path's last name is yours").
+- **Level-up ceremony**: when `getProgression().level > level_last_celebrated` (AsyncStorage, default 1) at celebration time, a full takeover overlay rises after the entrance (~1.9s): gold identity card — old name struck through, new name + english + `LEVEL_MEANINGS[n]` + rung strip — its own marigold shower, and "Continue as {name} →" to dismiss. The level is persisted immediately so it never re-fires. Note: users who out-leveled their last ceremony (incl. pre-feature users) get one catch-up ceremony on their next completion — intended.
 - **Path screen** (`JourneyPath` route) + onboarding finale share `JourneyPathView`: one continuous vertical **rail** (teal behind the walker, pale saffron ahead — the rail itself carries "where you are"; no marker pill). On the rail: six **spiritual-title milestones** in consistent "Name — The English" form (Jigyasu start, Shishya/Sadhaka/Bhakta/Jnani between stages, Guru at the end; dot+label teal once the level is actually attained) and five **accordion stage cards** (emoji, stage eyebrow, name, one-line italic rationale — no per-stage counts or rings; the ONLY numeric tracker is the screen subtitle "n of m steps walked"). Cards expand to the item checklists: 40px cover tiles (done = faded + teal tick; next = saffron frame + NEXT pill; Gita tiles get chapter-number overlays). Current stage is saffron-framed and auto-expands. Titles are earned by engagement, so milestone placement is soft by design. Nothing is locked.
 - Home Continue card: body resumes next item; separate full-width footer band "View full path · n of m ›" opens the path screen (mistap-safe two-band design — keep bands separated).
 
@@ -72,6 +76,7 @@ Tap handling: `navigationRef` + response listener in App.tsx (incl. cold-start v
 ## 7. Progression & profile
 
 - **Levels**: Jigyasu(0) → Shishya(100) → Sadhaka(300) → Bhakta(700) → Jnani(1500) → Rishi(3000) → Guru(5000 pts). **Points = versesRead×2 + chaptersCompleted×30 + reflections×15 — INVARIANT.**
+- **`LEVEL_MEANINGS`** (progressionService): one meaning paragraph per level — the single copy source for the onboarding Jigyasu card, every level-up ceremony, and (future) the Profile card. The path screen is titled **"Your Spiritual Journey"**.
 - Home leads with the status row (🪷 level name → Profile tab). Profile tab: Partiful-style photo (also the tab icon), level card, "what Krishna knows" completion card, reminders toggles, dev tools (__DEV__).
 - No streak display anywhere (product decision: noisy); streak feeds only the protection notification.
 
