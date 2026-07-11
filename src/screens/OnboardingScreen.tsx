@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
@@ -14,6 +15,8 @@ import KrishnaGuide from '../components/KrishnaGuide';
 import JourneyPathView from '../components/JourneyPathView';
 import LocalStorageService, { SpiritualProfile } from '../services/localStorageService';
 import journeyService from '../services/journeyService';
+import { getDailyAtom, ATOM_TAGS } from '../data/dailyAtoms';
+import { getDailyVerse } from '../data/dailyVerse';
 
 interface OnboardingScreenProps {
   onComplete: () => void;
@@ -53,7 +56,7 @@ const GOAL_OPTIONS: { value: SpiritualProfile['dailyGoalMinutes']; label: string
   { value: 20, label: '20 min / day', sub: 'Immersed' },
 ];
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 7;
 
 const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   const [step, setStep] = useState(0);
@@ -80,6 +83,9 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
     firstName
       ? `Here is the road we'll walk together, ${firstName} — five stages, one step at a time.`
       : "Here is the road we'll walk together — five stages, one step at a time.",
+    firstName
+      ? `One more thing, ${firstName} — each morning I'll have chai waiting: one small sip of wisdom and the day's verse, right on your Home screen. Under a minute. Now — shall we take the first step together?`
+      : "One more thing — each morning I'll have chai waiting: one small sip of wisdom and the day's verse, right on your Home screen. Under a minute. Now — shall we take the first step together?",
   ];
 
   const toggle = (list: string[], setList: (v: string[]) => void, value: string) =>
@@ -90,7 +96,8 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
     (step === 1 && familiarity !== null) ||
     (step === 2 && intentions.length > 0) ||
     (step === 3 && familyStream !== null) ||
-    (step === 4 && dailyGoal !== null);
+    (step === 4 && dailyGoal !== null) ||
+    step === 5; // the path finale just needs a look, not an answer
 
   const finish = async () => {
     // Merge, don't overwrite: replaying onboarding ("Edit my answers") must
@@ -117,6 +124,36 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   const next = () => {
     if (step < TOTAL_STEPS - 1) setStep(step + 1);
     else finish();
+  };
+
+  // Send-off: the final step auto-advances into the first lesson — no button.
+  // A ref guards against the timer and the escape link double-firing.
+  const [firstStepTitle, setFirstStepTitle] = useState('What is Hinduism?');
+  const departedRef = useRef(false);
+
+  useEffect(() => {
+    journeyService
+      .getNextUnfinished()
+      .then(item => item && setFirstStepTitle(item.title))
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (step !== TOTAL_STEPS - 1) return;
+    const timer = setTimeout(() => {
+      if (departedRef.current) return;
+      departedRef.current = true;
+      journeyService.setPendingStart();
+      finish();
+    }, 4000);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
+
+  const exploreInstead = () => {
+    if (departedRef.current) return;
+    departedRef.current = true;
+    finish();
   };
 
   const renderOption = (
@@ -197,9 +234,36 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
         </View>
 
         {step === 5 && <JourneyPathView scrollable={false} />}
+
+        {step === 6 && (
+          <View style={styles.rhythmWrap}>
+            {/* Live preview of today's actual chai — show the ritual, don't describe it */}
+            <View style={styles.rhythmCard}>
+              <Text style={styles.rhythmTag}>
+                ☕ DAILY CHAI · {ATOM_TAGS[getDailyAtom().type].toUpperCase()}
+              </Text>
+              <Text style={styles.rhythmHook}>{getDailyAtom().hook}</Text>
+              <View style={styles.rhythmDivider} />
+              <Text style={styles.rhythmTag}>TODAY'S VERSE</Text>
+              <Text style={styles.rhythmVerse} numberOfLines={3}>
+                “{getDailyVerse().english}”
+              </Text>
+            </View>
+
+            <View style={styles.departRow}>
+              <ActivityIndicator size="small" color={DharmaDesignSystem.colors.primary.deepSaffron} />
+              <Text style={styles.departText}>
+                Let's get started with “{firstStepTitle}”…
+              </Text>
+            </View>
+            <TouchableOpacity onPress={exploreInstead} style={styles.skipBtn}>
+              <Text style={styles.skipText}>I'll explore on my own</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </ScrollView>
 
-      {step < 5 ? (
+      {step < 6 && (
         <TouchableOpacity
           style={[styles.continueBtn, !canContinue && styles.continueBtnDisabled]}
           onPress={next}
@@ -207,21 +271,6 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
         >
           <Text style={styles.continueText}>{step === 4 ? "I'm committed" : 'Continue'}</Text>
         </TouchableOpacity>
-      ) : (
-        <View style={styles.pathFooter}>
-          <TouchableOpacity
-            style={styles.continueBtn}
-            onPress={() => {
-              journeyService.setPendingStart();
-              finish();
-            }}
-          >
-            <Text style={styles.continueText}>Begin the path</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={finish} style={styles.skipBtn}>
-            <Text style={styles.skipText}>Skip for now — explore on my own</Text>
-          </TouchableOpacity>
-        </View>
       )}
     </SafeAreaView>
   );
@@ -311,9 +360,53 @@ const styles = StyleSheet.create({
     color: colors.neutrals.softAsh,
     textDecorationLine: 'underline',
   },
-  pathFooter: {
-    paddingBottom: spacing.sm,
-    alignItems: 'stretch',
+  rhythmWrap: {
+    paddingHorizontal: spacing.md,
+  },
+  rhythmCard: {
+    backgroundColor: colors.neutrals.white,
+    borderRadius: borderRadius.large,
+    borderWidth: 1,
+    borderColor: 'rgba(230, 81, 0, 0.14)',
+    padding: spacing.md,
+    ...shadows.soft,
+  },
+  rhythmTag: {
+    fontSize: 10.5,
+    fontWeight: '800',
+    letterSpacing: 0.8,
+    color: colors.primary.deepSaffron,
+    marginBottom: 5,
+  },
+  rhythmHook: {
+    ...typography.sizes.headingSM,
+    color: colors.neutrals.charcoalBlack,
+    fontWeight: '700',
+    marginBottom: spacing.sm + 2,
+  },
+  rhythmDivider: {
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(33, 33, 33, 0.08)',
+    marginBottom: spacing.sm + 2,
+  },
+  rhythmVerse: {
+    fontSize: 14,
+    lineHeight: 21,
+    fontWeight: '600',
+    color: colors.neutrals.charcoalBlack,
+  },
+  departRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.sm,
+    marginTop: spacing.lg,
+    marginBottom: spacing.xs,
+  },
+  departText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.neutrals.charcoalBlack,
   },
   continueBtn: {
     margin: spacing.lg,

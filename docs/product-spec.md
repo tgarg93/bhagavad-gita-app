@@ -17,7 +17,8 @@ Six steps in one state machine (`OnboardingScreen`), Krishna asking each questio
 | 2 | Intentions (multi-select, 5 options) | `intentions` |
 | 3 | **Family stream** — "Growing up, whose face was closest in your home?" (single-select: Krishna, Shiva, The Goddess, Ganesha, Rama & Hanuman, A mix of many, Not sure) | `familyStream` |
 | 4 | Daily goal (5/10/15/20 min) — CTA "I'm committed" | `dailyGoalMinutes` |
-| 5 | Journey finale: path view + **Begin the path** / **Skip for now** | `onboarded: true` |
+| 5 | Journey finale: path view (rail + milestones) → Continue | — |
+| 6 | **Daily rhythm send-off**: Krishna introduces Daily Chai + the verse; live mini-preview of today's chai card; then **auto-advances** (~4s) into the first lesson ("Let's get started with '{next step}'…" + spinner) via `setPendingStart()` + finish. Only escape: "I'll explore on my own" text link → Home | `onboarded: true` |
 
 - `finish()` **merges** the patch (never overwrites the rolling summary/knowledge). Completing onboarding is the warm moment for the notification-permission ask.
 - **Begin handoff**: onboarding can't navigate (outside navigator) → `journeyService.setPendingStart()`; HomeScreen's focus effect consumes the flag and opens the first unfinished item. Skip lands on Home.
