@@ -58,7 +58,7 @@ Tap handling: `navigationRef` + response listener in App.tsx (incl. cold-start v
 
 - **Anatomy** (both readers): horizontal paged FlatList — cover (art, title, meta, Begin) → one section per page → one reflection question per page (skippable) → celebration. Resume position stored per item.
 - **Citations**: sections carry an optional one-line `citation` footnote (hairline rule, small italic) at the page foot; the full `SourcesCard` bibliography rides at the bottom of the **last text page**. No standalone sources page.
-- **Narration**: expo-speech; Indian-English voice preferred, Hindi voice for Sanskrit (skipped if unavailable); plays under the iOS silent switch (session activated by a silent WAV once per session). Transport: play/pause, prev/next section, ±10s. Skip buttons move voice AND page together.
+- **Narration**: expo-speech; Indian-English voice preferred, Hindi voice for Sanskrit (skipped if unavailable); plays under the iOS silent switch (session activated by a silent WAV once per session). Transport: play/pause, prev/next section, ±10s. Skip buttons move voice AND page together. **The playback bar appears only inside content** (verse/section and reflection pages — never covers or celebrations). **Begin on a cover turns the page AND starts narration automatically**; play pressed mid-content starts from the current page (start segment resolved by id, not arithmetic).
 - **Ask Krishna about this**: both readers seed `krishnaContext.setCurrentContent` and jump to the chat tab.
 
 ## 6. Ask Krishna

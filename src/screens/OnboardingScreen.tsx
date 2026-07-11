@@ -8,7 +8,17 @@ import {
   ScrollView,
   TextInput,
   ActivityIndicator,
+  Image,
 } from 'react-native';
+
+// Typed separately: inside StyleSheet.create the style resolves to a union
+// that Image's style prop rejects
+const transitionCoverStyle = {
+  width: 120,
+  height: 120,
+  borderRadius: 24,
+  resizeMode: 'cover',
+} as const;
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import KrishnaGuide from '../components/KrishnaGuide';
@@ -56,7 +66,7 @@ const GOAL_OPTIONS: { value: SpiritualProfile['dailyGoalMinutes']; label: string
   { value: 20, label: '20 min / day', sub: 'Immersed' },
 ];
 
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 8;
 
 const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   const [step, setStep] = useState(0);
@@ -84,8 +94,9 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
       ? `Here is the road we'll walk together, ${firstName} — five stages, one step at a time.`
       : "Here is the road we'll walk together — five stages, one step at a time.",
     firstName
-      ? `One more thing, ${firstName} — each morning I'll have chai waiting: one small sip of wisdom and the day's verse, right on your Home screen. Under a minute. Now — shall we take the first step together?`
-      : "One more thing — each morning I'll have chai waiting: one small sip of wisdom and the day's verse, right on your Home screen. Under a minute. Now — shall we take the first step together?",
+      ? `One more thing, ${firstName} — each morning I'll have chai waiting for you: one small sip of wisdom and the day's verse, right on your Home screen. Under a minute, I promise.`
+      : "One more thing — each morning I'll have chai waiting for you: one small sip of wisdom and the day's verse, right on your Home screen. Under a minute, I promise.",
+    '', // step 7 is the quiet transition screen — no bubble
   ];
 
   const toggle = (list: string[], setList: (v: string[]) => void, value: string) =>
@@ -97,7 +108,8 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
     (step === 2 && intentions.length > 0) ||
     (step === 3 && familyStream !== null) ||
     (step === 4 && dailyGoal !== null) ||
-    step === 5; // the path finale just needs a look, not an answer
+    step === 5 || // the path finale just needs a look, not an answer
+    step === 6; // so does the chai preview
 
   const finish = async () => {
     // Merge, don't overwrite: replaying onboarding ("Edit my answers") must
@@ -129,12 +141,18 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   // Send-off: the final step auto-advances into the first lesson — no button.
   // A ref guards against the timer and the escape link double-firing.
   const [firstStepTitle, setFirstStepTitle] = useState('What is Hinduism?');
+  const [firstStepCover, setFirstStepCover] = useState<number | string | null>(null);
   const departedRef = useRef(false);
 
   useEffect(() => {
     journeyService
       .getNextUnfinished()
-      .then(item => item && setFirstStepTitle(item.title))
+      .then(item => {
+        if (item) {
+          setFirstStepTitle(item.title);
+          setFirstStepCover(item.cover);
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -145,7 +163,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
       departedRef.current = true;
       journeyService.setPendingStart();
       finish();
-    }, 4000);
+    }, 2500);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
@@ -190,7 +208,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
       </View>
 
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-        <KrishnaGuide message={stepMessages[step]} />
+        {step < 7 && <KrishnaGuide message={stepMessages[step]} />}
 
         <View style={styles.options}>
           {step === 0 && (
@@ -250,12 +268,25 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
               </Text>
             </View>
 
-            <View style={styles.departRow}>
-              <ActivityIndicator size="small" color={DharmaDesignSystem.colors.primary.deepSaffron} />
-              <Text style={styles.departText}>
-                Let's get started with “{firstStepTitle}”…
-              </Text>
-            </View>
+          </View>
+        )}
+
+        {step === 7 && (
+          <View style={styles.transitionWrap}>
+            <Text style={styles.transitionEyebrow}>YOUR FIRST STEP</Text>
+            {firstStepCover != null && (
+              <Image
+                source={typeof firstStepCover === 'string' ? { uri: firstStepCover } : firstStepCover}
+                style={transitionCoverStyle}
+              />
+            )}
+            <Text style={styles.transitionTitle}>Getting started with</Text>
+            <Text style={styles.transitionLesson}>“{firstStepTitle}”</Text>
+            <ActivityIndicator
+              size="small"
+              color={DharmaDesignSystem.colors.primary.deepSaffron}
+              style={styles.transitionSpinner}
+            />
             <TouchableOpacity onPress={exploreInstead} style={styles.skipBtn}>
               <Text style={styles.skipText}>I'll explore on my own</Text>
             </TouchableOpacity>
@@ -263,7 +294,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
         )}
       </ScrollView>
 
-      {step < 6 && (
+      {step < 7 && (
         <TouchableOpacity
           style={[styles.continueBtn, !canContinue && styles.continueBtnDisabled]}
           onPress={next}
@@ -395,18 +426,35 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.neutrals.charcoalBlack,
   },
-  departRow: {
-    flexDirection: 'row',
+  transitionWrap: {
     alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.sm,
-    marginTop: spacing.lg,
-    marginBottom: spacing.xs,
+    paddingTop: spacing.xxl * 1.5,
+    paddingHorizontal: spacing.xl,
   },
-  departText: {
-    fontSize: 14,
-    fontWeight: '600',
+  transitionEyebrow: {
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 1.5,
+    color: colors.primary.deepSaffron,
+    marginBottom: spacing.lg,
+  },
+  transitionTitle: {
+    fontSize: 17,
+    fontWeight: '400',
+    color: colors.neutrals.softAsh,
+    marginTop: spacing.lg,
+  },
+  transitionLesson: {
+    fontSize: 26,
+    lineHeight: 34,
+    fontWeight: '700',
     color: colors.neutrals.charcoalBlack,
+    textAlign: 'center',
+    marginTop: 4,
+  },
+  transitionSpinner: {
+    marginTop: spacing.lg,
+    marginBottom: spacing.md,
   },
   continueBtn: {
     margin: spacing.lg,

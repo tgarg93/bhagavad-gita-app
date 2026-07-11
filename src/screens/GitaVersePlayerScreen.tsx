@@ -221,8 +221,14 @@ const GitaVersePlayerScreen: React.FC = () => {
         },
       }],
     }));
-    const segsPerVerse = playMode === 'all' ? 2 : 1;
-    const startFromIndex = fromVerseIndex * segsPerVerse;
+    // Resolve the starting segment by id rather than arithmetic — per-verse
+    // segment counts can vary (e.g. a verse with no usable Sanskrit), and any
+    // drift makes "play from here" start from the wrong verse
+    const segments = audioService.parseContentIntoSegments(content as any);
+    const startFromIndex = Math.max(
+      0,
+      segments.findIndex(s => s.id.startsWith(`section-${fromVerseIndex}-`))
+    );
 
     const callbacks: NarrationCallbacks = {
       onSegmentStart: (segmentId) => {
@@ -404,7 +410,18 @@ const GitaVersePlayerScreen: React.FC = () => {
                 {isPreface ? '2 min' : `${readingTimeFor(count)} min · ${count} verses`}
               </Text>
             </View>
-            <TouchableOpacity style={styles.coverBegin} onPress={() => scrollToIndex(activeIndex + 1)}>
+            <TouchableOpacity
+              style={styles.coverBegin}
+              onPress={() => {
+                // Begin = turn the page AND start the voice (preface has no verses)
+                if (isPreface) {
+                  scrollToIndex(activeIndex + 1);
+                  return;
+                }
+                scrollToIndex(verseStartIndex[chapter]);
+                startPlayback(chapter, 0, mode);
+              }}
+            >
               <Text style={styles.coverBeginText}>{isPreface ? 'Begin' : 'Begin chapter'}</Text>
               <Ionicons name="arrow-forward" size={18} color={DharmaDesignSystem.colors.primary.deepSaffron} />
             </TouchableOpacity>
@@ -552,7 +569,8 @@ const GitaVersePlayerScreen: React.FC = () => {
     }
   };
 
-  const showPlaybackBar = activePage.kind === 'verse' || activePage.kind === 'cover' || activePage.kind === 'reflection';
+  // Transport lives inside the content only — covers stay clean
+  const showPlaybackBar = activePage.kind === 'verse' || activePage.kind === 'reflection';
   const isCover = activePage.kind === 'cover';
 
   return (

@@ -325,7 +325,14 @@ const ContentReaderScreen: React.FC = () => {
               {readingMinutes(content.sections)} min · {partCount} parts
             </Text>
           </View>
-          <TouchableOpacity style={styles.coverBegin} onPress={() => scrollToIndex(1)}>
+          <TouchableOpacity
+            style={styles.coverBegin}
+            onPress={() => {
+              // Begin = turn the page AND start the voice
+              scrollToIndex(1);
+              startPlayback(0);
+            }}
+          >
             <Text style={styles.coverBeginText}>Begin</Text>
             <Ionicons name="arrow-forward" size={18} color={DharmaDesignSystem.colors.primary.deepSaffron} />
           </TouchableOpacity>
@@ -442,7 +449,8 @@ const ContentReaderScreen: React.FC = () => {
         />
       )}
 
-      {/* Playback bar (transport only) */}
+      {/* Playback bar — transport lives inside the content only */}
+      {(activePage?.kind === 'section' || activePage?.kind === 'reflection') && (
       <View style={styles.playbackBar}>
         <View style={styles.transport}>
           <TouchableOpacity onPress={() => skipPage(-1)} style={styles.transportBtn}>
@@ -485,6 +493,7 @@ const ContentReaderScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
       </View>
+      )}
 
       {/* 3-dot menu */}
       <Modal visible={showMenu} transparent animationType="fade" onRequestClose={() => setShowMenu(false)}>
