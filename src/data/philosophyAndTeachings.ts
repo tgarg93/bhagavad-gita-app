@@ -1173,92 +1173,123 @@ export const philosophyData: PhilosophicalConcept[] = [
       {
         id: 'dharma-opening',
         title: 'The Art of Righteous Living',
-        subtitle: 'Ancient Kurukshetra Battlefield Transforming into Modern City Crossroads',
-        storyText: 'In the opening moments of the Bhagavad Gita, Arjuna stands paralyzed on the battlefield of Kurukshetra, his bow slipping from trembling hands. Before him are his beloved teachers, cousins, and friends—all armed and ready for war. His duty as a warrior demands he fight, but his heart rebels against harming those he loves. This moment of moral crisis births one of humanity\'s greatest conversations about dharma.'
+        subtitle: 'A warrior frozen between two duties',
+        storyText:
+          'In the opening moments of the Bhagavad Gita, **Arjuna** stands paralyzed on the battlefield of **Kurukshetra**, his bow slipping from trembling hands.\n\nBefore him are his beloved teachers, cousins, and friends \u2014 all armed and ready for war. His duty as a warrior demands he fight. His heart rebels against harming those he loves.\n\nThis moment of moral crisis births one of humanity\u2019s greatest conversations about **dharma**.',
+        citation: 'Bhagavad Gita, Chapter 1 (Arjuna\u2019s crisis)',
       },
       {
         id: 'dharma-meaning',
         title: 'What Dharma Really Means',
-        subtitle: 'Cosmic Wheel Showing Dharma as Universal Balance',
+        subtitle: 'Bigger than "duty"',
         openingVerse: {
-          sanskrit: 'धर्म एव हतो हन्ति धर्मो रक्षति रक्षितः',
-          transliteration: 'dharma eva hato hanti dharmo rakṣati rakṣitaḥ',
-          meaning: 'Dharma destroys those who destroy it; dharma protects those who protect it'
+          sanskrit: '\u0927\u0930\u094d\u092e \u090f\u0935 \u0939\u0924\u094b \u0939\u0928\u094d\u0924\u093f \u0927\u0930\u094d\u092e\u094b \u0930\u0915\u094d\u0937\u0924\u093f \u0930\u0915\u094d\u0937\u093f\u0924\u0903',
+          transliteration: 'dharma eva hato hanti dharmo rak\u1e63ati rak\u1e63ita\u1e25',
+          meaning: 'Dharma destroys those who destroy it; dharma protects those who protect it',
         },
-        storyText: 'Dharma is often translated as "duty" or "righteousness," but these English words fail to capture its nuanced essence. Dharma is the cosmic principle that upholds the universe—it\'s both the natural law that keeps planets in orbit and the moral law that guides human behavior.',
-        sectionHeader: 'Personal Dharma Discovery',
+        storyText:
+          'Dharma is often translated as **"duty"** or **"righteousness"** \u2014 but these English words are too small for it.\n\nDharma is the cosmic principle that **upholds the universe**. It is both the natural law that keeps planets in orbit and the moral law that guides human behavior. The word comes from the root **dhr** \u2014 \u201cto hold\u201d: dharma is what holds everything together.',
+        citation: 'Manusmriti 8.15 (dharma protects its protectors); root "dhr": standard etymology',
+      },
+      {
+        id: 'dharma-personal',
+        title: 'Your Personal Dharma',
+        subtitle: 'The universal becomes intimate',
         keyVerse: {
-          sanskrit: 'धर्मो हि सर्वभूतानां श्रेयो यो धारयेत्',
-          transliteration: 'dharmo hi sarvabhūtānāṁ śreyo yo dhārayet',
-          meaning: 'Dharma exists for the welfare of all beings'
+          sanskrit: '\u0927\u0930\u094d\u092e\u094b \u0939\u093f \u0938\u0930\u094d\u0935\u092d\u0942\u0924\u093e\u0928\u093e\u0902 \u0936\u094d\u0930\u0947\u092f\u094b \u092f\u094b \u0927\u093e\u0930\u092f\u0947\u0924\u094d',
+          transliteration: 'dharmo hi sarvabh\u016bt\u0101n\u0101\u1e43 \u015breyo yo dh\u0101rayet',
+          meaning: 'Dharma exists for the welfare of all beings',
         },
-        teachingText: 'For each individual, dharma becomes deeply personal: it\'s the unique way you\'re meant to contribute to the world\'s harmony based on your nature, circumstances, and stage of life. Consider this: You\'re offered your dream job, but accepting it means your current team will struggle without you during a critical project. What would dharma look like here?'
+        storyText:
+          'For each individual, dharma becomes deeply personal: the unique way **you** are meant to contribute to the world\u2019s harmony, based on your nature, your circumstances, and your stage of life.\n\nConsider this: you\u2019re offered your dream job, but accepting it means your current team will struggle through a critical project without you. What would dharma look like here?\n\nNot a rule from a book \u2014 a **conscious navigation of competing responsibilities**. That navigation is the practice.',
+        citation: 'Mahabharata, Vana Parva (dharma as welfare of beings)',
       },
       {
         id: 'dharma-stages',
-        title: 'Dharma Through Life\'s Stages',
-        subtitle: 'Tree Growing Through Seasons',
-        storyText: 'Your relationship with dharma evolves as you mature. In youth, dharma often feels externally imposed—following your parents\' guidance, your teachers\' rules, society\'s expectations. The young Rama dutifully obeys his father\'s command to live in exile, even though it upends his coronation. His dharma at this stage is to honor his father\'s word and develop the qualities he\'ll need as a future king.',
-        sectionHeader: 'The Householder\'s Challenge',
-        teachingText: 'As you enter the householder phase, dharma becomes more complex and personal. You must balance your own needs with those of your partner, children, parents, career, and community. The Ramayana shows us this through Rama\'s later struggles as king, when he must choose between his love for Sita and his subjects\' doubts about her purity.'
+        title: 'Dharma Through Life\u2019s Stages',
+        subtitle: 'What is right changes as you grow',
+        storyText:
+          'Your relationship with dharma evolves as you mature.\n\nIn youth, dharma often feels externally imposed \u2014 parents\u2019 guidance, teachers\u2019 rules, society\u2019s expectations. The young **Rama** dutifully obeys his father\u2019s command to live in exile, even though it upends his coronation.\n\nAs a householder, dharma grows complex and personal: your needs balanced against partner, children, parents, career, community. The Ramayana shows this too \u2014 Rama\u2019s hardest choices come not in the forest but **on the throne**.',
+        teachingText:
+          'The same act can be dharmic at one stage of life and adharmic at another. Ask not only “what is right?” but “what is right **for where I now stand**?”',
+        citation: 'Valmiki Ramayana, Ayodhya Kanda (the exile)',
       },
       {
         id: 'dharma-differences',
-        title: 'When Your Dharma Differs from Others',
-        subtitle: 'Multiple Paths Converging on Mountain Peak',
+        title: 'When Your Dharma Differs From Others\u2019',
+        subtitle: 'Svadharma \u2014 your own path',
         keyVerse: {
-          sanskrit: 'श्रेयान्स्वधर्मो विगुणः परधर्मात्स्वनुष्ठितात्',
-          transliteration: 'śreyān sva-dharmo viguṇaḥ para-dharmāt sv-anuṣṭhitāt',
-          meaning: 'Better to perform one\'s own dharma imperfectly than another\'s dharma perfectly'
+          sanskrit: '\u0936\u094d\u0930\u0947\u092f\u093e\u0928\u094d\u0938\u094d\u0935\u0927\u0930\u094d\u092e\u094b \u0935\u093f\u0917\u0941\u0923\u0903 \u092a\u0930\u0927\u0930\u094d\u092e\u093e\u0924\u094d\u0938\u094d\u0935\u0928\u0941\u0937\u094d\u0920\u093f\u0924\u093e\u0924\u094d',
+          transliteration: '\u015brey\u0101n sva-dharmo vigu\u1e47a\u1e25 para-dharm\u0101t sv-anu\u1e63\u1e6dhit\u0101t',
+          meaning: 'Better to perform one\u2019s own dharma imperfectly than another\u2019s dharma perfectly',
         },
-        storyText: 'The genius of Hindu thought is recognizing that what\'s dharmic for you might not be dharmic for someone else. Krishna encourages Arjuna to fight because Arjuna is a kshatriya by nature—his dharma lies in protecting others through strength and courage. But Krishna himself chooses to be Arjuna\'s charioteer rather than picking up weapons, because his dharma in that moment is to be a guide and teacher.'
+        storyText:
+          'The genius of Hindu thought is recognizing that **what\u2019s dharmic for you might not be dharmic for someone else**.\n\nKrishna encourages Arjuna to fight because Arjuna is a warrior by nature \u2014 his dharma lies in protecting others through strength and courage. But Krishna himself chooses to be Arjuna\u2019s **charioteer** rather than pick up weapons, because his dharma in that moment is to guide.\n\nSame battlefield. Two completely different dharmas. Both right.',
+        citation: 'Bhagavad Gita 3.35, tr. Sivananda (public domain)',
       },
       {
         id: 'dharma-desire',
-        title: 'When Dharma Conflicts with Desire',
-        subtitle: 'Karna at Crossroads - Crown vs Loyal Friendship',
-        storyText: 'One of dharma\'s most challenging aspects is that it doesn\'t always align with what we want. In the Mahabharata, Karna faces a heartbreaking choice when Krishna reveals that he\'s actually the son of Kunti, making him the eldest Pandava brother. He could claim his rightful place as the crown prince, but doing so would betray Duryodhana, who gave him respect and friendship when no one else would.',
-        sectionHeader: 'The Choice of Values',
+        title: 'When Dharma Conflicts With Desire',
+        subtitle: 'Karna at the crossroads',
         keyVerse: {
-          sanskrit: 'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन',
-          transliteration: 'karmaṇy evādhikāras te mā phaleṣu kadācana',
-          meaning: 'You have the right to perform your prescribed duty, but not to the fruits of action'
+          sanskrit: '\u0915\u0930\u094d\u092e\u0923\u094d\u092f\u0947\u0935\u093e\u0927\u093f\u0915\u093e\u0930\u0938\u094d\u0924\u0947 \u092e\u093e \u092b\u0932\u0947\u0937\u0941 \u0915\u0926\u093e\u091a\u0928',
+          transliteration: 'karma\u1e47y ev\u0101dhik\u0101ras te m\u0101 phale\u1e63u kad\u0101cana',
+          meaning: 'You have the right to perform your prescribed duty, but not to the fruits of action',
         },
-        teachingText: 'Karna chooses loyalty over birthright, demonstrating that sometimes dharma means sacrificing legitimate claims for the sake of gratitude and honor. The Gita\'s profound insight is that dharmic action requires detachment from outcomes. This isn\'t passivity—it\'s the recognition that when you act from genuine dharmic motivation, you must trust the process even when you can\'t control the results.'
+        storyText:
+          'One of dharma\u2019s hardest aspects: it doesn\u2019t always align with what we want.\n\nIn the Mahabharata, **Karna** learns a shattering secret \u2014 he is actually the eldest brother of the **Pandavas** he has sworn to fight. He could claim his rightful place as crown prince. But doing so would betray **Duryodhana**, who gave him respect and friendship when no one else would.\n\nKarna chooses loyalty over birthright \u2014 sacrificing a legitimate claim for the sake of gratitude and honor.',
+        teachingText:
+          'The Gita\u2019s insight: dharmic action requires **detachment from outcomes**. This isn\u2019t passivity \u2014 it\u2019s trusting the process when you act from genuine dharmic motivation, even when you can\u2019t control the results.',
+        citation: 'Karna\u2019s choice: Mahabharata, Udyoga Parva; verse: Bhagavad Gita 2.47, tr. Sivananda',
       },
       {
         id: 'dharma-authenticity',
         title: 'The Dharma of Authentic Self-Expression',
-        subtitle: 'Hanuman Using Powers in Service',
-        storyText: 'Perhaps the most radical aspect of dharmic living is its call to authenticity. Your dharma isn\'t about becoming someone else\'s version of success—it\'s about becoming the fullest expression of your authentic self in service to something larger. Hanuman exemplifies this beautifully. He could have used his immense powers for personal glory, but his dharma was devotional service to Rama. His strength became meaningful because it was dedicated to protecting righteousness.'
+        subtitle: 'Hanuman\u2019s strength in service',
+        storyText:
+          'Perhaps the most radical aspect of dharmic living is its call to **authenticity**. Your dharma isn\u2019t about becoming someone else\u2019s version of success \u2014 it\u2019s about becoming the fullest expression of your authentic self **in service to something larger**.\n\n**Hanuman** exemplifies this beautifully. He could have used his immense powers for personal glory. Instead, his dharma was devotional service to Rama \u2014 and his strength became meaningful precisely because it was dedicated to protecting righteousness.',
+        citation: 'Hanuman\u2019s service: Valmiki Ramayana, Sundara Kanda',
       },
       {
         id: 'dharma-relationships',
         title: 'Living Dharma in Relationship',
-        subtitle: 'Sita Maintaining Inner Light in Lanka',
-        storyText: 'Dharma isn\'t a solitary pursuit. The Ramayana and Mahabharata are fundamentally stories about relationships—between siblings, spouses, friends, teachers and students, rulers and subjects. Consider Sita\'s dharma during her captivity in Lanka. She maintains her dignity and devotion despite Ravana\'s threats and promises, not because she\'s passive, but because she understands that her inner strength serves a larger purpose.',
-        teachingText: 'Her steadfastness isn\'t just personal virtue—it\'s a cosmic force that ultimately leads to Ravana\'s downfall and dharma\'s restoration. In your own relationships, dharmic living means understanding that you affect others through your choices. When you live authentically and ethically, you give others permission to do the same.'
+        subtitle: 'Sita\u2019s inner light in Lanka',
+        storyText:
+          'Dharma isn\u2019t a solitary pursuit. The Ramayana and Mahabharata are fundamentally stories about **relationships** \u2014 siblings, spouses, friends, teachers and students, rulers and subjects.\n\nConsider **Sita\u2019s** dharma during her captivity in Lanka. She maintains her dignity and devotion despite Ravana\u2019s threats and promises \u2014 not because she is passive, but because her inner steadfastness serves a larger purpose. It ultimately leads to Ravana\u2019s downfall and dharma\u2019s restoration.',
+        teachingText:
+          'In your own relationships, dharmic living means understanding that **you affect others through your choices**. When you live authentically and ethically, you give others permission to do the same.',
+        citation: 'Sita in Lanka: Valmiki Ramayana, Sundara Kanda',
       },
       {
         id: 'dharma-imperfection',
         title: 'The Wisdom of Imperfection',
-        subtitle: 'Yudhishthira\'s Dice Falling',
-        storyText: 'One of dharma\'s most compassionate teachings is that you don\'t have to be perfect to be dharmic. Even the greatest figures in our epics make mistakes. Rama banishes Sita based on public opinion rather than his own judgment. Yudhishthira\'s gambling addiction leads to his family\'s exile. Arjuna initially refuses to fight out of attachment to his relatives.',
-        teachingText: 'What makes them dharmic isn\'t their perfection but their willingness to learn, grow, and ultimately serve righteousness despite their flaws. You will make choices that seem dharmic at the time but later reveal unintended consequences. The dharmic response isn\'t self-punishment but honest self-reflection and renewed commitment to growth.'
+        subtitle: 'Even the great ones stumble',
+        storyText:
+          'One of dharma\u2019s most compassionate teachings: **you don\u2019t have to be perfect to be dharmic.** Even the greatest figures in the epics make real mistakes:',
+        bullets: [
+          '**Rama** banishes Sita based on public opinion rather than his own judgment',
+          '**Yudhishthira\u2019s** gambling addiction leads to his family\u2019s exile',
+          '**Arjuna** initially refuses to fight, paralyzed by attachment',
+        ],
+        teachingText:
+          'What makes them dharmic isn\u2019t perfection \u2014 it\u2019s their willingness to **learn, grow, and return to righteousness** despite their flaws. When your own choices misfire, the dharmic response isn\u2019t self-punishment. It is honest reflection and renewed commitment.',
+        citation: 'Episodes: Valmiki Ramayana (Uttara tradition); Mahabharata, Sabha Parva; Bhagavad Gita ch. 1',
       },
       {
         id: 'dharma-ultimate',
         title: 'The Ultimate Dharma',
-        subtitle: 'Krishna\'s Universal Form Transforming to Gentle Human',
+        subtitle: 'Love as the highest duty',
         keyVerse: {
-          sanskrit: 'सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज',
-          transliteration: 'sarva-dharmān parityajya mām ekaṁ śaraṇaṁ vraja',
-          meaning: 'Abandon all varieties of dharma and surrender unto me'
+          sanskrit: '\u0938\u0930\u094d\u0935\u0927\u0930\u094d\u092e\u093e\u0928\u094d\u092a\u0930\u093f\u0924\u094d\u092f\u091c\u094d\u092f \u092e\u093e\u092e\u0947\u0915\u0902 \u0936\u0930\u0923\u0902 \u0935\u094d\u0930\u091c',
+          transliteration: 'sarva-dharm\u0101n parityajya m\u0101m eka\u1e43 \u015bara\u1e47a\u1e43 vraja',
+          meaning: 'Abandon all varieties of dharma and surrender unto me',
         },
-        storyText: 'In the Gita\'s final chapter, Krishna offers what many consider the ultimate teaching: "Abandon all varieties of dharma and surrender unto me. I shall deliver you from all sinful reactions." This isn\'t a rejection of dharma but its deepest fulfillment.',
-        sectionHeader: 'Love as the Highest Dharma',
-        teachingText: 'When your actions arise from genuine love, compassion, and dedication to the universal good, you naturally act dharmically without the anxiety of constantly calculating right and wrong. This surrendered dharma appears in moments when you act from pure compassion without counting the cost, when you tell the truth knowing it will complicate your life, when you choose love over fear even when you can\'t see the outcome. Your life becomes both uniquely yours and part of something infinitely larger, a single note in the eternal song of righteousness that upholds the universe.'
-      }
+        storyText:
+          'In the Gita\u2019s final chapter, Krishna offers what many consider the ultimate teaching: “Abandon all varieties of dharma and surrender unto me. I shall deliver you from all sinful reactions.”\n\nThis isn\u2019t a rejection of dharma \u2014 it is its **deepest fulfillment**. When your actions arise from genuine love, compassion, and dedication to the universal good, you naturally act dharmically, without the anxiety of constantly calculating right and wrong.',
+        teachingText:
+          'This surrendered dharma appears in the moments when you act from pure compassion without counting the cost \u2014 when you tell the truth knowing it will complicate your life, when you choose **love over fear**. Your life becomes both uniquely yours and part of something infinitely larger.',
+        citation: 'Bhagavad Gita 18.66, tr. Sivananda (public domain)',
+      },
     ]
   },
   {

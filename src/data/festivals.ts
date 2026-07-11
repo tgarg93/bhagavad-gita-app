@@ -1463,43 +1463,85 @@ export const festivalData: Festival[] = [
       {
         id: 'janmashtami-midnight',
         title: 'The Darkest Night of the Month',
-        subtitle: 'A Prison Cell Lit from Within',
-        storyText: 'Janmashtami falls on the eighth night of the waning moon of Bhadrapada — close to the month\'s darkest hour. The timing is the first teaching. Krishna is not born at dawn in a palace; he is born at midnight in a prison, to parents chained by a tyrant. Hindu tradition placed the year\'s most joyous birth in the year\'s heaviest darkness deliberately: divinity arrives precisely where things look most hopeless. Devotees who fast through the day and keep vigil to midnight are not performing an austerity — they are rehearsing the story\'s deepest claim, that the night is worth waiting through.'
+        subtitle: 'Why this festival happens at midnight',
+        storyText:
+          'Janmashtami falls on the **eighth night of the waning moon** of Bhadrapada \u2014 close to the month\u2019s darkest hour. The timing is the first teaching.\n\nKrishna is not born at dawn in a palace. He is born at **midnight**, in a **prison**, to parents chained by a tyrant.\n\nThe tradition placed the year\u2019s most joyous birth in the year\u2019s heaviest darkness deliberately: **divinity arrives precisely where things look most hopeless.** Devotees who fast through the day and keep vigil to midnight are rehearsing the story\u2019s deepest claim \u2014 that the night is worth waiting through.',
+        citation: 'Timing: Bhadrapada Krishna Ashtami \u2014 traditional reckoning (Drik Panchang)',
       },
       {
         id: 'janmashtami-prophecy',
-        title: 'The Prophecy and the Prison',
-        subtitle: 'Kamsa Gripping the Reins of His Sister\'s Chariot',
-        storyText: 'The Bhagavata Purana (Canto 10, Chapter 1) opens the story at a wedding. Kamsa, the ruthless king of Mathura, is lovingly driving the chariot of his newly married sister Devaki when a voice from the sky stops him cold: the eighth child of this very sister will be his death. In an instant, affection becomes terror. He raises his sword against Devaki; her husband Vasudeva saves her with a desperate promise — every child they bear will be handed to Kamsa. The king imprisons them both, and one by one, six newborns are taken and killed. The seventh is mysteriously lost. And then Devaki conceives an eighth time, and the prison begins, impossibly, to feel like a temple.',
-        teachingText: 'Kamsa\'s tragedy is instructive: the prophecy did not doom him — his response to it did. Fear made him cruel, and his cruelty manufactured the very enemy he feared. When you receive threatening news, watch what it makes of you. Fear that turns to control and harm builds the prison; and it is always the fearful one who ends up living in it.'
+        title: 'The Wedding-Day Prophecy',
+        subtitle: 'A voice from the sky stops a chariot',
+        storyText:
+          'The story opens at a wedding. **Kamsa**, the ruthless king of Mathura, is lovingly driving the chariot of his newly married sister **Devaki** \u2014 a rare tender moment for a hard man.\n\nThen a voice from the sky stops him cold: **the eighth child of this very sister will be his death.**\n\nIn an instant, affection becomes terror. Kamsa raises his sword against his own sister on her wedding day. Her husband **Vasudeva** saves her life with a desperate bargain: every child they bear will be handed to the king.',
+        teachingText:
+          'Kamsa\u2019s tragedy is instructive: **the prophecy did not doom him \u2014 his response to it did.** Fear made him cruel, and his cruelty manufactured the very enemy he feared. When threatening news arrives, watch what it makes of you.',
+        citation: 'Bhagavata Purana, Canto 10, Chapter 1 (vedabase.io / wisdomlib.org)',
+      },
+      {
+        id: 'janmashtami-prison-years',
+        title: 'The Prison Years',
+        subtitle: 'Six cradles, and an eighth hope',
+        storyText:
+          'Kamsa imprisons Devaki and Vasudeva. Then he keeps the bargain in the cruelest way possible: **one by one, six newborns are taken from their mother\u2019s arms and killed.**\n\nThe **seventh** child is mysteriously lost before birth \u2014 the tradition says the unborn **Balarama** was moved to another womb, beyond the king\u2019s reach.\n\nAnd then Devaki conceives an **eighth** time. The texts say her face began to glow; the guards doubled; and the prison began, impossibly, to feel like a temple. Everyone \u2014 the terrified king most of all \u2014 was now waiting for the same child.',
+        citation: 'Bhagavata Purana, Canto 10, Chapters 1\u20132',
       },
       {
         id: 'janmashtami-birth',
         title: 'The Midnight Birth',
-        subtitle: 'Vasudeva Carrying a Basket Across the Yamuna',
-        storyText: 'At midnight, in the blackest hour, the child is born — and the Bhagavata Purana says the prison filled with light. Devaki and Vasudeva behold their newborn for a moment in his four-armed divine form, crowned and holding conch, discus, club, and lotus, before he becomes an ordinary, impossibly beautiful baby (Canto 10, Chapter 3). The guards fall into enchanted sleep. The shackles open. The barred doors swing wide. Carrying his son in a basket on his head, Vasudeva walks out into a monsoon night, and the rain-swollen Yamuna parts to give him passage while the great serpent Shesha spreads his hoods as an umbrella. In sleeping Gokul, he lays Krishna beside the cowherd queen Yashoda and returns with her newborn daughter. When Kamsa comes to kill the eighth child, she slips from his hands and rises as the goddess Yogamaya, laughing: "The one who will destroy you is already born, elsewhere" (Canto 10, Chapter 4).',
-        teachingText: 'Notice what the story insists on: when the divine chooses to move, every lock in the world is already open. The chains, the doors, the river — none of them were ever the real obstacle. What actually carries the child to safety is a father\'s trembling, faithful walk through the rain. Grace opens the way; someone still has to do the walking.'
+        subtitle: 'A prison fills with light',
+        storyText:
+          'At **midnight**, in the blackest hour of the month, the child is born \u2014 and the Bhagavata Purana says the prison **filled with light**.\n\nFor one moment, Devaki and Vasudeva behold their newborn in his **four-armed divine form** \u2014 crowned, holding conch, discus, club, and lotus. Then, at their prayer, he becomes what a hunted child must be: an ordinary, impossibly beautiful baby.\n\nAnd the world quietly unlocks. The guards fall into enchanted sleep. The **shackles open** on their own. The barred doors swing wide.',
+        teachingText:
+          'When the divine chooses to move, the story insists, **every lock in the world is already open.** The chains and doors were never the real obstacle.',
+        citation: 'Bhagavata Purana, Canto 10, Chapter 3',
+      },
+      {
+        id: 'janmashtami-crossing',
+        title: 'The Crossing',
+        subtitle: 'A father, a basket, a river in flood',
+        storyText:
+          'Carrying his son in a **basket on his head**, Vasudeva walks out of the open prison into a monsoon night.\n\nThe rain hammers down. Ahead lies the **Yamuna**, swollen and black. He steps in anyway \u2014 and the river **parts** to give him passage, while the great serpent **Shesha** rises behind him, spreading his hoods over the basket as an umbrella.\n\nOn the far shore lies sleeping **Gokul**, the cowherd village where a child could grow up unnoticed, loved, and free.',
+        teachingText:
+          'Grace opened every lock, parted the river, held off the rain \u2014 but notice what actually carries the child to safety: **a father\u2019s trembling, faithful walk through the storm.** Grace opens the way; someone still has to do the walking.',
+        citation: 'Bhagavata Purana, Canto 10, Chapter 3',
+      },
+      {
+        id: 'janmashtami-swap',
+        title: 'The Swap and the Warning',
+        subtitle: 'The goddess laughs at the king',
+        storyText:
+          'In Gokul, Vasudeva lays Krishna beside the sleeping cowherd queen **Yashoda** \u2014 and lifts her newborn **daughter** into the basket for the journey back. By dawn, the swap is invisible; even Yashoda believes the boy is her own.\n\nWhen word reaches Kamsa that the eighth child is born, he storms the prison and seizes the infant girl.\n\nShe **slips from his hands** and rises into the air as the goddess **Yogamaya**, blazing and laughing: \u201cThe one who will destroy you is already born \u2014 elsewhere.\u201d',
+        teachingText:
+          'Kamsa spent eight years guarding one door, and destiny walked out another. **Control is the tyrant\u2019s illusion** \u2014 the story\u2019s quiet verdict on every attempt to cage the future.',
+        citation: 'Bhagavata Purana, Canto 10, Chapter 4',
       },
       {
         id: 'janmashtami-why-born',
         title: 'Why God Takes Birth',
-        subtitle: 'The Charioteer Revealing Himself',
+        subtitle: 'The child explains his own arrival',
         keyVerse: {
-          sanskrit: 'यदा यदा हि धर्मस्य ग्लानिर्भवति भारत। अभ्युत्थानमधर्मस्य तदाऽऽत्मानं सृजाम्यहम्॥ परित्राणाय साधूनां विनाशाय च दुष्कृताम्। धर्मसंस्थापनार्थाय संभवामि युगे युगे॥',
-          transliteration: 'yadā yadā hi dharmasya glānir bhavati bhārata, abhyutthānam adharmasya tadātmānaṁ sṛijāmy aham; paritrāṇāya sādhūnāṁ vināśhāya cha duṣhkṛitām, dharma-sansthāpanārthāya sambhavāmi yuge yuge',
-          meaning: 'Whenever there is a decline of righteousness and a rise of unrighteousness, O Arjuna, then I manifest Myself. For the protection of the good, for the destruction of the wicked, and for the establishment of righteousness, I am born in every age.',
-          source: 'Bhagavad Gita 4.7–8 (tr. Swami Sivananda)'
+          sanskrit: '\u092f\u0926\u093e \u092f\u0926\u093e \u0939\u093f \u0927\u0930\u094d\u092e\u0938\u094d\u092f \u0917\u094d\u0932\u093e\u0928\u093f\u0930\u094d\u092d\u0935\u0924\u093f \u092d\u093e\u0930\u0924\u0964 \u0905\u092d\u094d\u092f\u0941\u0924\u094d\u0925\u093e\u0928\u092e\u0927\u0930\u094d\u092e\u0938\u094d\u092f \u0924\u0926\u093e\u0966\u0966\u0924\u094d\u092e\u093e\u0928\u0902 \u0938\u0943\u091c\u093e\u092e\u094d\u092f\u0939\u092e\u094d\u0965',
+          transliteration: 'yad\u0101 yad\u0101 hi dharmasya gl\u0101nir bhavati bh\u0101rata, abhyutth\u0101nam adharmasya tad\u0101tm\u0101na\u1e43 s\u1e5bij\u0101my aham',
+          meaning: 'Whenever there is a decline of righteousness and a rise of unrighteousness, O Arjuna, then I manifest Myself \u2014 for the protection of the good, for the destruction of the wicked, and for the establishment of righteousness, I am born in every age.',
+          source: 'Bhagavad Gita 4.7\u20138 (tr. Swami Sivananda)',
         },
-        storyText: 'Decades after that midnight, the child born in Kamsa\'s prison stood on the battlefield of Kurukshetra as Arjuna\'s charioteer and explained his own birth. These two verses — recited in millions of homes every Janmashtami — are Krishna\'s answer to why the infinite takes a body at all: not as a one-time miracle, but as a standing promise. Whenever darkness gathers past bearing, in every age, the light is born again.',
-        teachingText: 'The promise has an inner reading too. The prison is any heart shut tight by fear; midnight is any hour when hope runs lowest. Janmashtami asks you to keep one lamp lit in that darkness — because the story\'s whole claim is that this is exactly when and where the divine chooses to be born.'
+        storyText:
+          'Decades after that midnight, the child born in Kamsa\u2019s prison stood on the battlefield of Kurukshetra as Arjuna\u2019s charioteer \u2014 and explained his own birth.\n\nThese verses, recited in millions of homes every Janmashtami, are Krishna\u2019s answer to why the infinite takes a body at all: **not a one-time miracle, but a standing promise.** Whenever darkness gathers past bearing, in every age, the light is born again.',
+        teachingText:
+          'The promise has an inner reading too. The prison is any heart shut tight by fear; midnight is any hour when hope runs lowest. Janmashtami asks you to **keep one lamp lit in that darkness** \u2014 because that is exactly when and where the divine chooses to be born.',
+        citation: 'Bhagavad Gita 4.7\u20138, tr. Sivananda (public domain)',
       },
       {
         id: 'janmashtami-butter',
         title: 'The God Who Steals Butter',
-        subtitle: 'A Clay Pot Hanging High, Boys Climbing in a Pyramid',
-        storyText: 'The story does not end at the rescue — it erupts into joy. In Gokul and Vrindavan, the divine child grows up as a mischievous cowherd boy who raids every kitchen for fresh makhan, white butter — the Bhagavata\'s tenth canto lovingly records the exasperated cowherd women lining up to complain to Yashoda while secretly hoping he raids their homes next. This is why Janmashtami tastes of butter and rock sugar, and why in Maharashtra young men build swaying human pyramids to smash a dahi handi hung high above the street — recreating the toddler gangs Krishna organized to reach the hanging pots.',
-        teachingText: 'Hindu tradition\'s boldest move is here: the same God who parts rivers wants to be loved as the baby you rock, the child you scold, the friend whose mischief you forgive. The butter thief teaches that the divine is not only approached through awe — sometimes it climbs through your kitchen window. Let your practice this Janmashtami include delight: sweetness shared, songs sung too loudly, a pot broken open. Joy, too, is worship.'
-      }
+        subtitle: 'Joy, too, is worship',
+        storyText:
+          'The story does not end at the rescue \u2014 it erupts into joy. In Gokul and Vrindavan, the divine child grows up as a mischievous cowherd boy who raids every kitchen for fresh **makhan**, white butter.\n\nThe Bhagavata\u2019s tenth canto lovingly records the cowherd women lining up to complain to Yashoda \u2014 while secretly hoping he raids their homes next.\n\nThis is why Janmashtami tastes of butter and rock sugar, and why in Maharashtra young men build swaying human pyramids to smash a **dahi handi** hung high above the street \u2014 recreating the toddler gangs Krishna organized to reach the hanging pots.',
+        teachingText:
+          'The tradition\u2019s boldest move is here: the same God who parts rivers wants to be loved as **the baby you rock, the child you scold, the friend whose mischief you forgive.** Let your practice this Janmashtami include delight \u2014 sweetness shared, songs sung too loudly, a pot broken open. Joy, too, is worship.',
+        citation: 'Bhagavata Purana, Canto 10, Chapters 8\u20139 (the butter stories)',
+      },
     ],
     sources: [
       {
