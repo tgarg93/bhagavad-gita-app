@@ -25,8 +25,8 @@ import KrishnaGuide from '../components/KrishnaGuide';
 import JourneyPathView from '../components/JourneyPathView';
 import LocalStorageService, { SpiritualProfile } from '../services/localStorageService';
 import journeyService from '../services/journeyService';
-import { getDailyAtom, ATOM_TAGS } from '../data/dailyAtoms';
-import { getDailyVerse } from '../data/dailyVerse';
+import { getDailyAtom } from '../data/dailyAtoms';
+import DailyChaiCard from '../components/DailyChaiCard';
 
 interface OnboardingScreenProps {
   onComplete: () => void;
@@ -255,19 +255,9 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
 
         {step === 6 && (
           <View style={styles.rhythmWrap}>
-            {/* Live preview of today's actual chai — show the ritual, don't describe it */}
-            <View style={styles.rhythmCard}>
-              <Text style={styles.rhythmTag}>
-                ☕ DAILY CHAI · {ATOM_TAGS[getDailyAtom().type].toUpperCase()}
-              </Text>
-              <Text style={styles.rhythmHook}>{getDailyAtom().hook}</Text>
-              <View style={styles.rhythmDivider} />
-              <Text style={styles.rhythmTag}>TODAY'S VERSE</Text>
-              <Text style={styles.rhythmVerse} numberOfLines={3}>
-                “{getDailyVerse().english}”
-              </Text>
-            </View>
-
+            {/* Live preview of today's actual chai — the same unified card the
+                Home screen shows, compact and action-less */}
+            <DailyChaiCard atom={getDailyAtom()} compact />
           </View>
         )}
 
@@ -393,38 +383,6 @@ const styles = StyleSheet.create({
   },
   rhythmWrap: {
     paddingHorizontal: spacing.md,
-  },
-  rhythmCard: {
-    backgroundColor: colors.neutrals.white,
-    borderRadius: borderRadius.large,
-    borderWidth: 1,
-    borderColor: 'rgba(230, 81, 0, 0.14)',
-    padding: spacing.md,
-    ...shadows.soft,
-  },
-  rhythmTag: {
-    fontSize: 10.5,
-    fontWeight: '800',
-    letterSpacing: 0.8,
-    color: colors.primary.deepSaffron,
-    marginBottom: 5,
-  },
-  rhythmHook: {
-    ...typography.sizes.headingSM,
-    color: colors.neutrals.charcoalBlack,
-    fontWeight: '700',
-    marginBottom: spacing.sm + 2,
-  },
-  rhythmDivider: {
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(33, 33, 33, 0.08)',
-    marginBottom: spacing.sm + 2,
-  },
-  rhythmVerse: {
-    fontSize: 14,
-    lineHeight: 21,
-    fontWeight: '600',
-    color: colors.neutrals.charcoalBlack,
   },
   transitionWrap: {
     alignItems: 'center',

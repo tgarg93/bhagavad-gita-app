@@ -20,8 +20,9 @@ Manual smoke tests until automated coverage lands (Wave 2). Run the **Simulator 
 
 **Home:**
 - [ ] Status row shows level (Jigyasu for fresh) → taps to Profile tab
-- [ ] Chai atom card: correct type for today's weekday; citation line; 📖 opens the linked content (only when link exists)
-- [ ] Verse card: English-first; ▶ plays and **toggles off on second tap**; 📖 opens that Gita chapter
+- [ ] Daily Chai card (ONE card): correct type for today's weekday (Sun/Wed verse, Mon why, Tue saying, Thu story, Fri question, Sat word) with that type's layout + accent tint; citation line; 📖 opens the linked content (only when link exists)
+- [ ] Chai ▶: plays and **toggles off on second tap** — on word/saying days the Devanagari speaks first (Hindi voice), then the English; verse days English-first; stop mid-Sanskrit kills the whole sequence
+- [ ] Verse day: 📖 opens that Gita chapter
 - [ ] Continue card body → next journey item; **View full path** footer → path screen
 
 **Journey:**

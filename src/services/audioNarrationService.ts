@@ -400,28 +400,72 @@ export class AudioNarrationService {
     return type === 'sanskrit' ? 'hi-IN' : 'en-IN';
   }
 
-  // Unconditional stop for one-off utterances — speakOnce doesn't go through
-  // the segment queue, so stopNarration's speechId guard never fires for it
+  // Token guarding one-off sequences: stopSpeaking() and every new sequence
+  // invalidate any in-flight chain. Required, not defensive — expo-speech fires
+  // no onDone on interrupt, but an onDone racing the stop must not resurrect
+  // the next segment of a stopped sequence.
+  private onceToken = 0;
+
+  // Unconditional stop for one-off utterances — speakOnce/speakSequence don't
+  // go through the segment queue, so stopNarration's speechId guard never
+  // fires for them
   async stopSpeaking(): Promise<void> {
+    this.onceToken++;
     await this.backend.stop();
   }
 
-  // One-off utterance outside the segment queue (e.g. the Daily Chai verse).
+  // One-off utterance outside the segment queue (e.g. a Daily Chai body).
   // Uses the same session activation and voice preference as full narration.
   async speakOnce(text: string, onDone?: () => void): Promise<void> {
+    await this.speakSequence([{ text }], onDone);
+  }
+
+  // One-off multi-part utterance (e.g. the Daily Chai word card: Devanagari in
+  // the Hindi voice, then the meaning in English). Segments default to the
+  // 'meaning' (English-India) voice; 'sanskrit' segments use the Hindi voice
+  // and are skipped when no Hindi voice is installed, mirroring the queue
+  // player's guard. onDone fires only when the sequence completes on its own.
+  async speakSequence(
+    segments: { text: string; type?: TextSegment['type'] }[],
+    onDone?: () => void
+  ): Promise<void> {
     await this.initialize();
     await this.backend.stop();
-    const voice = await this.getBestVoice('meaning');
-    await this.backend.speak(
-      text,
-      {
-        language: this.getSpeechLanguage('meaning'),
-        pitch: this.getSpeechPitch('meaning'),
-        rate: this.getSpeechRate('meaning'),
-        voice,
-      },
-      { onStart: () => {}, onDone: onDone ?? (() => {}), onError: () => onDone?.() }
-    );
+    const token = ++this.onceToken;
+    const playFrom = async (i: number): Promise<void> => {
+      if (token !== this.onceToken) return; // stopped or superseded
+      if (i >= segments.length) {
+        onDone?.();
+        return;
+      }
+      const seg = segments[i];
+      const type = seg.type ?? 'meaning';
+      const voice = await this.getBestVoice(type);
+      if (type === 'sanskrit' && !voice) {
+        await playFrom(i + 1);
+        return;
+      }
+      if (token !== this.onceToken) return;
+      await this.backend.speak(
+        seg.text,
+        {
+          language: this.getSpeechLanguage(type),
+          pitch: this.getSpeechPitch(type),
+          rate: this.getSpeechRate(type),
+          voice,
+        },
+        {
+          onStart: () => {},
+          onDone: () => {
+            void playFrom(i + 1);
+          },
+          onError: () => {
+            void playFrom(i + 1);
+          },
+        }
+      );
+    };
+    await playFrom(0);
   }
 
   private getSpeechPitch(type: string): number {

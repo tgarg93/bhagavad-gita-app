@@ -8,8 +8,9 @@
 // scriptural source say so and cite the tradition honestly.
 import { getUpcomingFestivals, getDaysUntilFestival } from './festivals';
 import { hasReaderContent } from './readerContent';
+import { getDailyVerse } from './dailyVerse';
 
-export type AtomType = 'why' | 'saying' | 'word' | 'story' | 'festival';
+export type AtomType = 'why' | 'saying' | 'word' | 'story' | 'question' | 'verse' | 'festival';
 
 export interface AtomLink {
   label: string;
@@ -22,6 +23,8 @@ export const ATOM_TAGS: Record<AtomType, string> = {
   saying: 'A saying to carry',
   word: 'Sanskrit word',
   story: 'Story moment',
+  question: 'A question to sit with',
+  verse: "Today's verse",
   festival: 'Festival lens',
 };
 
@@ -33,6 +36,14 @@ export interface DailyAtom {
   citation: string;
   link?: AtomLink;
   krishnaPrompt: string; // pre-seeded question for Ask Krishna
+  // Structured Sanskrit for the word/saying/verse card treatments (and their
+  // narration): the Devanagari is displayed prominently and spoken with the
+  // Hindi voice; hook/body stay English-first for notifications & Krishna.
+  sanskrit?: {
+    devanagari: string;
+    transliteration: string;
+    meaning?: string; // one-line gloss under the transliteration (word cards)
+  };
 }
 
 const concept = (id: string, label: string): AtomLink => ({
@@ -138,8 +149,9 @@ const SAYING_ATOMS: DailyAtom[] = [
     body:
       'Three words a father, Uddalaka, repeats nine times to his son Svetaketu in the Chandogya Upanishad. “That” is Brahman — the reality behind everything. The claim is staggering: the divine you search for outside is what you already are. Much of Hindu philosophy is a two-thousand-year response to this one sentence.',
     citation: 'Chandogya Upanishad 6.8.7',
-    link: concept('moksha', 'Read: Moksha'),
+    link: concept('brahman-atman', 'Read: Brahman & Atman'),
     krishnaPrompt: 'If I am already “That,” why do I feel so ordinary? What is tat tvam asi actually asking me to see?',
+    sanskrit: { devanagari: 'तत्त्वमसि', transliteration: 'tat tvam asi' },
   },
   {
     id: 'saying:aham-brahmasmi',
@@ -148,8 +160,9 @@ const SAYING_ATOMS: DailyAtom[] = [
     body:
       'Not a boast — a discovery. The Brihadaranyaka Upanishad places these words at the moment a seeker realizes the self they have been protecting and polishing was never separate from the whole. It is one of the four “great sayings” every school of Vedanta must wrestle with.',
     citation: 'Brihadaranyaka Upanishad 1.4.10',
-    link: concept('moksha', 'Read: Moksha'),
+    link: concept('brahman-atman', 'Read: Brahman & Atman'),
     krishnaPrompt: 'How is “I am Brahman” different from arrogance? Where does the ego end and this truth begin?',
+    sanskrit: { devanagari: 'अहं ब्रह्मास्मि', transliteration: 'ahaṁ brahmāsmi' },
   },
   {
     id: 'saying:tena-tyaktena',
@@ -160,6 +173,7 @@ const SAYING_ATOMS: DailyAtom[] = [
     citation: 'Isha Upanishad, verse 1',
     link: concept('karma', 'Read: Karma'),
     krishnaPrompt: 'How can renouncing something let me enjoy it more? Give me an everyday example.',
+    sanskrit: { devanagari: 'तेन त्यक्तेन भुञ्जीथाः', transliteration: 'tena tyaktena bhuñjīthāḥ' },
   },
   {
     id: 'saying:deep-desire',
@@ -180,6 +194,7 @@ const SAYING_ATOMS: DailyAtom[] = [
     citation: 'Maha Upanishad 6.71–73; also Hitopadesha 1.3.71',
     link: concept('dharma', 'Read: Dharma'),
     krishnaPrompt: 'How do I actually treat strangers as family without being naive about the world?',
+    sanskrit: { devanagari: 'वसुधैव कुटुम्बकम्', transliteration: 'vasudhaiva kuṭumbakam' },
   },
   {
     id: 'saying:ahimsa-paramo',
@@ -190,6 +205,7 @@ const SAYING_ATOMS: DailyAtom[] = [
     citation: 'Mahabharata, Anushasana Parva 117.37',
     link: concept('ahimsa', 'Read: Ahimsa'),
     krishnaPrompt: 'If non-violence is the highest dharma, why does the Gita tell Arjuna to fight?',
+    sanskrit: { devanagari: 'अहिंसा परमो धर्मः', transliteration: 'ahiṁsā paramo dharmaḥ' },
   },
   {
     id: 'saying:satyameva',
@@ -200,6 +216,7 @@ const SAYING_ATOMS: DailyAtom[] = [
     citation: 'Mundaka Upanishad 3.1.6',
     link: concept('dharma', 'Read: Dharma'),
     krishnaPrompt: 'Truth doesn’t always seem to win in real life. What does “satyameva jayate” really claim?',
+    sanskrit: { devanagari: 'सत्यमेव जयते', transliteration: 'satyameva jayate' },
   },
 ];
 
@@ -214,8 +231,9 @@ const WORD_ATOMS: DailyAtom[] = [
     body:
       'Gu, darkness; ru, its remover. Not merely “teacher” — a guru is anyone whose presence dispels your not-knowing. The word you hear in yoga studios carries a whole theory of how wisdom moves: it cannot be downloaded, only handed over, person to person.',
     citation: 'Traditional etymology given in the Advayataraka Upanishad 16',
-    link: concept('bhakti-paths', 'Read: Paths of Bhakti'),
+    link: concept('guru', 'Read: The Guru'),
     krishnaPrompt: 'Do I need a guru to grow spiritually, or can books and apps be enough?',
+    sanskrit: { devanagari: 'गुरु', transliteration: 'guru', meaning: 'the one who removes darkness' },
   },
   {
     id: 'word:namaste',
@@ -225,6 +243,7 @@ const WORD_ATOMS: DailyAtom[] = [
       'Namas, a bow (from nam, to bend), plus te, to you: “I bow to you.” The folded hands are the word made visible. The traditional gloss deepens it: the light in me recognizes the light in you — a theology of equality hiding inside a greeting.',
     citation: 'Sanskrit etymology (nam, “to bow”); namas as reverence appears throughout the Vedas, e.g. the Rudram’s repeated “namah”',
     krishnaPrompt: 'When I say namaste, what am I actually acknowledging in the other person?',
+    sanskrit: { devanagari: 'नमस्ते', transliteration: 'namaste', meaning: 'I bow to you' },
   },
   {
     id: 'word:karma',
@@ -235,6 +254,7 @@ const WORD_ATOMS: DailyAtom[] = [
     citation: 'Root kri (“to do”); the law of action articulated in Bhagavad Gita 2.47',
     link: concept('karma', 'Read: Karma'),
     krishnaPrompt: 'Is karma punishment, or cause and effect? How should it change what I do today?',
+    sanskrit: { devanagari: 'कर्म', transliteration: 'karma', meaning: 'action — and what it leaves behind' },
   },
   {
     id: 'word:yoga',
@@ -245,6 +265,7 @@ const WORD_ATOMS: DailyAtom[] = [
     citation: 'Root yuj (“to yoke”); the Gita’s working definition at 2.48 — “evenness of mind is called yoga”',
     link: concept('bhakti-paths', 'Read: Paths of Bhakti'),
     krishnaPrompt: 'Which yoga fits my temperament — action, devotion, or knowledge? How do I tell?',
+    sanskrit: { devanagari: 'योग', transliteration: 'yoga', meaning: 'union — to yoke together' },
   },
   {
     id: 'word:om',
@@ -255,6 +276,7 @@ const WORD_ATOMS: DailyAtom[] = [
     citation: 'Mandukya Upanishad 1',
     link: concept('moksha', 'Read: Moksha'),
     krishnaPrompt: 'What is actually happening when I chant Om? Why this sound and not another?',
+    sanskrit: { devanagari: 'ॐ', transliteration: 'om (a-u-m)', meaning: 'the syllable that holds all this' },
   },
   {
     id: 'word:avatar',
@@ -265,6 +287,7 @@ const WORD_ATOMS: DailyAtom[] = [
     citation: 'Bhagavad Gita 4.7–8',
     link: deity('krishna', 'Read: Krishna'),
     krishnaPrompt: 'Why does the divine descend as avatars instead of just fixing the world directly?',
+    sanskrit: { devanagari: 'अवतार', transliteration: 'avatāra', meaning: 'the divine, crossing down' },
   },
   {
     id: 'word:mantra',
@@ -274,6 +297,7 @@ const WORD_ATOMS: DailyAtom[] = [
       'Man, the mind; tra, a tool — or, by another reading, that which protects. A mantra is a phrase engineered to be repeated until it steadies the one repeating it. The tradition’s insight is practical: the mind will chatter regardless, so give it something worth saying.',
     citation: 'Traditional etymology (man + tra); mantra practice runs from the Rig Veda’s hymns to japa in the Gita (10.25 — “of sacrifices I am japa”)',
     krishnaPrompt: 'How do I start a simple mantra practice — which one, and what should I expect?',
+    sanskrit: { devanagari: 'मन्त्र', transliteration: 'mantra', meaning: 'an instrument for the mind' },
   },
 ];
 
@@ -352,11 +376,86 @@ const STORY_ATOMS: DailyAtom[] = [
   },
 ];
 
-const ATOMS_BY_TYPE: Record<Exclude<AtomType, 'festival'>, DailyAtom[]> = {
+// ---------------------------------------------------------------------------
+// A question to sit with — one reflective question, two quiet sentences
+// ---------------------------------------------------------------------------
+const QUESTION_ATOMS: DailyAtom[] = [
+  {
+    id: 'question:whose-work',
+    type: 'question',
+    hook: 'Whose work were you doing today — and did the work know?',
+    body:
+      'The Gita’s test for any effort is not its size but its offering. Hanuman crossed an ocean and called it Rama’s work; the crossing cost him nothing.',
+    citation: 'cf. Bhagavad Gita 3.9',
+    link: concept('karma', 'Read: Karma'),
+    krishnaPrompt: 'How do I turn ordinary work into an offering without pretending I don’t need the paycheck?',
+  },
+  {
+    id: 'question:rehearsal',
+    type: 'question',
+    hook: 'What did your mind rehearse today without you choosing it?',
+    body:
+      'Whatever the mind practices remembering, it remembers under pressure. The tradition calls spiritual practice rehearsal — re-aiming the arrow before it must fly.',
+    citation: 'cf. Bhagavad Gita 8.6',
+    krishnaPrompt: 'My idle thoughts default to worry and grievance. How do I retrain what my mind rehearses?',
+  },
+  {
+    id: 'question:rope-snake',
+    type: 'question',
+    hook: 'Which of your fears might be a rope, misread at dusk?',
+    body:
+      'The traveler leapt from a snake that was never there — and the terror was real anyway. Maya’s question is not “is this real?” but “is this the rope, or my snake?”',
+    citation: 'The rope-snake teaching: Advaita tradition',
+    link: concept('maya', 'Read: Maya'),
+    krishnaPrompt: 'Help me examine a fear I have — how do I tell the rope from the snake?',
+  },
+  {
+    id: 'question:weather',
+    type: 'question',
+    hook: 'Which weather woke up with you this morning — clarity, restlessness, or fog?',
+    body:
+      'The Gita says three strands dye every hour: sattva, rajas, tamas. Naming the weather is the first step to not being the storm.',
+    citation: 'cf. Bhagavad Gita 14.5–17',
+    link: concept('three-gunas', 'Read: The Three Gunas'),
+    krishnaPrompt: 'I woke up foggy and unmotivated today. What does the guna teaching say I should actually do?',
+  },
+  {
+    id: 'question:jambavan',
+    type: 'question',
+    hook: 'Who reminds you of your strength — and who is waiting for you to remind them?',
+    body:
+      'Hanuman sat silent at the ocean because a curse hid his own power from him. Jambavan’s reminder was not flattery; it was testimony.',
+    citation: 'cf. Valmiki Ramayana, Kishkindha Kanda 66',
+    krishnaPrompt: 'Someone I love has forgotten their own strength. How do I remind them the way Jambavan did?',
+  },
+  {
+    id: 'question:open-palm',
+    type: 'question',
+    hook: 'What outcome are you gripping that was never yours to hold?',
+    body:
+      'Effort is yours; the fruit never was. The Gita’s most quoted verse is a surgical distinction, not a shrug — pour yourself into the work, and open the palm.',
+    citation: 'cf. Bhagavad Gita 2.47',
+    link: concept('karma', 'Read: Karma'),
+    krishnaPrompt: 'I can’t stop obsessing over a result I’m waiting on. Walk me through what 2.47 asks of me.',
+  },
+  {
+    id: 'question:one-lamp',
+    type: 'question',
+    hook: 'If your practice were stripped to one leaf and a palmful of water, what would remain?',
+    body:
+      'Shiva is Bholenath, the easily pleased — unimpressible by production value. The bare act, meant fully, is already complete.',
+    citation: 'cf. Bhagavad Gita 9.26',
+    link: deity('shiva', 'Read: Shiva'),
+    krishnaPrompt: 'My spiritual life feels like apps and checklists. What is the barest practice that still counts?',
+  },
+];
+
+const ATOMS_BY_TYPE: Record<Exclude<AtomType, 'festival' | 'verse'>, DailyAtom[]> = {
   why: WHY_ATOMS,
   saying: SAYING_ATOMS,
   word: WORD_ATOMS,
   story: STORY_ATOMS,
+  question: QUESTION_ATOMS,
 };
 
 export const ALL_AUTHORED_ATOMS: DailyAtom[] = [
@@ -364,23 +463,43 @@ export const ALL_AUTHORED_ATOMS: DailyAtom[] = [
   ...SAYING_ATOMS,
   ...WORD_ATOMS,
   ...STORY_ATOMS,
+  ...QUESTION_ATOMS,
 ];
 
-// Weekday → atom type. Two why-days and two story/word days keep the week
-// varied; sayings and stories sit where there's weekend reading time.
+// Weekday → atom type. One day per authored type; the Gita verse holds the
+// slot twice a week (Sun + Wed) now that the old standalone verse card is
+// folded into this single daily slot.
 const WEEKDAY_TYPE: Exclude<AtomType, 'festival'>[] = [
-  'story', // Sun
+  'verse', // Sun
   'why', // Mon
   'saying', // Tue
-  'word', // Wed
+  'verse', // Wed
   'story', // Thu
-  'why', // Fri
+  'question', // Fri
   'word', // Sat
 ];
 
-const dayOfYear = (date: Date): number => {
-  const start = new Date(date.getFullYear(), 0, 0);
-  return Math.floor((date.getTime() - start.getTime()) / 86400000);
+// Local-calendar day number (timezone-safe): lets the pick rotate WEEKLY.
+// (The old `dayOfYear + year` hash advanced by exactly 7 per week, so a given
+// weekday resolved to the same atom index all year — invisible while types
+// owned two weekdays, but fatal with one weekday per type.)
+const localDayNumber = (date: Date): number =>
+  Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000);
+
+// The verse-day atom is synthesized from the daily verse rather than authored:
+// the verse rotation already covers all 701 verses deterministically.
+const verseAtomFor = (date: Date): DailyAtom => {
+  const v = getDailyVerse(date);
+  return {
+    id: `verse:${v.chapter}:${v.verse}`,
+    type: 'verse',
+    hook: v.english,
+    body: '',
+    citation: `${v.reference} · Sivananda translation`,
+    link: gita(v.chapter, `Read: Gita Chapter ${v.chapter}`),
+    krishnaPrompt: `Today's verse is ${v.reference} — "${v.english}" What is it asking of me today?`,
+    sanskrit: { devanagari: v.sanskrit, transliteration: v.transliteration },
+  };
 };
 
 // Within 7 days of a festival, the brief turns toward it: countdown + the
@@ -410,12 +529,15 @@ const festivalAtomFor = (date: Date): DailyAtom | null => {
   };
 };
 
-// Deterministic pick for a date: festival lens wins near a festival;
-// otherwise the weekday's type, indexed by a stable hash of the date.
+// Deterministic pick for a date: festival lens wins near a festival; verse
+// days come from the daily-verse rotation; otherwise the weekday's type,
+// rotating through its pool week by week.
 export const getDailyAtom = (date: Date = new Date()): DailyAtom => {
   const festival = festivalAtomFor(date);
   if (festival) return festival;
-  const pool = ATOMS_BY_TYPE[WEEKDAY_TYPE[date.getDay()]];
-  const index = (dayOfYear(date) + date.getFullYear()) % pool.length;
+  const type = WEEKDAY_TYPE[date.getDay()];
+  if (type === 'verse') return verseAtomFor(date);
+  const pool = ATOMS_BY_TYPE[type];
+  const index = Math.floor(localDayNumber(date) / 7) % pool.length;
   return pool[index];
 };

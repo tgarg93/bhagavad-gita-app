@@ -35,11 +35,13 @@ Six steps in one state machine (`OnboardingScreen`), Krishna asking each questio
 
 ## 3. Daily Chai (the daily loop)
 
-- Home IS the brief: under the status row sit the **atom card** and the **verse card**; reading requires zero taps. Opening Home marks the day's chai read (`daily_chai_last_opened`) and credits activity.
-- **Atom selection** (`getDailyAtom`, deterministic per date): weekday → type (Sun story, Mon why, Tue saying, Wed word, Thu story, Fri why, Sat word); hash(dayOfYear+year) picks within type. 28 authored atoms (7 × why/saying/word/story), each: hook, 2–4 sentence body, citation, optional deep link, `krishnaPrompt`.
-- **Festival override**: within 7 days of the next festival, the atom slot becomes a generated countdown atom from festival data.
-- **Verse slot**: `getDailyVerse` (deterministic from 701 bundled verses), **English-first** hierarchy; ▶ narrates (toggle — tap again stops), 📖 opens that Gita chapter.
-- Card actions are **bare icons** in the header row (no chips/circles); card bodies are not tappable. No chat-bubble action — today's `krishnaPrompt` leads Ask Krishna's suggestions instead.
+- Home IS the brief: under the status row sits **ONE unified Daily Chai card** (`DailyChaiCard`, shared with the onboarding preview); reading requires zero taps. Opening Home marks the day's chai read (`daily_chai_last_opened`) and credits activity.
+- **Rotation** (`getDailyAtom`, deterministic per date): weekday → type — Sun **verse**, Mon why, Tue saying, Wed **verse**, Thu story, Fri **question**, Sat word. Within a type the pick rotates **weekly** (`floor(localDayNumber/7) % pool` — the old dayOfYear hash froze each weekday on one atom all year). 35 authored atoms (7 × why/saying/word/story/question).
+- **Verse days** synthesize the atom from `getDailyVerse` (deterministic from 701 bundled verses): English-first hierarchy, Devanagari beneath, 📖 opens that Gita chapter. The standalone verse card is gone.
+- **Festival override**: within 7 days of the next festival, the slot becomes a generated countdown atom from festival data.
+- **Per-type treatments** (one shared frame; per-type inner layout + accent border/tag tint): word = large centered Devanagari + transliteration + gloss (saffron); saying = quote glyph + Devanagari + "WHAT IT MEANS" interpretation (teal); question = airy centered italic question + short insight (violet); verse = quote + Sanskrit line (gold); story/why/festival = original hook/body (saffron). Structured Sanskrit lives in the optional `atom.sanskrit {devanagari, transliteration, meaning?}` field.
+- **Voice mode**: ▶ on every card (toggle — tap again stops). Sanskrit-bearing cards speak the Devanagari first in the Hindi voice (slower/lower, same settings as reader narration), then the English; **verse cards stay English-first**. No Hindi voice installed → Sanskrit part is skipped silently (`speakSequence` in `audioNarrationService`; a cancellation token stops mid-sequence chains).
+- Card actions are **bare icons** in the header row (no chips/circles); card bodies are not tappable. No chat-bubble action — today's `krishnaPrompt` (present on all types, incl. synthesized verse atoms) leads Ask Krishna's suggestions instead.
 
 ## 4. Notifications (all local, no backend)
 
