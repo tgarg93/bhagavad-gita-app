@@ -1379,14 +1379,15 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'karma-opening',
         title: 'The Weight of Every Action',
         subtitle: 'An Arrow Leaving the Bow',
-        storyText: 'When Arjuna collapsed on the battlefield, unable to act, Krishna did not begin with metaphysics or heaven. He began with action. Before speaking of the soul\'s immortality or the paths of devotion, he addressed the thing Arjuna could not escape: a choice had to be made, and even refusing to choose would itself be a choice. This is where the teaching of karma begins — not as a cosmic scoreboard of rewards and punishments, but as the simple, unavoidable truth that you are always acting, and every action leaves something behind. An arrow, once released, cannot be called back. But the archer chooses where to aim.'
+        storyText: 'When Arjuna collapsed on the battlefield, unable to act, Krishna did not begin with metaphysics or heaven. He began with action.\n\nBefore speaking of the soul\'s immortality or the paths of devotion, he addressed the thing Arjuna could not escape: a choice had to be made, and even refusing to choose would itself be a choice.\n\nThis is where the teaching of **karma** begins — not as a cosmic scoreboard of rewards and punishments, but as the simple, unavoidable truth that **you are always acting**, and every action leaves something behind. An arrow, once released, cannot be called back. But the archer chooses where to aim.'
       },
       {
         id: 'karma-meaning',
         title: 'What Karma Really Means',
         subtitle: 'A Seed Becoming a Tree',
-        storyText: 'Karma comes from the Sanskrit root "kri" — to do, to act. It simply means action. Yet centuries of use have buried it under misreadings: fate, luck, punishment, "what goes around comes around." The oldest teaching is more precise and more empowering. The Brihadaranyaka Upanishad says of a person: "As is his desire, so is his will; and as is his will, so is his deed; and whatever deed he does, that he will reap" (4.4.5). Desire shapes intention, intention shapes action, and action shapes who you become. Karma is not something that happens TO you. It is the trail you are laying down, one choice at a time, in the direction your attention is already pointing.',
-        teachingText: 'Notice the chain begins with desire, not deed. This is why Hindu thought insists that intention matters as much as action: two people can perform the identical act — one from love, one from calculation — and plant entirely different seeds. If you want to know your future, the Upanishad suggests, do not consult the stars. Watch what you are doing, and wanting, today.'
+        storyText: '**Karma** comes from the Sanskrit root **kri** — to do, to act. It simply means action. Yet centuries of use have buried it under misreadings: fate, luck, punishment, "what goes around comes around."\n\nThe oldest teaching is more precise and more empowering. The Brihadaranyaka Upanishad says of a person: "As is his desire, so is his will; and as is his will, so is his deed; and whatever deed he does, that he will reap."\n\n**Desire shapes intention, intention shapes action, and action shapes who you become.** Karma is not something that happens TO you. It is the trail you are laying down, one choice at a time, in the direction your attention is already pointing.',
+        teachingText: 'Notice the chain begins with **desire**, not deed. This is why Hindu thought insists that intention matters as much as action: two people can perform the identical act — one from love, one from calculation — and plant entirely different seeds.\n\nIf you want to know your future, the Upanishad suggests, do not consult the stars. Watch what you are doing, and wanting, today.',
+        citation: 'Brihadaranyaka Upanishad 4.4.5 (tr. Max Müller).'
       },
       {
         id: 'karma-right-to-action',
@@ -1398,8 +1399,8 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'Your right is to work only, but never to its results; let not the results of action be your motive, nor let your attachment be to inaction.',
           source: 'Bhagavad Gita 2.47 (tr. Swami Sivananda)'
         },
-        storyText: 'This is the most quoted verse in the Gita, and the most misunderstood. Krishna is not telling Arjuna to stop caring about results — a general who doesn\'t care about victory should leave the field. He is making a surgical distinction: effort is yours; outcome is not. A thousand factors you cannot see — other people\'s choices, timing, chance, history — stand between your action and its fruit. When you stake your peace on the part you cannot control, anxiety is the only possible harvest.',
-        teachingText: 'Think of something you\'re working toward right now — a promotion, a child\'s happiness, a body healed. The verse asks: can you pour yourself into the work itself, wholly, and hold the outcome with open palms? This is not lowering the bar. People who work this way usually work better — steadier under pressure, more honest about feedback, less crushed by setbacks — because their fuel is the work, not the scoreboard.'
+        storyText: 'This is the most quoted verse in the Gita, and the most misunderstood. Krishna is not telling Arjuna to stop caring about results — a general who doesn\'t care about victory should leave the field.\n\nHe is making a surgical distinction: **effort is yours; outcome is not.** A thousand factors you cannot see — other people\'s choices, timing, chance, history — stand between your action and its fruit.\n\nWhen you stake your peace on the part you cannot control, anxiety is the only possible harvest.',
+        teachingText: 'Think of something you\'re working toward right now — a promotion, a child\'s happiness, a body healed. The verse asks: can you pour yourself into the work itself, wholly, and hold the outcome with open palms?\n\nThis is not lowering the bar. People who work this way usually work better — steadier under pressure, more honest about feedback, less crushed by setbacks — because their fuel is the work, not the scoreboard.'
       },
       {
         id: 'karma-no-inaction',
@@ -1411,8 +1412,13 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'Verily, no one can remain even for a moment without performing action; everyone is made to act by the qualities born of Nature.',
           source: 'Bhagavad Gita 3.5 (tr. Swami Sivananda)'
         },
-        storyText: 'Arjuna\'s first instinct was to walk away — to renounce the battle and become a beggar rather than act in such a terrible situation. Krishna\'s reply dismantles the fantasy: there is no such thing as opting out. Your heart beats, your mind judges, your silence speaks, your absence is felt. The person who "stays neutral" while a friend is slandered has acted. The citizen who doesn\'t vote has voted. Even the renunciant sitting motionless in a cave is acting — breathing, thinking, choosing to remain.',
-        teachingText: 'This teaching is bracing because it removes the comfortable illusion of the sidelines. Where in your life are you telling yourself "I\'m not doing anything" — about a strained relationship, an injustice at work, a habit quietly growing? The Gita\'s point is not to induce guilt but clarity: since you are acting either way, act consciously. A deliberate choice, even a hard one, plants better seeds than a drift.'
+        storyText: 'Arjuna\'s first instinct was to walk away — to renounce the battle and become a beggar rather than act in such a terrible situation. Krishna\'s reply dismantles the fantasy: **there is no such thing as opting out.**\n\nYour heart beats, your mind judges, your silence speaks, your absence is felt.',
+        bullets: [
+          'The person who "stays neutral" while a friend is slandered **has acted**.',
+          'The citizen who doesn\'t vote **has voted**.',
+          'Even the renunciant sitting motionless in a cave is acting — breathing, thinking, choosing to remain.'
+        ],
+        teachingText: 'This teaching is bracing because it removes the comfortable illusion of the sidelines. Where in your life are you telling yourself "I\'m not doing anything" — about a strained relationship, an injustice at work, a habit quietly growing?\n\nThe Gita\'s point is not to induce guilt but clarity: since you are acting either way, **act consciously**. A deliberate choice, even a hard one, plants better seeds than a drift.'
       },
       {
         id: 'karma-skill',
@@ -1424,8 +1430,9 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'Endowed with wisdom and evenness of mind, one casts off in this life both good and evil deeds; therefore devote yourself to Yoga — Yoga is skill in action.',
           source: 'Bhagavad Gita 2.50 (tr. Swami Sivananda)'
         },
-        storyText: 'Krishna gives karma yoga its famous definition: yogah karmasu kaushalam — yoga is skill in action. The skill is not technical mastery; it is evenness. A verse earlier he describes it: "Perform action, abandoning attachment, balanced in success and failure; evenness of mind is called Yoga" (Gita 2.48). Watch a surgeon, a musician, a parent soothing a feverish child at 3 a.m. — the ones who are truly skillful have a stillness at the center of their effort. They are fully engaged and strangely unhurried, because none of their energy is leaking into "what if this fails?"',
-        teachingText: 'Evenness is trainable, and daily life is the gym. The next time something goes well, notice the surge of "I am wonderful" — and let it pass through without grabbing it. The next time something flops, notice "I am terrible" — and let that pass too. What remains when both waves settle is the steady worker the Gita calls the yogi. From that steadiness, your next action is cleaner than the last.'
+        storyText: 'Krishna gives karma yoga its famous definition: **yogah karmasu kaushalam** — yoga is skill in action. The skill is not technical mastery; it is **evenness**.\n\nA verse earlier he describes it: "Perform action, abandoning attachment, balanced in success and failure; evenness of mind is called Yoga."\n\nWatch a surgeon, a musician, a parent soothing a feverish child at 3 a.m. — the ones who are truly skillful have a stillness at the center of their effort. They are fully engaged and strangely unhurried, because none of their energy is leaking into "what if this fails?"',
+        teachingText: 'Evenness is trainable, and daily life is the gym.\n\nThe next time something goes well, notice the surge of "I am wonderful" — and let it pass through without grabbing it. The next time something flops, notice "I am terrible" — and let that pass too.\n\nWhat remains when both waves settle is the steady worker the Gita calls the yogi. From that steadiness, your next action is cleaner than the last.',
+        citation: 'Bhagavad Gita 2.48 (tr. Swami Sivananda).'
       },
       {
         id: 'karma-offering',
@@ -1437,21 +1444,27 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'The world is bound by actions other than those performed as sacrifice; therefore perform action for that sake alone, free from attachment.',
           source: 'Bhagavad Gita 3.9 (tr. Swami Sivananda)'
         },
-        storyText: 'Here Krishna reveals karma\'s escape hatch. Action binds when it is performed for the small self — my gain, my credit, my comfort. The same action performed as yajna, as offering, does not bind at all. The cook who feeds her family as an act of love, the engineer who builds as service to people he will never meet, the volunteer who asks for nothing — they act as much as anyone, often more. But the Gita says their action leaves no residue, "as a lotus leaf is not tainted by water" (Gita 5.10). The leaf lives in the pond; it is simply not soaked by it.',
-        teachingText: 'Try this quiet experiment: choose one routine task tomorrow — a meeting, the dishes, a commute — and perform it deliberately as an offering, to God, to the people it serves, or simply to something larger than your own advantage. Nothing external changes. Everything internal does. The task stops being a transaction and becomes, briefly, worship.'
+        storyText: 'Here Krishna reveals karma\'s escape hatch. Action binds when it is performed for the small self — my gain, my credit, my comfort. The same action performed as **yajna**, as offering, does not bind at all.\n\nThe cook who feeds her family as an act of love, the engineer who builds as service to people he will never meet, the volunteer who asks for nothing — they act as much as anyone, often more.\n\nBut the Gita says their action leaves no residue, "as a lotus leaf is not tainted by water." The leaf lives in the pond; it is simply not soaked by it.',
+        teachingText: 'Try this quiet experiment: choose one routine task tomorrow — a meeting, the dishes, a commute — and perform it deliberately as an **offering**: to God, to the people it serves, or simply to something larger than your own advantage.\n\nNothing external changes. Everything internal does. The task stops being a transaction and becomes, briefly, worship.',
+        citation: 'Lotus-leaf image: Bhagavad Gita 5.10 (tr. Swami Sivananda).'
       },
       {
         id: 'karma-mystery',
         title: 'The Deep Mystery of Action',
         subtitle: 'Paths Crossing in a Dense Forest',
-        keyVerse: {
+        openingVerse: {
           sanskrit: 'कर्मणो ह्यपि बोद्धव्यं बोद्धव्यं च विकर्मणः। अकर्मणश्च बोद्धव्यं गहना कर्मणो गतिः॥',
           transliteration: 'karmaṇo hy api boddhavyaṁ boddhavyaṁ cha vikarmaṇaḥ, akarmaṇaśh cha boddhavyaṁ gahanā karmaṇo gatiḥ',
           meaning: 'The true nature of action should be known, of forbidden action, and of inaction — the way of action is hard to understand.',
           source: 'Bhagavad Gita 4.17 (tr. Swami Sivananda)'
         },
-        storyText: 'Gahana karmano gatih — deep, dense, hard to fathom is the course of action. Even Krishna, in the middle of explaining karma, pauses to admit its mystery. A harsh word spoken in love can heal; a kind word spoken in cowardice can wound. Help given carelessly can weaken the helped. The epics are full of this ambiguity: Yudhishthira\'s truthfulness enables a deception at Kurukshetra; Karna\'s legendary generosity, offered to the wrong request, costs him his armor and his life.',
-        teachingText: 'This is why karma cannot be reduced to a rulebook. The teaching asks for something harder than compliance: discernment. Before a significant act, the tradition suggests three lamps to examine it by — Is my intention clean? Does it serve more than myself? Would I act this way if no one ever knew? None guarantees a perfect outcome; the way of action stays deep. But a person who keeps asking becomes, over years, someone whose actions can be trusted — including by themselves.'
+        storyText: '**Gahana karmano gatih** — deep, dense, hard to fathom is the course of action. Even Krishna, in the middle of explaining karma, pauses to admit its mystery.\n\nA harsh word spoken in love can heal; a kind word spoken in cowardice can wound. Help given carelessly can weaken the helped. The epics are full of this ambiguity: Yudhishthira\'s truthfulness enables a deception at Kurukshetra; Karna\'s legendary generosity, offered to the wrong request, costs him his armor and his life.\n\nThis is why karma cannot be reduced to a rulebook. Before a significant act, the tradition suggests **three lamps** to examine it by:',
+        bullets: [
+          'Is my **intention** clean?',
+          'Does it serve **more than myself**?',
+          'Would I act this way if **no one ever knew**?'
+        ],
+        teachingText: 'The teaching asks for something harder than compliance: **discernment**. None of the lamps guarantees a perfect outcome; the way of action stays deep.\n\nBut a person who keeps asking becomes, over years, someone whose actions can be trusted — including by themselves.'
       },
       {
         id: 'karma-no-effort-lost',
@@ -1463,8 +1476,8 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'In this path there is no loss of effort, nor any harm; even a little of this practice protects one from great fear.',
           source: 'Bhagavad Gita 2.40 (tr. Swami Sivananda)'
         },
-        storyText: 'Perhaps karma\'s gentlest promise: on this path, nothing sincere is wasted. The world\'s accounting is unreliable — honest work goes unnoticed, kindness is forgotten, discipline shows no result for years. The Gita\'s accounting is different. Every genuine effort changes the one who makes it, and that change is never repossessed. The patience you practiced in a job that ended badly is still in your hands. The steadiness you built caring for someone who didn\'t recover is still in your spine.',
-        teachingText: 'Recall an effort of yours that "failed" — the venture that folded, the relationship that ended anyway, the practice you kept for a year and then dropped. Look honestly at what it left behind in you: a capacity, a scar that became sensitivity, a proof that you can endure. Karma\'s ledger records in a currency the world doesn\'t display. Even a little, Krishna says, protects from great fear.'
+        storyText: 'Perhaps karma\'s gentlest promise: on this path, **nothing sincere is wasted**.\n\nThe world\'s accounting is unreliable — honest work goes unnoticed, kindness is forgotten, discipline shows no result for years. The Gita\'s accounting is different. Every genuine effort changes the one who makes it, and that change is never repossessed.\n\nThe patience you practiced in a job that ended badly is still in your hands. The steadiness you built caring for someone who didn\'t recover is still in your spine.',
+        teachingText: 'Recall an effort of yours that "failed" — the venture that folded, the relationship that ended anyway, the practice you kept for a year and then dropped. Look honestly at what it left behind in you: a capacity, a scar that became sensitivity, a proof that you can endure.\n\nKarma\'s ledger records in a currency the world doesn\'t display. **Even a little**, Krishna says, **protects from great fear**.'
       },
       {
         id: 'karma-worship',
@@ -1476,8 +1489,9 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'He from whom all beings have evolved and by whom all this is pervaded — worshipping Him with one\'s own duty, a person attains perfection.',
           source: 'Bhagavad Gita 18.46 (tr. Swami Sivananda)'
         },
-        storyText: 'In the Gita\'s final chapter, the teaching of karma completes its arc. It began with a frightened warrior being told he could not escape action. It ends with the revelation that action itself — your own ordinary work, done as offering — is a form of worship equal to any ritual. Not someone else\'s more impressive work: yours. Sva-karmana, "by one\'s own action," Krishna says, a person worships the source of all beings and finds perfection.',
-        teachingText: 'And also this, from the same teaching: "One should raise oneself by one\'s own self; the self alone is one\'s friend, and the self alone is one\'s enemy" (Gita 6.5). Karma places your life firmly in your own hands — not because you control outcomes, but because you always control the next action, and the next action is where your character, your habits, and by the Upanishad\'s chain, your destiny are being written. The wheel is turning either way. The teaching simply hands you the wheel.'
+        storyText: 'In the Gita\'s final chapter, the teaching of karma completes its arc.\n\nIt began with a frightened warrior being told he could not escape action. It ends with the revelation that action itself — your own ordinary work, done as offering — is a form of **worship** equal to any ritual.\n\nNot someone else\'s more impressive work: yours. **Sva-karmana**, "by one\'s own action," Krishna says, a person worships the source of all beings and finds perfection.',
+        teachingText: 'And also this, from the same teaching: "One should raise oneself by one\'s own self; the self alone is one\'s friend, and the self alone is one\'s enemy."\n\nKarma places your life firmly in your own hands — not because you control outcomes, but because you always control the **next action**. And the next action is where your character, your habits, and, by the Upanishad\'s chain, your destiny are being written.\n\nThe wheel is turning either way. The teaching simply hands you the wheel.',
+        citation: 'Bhagavad Gita 6.5 (tr. Swami Sivananda).'
       }
     ],
     sources: [
@@ -1592,14 +1606,21 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'ahimsa-opening',
         title: 'The Strength That Refuses to Wound',
         subtitle: 'An Open Hand Where a Fist Could Be',
-        storyText: 'Ahimsa is usually translated "non-violence," and the translation undersells it. The word is a-himsa — the absence of the wish to harm — and the tradition means it in full: not wounding with the hand, not wounding with the tongue, not wounding, finally, even with the thought. It is often mistaken for weakness, and the Mahabharata — a text soaked in the moral complexities of war — answers that mistake with its most sweeping superlative: "Ahimsa is the highest dharma, the highest self-control, the highest gift, the highest austerity, the highest sacrifice" (Mahabharata 13.117.37–38). The epic of the great war reserves its supreme praise for the one who harms nothing.'
+        storyText: '**Ahimsa** is usually translated "non-violence," and the translation undersells it. The word is **a-himsa** — the absence of the wish to harm — and the tradition means it in full: not wounding with the hand, not wounding with the tongue, not wounding, finally, even with the thought.\n\nIt is often mistaken for weakness. The Mahabharata — a text soaked in the moral complexities of war — answers that mistake with its most sweeping superlative: **"Ahimsa is the highest dharma**, the highest self-control, the highest gift, the highest austerity, the highest sacrifice."\n\nThe epic of the great war reserves its supreme praise for the one who harms nothing.',
+        citation: 'Mahabharata, Anushasana Parva 13.117 (tr. K.M. Ganguli).'
       },
       {
         id: 'ahimsa-three-gates',
         title: 'Three Gates of Harm',
         subtitle: 'Thought, Word, and Hand',
-        storyText: 'The tradition analyzes violence the way a physician traces a disease: to its origin. By the time a hand strikes, the harm is old — it lived first as a thought, then as words. So ahimsa is practiced at three gates. The hand\'s gate is the easiest: most of us pass it daily. The tongue\'s gate is harder — the tradition counts sarcasm, gossip, and the well-aimed "honest" remark as himsa in fluent disguise. The mind\'s gate is hardest of all: the rehearsed grievance, the imagined argument won, the quiet wish to see someone fail. The Gita lists ahimsa among the marks of true knowledge (13.7–12) and among the divine endowments (16.2) — in both lists it keeps company with truthfulness and absence of anger, its gatekeeper virtues.',
-        teachingText: 'Audit your three gates for one day, gently. Most people find the hand clean, the tongue occasionally armed, and the mind running a low-grade war no one else can see. Begin where the tradition begins: not by suppressing the violent thought, but by noticing it without enlisting.'
+        storyText: 'The tradition analyzes violence the way a physician traces a disease: to its origin. By the time a hand strikes, the harm is old — it lived first as a thought, then as words.\n\nSo ahimsa is practiced at **three gates**:',
+        bullets: [
+          '**The hand\'s gate** is the easiest — most of us pass it daily.',
+          '**The tongue\'s gate** is harder — the tradition counts sarcasm, gossip, and the well-aimed "honest" remark as himsa in fluent disguise.',
+          '**The mind\'s gate** is hardest of all — the rehearsed grievance, the imagined argument won, the quiet wish to see someone fail.'
+        ],
+        teachingText: 'The Gita lists ahimsa among the marks of true knowledge and among the divine endowments — in both lists it keeps company with truthfulness and absence of anger, its gatekeeper virtues.\n\nAudit your three gates for one day, gently. Most people find the hand clean, the tongue occasionally armed, and the mind running a low-grade war no one else can see. Begin where the tradition begins: not by suppressing the violent thought, but by **noticing it without enlisting**.',
+        citation: 'Bhagavad Gita 13.7–12, 16.2 (tr. Swami Sivananda).'
       },
       {
         id: 'ahimsa-gita-virtue',
@@ -1611,29 +1632,38 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'Harmlessness, truth, absence of anger, renunciation, peacefulness, absence of crookedness, compassion for beings, non-covetousness, gentleness, modesty, absence of fickleness.',
           source: 'Bhagavad Gita 16.2 (tr. Swami Sivananda)'
         },
-        storyText: 'Notice the company ahimsa keeps in the Gita\'s sixteenth chapter: truth, absence of anger, compassion, gentleness. The tradition understood these as one organism — you cannot practice harmlessness while cultivating anger, and you cannot be truly truthful while wishing harm, because harm distorts what you are willing to see. And there is a paradox the Gita holds without flinching: this teaching is given on a battlefield, to a warrior being told to fight. Ahimsa in the Gita is not the refusal of all conflict; it is the purging of hatred from whatever conflict dharma requires. Arjuna must fight — without the wish to harm.',
-        teachingText: 'This is the adult version of the teaching: some roles — parent, judge, soldier, surgeon, manager — require acts that cause pain. Ahimsa asks not that you abandon the role but that you empty it of cruelty: the discipline without the contempt, the boundary without the punishment, the truth without the twist of the knife.'
+        storyText: 'Notice the company ahimsa keeps in the Gita\'s sixteenth chapter: truth, absence of anger, compassion, gentleness. The tradition understood these as **one organism** — you cannot practice harmlessness while cultivating anger, and you cannot be truly truthful while wishing harm, because harm distorts what you are willing to see.\n\nAnd there is a paradox the Gita holds without flinching: this teaching is given on a battlefield, to a warrior being told to fight.\n\nAhimsa in the Gita is not the refusal of all conflict; it is **the purging of hatred from whatever conflict dharma requires**. Arjuna must fight — without the wish to harm.',
+        teachingText: 'This is the adult version of the teaching: some roles — parent, judge, soldier, surgeon, manager — require acts that cause pain.\n\nAhimsa asks not that you abandon the role but that you empty it of cruelty: the discipline without the contempt, the boundary without the punishment, the truth without the twist of the knife.'
       },
       {
         id: 'ahimsa-yoga-sutra',
         title: 'The Sutra\'s Astonishing Promise',
         subtitle: 'A Predator Grown Calm in a Sage\'s Presence',
-        storyText: 'Patanjali\'s Yoga Sutras make ahimsa the first of the five yamas — the restraints on which all further practice stands — and attach to it the tradition\'s most beautiful promise: "In the presence of one established in ahimsa, hostility is abandoned" (Yoga Sutra 2.35). Not managed. Abandoned — by others. The claim is that harmlessness, perfected, becomes an atmosphere: animals calm, arguments deflate, aggressive people find their aggression has nowhere to land. India\'s lore is full of sages whose presence tamed predators; modern life offers the same evidence at lower voltage — everyone knows one person around whom conflict simply doesn\'t escalate.',
-        teachingText: 'You have felt this atmosphere around certain people, and its opposite around others. The sutra says it is trainable. The training is unglamorous: a thousand small refusals to add heat — until your presence itself becomes the de-escalation. Ask yourself which rooms get calmer when you enter, and which get tenser, and treat the answer as a progress report.'
+        storyText: 'Patanjali\'s Yoga Sutras make ahimsa the first of the five **yamas** — the restraints on which all further practice stands — and attach to it the tradition\'s most beautiful promise: **"In the presence of one established in ahimsa, hostility is abandoned."**\n\nNot managed. Abandoned — by others.\n\nThe claim is that harmlessness, perfected, becomes an atmosphere: animals calm, arguments deflate, aggressive people find their aggression has nowhere to land. India\'s lore is full of sages whose presence tamed predators; modern life offers the same evidence at lower voltage — everyone knows one person around whom conflict simply doesn\'t escalate.',
+        teachingText: 'You have felt this atmosphere around certain people, and its opposite around others. The sutra says it is **trainable**.\n\nThe training is unglamorous: a thousand small refusals to add heat — until your presence itself becomes the de-escalation. Ask yourself which rooms get calmer when you enter, and which get tenser, and treat the answer as a progress report.',
+        citation: 'Yoga Sutras of Patanjali 2.35.'
       },
       {
         id: 'ahimsa-self',
         title: 'The Forgotten Direction: Inward',
         subtitle: 'A Mirror Treated Gently',
-        storyText: 'The subtlest himsa is the one aimed at yourself. The inner voice that calls you an idiot for a small mistake, the punishing schedule, the refusal of rest, the standards you would never impose on a friend — the tradition counts all of it as violence, and notes that it never stays contained. Those who wound themselves leak the wounding outward: the harsh self-critic becomes the harsh parent, the person at war with their own body wars quietly with everyone else\'s ease. The Gita\'s counsel that "the self alone is one\'s friend, the self alone is one\'s enemy" (6.5) makes the choice explicit — befriending yourself is not indulgence; it is where ahimsa begins.',
-        teachingText: 'Listen to your inner commentary for a day as if it were spoken aloud to someone you love. Where it fails that test, it is himsa — and practicing gentler inner speech is not self-esteem homework but the root practice of non-violence. A person cannot give the world a peace they refuse themselves.'
+        storyText: 'The subtlest himsa is the one aimed at yourself.\n\nThe inner voice that calls you an idiot for a small mistake, the punishing schedule, the refusal of rest, the standards you would never impose on a friend — the tradition counts all of it as violence, and notes that it never stays contained.\n\nThose who wound themselves leak the wounding outward: the harsh self-critic becomes the harsh parent; the person at war with their own body wars quietly with everyone else\'s ease. The Gita\'s counsel that "the self alone is one\'s friend, the self alone is one\'s enemy" makes the choice explicit — **befriending yourself is not indulgence; it is where ahimsa begins**.',
+        teachingText: 'Listen to your inner commentary for a day as if it were spoken aloud to someone you love. Where it fails that test, it is himsa — and practicing gentler inner speech is not self-esteem homework but the **root practice** of non-violence.\n\nA person cannot give the world a peace they refuse themselves.',
+        citation: 'Bhagavad Gita 6.5 (tr. Swami Sivananda).'
       },
       {
         id: 'ahimsa-daily',
         title: 'A Day of Practiced Harmlessness',
         subtitle: 'Small Choices, Repeated, Becoming a Nature',
-        storyText: 'Because ahimsa is a direction rather than a destination, the tradition renders it as daily choices: the pause before the sharp reply; the gossip declined; the benefit of the doubt extended one more time; consumption examined — food, purchases, entertainment — for the harm hidden in its supply chain; the insect escorted out rather than crushed, less for the insect\'s sake than for what the escorting practices in you. Gandhi, who took this ancient vow into politics, insisted ahimsa was "the weapon of the strong": it takes no strength to strike back, and all of it not to.',
-        teachingText: 'Choose one gate and one week: a week of unarmed speech, or a week of unhostile thought toward one difficult person, or a week of gentleness toward yourself. Small, specific, finishable. The tradition\'s claim is that harmlessness practiced narrow becomes, over years, a nature — and that nature, per the sutra, changes every room it enters.'
+        storyText: 'Because ahimsa is a direction rather than a destination, the tradition renders it as daily choices:',
+        bullets: [
+          'The pause before the sharp reply.',
+          'The gossip declined.',
+          'The benefit of the doubt extended one more time.',
+          'Consumption examined — food, purchases, entertainment — for the harm hidden in its supply chain.',
+          'The insect escorted out rather than crushed — less for the insect\'s sake than for what the escorting practices in you.'
+        ],
+        teachingText: 'Gandhi, who took this ancient vow into politics, insisted ahimsa was **"the weapon of the strong"**: it takes no strength to strike back, and all of it not to.\n\nChoose one gate and one week: a week of unarmed speech, or a week of unhostile thought toward one difficult person, or a week of gentleness toward yourself. Small, specific, finishable.\n\nThe tradition\'s claim is that harmlessness practiced narrow becomes, over years, a nature — and that nature changes every room it enters.'
       }
     ],
     sources: [
@@ -1747,7 +1777,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'samsara-opening',
         title: 'The Wheel That Keeps Turning',
         subtitle: 'A River Bending Back to Its Source',
-        storyText: 'Samsara — from the Sanskrit "to flow together, to wander through" — is the tradition\'s name for the great circulation: birth, growth, decay, death, and birth again, world upon world, life upon life. But before it is a doctrine about reincarnation, it is an observation anyone can verify: everything in experience cycles. Seasons return. Moods return. The argument you had with your father returns, wearing your child\'s face. The tradition\'s claim is simply that the circulation does not stop at the body\'s edge — the traveler continues, changing vehicles.'
+        storyText: '**Samsara** — from the Sanskrit "to flow together, to wander through" — is the tradition\'s name for the great circulation: birth, growth, decay, death, and birth again, world upon world, life upon life.\n\nBut before it is a doctrine about reincarnation, it is an observation anyone can verify: **everything in experience cycles**. Seasons return. Moods return. The argument you had with your father returns, wearing your child\'s face.\n\nThe tradition\'s claim is simply that the circulation does not stop at the body\'s edge — the traveler continues, changing vehicles.'
       },
       {
         id: 'samsara-changing-clothes',
@@ -1759,15 +1789,17 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'Just as a man casts off worn-out clothes and puts on new ones, so the embodied Self casts off worn-out bodies and enters others that are new.',
           source: 'Bhagavad Gita 2.22 (tr. Swami Sivananda)'
         },
-        storyText: 'The Gita\'s most famous image for samsara is domestic, almost gentle: changing clothes. A verse earlier, Krishna points out that you have already survived several such changes within this one life — "as the embodied soul passes through childhood, youth, and old age in this body, so too does it pass into another body; the steadfast one does not grieve" (2.13). The child\'s body you once wore is gone as completely as any past life; something continuous wore it and outlasted it, and is reading this now.',
-        teachingText: 'Whatever you conclude about literal rebirth, the verse\'s comfort is empirically available: you have already died to several selves — the child, the adolescent, the person before the loss — and the wearer persisted. The next great change is, on this teaching, more wardrobe than annihilation. The steadfast one does not grieve; the practical one gets acquainted with the wearer.'
+        storyText: 'The Gita\'s most famous image for samsara is domestic, almost gentle: **changing clothes**.\n\nA verse earlier, Krishna points out that you have already survived several such changes within this one life: "as the embodied soul passes through childhood, youth, and old age in this body, so too does it pass into another body; the steadfast one does not grieve."\n\nThe child\'s body you once wore is gone as completely as any past life. Something continuous wore it and outlasted it — and is reading this now.',
+        teachingText: 'Whatever you conclude about literal rebirth, the verse\'s comfort is empirically available: you have already died to several selves — the child, the adolescent, the person before the loss — and **the wearer persisted**.\n\nThe next great change is, on this teaching, more wardrobe than annihilation. The steadfast one does not grieve; the practical one gets acquainted with the wearer.',
+        citation: 'Bhagavad Gita 2.13 (tr. Swami Sivananda).'
       },
       {
         id: 'samsara-engine',
         title: 'What Drives the Wheel',
         subtitle: 'Desire as the Axle',
-        storyText: 'The wheel is not spun by punishment; it is spun by wanting. The Brihadaranyaka Upanishad traces the mechanics in one breath: a person "consists of desires; as is the desire, so is the will; as is the will, so is the deed; and whatever deed he does, that he will reap" (4.4.5) — and then completes the circuit: the one still holding unfinished desire returns to fulfill it, while "of the one without desire... his vital energies do not depart; being Brahman itself, he goes to Brahman." Samsara, in other words, is unfinished business. Each life is the previous life\'s wanting, given a new body to want with.',
-        teachingText: 'Scale it down to watch it work: notice how today\'s restlessness is mostly yesterday\'s unfinished desires re-arising — the unanswered message, the unbought thing, the unproven point. That is the wheel, in miniature, turning daily. The tradition\'s exit is not to crush desire but to complete and outgrow it: want deeper things until the shallow wanting quiets.'
+        storyText: 'The wheel is not spun by punishment; it is spun by **wanting**.\n\nThe Brihadaranyaka Upanishad traces the mechanics in one breath: a person "consists of desires; as is the desire, so is the will; as is the will, so is the deed; and whatever deed he does, that he will reap" — and then completes the circuit: the one still holding unfinished desire returns to fulfill it, while "of the one without desire... his vital energies do not depart; being Brahman itself, he goes to Brahman."\n\nSamsara, in other words, is **unfinished business**. Each life is the previous life\'s wanting, given a new body to want with.',
+        teachingText: 'Scale it down to watch it work: notice how today\'s restlessness is mostly yesterday\'s unfinished desires re-arising — the unanswered message, the unbought thing, the unproven point. That is the wheel, in miniature, turning daily.\n\nThe tradition\'s exit is not to crush desire but to **complete and outgrow it**: want deeper things until the shallow wanting quiets.',
+        citation: 'Brihadaranyaka Upanishad 4.4.5–6 (tr. Max Müller).'
       },
       {
         id: 'samsara-even-heaven',
@@ -1779,22 +1811,24 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'All worlds, up to the realm of Brahma, are subject to return, O Arjuna; but reaching Me, there is no rebirth.',
           source: 'Bhagavad Gita 8.16 (tr. Swami Sivananda)'
         },
-        storyText: 'Hindu cosmology makes a move that startles first-time readers: even heaven is inside samsara. The pleasant worlds earned by good karma are real, says the Gita — and temporary. When the merit runs out, the stay ends, and the wheel resumes (8.15–16). This is the tradition\'s deepest critique of the spiritual transaction: piety aimed at reward is just shopping at a higher altitude. What the Gita calls "a place of pain and impermanence" is not earth specifically — it is anywhere the meter is running.',
-        teachingText: 'The modern translation writes itself: every achieved paradise — the promotion, the body, the house, the reputation — is a heaven with an expiry date, enjoyable and unstable. Noticing this is not cynicism; it is accuracy. The unconditioned, says the teaching, is not another better place on the wheel. It is the axle\'s stillness — available, the sages insist, in the middle of any turning life.'
+        storyText: 'Hindu cosmology makes a move that startles first-time readers: **even heaven is inside samsara**.\n\nThe pleasant worlds earned by good karma are real, says the Gita — and temporary. When the merit runs out, the stay ends, and the wheel resumes.\n\nThis is the tradition\'s deepest critique of the spiritual transaction: piety aimed at reward is just shopping at a higher altitude. What the Gita calls "a place of pain and impermanence" is not earth specifically — it is **anywhere the meter is running**.',
+        teachingText: 'The modern translation writes itself: every achieved paradise — the promotion, the body, the house, the reputation — is a heaven with an expiry date, enjoyable and unstable.\n\nNoticing this is not cynicism; it is accuracy. The unconditioned, says the teaching, is not another better place on the wheel. It is **the axle\'s stillness** — available, the sages insist, in the middle of any turning life.',
+        citation: 'Bhagavad Gita 8.15–16 (tr. Swami Sivananda).'
       },
       {
         id: 'samsara-not-punishment',
         title: 'A School, Not a Sentence',
         subtitle: 'The Same Lesson Returning Until Learned',
-        storyText: 'It is easy to hear samsara as a prison sentence — trapped on the wheel until release. The tradition\'s working attitude is closer to a school: the wheel returns you, with great precision, to whatever you have not yet learned. The pattern you fled in one relationship waits in the next; the lesson dodged in one decade re-enrolls you in the following one. Rebirth, on this reading, is the curriculum continuing between terms. Nothing is vindictive about it — the fire that burns the hand is also the fire that cooks the food. The wheel is neutral; the learning is optional; the repetition is not.',
-        teachingText: 'Find your own recurring curriculum: the situation that keeps arriving with different casting — the same boss twice, the same argument in every friendship, the same crisis each spring. The tradition\'s counsel is to stop asking "why does this keep happening to me" and start asking "what does this keep asking of me." Wheels release what has finished learning.'
+        storyText: 'It is easy to hear samsara as a prison sentence — trapped on the wheel until release. The tradition\'s working attitude is closer to **a school**: the wheel returns you, with great precision, to whatever you have not yet learned.\n\nThe pattern you fled in one relationship waits in the next; the lesson dodged in one decade re-enrolls you in the following one. Rebirth, on this reading, is the curriculum continuing between terms.\n\nNothing is vindictive about it — the fire that burns the hand is also the fire that cooks the food. **The wheel is neutral; the learning is optional; the repetition is not.**',
+        teachingText: 'Find your own recurring curriculum: the situation that keeps arriving with different casting — the same boss twice, the same argument in every friendship, the same crisis each spring.\n\nThe tradition\'s counsel is to stop asking "why does this keep happening to me" and start asking **"what does this keep asking of me."** Wheels release what has finished learning.'
       },
       {
         id: 'samsara-stepping-off',
         title: 'The Still Point',
         subtitle: 'The Axle at the Center of the Turning',
-        storyText: 'Samsara is only half the teaching; the other half is that the wheel has an exit — or more precisely, a center. Moksha is not somewhere else; it is the stillness at the axle, and the Gita\'s entire counsel — act without clinging, remember the divine, love without agenda — is the inward walk from rim to hub. At the rim, every turn of fortune flings you; nearer the center, the same wheel turns and you merely watch it turn. "Having attained Me," says Krishna, "these great souls do not take birth again in this place of pain and impermanence" (8.15) — and the devotional traditions add, tenderly, that some who are free keep riding the wheel anyway, for love of those still on it.',
-        teachingText: 'You can test the geometry today. In the next upheaval, notice where you are standing: at the rim (flung, reactive, "why me") or nearer the axle (moved, but watching). Every practice in this app — the reading, the reflections, the remembering — is a step inward. The wheel is not the enemy. Forgetting there is a center is.'
+        storyText: 'Samsara is only half the teaching; the other half is that the wheel has an exit — or more precisely, **a center**.\n\nMoksha is not somewhere else; it is the stillness at the axle, and the Gita\'s entire counsel — act without clinging, remember the divine, love without agenda — is the inward walk from rim to hub.\n\nAt the rim, every turn of fortune flings you; nearer the center, the same wheel turns and you merely watch it turn. "Having attained Me," says Krishna, "these great souls do not take birth again." And the devotional traditions add, tenderly, that some who are free keep riding the wheel anyway — **for love of those still on it**.',
+        teachingText: 'You can test the geometry today. In the next upheaval, notice where you are standing: at the rim (flung, reactive, "why me") or nearer the axle (moved, but watching).\n\nEvery practice in this app — the reading, the reflections, the remembering — is a step inward. **The wheel is not the enemy. Forgetting there is a center is.**',
+        citation: 'Bhagavad Gita 8.15 (tr. Swami Sivananda).'
       }
     ],
     sources: [
@@ -1905,7 +1939,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'moksha-opening',
         title: 'The Open Cage',
         subtitle: 'A Bird Beside a Door Left Ajar',
-        storyText: 'Every teaching in the Hindu tradition eventually points at one destination: moksha, liberation. But liberation from what? Not from the world — from the cage of mistaken identity: the conviction that you are only this body, this résumé, this bundle of fears aging toward an ending. The tradition\'s startling claim is that the cage door is not locked. It never was. The soul is already free — unborn, undying, untouched — and the entire spiritual project is not to earn freedom but to stop believing in the bars. Moksha is not somewhere you go after death. It is what remains when the misunderstanding drops.'
+        storyText: 'Every teaching in the Hindu tradition eventually points at one destination: **moksha**, liberation. But liberation from what?\n\nNot from the world — from the cage of mistaken identity: the conviction that you are only this body, this résumé, this bundle of fears aging toward an ending.\n\nThe tradition\'s startling claim is that **the cage door is not locked. It never was.** The soul is already free — unborn, undying, untouched — and the entire spiritual project is not to earn freedom but to stop believing in the bars. Moksha is not somewhere you go after death. It is what remains when the misunderstanding drops.'
       },
       {
         id: 'moksha-beyond-sorrow',
@@ -1917,8 +1951,9 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'The wise, having abandoned the fruits of their actions, freed from the bonds of birth, go to the place beyond all evil.',
           source: 'Bhagavad Gita 2.51 (tr. Swami Sivananda)'
         },
-        storyText: 'The Gita\'s first mention of the goal comes wrapped in the teaching of karma: the wise who release the fruits of action are "freed from the bonds of birth" and reach the place anamayam — beyond affliction, beyond sorrow. Notice the mechanics: bondage is made of clinging, so liberation is made of release. Nothing is added to the liberated person; things are set down. The Upanishads had said it a generation of texts earlier: as desire is, so is destiny — and the one whose desires have resolved into the Self "goes to the Self" (Brihadaranyaka Upanishad 4.4.5–6).',
-        teachingText: 'You have tasted anamayam already — moments when a long-carried weight was set down and the world turned vivid: after honest confession, after forgiving, after finally releasing an outcome. The tradition asks you to take those moments seriously as data. They are not moods; they are glimpses of your actual condition with the clinging briefly removed.'
+        storyText: 'The Gita\'s first mention of the goal comes wrapped in the teaching of karma: the wise who release the fruits of action are "freed from the bonds of birth" and reach the place **anamayam** — beyond affliction, beyond sorrow.\n\nNotice the mechanics: **bondage is made of clinging, so liberation is made of release.** Nothing is added to the liberated person; things are set down.\n\nThe Upanishads had said it a generation of texts earlier: as desire is, so is destiny — and the one whose desires have resolved into the Self "goes to the Self."',
+        teachingText: 'You have tasted anamayam already — moments when a long-carried weight was set down and the world turned vivid: after honest confession, after forgiving, after finally releasing an outcome.\n\nThe tradition asks you to take those moments seriously as data. They are not moods; they are glimpses of your actual condition with the clinging briefly removed.',
+        citation: 'Brihadaranyaka Upanishad 4.4.5–6 (tr. Max Müller).'
       },
       {
         id: 'moksha-lit-within',
@@ -1930,8 +1965,9 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'He who is happy within, who rejoices within, who is illuminated within — that yogi attains absolute freedom, becoming Brahman himself.',
           source: 'Bhagavad Gita 5.24 (tr. Swami Sivananda)'
         },
-        storyText: 'The Gita gives liberation a diagnostic: where does your light come from? The unliberated life is lit from outside — happiness switched on and off by praise, purchases, outcomes, other people\'s moods. The liberated one is antar-jyotih, lit from within: happy within, rejoicing within, illuminated within. This is not a personality trait but a relocation of the source. The sage Yajnavalkya, asked what light a person sees by when sun, moon, and fire are all gone, answered: the Self is his light (Brihadaranyaka Upanishad 4.3.6).',
-        teachingText: 'Run the diagnostic honestly for a day. Track each surge of happiness and each collapse: what switched it? If every switch is external, nothing is wrong with you — that is simply the starting condition. The practices — meditation, offering the fruits, devotion — are all ways of drilling toward the inner light until some of your illumination no longer depends on the weather.'
+        storyText: 'The Gita gives liberation a diagnostic: **where does your light come from?**\n\nThe unliberated life is lit from outside — happiness switched on and off by praise, purchases, outcomes, other people\'s moods. The liberated one is **antar-jyotih**, lit from within: happy within, rejoicing within, illuminated within.\n\nThis is not a personality trait but a relocation of the source. The sage Yajnavalkya, asked what light a person sees by when sun, moon, and fire are all gone, answered: **the Self is his light**.',
+        teachingText: 'Run the diagnostic honestly for a day. Track each surge of happiness and each collapse: what switched it?\n\nIf every switch is external, nothing is wrong with you — that is simply the starting condition. The practices — meditation, offering the fruits, devotion — are all ways of drilling toward the inner light until some of your illumination no longer depends on the weather.',
+        citation: 'Brihadaranyaka Upanishad 4.3.6 (tr. Max Müller).'
       },
       {
         id: 'moksha-what-you-remember',
@@ -1943,8 +1979,8 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'Whoever, leaving the body, goes forth remembering Me alone at the time of death attains My being; of this there is no doubt.',
           source: 'Bhagavad Gita 8.5 (tr. Swami Sivananda)'
         },
-        storyText: 'The Gita\'s eighth chapter faces the question directly: what happens at death? Krishna\'s answer is neither morbid nor mystical — it is about momentum. Whatever the mind has practiced remembering, it remembers at the end; and what it remembers at the end shapes where it goes. The tradition drew the practical conclusion with complete seriousness: you cannot summon at the last hour a remembrance you never rehearsed. The whole of spiritual practice is, in one sense, rehearsal — training the mind\'s default direction so that its final movement is toward the light.',
-        teachingText: 'Set aside the metaphysics and the teaching still stands: you are always practicing something, and the practiced thing is what surfaces under pressure. What does your mind rehearse in its idle moments — grievance, anxiety, acquisition? That is the current default. The remembrance practices — a name, a breath, a verse returned to daily — are how the tradition re-aims the arrow before it must fly.'
+        storyText: 'The Gita\'s eighth chapter faces the question directly: what happens at death? Krishna\'s answer is neither morbid nor mystical — it is about **momentum**.\n\nWhatever the mind has practiced remembering, it remembers at the end; and what it remembers at the end shapes where it goes.\n\nThe tradition drew the practical conclusion with complete seriousness: you cannot summon at the last hour a remembrance you never rehearsed. The whole of spiritual practice is, in one sense, **rehearsal** — training the mind\'s default direction so that its final movement is toward the light.',
+        teachingText: 'Set aside the metaphysics and the teaching still stands: you are always practicing something, and the practiced thing is what surfaces under pressure.\n\nWhat does your mind rehearse in its idle moments — grievance, anxiety, acquisition? That is the current default. The remembrance practices — a name, a breath, a verse returned to daily — are how the tradition re-aims the arrow before it must fly.'
       },
       {
         id: 'moksha-no-return',
@@ -1956,8 +1992,8 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'Neither sun nor moon nor fire illumines that place; having gone there, they do not return — that is My supreme abode.',
           source: 'Bhagavad Gita 15.6 (tr. Swami Sivananda)'
         },
-        storyText: 'Everything in samsara cycles — seasons, moods, fortunes, births. The tradition\'s image for conditioned existence is the wheel; even heaven, in Hindu cosmology, is temporary, a pleasant stay that ends when merit runs out. Moksha alone is described as the place from which "they do not return." Not because a door locks behind you, but because there is nothing left to pull you back: the fuel of returning — unfinished desire — is spent. The light there needs no sun because it is the light by which suns are seen.',
-        teachingText: 'The mark of everything unliberated is that it wears off — the vacation, the achievement, the purchase, each demanding a next one. Moksha is the tradition\'s name for the only satisfaction that does not wear off, because it is not an experience the self has but the self\'s own nature, uncovered. Chasing states that wear off is not wrong; it is simply the wheel. Noticing the wheel is the first step off it.'
+        storyText: 'Everything in samsara cycles — seasons, moods, fortunes, births. The tradition\'s image for conditioned existence is the wheel; even heaven, in Hindu cosmology, is temporary — a pleasant stay that ends when merit runs out.\n\n**Moksha alone is described as the place from which "they do not return."** Not because a door locks behind you, but because there is nothing left to pull you back: the fuel of returning — unfinished desire — is spent.\n\nThe light there needs no sun because it is the light by which suns are seen.',
+        teachingText: 'The mark of everything unliberated is that it **wears off** — the vacation, the achievement, the purchase, each demanding a next one.\n\nMoksha is the tradition\'s name for the only satisfaction that does not wear off, because it is not an experience the self has but the self\'s own nature, uncovered. Chasing states that wear off is not wrong; it is simply the wheel. Noticing the wheel is the first step off it.'
       },
       {
         id: 'moksha-liberated-life',
@@ -1969,8 +2005,8 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'Becoming Brahman, serene in the Self, he neither grieves nor desires; the same to all beings, he attains supreme devotion to Me.',
           source: 'Bhagavad Gita 18.54 (tr. Swami Sivananda)'
         },
-        storyText: 'The tradition\'s boldest idea is jivanmukti: liberation while alive. The liberated one does not vanish in a flash of light — she goes on cooking, working, raising children, but from a different center. The Gita\'s portrait: serene, beyond grasping and grieving, "the same to all beings" — because she no longer sorts people by what they can give or take from her. And then the surprise in the verse\'s last line: this freedom does not end in cool detachment but flowers into supreme devotion. The freed heart, wanting nothing, finally loves without agenda.',
-        teachingText: 'Liberation, scaled to a Tuesday: act fully, cling to nothing, meet everyone as the same light in different lamps, and let love — not need — be what remains. You will manage it for moments at first. The tradition\'s patient claim is that the moments join. Moksha is not the abandonment of your life; it is your life, finally unclenched.'
+        storyText: 'The tradition\'s boldest idea is **jivanmukti**: liberation while alive.\n\nThe liberated one does not vanish in a flash of light — she goes on cooking, working, raising children, but from a different center. The Gita\'s portrait: serene, beyond grasping and grieving, "the same to all beings" — because she no longer sorts people by what they can give or take from her.\n\nAnd then the surprise in the verse\'s last line: this freedom does not end in cool detachment but flowers into **supreme devotion**. The freed heart, wanting nothing, finally loves without agenda.',
+        teachingText: 'Liberation, scaled to a Tuesday: act fully, cling to nothing, meet everyone as the same light in different lamps, and let love — not need — be what remains.\n\nYou will manage it for moments at first. The tradition\'s patient claim is that the moments join. **Moksha is not the abandonment of your life; it is your life, finally unclenched.**'
       }
     ],
     sources: [
@@ -2095,7 +2131,13 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'gunas-opening',
         title: 'The Weather of the Mind',
         subtitle: 'Three Skies Over One Mountain',
-        storyText: 'Some mornings you wake clear: the tea tastes bright, work flows, patience comes easily. Other mornings you wake already running: mind racing, jaw tight, five browser tabs before breakfast. And some mornings you wake in fog: heavy, unwilling, reaching for the phone to numb the grayness. Same person, same bed — three different worlds. The Gita\'s fourteenth chapter gives this everyday mystery its oldest and most useful map: three strands, three gunas, weave all of nature — sattva, clarity; rajas, restlessness; tamas, inertia — and at every moment one of them is dyeing your entire experience its color.'
+        storyText: 'Some mornings you wake clear: the tea tastes bright, work flows, patience comes easily. Other mornings you wake already running: mind racing, jaw tight, five browser tabs before breakfast. And some mornings you wake in fog: heavy, unwilling, reaching for the phone to numb the grayness.\n\nSame person, same bed — three different worlds.\n\nThe Gita\'s fourteenth chapter gives this everyday mystery its oldest and most useful map. Three strands, three **gunas**, weave all of nature:',
+        bullets: [
+          '**Sattva** — clarity, light',
+          '**Rajas** — restlessness, motion',
+          '**Tamas** — inertia, heaviness'
+        ],
+        teachingText: 'At every moment, one of the three is dyeing your entire experience its color.'
       },
       {
         id: 'gunas-three-strands',
@@ -2107,8 +2149,14 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'Sattva, rajas, and tamas — these qualities born of Nature bind fast in the body the indestructible embodied one.',
           source: 'Bhagavad Gita 14.5 (tr. Swami Sivananda)'
         },
-        storyText: 'Guna means strand — the threads a rope is twisted from. Sattva is light and clear: the mind in sattva learns easily, loves easily, sees far. Rajas is motion and heat: the mind in rajas wants, launches, acquires, cannot sit still. Tamas is weight and dark: the mind in tamas postpones, numbs, sleeps, forgets why it came into the room. The Gita\'s crucial claim is that all three bind — even sattva, which "binds by attachment to happiness and knowledge" (14.6). The strands are not a ladder from sin to virtue; they are a description of the rope. And you are not the rope — you are the one it binds.',
-        teachingText: 'Learn to name your weather in real time — not "I am lazy" but "tamas is heavy this hour"; not "I am so driven" but "rajas is burning." The naming matters because it separates the witness from the weather. You cannot steer a storm you believe you are.'
+        storyText: '**Guna** means strand — the threads a rope is twisted from.',
+        bullets: [
+          '**Sattva** is light and clear: the mind in sattva learns easily, loves easily, sees far.',
+          '**Rajas** is motion and heat: the mind in rajas wants, launches, acquires, cannot sit still.',
+          '**Tamas** is weight and dark: the mind in tamas postpones, numbs, sleeps, forgets why it came into the room.'
+        ],
+        teachingText: 'The Gita\'s crucial claim is that **all three bind** — even sattva, which "binds by attachment to happiness and knowledge." The strands are not a ladder from sin to virtue; they are a description of the rope. And you are not the rope — you are the one it binds.\n\nLearn to name your weather in real time — not "I am lazy" but "tamas is heavy this hour"; not "I am so driven" but "rajas is burning." The naming separates the witness from the weather. **You cannot steer a storm you believe you are.**',
+        citation: 'Bhagavad Gita 14.5–6 (tr. Swami Sivananda).'
       },
       {
         id: 'gunas-fruits',
@@ -2120,15 +2168,22 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'From sattva arises knowledge, from rajas greed; heedlessness and delusion arise from tamas, and ignorance too.',
           source: 'Bhagavad Gita 14.17 (tr. Swami Sivananda)'
         },
-        storyText: 'The strands are recognizable by their harvests. A season ruled by sattva leaves knowledge behind — you end it wiser, steadier, kinder. A season ruled by rajas leaves greed — however much was gained, the wanting grew faster. A season ruled by tamas leaves confusion — time passed and nothing can quite be accounted for. The Gita even describes the diagnostic light: "When the light of knowledge shines through every gate of this body, know that sattva is predominant" (14.11). The gates are the senses; in sattva, the eyes themselves feel washed.',
-        teachingText: 'Audit your last year by harvest, not by activity. Which months left knowledge, which left hunger, which left fog? This is more honest than judging by busyness — rajas always looks productive from inside. The harvest tells you which strand was actually holding the reins.'
+        storyText: 'The strands are recognizable by their **harvests**.',
+        bullets: [
+          'A season ruled by **sattva** leaves knowledge behind — you end it wiser, steadier, kinder.',
+          'A season ruled by **rajas** leaves greed — however much was gained, the wanting grew faster.',
+          'A season ruled by **tamas** leaves confusion — time passed and nothing can quite be accounted for.'
+        ],
+        teachingText: 'The Gita even describes the diagnostic light: "When the light of knowledge shines through every gate of this body, know that sattva is predominant." The gates are the senses; in sattva, the eyes themselves feel washed.\n\nAudit your last year by harvest, not by activity. Which months left knowledge, which left hunger, which left fog? This is more honest than judging by busyness — **rajas always looks productive from inside**. The harvest tells you which strand was actually holding the reins.',
+        citation: 'Bhagavad Gita 14.11, 14.17 (tr. Swami Sivananda).'
       },
       {
         id: 'gunas-feeding',
         title: 'You Cannot Fight a Guna — You Feed Another',
         subtitle: 'Tending a Fire Instead of Battling the Dark',
-        storyText: 'Here is the teaching\'s great practical mercy: the strands do not yield to willpower. You cannot scold tamas into clarity — the scolding just adds agitation to the fog. You cannot suppress rajas by force — suppression is itself rajasic. The gunas respond only to diet, in the widest sense: food, sleep, company, media, work, and thought are each guna-flavored, and whichever strand you feed grows. The Gita\'s seventeenth chapter maps even faith and food onto the strands (17.3, 17.8–10): fresh, nourishing food feeds sattva; bitter, burning excess feeds rajas; stale, lifeless stuff feeds tamas. The same is true of everything you consume with eyes and ears.',
-        teachingText: 'Pick the strand you want more of and feed it one input at a time. Foggy? Don\'t fight the fog — add light: a walk, water, one fresh meal, ten minutes of something true. Frantic? Don\'t suppress the fire — stop fueling it: one meal seated, one hour unplugged. Working with inputs instead of willpower is the whole craft, and it is why the tradition cares so much about what you eat, watch, and keep company with.'
+        storyText: 'Here is the teaching\'s great practical mercy: **the strands do not yield to willpower.**\n\nYou cannot scold tamas into clarity — the scolding just adds agitation to the fog. You cannot suppress rajas by force — suppression is itself rajasic.\n\nThe gunas respond only to **diet**, in the widest sense: food, sleep, company, media, work, and thought are each guna-flavored, and whichever strand you feed grows. The Gita\'s seventeenth chapter maps even faith and food onto the strands: fresh, nourishing food feeds sattva; bitter, burning excess feeds rajas; stale, lifeless stuff feeds tamas. The same is true of everything you consume with eyes and ears.',
+        teachingText: 'Pick the strand you want more of and feed it one input at a time.\n\nFoggy? Don\'t fight the fog — add light: a walk, water, one fresh meal, ten minutes of something true. Frantic? Don\'t suppress the fire — stop fueling it: one meal seated, one hour unplugged.\n\nWorking with **inputs instead of willpower** is the whole craft, and it is why the tradition cares so much about what you eat, watch, and keep company with.',
+        citation: 'Bhagavad Gita 17.3, 17.8–10 (tr. Swami Sivananda).'
       },
       {
         id: 'gunas-in-action',
@@ -2140,8 +2195,14 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'Action that is ordained, done without attachment, without like or dislike, without desire for reward — that is called sattvic.',
           source: 'Bhagavad Gita 18.23 (tr. Swami Sivananda)'
         },
-        storyText: 'The eighteenth chapter applies the strands to work itself. The same email can be written three ways: sattvic — clear, needed, sent without drama; rajasic — fired off to win, wound, or impress, refreshed every minute for a reply; tamasic — avoided for a week, then dashed off carelessly at midnight. Same task, three actors, three karmic residues. The Gita extends this to the doer, the understanding, even the happiness each strand produces: rajasic happiness is "nectar at first, poison in the end," and sattvic happiness "poison at first, nectar in the end" (14.37–38 region; the discipline that tastes bitter on day one and sweet in year one).',
-        teachingText: 'Before your next significant act, take one breath and ask which of the three actors is about to do it. The act may not change; the doer can. That single breath of self-location — am I clear, burning, or foggy right now? — is the most portable practice this teaching offers.'
+        storyText: 'The eighteenth chapter applies the strands to work itself. The same email can be written three ways:',
+        bullets: [
+          '**Sattvic** — clear, needed, sent without drama.',
+          '**Rajasic** — fired off to win, wound, or impress, then refreshed every minute for a reply.',
+          '**Tamasic** — avoided for a week, then dashed off carelessly at midnight.'
+        ],
+        teachingText: 'Same task, three actors, three karmic residues. The Gita extends this to the doer, the understanding, even the happiness each strand produces: rajasic happiness is "nectar at first, poison in the end," and sattvic happiness "poison at first, nectar in the end" — the discipline that tastes bitter on day one and sweet in year one.\n\nBefore your next significant act, take one breath and ask **which of the three actors is about to do it**. The act may not change; the doer can. That single breath of self-location — am I clear, burning, or foggy right now? — is the most portable practice this teaching offers.',
+        citation: 'Bhagavad Gita 18.23–28, 18.36–39 (tr. Swami Sivananda).'
       },
       {
         id: 'gunas-beyond',
@@ -2153,8 +2214,9 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'He who serves Me with unwavering devotion crosses beyond these gunas and is fit to become Brahman.',
           source: 'Bhagavad Gita 14.26 (tr. Swami Sivananda)'
         },
-        storyText: 'Arjuna asks the obvious question: what does the person beyond the strands look like? Krishna\'s portrait (14.22–25) is quietly radical: not someone who has only good weather, but someone who no longer argues with any of it — "he neither hates the presence of light, activity, or delusion, nor longs for them when absent." The strands keep cycling; the watcher stops being spun. And the door beyond, Krishna says, is devotion: love aimed past the weather at the sky itself. Cultivate sattva, yes — but hold even sattva lightly, because clear days bind too, with silken threads.',
-        teachingText: 'The practice matures in three stages: first, name the weather; then, feed the weather you want; finally, rest as the sky. On some ordinary afternoon, watching irritation arise and pass without becoming it, you will taste the third stage — the freedom the whole teaching points to, which no strand can bind because it was never made of thread.'
+        storyText: 'Arjuna asks the obvious question: what does the person beyond the strands look like?\n\nKrishna\'s portrait is quietly radical: not someone who has only good weather, but someone who **no longer argues with any of it** — "he neither hates the presence of light, activity, or delusion, nor longs for them when absent."\n\nThe strands keep cycling; the watcher stops being spun. And the door beyond, Krishna says, is **devotion**: love aimed past the weather at the sky itself. Cultivate sattva, yes — but hold even sattva lightly, because clear days bind too, with silken threads.',
+        teachingText: 'The practice matures in three stages: first, **name the weather**; then, **feed the weather you want**; finally, **rest as the sky**.\n\nOn some ordinary afternoon, watching irritation arise and pass without becoming it, you will taste the third stage — the freedom the whole teaching points to, which no strand can bind because it was never made of thread.',
+        citation: 'Bhagavad Gita 14.22–26 (tr. Swami Sivananda).'
       }
     ],
     sources: [
@@ -2279,14 +2341,22 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'bhakti-opening',
         title: 'The Way of Love',
         subtitle: 'A Song Rising from the Foot of the Mountain',
-        storyText: 'Every tradition must answer a hard question: is the spiritual summit only for spiritual athletes — the ones who can renounce, reason, and meditate for decades? The Gita\'s answer transformed India: no. There is a path that asks for nothing you don\'t already have, because its only instrument is the heart. Bhakti — from the root bhaj, to share, to adore — is the way of love. The Narada Bhakti Sutras, the classical manual of this path, define it in five Sanskrit words: sā tv asmin parama-prema-rūpā — "it is of the form of supreme love for Him." Not technique. Not attainment. Love, aimed all the way up.'
+        storyText: 'Every tradition must answer a hard question: is the spiritual summit only for spiritual athletes — the ones who can renounce, reason, and meditate for decades?\n\nThe Gita\'s answer transformed India: **no**. There is a path that asks for nothing you don\'t already have, because its only instrument is the heart.\n\n**Bhakti** — from the root **bhaj**, to share, to adore — is the way of love. The Narada Bhakti Sutras, the classical manual of this path, define it in five Sanskrit words: **sā tv asmin parama-prema-rūpā** — "it is of the form of supreme love for Him." Not technique. Not attainment. Love, aimed all the way up.',
+        citation: 'Narada Bhakti Sutra 2.'
       },
       {
         id: 'bhakti-four-paths',
         title: 'Four Roads Up One Mountain',
         subtitle: 'Trailhead Signs Pointing to the Same Peak',
-        storyText: 'The Gita is a map of several yogas — several disciplines of union. Karma yoga: for the doer, whose temple is work offered without clinging. Jnana yoga: for the thinker, who discriminates the eternal from the passing until only the real remains. Dhyana yoga: for the quiet one, who stills the restless mind "as a lamp in a windless place." And bhakti yoga: for the lover, who simply cannot stop adoring. The tradition\'s honesty here is remarkable — it looked at human beings, saw four temperaments, and refused to force one mold on all. The question is not "which path is highest?" but "which trailhead is nearest to where you already stand?"',
-        teachingText: 'Identify your native trailhead honestly. When life is hardest, do you cope by doing, understanding, quieting, or loving? That reflex is your yoga. Start there — a practice aligned with temperament survives; a borrowed one impresses for a month and dies.'
+        storyText: 'The Gita is a map of several **yogas** — several disciplines of union, one for each human temperament:',
+        bullets: [
+          '**Karma yoga** — for the doer, whose temple is work offered without clinging.',
+          '**Jnana yoga** — for the thinker, who discriminates the eternal from the passing until only the real remains.',
+          '**Dhyana yoga** — for the quiet one, who stills the restless mind "as a lamp in a windless place."',
+          '**Bhakti yoga** — for the lover, who simply cannot stop adoring.'
+        ],
+        teachingText: 'The tradition\'s honesty here is remarkable — it looked at human beings, saw four temperaments, and refused to force one mold on all. The question is not "which path is highest?" but **"which trailhead is nearest to where you already stand?"**\n\nIdentify your native trailhead honestly. When life is hardest, do you cope by doing, understanding, quieting, or loving? That reflex is your yoga. Start there — a practice aligned with temperament survives; a borrowed one impresses for a month and dies.',
+        citation: 'Lamp image: Bhagavad Gita 6.19 (tr. Swami Sivananda).'
       },
       {
         id: 'bhakti-carried',
@@ -2298,8 +2368,8 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'For those who worship Me alone, thinking of no other, ever united — I secure what they lack and preserve what they have.',
           source: 'Bhagavad Gita 9.22 (tr. Swami Sivananda)'
         },
-        storyText: 'Nine chapters into the Gita, Krishna makes the promise on which the whole devotional tradition stands: yoga-kshemam vahamy aham — "I carry their acquisition and their security." Every other path leaves the seeker holding the project of themselves. Bhakti alone transfers the luggage. Generations of India\'s householders — farmers, mothers, clerks with no leisure for philosophy — have run their lives on this verse: do your part with love, and what you cannot manage is managed. It is not a license for passivity; it is the end of carrying everything alone.',
-        teachingText: 'Make the experiment the verse invites: pick one worry you have white-knuckled for months, do your honest part today, and each time the mind reaches to re-grip it, say inwardly: carried. The devotional claim is not that problems vanish but that the aloneness inside them does.'
+        storyText: 'Nine chapters into the Gita, Krishna makes the promise on which the whole devotional tradition stands: **yoga-kshemam vahamy aham** — "I carry their acquisition and their security."\n\nEvery other path leaves the seeker holding the project of themselves. Bhakti alone transfers the luggage.\n\nGenerations of India\'s householders — farmers, mothers, clerks with no leisure for philosophy — have run their lives on this verse: do your part with love, and what you cannot manage is managed. It is not a license for passivity; it is **the end of carrying everything alone**.',
+        teachingText: 'Make the experiment the verse invites: pick one worry you have white-knuckled for months, do your honest part today, and each time the mind reaches to re-grip it, say inwardly: **carried**.\n\nThe devotional claim is not that problems vanish but that the aloneness inside them does.'
       },
       {
         id: 'bhakti-leaf',
@@ -2311,15 +2381,21 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'Whoever offers Me with devotion a leaf, a flower, a fruit, or water — that offering of love from the pure-hearted, I accept.',
           source: 'Bhagavad Gita 9.26 (tr. Swami Sivananda)'
         },
-        storyText: 'With this verse the Gita quietly overthrew religious economics. In a world of costly sacrifices and priestly gatekeeping, Krishna names a complete offering: a leaf. A flower. A fruit. Water. Things the poorest person on earth can find in an hour. The only ingredient that matters — bhaktya, with love — cannot be bought at any price. The tradition\'s stories delight in this inversion: Krishna choosing the widow Shabari\'s tasted berries over royal feasts, Vidura\'s simple greens over Duryodhana\'s banquet. The size of the gift measures the giver\'s wealth; the love in it measures the gift.',
-        teachingText: 'Whatever your practice, this verse keeps it honest and possible. No time, no money, no Sanskrit? A glass of water placed with full attention is a complete act of worship. Do one leaf-sized offering daily — food cooked with love, a task done as gift — and watch how the smallness of the vessel stops mattering.'
+        storyText: 'With this verse the Gita quietly overthrew religious economics.\n\nIn a world of costly sacrifices and priestly gatekeeping, Krishna names a complete offering: **a leaf. A flower. A fruit. Water.** Things the poorest person on earth can find in an hour. The only ingredient that matters — **bhaktya**, with love — cannot be bought at any price.\n\nThe tradition\'s stories delight in this inversion: Krishna choosing the widow Shabari\'s tasted berries over royal feasts, Vidura\'s simple greens over Duryodhana\'s banquet. The size of the gift measures the giver\'s wealth; the love in it measures the gift.',
+        teachingText: 'Whatever your practice, this verse keeps it honest and possible. No time, no money, no Sanskrit? **A glass of water placed with full attention is a complete act of worship.**\n\nDo one leaf-sized offering daily — food cooked with love, a task done as gift — and watch how the smallness of the vessel stops mattering.'
       },
       {
         id: 'bhakti-ladder',
         title: 'The Ladder That Reaches All the Way Down',
         subtitle: 'Rungs Descending into Reach',
-        storyText: 'The twelfth chapter contains the Gita\'s gentlest engineering: a ladder for those who cannot do the highest thing. Fix your mind wholly on Me, Krishna begins — and immediately anticipates the honest reply: I can\'t. Then practice remembering and forgetting and remembering again, he says. Can\'t sustain that either? Then work for Me — let your hands do what your mind cannot hold. Even that too much? Then simply do your own work and release the fruits (12.8–12). Every rung is honored; no one is turned away for starting low. And the chapter ends with love\'s portrait: the devotee "from whom the world feels no fear," friendly, compassionate, free of possessiveness — beloved not for feats but for gentleness.',
-        teachingText: 'In dry seasons, climb DOWN with dignity instead of quitting in shame. Can\'t feel devotion? Practice remembering. Can\'t practice? Offer your work. Can\'t offer? Just release one outcome today. The ladder\'s genius is that its lowest rung — letting go of one result — is available on your worst day, and it is still the path.'
+        storyText: 'The twelfth chapter contains the Gita\'s gentlest engineering: **a ladder for those who cannot do the highest thing.**\n\nFix your mind wholly on Me, Krishna begins — and immediately anticipates the honest reply: I can\'t. Then he descends, rung by rung:',
+        bullets: [
+          'Can\'t fix the mind? **Practice** remembering, forgetting, and remembering again.',
+          'Can\'t sustain the practice? **Work for Me** — let your hands do what your mind cannot hold.',
+          'Even that too much? **Do your own work and release the fruits.**'
+        ],
+        teachingText: 'Every rung is honored; no one is turned away for starting low. And the chapter ends with love\'s portrait: the devotee "from whom the world feels no fear" — friendly, compassionate, free of possessiveness — beloved not for feats but for gentleness.\n\nIn dry seasons, **climb down with dignity** instead of quitting in shame. Can\'t feel devotion? Practice remembering. Can\'t practice? Offer your work. Can\'t offer? Just release one outcome today. The ladder\'s lowest rung is available on your worst day, and it is still the path.',
+        citation: 'Bhagavad Gita 12.8–12, 12.13–15 (tr. Swami Sivananda).'
       },
       {
         id: 'bhakti-braid',
@@ -2331,8 +2407,9 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'But by single-minded devotion I can be known, seen, and in truth entered into, O Arjuna.',
           source: 'Bhagavad Gita 11.54 (tr. Swami Sivananda)'
         },
-        storyText: 'After granting Arjuna the overwhelming vision of the cosmic form — the vision philosophy strains toward — Krishna reveals what actually opened the door: not austerity, not study, not sacrifice, "but by single-minded devotion I can be known." The paths, walked far enough, braid. Karma yoga matures when action becomes offering — which is love. Jnana matures when the knower falls silent before what is known — which is love. Meditation matures when stillness becomes presence with the beloved — which is love. And the Gita\'s very last teaching verse hands Arjuna the braided rope: "Abandon all dharmas and take refuge in Me alone... do not grieve" (18.66).',
-        teachingText: 'Wherever you started — doing, thinking, sitting — notice love quietly becoming the point. The task done for its own sake starts feeling like a gift to someone. That shift is not a distraction from your path; it is your path ripening. Follow the warmth. Every road on the map was always a road home.'
+        storyText: 'After granting Arjuna the overwhelming vision of the cosmic form — the vision philosophy strains toward — Krishna reveals what actually opened the door: not austerity, not study, not sacrifice, "but by single-minded devotion I can be known."\n\nThe paths, walked far enough, **braid**. Karma yoga matures when action becomes offering — which is love. Jnana matures when the knower falls silent before what is known — which is love. Meditation matures when stillness becomes presence with the beloved — which is love.\n\nAnd the Gita\'s very last teaching verse hands Arjuna the braided rope: "Abandon all dharmas and take refuge in Me alone... do not grieve."',
+        teachingText: 'Wherever you started — doing, thinking, sitting — notice love quietly becoming the point. The task done for its own sake starts feeling like a gift to someone.\n\nThat shift is not a distraction from your path; **it is your path ripening**. Follow the warmth. Every road on the map was always a road home.',
+        citation: 'Bhagavad Gita 18.66 (tr. Swami Sivananda).'
       }
     ],
     sources: [
