@@ -77,6 +77,8 @@ Tap handling: `navigationRef` + response listener in App.tsx (incl. cold-start v
 
 - Four content shapes: **courses** (reader items on the journey), **atoms** (Daily Chai), **skills** (future: mantra learn-by-repetition), **discussions** (future: audio/voice-mentor renderings).
 - Every item/section opens with the **human question it answers**, not a definition.
+- **Bite-sized pages**: one idea per page — split into more sections rather than compressing; a course may span many pages like a Gita chapter. Stories are told as **scenes**, never summarized ("what actually happened," not "the story goes").
+- **Readable formatting**: `**bold**` the key terms a reader should retain (rendered via RichText; markers stripped for narration/highlighting); use the section `bullets` field for any enumeration of 3+ items. Prose paragraphs stay short (2–4 sentences), separated by blank lines. *(Piloted on hinduism-overview; rolling out to all content.)*
 - **Citations**: famous, publicly verifiable loci only; public-domain translations named (Sivananda/Gita, Müller/Upanishads, Griffith/Rig Veda, Ganguli/Mahabharata); practices without scripture say "tradition" honestly; later-tradition stories labeled as such (e.g., Hanuman's opened chest).
 - Ritual/practice pages end with the standing line: **"This is one common way — ask your family how they walk it."**
 - Plurality is doctrine: no single "correct" Hinduism; branches taught explicitly. Comparative-religion content: last priority, expert-reviewed first, framed as shared questions before differing answers.

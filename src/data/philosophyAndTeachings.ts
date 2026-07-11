@@ -172,64 +172,163 @@ export const philosophyData: PhilosophicalConcept[] = [
     difficulty: 'beginner',
     sections: [
       {
-        id: 'overview-name',
-        title: 'A Religion With No Founder',
-        subtitle: 'The river that named a civilization',
-        storyText: 'Every other major religion can point to a beginning — a founder, a revelation, a date. Hinduism cannot, and that is the first thing to understand about it. It grew the way a river system grows: countless streams, some four thousand years old, feeding one another until no one could say where the water began. Even the name came from outside. Persian travelers used "Hindu" — their pronunciation of Sindhu, the river Indus — for the people who lived beyond that river. The people themselves had no single name for what they practiced, because they did not think of it as a single thing.',
-        sectionHeader: 'What it calls itself',
-        teachingText: 'The tradition\'s own name for itself is Sanatana Dharma — the eternal way. Not eternal because it refuses to change (it never stops changing), but because it organizes itself around questions that do not age: What am I, really? Why is there suffering? What happens when I die? How should I live? Hold onto that. Hinduism is not a set of answers you must accept; it is a very old, very patient conversation about those questions — and you are allowed to join it from wherever you stand.',
-        citation: '"Hindu" from Persian for the Sindhu (Indus) river — standard etymology; "Sanatana Dharma" as the tradition\'s self-designation',
+        id: 'overview-river',
+        title: 'The River That Named It',
+        subtitle: 'A religion with no founder',
+        storyText:
+          'Every other major religion can point to a beginning — a founder, a revelation, a date. Hinduism cannot, and that is the first thing to understand about it.\n\nIt grew the way a river system grows: countless streams, some four thousand years old, feeding one another until no one could say where the water began.\n\nEven the name came from outside. Persian travelers used **Hindu** — their pronunciation of **Sindhu**, the river Indus — for the people who lived beyond that river. The people themselves had no single name for what they practiced, because they never thought of it as a single thing.',
+        citation: '"Hindu" from Persian for the Sindhu (Indus) river — standard etymology',
       },
       {
-        id: 'overview-books',
-        title: 'The Library, Not the Book',
-        subtitle: 'How the scriptures fit together',
-        storyText: 'Ask "what is the Hindu Bible?" and the honest answer is: there isn\'t one — there is a library, with two great shelves. The first shelf is called Shruti, "that which was heard": the four Vedas — Rig, Sama, Yajur, Atharva — the oldest religious texts still in use anywhere on earth, and, folded into their final portions, the Upanishads. The word upanishad means "sitting down near," as a student sits near a teacher, and these are the tradition\'s crown: fearless dialogues about the nature of reality itself. The second shelf is Smriti, "that which is remembered": the great epics — the Mahabharata, which carries the Bhagavad Gita inside it like a jewel in a setting, and the Ramayana — along with the Puranas, the vast storybooks that gave the gods their faces and the festivals their stories.',
-        sectionHeader: 'Why the Gita matters so much',
+        id: 'overview-sanatana',
+        title: 'What It Calls Itself',
+        subtitle: 'The eternal way',
+        storyText:
+          'The tradition\u2019s own name for itself is **Sanatana Dharma** — the eternal way.\n\nNot eternal because it refuses to change. It never stops changing. Eternal because it organizes itself around questions that do not age.\n\nHold onto this: Hinduism is not a set of answers you must accept. It is a very old, very patient **conversation** — and you are allowed to join it from wherever you stand.',
+        citation: '"Sanatana Dharma" as the tradition\u2019s self-designation — traditional usage',
+      },
+      {
+        id: 'overview-questions',
+        title: 'The Questions That Hold It Together',
+        subtitle: 'Four questions, four thousand years',
+        storyText:
+          'What holds a tradition together without a founder, a single book, or a central authority? A shared set of questions. For four thousand years, everything in Hinduism has circled these four:',
+        bullets: [
+          '**What am I, really?** — beneath the name, the roles, the body',
+          '**Why is there suffering?** — and what can actually be done about it',
+          '**What happens when I die?** — does anything continue, and what?',
+          '**How should I live?** — today, in this family, with these duties',
+        ],
+        teachingText:
+          'Every scripture, god, festival, and practice you will meet on this journey is an answer to one of these four. Keep them in your pocket — they are the map\u2019s legend.',
+        citation: 'The framing is editorial; the questions are the classical concerns of the Upanishads and Dharmashastra',
+      },
+      {
+        id: 'overview-shruti',
+        title: 'The First Shelf: What Was Heard',
+        subtitle: 'Shruti — the Vedas and their crown',
+        storyText:
+          'Ask "what is the Hindu Bible?" and the honest answer is: there isn\u2019t one. There is a **library**, with two great shelves.\n\nThe first shelf is called **Shruti** — **"that which was heard."** The tradition holds that these texts were not composed but received, by sages in deep states of attention. They are the four **Vedas**:',
+        bullets: [
+          '**Rig Veda** — the hymns; the oldest religious text still in use anywhere on earth',
+          '**Sama Veda** — the hymns set to melody; the root of Indian sacred music',
+          '**Yajur Veda** — the ritual formulas; how the ceremonies are actually performed',
+          '**Atharva Veda** — the practical one; healing, protection, daily life',
+        ],
+        teachingText:
+          'Folded into the final portions of the Vedas sit the **Upanishads** — the tradition\u2019s crown. The word means **"sitting down near,"** as a student sits near a teacher, and these are fearless dialogues about the nature of reality itself.',
+        citation: 'Shruti/Smriti distinction and upanishad etymology ("sitting near"): standard; Vedic corpus as described',
+      },
+      {
+        id: 'overview-smriti',
+        title: 'The Second Shelf: What Is Remembered',
+        subtitle: 'Smriti — the epics and the storybooks',
+        storyText:
+          'The second shelf is **Smriti** — **"that which is remembered."** If Shruti is the philosopher\u2019s shelf, Smriti is the family\u2019s: the texts most Hindus actually live with.\n\nHere sit the two great epics. The **Mahabharata** — the longest poem ever composed, a war within one family — carries the **Bhagavad Gita** inside it like a jewel in a setting. The **Ramayana** tells of Rama\u2019s exile, Sita\u2019s abduction, and Hanuman\u2019s devotion.\n\nAnd beside them, the **Puranas** — the vast storybooks that gave the gods their faces and the festivals their stories.',
+        teachingText:
+          'The stories your grandmother told are scripture too. They are simply from the shelf built for **hearts** rather than philosophers.',
+        citation: 'Smriti corpus: standard classification (epics and Puranas)',
+      },
+      {
+        id: 'overview-gita-milk',
+        title: 'Why the Gita Matters So Much',
+        subtitle: 'The milk of the Upanishads',
         keyVerse: {
-          sanskrit: 'सर्वोपनिषदो गावो दोग्धा गोपालनन्दनः',
-          transliteration: 'sarvopaniṣado gāvo dogdhā gopāla-nandanaḥ',
-          meaning: 'All the Upanishads are cows; the milker is Krishna, the cowherd\'s son',
+          sanskrit: '\u0938\u0930\u094d\u0935\u094b\u092a\u0928\u093f\u0937\u0926\u094b \u0917\u093e\u0935\u094b \u0926\u094b\u0917\u094d\u0927\u093e \u0917\u094b\u092a\u093e\u0932\u0928\u0928\u094d\u0926\u0928\u0903',
+          transliteration: 'sarvopani\u1e63ado g\u0101vo dogdh\u0101 gop\u0101la-nandana\u1e25',
+          meaning: 'All the Upanishads are cows; the milker is Krishna, the cowherd\u2019s son',
         },
-        teachingText: 'A traditional verse says the Upanishads are cows and the Gita is their milk, drawn by Krishna himself — everything essential, made drinkable. That is why this app\'s journey walks you through the Gita chapter by chapter: it is the tradition\'s own summary of its deepest shelf. The epics and Puranas, meanwhile, are where most families actually live — the stories your grandmother told are scripture too, just from the shelf built for hearts rather than philosophers.',
-        citation: 'Cows-and-milk verse: Gita Mahatmya 6 (traditional); upanishad = "sitting down near," standard etymology',
+        storyText:
+          'A traditional verse says the **Upanishads are cows** and the **Gita is their milk**, drawn by Krishna himself — everything essential, made drinkable.\n\nSeven hundred verses, spoken on a battlefield to a warrior who has just lost his nerve. Every big idea the tradition ever had shows up in it, applied to one man\u2019s hardest morning.',
+        teachingText:
+          'That is why this journey walks you through the Gita **chapter by chapter**: it is the tradition\u2019s own summary of its deepest shelf.',
+        citation: 'Cows-and-milk verse: Gita Mahatmya 6 (traditional)',
       },
       {
-        id: 'overview-gods',
-        title: 'One Truth, Many Faces',
-        subtitle: 'Why "how many gods?" is the wrong question',
+        id: 'overview-one-truth',
+        title: 'One Truth, Many Names',
+        subtitle: 'The oldest answer to the oldest question',
         openingVerse: {
-          sanskrit: 'एकं सद्विप्रा बहुधा वदन्ति',
-          transliteration: 'ekaṁ sad viprā bahudhā vadanti',
+          sanskrit: '\u090f\u0915\u0902 \u0938\u0926\u094d\u0935\u093f\u092a\u094d\u0930\u093e \u092c\u0939\u0941\u0927\u093e \u0935\u0926\u0928\u094d\u0924\u093f',
+          transliteration: 'eka\u1e43 sad vipr\u0101 bahudh\u0101 vadanti',
           meaning: 'Truth is one; the wise call it by many names',
         },
-        storyText: 'The Rig Veda — the oldest book on the oldest shelf — already answered the question outsiders never stop asking. Naming Indra, Mitra, Varuna, Agni, the hymn concludes: what exists is One; sages give it many names. Everything else about the gods unfolds from that line. The one reality the Upanishads call Brahman meets human beings through faces: Brahma who creates, Vishnu who preserves, Shiva who dissolves; the Goddess — Durga, Lakshmi, Saraswati — who is power, abundance, and wisdom; and the avatars, the divine descents like Rama and Krishna, who walk into history when dharma falters.',
-        sectionHeader: 'The face you love',
-        teachingText: 'The tradition even has a word for the most personal part of this: ishta-devata, the "chosen deity" — the face of the divine your own heart answers to. A family of Krishna devotees and a family of Shiva devotees are not practicing rival religions; they are loving the same ocean through different rivers. When you meet the deities later in this journey, you are not being introduced to a crowd of gods. You are being shown the same light through different windows.',
-        citation: 'Rig Veda 1.164.46, tr. Griffith (public domain); avatars: Bhagavad Gita 4.7–8',
+        storyText:
+          '"How many gods do Hindus worship?" The **Rig Veda** — the oldest book on the oldest shelf — answered this three thousand years before anyone thought to ask it as a challenge.\n\nNaming god after god — Indra, Mitra, Varuna, Agni — the hymn suddenly stops and says the quiet part aloud: **what exists is One**. The sages simply give it many names.\n\nEverything about the gods unfolds from that single line.',
+        citation: 'Rig Veda 1.164.46, tr. Griffith (public domain)',
       },
       {
-        id: 'overview-goal',
-        title: 'The Goal of a Human Life',
-        subtitle: 'Four aims, one destination',
-        storyText: 'Hinduism is unusually generous about what a life is for. The tradition names four aims — the purusharthas. Dharma: living rightly, in tune with your nature and your responsibilities. Artha: prosperity — wealth and security are not embarrassments but legitimate goods. Kama: pleasure, beauty, love — also holy, in their place. And moksha: liberation. The first three make a good life; the fourth asks what all of it was for. The mechanics underneath are karma and samsara: actions leave traces, traces shape futures, and the self — the atman — travels through birth after birth carrying them.',
-        sectionHeader: 'The claim beneath everything',
+        id: 'overview-faces',
+        title: 'The Faces of the One',
+        subtitle: 'Who you will meet',
+        storyText:
+          'The one reality the Upanishads call **Brahman** meets human beings through faces. The ones you will encounter most:',
+        bullets: [
+          '**Brahma** — the creator, who begins each cosmos',
+          '**Vishnu** — the preserver, who sustains what is good',
+          '**Shiva** — the transformer, who dissolves what is finished',
+          '**Devi**, the Goddess — **Durga\u2019s** protection, **Lakshmi\u2019s** abundance, **Saraswati\u2019s** wisdom',
+          '**The avatars** — the divine descending into history: **Rama** the ideal king, **Krishna** the friend and guide',
+        ],
+        teachingText:
+          'When you meet the deities later in this journey, you are not being introduced to a crowd of gods. You are being shown **the same light through different windows**.',
+        citation: 'Trimurti, Devi, and avatar doctrine: Puranic tradition; avatars: Bhagavad Gita 4.7\u20138',
+      },
+      {
+        id: 'overview-ishta',
+        title: 'The Face You Love',
+        subtitle: 'Ishta-devata — devotion made personal',
+        storyText:
+          'The tradition has a word for the most personal part of all this: **ishta-devata** — the chosen deity. The face of the divine your own heart answers to.\n\nA family of Krishna devotees and a family of Shiva devotees are not practicing rival religions. They are loving the **same ocean** through different rivers.\n\nYou may already have an ishta-devata without knowing the word — the face that was on your family\u2019s altar, or the one whose stories quietly stayed with you.',
+        citation: 'Ishta-devata: standard devotional concept across sampradayas',
+      },
+      {
+        id: 'overview-aims',
+        title: 'The Four Aims of a Life',
+        subtitle: 'What is all this for?',
+        storyText:
+          'Hinduism is unusually generous about what a life is for. The tradition names four aims — the **purusharthas**:',
+        bullets: [
+          '**Dharma** — right living: acting in tune with your nature and your responsibilities',
+          '**Artha** — prosperity: wealth and security are legitimate goods, not embarrassments',
+          '**Kama** — pleasure: beauty, love, and enjoyment are also holy, in their place',
+          '**Moksha** — liberation: the final freedom that asks what the other three were for',
+        ],
+        teachingText:
+          'Notice the generosity. A tradition that blesses prosperity and pleasure alongside duty and liberation is not asking you to choose between a good life and a spiritual one. It is claiming they were **never two different things**.',
+        citation: 'Purusharthas: Dharmashastra tradition',
+      },
+      {
+        id: 'overview-mechanics',
+        title: 'Karma, Samsara, and the Way Out',
+        subtitle: 'The mechanics beneath everything',
+        storyText:
+          'Three ideas run the machinery. **Karma**: every action leaves a trace, and traces shape futures. **Samsara**: the self — the **atman** — travels through birth after birth, carrying those traces. **Moksha**: the exit — liberation from the whole cycle.\n\nAnd what is liberation? The Upanishads state the destination in three syllables a father once spoke to his son:',
         keyVerse: {
-          sanskrit: 'तत्त्वमसि',
+          sanskrit: '\u0924\u0924\u094d\u0924\u094d\u0935\u092e\u0938\u093f',
           transliteration: 'tat tvam asi',
           meaning: 'That thou art — you are That',
         },
-        teachingText: 'And moksha itself? The Upanishads state the destination in three syllables a father spoke to his son: tat tvam asi — you are That. The atman within you and Brahman behind everything were never two. Liberation is not going somewhere after death; it is waking up to what was always true. Every practice in this tradition — every ritual, every chant, every pilgrimage — is, at bottom, an alarm clock.',
-        citation: 'Purusharthas: Dharmashastra tradition; tat tvam asi: Chandogya Upanishad 6.8.7, tr. Müller (public domain)',
+        teachingText:
+          'The **atman** within you and **Brahman** behind everything were never two. Liberation is not going somewhere after death — it is **waking up to what was always true**. Every practice in this tradition, at bottom, is an alarm clock.',
+        citation: 'Tat tvam asi: Chandogya Upanishad 6.8.7, tr. M\u00fcller (public domain)',
       },
       {
-        id: 'overview-paths',
+        id: 'overview-which',
         title: 'Which Hinduism Is the Right One?',
         subtitle: 'Many rivers, one ocean',
-        storyText: 'By now you may suspect the answer: there is no single right one, and the tradition says so on purpose. Historically, Hindus have organized their devotion in great streams — Vaishnavas centered on Vishnu and his avatars, Shaivas on Shiva, Shaktas on the Goddess, Smartas honoring all the faces as one. And across all of them run the yogas, the paths matched to temperament: karma yoga for those who find the divine through work, bhakti yoga through love, jnana yoga through inquiry, dhyana through stillness. The Gita blesses this plurality outright — by whatever path people come to me, Krishna says, I welcome them.',
-        sectionHeader: 'Your family\'s way',
-        teachingText: 'This is also why your family\'s Hinduism may look different from your friend\'s — different deities on the altar, different festival foods, different rules about fasting. None of that is corruption or confusion. It is the design. This is one common map; ask your family how they walk it. Their answers are part of the tradition too — the living part. Four thousand years of conversation are waiting. Take the next step.',
-        citation: '"By whatever path…": Bhagavad Gita 4.11, tr. Sivananda (public domain)',
+        storyText:
+          'By now you may suspect the answer: **there is no single right one**, and the tradition says so on purpose. Historically, Hindus have organized their devotion in great streams:',
+        bullets: [
+          '**Vaishnavas** — centered on Vishnu and his avatars',
+          '**Shaivas** — centered on Shiva',
+          '**Shaktas** — centered on the Goddess',
+          '**Smartas** — honoring all the faces as one',
+        ],
+        sectionHeader: 'Your family\u2019s way',
+        teachingText:
+          'This is why your family\u2019s Hinduism may look different from your friend\u2019s — different deities on the altar, different festival foods, different fasts. None of that is confusion. **It is the design.**\n\nThis is one common map; **ask your family how they walk it**. Their answers are part of the tradition too — the living part. Four thousand years of conversation are waiting. Take the next step.',
+        citation: 'The four streams: sampradaya tradition; the Gita\u2019s pluralism: 4.11, tr. Sivananda (public domain)',
       },
     ],
     sources: [
