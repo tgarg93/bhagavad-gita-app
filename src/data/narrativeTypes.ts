@@ -29,6 +29,10 @@ export interface NarrativeSection {
   // One-line footnote for this section's claims, rendered at the foot of the
   // page ("Shiva Purana, Rudra Samhita · tr. wisdomlib.org")
   citation?: string;
+  // In-app destination for the citation, in the permanent content-ref form
+  // ('gita:2' | 'concept:karma' | 'deity:krishna' | 'festival:janmashtami').
+  // When set, the footnote becomes tappable (routeForContentRef resolves it).
+  citationLink?: string;
 }
 
 // A human-readable SOURCES entry rendered at the foot of seed content.
@@ -38,4 +42,7 @@ export interface SourceNote {
   locator: string; // "Canto 10, Chapters 1–4"
   translation?: string; // translation consulted, e.g. "Prabhupada / wisdomlib.org"
   url?: string;
+  // In-app destination when this source's text exists in the app, in the same
+  // content-ref form as NarrativeSection.citationLink (e.g. 'gita:2')
+  appLink?: string;
 }

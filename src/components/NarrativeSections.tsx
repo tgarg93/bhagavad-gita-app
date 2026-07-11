@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import TextHighlighter from './TextHighlighter';
 import RichText, { stripInlineMarkup } from './RichText';
 import { TextSegment } from '../services/audioNarrationService';
 import { NarrativeSection, NarrativeVerse } from '../data/narrativeTypes';
+import { navigateToContentRef } from '../data/journeyPath';
 
 // The shared immersive-reading renderer, extracted from PhilosophyDetailScreen:
 // title → openingVerse → storyText → sectionHeader → keyVerse → teachingText.
@@ -39,6 +41,7 @@ const NarrativeSections: React.FC<NarrativeSectionsProps> = ({
   onSectionLayout,
   sectionIndexOffset,
 }) => {
+  const navigation = useNavigation();
   // Prose renderer: rich (bold) normally; while THIS block is being narrated,
   // fall back to TextHighlighter on marker-stripped text so the highlight's
   // substring offsets (computed against stripped narration text) stay exact
@@ -159,7 +162,19 @@ const NarrativeSections: React.FC<NarrativeSectionsProps> = ({
 
             {section.citation && (
               <View style={styles.citationRule}>
-                <Text style={styles.citationText}>{section.citation}</Text>
+                {section.citationLink ? (
+                  <TouchableOpacity
+                    activeOpacity={0.6}
+                    onPress={() => navigateToContentRef(navigation, section.citationLink!)}
+                  >
+                    <Text style={styles.citationText}>
+                      {section.citation}
+                      <Text style={styles.citationLinkText}>{'  '}Read in app ›</Text>
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <Text style={styles.citationText}>{section.citation}</Text>
+                )}
               </View>
             )}
           </View>
@@ -180,12 +195,13 @@ const styles = StyleSheet.create({
     marginBottom: DharmaDesignSystem.spacing.xs,
     fontWeight: '600',
   },
+  // Matches the Gita reader's chapterSubtitle so every subtitle in the app
+  // shares one treatment: bodyLG italic softAsh, left-aligned under the title
   sectionSubtitle: {
-    ...DharmaDesignSystem.typography.sizes.bodyMD,
+    ...DharmaDesignSystem.typography.sizes.bodyLG,
     color: DharmaDesignSystem.colors.neutrals.softAsh,
     fontStyle: 'italic',
     marginBottom: DharmaDesignSystem.spacing.md,
-    textAlign: 'center',
   },
   verseContainer: {
     backgroundColor: 'rgba(255, 193, 7, 0.05)',
@@ -266,6 +282,13 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     fontStyle: 'italic',
     color: DharmaDesignSystem.colors.neutrals.softAsh,
+  },
+  citationLinkText: {
+    fontSize: 12,
+    lineHeight: 17,
+    fontStyle: 'normal',
+    fontWeight: '600',
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
   },
 });
 

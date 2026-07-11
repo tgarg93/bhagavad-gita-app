@@ -36,7 +36,8 @@ export interface Deity {
   sections?: NarrativeSection[];
   // Primary texts the content was verified against (rendered as a footer card)
   sources?: SourceNote[];
-  // Chapter-style reflection questions (exactly 3, Gita pattern)
+  // Reflection questions: one plain, concrete question (two only when the
+  // content genuinely has two distinct hooks) — answerable from daily life
   reflectionQuestions?: string[];
 }
 
@@ -293,6 +294,7 @@ export const deitiesData: Deity[] = [
         subtitle: 'A Basket Crossing the Yamuna at Midnight',
         storyText: 'His story begins where Janmashtami\'s does: the tyrant Kamsa, the prophecy, the prison birth at midnight, the locks opening, and Vasudeva carrying the child across the flooding Yamuna to safety in Gokul.\n\nWhat the tradition savors is the sequel: the rescued god grew up not in a palace preparing his revenge, but in a cowherd village — **barefoot, butter-smeared, beloved**.\n\nThe divine chose ordinary rural childhood: churning, herding, flooding rivers, village festivals. Every dusty detail of common life was good enough for God to live in.',
         teachingText: 'Krishna\'s pastoral years dignify every unglamorous stretch of a life.\n\nIf the divine spent years herding cows and stealing butter before speaking the Gita, then your own ordinary seasons — the commutes, the childcare, the unremarkable years — are not the waiting room of your real life. **They may be the part heaven remembers most fondly.**',
+        citationLink: 'festival:janmashtami-2025',
         citation: 'Bhagavata Purana, Canto 10, Chapters 1–4 (the birth), 5–10 (Gokul).'
       },
       {
@@ -334,14 +336,13 @@ export const deitiesData: Deity[] = [
       },
       {
         text: 'Bhagavad Gita',
+        appLink: 'gita:18',
         locator: '18.61 (the Lord in all hearts); the Gita entire as Krishna\'s teaching at Kurukshetra',
         translation: 'Swami Sivananda (public domain)',
       },
     ],
     reflectionQuestions: [
-      'Krishna lived years of ordinary village life before speaking the Gita. Which "unremarkable" season of your own life might heaven remember most fondly — and what did it quietly build in you?',
-      'The flute makes music only because it is empty. What fills you that the music cannot pass through — and what would one small hollowing look like?',
-      'Krishna drives the chariot but does not fight the battle. In your current struggle, what belongs to the charioteer — and what part is unavoidably yours to fight?'
+      'Krishna spent years on ordinary village chores before speaking the Gita. What ordinary part of your day deserves more care?'
     ]
   },
   {
@@ -503,9 +504,7 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Rama had one line he would not cross at any price. Do you know yours? What has holding it — or not yet naming it — cost you?',
-      'The forest, not the palace, made Rama the king he became. What has your hardest season taught you that comfort never could — and who were the allies you met only there?',
-      'On Rama\'s bridge, the squirrel\'s sand counted as sacred work. In what you\'re building now, who is carrying sand — and when did you last stroke the squirrel\'s back?'
+      'Rama had one line he would never cross. What is one line you won\'t cross, no matter what?'
     ]
   },
   {
@@ -631,6 +630,7 @@ export const deitiesData: Deity[] = [
         subtitle: 'Parvati Shaping a Boy from Turmeric',
         storyText: 'The Shiva Purana tells Ganesha\'s birth without softening it.\n\nParvati creates a son from the turmeric paste of her own body and posts him at her door; Shiva, unrecognized and enraged, beheads the boy; Parvati\'s grief threatens the cosmos; and the child is restored with an elephant\'s head, then **raised higher than he stood before** — first among the ganas, first in every prayer.\n\nIt is a family story of terrible misunderstanding and greater repair, and Hindu tradition placed it at the very front of all worship.',
         teachingText: 'Every family carries a version of this story — the clash that came from not recognizing each other, the wound that seemed unforgivable.\n\nThe Purana\'s answer is not that the wound didn\'t matter, but that **repair can be so complete it transforms the wounded one\'s place in the family**. Where in your life is a beheaded relationship waiting for an elephant\'s head — an imperfect, unlikely, generous repair that restores more than was lost?',
+        citationLink: 'festival:ganesh-chaturthi-2025',
         citation: 'Shiva Purana, Rudra Samhita (Kumara Khanda).'
       },
       {
@@ -687,9 +687,7 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Ganesha guards thresholds — every beginning is sacred to him. What are you beginning right now, and how might you honor that beginning instead of rushing through it?',
-      'In the race with his brother, Ganesha won by circling his parents and calling them his world. What race are you running that might be the wrong circuit — and what would "walking around what you love" look like instead?',
-      'Ganesha would not write faster than he understood. Where in your life is your output — words, decisions, commitments — outrunning your understanding?'
+      'What are you starting right now, and what would a good, unhurried beginning look like?'
     ]
   },
   {
@@ -832,6 +830,7 @@ export const deitiesData: Deity[] = [
         subtitle: 'Kailasa as a Family Home',
         storyText: 'The wild, ash-smeared renunciant is also the tradition\'s most beloved family man.\n\nParvati won him not by beauty — he burned Kama, desire itself, to ash with his third eye when desire was aimed at him — but by **tapasya**, matching his austerity with her own until he recognized an equal.\n\nTheir marriage joins what the world calls opposites: the hermit and the queen\'s daughter, stillness and devotion. Their household on Kailasa — Parvati, Ganesha, Kartikeya, the bull Nandi at the door — became the model of **a family built around a meditative center** rather than around busyness.',
         teachingText: 'Shiva refutes the idea that depth requires leaving. He is fully ascetic and fully married; the meditation does not end when the family begins.\n\nWhat would it mean for your household to have a still center — one practice, one hour, one corner of the home where the churning stops? The tradition\'s answer to work-life balance is not balance but **a center**.',
+        citationLink: 'deity:parvati',
         citation: 'Shiva Purana, Rudra Samhita (Parvati Khanda); Kalidasa, Kumarasambhava.'
       },
       {
@@ -840,6 +839,7 @@ export const deitiesData: Deity[] = [
         subtitle: 'One Bilva Leaf and a Handful of Water',
         storyText: 'Of all the great gods, Shiva is **Bholenath** — the innocent, the easily pleased.\n\nHis worship requires no priest, no wealth, no elaborate rite: a bilva leaf, water poured over a stone linga, his name said with attention. The tradition delights in stories of accidental worship — a hunter who unknowingly dropped bilva leaves on a linga through a night of fear and was liberated by dawn.\n\nThe theological point is serious: **the divine measures sincerity, not production value.** The god who owns nothing cannot be impressed by what you own.',
         teachingText: 'Whatever your practice is becoming, Shiva keeps it honest: **could you do it with one leaf and a palmful of water?**\n\nIf your spiritual life has grown elaborate — apps, courses, gear — strip it once a week to the bare act: sit, pour, say the name, mean it. Bholenath asks for nothing else, which is exactly what makes the offering complete.',
+        citationLink: 'festival:maha-shivratri-2025',
         citation: 'The hunter\'s night of bilva leaves: Shiva Purana (Shivratri mahatmya tellings).'
       }
     ],
@@ -868,9 +868,7 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Shiva held the world\'s poison in his throat — absorbing it without passing it on. Where in your life are you swallowing poison too deep, or spraying it onward? What would holding it "in the throat" look like?',
-      'The Ganga would have shattered the earth if Shiva had not broken her fall. Who broke the fall of what descended toward you — and for whom are you now the one standing beneath the river?',
-      'Shiva is worshipped with one leaf and a handful of water. If your practice were stripped to a single sincere act, what would it be?'
+      'Shiva absorbed poison without passing it on. When you\'re stressed, how could you avoid passing it to the people around you?'
     ]
   },
   {
@@ -1028,9 +1026,7 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Hanuman forgot his own strength until Jambavan reminded him. What capability have you stopped believing you have — and who in your life states your strengths as facts?',
-      'Hanuman\'s power had no drag because none of it served his ego. In your current work, how much of your energy goes to the task, and how much to maintaining your image?',
-      'If your chest were opened like Hanuman\'s — your time, attention, and quiet thoughts examined — what would be found enthroned at the center?'
+      'Hanuman forgot his own strength until a friend reminded him. What are you good at that you tend to forget?'
     ]
   },
   {
@@ -1180,6 +1176,7 @@ export const deitiesData: Deity[] = [
         subtitle: 'A Lamp Lit Beside a Sprouting Pot of Grain',
         storyText: 'Twice a year, at the great turning of the seasons, India gives Durga nine nights — **Navratri**.\n\nA pot of grain is sprouted, a lamp kept burning, and night by night the Goddess is honored in her forms: fierce **Durga**, wealth-giving **Lakshmi**, wisdom-bestowing **Saraswati** — by one beloved arrangement, three nights each. On Ashtami, young girls are worshipped as her living embodiment — the theology of "the Goddess abides in all beings" made into a household act.\n\nThe festival ends in **Vijayadashami**, the day of victory, when Mahishasura falls and, in the north, Ravana burns: all the traditions agreeing that after nine nights of honoring the sacred feminine, the tenth day belongs to triumph.',
         teachingText: 'Navratri\'s structure is itself the teaching: **protection first (Durga), then abundance (Lakshmi), then wisdom (Saraswati)** — in that order, because abundance without protection is looted and wisdom without abundance starves.\n\nAudit your own life in her sequence. And the kanya puja asks the sharpest question: do you actually treat the ordinary beings around you as places where the Goddess lives?',
+        citationLink: 'festival:navratri-2025',
         citation: 'Navratri: living tradition; the three-by-three arrangement and kanya puja: widespread devotional practice.'
       }
     ],
@@ -1196,9 +1193,7 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Durga was born when the gods pooled their power and handed over their own weapons. What is your "trident" — and is there a struggle in your life that persists because everyone involved is fighting it separately?',
-      'Her iconography joins a serene face with armed hands: total protection, zero hatred. When you last had to be fierce, which came out — the weapons, the serenity, or both?',
-      'Mahishasura survived by shape-shifting every time he was nearly caught. What in your life keeps changing its name each time you confront it — and what would naming it once, clearly, sound like?'
+      'Durga is fierce without hatred. When did you last have to stand firm — and did you manage it without anger?'
     ]
   },
   {
@@ -1340,9 +1335,7 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Brahma\'s work was essential and then it was over — and the tradition honors what is still running. What have you created that you now need to release into others\' maintenance?',
-      'The creator\'s first act was to sit with what he could not see and begin anyway. Where are you waiting for full understanding before starting something that only needs your honest beginning?',
-      'A day of Brahma makes empires look brief. Name the worry that is loudest this week — how does it look against the largest clock you can imagine?'
+      'A single day of Brahma outlasts empires. Does this week\'s biggest worry look smaller from that distance?'
     ]
   },
   {
@@ -1465,6 +1458,7 @@ export const deitiesData: Deity[] = [
         subtitle: 'A household on a mountaintop',
         storyText: 'Kailash, as the Puranas paint it, is **the strangest household in literature**: the ascetic father with snakes for ornaments, the mountain-princess mother, one son with an elephant\'s head shaped by her own hands from turmeric paste, another born to command the armies of heaven, a lion, a bull, a mouse, and a peacock in the yard.\n\nIt should not work, and it is the most beloved family in the tradition.\n\n**Parvati is its center of gravity** — the one who turned the great renouncer into a father, absolute stillness into a home.',
         teachingText: 'The tradition could have left divinity solitary and abstract. Instead its most worshipped god is half of a marriage, and the goddess who arranged that is the patron of everyone who has ever **built a family out of unlikely materials**.\n\nAsk her blessing not for a perfect household but for a whole one — held together, like hers, by a love that outlasted every winter it stood in.',
+        citationLink: 'deity:ganesha',
         citation: 'The Kailash household: Shiva Purana, Rudra Samhita (Kumara Khanda); Ganesha\'s shaping: same, Kumara Khanda'
       }
     ],
@@ -1484,9 +1478,7 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Parvati stopped trying to be noticed and became undeniable through discipline. Where in your life are you decorating the surface when the real work is practice?',
-      'Ardhanarishvara joins the still half and the engaged half in one body. Which half of yourself have you been treating as the enemy — and what would sharing a spine with it look like?',
-      'Annapurna\'s lesson: feeding people is the real spiritual work. What ordinary care that you provide have you been discounting as "not the real thing"?'
+      'Parvati won Shiva through quiet, steady effort. What goal of yours needs steady practice more than attention?'
     ]
   },
   {
@@ -1600,6 +1592,7 @@ export const deitiesData: Deity[] = [
         storyText: 'On Diwali night, hundreds of millions of households do the same three things: **clean the house to its corners, draw a welcome at the threshold, and set lamps in every window.**\n\nThe stated reason is one of the tradition\'s loveliest images — Lakshmi walks the earth that night, and she enters homes that are clean, bright, and open.\n\nLedgers are opened fresh; doorways are decorated; the dark and cluttered corner is, for one night at least, abolished.',
         sectionHeader: 'Order as invitation',
         teachingText: 'Strip the metaphor and it still runs: prosperity in every form favors **prepared, ordered, welcoming systems**. The cleaned house is the audited ledger, the maintained tool, the answered email, the tidy codebase.\n\nLakshmi Puja is the annual rehearsal of a daily truth — abundance is not summoned by wanting; it is welcomed by readiness. **Light the corner you have been avoiding.**',
+        citationLink: 'festival:diwali-2025',
         citation: 'Diwali Lakshmi Puja: pan-Indian living tradition; see also Sri Sukta (Rig Veda khila) — the ancient hymn recited at her worship'
       },
       {
@@ -1629,9 +1622,7 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Lakshmi garlanded the sustainer, not the strongest. In your work and relationships, are you performing brilliance or demonstrating stewardship — and which have you been rewarded for lately?',
-      'She is Chanchala — she leaves sealed vaults. Where in your life are you damming a flow (money, knowledge, affection) that would multiply if you let it move?',
-      'The owl sees in darkness and goes blind at noon. When resources were most abundant in your life, what did you stop seeing?'
+      'Lakshmi stays where things keep flowing. What do you have plenty of — time, money, knowledge — that you could share more freely?'
     ]
   },
   {
@@ -1760,6 +1751,7 @@ export const deitiesData: Deity[] = [
         storyText: 'On Vasant Panchami, when the mustard fields turn the color of her festival, small children across India are carried to her altar to **write their first letters** — a finger guided through the alphabet in a plate of rice.\n\nThe tradition calls it **Vidyarambham**, the beginning of knowledge, and treats it with the gravity of a sacrament, because it is one.\n\nThe child is being inducted into the one form of wealth with a miraculous property: **split any other treasure and each share shrinks. Split knowledge — teach it — and both shares grow.**',
         sectionHeader: 'The teacher\'s economy',
         teachingText: 'A Sanskrit proverb states her economics plainly: knowledge is the wealth that **thieves cannot steal, kings cannot tax, and giving cannot diminish** — it grows by being spent.\n\nThis is why the guru sits so high in this tradition, and why the truest Saraswati worship is not the flowers but the explaining: every time you teach what you know, you are performing her puja in its original form.',
+        citationLink: 'festival:basant-panchami-2025',
         citation: 'Vidyarambham / Vasant Panchami: living tradition; the knowledge-wealth proverb: Subhashita tradition (traditional Sanskrit verse)'
       }
     ],
@@ -1780,9 +1772,7 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'The river goddess survived losing her river by flowing into new channels. What dried-up chapter of your life still holds water that could flow somewhere new?',
-      'Saraswati wears white amid golden gods: learning needs subtraction, not ornament. What would you remove from your days to give one real pursuit your undivided attention?',
-      'Knowledge grows when given away. What do you know well that you have never taught anyone — and who is waiting, perhaps without knowing it, for you to be their Jambavan?'
+      'Saraswati\'s knowledge grows by being given away. What do you know well that you\'ve never taught anyone?'
     ]
   }
 ];

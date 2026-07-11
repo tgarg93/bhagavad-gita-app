@@ -60,6 +60,63 @@ const MODULE_3_DEITIES = [
   'saraswati',
 ];
 
+// Canonical route for a content ref ('gita:2' | 'concept:karma' |
+// 'deity:krishna' | 'practice:bhakti-yoga' | 'festival:janmashtami') — the
+// single kind→screen mapping, shared by the journey path and by citation
+// links that jump from one piece of content to another.
+export function routeForContentRef(
+  ref: string
+): { name: string; params?: Record<string, unknown> } | null {
+  const sep = ref.indexOf(':');
+  if (sep < 0) return null;
+  const kind = ref.slice(0, sep);
+  const id = ref.slice(sep + 1);
+  if (!id) return null;
+  switch (kind) {
+    case 'gita': {
+      const chapter = parseInt(id, 10);
+      return Number.isFinite(chapter)
+        ? { name: 'GitaVersePlayer', params: { chapter } }
+        : null;
+    }
+    case 'concept':
+      return hasReaderContent('concept', id)
+        ? { name: 'ContentReader', params: { contentType: 'concept', contentId: id } }
+        : { name: 'PhilosophyDetail', params: { conceptId: id } };
+    case 'deity':
+      return hasReaderContent('deity', id)
+        ? { name: 'ContentReader', params: { contentType: 'deity', contentId: id } }
+        : { name: 'DeityDetail', params: { deityId: id } };
+    case 'practice':
+      return { name: 'PracticeDetail', params: { practiceId: id } };
+    case 'festival':
+      return hasReaderContent('festival', id)
+        ? { name: 'ContentReader', params: { contentType: 'festival', contentId: id } }
+        : { name: 'FestivalCalendar', params: { selectedFestival: id } };
+    default:
+      return null;
+  }
+}
+
+// Open a content ref from anywhere (citation footnotes, sources card).
+// Pushes a fresh screen instance when possible — the reader derives all its
+// state from route params on mount, so navigating "onto itself" with new
+// params (e.g. Krishna's citation → Janmashtami, both ContentReader) must
+// mount a new instance rather than update the current one.
+export function navigateToContentRef(navigation: any, ref: string) {
+  const route = routeForContentRef(ref);
+  if (!route) return;
+  if (route.name === 'FestivalCalendar') {
+    navigation.navigate('MainTabs', { screen: 'FestivalCalendar', params: route.params });
+    return;
+  }
+  if (typeof navigation.push === 'function') {
+    navigation.push(route.name, route.params);
+  } else {
+    navigation.navigate(route.name, route.params);
+  }
+}
+
 // Navigate to a journey item, handling the one tab-route (FestivalCalendar
 // lives inside MainTabs and cannot be pushed/replaced on the stack)
 export function navigateToJourneyItem(navigation: any, item: JourneyItem, replace = false) {
@@ -85,9 +142,7 @@ export function buildJourneyPath(): JourneyItem[] {
       id: `concept:${id}`,
       module: 1,
       title: concept.name,
-      route: hasReaderContent('concept', id)
-        ? { name: 'ContentReader', params: { contentType: 'concept', contentId: id } }
-        : { name: 'PhilosophyDetail', params: { conceptId: id } },
+      route: routeForContentRef(`concept:${id}`)!,
       cover: typeof concept.images.heroImage === 'number' ? concept.images.heroImage : FALLBACK_COVER,
     });
   }
@@ -100,7 +155,7 @@ export function buildJourneyPath(): JourneyItem[] {
       id: `gita:${ch}`,
       module: 2,
       title: `Gita Chapter ${ch}${chapter ? ` · ${chapter.name.english}` : ''}`,
-      route: { name: 'GitaVersePlayer', params: { chapter: ch } },
+      route: routeForContentRef(`gita:${ch}`)!,
       cover: getChapterCover(ch) as number,
     });
   }
@@ -113,9 +168,7 @@ export function buildJourneyPath(): JourneyItem[] {
       id: `deity:${id}`,
       module: 3,
       title: deity.name,
-      route: hasReaderContent('deity', id)
-        ? { name: 'ContentReader', params: { contentType: 'deity', contentId: id } }
-        : { name: 'DeityDetail', params: { deityId: id } },
+      route: routeForContentRef(`deity:${id}`)!,
       cover: typeof deity.images.heroImage === 'number' ? deity.images.heroImage : FALLBACK_COVER,
     });
   }
@@ -126,7 +179,7 @@ export function buildJourneyPath(): JourneyItem[] {
       id: `practice:${practice.id}`,
       module: 4,
       title: practice.name,
-      route: { name: 'PracticeDetail', params: { practiceId: practice.id } },
+      route: routeForContentRef(`practice:${practice.id}`)!,
       cover:
         typeof (practice as any).images?.heroImage === 'number'
           ? (practice as any).images.heroImage
@@ -144,9 +197,7 @@ export function buildJourneyPath(): JourneyItem[] {
       id: `festival:${festival.id}`,
       module: 5,
       title: festival.name,
-      route: hasReaderContent('festival', festival.id)
-        ? { name: 'ContentReader', params: { contentType: 'festival', contentId: festival.id } }
-        : { name: 'FestivalCalendar', params: { selectedFestival: festival.id } },
+      route: routeForContentRef(`festival:${festival.id}`)!,
       cover: typeof festival.heroImageUrl === 'number' ? festival.heroImageUrl : FALLBACK_COVER,
     });
   }

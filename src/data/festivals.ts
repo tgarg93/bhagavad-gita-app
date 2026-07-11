@@ -264,6 +264,7 @@ export const festivalData: Festival[] = [
     sources: [
       {
         text: 'Bhagavad Gita',
+        appLink: 'gita:8',
         locator: '8.24 (the northern path of the sun)',
         translation: 'Swami Sivananda (public domain)',
       },
@@ -765,6 +766,7 @@ export const festivalData: Festival[] = [
         subtitle: 'A White-Robed Figure with a Veena by a River',
         storyText: 'Saraswati is unlike any other great goddess: **she carries no weapon.**\n\nBorn, the Puranas tell, from the mind of Brahma the creator — who found his new universe silent and formless until **she gave it speech, music, and order** — she holds instead a veena, a book, and a rosary, and rides a white swan said to be able to separate milk from water: discrimination itself, the mind\'s power to tell the true from the mixed. Her white robes refuse ornament; knowledge needs none.\n\nShe is also the memory of a real river — the Saraswati of the Rig Veda, "best of mothers, best of rivers, best of goddesses" — whose waters became, in the tradition\'s imagination, **the flowing of wisdom itself**.',
         teachingText: 'The unarmed goddess is the festival\'s quiet thesis: **knowledge is a power that needs no weapon**, and the swan\'s discrimination — telling truth from noise — may be the most protective skill a person can own.\n\nAsk what your swan currently drinks: what mixture of milk and water does your daily attention take in undivided?',
+        citationLink: 'deity:saraswati',
         citation: 'Saraswati\'s birth: Puranic tradition; the river: Rig Veda 6.61 (tr. Griffith, public domain).'
       },
       {
@@ -918,7 +920,7 @@ export const festivalData: Festival[] = [
             explanation: 'The night ends the way every dark night ends — and having watched it through changes the watcher.'
           }
         ],
-        significance: 'Legend says even accidental wakefulness this night bears fruit — the hunter who stayed awake in a bilva tree, unknowingly dropping its leaves on a linga below, was liberated by dawn (Shiva Purana). Attention itself, however imperfect, is the offering.',
+        significance: 'Legend says even accidental wakefulness this night bears fruit — the Shiva Purana tells of a hunter who stayed awake in a bilva tree, unknowingly dropping its leaves on a linga below, and was liberated by dawn. Attention itself, however imperfect, is the offering.',
         tips: ['Keeping vigil with family or a temple community makes the night joyful rather than grim'],
         commonMistakes: ['Turning the vigil into an endurance contest — a loving half-night outweighs a resentful whole one']
       }
@@ -944,6 +946,7 @@ export const festivalData: Festival[] = [
         subtitle: 'Leaves Falling One by One onto a Stone Below',
         storyText: 'The Shiva Purana\'s beloved Shivratri story stars no sage but **a hunter** — a rough man who had never worshipped anything.\n\nBenighted in the forest and afraid of beasts, he climbed a bilva tree and, to stay awake through the cold night, plucked its leaves one by one and dropped them below. Unknown to him, **a Shiva linga stood at the tree\'s foot**; unknowing, hungry, and frightened, he kept an accidental all-night vigil, showering it with Shiva\'s favorite leaves on Shiva\'s own night.\n\nBy dawn, the story insists, his heart had changed — and heaven counted the night as perfect worship.',
         teachingText: 'The hunter\'s story is the tradition at its most generous: intention matters, but **attention counts even when it doesn\'t know itself as worship**.\n\nWhatever kept you awake and watchful through your own hard nights — grief, fear, care — may have been closer to prayer than you knew. Tonight, do knowingly what the hunter did by accident.',
+        citationLink: 'deity:shiva',
         citation: 'Shiva Purana (Shivratri mahatmya tellings).'
       },
       {
@@ -952,6 +955,7 @@ export const festivalData: Festival[] = [
         subtitle: 'A Wild Bridegroom Arriving to Meet a Radiant Bride',
         storyText: 'The night\'s most joyful reading: Maha Shivratri as **the wedding anniversary of Shiva and Parvati**.\n\nParvati won the unwinnable — the ash-smeared ascetic who had burned desire itself — not by beauty but by matching his discipline with her own tapasya. Their wedding procession is the tradition\'s wildest scene: Shiva arriving on his bull with an entourage of ghosts and misfits, the mountain-king\'s court aghast, Parvati serene.\n\n**Shakti — power, energy, life — married Shiva — stillness, consciousness** — and the philosophers have read the whole cosmos as that marriage ever since.',
         teachingText: 'The union is also inner counsel: **your stillness and your power are meant to be wedded, not alternated.** Meditation that never acts is Shiva without Shakti; action that never stills is Shakti without Shiva.\n\nShivratri, falling weeks before the action-festival of Holi, holds the still pole of the pair. Ask which pole your life over-weights, and what a wedding of the two would change.',
+        citationLink: 'deity:parvati',
         citation: 'Shiva Purana, Rudra Samhita (the wedding).'
       }
     ],
@@ -1130,6 +1134,7 @@ export const festivalData: Festival[] = [
         subtitle: 'A Dark-Skinned Boy Painting a Fair-Skinned Girl',
         storyText: 'The color-play\'s beloved origin is a Krishna story, kept warm in the Braj tradition.\n\nThe dark-skinned child Krishna complained to his mother Yashoda: **why is Radha so fair while I am dark?** Yashoda, laughing, offered a mother\'s solution — go paint her whatever color you like. Krishna did, gleefully, and Radha painted him back, and the cowherd village dissolved into the first Holi.\n\nIn Braj — Mathura, Vrindavan, Barsana — Holi still runs for days, the great equalizer descended from one mother\'s joke: **if the difference bothers you, color over it with love.**',
         teachingText: 'The theology hiding in the play: smeared with gulal, every face — rich, poor, old, young, every shade — turns the same colors. For one morning, India repaints itself into what the sages said it always was: **one consciousness in a billion disguises.**\n\n**"Bura na mano, Holi hai"** — take no offense — is the day\'s liturgy: the permission to touch, laugh, and forgive across every line the other 364 days maintain.',
+        citationLink: 'deity:krishna',
         citation: 'The Braj Holi (Mathura, Vrindavan, Barsana): living tradition.'
       },
       {
@@ -1301,6 +1306,7 @@ export const festivalData: Festival[] = [
         subtitle: 'Sacred Fire, and a Golden Vessel of Kheer',
         storyText: 'The Valmiki Ramayana opens the story with an ache: **Dasharatha**, king of Ayodhya, mighty and beloved, has three queens and no child.\n\nOn his sages\' counsel he performs the **putrakameshti yajna** — the fire rite for offspring. From the flames rises a radiant being bearing a vessel of divine kheer for the queens. Kausalya bears Rama, Kaikeyi bears Bharata, Sumitra bears the twins Lakshmana and Shatrughna.\n\nHeaven, meanwhile, has its own reason: the gods, oppressed by Ravana — untouchable by divine hands through his boon — have asked **Vishnu to be born as a man**. The king\'s longing and the world\'s need meet in one child.',
         teachingText: 'The tradition loves this convergence: Rama is born because a father ached for a son AND because the world ached for a rescuer — **private longing and cosmic purpose in one birth**.\n\nIt reads every birth that way. The child given to you, or the one you were, arrives carrying both a family\'s hope and some purpose the family cannot yet see.',
+        citationLink: 'deity:rama',
         citation: 'Valmiki Ramayana, Bala Kanda, sargas 8–16.'
       },
       {
@@ -1500,6 +1506,7 @@ export const festivalData: Festival[] = [
         subtitle: 'Six cradles, and an eighth hope',
         storyText:
           'Kamsa imprisons Devaki and Vasudeva. Then he keeps the bargain in the cruelest way possible: **one by one, six newborns are taken from their mother\u2019s arms and killed.**\n\nThe **seventh** child is mysteriously lost before birth \u2014 the tradition says the unborn **Balarama** was moved to another womb, beyond the king\u2019s reach.\n\nAnd then Devaki conceives an **eighth** time. The texts say her face began to glow; the guards doubled; and the prison began, impossibly, to feel like a temple. Everyone \u2014 the terrified king most of all \u2014 was now waiting for the same child.',
+        citationLink: 'deity:krishna',
         citation: 'Bhagavata Purana, Canto 10, Chapters 1\u20132',
       },
       {
@@ -1546,6 +1553,7 @@ export const festivalData: Festival[] = [
           'Decades after that midnight, the child born in Kamsa\u2019s prison stood on the battlefield of Kurukshetra as Arjuna\u2019s charioteer \u2014 and explained his own birth.\n\nThese verses, recited in millions of homes every Janmashtami, are Krishna\u2019s answer to why the infinite takes a body at all: **not a one-time miracle, but a standing promise.** Whenever darkness gathers past bearing, in every age, the light is born again.',
         teachingText:
           'The promise has an inner reading too. The prison is any heart shut tight by fear; midnight is any hour when hope runs lowest. Janmashtami asks you to **keep one lamp lit in that darkness** \u2014 because that is exactly when and where the divine chooses to be born.',
+        citationLink: 'gita:4',
         citation: 'Bhagavad Gita 4.7\u20138, tr. Sivananda (public domain)',
       },
       {
@@ -1556,6 +1564,7 @@ export const festivalData: Festival[] = [
           'The story does not end at the rescue \u2014 it erupts into joy. In Gokul and Vrindavan, the divine child grows up as a mischievous cowherd boy who raids every kitchen for fresh **makhan**, white butter.\n\nThe Bhagavata\u2019s tenth canto lovingly records the cowherd women lining up to complain to Yashoda \u2014 while secretly hoping he raids their homes next.\n\nThis is why Janmashtami tastes of butter and rock sugar, and why in Maharashtra young men build swaying human pyramids to smash a **dahi handi** hung high above the street \u2014 recreating the toddler gangs Krishna organized to reach the hanging pots.',
         teachingText:
           'The tradition\u2019s boldest move is here: the same God who parts rivers wants to be loved as **the baby you rock, the child you scold, the friend whose mischief you forgive.** Let your practice this Janmashtami include delight \u2014 sweetness shared, songs sung too loudly, a pot broken open. Joy, too, is worship.',
+        citationLink: 'deity:krishna',
         citation: 'Bhagavata Purana, Canto 10, Chapters 8\u20139 (the butter stories)',
       },
     ],
@@ -1568,6 +1577,7 @@ export const festivalData: Festival[] = [
       },
       {
         text: 'Bhagavad Gita',
+        appLink: 'gita:4',
         locator: '4.7–8 (why the divine takes birth)',
         translation: 'Swami Sivananda (public domain)',
       },
@@ -1784,6 +1794,7 @@ export const festivalData: Festival[] = [
         subtitle: 'Parvati\'s Hands Shaping a Boy from Turmeric',
         storyText: 'The birth the festival honors is the Shiva Purana\'s fierce and tender story: Parvati shaping a son from the turmeric paste of her own body, the boy\'s unbending loyalty at her door, Shiva\'s terrible mistake, and **the repair that outgrew the wound** — an elephant\'s head, command of the ganas, and the decree that this child would be worshipped first among all gods.\n\n**Chaturthi**, the fourth day of the waxing moon of Bhadrapada, is kept as the day that grace took form.',
         teachingText: 'Every murti brought home on Chaturthi re-enacts the story\'s ending: **the wounded one enthroned first**.\n\nFamilies who have weathered their own ruptures know why India loves this birthday — it celebrates not a perfect family, but a repaired one.',
+        citationLink: 'deity:ganesha',
         citation: 'Shiva Purana, Rudra Samhita, Kumara Khanda, Chapters 13–18.'
       },
       {
@@ -1911,6 +1922,7 @@ export const festivalData: Festival[] = [
         subtitle: 'Durga\'s Lion Mid-Leap Against the Buffalo Demon',
         storyText: 'The nine nights commemorate the Devi Mahatmya\'s central war.\n\n**Mahishasura**, the shape-shifting buffalo demon, held a boon protecting him from man and god alike. **Durga** — born of the pooled radiance of every deva, armed with all their weapons — fought him through nine nights of shifting forms and slew him as the tenth day dawned.\n\n**Vijayadashami**, "the tenth of victory," is that dawn. The whole structure of the festival is the battle\'s shape: nine nights of holding steady while the deception cycles, and then the morning where truth pins it.',
         teachingText: 'Whatever you are contending with this season — a habit, a fear, a long injustice — Navratri\'s counsel is the Goddess\'s method: **do not chase every disguise it wears. Keep the vigil.**\n\nNine nights of steadiness beat nine days of frantic pursuit, and the tenth morning belongs to the one who did not waver.',
+        citationLink: 'deity:durga',
         citation: 'Devi Mahatmya (Markandeya Purana), Chapters 2–3.'
       },
       {
@@ -2504,6 +2516,7 @@ export const festivalData: Festival[] = [
         subtitle: 'Ayodhya Lit End to End for a Homecoming',
         storyText: 'The most beloved of Diwali\'s stories is **a homecoming**.\n\nFourteen years of exile — the forest, the abduction of Sita, the bridge to Lanka, the war, Ravana\'s fall — and then, at last, the flight home. Tradition holds that Rama, Sita, and Lakshmana returned to Ayodhya on the new-moon night of Kartika, and the city, refusing to let its king come home in darkness, **lit every street and sill with rows of lamps**.\n\nThe diyas of every Diwali since are Ayodhya\'s welcome, renewed: light kept burning for the good that is on its way back.',
         teachingText: 'Everyone has an exile running — a person, a hope, a version of themselves that has been fourteen years in the forest.\n\nAyodhya\'s posture is the teaching: **prepare the welcome before the return is visible.** Light the lamp for what you are still waiting for; the lamp is how the waiting stays alive.',
+        citationLink: 'deity:rama',
         citation: 'Valmiki Ramayana, Yuddha Kanda; the lamplit return: living tradition.'
       },
       {
@@ -2512,6 +2525,7 @@ export const festivalData: Festival[] = [
         subtitle: 'A Doorway Rangoli, Small Footprints Walking In',
         storyText: 'On the main night, homes across India perform **Lakshmi Puja** — for the goddess of wealth and well-being who, the Puranas tell, emerged radiant from the churning of the cosmic ocean.\n\nDoorways are washed and painted with rangoli; tiny footprints are stenciled walking inward; windows glow; account books open to new pages. The theology of the customs is precise: Lakshmi visits homes that are clean, lit, and harmonious — **abundance is invited, not seized**.\n\nThe same churning that yielded poison first (Shiva\'s story) yields the goddess later: prosperity, the sequence says, comes to those who stayed through the difficult part.',
         teachingText: 'The customs are a checklist worth taking literally once a year: clear the clutter, settle the quarrels, light the entrance, open a fresh page.\n\nWhether or not the goddess walks in, the household that did those four things has already prospered. **Lakshmi\'s footprints point inward — abundance is a direction, not an amount.**',
+        citationLink: 'deity:lakshmi',
         citation: 'Lakshmi from the churning: Vishnu Purana 1.9; Diwali Lakshmi Puja: living tradition.'
       },
       {
@@ -2527,6 +2541,7 @@ export const festivalData: Festival[] = [
           '**Bhai Dooj** — sisters and brothers blessing one another to close the arc.'
         ],
         teachingText: 'Health, liberation, abundance, protection, family — the five days are **a complete curriculum of what a lit life contains**, and the arc\'s order is its wisdom: health before wealth, freeing what is captive before inviting abundance, gratitude and family as the closing note.\n\nUse the five days as an annual audit — one evening per theme — and Diwali becomes less a party than a yearly re-consecration of everything the lamps stand for.',
+        citationLink: 'deity:krishna',
         citation: 'Narakasura: Bhagavata Purana, Canto 10, Chapter 59; Govardhan: Canto 10, Chapters 24–25; the five-day arc: living tradition.'
       }
     ],

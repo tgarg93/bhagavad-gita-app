@@ -35,98 +35,62 @@ export const gitaVerseInsights: { [ref: string]: string } = {
   '1.28': "Notice that Arjuna's body breaks down before his mind can reason — limbs failing, mouth dry. The Gita treats this honestly: the collision between duty and love is where wisdom begins, not a weakness to be ashamed of.",
 };
 
-// Three reflection questions per chapter (54 total). Non-judgmental, no right
-// answers — each ties the chapter's core teaching to the reader's own experience.
+// One plain reflection question per chapter. Non-judgmental, no right answers —
+// each ties the chapter's core teaching to the reader's own everyday experience.
 export const gitaReflections: { [chapter: number]: string[] } = {
   1: [
-    "Arjuna's crisis was a collision between his duty and his love. Where in your own life do you feel torn between what you should do and what your heart wants?",
-    'Arjuna froze — he simply could not act. Think of a recent moment when you felt paralyzed by a hard choice. What made it so hard to move?',
-    'The Gita honors Arjuna\'s breakdown instead of shaming it. When you\'re overwhelmed, are you gentle with yourself, or do you judge the feeling? What would change if you treated it as the beginning of understanding?',
+    'Where in your life right now do you feel torn between what you should do and what your heart wants?',
   ],
   2: [
-    "Krishna says you are not your body but an unchanging self within it. When you strip away your roles, job, and appearance, who do you sense you are underneath?",
-    'The famous teaching is to act fully but release your grip on results. Where in your life are you holding an outcome so tightly that the work itself has stopped bringing you joy?',
-    'The anger chain begins with just dwelling on something. Can you recall a time a small resentment grew into something bigger? Where could you have caught it early?',
+    'Where are you holding an outcome so tightly that the work itself has stopped bringing you joy?',
   ],
   3: [
-    "Krishna says your own path, imperfectly walked, beats copying someone else's. Whose life are you tempted to imitate, and what might your own authentic path look like instead?",
-    'He describes life as a cycle of giving — work done as an offering nourishes everyone. What is one thing you do purely to take, that you could begin doing as a gift?',
-    'Krishna names craving as the hidden enemy that pushes good people into wrong action. What is one desire that, when it grips you, tends to pull you off course?',
+    'What is one desire that, when it grips you, tends to pull you off course?',
   ],
   4: [
-    'Krishna says the wise "see inaction in action" — busy on the outside, still within. When have you felt calm and centered even in the middle of intense activity? What made that possible?',
-    'Real knowledge, he says, is learned with humility, honest questions, and service. Who has been a true teacher in your life, and what did your openness to them make possible?',
-    'Doubt, Krishna warns, is the real destroyer. What is one doubt about yourself or your path that you keep circling — and what would it take to cut through it?',
+    'When have you felt calm and centered in the middle of intense activity?',
   ],
   5: [
-    'The lotus leaf lives in the water but never gets wet. Where do you want to be fully engaged in life yet less stained by its ups and downs?',
-    'Krishna says true renunciation is dropping the ego, not the work. In what part of your life does your sense of "I did this" get in the way of doing it well?',
-    'Peace comes, he says, from working as an offering rather than performing for the world. Whose approval are you working for right now — and how would it feel to work for something larger instead?',
+    'Whose approval are you working for right now?',
   ],
   6: [
-    'Krishna says the mind can be your best friend or your worst enemy. Which has yours been lately, and what is one small way you could befriend it?',
-    'He validates that the mind is restless and hard to tame — but says practice and letting go slowly work. What is one daily practice you could commit to, however small?',
-    '"No sincere effort is ever lost." Think of a time you tried at something and seemingly failed. Looking back, what did that effort quietly leave you with?',
+    'Has your mind been your friend or your enemy lately? What is one small way you could befriend it?',
   ],
   7: [
-    'Krishna says he is the taste in water, the light in the sun, the ability in you. When did you last pause and sense something sacred in an ordinary moment?',
-    'He welcomes four kinds of seekers — the hurting, the curious, the wanting, and the wise. Which one are you right now, and is that okay with you?',
-    'What is one talent or ability you have that you tend to take full credit for? How might it feel to see it as something moving through you rather than just from you?',
+    'When did you last sense something sacred in an ordinary moment?',
   ],
   8: [
-    'Krishna teaches that we become whatever we constantly dwell on. What does your mind rehearse most often — and is that the direction you actually want to grow in?',
-    '"Remember me, and act" — spiritual life woven into ordinary work, not separate from it. What is one anchor-thought you could return to during a normal busy day?',
-    'If your whole life is quietly shaping your final state of mind, what small shift in what you feed your attention would you want to start today?',
+    'What does your mind rehearse most often — and is that the direction you want to grow in?',
   ],
   9: [
-    'Krishna promises to "carry what they lack and preserve what they have" for those who trust him. Where in your life are you trying to carry everything alone?',
-    'A leaf or flower offered with love outweighs a fortune offered for show. What is a small, sincere act you could offer someone — where the love matters more than the size?',
-    'He says even a person of bad past conduct who turns wholeheartedly is counted as good. Is there a part of your past you struggle to forgive in yourself? What would wholehearted turning look like now?',
+    'Where in your life are you trying to carry everything alone?',
   ],
   10: [
-    'Krishna says every excellence you admire is a spark of one splendor. What is something beautiful or impressive you saw recently — and what happens if you trace that wonder back to its source?',
-    'He locates the divine "in the heart of all beings," including everyone you meet. Who is someone hard for you to respect right now, and how might this shift how you see them?',
-    'Where do you most easily feel awe — nature, music, people, ideas? How could you make more room for that in your everyday life?',
+    'Where do you most easily feel awe — nature, music, people, ideas?',
   ],
   11: [
-    'Arjuna wanted to *see*, not just hear — and what he saw both awed and terrified him. When has a glimpse of something vast (nature, mortality, the scale of time) shifted your sense of your own problems?',
-    '"I am Time." Sitting with the fact that everything passes — how does that change what you think is worth worrying about today?',
-    'After the overwhelming vision, Arjuna asked for the familiar, loving face again. Where do you need the sacred to feel personal and close rather than infinite and distant?',
+    'When has something vast — the night sky, the ocean, time itself — made your problems feel smaller?',
   ],
   12: [
-    "Krishna's list of a beloved devotee is all about how you treat others — friendliness, compassion, patience, no ill will. Which of these comes naturally to you, and which needs work?",
-    'He gives a ladder: if constant devotion is too much, just practice; if that\'s too much, work for something larger; if even that\'s hard, just let go of results. Where are you honestly on that ladder right now?',
-    'The person "from whom the world feels no fear, and who fears no one" — what would it take for the people around you to feel completely safe with you?',
+    'Friendliness, compassion, patience: which comes naturally to you, and which needs work?',
   ],
   13: [
-    'Krishna distinguishes the field (everything you can observe — body, thoughts, moods) from the knower who watches it. Try it now: can you notice a feeling as something you *have* rather than something you *are*?',
-    'Suffering, he suggests, comes from confusing the watcher with what it watches. What is one thing you\'ve been over-identifying with — a role, an emotion, a story about yourself?',
-    'He says the same self dwells in all beings. When you look at someone very different from you, can you sense the same awareness looking back? What shifts when you try?',
+    'Try noticing a current mood as something you have, not something you are. What changes?',
   ],
   14: [
-    'The three gunas — clarity, restlessness, and inertia — color every mood. Which one has been driving your days lately? What tends to tip you into it?',
-    'Krishna says you can\'t fight a guna head-on, but you can feed a different one — change the food, company, and inputs. What is one input in your life that pulls you down, and what could replace it?',
-    'The free person watches even their moods like passing weather. Can you recall a strong emotion recently and see it, in hindsight, as weather that moved through? How might that help next time?',
+    'Which has been driving your days lately — clarity, restlessness, or inertia?',
   ],
   15: [
-    'Krishna pictures worldly life as an upside-down tree to be cut with non-attachment. What is one branch of craving or habit you sense you\'d be freer without?',
-    'He says memory, knowledge, and even forgetting arise from the divine seated in your own heart. When have you felt guided or helped from within, as if you weren\'t working entirely alone?',
-    'This chapter is recited daily by many before meals — a pause to remember the source. What is one small daily ritual of gratitude you could adopt?',
+    'What is one small daily ritual of gratitude you could adopt?',
   ],
   16: [
-    'Krishna lists divine qualities (fearlessness, honesty, compassion) and their shadows (arrogance, harshness, greed) as tendencies within every heart. Which divine quality do you most want to grow this year?',
-    'The three gates to self-destruction are craving, anger, and greed. Which of these three has cost you the most — and what would guarding that gate look like in practice?',
-    'The divine qualities begin with fearlessness — goodness done from fear isn\'t yet goodness. Where in your life are you "good" mainly because you\'re afraid, and what would freely-chosen goodness feel like?',
+    'Craving, anger, greed — which of these three has cost you the most?',
   ],
   17: [
-    '"You are made of your faith — whatever you trust, you become." What are you placing your deepest trust in right now, and is it quietly shaping you into who you want to be?',
-    'Krishna shows the same act — a meal, a gift, a discipline — can elevate or degrade depending on its spirit. Think of something you do routinely: what is the *why* underneath it?',
-    'His definition of austerity of speech: words that are true, kind, and helpful. Which of those three does your speech most often miss, and with whom?',
+    'True, kind, helpful — which of the three does your speech most often miss?',
   ],
   18: [
-    'After 700 verses, Krishna says: "Reflect fully — then do as you choose." How does it feel to be trusted with your own decision rather than simply told what to do?',
-    '"Letting go of all duties, take refuge in me — do not grieve." Where in your life have you been over-calculating, and what would it feel like to simply trust and let go?',
-    'Sanjaya says fortune lives where skill and spirit ride the same chariot. In a challenge you\'re facing, where do you need more effort, and where do you need more surrender?',
+    'Krishna ends with "reflect fully, then do as you choose." What choice are you facing that is truly yours to make?',
   ],
 };
 
