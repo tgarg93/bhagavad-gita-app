@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import TextHighlighter from './TextHighlighter';
+import RichText, { stripInlineMarkup } from './RichText';
 import { TextSegment } from '../services/audioNarrationService';
 import { NarrativeSection, NarrativeVerse } from '../data/narrativeTypes';
 
@@ -21,8 +22,9 @@ interface NarrativeSectionsProps {
   // Global index of sections[0] within the narration content built by
   // sectionsToNarrationContent (readerContent.ts). When set, deterministic
   // blockIds are passed to TextHighlighter so audio highlighting works:
-  //   section-{gi}-title · -block-0/-3 (verses, -sanskrit/-meaning) ·
-  //   -block-1 (story) · -block-2 (header) · -block-4 (teaching).
+  //   section-{gi}-title · block-0 openingVerse · block-1 story ·
+  //   block-2 bullets · block-3 header · block-4 keyVerse · block-5 teaching
+  // (shared convention with sectionsToNarrationContent — change together).
   // When undefined, behavior is identical to before (no highlighting).
   sectionIndexOffset?: number;
 }
@@ -37,6 +39,31 @@ const NarrativeSections: React.FC<NarrativeSectionsProps> = ({
   onSectionLayout,
   sectionIndexOffset,
 }) => {
+  // Prose renderer: rich (bold) normally; while THIS block is being narrated,
+  // fall back to TextHighlighter on marker-stripped text so the highlight's
+  // substring offsets (computed against stripped narration text) stay exact
+  const Prose = ({ text, blockId, style }: { text: string; blockId?: string; style: any }) => {
+    const activeHere =
+      blockId != null &&
+      highlightedSegmentId != null &&
+      audioSegments.some(s => s.id === highlightedSegmentId && s.blockId === blockId);
+    if (activeHere) {
+      return (
+        <TextHighlighter
+          text={stripInlineMarkup(text)}
+          blockId={blockId}
+          highlightedSegmentId={highlightedSegmentId}
+          segments={audioSegments}
+          style={style}
+        />
+      );
+    }
+    return (
+      <View>
+        <RichText text={text} style={style} />
+      </View>
+    );
+  };
   const Verse = ({ verse, blockId }: { verse: NarrativeVerse; blockId?: string }) => (
     <View style={styles.verseContainer}>
       <TextHighlighter
@@ -90,33 +117,42 @@ const NarrativeSections: React.FC<NarrativeSectionsProps> = ({
             )}
 
             {section.storyText && (
-              <TextHighlighter
+              <Prose
                 text={section.storyText}
                 blockId={bid('block-1')}
-                highlightedSegmentId={highlightedSegmentId}
-                segments={audioSegments}
                 style={getTextStyle(styles.storyText)}
               />
+            )}
+
+            {section.bullets && section.bullets.length > 0 && (
+              <View style={styles.bulletList}>
+                {section.bullets.map((item, bi) => (
+                  <View key={bi} style={styles.bulletRow}>
+                    <Text style={styles.bulletGlyph}>•</Text>
+                    <View style={styles.bulletBody}>
+                      <RichText text={item} style={getTextStyle(styles.bulletText)} />
+                    </View>
+                  </View>
+                ))}
+              </View>
             )}
 
             {section.sectionHeader && (
               <TextHighlighter
                 text={section.sectionHeader}
-                blockId={bid('block-2')}
+                blockId={bid('block-3')}
                 highlightedSegmentId={highlightedSegmentId}
                 segments={audioSegments}
                 style={getTextStyle(styles.sectionHeader)}
               />
             )}
 
-            {section.keyVerse && <Verse verse={section.keyVerse} blockId={bid('block-3')} />}
+            {section.keyVerse && <Verse verse={section.keyVerse} blockId={bid('block-4')} />}
 
             {section.teachingText && (
-              <TextHighlighter
+              <Prose
                 text={section.teachingText}
-                blockId={bid('block-4')}
-                highlightedSegmentId={highlightedSegmentId}
-                segments={audioSegments}
+                blockId={bid('block-5')}
                 style={getTextStyle(styles.storyText)}
               />
             )}
@@ -189,6 +225,28 @@ const styles = StyleSheet.create({
     lineHeight: 30,
     marginBottom: DharmaDesignSystem.spacing.lg,
     textAlign: 'justify',
+  },
+  bulletList: {
+    marginBottom: DharmaDesignSystem.spacing.lg,
+    gap: DharmaDesignSystem.spacing.sm,
+  },
+  bulletRow: {
+    flexDirection: 'row',
+    gap: DharmaDesignSystem.spacing.sm,
+  },
+  bulletGlyph: {
+    fontSize: 18,
+    lineHeight: 28,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
+    fontWeight: '700',
+  },
+  bulletBody: {
+    flex: 1,
+  },
+  bulletText: {
+    fontSize: 16,
+    lineHeight: 28,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
   },
   sectionHeader: {
     ...DharmaDesignSystem.typography.sizes.headingMD,

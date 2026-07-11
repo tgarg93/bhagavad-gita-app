@@ -20,6 +20,9 @@ export interface NarrativeSection {
   subtitle?: string;
   openingVerse?: NarrativeVerse;
   storyText?: string;
+  // Bulleted list rendered after storyText — for enumerations of 3+ items.
+  // Items support the same inline **bold** markers as prose.
+  bullets?: string[];
   sectionHeader?: string;
   keyVerse?: NarrativeVerse;
   teachingText?: string;

@@ -104,14 +104,18 @@ export function hasReaderContent(contentType: ReaderContentType, contentId: stri
   return getReaderContent(contentType, contentId) !== null;
 }
 
+// Inline **bold** markers are display-only: narration and highlight offsets
+// operate on stripped text (RichText strips identically on the display side,
+// so substring offsets align).
+const stripMarkup = (text: string): string => text.replace(/\*\*/g, '');
+
 // Convert NarrativeSection[] into the {title, blocks} shape that
 // AudioNarrationService.parseContentIntoSegments understands. Blocks are
-// emitted at FIXED positions (0 openingVerse, 1 storyText, 2 sectionHeader,
-// 3 keyVerse, 4 teachingText) — empty blocks yield no segments but keep the
-// indices stable, so blockIds are deterministic:
-//   section-{i}-title · section-{i}-block-0-sanskrit/-meaning ·
-//   section-{i}-block-1 (story sentences) · section-{i}-block-2 (header) ·
-//   section-{i}-block-3-... · section-{i}-block-4 (teaching sentences)
+// emitted at FIXED positions (0 openingVerse, 1 storyText, 2 bullets,
+// 3 sectionHeader, 4 keyVerse, 5 teachingText) — empty blocks yield no
+// segments but keep the indices stable, so blockIds are deterministic.
+// This order is a CONVENTION shared with NarrativeSections' bid() mapping —
+// change both together or audio highlighting drifts.
 export function sectionsToNarrationContent(sections: NarrativeSection[]) {
   return sections.map(section => ({
     title: section.title,
@@ -121,20 +125,21 @@ export function sectionsToNarrationContent(sections: NarrativeSection[]) {
         verse: {
           sanskrit: section.openingVerse?.sanskrit ?? '',
           transliteration: '', // not narrated (matches Gita player behavior)
-          meaning: section.openingVerse?.meaning ?? '',
+          meaning: stripMarkup(section.openingVerse?.meaning ?? ''),
         },
       },
-      { type: 'prose', text: section.storyText ?? '' },
-      { type: 'header', text: section.sectionHeader ?? '' },
+      { type: 'prose', text: stripMarkup(section.storyText ?? '') },
+      { type: 'prose', text: stripMarkup((section.bullets ?? []).join('. ')) },
+      { type: 'header', text: stripMarkup(section.sectionHeader ?? '') },
       {
         type: 'verse',
         verse: {
           sanskrit: section.keyVerse?.sanskrit ?? '',
           transliteration: '',
-          meaning: section.keyVerse?.meaning ?? '',
+          meaning: stripMarkup(section.keyVerse?.meaning ?? ''),
         },
       },
-      { type: 'teaching', text: section.teachingText ?? '' },
+      { type: 'teaching', text: stripMarkup(section.teachingText ?? '') },
     ],
   }));
 }
