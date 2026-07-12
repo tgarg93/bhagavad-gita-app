@@ -25,7 +25,7 @@ export interface Story {
 
 const GENERIC_COVER = require('../../assets/images/covers/generic-cover.jpg');
 const RAMAYANA_COVER = require('../../assets/images/covers/ramayana-cover.png');
-const KRISHNA_COVER = require('../../assets/images/covers/krishna-cover.png');
+const KRISHNA_COVER = require('../../assets/images/covers/krishna-cover.jpg');
 const DHARMA_COVER = require('../../assets/images/covers/dharma-cover.png');
 const MOKSHA_COVER = require('../../assets/images/covers/moksha-cover.png');
 const SAMSARA_COVER = require('../../assets/images/covers/samsara-cover.png');

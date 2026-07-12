@@ -5,7 +5,7 @@ export const FestivalImageMapping = {
   // Major festivals with dedicated cover images
   'diwali-2025': require('../../assets/images/covers/diwali-cover.png'),
   'ram-navami-2025': require('../../assets/images/covers/ramayana-cover.png'),
-  'janmashtami-2025': require('../../assets/images/covers/krishna-cover.png'),
+  'janmashtami-2025': require('../../assets/images/covers/krishna-cover.jpg'),
   'navratri-2025': require('../../assets/images/covers/navratri-cover.png'),
 
   // Festivals using general dharma cover

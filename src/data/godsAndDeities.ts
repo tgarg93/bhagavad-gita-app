@@ -271,7 +271,7 @@ export const deitiesData: Deity[] = [
       }
     ],
     images: {
-      heroImage: require('../../assets/images/covers/krishna-cover.png'),
+      heroImage: require('../../assets/images/covers/krishna-cover.jpg'),
       iconImage: '/images/deities/krishna-icon.jpg',
       galleryImages: [
         '/images/deities/krishna-flute.jpg',
@@ -445,7 +445,7 @@ export const deitiesData: Deity[] = [
     ],
     regionalVariations: [],
     images: {
-      heroImage: require('../../assets/images/covers/rama-cover.png'),
+      heroImage: require('../../assets/images/covers/rama-cover.jpg'),
       iconImage: '/images/deities/rama-icon.jpg',
       galleryImages: ['/images/deities/rama-sita.jpg', '/images/deities/rama-court.jpg']
     },
@@ -610,8 +610,7 @@ export const deitiesData: Deity[] = [
     ],
     regionalVariations: [],
     images: {
-      // TODO cover shopping list: replace with a real ganesha-cover.png
-      heroImage: require('../../assets/images/covers/generic-cover.jpg'),
+      heroImage: require('../../assets/images/covers/ganesha-cover.jpg'),
       iconImage: '/images/deities/ganesha-icon.jpg',
       galleryImages: []
     },
@@ -795,8 +794,7 @@ export const deitiesData: Deity[] = [
     ],
     regionalVariations: [],
     images: {
-      // TODO cover shopping list: replace with a real shiva-cover.png
-      heroImage: require('../../assets/images/covers/generic-cover.jpg'),
+      heroImage: require('../../assets/images/covers/shiva-cover.jpg'),
       iconImage: '/images/deities/shiva-icon.jpg',
       galleryImages: []
     },
@@ -969,8 +967,7 @@ export const deitiesData: Deity[] = [
     ],
     regionalVariations: [],
     images: {
-      // TODO cover shopping list: replace with a real hanuman-cover.png (interim: Ramayana cover)
-      heroImage: require('../../assets/images/covers/ramayana-cover.png'),
+      heroImage: require('../../assets/images/covers/hanuman-cover.jpg'),
       iconImage: '/images/deities/hanuman-icon.jpg',
       galleryImages: []
     },
@@ -1140,8 +1137,7 @@ export const deitiesData: Deity[] = [
     ],
     regionalVariations: [],
     images: {
-      // TODO cover shopping list: replace with a real durga-cover.png (interim: Navratri cover)
-      heroImage: require('../../assets/images/covers/navratri-cover.png'),
+      heroImage: require('../../assets/images/covers/durga-cover.jpg'),
       iconImage: '/images/deities/durga-icon.jpg',
       galleryImages: []
     },

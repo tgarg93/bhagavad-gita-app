@@ -1670,7 +1670,7 @@ export const festivalData: Festival[] = [
     ],
     culturalImpact: 'Teaches devotion, divine love, and the importance of dharma through Krishna\'s teachings.',
     relatedFestivals: ['holi-2025', 'diwali-2025'],
-    heroImageUrl: require('../../assets/images/covers/krishna-cover.png'),
+    heroImageUrl: require('../../assets/images/covers/krishna-cover.jpg'),
   },
   {
     id: 'ganesh-chaturthi-2025',
