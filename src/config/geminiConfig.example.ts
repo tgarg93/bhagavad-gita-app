@@ -4,15 +4,18 @@
 export const GEMINI_CONFIG = {
   // API Configuration
   apiKey: process.env.EXPO_PUBLIC_GEMINI_API_KEY || '', // Set in .env file
-  model: 'gemini-1.5-flash', // Using the fastest model for mobile
+  model: 'gemini-2.5-flash', // Matches production
   enabled: !!process.env.EXPO_PUBLIC_GEMINI_API_KEY, // Auto-enabled when API key is provided
-  
+
   // Generation Configuration
   generationConfig: {
     temperature: 0.7, // Balanced creativity and consistency
     topP: 0.8,
     topK: 40,
-    maxOutputTokens: 800, // Reasonable length for mobile
+    // gemini-2.5-flash is a THINKING model: this budget is shared between its
+    // hidden reasoning and the visible reply. Too low (e.g. 800) starves the
+    // answer and replies cut off mid-sentence. Keep generous headroom.
+    maxOutputTokens: 2048,
   },
   
   // Safety Settings
