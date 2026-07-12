@@ -49,6 +49,7 @@ const ACCENTS: Record<string, { border: string; text: string }> = {
   story: { border: 'rgba(230, 81, 0, 0.14)', text: DharmaDesignSystem.colors.primary.deepSaffron },
   why: { border: 'rgba(230, 81, 0, 0.14)', text: DharmaDesignSystem.colors.primary.deepSaffron },
   festival: { border: 'rgba(230, 81, 0, 0.14)', text: DharmaDesignSystem.colors.primary.deepSaffron },
+  compare: { border: 'rgba(46, 88, 148, 0.24)', text: '#2E5894' },
 };
 
 interface DailyChaiCardProps {
@@ -113,7 +114,7 @@ const DailyChaiCard: React.FC<DailyChaiCardProps> = ({
           </>
         );
       default:
-        // story · why · festival — the original hook/body layout
+        // story · why · festival · compare — the original hook/body layout
         return (
           <>
             <Text style={styles.hook}>{atom.hook}</Text>

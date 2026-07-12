@@ -2,6 +2,8 @@
 // Centralized system to combine all content types into unified interface
 
 import { ContentCard, ContentSection, ContentCategory } from '../types/contentTypes';
+import { PRAYERS, lessonCount } from './prayers';
+import { getStoriesByCollection, Story } from './stories';
 import { expandedScripturesData } from './expandedScriptures';
 import { getMajorFestivals } from './festivals';
 import { getMajorDeities } from './godsAndDeities';
@@ -9,6 +11,51 @@ import { getCoreConceptsData, getEthicalValuesData, getSpiritualPathsData } from
 import { getYogaPathsData, getBeginnerPractices } from './yogaAndPractices';
 
 // Convert data to unified ContentCard format
+const convertPrayersToCards = (): ContentCard[] => {
+  try {
+    return PRAYERS.map(prayer => ({
+      id: prayer.id,
+      title: prayer.title,
+      description: prayer.subtitle,
+      category: 'mantras' as ContentCategory,
+      difficulty: 'beginner' as const,
+      heroImage: prayer.coverImage,
+      iconImage: prayer.coverImage,
+      tags: [prayer.language, prayer.attribution],
+      estimatedTime: `${lessonCount(prayer)} lesson${lessonCount(prayer) === 1 ? '' : 's'}`,
+      progress: 0,
+      isFavorite: false,
+      isNew: true,
+    }));
+  } catch (error) {
+    console.log('Error converting prayers:', error);
+    return [];
+  }
+};
+
+const convertStoriesToCards = (stories: Story[]): ContentCard[] => {
+  try {
+    return stories.map(story => ({
+      id: story.id,
+      title: story.title,
+      sanskritName: story.sanskritTitle,
+      description: story.subtitle,
+      category: 'stories' as ContentCategory,
+      difficulty: 'beginner' as const,
+      heroImage: story.coverImage,
+      iconImage: story.coverImage,
+      tags: [story.collection === 'upanishad' ? 'Upanishad' : 'Katha'],
+      estimatedTime: `${story.sections.length} parts`,
+      progress: 0,
+      isFavorite: false,
+      isNew: false,
+    }));
+  } catch (error) {
+    console.log('Error converting stories:', error);
+    return [];
+  }
+};
+
 const convertScripturesToCards = (): ContentCard[] => {
   try {
     return expandedScripturesData.map(scripture => ({
@@ -204,11 +251,32 @@ export const getContentSections = (): ContentSection[] => {
         cards: convertPhilosophyToCards(),
       },
       {
+        id: 'prayers-section',
+        title: 'Prayers & Mantras',
+        description: 'Learn the words, verse by verse',
+        icon: 'flame-outline',
+        cards: convertPrayersToCards(),
+      },
+      {
         id: 'scriptures-section',
         title: 'Scriptures & Epics',
         description: 'Ancient wisdom texts and sacred stories',
         icon: 'library-outline',
         cards: convertScripturesToCards(),
+      },
+      {
+        id: 'upanishad-stories-section',
+        title: 'Stories of the Upanishads',
+        description: 'The dialogues where the great ideas were born',
+        icon: 'sparkles-outline',
+        cards: convertStoriesToCards(getStoriesByCollection('upanishad')),
+      },
+      {
+        id: 'kathas-section',
+        title: 'Timeless Kathas',
+        description: 'The stories told for a thousand years',
+        icon: 'book-outline',
+        cards: convertStoriesToCards(getStoriesByCollection('katha')),
       },
       {
         id: 'deities-section',

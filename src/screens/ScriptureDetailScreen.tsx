@@ -42,7 +42,7 @@ const ScriptureDetailScreen: React.FC = () => {
         scriptureData.philosophicalThemes,
         ...scriptureData.mainThemes,
         scriptureData.teachingsOverview
-      ];
+      ].filter(Boolean);
       const segments = audioService.parseContentIntoSegments(content);
       setAudioSegments(segments);
     }
@@ -92,7 +92,7 @@ const ScriptureDetailScreen: React.FC = () => {
                   scripture.culturalSignificance,
                   scripture.philosophicalThemes,
                   scripture.teachingsOverview
-                ]}
+                ].filter(Boolean)}
                 onTextHighlight={handleTextHighlight}
                 onScrollToSegment={handleScrollToSegment}
                 compact={true}
@@ -134,55 +134,65 @@ const ScriptureDetailScreen: React.FC = () => {
               />
             </View>
 
-            <View style={styles.contentSection}>
-              <Text style={getTextStyle(styles.sectionTitle)}>Detailed Description</Text>
-              <TextHighlighter
-                text={scripture.detailedDescription}
-                highlightedSegmentId={highlightedSegmentId}
-                segments={audioSegments}
-                style={getTextStyle(styles.bodyText)}
-              />
-            </View>
+            {scripture.detailedDescription && (
+              <View style={styles.contentSection}>
+                <Text style={getTextStyle(styles.sectionTitle)}>Detailed Description</Text>
+                <TextHighlighter
+                  text={scripture.detailedDescription}
+                  highlightedSegmentId={highlightedSegmentId}
+                  segments={audioSegments}
+                  style={getTextStyle(styles.bodyText)}
+                />
+              </View>
+            )}
 
-            <View style={styles.contentSection}>
-              <Text style={getTextStyle(styles.sectionTitle)}>Historical Context</Text>
-              <TextHighlighter
-                text={scripture.historicalContext}
-                highlightedSegmentId={highlightedSegmentId}
-                segments={audioSegments}
-                style={getTextStyle(styles.bodyText)}
-              />
-            </View>
+            {scripture.historicalContext && (
+              <View style={styles.contentSection}>
+                <Text style={getTextStyle(styles.sectionTitle)}>Historical Context</Text>
+                <TextHighlighter
+                  text={scripture.historicalContext}
+                  highlightedSegmentId={highlightedSegmentId}
+                  segments={audioSegments}
+                  style={getTextStyle(styles.bodyText)}
+                />
+              </View>
+            )}
 
-            <View style={styles.contentSection}>
-              <Text style={getTextStyle(styles.sectionTitle)}>Cultural Significance</Text>
-              <TextHighlighter
-                text={scripture.culturalSignificance}
-                highlightedSegmentId={highlightedSegmentId}
-                segments={audioSegments}
-                style={getTextStyle(styles.bodyText)}
-              />
-            </View>
+            {scripture.culturalSignificance && (
+              <View style={styles.contentSection}>
+                <Text style={getTextStyle(styles.sectionTitle)}>Cultural Significance</Text>
+                <TextHighlighter
+                  text={scripture.culturalSignificance}
+                  highlightedSegmentId={highlightedSegmentId}
+                  segments={audioSegments}
+                  style={getTextStyle(styles.bodyText)}
+                />
+              </View>
+            )}
 
-            <View style={styles.contentSection}>
-              <Text style={getTextStyle(styles.sectionTitle)}>Philosophical Themes</Text>
-              <TextHighlighter
-                text={scripture.philosophicalThemes}
-                highlightedSegmentId={highlightedSegmentId}
-                segments={audioSegments}
-                style={getTextStyle(styles.bodyText)}
-              />
-            </View>
+            {scripture.philosophicalThemes && (
+              <View style={styles.contentSection}>
+                <Text style={getTextStyle(styles.sectionTitle)}>Philosophical Themes</Text>
+                <TextHighlighter
+                  text={scripture.philosophicalThemes}
+                  highlightedSegmentId={highlightedSegmentId}
+                  segments={audioSegments}
+                  style={getTextStyle(styles.bodyText)}
+                />
+              </View>
+            )}
 
-            <View style={styles.contentSection}>
-              <Text style={getTextStyle(styles.sectionTitle)}>Teachings Overview</Text>
-              <TextHighlighter
-                text={scripture.teachingsOverview}
-                highlightedSegmentId={highlightedSegmentId}
-                segments={audioSegments}
-                style={getTextStyle(styles.bodyText)}
-              />
-            </View>
+            {scripture.teachingsOverview && (
+              <View style={styles.contentSection}>
+                <Text style={getTextStyle(styles.sectionTitle)}>Teachings Overview</Text>
+                <TextHighlighter
+                  text={scripture.teachingsOverview}
+                  highlightedSegmentId={highlightedSegmentId}
+                  segments={audioSegments}
+                  style={getTextStyle(styles.bodyText)}
+                />
+              </View>
+            )}
 
             {scripture.mainThemes.length > 0 && (
               <View style={styles.contentSection}>

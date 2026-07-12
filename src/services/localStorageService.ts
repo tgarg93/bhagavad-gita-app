@@ -120,7 +120,7 @@ export interface ReflectionTurn {
 
 // What kind of content a reflection belongs to. Entries with no contentType
 // (everything stored before Phase D) are legacy Gita chapter reflections.
-export type ReflectionContentType = 'gita' | 'festival' | 'deity' | 'concept';
+export type ReflectionContentType = 'gita' | 'festival' | 'deity' | 'concept' | 'story' | 'scripture';
 
 // A single reflection: the reader's answer to a chapter question, Krishna's
 // response, and any follow-up conversation. `completed` marks the user having
@@ -169,6 +169,7 @@ class LocalStorageService {
     NOTIFICATION_SETTINGS: 'notification_settings',
     CHAI_LAST_OPENED: 'daily_chai_last_opened',
     LEVEL_LAST_CELEBRATED: 'level_last_celebrated',
+    PRAYER_RECITATIONS: 'prayer_recitations',
   };
 
   private static readonly TOTAL_GITA_VERSES = 700;
@@ -449,6 +450,30 @@ class LocalStorageService {
     } catch (error) {
       console.error('Error marking content completed:', error);
       return false;
+    }
+  }
+
+  // ——— Prayer recitations (times each prayer was recited end-to-end) ———
+
+  static async getPrayerRecitations(): Promise<Record<string, number>> {
+    try {
+      const json = await AsyncStorage.getItem(this.KEYS.PRAYER_RECITATIONS);
+      return json ? JSON.parse(json) : {};
+    } catch (error) {
+      console.error('Error getting prayer recitations:', error);
+      return {};
+    }
+  }
+
+  static async incrementPrayerRecitation(prayerId: string): Promise<number> {
+    try {
+      const map = await this.getPrayerRecitations();
+      map[prayerId] = (map[prayerId] ?? 0) + 1;
+      await AsyncStorage.setItem(this.KEYS.PRAYER_RECITATIONS, JSON.stringify(map));
+      return map[prayerId];
+    } catch (error) {
+      console.error('Error incrementing prayer recitation:', error);
+      return 0;
     }
   }
 

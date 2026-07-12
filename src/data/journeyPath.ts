@@ -8,6 +8,12 @@ import { festivalData, getUpcomingFestivals } from './festivals';
 import { getYogaPathsData } from './yogaAndPractices';
 import { hasReaderContent } from './readerContent';
 import { getChapterCover } from './gitaChapterCovers';
+import { getStoryById, UPANISHAD_JOURNEY_ORDER } from './stories';
+import {
+  getPartById,
+  RAMAYANA_JOURNEY_ORDER,
+  UPANISHAD_JOURNEY_ORDER as UPANISHAD_TEXT_JOURNEY_ORDER,
+} from './scriptureTexts';
 
 export type JourneyModule = 1 | 2 | 3 | 4 | 5;
 
@@ -87,8 +93,18 @@ export function routeForContentRef(
       return hasReaderContent('deity', id)
         ? { name: 'ContentReader', params: { contentType: 'deity', contentId: id } }
         : { name: 'DeityDetail', params: { deityId: id } };
+    case 'story':
+      return hasReaderContent('story', id)
+        ? { name: 'ContentReader', params: { contentType: 'story', contentId: id } }
+        : null;
+    case 'scripture':
+      return hasReaderContent('scripture', id)
+        ? { name: 'ContentReader', params: { contentType: 'scripture', contentId: id } }
+        : null;
     case 'practice':
       return { name: 'PracticeDetail', params: { practiceId: id } };
+    case 'prayer':
+      return { name: 'PrayerPlayer', params: { prayerId: id } };
     case 'festival':
       return hasReaderContent('festival', id)
         ? { name: 'ContentReader', params: { contentType: 'festival', contentId: id } }
@@ -146,9 +162,21 @@ export function buildJourneyPath(): JourneyItem[] {
       cover: typeof concept.images.heroImage === 'number' ? concept.images.heroImage : FALLBACK_COVER,
     });
   }
+  // Principal Upanishads (the texts) — appended after the concepts (append-only)
+  for (const id of UPANISHAD_TEXT_JOURNEY_ORDER) {
+    const part = getPartById(id);
+    if (!part) continue;
+    path.push({
+      id: `scripture:${id}`,
+      module: 1,
+      title: part.name,
+      route: routeForContentRef(`scripture:${id}`)!,
+      cover: typeof part.coverImage === 'number' ? part.coverImage : FALLBACK_COVER,
+    });
+  }
 
-  // Module 2 — Stories That Guide Us (the Gita, chapter by chapter;
-  // Ramayana kandas join this module in a later wave)
+  // Module 2 — Stories That Guide Us (the Gita, chapter by chapter, then the
+  // Upanishad dialogues; Ramayana kandas join this module in a later wave).
   for (let ch = 1; ch <= 18; ch++) {
     const chapter = bhagavadGitaData.find(c => c.number === ch);
     path.push({
@@ -157,6 +185,30 @@ export function buildJourneyPath(): JourneyItem[] {
       title: `Gita Chapter ${ch}${chapter ? ` · ${chapter.name.english}` : ''}`,
       route: routeForContentRef(`gita:${ch}`)!,
       cover: getChapterCover(ch) as number,
+    });
+  }
+  // Appended after Gita 18 — existing journey positions never move
+  for (const id of UPANISHAD_JOURNEY_ORDER) {
+    const story = getStoryById(id);
+    if (!story) continue;
+    path.push({
+      id: `story:${id}`,
+      module: 2,
+      title: story.title,
+      route: routeForContentRef(`story:${id}`)!,
+      cover: typeof story.coverImage === 'number' ? story.coverImage : FALLBACK_COVER,
+    });
+  }
+  // Ramayana kandas — appended after the Upanishad stories (append-only)
+  for (const id of RAMAYANA_JOURNEY_ORDER) {
+    const part = getPartById(id);
+    if (!part) continue;
+    path.push({
+      id: `scripture:${id}`,
+      module: 2,
+      title: part.name,
+      route: routeForContentRef(`scripture:${id}`)!,
+      cover: typeof part.coverImage === 'number' ? part.coverImage : FALLBACK_COVER,
     });
   }
 

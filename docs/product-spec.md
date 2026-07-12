@@ -40,16 +40,18 @@ Six steps in one state machine (`OnboardingScreen`), Krishna asking each questio
 ## 3. Daily Chai (the daily loop)
 
 - Home IS the brief: under the status row sits **ONE unified Daily Chai card** (`DailyChaiCard`, shared with the onboarding preview); reading requires zero taps. Opening Home marks the day's chai read (`daily_chai_last_opened`) and credits activity.
-- **Rotation** (`getDailyAtom`, deterministic per date): weekday → type — Sun **verse**, Mon why, Tue saying, Wed **verse**, Thu story, Fri **question**, Sat word. Within a type the pick rotates **weekly** (`floor(localDayNumber/7) % pool` — the old dayOfYear hash froze each weekday on one atom all year). 35 authored atoms (7 × why/saying/word/story/question).
+- **Rotation** (`getDailyAtom`, deterministic per date): weekday → type — Sun **verse**, Mon why, Tue saying, Wed **compare**, Thu story, Fri **question**, Sat word. Within a type the pick rotates **weekly** (`floor(localDayNumber/7) % pool` — the old dayOfYear hash froze each weekday on one atom all year). 109 authored atoms: 60 why (7 ritual-etiquette originals + the 53-question "always wondered" canon — iconography, the gods, nature, practice, beliefs, interleaved so consecutive Mondays vary), 18 compare, 10 story (4 link into the new story library via `story:` refs), 7 each saying/word/question.
+- **Across traditions (`compare`, Wednesdays)**: Hinduism set beside other faiths (Trimurti vs Trinity, karma vs sin, Om/Amen/Amin, reincarnation vs resurrection…). Framing rules: curiosity never superiority; Hindu locus cited precisely; other faiths characterized respectfully at intro level; differences stated without ranking. Card renders with the hook/body layout and an indigo accent.
+- **Sensitive questions** (caste, women & scripture, swastika, vegetarianism) are included deliberately — they are the most-asked questions about Hinduism — and answered with the citation discipline: what scripture says vs. what is later social history, stated honestly. Customs without scripture (right hand, 108, shoes off) say so on the card.
 - **Verse days** synthesize the atom from `getDailyVerse` (deterministic from 701 bundled verses): English-first hierarchy, Devanagari beneath, 📖 opens that Gita chapter. The standalone verse card is gone.
 - **Festival override**: within 7 days of the next festival, the slot becomes a generated countdown atom from festival data.
 - **Per-type treatments** (one shared frame; per-type inner layout + accent border/tag tint): word = large centered Devanagari + transliteration + gloss (saffron); saying = quote glyph + Devanagari + "WHAT IT MEANS" interpretation (teal); question = airy centered italic question + short insight (violet); verse = quote + Sanskrit line (gold); story/why/festival = original hook/body (saffron). Structured Sanskrit lives in the optional `atom.sanskrit {devanagari, transliteration, meaning?}` field.
 - **Voice mode**: ▶ on every card (toggle — tap again stops). Sanskrit-bearing cards speak the Devanagari first in the Hindi voice (slower/lower, same settings as reader narration), then the English; **verse cards stay English-first**. No Hindi voice installed → Sanskrit part is skipped silently (`speakSequence` in `audioNarrationService`; a cancellation token stops mid-sequence chains).
 - Card actions are **bare icons** in the header row (no chips/circles); card bodies are not tappable. No chat-bubble action — today's `krishnaPrompt` (present on all types, incl. synthesized verse atoms) leads Ask Krishna's suggestions instead.
 
-## 4. Notifications (all local, no backend)
+## 4. Notifications (local today; remote push specced in § 4.1 for wave 2)
 
-Idempotent reschedule-all on every app open. "Fires only after absence" = one-shots scheduled for future days, cancelled+rescheduled on each open.
+All current notifications are **local** — scheduled on-device, no backend, no APNs. Idempotent reschedule-all on every app open. "Fires only after absence" = one-shots scheduled for future days, cancelled+rescheduled on each open.
 
 | Type | When | Content | Deep link |
 |---|---|---|---|
@@ -60,6 +62,24 @@ Idempotent reschedule-all on every app open. "Fires only after absence" = one-sh
 
 Tap handling: `navigationRef` + response listener in App.tsx (incl. cold-start via `getLastNotificationResponseAsync`). Permission is requested only at warm moments (onboarding finish, celebrations) and never re-nagged.
 
+### 4.1 Remote push (future — wave 2, not implemented)
+
+**Why**: local one-shots exhaust ~7 days after the last app open — the lapsed user, the one notifications exist for, hears nothing after that. Remote push is the only complete fix. The cheap interim (no backend) is extending the local horizon: ~28 Daily Chai one-shots + absence nudges at days 14/21/28 ≈ 40 pending, comfortably under iOS's 64-pending limit.
+
+**Requires**:
+- Backend + device push-token registry — build alongside accounts in wave 2; until accounts land, tokens key to the local anonymous id.
+- Delivery: start with the **Expo Push Service** (`getExpoPushTokenAsync`, server POSTs to Expo's push API — no APNs plumbing). Direct APNs/FCM is the later opt-out path if Expo's service becomes a constraint.
+- Credentials: APNs key on the Apple team that owns `com.tushargarg.dharma` (managed via EAS credentials); FCM key for Android. The push entitlement arrives with the build config — nothing manual in Xcode.
+- Server-side scheduler that reproduces atom content: `getDailyAtom(date)` is deterministic per date, but atoms live in bundled TS — needs a build step exporting atoms to JSON for the server, so local and remote say the same thing on the same day for free.
+
+**Unlocks**: win-back after 7+ days of silence; festival-day pushes regardless of last open; announcements/content drops; server-side timezone correctness.
+
+**Coexistence rules** (the contract future work must honor):
+- Local notifications remain the primary channel — offline and no-account users keep working unchanged.
+- No double-fire: the server only sends what the device cannot have pending — i.e., remote takes over after N days of silence, inferred from an app-open heartbeat, and never duplicates the locally scheduled week.
+- Same deep-link payload shape (`{url, festivalId?}`) so App.tsx tap handling works unchanged for both channels.
+- Permission UX unchanged (warm-moment ask, never re-nagged); token registration happens only after grant. New AsyncStorage keys for token/consent — append-only, as always.
+
 ## 5. Readers
 
 - **Anatomy** (both readers): horizontal paged FlatList — cover (art, title, meta, Begin) → one section per page → one reflection question per page (skippable) → celebration. Resume position stored per item.
@@ -68,6 +88,38 @@ Tap handling: `navigationRef` + response listener in App.tsx (incl. cold-start v
 - **Section subtitles**: left-aligned under the title, one shared treatment across readers (bodyLG italic, soft ash) — matching the Gita chapter subtitle.
 - **Narration**: expo-speech; Indian-English voice preferred, Hindi voice for Sanskrit (skipped if unavailable); plays under the iOS silent switch (session activated by a silent WAV once per session). Transport: play/pause, prev/next section, ±10s. Skip buttons move voice AND page together. **The playback bar appears only inside content** (verse/section and reflection pages — never covers or celebrations). **Begin on a cover turns the page AND starts narration automatically**; play pressed mid-content starts from the current page (start segment resolved by id, not arithmetic).
 - **Ask Krishna about this**: both readers seed `krishnaContext.setCurrentContent` and jump to the chat tab.
+
+### 5.1 Prayer learn player (`PrayerPlayerScreen`)
+
+The "skills" content shape: liturgical text learned by repetition, not read once. Data in `src/data/prayers.ts` (`prayer:<id>` ids are permanent — completion keys on them).
+
+- **Anatomy**: paged like the readers — cover (attribution, verse/lesson count, "First lessons" badge while `complete: false`) → intro pages (origin story; last one carries when-to-recite) → **one verse per page** → celebration.
+- **Verse page (recitation-first)**: hero text is the script being recited from — the **Aa/अ header toggle** swaps transliteration-first ↔ Devanagari-first; meaning sits below a hairline divider; a **mala-bead row** shows position (beads grouped by lesson, current bead enlarged).
+- **Modes**: **Learn** (default) — stay on the verse, ▶ loops its audio ×1/×3/∞ (loop pill). **Listen** — the whole prayer flows, audio auto-advancing the pages to the end. Manual page turns stop a playing verse; the loop pill is disabled in Listen.
+- **Audio**: existing TTS pipeline, Devanagari as `sanskrit` segments (Hindi voice, slow rate; silently skipped when no Hindi voice — same rule as everywhere).
+- **Progress**: resume via the shared reader-positions map (key `prayer:<id>`); finishing a **complete** prayer writes `prayer:<id>` to `content_completion` and increments `prayer_recitations` (append-only key; times-recited shown on the celebration). Incomplete prototypes celebrate the lesson but persist nothing. Points formula untouched.
+- **Editorial**: scriptural mantras cite their locus (Mahamrityunjaya: Rig Veda 7.59.12); compositions name author and century (Chalisa: Tulsidas, 16th c.; Om Jai Jagdish Hare: Shardha Ram Phillauri, 1870s); legends told as legends. Every "how to practice" intro ends with "This is one common way — ask your family how they do it."
+- **Surfaces**: "Prayers & Mantras" section in Learn (category `mantras` → PrayerPlayer); `prayer:` refs resolve via `routeForContentRef`; Ask Krishna header action seeds `type: 'prayer'` context.
+- **v1 library (shipped)**: Hanuman Chalisa (flagship, 43 verses / 11 lessons of 4, `complete`), Om Jai Jagdish Hare, Sukhkarta Dukhharta (Ganesha), Aarti Kunj Bihari (Krishna), Mahamrityunjaya, Om Namah Shivaya, Shanti Mantras (Saha Navavatu + Purnamadah). All `complete: true`. The `complete` flag gates completion-writing, so a partially-authored prayer can ship and teach without marking done.
+
+### 5.2 Story library (`src/data/stories.ts` → ContentReader)
+
+Standalone kathas and Upanishad dialogues in the reader's `NarrativeSection[]` shape — no new screen. One schema, one `collection` tag (`'upanishad' | 'katha'`); `story:<id>` ids are permanent.
+
+- **Adapter**: `readerContent.ts` gains a `story` branch; `detailRoute` is now **optional** and stories omit it, so the reader's ⋮ menu hides "Details & practices" (its only reader-code change). `readerLabel` is "Upanishad Story" / "Story".
+- **Upanishad collection (8)** — Nachiketa & Death, Svetaketu & the salt (tat tvam asi), Satyakama Jabala, Yajnavalkya & Maitreyi, Gargi's debate, Indra & Virochana, the two birds, Bhrigu's five sheaths. **Appended to journey Module 2** after Gita 18 via `UPANISHAD_JOURNEY_ORDER` (append-only — existing item positions never move).
+- **Katha collection (12)** — Vishwamitra & Vasishtha's cow, Harishchandra, Dhruva, Markandeya vs. death, Ekalavya, King Shibi & the dove, Sudama's rice, Gajendra's surrender, Prahlada, Savitri, Ganesha & the moon, the churning of the ocean. **Browse-only** (Learn tab), off the journey.
+- **Surfaces**: two Learn sections ("Stories of the Upanishads", "Timeless Kathas", category `stories` → ContentReader); `story:` kind in `routeForContentRef`; 4 Daily Chai story atoms link in (Nachiketa, the salt, Ekalavya, Gajendra).
+- **Editorial**: per-section `citation` footnotes with `citationLink` refs where the subject is in-app (e.g. Prahlada → `festival:holi-2025`, Markandeya → `deity:shiva`); folk episodes (Ganesha & the moon) cited as tradition honestly; injustice left visible where the source leaves it (Ekalavya).
+
+### 5.3 Multi-part scriptures (`src/data/scriptureTexts.ts` → ContentReader)
+
+Long texts read in the **Gita reading pattern** but via the shared reader (no full verse JSON like the Gita's). One schema serves both collections: a `ScriptureCollection` (Ramayana, Principal Upanishads) holds ordered `ScripturePart`s (kandas / individual Upanishads), each a reader item. `scripture:<partId>` ids are globally unique and permanent; parts are authored at Gita-chapter depth (`NarrativeSection`s with cited `openingVerse`/`keyVerse` shlokas, story + teaching voice, per-section `citation`, cross-linked to episode-stories via `citationLink` e.g. Katha → `story:nachiketa`).
+
+- **Surfacing**: the existing "Ramayana" / "Principal Upanishads" scripture cards route (via `collectionForCardId`) to **`ScriptureContentsScreen`** — a contents list (collection blurb + ordered part rows with completion ticks) → each part opens `ContentReader`. Other scriptures still use `ScriptureDetail`; `bhagavad-gita` still opens the Gita player.
+- **Reader adapter**: `readerContent.ts` gains a `scripture` branch (no `detailRoute`; `readerLabel` = collection title); `scripture:` kind in `routeForContentRef`; `ReflectionContentType` + Krishna `CurrentContent.type` gain `'scripture'` (append-only unions).
+- **Journey**: Ramayana kandas append to Module 2, Upanishad texts to Module 1, via `RAMAYANA_JOURNEY_ORDER` / `UPANISHAD_JOURNEY_ORDER` (append-only — existing positions never move).
+- **v1 scope**: Ramayana = 7 kandas (Bala…Uttara); Upanishads = Core 6 (Isha, Kena, Katha, Mundaka, Mandukya, Taittiriya). Phase A shipped Bala Kanda + Katha Upanishad; remaining parts land in follow-up passes. Per-part cover art is a follow-up (illustration spec); parts reuse existing covers for now.
 
 ## 6. Ask Krishna
 

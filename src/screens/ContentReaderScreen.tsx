@@ -271,7 +271,7 @@ const ContentReaderScreen: React.FC = () => {
 
   const openDetails = () => {
     setShowMenu(false);
-    if (!content) return;
+    if (!content?.detailRoute) return;
     (navigation as any).navigate(content.detailRoute.name, content.detailRoute.params);
   };
 
@@ -508,10 +508,12 @@ const ContentReaderScreen: React.FC = () => {
               <Ionicons name="chatbubble-ellipses-outline" size={22} color={DharmaDesignSystem.colors.neutrals.charcoalBlack} />
               <Text style={styles.menuItemText}>Ask Krishna about this</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.menuItem} onPress={openDetails}>
-              <Ionicons name="information-circle-outline" size={22} color={DharmaDesignSystem.colors.neutrals.charcoalBlack} />
-              <Text style={styles.menuItemText}>Details & practices</Text>
-            </TouchableOpacity>
+            {content.detailRoute && (
+              <TouchableOpacity style={styles.menuItem} onPress={openDetails}>
+                <Ionicons name="information-circle-outline" size={22} color={DharmaDesignSystem.colors.neutrals.charcoalBlack} />
+                <Text style={styles.menuItemText}>Details & practices</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </TouchableOpacity>
       </Modal>

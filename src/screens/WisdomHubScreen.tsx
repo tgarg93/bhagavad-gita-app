@@ -19,6 +19,7 @@ import { DharmaDesignSystem, createTextStyle, createGradientColors } from '../co
 import DharmaSearchHeader from '../components/ui/DharmaSearchHeader';
 import { getContentSections, getFeaturedContent, searchContent } from '../data/contentAggregator';
 import { hasReaderContent } from '../data/readerContent';
+import { collectionForCardId } from '../data/scriptureTexts';
 import journeyService from '../services/journeyService';
 import { ContentSection, ContentCard, ContentCategory } from '../types/contentTypes';
 
@@ -78,13 +79,20 @@ const WisdomHubScreen: React.FC = () => {
   const handleCardPress = (card: ContentCard) => {
     // Navigate to appropriate detail screen based on category
     switch (card.category) {
-      case 'scriptures':
+      case 'scriptures': {
         if (card.id === 'bhagavad-gita') {
           (navigation as any).navigate('GitaVersePlayer');
+          break;
+        }
+        // Multi-part scriptures with authored content open their contents list
+        const collection = collectionForCardId(card.id);
+        if (collection) {
+          (navigation as any).navigate('ScriptureContents', { collectionId: collection.id });
         } else {
           (navigation as any).navigate('ScriptureDetail', { scriptureId: card.id });
         }
         break;
+      }
       case 'festivals':
         // This will open the festival modal from FestivalCalendarScreen
         (navigation as any).navigate('FestivalCalendar', { selectedFestival: card.id });
@@ -106,6 +114,14 @@ const WisdomHubScreen: React.FC = () => {
         break;
       case 'practices':
         (navigation as any).navigate('PracticeDetail', { practiceId: card.id });
+        break;
+      case 'mantras':
+        // Prayers open the learn player (paged, verse-by-verse)
+        (navigation as any).navigate('PrayerPlayer', { prayerId: card.id });
+        break;
+      case 'stories':
+        // Kathas & Upanishad stories open the paged reader
+        (navigation as any).navigate('ContentReader', { contentType: 'story', contentId: card.id });
         break;
       default:
         console.log('Unknown category:', card.category);

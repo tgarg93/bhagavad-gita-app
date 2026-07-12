@@ -12,6 +12,12 @@ export interface Scripture {
   description: string;
   significance: string;
   historicalContext: string;
+  // Optional long-form fields ScriptureDetailScreen renders when present; most
+  // records omit them (the screen guards each section on presence).
+  detailedDescription?: string;
+  culturalSignificance?: string;
+  philosophicalThemes?: string;
+  teachingsOverview?: string;
   language: 'sanskrit' | 'mixed';
   estimatedDate: string;
   totalChapters?: number;

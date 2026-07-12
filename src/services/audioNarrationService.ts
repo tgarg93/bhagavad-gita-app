@@ -209,6 +209,7 @@ export class AudioNarrationService {
 
     // Sections are { title?: string, blocks: GitaBlock[] } — see src/data/bhagavadGitaContent.ts
     content.forEach((section, sectionIndex) => {
+      if (!section) return; // tolerate undefined/null entries (e.g. sparse scripture fields)
       if (section.title) {
         pushBlock(`section-${sectionIndex}-title`, section.title, 'title');
       }

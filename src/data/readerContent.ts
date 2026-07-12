@@ -4,8 +4,10 @@ import { NarrativeSection, SourceNote } from './narrativeTypes';
 import { getPhilosophyById } from './philosophyAndTeachings';
 import { getDeityById } from './godsAndDeities';
 import { festivalData } from './festivals';
+import { getStoryById } from './stories';
+import { getPartById, getCollection } from './scriptureTexts';
 
-export type ReaderContentType = 'concept' | 'deity' | 'festival';
+export type ReaderContentType = 'concept' | 'deity' | 'festival' | 'story' | 'scripture';
 
 export interface ReaderContent {
   contentType: ReaderContentType;
@@ -17,8 +19,10 @@ export interface ReaderContent {
   sections: NarrativeSection[];
   reflectionQuestions: string[];
   sources: SourceNote[];
-  // Where the ⋮ menu's "Details & practices" leads (mantras/rituals/worship etc.)
-  detailRoute: { name: string; params: Record<string, string> };
+  // Where the ⋮ menu's "Details & practices" leads (mantras/rituals/worship
+  // etc.). Absent for content types with no detail screen (e.g. stories) —
+  // the reader hides the menu item then.
+  detailRoute?: { name: string; params: Record<string, string> };
   readerLabel: string; // cover eyebrow, e.g. 'Philosophy'
 }
 
@@ -80,6 +84,43 @@ export function getReaderContent(
       sources: deity.sources ?? [],
       detailRoute: { name: 'DeityDetail', params: { deityId: deity.id } },
       readerLabel: 'Deity',
+    };
+  }
+
+  if (contentType === 'story') {
+    const story = getStoryById(contentId);
+    if (!story?.sections?.length) return null;
+    return {
+      contentType,
+      id: story.id,
+      title: story.title,
+      sanskritTitle: story.sanskritTitle,
+      subtitle: story.subtitle,
+      coverImage: asCover(story.coverImage),
+      sections: story.sections,
+      reflectionQuestions: story.reflectionQuestions ?? [],
+      sources: story.sources ?? [],
+      // No detail screen for stories — the reader is the whole experience
+      readerLabel: story.collection === 'upanishad' ? 'Upanishad Story' : 'Story',
+    };
+  }
+
+  if (contentType === 'scripture') {
+    const part = getPartById(contentId);
+    if (!part?.sections?.length) return null;
+    const collection = getCollection(part.collection);
+    return {
+      contentType,
+      id: part.id,
+      title: part.name,
+      sanskritTitle: part.sanskritName,
+      subtitle: part.subtitle,
+      coverImage: asCover(part.coverImage),
+      sections: part.sections,
+      reflectionQuestions: part.reflectionQuestions ?? [],
+      sources: part.sources ?? [],
+      // No detail screen — the reader is the whole experience
+      readerLabel: collection?.title ?? 'Scripture',
     };
   }
 

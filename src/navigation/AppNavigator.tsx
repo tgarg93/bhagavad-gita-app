@@ -24,6 +24,8 @@ import BhagavadGitaChapter1Screen from '../screens/BhagavadGitaChapter1Screen';
 import BhagavadGitaCompleteScreen from '../screens/BhagavadGitaCompleteScreen';
 import GitaVersePlayerScreen from '../screens/GitaVersePlayerScreen';
 import ContentReaderScreen from '../screens/ContentReaderScreen';
+import PrayerPlayerScreen from '../screens/PrayerPlayerScreen';
+import ScriptureContentsScreen from '../screens/ScriptureContentsScreen';
 import ProfileTabScreen from '../screens/ProfileTabScreen';
 import JourneyPathScreen from '../screens/JourneyPathScreen';
 
@@ -161,6 +163,8 @@ const AppNavigator = () => {
         <Stack.Screen name="BhagavadGitaComplete" component={BhagavadGitaCompleteScreen} />
         <Stack.Screen name="GitaVersePlayer" component={GitaVersePlayerScreen} />
         <Stack.Screen name="ContentReader" component={ContentReaderScreen} />
+        <Stack.Screen name="PrayerPlayer" component={PrayerPlayerScreen} />
+        <Stack.Screen name="ScriptureContents" component={ScriptureContentsScreen} />
         <Stack.Screen name="JourneyPath" component={JourneyPathScreen} />
       </Stack.Navigator>
     </NavigationContainer>
