@@ -58,7 +58,6 @@ type StepId =
   | 'name'
   | 'familiarity'
   | 'intentions'
-  | 'familyStream'
   | 'goal'
   | 'identity'
   | 'journey'
@@ -71,7 +70,6 @@ const FIRST_RUN_STEPS: StepId[] = [
   'name',
   'familiarity',
   'intentions',
-  'familyStream',
   'goal',
   'identity',
   'journey',
@@ -83,31 +81,32 @@ const EDIT_STEPS: StepId[] = FIRST_RUN_STEPS.filter(
   s => s !== 'introApp' && s !== 'introKrishna'
 );
 
+// Every option label has to survive on ONE line. The label column is 290pt
+// (390 screen − 48 body padding − 48 option padding − 4 border) at 18pt/600,
+// which is roughly 28 characters. Subtitles (14pt) get about 40. Copy that
+// busts the budget wraps to two lines and the list stops scanning.
 const FAMILIARITY_OPTIONS: { value: SpiritualProfile['familiarity']; label: string; sub: string }[] = [
-  { value: 'new', label: 'Just beginning', sub: 'New to Hindu teachings' },
-  { value: 'some', label: 'Some familiarity', sub: 'Grew up around it or explored a little' },
-  { value: 'deep', label: 'Well acquainted', sub: 'Comfortable with scriptures and practice' },
+  { value: 'new', label: 'Just beginning', sub: 'Starting from scratch' },
+  { value: 'some', label: 'Some familiarity', sub: 'I know the names, not the meanings' },
+  { value: 'deep', label: 'Well acquainted', sub: "I've read and practiced before" },
 ];
 
-const INTENTION_OPTIONS = [
-  'Learn the Bhagavad Gita',
-  'Understand Hindu philosophy',
-  'Build a daily practice',
-  'Stories & festivals',
-  'Personal growth',
-];
-
-// The question only this app would ask: the family's ishta-devata. Family
-// tradition is a different signal than current intentions, and it seeds the
-// Branches course's "ask your family" thread.
-const FAMILY_STREAM_OPTIONS: { value: string; label: string; sub: string }[] = [
-  { value: 'Krishna', label: 'Krishna', sub: 'Flute, stories, Janmashtami' },
-  { value: 'Shiva', label: 'Shiva', sub: 'The ascetic, Shivratri nights' },
-  { value: 'The Goddess', label: 'The Goddess', sub: 'Durga, Lakshmi, Navratri' },
-  { value: 'Ganesha', label: 'Ganesha', sub: 'First prayers, new beginnings' },
-  { value: 'Rama & Hanuman', label: 'Rama & Hanuman', sub: 'The Ramayana household' },
-  { value: 'A mix of many', label: 'A mix of many', sub: 'Different faces on one altar' },
-  { value: 'Not sure', label: 'Not sure', sub: 'And that\'s perfectly fine' },
+// Outcomes, not shelves. The old list ("Learn the Bhagavad Gita", "Understand
+// Hindu philosophy", "Stories & festivals", "Personal growth") was the app's own
+// table of contents read back to the user — nobody's goal is "philosophy". These
+// are the things people actually open this app to be able to DO, and the first
+// two are the product's whole reason to exist: help Hindus become experts in
+// their own religion.
+//
+// The strings themselves are what gets stored (see userKnowledgeSchema.ts), so
+// changing them here means changing them there too.
+const INTENTION_OPTIONS: { value: string; label: string; sub: string }[] = [
+  { value: "Answer my kids' questions", label: "Answer my kids' questions", sub: 'Not just “that’s what we do”' },
+  { value: 'Explain Hinduism to others', label: 'Explain Hinduism to others', sub: 'In plain words, with confidence' },
+  { value: 'Understand our rituals', label: 'Understand our rituals', sub: 'What we do at the temple, and why' },
+  { value: 'Finally read the Gita', label: 'Finally read the Gita', sub: 'All 18 chapters, with a guide' },
+  { value: 'Know the gods and stories', label: 'Know the gods and stories', sub: "Who's who, and how they connect" },
+  { value: 'Steady myself in hard times', label: 'Steady myself in hard times', sub: 'The teachings, when life is heavy' },
 ];
 
 const GOAL_OPTIONS: { value: SpiritualProfile['dailyGoalMinutes']; label: string; sub: string }[] = [
@@ -255,7 +254,6 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
   const [step, setStep] = useState(0);
   const [familiarity, setFamiliarity] = useState<SpiritualProfile['familiarity'] | null>(null);
   const [intentions, setIntentions] = useState<string[]>([]);
-  const [familyStream, setFamilyStream] = useState<string | null>(null);
   const [name, setName] = useState('');
   const [dailyGoal, setDailyGoal] = useState<SpiritualProfile['dailyGoalMinutes'] | null>(null);
 
@@ -273,10 +271,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
     familiarity: firstName
       ? `Lovely to meet you, ${firstName}. How familiar are you with Hindu teachings?`
       : 'How familiar are you with Hindu teachings?',
-    intentions: 'Wonderful. What brings you here? Choose all that speak to you.',
-    familyStream: firstName
-      ? `Every family holds the divine through a face, ${firstName}. Growing up, whose was closest in your home?`
-      : 'Every family holds the divine through a face. Growing up, whose was closest in your home?',
+    intentions: 'What would you like to be able to do? Choose all that speak to you.',
     goal: firstName
       ? `One last thing, ${firstName} — how much time shall we spend together each day?`
       : 'One last thing — how much time shall we spend together each day?',
@@ -313,7 +308,6 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
     (id === 'name' && firstName.length > 0) ||
     (id === 'familiarity' && familiarity !== null) ||
     (id === 'intentions' && intentions.length > 0) ||
-    (id === 'familyStream' && familyStream !== null) ||
     (id === 'goal' && dailyGoal !== null) ||
     id === 'identity' ||
     id === 'journey' ||
@@ -322,10 +316,12 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
   const finish = async () => {
     // Merge, don't overwrite: replaying onboarding ("Edit my answers") must
     // preserve the rolling summary and structured knowledge learned since.
+    // familyStream is deliberately absent: the question that set it is gone, but
+    // the field stays on SpiritualProfile and Krishna still reads it. Because
+    // this is a merge, users who answered it before keep their answer.
     const patch: Partial<SpiritualProfile> = {
       familiarity: familiarity ?? 'some',
       intentions,
-      familyStream: familyStream ?? '',
       dailyGoalMinutes: dailyGoal ?? 10,
       onboarded: true,
     };
@@ -489,15 +485,14 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
 
           {id === 'intentions' &&
             INTENTION_OPTIONS.map((o, i) => (
-              <Reveal key={o} active={krishnaDone} delay={i * 70}>
-                {renderOption(intentions.includes(o), o, undefined, () => toggle(intentions, setIntentions, o), o)}
-              </Reveal>
-            ))}
-
-          {id === 'familyStream' &&
-            FAMILY_STREAM_OPTIONS.map((o, i) => (
               <Reveal key={o.value} active={krishnaDone} delay={i * 70}>
-                {renderOption(familyStream === o.value, o.label, o.sub, () => setFamilyStream(o.value), o.value)}
+                {renderOption(
+                  intentions.includes(o.value),
+                  o.label,
+                  o.sub,
+                  () => toggle(intentions, setIntentions, o.value),
+                  o.value
+                )}
               </Reveal>
             ))}
 

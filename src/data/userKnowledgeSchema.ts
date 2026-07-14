@@ -65,11 +65,12 @@ const FAMILIARITY_OPTIONS: FieldOption[] = [
 ];
 
 const INTENTION_OPTIONS: FieldOption[] = [
-  'Learn the Bhagavad Gita',
-  'Understand Hindu philosophy',
-  'Build a daily practice',
-  'Stories & festivals',
-  'Personal growth',
+  "Answer my kids' questions",
+  'Explain Hinduism to others',
+  'Understand our rituals',
+  'Finally read the Gita',
+  'Know the gods and stories',
+  'Steady myself in hard times',
 ].map(v => ({ value: v, label: v }));
 
 const INTEREST_OPTIONS: FieldOption[] = [
@@ -109,11 +110,11 @@ export const USER_KNOWLEDGE_FIELDS: UserKnowledgeField[] = [
   },
   {
     key: 'intentions',
-    label: 'What brings you here',
+    label: 'What you want to be able to do',
     category: 'About you',
     kind: 'multiSelect',
     options: INTENTION_OPTIONS,
-    askPrompt: 'What brings you to this journey?',
+    askPrompt: 'What would you like to be able to do?',
     storage: 'core',
   },
   {
