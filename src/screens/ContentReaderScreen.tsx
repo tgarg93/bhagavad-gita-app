@@ -512,8 +512,15 @@ const ContentReaderScreen: React.FC = () => {
     </KeyboardAvoidingView>
   );
 
+  // Scrollable: a Foundations act's celebration carries the banked-takeaway list
+  // and the handoff line on top of the ceremony, which overflows a fixed page.
+  // flexGrow keeps the short (non-Foundations) case vertically centered as before.
   const renderCelebration = () => (
-    <View style={styles.page}>
+    <ScrollView
+      style={styles.page}
+      contentContainerStyle={styles.celebrationScroll}
+      showsVerticalScrollIndicator={false}
+    >
       <JourneyCelebration
         completedItemId={positionKey}
         completedTitle={content.title}
@@ -526,7 +533,7 @@ const ContentReaderScreen: React.FC = () => {
         onNext={next => navigateToJourneyItem(navigation, next, true)}
         onBackToLearn={() => (navigation as any).navigate('MainTabs', { screen: 'Scriptures' })}
       />
-    </View>
+    </ScrollView>
   );
 
   const renderItem = ({ item }: { item: ReaderPage }) => {
@@ -678,6 +685,9 @@ const styles = StyleSheet.create({
   // Pages
   page: { width, flex: 1 },
   pageScroll: { paddingTop: spacing.lg, paddingBottom: spacing.xxl },
+  // flexGrow (not flex) so a short celebration still centers, while a long one
+  // — a Foundations act, with its banked takeaways and handoff — can scroll.
+  celebrationScroll: { flexGrow: 1, justifyContent: 'center', paddingVertical: spacing.lg },
   reflectionScroll: {
     paddingTop: spacing.lg,
     paddingBottom: spacing.xxl,
