@@ -70,9 +70,10 @@ type ReaderPage =
 const ContentReaderScreen: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { contentType, contentId } = (route.params as {
+  const { contentType, contentId, sectionId } = (route.params as {
     contentType: ReaderContentType;
     contentId: string;
+    sectionId?: string; // deep link: open ON this section, not the cover
   }) || { contentType: 'concept', contentId: '' };
 
   const content = useMemo(() => getReaderContent(contentType, contentId), [contentType, contentId]);
@@ -129,6 +130,24 @@ const ContentReaderScreen: React.FC = () => {
 
   const positionKey = `${contentType}:${contentId}`;
 
+  // A citation that names a section must land ON it. This has to outrank the
+  // saved reading position below — otherwise following a source link drops you
+  // wherever you happened to stop reading this item last time, which is exactly
+  // the arbitrariness the Daily Chai citation link exists to fix.
+  const deepLinkIndex = useMemo(() => {
+    if (!sectionId || !content) return null;
+    const sectionIndex = content.sections.findIndex(s => s.id === sectionId);
+    if (sectionIndex < 0) return null;
+    const page = pageIndexForSection[sectionIndex];
+    return page != null ? page : null;
+  }, [sectionId, content, pageIndexForSection]);
+
+  // Read inside the mount effect below, which is keyed on positionKey rather
+  // than on this — assigned during render, so it is current by the time the
+  // effect runs. Same idiom as pageIndexForSectionRef further down.
+  const deepLinkIndexRef = useRef(deepLinkIndex);
+  deepLinkIndexRef.current = deepLinkIndex;
+
   const listRef = useRef<FlatList<ReaderPage>>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [ready, setReady] = useState(false);
@@ -172,9 +191,14 @@ const ContentReaderScreen: React.FC = () => {
       for (let i = pages.length - 1; i >= 0; i--) {
         if (pages[i].kind !== 'celebration') { lastContentPage = i; break; }
       }
-      const idx = completion[positionKey]
-        ? 0
-        : Math.min(Math.max(last, 0), lastContentPage);
+      // A deep link outranks both: you asked for this section, not for wherever
+      // you left off.
+      const idx =
+        deepLinkIndexRef.current != null
+          ? deepLinkIndexRef.current
+          : completion[positionKey]
+          ? 0
+          : Math.min(Math.max(last, 0), lastContentPage);
 
       setInitialIndex(idx);
       setActiveIndex(idx);

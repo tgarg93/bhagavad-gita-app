@@ -65,7 +65,8 @@ const PAGE_LAYOUT_VERSION = 2;
 const GitaVersePlayerScreen: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const requestedChapter = (route.params as { chapter?: number } | undefined)?.chapter;
+  const { chapter: requestedChapter, verse: requestedVerse } =
+    (route.params as { chapter?: number; verse?: number } | undefined) ?? {};
 
   // Build the whole-book page list + index maps once
   const { pages, coverIndex, celebrationIndex } = useMemo(() => {
@@ -98,6 +99,20 @@ const GitaVersePlayerScreen: React.FC = () => {
     return map;
   }, [pages]);
 
+  // Where a chapter (+ optional verse) request lands. A citation that names
+  // "Gita 2.47" should open ON 2.47, not on the chapter cover — so the verse
+  // wins when it resolves, and the cover is the fallback.
+  const requestedIndex = useMemo(() => {
+    if (!requestedChapter || coverIndex[requestedChapter] == null) return null;
+    if (requestedVerse != null) {
+      const i = pages.findIndex(
+        p => p.kind === 'verse' && p.chapter === requestedChapter && p.verse.verse === requestedVerse
+      );
+      if (i >= 0) return i;
+    }
+    return coverIndex[requestedChapter];
+  }, [requestedChapter, requestedVerse, pages, coverIndex]);
+
   const listRef = useRef<FlatList<Page>>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [ready, setReady] = useState(false);
@@ -124,8 +139,8 @@ const GitaVersePlayerScreen: React.FC = () => {
   useEffect(() => {
     (async () => {
       let idx: number;
-      if (requestedChapter && coverIndex[requestedChapter] != null) {
-        idx = coverIndex[requestedChapter];
+      if (requestedIndex != null) {
+        idx = requestedIndex;
       } else {
         const progress = await LocalStorageService.getVerseProgress();
         let last = progress.lastPageIndex;
@@ -161,13 +176,13 @@ const GitaVersePlayerScreen: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Re-navigation with a different chapter while already mounted
+  // Re-navigation with a different chapter/verse while already mounted
   useEffect(() => {
-    if (ready && requestedChapter && coverIndex[requestedChapter] != null) {
-      listRef.current?.scrollToIndex({ index: coverIndex[requestedChapter], animated: false });
+    if (ready && requestedIndex != null) {
+      listRef.current?.scrollToIndex({ index: requestedIndex, animated: false });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [requestedChapter]);
+  }, [requestedIndex]);
 
   const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
     if (viewableItems.length > 0 && viewableItems[0].index != null) {

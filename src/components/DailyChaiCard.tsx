@@ -56,7 +56,10 @@ interface DailyChaiCardProps {
   atom: DailyAtom;
   speaking?: boolean;
   onToggleAudio?: () => void;
-  onOpenLink?: () => void;
+  // Opens the cited text. Passed as a prop, never resolved with useNavigation():
+  // OnboardingScreen renders this card OUTSIDE the navigator, and a hook in here
+  // would crash it. Onboarding passes nothing, so its citation stays plain.
+  onOpenSource?: () => void;
   compact?: boolean; // onboarding preview: clamped body, no actions expected
 }
 
@@ -66,7 +69,7 @@ const DailyChaiCard: React.FC<DailyChaiCardProps> = ({
   atom,
   speaking = false,
   onToggleAudio,
-  onOpenLink,
+  onOpenSource,
   compact = false,
 }) => {
   const accent = ACCENTS[atom.type] ?? ACCENTS.story;
@@ -136,15 +139,25 @@ const DailyChaiCard: React.FC<DailyChaiCardProps> = ({
               <Ionicons name={speaking ? 'volume-high' : 'play'} size={20} color={accent.text} />
             </TouchableOpacity>
           )}
-          {atom.link && onOpenLink && (
-            <TouchableOpacity onPress={onOpenLink} hitSlop={HIT_SLOP}>
-              <Ionicons name="book-outline" size={20} color={accent.text} />
-            </TouchableOpacity>
-          )}
         </View>
       </View>
       {inner()}
-      {!!atom.citation && <Text style={styles.citation}>{atom.citation}</Text>}
+      {/* The citation IS the source affordance. There used to be a 📖 icon up in
+          the header that opened `atom.link` — a hand-authored "further reading"
+          pointer written independently of the citation — so a card citing the
+          Isha Upanishad would open Karma. One source, one link, and it only
+          appears when the cited text actually exists in the app. */}
+      {!!atom.citation &&
+        (atom.sourceRef && onOpenSource ? (
+          <TouchableOpacity activeOpacity={0.6} onPress={onOpenSource}>
+            <Text style={styles.citation}>
+              {atom.citation}
+              <Text style={[styles.citationLink, { color: accent.text }]}>{'  '}Read in app ›</Text>
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <Text style={styles.citation}>{atom.citation}</Text>
+        ))}
     </View>
   );
 };
@@ -193,6 +206,13 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     fontStyle: 'italic',
     color: DharmaDesignSystem.colors.neutrals.softAsh,
+  },
+  // Colour comes from the atom's accent at the call site
+  citationLink: {
+    fontSize: 11.5,
+    lineHeight: 16,
+    fontStyle: 'normal',
+    fontWeight: '600',
   },
   // word — the Devanagari is the hero
   wordDevanagari: {

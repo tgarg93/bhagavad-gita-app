@@ -110,52 +110,67 @@ const STAGE_5_FESTIVALS = [
 // 'deity:krishna' | 'practice:bhakti-yoga' | 'festival:janmashtami') — the
 // single kind→screen mapping, shared by the journey path and by citation
 // links that jump from one piece of content to another.
+//
+// A ref may carry an optional `#fragment` naming the exact spot inside the
+// item, so a citation can land on what it actually cites rather than on a
+// cover:
+//   'gita:2#47'                                → chapter 2, verse 47
+//   'scripture:isha-upanishad#isha-first-verse' → that section of the reader
+// Fragmentless refs behave exactly as before. Because this lives here, every
+// citationLink in the app gets the precision, not just the Daily Chai card.
 export function routeForContentRef(
   ref: string
 ): { name: string; params?: Record<string, unknown> } | null {
+  const hash = ref.indexOf('#');
+  const fragment = hash >= 0 ? ref.slice(hash + 1) : '';
+  if (hash >= 0) ref = ref.slice(0, hash);
+
   const sep = ref.indexOf(':');
   if (sep < 0) return null;
   const kind = ref.slice(0, sep);
   const id = ref.slice(sep + 1);
   if (!id) return null;
+  // The reader takes the fragment as a section id; screens that can't honour one
+  // simply never receive it.
+  const reader = (contentType: string, contentId: string) => ({
+    name: 'ContentReader',
+    params: fragment
+      ? { contentType, contentId, sectionId: fragment }
+      : { contentType, contentId },
+  });
+
   switch (kind) {
     case 'foundations':
-      return hasReaderContent('foundations', id)
-        ? { name: 'ContentReader', params: { contentType: 'foundations', contentId: id } }
-        : null;
+      return hasReaderContent('foundations', id) ? reader('foundations', id) : null;
     case 'capstone':
-      return hasReaderContent('capstone', id)
-        ? { name: 'ContentReader', params: { contentType: 'capstone', contentId: id } }
-        : null;
+      return hasReaderContent('capstone', id) ? reader('capstone', id) : null;
     case 'gita': {
       const chapter = parseInt(id, 10);
-      return Number.isFinite(chapter)
-        ? { name: 'GitaVersePlayer', params: { chapter } }
-        : null;
+      if (!Number.isFinite(chapter)) return null;
+      const verse = fragment ? parseInt(fragment, 10) : NaN;
+      return Number.isFinite(verse)
+        ? { name: 'GitaVersePlayer', params: { chapter, verse } }
+        : { name: 'GitaVersePlayer', params: { chapter } };
     }
     case 'concept':
       return hasReaderContent('concept', id)
-        ? { name: 'ContentReader', params: { contentType: 'concept', contentId: id } }
+        ? reader('concept', id)
         : { name: 'PhilosophyDetail', params: { conceptId: id } };
     case 'deity':
       return hasReaderContent('deity', id)
-        ? { name: 'ContentReader', params: { contentType: 'deity', contentId: id } }
+        ? reader('deity', id)
         : { name: 'DeityDetail', params: { deityId: id } };
     case 'story':
-      return hasReaderContent('story', id)
-        ? { name: 'ContentReader', params: { contentType: 'story', contentId: id } }
-        : null;
+      return hasReaderContent('story', id) ? reader('story', id) : null;
     case 'scripture':
-      return hasReaderContent('scripture', id)
-        ? { name: 'ContentReader', params: { contentType: 'scripture', contentId: id } }
-        : null;
+      return hasReaderContent('scripture', id) ? reader('scripture', id) : null;
     case 'practice':
       return { name: 'PracticeDetail', params: { practiceId: id } };
     case 'prayer':
       return { name: 'PrayerPlayer', params: { prayerId: id } };
     case 'festival':
       return hasReaderContent('festival', id)
-        ? { name: 'ContentReader', params: { contentType: 'festival', contentId: id } }
+        ? reader('festival', id)
         : { name: 'FestivalCalendar', params: { selectedFestival: id } };
     default:
       return null;

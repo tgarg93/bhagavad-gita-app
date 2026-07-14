@@ -24,7 +24,12 @@ import { foundationsService } from '../services/foundationsService';
 import { getProgression, Progression } from '../services/progressionService';
 import LocalStorageService from '../services/localStorageService';
 import { AudioNarrationService } from '../services/audioNarrationService';
-import { JourneyItem, JOURNEY_MODULES, navigateToJourneyItem } from '../data/journeyPath';
+import {
+  JourneyItem,
+  JOURNEY_MODULES,
+  navigateToJourneyItem,
+  navigateToContentRef,
+} from '../data/journeyPath';
 
 const { width } = Dimensions.get('window');
 
@@ -178,9 +183,9 @@ const HomeScreen: React.FC = () => {
             atom={todaysAtom}
             speaking={speaking}
             onToggleAudio={hearAtom}
-            onOpenLink={
-              todaysAtom.link
-                ? () => (navigation as any).navigate(todaysAtom.link!.route, todaysAtom.link!.params)
+            onOpenSource={
+              todaysAtom.sourceRef
+                ? () => navigateToContentRef(navigation, todaysAtom.sourceRef!)
                 : undefined
             }
           />
