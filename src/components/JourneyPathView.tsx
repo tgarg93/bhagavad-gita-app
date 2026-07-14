@@ -55,13 +55,18 @@ const MODULE_WHY: Record<JourneyModule, string> = {
 // Spiritual titles as rail milestones. Jigyasu sits above Foundations, which is
 // the stage that actually earns you the next name: the capstone at the end of
 // Module 0 confers Shishya.
+//
+// INVARIANT: every module in ALL_MODULES must have a milestone here, or the
+// rail lookup below returns undefined. Adding Module 0 without adding a sixth
+// milestone is exactly how this crashed once.
 const MILESTONES: { beforeModule: JourneyModule | null; level: number; label: string; sub: string }[] = [
   { beforeModule: 0, level: 1, label: 'Jigyasu — The Curious', sub: 'Every walker starts here.' },
   { beforeModule: 1, level: 2, label: 'Shishya — The Student', sub: 'The foundations are yours; the story begins.' },
   { beforeModule: 2, level: 3, label: 'Sadhaka — The Practitioner', sub: 'The Gita is the long climb.' },
   { beforeModule: 3, level: 4, label: 'Bhakta — The Devoted', sub: 'The faces of the divine are familiar now.' },
   { beforeModule: 4, level: 5, label: 'Jnani — The Knower', sub: 'Practice has made the knowing yours.' },
-  { beforeModule: null, level: 7, label: 'Guru — The Guide', sub: '…through Rishi, for those who keep returning.' },
+  { beforeModule: 5, level: 6, label: 'Rishi — The Sage', sub: 'The questions come to you now.' },
+  { beforeModule: null, level: 7, label: 'Guru — The Guide', sub: 'For those who keep returning.' },
 ];
 
 const { colors, typography, spacing, borderRadius } = DharmaDesignSystem;
@@ -271,11 +276,15 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
     );
   };
 
-  const firstMilestone = MILESTONES.find(m => m.beforeModule === 1)!;
+  // The first stage is whichever module actually leads the path — not a
+  // hardcoded 1. Foundations (module 0) leads it today.
+  const firstModule = modules[0]?.module ?? 0;
+  const firstMilestone =
+    MILESTONES.find(m => m.beforeModule === firstModule) ?? MILESTONES[0];
   const body = (
     <View style={styles.container}>
       <RailRow
-        walked={currentModule >= 1}
+        walked={currentModule >= firstModule}
         dot={levelNumber >= firstMilestone.level ? 'attained' : 'ahead'}
       >
         <Animated.View
@@ -298,13 +307,15 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
         }}
       >
         {modules.map(({ module, items }) => {
-          const milestone = MILESTONES.find(m => m.beforeModule === module)!;
+          const milestone = MILESTONES.find(m => m.beforeModule === module);
           // Rail is teal for everything strictly before the current stage
           const milestoneWalked = currentModule >= module;
           const cardWalked = currentModule > module;
           return (
             <React.Fragment key={module}>
-              {module !== 1 && (
+              {/* The lead module's milestone is already rendered above, outside
+                  the stagger, so it can carry the onboarding entrance pulse. */}
+              {module !== firstModule && milestone && (
                 <RailRow
                   walked={milestoneWalked}
                   dot={levelNumber >= milestone.level ? 'attained' : 'ahead'}
