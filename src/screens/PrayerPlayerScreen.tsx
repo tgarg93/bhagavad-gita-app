@@ -91,7 +91,9 @@ const PrayerPlayerScreen: React.FC = () => {
   useEffect(() => {
     (async () => {
       const last = await LocalStorageService.getReaderPosition(positionKey);
-      const idx = last > 0 && last < pages.length ? last : 0;
+      let idx = last > 0 && last < pages.length ? last : 0;
+      // Heal positions already stored on a celebration page, before the guard.
+      while (idx > 0 && pages[idx]?.kind === 'celebration') idx--;
       setInitialIndex(idx);
       setActiveIndex(idx);
       setReady(true);
@@ -166,8 +168,12 @@ const PrayerPlayerScreen: React.FC = () => {
     if (viewableItems.length === 0 || viewableItems[0].index == null) return;
     const idx = viewableItems[0].index;
     setActiveIndex(idx);
-    LocalStorageService.saveReaderPosition(positionKey, idx);
     const page = pagesRef.current[idx];
+    // A celebration is not a reading position — saving it reopens the prayer on
+    // "complete" with the recitation behind you. Same bug as the other readers.
+    if (page?.kind !== 'celebration') {
+      LocalStorageService.saveReaderPosition(positionKey, idx);
+    }
 
     // A manual page turn while a different verse is sounding stops the audio;
     // listen-mode auto-advance announces itself and stays alive.

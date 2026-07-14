@@ -76,6 +76,9 @@ Six stages (`JOURNEY_MODULES`, `ALL_MODULES`), built by `buildJourneyPath()`. Ea
 - **Grading never happens in the model.** `checkService` asks Gemini only which rubric points are *present*; the verdict is `hit.length >= passCount`, computed in code. If the grader is unreachable it returns `null` and the UI reveals the model answer and lets the reader self-mark — the capstone must never be the one screen that blocks a level-up.
 
 
+- **The celebration is not a reading position.** Reaching it marks completion, but the index is never persisted — saving it meant re-opening a finished item restored you onto "COMPLETED" with the reading behind you and no way back into it. Readers also clamp on restore, so positions already poisoned by that bug heal on the next open.
+- **A completed item re-opens at its cover** (re-reading starts at the top). An unfinished one still resumes exactly where it was left.
+- **The celebration offers "Read it again"** (pages back to the cover — it's the same pager, so no navigation) **and "Done"** (`goBack()`, returning you to the journey path you came from). "Done" used to be "Back to Learn", which jumped to the Scriptures tab and popped the path off the stack — that, plus the position bug, made completed content genuinely unreachable.
 - **Completion = reaching an item's celebration page** (viewability callback fires `journeyService.markCompleted(id)`). First completion wins; id-keyed, permanent.
 - **Next = first unfinished in path order** (wraps). Home's Continue card, notifications, and celebrations all derive from it.
 - **Celebration page** (last page of every reader): entrance choreography (ring settle → checkmark spring → staggered text) + one-shot marigold shower (16 petals, ~2.5s, respects reduce-motion). Fires when the page scrolls into view, **once per arrival**. Next button turns the page to the next journey item; chapter→chapter stays inline in the Gita player.

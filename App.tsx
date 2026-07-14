@@ -28,6 +28,8 @@ export default function App() {
 
     initializeAudio();
 
+      // Reopen a COMPLETED item — this is the one that used to land on the celebration
+
     // Check whether the spiritual-profile onboarding has been completed,
     // and opportunistically refresh the rolling profile summary
     LocalStorageService.getSpiritualProfile()

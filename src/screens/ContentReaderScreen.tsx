@@ -156,8 +156,26 @@ const ContentReaderScreen: React.FC = () => {
   const pointsAtStartRef = useRef<number | undefined>(undefined);
   useEffect(() => {
     (async () => {
-      const last = await LocalStorageService.getReaderPosition(positionKey);
-      const idx = last > 0 && last < pages.length ? last : 0;
+      const [last, completion] = await Promise.all([
+        LocalStorageService.getReaderPosition(positionKey),
+        journeyService.getCompletionMap(),
+      ]);
+
+      // Finished means finished: opening it again is RE-READING, so start at the
+      // cover. An unfinished item still resumes exactly where it was left.
+      //
+      // The clamp matters independently — devices already hold positions pointing
+      // at a celebration page, written before the save was guarded above. Refusing
+      // to restore past the last content page heals those on the next open, rather
+      // than only fixing it for new readers.
+      let lastContentPage = 0;
+      for (let i = pages.length - 1; i >= 0; i--) {
+        if (pages[i].kind !== 'celebration') { lastContentPage = i; break; }
+      }
+      const idx = completion[positionKey]
+        ? 0
+        : Math.min(Math.max(last, 0), lastContentPage);
+
       setInitialIndex(idx);
       setActiveIndex(idx);
       setReady(true);
@@ -165,8 +183,12 @@ const ContentReaderScreen: React.FC = () => {
       pointsAtStartRef.current = (await getProgression()).points;
     })();
     return () => { audioService.cleanup(); };
+    // positionKey: navigateToJourneyItem uses navigate (not push), so a
+    // reader → reader hop can swap params without remounting. Without this dep
+    // the resume logic would keep the previous item's position.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [positionKey]);
+
 
 
   const pagesRef = useRef(pages);
@@ -181,8 +203,13 @@ const ContentReaderScreen: React.FC = () => {
     if (viewableItems.length > 0 && viewableItems[0].index != null) {
       const idx = viewableItems[0].index;
       setActiveIndex(idx);
-      LocalStorageService.saveReaderPosition(positionKey, idx);
       const page = pagesRef.current[idx];
+      // The celebration is NOT a reading position. Saving it meant the next open
+      // restored you onto "COMPLETED" with the whole reading behind you and no
+      // way back into it — the content was genuinely unreachable.
+      if (page?.kind !== 'celebration') {
+        LocalStorageService.saveReaderPosition(positionKey, idx);
+      }
       if (page?.kind === 'section' && content) {
         // Keep the Krishna context aware of what's on screen
         krishnaContext.setCurrentContent({
@@ -538,7 +565,10 @@ const ContentReaderScreen: React.FC = () => {
         // promise on the stage card; here it is a thing they did.
         objective={content.objective}
         onNext={next => navigateToJourneyItem(navigation, next, true)}
-        onBackToLearn={() => (navigation as any).navigate('MainTabs', { screen: 'Scriptures' })}
+        onExit={() => navigation.goBack()}
+        // The celebration is a page in this very pager — going back to the
+        // reading is a scroll, not a navigation.
+        onReadAgain={() => scrollToIndex(0)}
       />
     </ScrollView>
   );

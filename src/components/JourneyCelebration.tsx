@@ -25,7 +25,14 @@ interface JourneyCelebrationProps {
   completedItemId: string; // journey id, e.g. 'concept:karma' or 'gita:3'
   completedTitle: string;
   onNext: (item: JourneyItem) => void;
-  onBackToLearn: () => void;
+  // Leaves the reader by going BACK to wherever the reader was opened from —
+  // the journey path, usually. It used to be onBackToLearn, which jumped to the
+  // Scriptures tab and popped the path off the stack, so a completed item became
+  // a dead end you couldn't return from.
+  onExit: () => void;
+  // Pages the reader back to its cover. Absent on screens that have no cover to
+  // return to, in which case the action isn't rendered.
+  onReadAgain?: () => void;
   // Foundations only. The takeaways this act banked, replayed back so the reader
   // sees what they are actually carrying out of it — this is the act summary,
   // folded into the celebration rather than made a screen of its own.
@@ -91,7 +98,8 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
   completedItemId,
   completedTitle,
   onNext,
-  onBackToLearn,
+  onExit,
+  onReadAgain,
   bankedTakeaways,
   handoff,
   objective,
@@ -296,9 +304,19 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
         )
       )}
 
-      <Animated.View style={{ opacity: backAnim }}>
-        <TouchableOpacity style={styles.backBtn} onPress={onBackToLearn}>
-          <Text style={styles.backBtnText}>Back to Learn</Text>
+      <Animated.View style={[styles.exitRow, { opacity: backAnim }]}>
+        {/* The way back INTO the reading. The celebration is a page in the
+            reader's own pager, so this is a scroll, not a navigation. */}
+        {!!onReadAgain && (
+          <TouchableOpacity style={styles.backBtn} onPress={onReadAgain}>
+            <Text style={styles.backBtnText}>Read it again</Text>
+          </TouchableOpacity>
+        )}
+        {/* Goes BACK — to the journey path if that's where you came from. It used
+            to jump to the Learn tab, which popped the path off the stack and made
+            a completed item a dead end. */}
+        <TouchableOpacity style={styles.backBtn} onPress={onExit}>
+          <Text style={styles.backBtnText}>Done</Text>
         </TouchableOpacity>
       </Animated.View>
 
@@ -491,6 +509,11 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '700',
     marginTop: 2,
+  },
+  exitRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
   },
   backBtn: {
     marginTop: spacing.md,

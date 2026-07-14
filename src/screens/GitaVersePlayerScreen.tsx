@@ -144,6 +144,10 @@ const GitaVersePlayerScreen: React.FC = () => {
           await LocalStorageService.migrateLastPageIndex(migrated, PAGE_LAYOUT_VERSION);
         }
         idx = last > 0 && last < pages.length ? last : 0;
+        // Devices already hold a celebration index, saved before the guard in
+        // onViewableItemsChanged existed. Step back to the reading rather than
+        // reopening the player onto "COMPLETED".
+        while (idx > 0 && pages[idx]?.kind === 'celebration') idx--;
       }
       setInitialIndex(idx);
       setActiveIndex(idx);
@@ -169,8 +173,14 @@ const GitaVersePlayerScreen: React.FC = () => {
     if (viewableItems.length > 0 && viewableItems[0].index != null) {
       const idx = viewableItems[0].index;
       setActiveIndex(idx);
-      LocalStorageService.saveLastPage(idx);
       const page = pages[idx];
+      // A celebration is not a reading position. This one is a single GLOBAL
+      // lastPageIndex (not per-chapter), so one stuck celebration index poisoned
+      // every entry into the player that doesn't carry a chapter param — e.g. the
+      // Gita card on the Learn tab.
+      if (page?.kind !== 'celebration') {
+        LocalStorageService.saveLastPage(idx);
+      }
       if (page?.kind === 'verse') {
         LocalStorageService.markVerseRead(page.chapter, page.verse.verse)
           .then(() => LocalStorageService.getTotalProgress())
@@ -561,7 +571,8 @@ const GitaVersePlayerScreen: React.FC = () => {
             navigateToJourneyItem(navigation, next, true);
           }
         }}
-        onBackToLearn={() => (navigation as any).navigate('MainTabs', { screen: 'Scriptures' })}
+        onExit={() => navigation.goBack()}
+        onReadAgain={() => scrollToIndex(coverIndex[chapter])}
       />
     </View>
   );
