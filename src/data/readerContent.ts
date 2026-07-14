@@ -7,7 +7,7 @@ import { getDeityById } from './godsAndDeities';
 import { festivalData } from './festivals';
 import { getStoryById } from './stories';
 import { getPartById, getCollection } from './scriptureTexts';
-import { getFoundationsAct, takeawaysForAct } from './foundations';
+import { getFoundationsAct, takeawaysForAct, FOUNDATIONS_ACTS } from './foundations';
 
 export type ReaderContentType =
   | 'concept'
@@ -157,7 +157,7 @@ export function getReaderContent(
       sections: act.sections,
       reflectionQuestions: act.reflectionQuestions,
       sources: act.sources,
-      readerLabel: `Foundations · Act ${act.order}`,
+      readerLabel: `Foundations · Part ${act.order} of ${FOUNDATIONS_ACTS.length}`,
       kicker: act.kicker,
       intro: act.intro,
       bankedTakeaways: takeawaysForAct(act.id),

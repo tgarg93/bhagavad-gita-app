@@ -366,7 +366,7 @@ const Shelves = () => (
       <Rect x={30} y={88} width={240} height={26} rx={2} fill={GOLD} opacity={0.5} />
       <SvgText x={42} y={106} fontSize={11} fontWeight="700" fill={INK}>The Upanishads</SvgText>
       <Line x1={24} y1={120} x2={276} y2={120} stroke={GOLD} strokeWidth={3} />
-      <SvgText x={150} y={146} textAnchor="middle" fontSize={10} fill={SOFT}>where Act Three came from —</SvgText>
+      <SvgText x={150} y={146} textAnchor="middle" fontSize={10} fill={SOFT}>where Core Beliefs came from —</SvgText>
       <SvgText x={150} y={161} textAnchor="middle" fontSize={10} fill={SOFT}>brahman, atman, “you are that”</SvgText>
 
       <Rect x={370} y={56} width={240} height={26} rx={2} fill={SAFFRON} opacity={0.22} />

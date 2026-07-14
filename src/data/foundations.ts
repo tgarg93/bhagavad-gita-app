@@ -1,11 +1,15 @@
 // FOUNDATIONS — the Jigyasu track.
 //
-// The first thing a new user walks. Seven acts of bite-sized cards (one idea per
+// The first thing a new user walks. Seven parts of bite-sized cards (one idea per
 // page, ~60 words, one takeaway apiece), then a capstone: a friend asks them what
 // Hinduism actually is, and they answer in their own words. Passing that confers
 // Shishya.
 //
-// Each act is its own JOURNEY ITEM ('foundations:name', 'foundations:thread', …),
+// The user-facing word is "Part" ("Foundations · Part 3 of 8"). The type is still
+// called FoundationsAct internally — renaming it buys nothing and touches four
+// files.
+//
+// Each part is its own JOURNEY ITEM ('foundations:name', 'foundations:thread', …),
 // so it gets the existing reader's cover page, its own celebration, and its own
 // line in the journey path for free. Those eight ids are PERMANENT — completion
 // is keyed on them (CLAUDE.md invariant).
@@ -27,13 +31,16 @@ import { NarrativeSection, SourceNote } from './narrativeTypes';
 import { Capstone } from './checkTypes';
 
 export interface FoundationsAct {
-  id: string; // journey id is `foundations:${id}` — PERMANENT
+  // Journey id is `foundations:${id}` — PERMANENT, completion is keyed on it.
+  // The slugs deliberately no longer track the titles ('faces' → "The Gods"):
+  // the titles were renamed for clarity, the ids cannot be. Do not "fix" them.
+  id: string;
   order: number;
   title: string;
-  // The act's thesis, shown on its cover in italics.
+  // The part's thesis, shown on its cover in italics.
   kicker: string;
   subtitle: string;
-  // The two paragraphs on the act's cover page: why this act, and what's in it.
+  // The two paragraphs on the part's cover page: why this part, and what's in it.
   intro: string[];
   coverImage: number;
   sections: NarrativeSection[];
@@ -51,12 +58,12 @@ export interface FoundationsAct {
 const GENERIC = require('../../assets/images/covers/generic-cover.jpg');
 
 // ═══════════════════════════════════════════════════════════════════════════
-// ACT 1 — THE NAME
+// PART 1 — WHAT HINDUISM IS
 // ═══════════════════════════════════════════════════════════════════════════
 const ACT_NAME: FoundationsAct = {
   id: 'name',
   order: 1,
-  title: 'The Name',
+  title: 'What Hinduism Is',
   kicker: 'Before anything else, the word itself is wrong.',
   subtitle: 'Where the word came from, and what the tradition calls itself',
   intro: [
@@ -120,16 +127,16 @@ const ACT_NAME: FoundationsAct = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
-// ACT 2 — THE THREAD
+// PART 2 — WHAT MAKES SOMEONE HINDU
 // ═══════════════════════════════════════════════════════════════════════════
 const ACT_THREAD: FoundationsAct = {
   id: 'thread',
   order: 2,
-  title: 'The Thread',
+  title: 'What Makes Someone Hindu',
   kicker: 'It is held together by something other than belief.',
   subtitle: 'Practice over creed — and why it could branch without breaking',
   intro: [
-    'This act contains the single most useful sentence in the whole track. Once you have it, every strange thing about Hinduism stops being strange.',
+    'This part contains the single most useful sentence in the whole track. Once you have it, every strange thing about Hinduism stops being strange.',
     'Four ideas: **what actually makes someone a Hindu**, how that compares with the traditions you already know, why it could branch without ever splitting, and why nobody assigns you a god.',
   ],
   coverImage: GENERIC,
@@ -198,12 +205,12 @@ const ACT_THREAD: FoundationsAct = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
-// ACT 3 — THE CLAIM
+// PART 3 — CORE BELIEFS
 // ═══════════════════════════════════════════════════════════════════════════
 const ACT_CLAIM: FoundationsAct = {
   id: 'claim',
   order: 3,
-  title: 'The Claim',
+  title: 'Core Beliefs',
   kicker: 'One reality, one witness — and the discovery that they were never two.',
   subtitle: 'Brahman, atman, maya, prana, and the three strands of nature',
   intro: [
@@ -328,17 +335,17 @@ const ACT_CLAIM: FoundationsAct = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
-// ACT 4 — THE WHEEL
+// PART 4 — KARMA & REBIRTH
 // ═══════════════════════════════════════════════════════════════════════════
 const ACT_WHEEL: FoundationsAct = {
   id: 'wheel',
   order: 4,
-  title: 'The Wheel',
+  title: 'Karma & Rebirth',
   kicker: 'What happens next, and what you can do about it.',
   subtitle: 'Samsara, karma, dharma, ahimsa, moksha — and the four roads out',
   intro: [
     'The philosophy is settled. Now the machinery: how a life leads to another life, what steers it, what you owe while you are here, and where the exit is.',
-    'Seven ideas — **samsara**, **karma**, **dharma**, **ahimsa**, **moksha**, the four aims of a life, and the four roads out. This is the act your friend will ask you about first.',
+    'Seven ideas — **samsara**, **karma**, **dharma**, **ahimsa**, **moksha**, the four aims of a life, and the four roads out. This is the part your friend will ask you about first.',
   ],
   coverImage: GENERIC,
   sections: [
@@ -488,12 +495,12 @@ const ACT_WHEEL: FoundationsAct = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
-// ACT 5 — THE FACES
+// PART 5 — THE GODS
 // ═══════════════════════════════════════════════════════════════════════════
 const ACT_FACES: FoundationsAct = {
   id: 'faces',
   order: 5,
-  title: 'The Faces',
+  title: 'The Gods',
   kicker: 'The gods, and — far more usefully — how they are related.',
   subtitle: 'The Trimurti, the avatars, the Goddess, and the whole family map',
   intro: [
@@ -571,17 +578,17 @@ const ACT_FACES: FoundationsAct = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
-// ACT 6 — THE LIBRARY
+// PART 6 — THE SCRIPTURES
 // ═══════════════════════════════════════════════════════════════════════════
 const ACT_LIBRARY: FoundationsAct = {
   id: 'library',
   order: 6,
-  title: 'The Library',
+  title: 'The Scriptures',
   kicker: 'No single book — but a library, and only two shelves.',
   subtitle: 'Shruti and smriti, the two epics, and one conversation on a battlefield',
   intro: [
     'Every Hindu text you have ever heard named sits on one of two shelves, and knowing which one is most of what a beginner needs.',
-    'Three ideas: **shruti and smriti** — including the Upanishads, where Act Three actually came from · the **two epics** · and the **one conversation**, inside one of them, that outgrew the war it interrupted.',
+    'Three ideas: **shruti and smriti** — including the Upanishads, where **Core Beliefs** came from · the **two epics** · and the **one conversation**, inside one of them, that outgrew the war it interrupted.',
   ],
   coverImage: GENERIC,
   sections: [
@@ -590,7 +597,7 @@ const ACT_LIBRARY: FoundationsAct = {
       title: 'Two shelves',
       takeaway: 'There is no one book. There is a library, and it has two shelves.',
       storyText:
-        '*Shruti* — "heard" — is the Vedas and, at their end, the **Upanishads**: received rather than authored, and holding the real authority. Everything in Act Three came from that shelf — *brahman*, *atman*, "you are that". *Smriti* — "remembered" — is the Gita, the epics, the Puranas: retold, adapted, argued with. **The stories everyone actually knows live on the second shelf.**',
+        '*Shruti* — "heard" — is the Vedas and, at their end, the **Upanishads**: received rather than authored, and holding the real authority. Everything in **Core Beliefs** came from that shelf — *brahman*, *atman*, "you are that". *Smriti* — "remembered" — is the Gita, the epics, the Puranas: retold, adapted, argued with. **The stories everyone actually knows live on the second shelf.**',
     },
     {
       id: 'f-library-epics',
@@ -637,16 +644,16 @@ const ACT_LIBRARY: FoundationsAct = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
-// ACT 7 — THE LIVING
+// PART 7 — RITUALS & FESTIVALS
 // ═══════════════════════════════════════════════════════════════════════════
 const ACT_LIVING: FoundationsAct = {
   id: 'living',
   order: 7,
-  title: 'The Living',
+  title: 'Rituals & Festivals',
   kicker: 'What it looks like in a room, in a year, and in an argument.',
   subtitle: 'Puja, darshan, the festival year — and the two questions you will be asked',
   intro: [
-    'Everything so far has been what Hindus think. This is what they *do* — which, as Act Two told you, is the part that actually counts.',
+    'Everything so far has been what Hindus think. This is what they *do* — which, as you saw early on, is the part that actually counts.',
     'Four ideas: what the **murti** really is (almost everyone gets this wrong) · what you go to a temple **for** · how the **year** becomes a story you can now read · and the **two questions** no honest account is allowed to dodge.',
   ],
   coverImage: GENERIC,
@@ -719,7 +726,7 @@ const ACT_LIVING: FoundationsAct = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
-// ACT 8 — THE CAPSTONE
+// PART 8 — EXPLAIN IT YOURSELF
 // The recap section carries no `takeaway`, so it is NOT banked and does not
 // disturb the 75-point arithmetic at the top of this file. It renders as an
 // ordinary prose page (bullets) through NarrativeSections.
@@ -727,7 +734,7 @@ const ACT_LIVING: FoundationsAct = {
 const ACT_CAPSTONE: FoundationsAct = {
   id: 'capstone',
   order: 8,
-  title: 'Say It',
+  title: 'Explain It Yourself',
   kicker: 'A friend asks you the question. You answer it.',
   subtitle: 'Everything you are carrying — and the only test that matters',
   intro: [
@@ -762,12 +769,12 @@ const ACT_CAPSTONE: FoundationsAct = {
     ],
     // Parallel to `rubric` — where each idea was taught, so a miss is actionable.
     rubricSource: [
-      'Act 1 · The Name',
-      'Act 3 · The Claim',
-      'Act 4 · The Wheel',
-      'Act 4 · The Wheel',
-      'Act 4 · The Wheel',
-      'Act 7 · The Living',
+      'Part 1 · What Hinduism Is',
+      'Part 3 · Core Beliefs',
+      'Part 4 · Karma & Rebirth',
+      'Part 4 · Karma & Rebirth',
+      'Part 4 · Karma & Rebirth',
+      'Part 7 · Rituals & Festivals',
     ],
     passCount: 4, // 4 of 6 — generous on purpose; the point is that they can say it
     modelAnswer:

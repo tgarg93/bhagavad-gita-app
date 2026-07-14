@@ -9,7 +9,7 @@ Expo SDK 53 / React Native 0.79 Hindu learning companion. Specs that govern this
 
 Data (static TS, all content bundled):
 - `src/data/journeyPath.ts` — the guided journey: 6 modules (0 = Foundations), ordered ids; `navigateToJourneyItem` handles routing
-- `src/data/foundations.ts` — the Jigyasu track: 8 acts, 32 bite-sized cards, the capstone. **The 75-point sum at the top of that file is load-bearing** — see invariants
+- `src/data/foundations.ts` — the Jigyasu track: 8 parts, 32 bite-sized cards, the capstone. **The 75-point sum at the top of that file is load-bearing** — see invariants. The `foundations:*` ids deliberately no longer match their titles (`faces` → "The Gods") — the titles were renamed for clarity, the ids can't be
 - `src/data/checkTypes.ts` — app-wide knowledge checks (mcq / recall / reflect); any `NarrativeSection` can carry `checks`
 - `src/data/philosophyAndTeachings.ts`, `godsAndDeities.ts`, `festivals.ts` — content with `sections: NarrativeSection[]`, `sources`, `reflectionQuestions`
 - `src/data/readerContent.ts` — adapter: any concept/deity/festival/story/scripture/foundations act with sections becomes reader content. **Its last branch is an unguarded festival fallthrough — new content types go ABOVE it** or they silently resolve as a festival

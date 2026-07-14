@@ -361,7 +361,11 @@ const ContentReaderScreen: React.FC = () => {
   const headerInfo = (() => {
     if (!activePage || activePage.kind === 'cover') return { sub: content.readerLabel, progress: 0 };
     if (activePage.kind === 'section') {
-      return { sub: `Part ${activePage.sectionIndex + 1} of ${partCount}`, progress };
+      // In Foundations a section IS a card, and "Part" is already taken there —
+      // the cover reads "Foundations · Part 3 of 8", meaning the part of the
+      // track. Calling these cards keeps the two counters from colliding.
+      const unit = activePage.section.takeaway ? 'Card' : 'Part';
+      return { sub: `${unit} ${activePage.sectionIndex + 1} of ${partCount}`, progress };
     }
     if (activePage.kind === 'check') return { sub: 'Check yourself', progress };
     if (activePage.kind === 'capstone') return { sub: 'The capstone', progress };

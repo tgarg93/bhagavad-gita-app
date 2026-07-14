@@ -32,12 +32,25 @@ Six steps in one state machine (`OnboardingScreen`), Krishna asking each questio
 
 ### 2.1 Foundations — the Jigyasu track (Module 0)
 
-- **What it is**: the first thing a new user walks. Seven acts of bite-sized cards plus a capstone, ~35–40 min, resumable — each act is its own journey item (`foundations:name`, `:thread`, `:claim`, `:wheel`, `:faces`, `:library`, `:living`, `:capstone`). **These eight ids are permanent.** Content lives in `src/data/foundations.ts`.
+- **What it is**: the first thing a new user walks. Seven parts of bite-sized cards plus a capstone, ~35–40 min, resumable — each part is its own journey item. Content lives in `src/data/foundations.ts`.
+
+| # | Journey id (**permanent**) | Title |
+|---|---|---|
+| 1 | `foundations:name` | What Hinduism Is |
+| 2 | `foundations:thread` | What Makes Someone Hindu |
+| 3 | `foundations:claim` | Core Beliefs |
+| 4 | `foundations:wheel` | Karma & Rebirth |
+| 5 | `foundations:faces` | The Gods |
+| 6 | `foundations:library` | The Scriptures |
+| 7 | `foundations:living` | Rituals & Festivals |
+| 8 | `foundations:capstone` | Explain It Yourself |
+
+  The **ids no longer track the titles** — the titles were renamed for clarity (users couldn't tell what "The Thread" or "The Faces" would teach), and the ids can't be, because completion is keyed on them. Don't "fix" the slugs. The user-facing word is **Part** ("Foundations · Part 3 of 8"); the internal type is still `FoundationsAct`.
 - **Why it exists**: user testing said the content was overwhelming and progress was invisible. `hinduism-overview` alone was 12 sections / 1,224 words / 15 swipes, and completing journey items awarded **zero** points, so walking Module 1 as designed moved no needle at all.
-- **One idea per page.** A card is a `NarrativeSection` carrying a `takeaway` (the sentence the reader banks — it must stand alone, because act celebrations replay it), ~60 words of body, an optional Sanskrit block, an optional figure, and an optional `deeper` ref into the existing long-form content. **Nothing was deleted**: the 13 concepts stay in Module 1 and are the go-deeper targets.
+- **One idea per page.** A card is a `NarrativeSection` carrying a `takeaway` (the sentence the reader banks — it must stand alone, because part celebrations replay it), ~60 words of body, an optional Sanskrit block, an optional figure, and an optional `deeper` ref into the existing long-form content. **Nothing was deleted**: the 13 concepts stay in Module 1 and are the go-deeper targets.
 - **The test**: at the end a friend asks "so what actually is Hinduism?" and the reader answers in their own words. Krishna (Gemini) marks it against a six-point rubric, generously; **4 of 6 passes**.
-- **Act celebrations**: each act ends on the standard `JourneyCelebration`, which additionally replays that act's banked takeaways ("You can now say…") and shows the `handoff` — the question the *next* act answers — directly above the next-step button.
-- **Existing users are not rewound.** Foundations was inserted at the head of the path, so `foundationsService.init()` (called from HomeScreen before `getNextUnfinished`) silently marks all eight acts complete for anyone with ≥3 prior completions. The stage stays visible and re-openable; no rite is granted, so they can still take the capstone.
+- **Part celebrations**: each part ends on the standard `JourneyCelebration`, which additionally replays that part's banked takeaways ("You can now say…") and shows the `handoff` — the question the *next* part answers — directly above the next-step button. The celebration is wrapped in a `ScrollView` (flexGrow, not flex) because that extra content overflows a fixed page; short celebrations still centre exactly as before.
+- **Existing users are not rewound.** Foundations was inserted at the head of the path, so `foundationsService.init()` (called from HomeScreen before `getNextUnfinished`) silently marks all eight parts complete for anyone with ≥3 prior completions. The stage stays visible and re-openable; no rite is granted, so they can still take the capstone.
 
 ### 2.2 Knowledge checks (app-wide capability)
 
