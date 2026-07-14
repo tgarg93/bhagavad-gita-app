@@ -8,7 +8,18 @@ import { geminiService } from './geminiService';
 import { userKnowledge } from './userKnowledgeService';
 
 export interface CurrentContent {
-  type: 'verse' | 'chapter' | 'festival' | 'deity' | 'concept' | 'daily-chai' | 'prayer' | 'story' | 'scripture' | 'none';
+  type:
+    | 'verse'
+    | 'chapter'
+    | 'festival'
+    | 'deity'
+    | 'concept'
+    | 'daily-chai'
+    | 'prayer'
+    | 'story'
+    | 'scripture'
+    | 'foundations'
+    | 'none';
   chapter?: number;
   verse?: number;
   title?: string;

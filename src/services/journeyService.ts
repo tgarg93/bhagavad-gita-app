@@ -3,6 +3,7 @@
 // the points formula in progressionService is untouched.
 import LocalStorageService from './localStorageService';
 import {
+  ALL_MODULES,
   buildJourneyPath,
   JourneyItem,
   JourneyModule,
@@ -94,7 +95,7 @@ class JourneyService {
   > {
     const path = this.getPath();
     const map = await this.getCompletionMap();
-    return ([1, 2, 3, 4, 5] as JourneyModule[]).map(module => {
+    return ALL_MODULES.map(module => {
       const items = path.filter(item => item.module === module);
       return {
         module,

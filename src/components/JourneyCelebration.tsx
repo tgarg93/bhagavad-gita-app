@@ -26,6 +26,13 @@ interface JourneyCelebrationProps {
   completedTitle: string;
   onNext: (item: JourneyItem) => void;
   onBackToLearn: () => void;
+  // Foundations only. The takeaways this act banked, replayed back so the reader
+  // sees what they are actually carrying out of it — this is the act summary,
+  // folded into the celebration rather than made a screen of its own.
+  bankedTakeaways?: string[];
+  // The question the next act answers, shown directly above the next-step button
+  // so the reader walks straight into it rather than stopping.
+  handoff?: string;
   // The page mounts off-screen inside the reader's pager; the celebration
   // sequence should only start once it actually scrolls into view
   active?: boolean;
@@ -82,6 +89,8 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
   completedTitle,
   onNext,
   onBackToLearn,
+  bankedTakeaways,
+  handoff,
   active = true,
   pointsAtStart,
 }) => {
@@ -238,6 +247,22 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
         </Animated.View>
       )}
 
+      {!!bankedTakeaways?.length && (
+        <Animated.View style={[styles.banked, riseStyle(nextAnim)]}>
+          <Text style={styles.bankedLabel}>You can now say</Text>
+          {bankedTakeaways.map(t => (
+            <View key={t} style={styles.bankedRow}>
+              <Text style={styles.bankedDot}>◆</Text>
+              <Text style={styles.bankedText}>{t}</Text>
+            </View>
+          ))}
+        </Animated.View>
+      )}
+
+      {!!handoff && (
+        <Animated.Text style={[styles.handoff, riseStyle(nextAnim)]}>{handoff}</Animated.Text>
+      )}
+
       {pathDone ? (
         <Animated.Text style={[styles.pathDone, riseStyle(nextAnim)]}>
           You have walked the entire path — every step, complete. 🙏
@@ -379,6 +404,48 @@ const styles = StyleSheet.create({
     color: colors.primary.peacockTeal,
     textAlign: 'center',
     marginBottom: spacing.lg,
+  },
+  // Foundations: the act's takeaways, replayed. Explicit fontSize/lineHeight
+  // rather than spreading typography.sizes.* — that union is the tsc trap here.
+  banked: {
+    alignSelf: 'stretch',
+    marginBottom: spacing.lg,
+    paddingVertical: spacing.md,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(0,0,0,0.12)',
+    gap: 9,
+  },
+  bankedLabel: {
+    fontSize: 10.5,
+    lineHeight: 14,
+    letterSpacing: 1.6,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    color: colors.neutrals.softAsh,
+    marginBottom: 3,
+  },
+  bankedRow: { flexDirection: 'row', gap: 9 },
+  bankedDot: {
+    fontSize: 8,
+    lineHeight: 21,
+    color: colors.primary.turmericYellow,
+  },
+  bankedText: {
+    flex: 1,
+    fontSize: 15,
+    lineHeight: 21,
+    color: colors.neutrals.charcoalBlack,
+    fontWeight: '500',
+  },
+  handoff: {
+    fontSize: 17,
+    lineHeight: 25,
+    fontStyle: 'italic',
+    color: colors.neutrals.charcoalBlack,
+    textAlign: 'center',
+    marginBottom: spacing.lg,
+    paddingHorizontal: spacing.sm,
   },
   nextBtnWrap: {
     alignSelf: 'stretch',

@@ -1,7 +1,10 @@
 // Novice → Guru progression. The level is a pure function of data the app
-// already stores (verse progress, chapter completion, reflections) — no new
-// write paths, no drift. Krishna acts as the mentor across levels.
+// already stores (verse progress, chapter completion, reflections, and the
+// Foundations track) — no new write paths, no drift. Krishna acts as the mentor
+// across levels.
 import LocalStorageService from './localStorageService';
+import { foundationsService, EMPTY_FOUNDATIONS_STATS } from './foundationsService';
+import { CHECK_POINTS } from '../data/checkTypes';
 
 export interface GitaLevel {
   level: number;
@@ -39,16 +42,37 @@ const POINTS = {
   reflections: 15,
 };
 
+// A rite is earned, not accumulated: passing it confers a level directly.
+//
+// Rites are a FLOOR, never a ceiling — the level a reader holds is
+// max(what their points earn, what their rites confer). This is the whole trick:
+//   • Nobody is demoted. A rite can only raise a level, so an existing user who
+//     has never seen a capstone keeps exactly the level they had.
+//   • Nobody is trapped. A reader who skips Foundations entirely still reaches
+//     Shishya on points, so no content is ever locked behind the capstone.
+// A ceiling (level = min(points, cap)) would break both of those, which is why
+// this is a floor.
+const RITES: { riteId: string; conferLevel: number }[] = [
+  { riteId: 'foundations-capstone', conferLevel: 2 }, // Shishya
+];
+
 export interface Progression {
   points: number;
   level: GitaLevel;
   nextLevel: GitaLevel | null;
   pointsToNext: number; // 0 when at Guru
   progressToNext: number; // 0-1 within the current level band
+  // True when the current level was conferred by a rite rather than earned on
+  // points alone — i.e. points < level.minPoints. The profile card uses this to
+  // avoid showing a progress bar that reads as empty.
+  levelConferred: boolean;
   stats: {
     versesRead: number;
     chaptersCompleted: number;
     reflections: number;
+    cardsBanked: number;
+    checksPassed: number;
+    ritesPassed: number;
   };
 }
 
@@ -66,14 +90,22 @@ export const progressWithinBand = (points: number): number => {
   const level = levelForPoints(points);
   const nextLevel = LEVELS.find(l => l.level === level.level + 1) ?? null;
   if (!nextLevel) return 1;
-  return Math.min(1, (points - level.minPoints) / (nextLevel.minPoints - level.minPoints));
+  return clamp01((points - level.minPoints) / (nextLevel.minPoints - level.minPoints));
 };
 
+// Both bounds matter. The upper one always did; the lower one became reachable
+// when rites landed — a reader who passes the capstone at 75 points is conferred
+// Shishya (minPoints 100), so points - level.minPoints goes NEGATIVE and an
+// unclamped value renders a backwards progress bar in ProgressRungs.
+const clamp01 = (n: number): number => Math.min(1, Math.max(0, n));
+
 export const getProgression = async (): Promise<Progression> => {
-  const [verseProgress, reflections, user] = await Promise.all([
+  const [verseProgress, reflections, user, foundationsStats, passedRites] = await Promise.all([
     LocalStorageService.getVerseProgress(),
     LocalStorageService.getAllReflections(),
     LocalStorageService.getCurrentUser(),
+    foundationsService.getStats().catch(() => EMPTY_FOUNDATIONS_STATS),
+    foundationsService.getPassedRites().catch(() => [] as string[]),
   ]);
   const userProgress = user
     ? await LocalStorageService.getUserProgress(user.id)
@@ -83,18 +115,43 @@ export const getProgression = async (): Promise<Progression> => {
     versesRead: verseProgress.readVerses.length,
     chaptersCompleted: userProgress?.chaptersCompleted.length ?? 0,
     reflections: reflections.length,
+    cardsBanked: foundationsStats.cardsBanked,
+    checksPassed: foundationsStats.checksPassed,
+    ritesPassed: foundationsStats.ritesPassed,
   };
 
+  // Every term is additive and non-negative. A user with no Foundations activity
+  // has all three new stats at 0 and therefore the exact point total they had
+  // before this formula gained its new terms — nobody is re-levelled by the
+  // change itself, only by new activity.
   const points =
     stats.versesRead * POINTS.versesRead +
     stats.chaptersCompleted * POINTS.chaptersCompleted +
-    stats.reflections * POINTS.reflections;
+    stats.reflections * POINTS.reflections +
+    stats.cardsBanked * CHECK_POINTS.card +
+    stats.checksPassed * CHECK_POINTS.mcq +
+    stats.ritesPassed * CHECK_POINTS.rite;
 
-  const level = levelForPoints(points);
+  const earned = levelForPoints(points);
+  const conferred = RITES.filter(r => passedRites.includes(r.riteId)).reduce(
+    (max, r) => Math.max(max, r.conferLevel),
+    1
+  );
+  const levelNumber = Math.max(earned.level, conferred);
+  const level = LEVELS.find(l => l.level === levelNumber) ?? LEVELS[0];
+
   const nextLevel = LEVELS.find(l => l.level === level.level + 1) ?? null;
   const pointsToNext = nextLevel ? Math.max(0, nextLevel.minPoints - points) : 0;
   const band = nextLevel ? nextLevel.minPoints - level.minPoints : 1;
-  const progressToNext = nextLevel ? Math.min(1, (points - level.minPoints) / band) : 1;
+  const progressToNext = nextLevel ? clamp01((points - level.minPoints) / band) : 1;
 
-  return { points, level, nextLevel, pointsToNext, progressToNext, stats };
+  return {
+    points,
+    level,
+    nextLevel,
+    pointsToNext,
+    progressToNext,
+    levelConferred: points < level.minPoints,
+    stats,
+  };
 };

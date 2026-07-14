@@ -13,7 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import journeyService from '../services/journeyService';
 import { getProgression } from '../services/progressionService';
-import { JourneyItem, JourneyModule, JOURNEY_MODULES } from '../data/journeyPath';
+import { ALL_MODULES, JourneyItem, JourneyModule, JOURNEY_MODULES } from '../data/journeyPath';
 
 // The guided journey as one continuous rail: spiritual-title milestones and
 // accordion stage cards hang on a single vertical line — teal where the
@@ -34,6 +34,7 @@ interface JourneyPathViewProps {
 }
 
 const MODULE_EMOJI: Record<JourneyModule, string> = {
+  0: '🌱',
   1: '🪔',
   2: '📖',
   3: '🕉️',
@@ -43,6 +44,7 @@ const MODULE_EMOJI: Record<JourneyModule, string> = {
 
 // Why each stage sits where it does — the rationale lives on the card itself
 const MODULE_WHY: Record<JourneyModule, string> = {
+  0: 'Start here. In one sitting, enough to explain Hinduism to a friend.',
   1: 'Ideas first — they\'re the grammar everything else speaks.',
   2: 'One story that uses every idea: the Gita, chapter by chapter.',
   3: 'With the ideas in hand, the gods become faces, not a crowd.',
@@ -50,15 +52,15 @@ const MODULE_WHY: Record<JourneyModule, string> = {
   5: 'And the festivals, where it all turns into lamps, food, and family.',
 };
 
-// Spiritual titles as rail milestones, placed roughly where walking earns
-// them. Titles come from engagement (reading, reflecting), so the mapping is
-// soft — the sub-lines say so in spirit.
+// Spiritual titles as rail milestones. Jigyasu sits above Foundations, which is
+// the stage that actually earns you the next name: the capstone at the end of
+// Module 0 confers Shishya.
 const MILESTONES: { beforeModule: JourneyModule | null; level: number; label: string; sub: string }[] = [
-  { beforeModule: 1, level: 1, label: 'Jigyasu — The Curious', sub: 'Every walker starts here.' },
-  { beforeModule: 2, level: 2, label: 'Shishya — The Student', sub: 'The foundations are yours; the story begins.' },
-  { beforeModule: 3, level: 3, label: 'Sadhaka — The Practitioner', sub: 'The Gita is the long climb.' },
-  { beforeModule: 4, level: 4, label: 'Bhakta — The Devoted', sub: 'The faces of the divine are familiar now.' },
-  { beforeModule: 5, level: 5, label: 'Jnani — The Knower', sub: 'Practice has made the knowing yours.' },
+  { beforeModule: 0, level: 1, label: 'Jigyasu — The Curious', sub: 'Every walker starts here.' },
+  { beforeModule: 1, level: 2, label: 'Shishya — The Student', sub: 'The foundations are yours; the story begins.' },
+  { beforeModule: 2, level: 3, label: 'Sadhaka — The Practitioner', sub: 'The Gita is the long climb.' },
+  { beforeModule: 3, level: 4, label: 'Bhakta — The Devoted', sub: 'The faces of the divine are familiar now.' },
+  { beforeModule: 4, level: 5, label: 'Jnani — The Knower', sub: 'Practice has made the knowing yours.' },
   { beforeModule: null, level: 7, label: 'Guru — The Guide', sub: '…through Rishi, for those who keep returning.' },
 ];
 
@@ -178,10 +180,12 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
     ? path.find(item => item.id === currentId)!.module
     : 6;
 
-  const modules = ([1, 2, 3, 4, 5] as JourneyModule[]).map(module => ({
+  // Empty modules are dropped so a stage never renders as a bare header — this
+  // is what keeps Module 0 honest if Foundations is ever trimmed.
+  const modules = ALL_MODULES.map(module => ({
     module,
     items: path.filter(item => item.module === module),
-  }));
+  })).filter(m => m.items.length > 0);
 
   const renderStageCard = (module: JourneyModule, items: JourneyItem[]) => {
     const isOpen = !!expanded[module];

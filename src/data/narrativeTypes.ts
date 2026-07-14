@@ -3,7 +3,9 @@
 // philosophy ConceptSection shape (philosophyAndTeachings.ts re-exports an
 // alias) so existing Dharma content is already valid NarrativeSection[].
 //
-// Pure types: no imports, safe to require from anywhere.
+// Pure types (checkTypes is itself import-free), safe to require from anywhere.
+
+import { KnowledgeCheck } from './checkTypes';
 
 export interface NarrativeVerse {
   sanskrit: string;
@@ -33,6 +35,22 @@ export interface NarrativeSection {
   // ('gita:2' | 'concept:karma' | 'deity:krishna' | 'festival:janmashtami').
   // When set, the footnote becomes tappable (routeForContentRef resolves it).
   citationLink?: string;
+
+  // ——— Bite-sized card mode (Foundations). All optional: existing content that
+  // sets none of these renders exactly as before, through NarrativeSections. ———
+
+  // The one line the reader banks from this page. When present, the reader
+  // renders the section as a card (takeaway first, short body under it) rather
+  // than as a prose section. Act summaries replay these, so each must stand
+  // alone as a sentence someone could say out loud, out of context.
+  takeaway?: string;
+  // "Go deeper" — an invitation into existing long-form content, in the same
+  // permanent content-ref form as citationLink ('concept:maya'). Distinct from
+  // citation/citationLink, which are provenance rather than an invitation.
+  deeper?: { ref: string; label: string };
+  // Checks that fire as their own pages immediately AFTER this section's page.
+  // This is the interleaving mechanism — see ContentReaderScreen's page builder.
+  checks?: KnowledgeCheck[];
 }
 
 // A human-readable SOURCES entry rendered at the foot of seed content.

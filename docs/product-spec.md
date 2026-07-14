@@ -28,7 +28,24 @@ Six steps in one state machine (`OnboardingScreen`), Krishna asking each questio
 
 ## 2. Guided journey
 
-- One ordered path through all content: 5 modules (`JOURNEY_MODULES`), built by `buildJourneyPath()`. 53 steps as of this sync (13 concepts, 18 Gita chapters, 10 deities, 3 practices, 9 festivals).
+- One ordered path through all content: 6 modules (`JOURNEY_MODULES`, `ALL_MODULES`), built by `buildJourneyPath()`. **Module 0 is Foundations** — see § 2.1 — followed by 13 concepts + 6 Upanishad texts, 18 Gita chapters + 8 Upanishad stories + 7 kandas, 10 deities, 3 practices, 9 festivals.
+
+### 2.1 Foundations — the Jigyasu track (Module 0)
+
+- **What it is**: the first thing a new user walks. Seven acts of bite-sized cards plus a capstone, ~35–40 min, resumable — each act is its own journey item (`foundations:name`, `:thread`, `:claim`, `:wheel`, `:faces`, `:library`, `:living`, `:capstone`). **These eight ids are permanent.** Content lives in `src/data/foundations.ts`.
+- **Why it exists**: user testing said the content was overwhelming and progress was invisible. `hinduism-overview` alone was 12 sections / 1,224 words / 15 swipes, and completing journey items awarded **zero** points, so walking Module 1 as designed moved no needle at all.
+- **One idea per page.** A card is a `NarrativeSection` carrying a `takeaway` (the sentence the reader banks — it must stand alone, because act celebrations replay it), ~60 words of body, an optional Sanskrit block, an optional figure, and an optional `deeper` ref into the existing long-form content. **Nothing was deleted**: the 13 concepts stay in Module 1 and are the go-deeper targets.
+- **The test**: at the end a friend asks "so what actually is Hinduism?" and the reader answers in their own words. Krishna (Gemini) marks it against a six-point rubric, generously; **4 of 6 passes**.
+- **Act celebrations**: each act ends on the standard `JourneyCelebration`, which additionally replays that act's banked takeaways ("You can now say…") and shows the `handoff` — the question the *next* act answers — directly above the next-step button.
+- **Existing users are not rewound.** Foundations was inserted at the head of the path, so `foundationsService.init()` (called from HomeScreen before `getNextUnfinished`) silently marks all eight acts complete for anyone with ≥3 prior completions. The stage stays visible and re-openable; no rite is granted, so they can still take the capstone.
+
+### 2.2 Knowledge checks (app-wide capability)
+
+- `src/data/checkTypes.ts`. Any content whose sections are `NarrativeSection[]` can attach `checks` to a section; they render as their own pages **immediately after** it. Foundations is the first consumer — Gita chapters, deities and festivals can adopt them with no schema change.
+- Three kinds. **`mcq`**: tap, instant feedback, and the `why` shows for a *wrong* answer too — the check teaches, it does not gate, and **a wrong answer still advances** (nothing is locked). **`recall`**: free text, graded by `checkService.gradeRecall`. **`reflect`**: points at an index in the content's existing `reflectionQuestions[]`, so it renders through the existing reflection page and `ChapterReflection` — one code path, one persistence path, and it still scores via the reflections × 15 term.
+- **Grading never happens in the model.** `checkService` asks Gemini only which rubric points are *present*; the verdict is `hit.length >= passCount`, computed in code. If the grader is unreachable it returns `null` and the UI reveals the model answer and lets the reader self-mark — the capstone must never be the one screen that blocks a level-up.
+
+
 - **Completion = reaching an item's celebration page** (viewability callback fires `journeyService.markCompleted(id)`). First completion wins; id-keyed, permanent.
 - **Next = first unfinished in path order** (wraps). Home's Continue card, notifications, and celebrations all derive from it.
 - **Celebration page** (last page of every reader): entrance choreography (ring settle → checkmark spring → staggered text) + one-shot marigold shower (16 petals, ~2.5s, respects reduce-motion). Fires when the page scrolls into view, **once per arrival**. Next button turns the page to the next journey item; chapter→chapter stays inline in the Gita player.
@@ -129,7 +146,11 @@ Long texts read in the **Gita reading pattern** but via the shared reader (no fu
 
 ## 7. Progression & profile
 
-- **Levels**: Jigyasu(0) → Shishya(100) → Sadhaka(300) → Bhakta(700) → Jnani(1500) → Rishi(3000) → Guru(5000 pts). **Points = versesRead×2 + chaptersCompleted×30 + reflections×15 — INVARIANT.**
+- **Levels**: Jigyasu(0) → Shishya(100) → Sadhaka(300) → Bhakta(700) → Jnani(1500) → Rishi(3000) → Guru(5000 pts).
+- **Points = versesRead×2 + chaptersCompleted×30 + reflections×15 + cardsBanked×1 + checksPassed×4 + ritesPassed×30.** The first three terms are the original invariant and are untouched. The last three are **additive only** — a user with no Foundations activity has all three at zero and therefore *exactly* the point total they had before, so the change re-levels nobody. Never add a term that can subtract.
+- **A rite is a floor, never a ceiling.** `level = max(levelForPoints(points), highest conferred rite level)`. Passing the Foundations capstone confers Shishya directly. Implemented as a ceiling (`min(...)`) this would demote every existing user above 100 points and trap Gita readers at Jigyasu forever — hence the floor: a rite can only *raise* a level, so nobody is demoted and nothing is locked.
+- **The gate is curriculum tuning, not enforcement.** The Foundations track sums to **75 points** (32 cards + 7 graded checks + 1 reflection) — deliberately short of the 100 for Shishya, so a reader who does every card and skips the capstone sits visibly short of it. Passing the capstone confers the level *and* adds 30 (→105), so it then holds on points alone. **Adding a card or a second reflection pushes the track over 100 and the reader levels up mid-track, deflating the capstone.** If the content changes, redo the sum (the arithmetic is commented at the top of `foundations.ts`).
+- `progressToNext` is clamped at **both** ends. A rite conferring level 2 at 75 points makes `points - level.minPoints` negative, which renders a backwards progress bar without the lower clamp.
 - **`LEVEL_MEANINGS`** (progressionService): one meaning paragraph per level — the single copy source for the onboarding Jigyasu card, every level-up ceremony, and (future) the Profile card. The path screen is titled **"Your Spiritual Journey"**.
 - Home leads with the status row (🪷 level name → Profile tab). Profile tab: Partiful-style photo (also the tab icon), level card, "what Krishna knows" completion card, reminders toggles, dev tools (__DEV__).
 - No streak display anywhere (product decision: noisy); streak feeds only the protection notification.

@@ -7,15 +7,23 @@ description: Build/launch/drive recipe for verifying Dharma app changes in the i
 
 ## Handle
 
-- A dev-client build is installed on the simulator under bundle id **`com.dharma.app`**
-  (the old dev bundle id — release builds use com.tushargarg.dharma, but the sim dev
-  client predates the switch). No `main.jsbundle` inside; it loads JS from metro.
+- The dev client on the simulator is bundle id **`com.tushargarg.dharma`** — the same
+  id release builds use. (It used to be `com.dharma.app`; that stale client was removed
+  in July 2026 because it predated `react-native-svg` and rendered every Foundations
+  figure as "Unimplemented component: <RNSVGSvgView>". Do not reinstall it — two apps
+  claiming the `exp+dharma-app` scheme makes every `openurl` raise an unanswerable
+  "Open in Dharma?" dialog.) No `main.jsbundle` inside; it loads JS from metro.
 - Metro usually already runs on **port 8081** (check `curl -s localhost:8081/status`).
   If not: `npx expo start` (background). Don't fight the port prompt — a 200 from
   8081 means a metro for this project is already serving.
-- Launch: `xcrun simctl launch booted com.dharma.app` — it reconnects to the last
-  metro automatically. JS-only changes need **no rebuild**; ~20-30s after launch the
-  fresh bundle is up.
+- Launch: `xcrun simctl launch booted com.tushargarg.dharma` — it reconnects to the
+  last metro automatically. JS-only changes need **no rebuild**; ~20-30s after launch
+  the fresh bundle is up.
+- **After adding any native dependency**, the dev client must be rebuilt or the new
+  native component renders as "Unimplemented component":
+  `cd ios && pod install && cd .. && npx expo run:ios --device <booted-udid>`.
+  A fresh install means a fresh AsyncStorage container — the app will show onboarding
+  and behave as a brand-new user, which is often exactly what you want to test.
 - Avoid `simctl openurl ...expo-development-client...` while the app is already
   connected — it raises a springboard "Open in Dharma?" dialog that survives app
   relaunches. If you trigger it anyway, clear with:
@@ -40,7 +48,7 @@ must be clean):
 - **Button behavior**: auto-fire the same handler the button calls from a timer
   (visual affordance is verified by screenshot).
 - Stage changes between screenshots by editing the TEMP-VERIFY params; terminate +
-  relaunch the app to re-run cold (`xcrun simctl terminate booted com.dharma.app`).
+  relaunch the app to re-run cold (`xcrun simctl terminate booted com.tushargarg.dharma`).
 
 ## Capture
 

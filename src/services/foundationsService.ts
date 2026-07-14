@@ -1,0 +1,134 @@
+// The Foundations track (the Jigyasu stage): which cards a reader has banked,
+// how they did on each check, and whether they've passed the capstone.
+//
+// Owns the append-only `foundations_progress` key. Everything progression reads
+// from here is DERIVED on each call (cardsBanked.length, count of correct
+// checks, capstone.passed ? 1 : 0) — nothing is ever incrementally awarded, so
+// points cannot drift out of sync with the underlying record.
+import LocalStorageService, {
+  FoundationsProgress,
+  FoundationsCapstoneResult,
+} from './localStorageService';
+
+export interface FoundationsStats {
+  cardsBanked: number;
+  checksPassed: number;
+  ritesPassed: number;
+}
+
+export const EMPTY_FOUNDATIONS_STATS: FoundationsStats = {
+  cardsBanked: 0,
+  checksPassed: 0,
+  ritesPassed: 0,
+};
+
+// Existing users have already walked part of the path. Foundations was inserted
+// at the HEAD of it, so without this they'd be sent backwards: `getNextUnfinished`
+// would hand them Act 1 and Home's "Continue" card would point at content they
+// never asked for.
+const NOT_A_NEW_USER_THRESHOLD = 3; // completed items
+
+class FoundationsService {
+  private static instance: FoundationsService;
+  private initialised = false;
+
+  static getInstance(): FoundationsService {
+    if (!FoundationsService.instance) {
+      FoundationsService.instance = new FoundationsService();
+    }
+    return FoundationsService.instance;
+  }
+
+  // Idempotent, cheap, and safe to call on every app open.
+  //
+  // Someone already several items into the path is not a new user, so we mark
+  // Foundations complete for them rather than rewinding them to Act 1. The stage
+  // stays fully visible and re-openable from the journey — nothing is hidden, and
+  // no rite is granted, so they can still take the capstone for Shishya if they
+  // want it. New users (0–2 completions) are untouched and start at Act 1.
+  async init(): Promise<void> {
+    if (this.initialised) return;
+    this.initialised = true;
+    try {
+      const completion = await LocalStorageService.getContentCompletion();
+      const alreadyMigrated = Object.keys(completion).some(id => id.startsWith('foundations:'));
+      if (alreadyMigrated) return;
+      if (Object.keys(completion).length < NOT_A_NEW_USER_THRESHOLD) return;
+
+      const { FOUNDATIONS_ACTS } = require('../data/foundations');
+      for (const act of FOUNDATIONS_ACTS) {
+        await LocalStorageService.markContentCompleted(`foundations:${act.id}`);
+      }
+      console.log('[foundations] existing user — Foundations marked complete, not rewound');
+    } catch (error) {
+      console.log('[foundations] migration skipped:', error);
+    }
+  }
+
+  async getProgress(): Promise<FoundationsProgress> {
+    return LocalStorageService.getFoundationsProgress();
+  }
+
+  // Idempotent. Called when a card page becomes active in the reader.
+  async bankCard(sectionId: string): Promise<boolean> {
+    const progress = await this.getProgress();
+    if (progress.cardsBanked.includes(sectionId)) return false;
+    progress.cardsBanked.push(sectionId);
+    await LocalStorageService.saveFoundationsProgress(progress);
+    return true;
+  }
+
+  async isCardBanked(sectionId: string): Promise<boolean> {
+    const progress = await this.getProgress();
+    return progress.cardsBanked.includes(sectionId);
+  }
+
+  // Records an attempt at a graded check. A previously-correct answer is never
+  // downgraded by a later wrong one — "nothing locked" cuts both ways.
+  async recordCheck(checkId: string, correct: boolean): Promise<void> {
+    const progress = await this.getProgress();
+    const prior = progress.checks[checkId];
+    progress.checks[checkId] = {
+      correct: prior?.correct || correct,
+      attempts: (prior?.attempts ?? 0) + 1,
+      firstTry: prior ? prior.firstTry : correct,
+      at: new Date().toISOString(),
+    };
+    await LocalStorageService.saveFoundationsProgress(progress);
+  }
+
+  async getCheckResult(checkId: string) {
+    const progress = await this.getProgress();
+    return progress.checks[checkId];
+  }
+
+  async recordCapstone(result: Omit<FoundationsCapstoneResult, 'attempts' | 'at'>): Promise<void> {
+    const progress = await this.getProgress();
+    progress.capstone = {
+      ...result,
+      attempts: (progress.capstone?.attempts ?? 0) + 1,
+      at: new Date().toISOString(),
+    };
+    await LocalStorageService.saveFoundationsProgress(progress);
+  }
+
+  // Rite ids the reader has actually earned. progressionService uses these as a
+  // level FLOOR — a rite can raise the level a point total already earns, never
+  // lower it, so nobody is demoted and nobody is trapped.
+  async getPassedRites(): Promise<string[]> {
+    const progress = await this.getProgress();
+    return progress.capstone?.passed ? [progress.capstone.riteId] : [];
+  }
+
+  async getStats(): Promise<FoundationsStats> {
+    const progress = await this.getProgress();
+    return {
+      cardsBanked: progress.cardsBanked.length,
+      checksPassed: Object.values(progress.checks).filter(c => c.correct).length,
+      ritesPassed: progress.capstone?.passed ? 1 : 0,
+    };
+  }
+}
+
+export const foundationsService = FoundationsService.getInstance();
+export default foundationsService;

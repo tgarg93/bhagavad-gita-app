@@ -20,6 +20,7 @@ import { getDailyAtom } from '../data/dailyAtoms';
 import DailyChaiCard, { speakableSequence } from '../components/DailyChaiCard';
 import { getTodaysFestivals, getUpcomingFestivals, getNextOccurrence, getDaysUntilFestival, Festival } from '../data/festivals';
 import journeyService from '../services/journeyService';
+import { foundationsService } from '../services/foundationsService';
 import { getProgression, Progression } from '../services/progressionService';
 import LocalStorageService from '../services/localStorageService';
 import { AudioNarrationService } from '../services/audioNarrationService';
@@ -53,6 +54,11 @@ const HomeScreen: React.FC = () => {
   useFocusEffect(
     React.useCallback(() => {
       (async () => {
+        // Must run before getNextUnfinished: Foundations was inserted at the head
+        // of the path, so an existing user would otherwise be handed Act 1 and
+        // sent backwards. Idempotent — a no-op for new users and after the first
+        // run. See foundationsService.init().
+        await foundationsService.init();
         const [next, map] = await Promise.all([
           journeyService.getNextUnfinished(),
           journeyService.getCompletionMap(),

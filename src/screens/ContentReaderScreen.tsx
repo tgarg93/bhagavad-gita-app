@@ -32,8 +32,13 @@ import NarrativeSections from '../components/NarrativeSections';
 import SourcesCard from '../components/SourcesCard';
 import ChapterReflection from '../components/ChapterReflection';
 import JourneyCelebration from '../components/JourneyCelebration';
+import FoundationCard from '../components/FoundationCard';
+import CheckPage from '../components/CheckPage';
+import CapstonePage from '../components/CapstonePage';
 import journeyService from '../services/journeyService';
-import { navigateToJourneyItem } from '../data/journeyPath';
+import { foundationsService } from '../services/foundationsService';
+import { navigateToJourneyItem, navigateToContentRef } from '../data/journeyPath';
+import { McqCheck, RecallCheck } from '../data/checkTypes';
 
 const { width } = Dimensions.get('window');
 
@@ -47,13 +52,19 @@ const readingMinutes = (sections: NarrativeSection[]): number => {
   return Math.max(2, Math.round(words / 200));
 };
 
-// The paged "book" experience for concepts, deities, and festivals — same
-// pattern as GitaVersePlayerScreen: cover → one section per page → reflection
-// → sources, swiped horizontally with narration and resume position.
+// The paged "book" experience for concepts, deities, festivals and Foundations
+// acts — same pattern as GitaVersePlayerScreen: cover → one section per page →
+// reflection → sources, swiped horizontally with narration and resume position.
+//
+// Foundations adds two page kinds. A section can carry `checks`, which are
+// spliced in as their own pages immediately after it — that is the interleaving
+// mechanism, and it works for any content type that adopts checks later.
 type ReaderPage =
   | { kind: 'cover' }
   | { kind: 'section'; section: NarrativeSection; sectionIndex: number }
+  | { kind: 'check'; check: McqCheck | RecallCheck }
   | { kind: 'reflection'; questionIndex: number } // one page per question
+  | { kind: 'capstone' }
   | { kind: 'celebration' };
 
 const ContentReaderScreen: React.FC = () => {
@@ -66,18 +77,55 @@ const ContentReaderScreen: React.FC = () => {
 
   const content = useMemo(() => getReaderContent(contentType, contentId), [contentType, contentId]);
 
+  // On the capstone act, the celebration page does not exist until the capstone
+  // is resolved (passed, or explicitly deferred). Nothing is blocked or locked —
+  // there is simply nothing to the right yet.
+  const [capstoneResolved, setCapstoneResolved] = useState(false);
+
   const pages = useMemo(() => {
     if (!content) return [] as ReaderPage[];
     const pages: ReaderPage[] = [{ kind: 'cover' }];
-    content.sections.forEach((section, sectionIndex) =>
-      pages.push({ kind: 'section', section, sectionIndex })
+    content.sections.forEach((section, sectionIndex) => {
+      pages.push({ kind: 'section', section, sectionIndex });
+      // Checks fire immediately after the section that set them up. A 'reflect'
+      // check emits the EXISTING reflection page kind, so ChapterReflection and
+      // ReflectionEntry keep working untouched — one code path, one persistence
+      // path, and the reflection still scores via the reflections × 15 term.
+      for (const check of section.checks ?? []) {
+        if (check.kind === 'reflect') {
+          pages.push({ kind: 'reflection', questionIndex: check.questionIndex });
+        } else {
+          pages.push({ kind: 'check', check });
+        }
+      }
+    });
+    // Content with no inline reflect-checks keeps the classic end-of-book
+    // reflection block, so every existing concept/deity/festival is unchanged.
+    const hasInlineReflect = content.sections.some(s =>
+      s.checks?.some(c => c.kind === 'reflect')
     );
-    content.reflectionQuestions.forEach((_, questionIndex) =>
-      pages.push({ kind: 'reflection', questionIndex })
-    );
-    pages.push({ kind: 'celebration' }); // appended last — stored positions unaffected
+    if (!hasInlineReflect) {
+      content.reflectionQuestions.forEach((_, questionIndex) =>
+        pages.push({ kind: 'reflection', questionIndex })
+      );
+    }
+    if (content.capstone) pages.push({ kind: 'capstone' });
+    if (!content.capstone || capstoneResolved) pages.push({ kind: 'celebration' });
     return pages;
-  }, [content]);
+  }, [content, capstoneResolved]);
+
+  // Section index → page index. Narration segments are named `section-N-block-M`,
+  // so anything that maps a segment back to a page has to go through this. It used
+  // to be hardcoded as `1 + sectionIndex`, which was true only while cover+sections
+  // were the sole page kinds — the moment a check page is spliced in, that
+  // arithmetic scrolls the reader to the wrong page.
+  const pageIndexForSection = useMemo(() => {
+    const map: number[] = [];
+    pages.forEach((p, i) => {
+      if (p.kind === 'section') map[p.sectionIndex] = i;
+    });
+    return map;
+  }, [pages]);
 
   const positionKey = `${contentType}:${contentId}`;
 
@@ -124,6 +172,11 @@ const ContentReaderScreen: React.FC = () => {
   const pagesRef = useRef(pages);
   pagesRef.current = pages;
 
+  // onSegmentStart is captured in a narration callback closure, so it reads the
+  // map through a ref rather than a stale binding.
+  const pageIndexForSectionRef = useRef(pageIndexForSection);
+  pageIndexForSectionRef.current = pageIndexForSection;
+
   const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
     if (viewableItems.length > 0 && viewableItems[0].index != null) {
       const idx = viewableItems[0].index;
@@ -137,6 +190,12 @@ const ContentReaderScreen: React.FC = () => {
           title: content.title,
           snippet: `${page.section.title}. ${page.section.storyText ?? ''}`,
         });
+        // A Foundations card is banked simply by being read. This is the point
+        // tick the reader feels on every page — and it is idempotent, so a
+        // second pass over the same card awards nothing.
+        if (page.section.takeaway) {
+          foundationsService.bankCard(page.section.id);
+        }
       }
       if (page?.kind === 'celebration') {
         // Reaching the celebration page IS completing the content
@@ -174,8 +233,8 @@ const ContentReaderScreen: React.FC = () => {
         setHighlightedSegmentId(segmentId);
         const m = segmentId.match(/section-(\d+)/);
         if (m) {
-          const sectionIdx = parseInt(m[1]);
-          listRef.current?.scrollToIndex({ index: 1 + sectionIdx, animated: true });
+          const target = pageIndexForSectionRef.current[parseInt(m[1])];
+          if (target != null) listRef.current?.scrollToIndex({ index: target, animated: true });
         }
       },
       onSegmentEnd: () => {},
@@ -255,9 +314,12 @@ const ContentReaderScreen: React.FC = () => {
     if (seg) {
       setHighlightedSegmentId(seg.id);
       const m = seg.id.match(/section-(\d+)/);
-      if (m) scrollToIndex(1 + parseInt(m[1]));
+      if (m) {
+        const target = pageIndexForSection[parseInt(m[1])];
+        if (target != null) scrollToIndex(target);
+      }
     }
-  }, [narrationActive, audioService, audioSegments, scrollToIndex]);
+  }, [narrationActive, audioService, audioSegments, scrollToIndex, pageIndexForSection]);
 
   const askKrishnaAboutThis = () => {
     setShowMenu(false);
@@ -292,18 +354,21 @@ const ContentReaderScreen: React.FC = () => {
   // --- Header info for the active page ----------------------------------
   const partCount = content.sections.length;
   const activePage = pages[activeIndex];
+  // Progress is over PAGES, not sections. The old section-based fraction hit
+  // 100% at the last section — before the reflections — and would read wrong
+  // now that checks and a capstone can sit between the sections and the end.
+  const progress = pages.length > 1 ? activeIndex / (pages.length - 1) : 0;
   const headerInfo = (() => {
     if (!activePage || activePage.kind === 'cover') return { sub: content.readerLabel, progress: 0 };
     if (activePage.kind === 'section') {
-      return {
-        sub: `Part ${activePage.sectionIndex + 1} of ${partCount}`,
-        progress: partCount > 0 ? (activePage.sectionIndex + 1) / partCount : 0,
-      };
+      return { sub: `Part ${activePage.sectionIndex + 1} of ${partCount}`, progress };
     }
+    if (activePage.kind === 'check') return { sub: 'Check yourself', progress };
+    if (activePage.kind === 'capstone') return { sub: 'The capstone', progress };
     if (activePage.kind === 'reflection') {
       return {
         sub: `Reflection ${activePage.questionIndex + 1} of ${content.reflectionQuestions.length}`,
-        progress: 1,
+        progress,
       };
     }
     return { sub: 'Complete', progress: 1 };
@@ -322,7 +387,13 @@ const ContentReaderScreen: React.FC = () => {
           <Text style={styles.coverLabel}>{content.readerLabel}</Text>
           <Text style={styles.coverTitle}>{content.title}</Text>
           {content.sanskritTitle && <Text style={styles.coverSanskrit}>{content.sanskritTitle}</Text>}
-          <Text style={styles.coverSubtitle}>{content.subtitle}</Text>
+          {/* A Foundations act opens on its thesis — what this act is FOR —
+              rather than a bare subtitle. */}
+          {content.kicker ? (
+            <Text style={styles.coverKicker}>{content.kicker}</Text>
+          ) : (
+            <Text style={styles.coverSubtitle}>{content.subtitle}</Text>
+          )}
           <View style={styles.coverMetaRow}>
             <Ionicons name="time-outline" size={16} color="rgba(255,255,255,0.9)" />
             <Text style={styles.coverMeta}>
@@ -348,13 +419,23 @@ const ContentReaderScreen: React.FC = () => {
   const renderSection = (section: NarrativeSection, sectionIndex: number) => (
     <View style={styles.page}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.pageScroll}>
-        <NarrativeSections
-          sections={[section]}
-          sectionIndexOffset={sectionIndex}
-          highlightedSegmentId={highlightedSegmentId}
-          audioSegments={audioSegments}
-          getTextStyle={getTextStyle}
-        />
+        {/* A section carrying a takeaway is a bite-sized card; everything else
+            is prose and renders exactly as it always has. */}
+        {section.takeaway ? (
+          <FoundationCard
+            section={section}
+            getTextStyle={getTextStyle}
+            onGoDeeper={ref => navigateToContentRef(navigation, ref)}
+          />
+        ) : (
+          <NarrativeSections
+            sections={[section]}
+            sectionIndexOffset={sectionIndex}
+            highlightedSegmentId={highlightedSegmentId}
+            audioSegments={audioSegments}
+            getTextStyle={getTextStyle}
+          />
+        )}
         {/* Bibliography rides at the foot of the final text page — sources
             are footnotes here, not a destination of their own */}
         {sectionIndex === content.sections.length - 1 && content.sources.length > 0 && (
@@ -365,6 +446,45 @@ const ContentReaderScreen: React.FC = () => {
       </ScrollView>
     </View>
   );
+
+  const renderCheck = (check: McqCheck | RecallCheck) => (
+    <KeyboardAvoidingView style={styles.page} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.pageScroll}
+        keyboardShouldPersistTaps="handled"
+      >
+        {/* A wrong answer still advances — the check teaches, it does not gate. */}
+        <CheckPage check={check} getTextStyle={getTextStyle} onResolved={() => {}} />
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+
+  const renderCapstone = () => {
+    if (!content.capstone) return <View style={styles.page} />;
+    // Passing reveals the celebration page (which then fires the level-up
+    // ceremony); deferring completes the item without granting the rite.
+    const resolve = () => {
+      setCapstoneResolved(true);
+      setTimeout(() => listRef.current?.scrollToEnd({ animated: true }), 350);
+    };
+    return (
+      <KeyboardAvoidingView style={styles.page} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.pageScroll}
+          keyboardShouldPersistTaps="handled"
+        >
+          <CapstonePage
+            capstone={content.capstone}
+            getTextStyle={getTextStyle}
+            onPassed={resolve}
+            onDefer={resolve}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    );
+  };
 
   // Jump past the reflection block, straight to the celebration
   const skipReflections = () => {
@@ -399,6 +519,10 @@ const ContentReaderScreen: React.FC = () => {
         completedTitle={content.title}
         active={pages[activeIndex]?.kind === 'celebration'}
         pointsAtStart={pointsAtStartRef.current}
+        // Foundations only: replay what this act banked, then hand off into the
+        // question the next act answers. Inert for every other content type.
+        bankedTakeaways={content.bankedTakeaways}
+        handoff={content.handoff}
         onNext={next => navigateToJourneyItem(navigation, next, true)}
         onBackToLearn={() => (navigation as any).navigate('MainTabs', { screen: 'Scriptures' })}
       />
@@ -409,7 +533,9 @@ const ContentReaderScreen: React.FC = () => {
     switch (item.kind) {
       case 'cover': return renderCover();
       case 'section': return renderSection(item.section, item.sectionIndex);
+      case 'check': return renderCheck(item.check);
       case 'reflection': return renderReflection(item.questionIndex);
+      case 'capstone': return renderCapstone();
       case 'celebration': return renderCelebration();
     }
   };
@@ -571,6 +697,9 @@ const styles = StyleSheet.create({
   coverTitle: { ...typography.sizes.headingXL, color: '#FFFFFF', fontWeight: '700', marginBottom: spacing.xs },
   coverSanskrit: { ...typography.sizes.sacredQuote, fontWeight: '500', color: 'rgba(255,255,255,0.95)', marginBottom: spacing.xs },
   coverSubtitle: { ...typography.sizes.bodyLG, fontWeight: '400', color: 'rgba(255,255,255,0.9)', fontStyle: 'italic', marginBottom: spacing.md },
+  // A Foundations act's thesis line. Explicit sizes — spreading typography.sizes.*
+  // into a Text style is the tsc trap called out in CLAUDE.md.
+  coverKicker: { fontSize: 18, lineHeight: 26, fontWeight: '500', color: '#FFFFFF', fontStyle: 'italic', marginBottom: spacing.md },
   coverMetaRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs, marginBottom: spacing.lg },
   coverMeta: { ...typography.sizes.bodySM, fontWeight: '400', color: 'rgba(255,255,255,0.9)' },
   coverBegin: {

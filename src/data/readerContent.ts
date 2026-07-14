@@ -1,13 +1,21 @@
 // Adapter that presents concepts, deities, and festivals to the generic paged
 // ContentReaderScreen as one uniform shape. Pure data mapping — no React.
 import { NarrativeSection, SourceNote } from './narrativeTypes';
+import { Capstone } from './checkTypes';
 import { getPhilosophyById } from './philosophyAndTeachings';
 import { getDeityById } from './godsAndDeities';
 import { festivalData } from './festivals';
 import { getStoryById } from './stories';
 import { getPartById, getCollection } from './scriptureTexts';
+import { getFoundationsAct, takeawaysForAct } from './foundations';
 
-export type ReaderContentType = 'concept' | 'deity' | 'festival' | 'story' | 'scripture';
+export type ReaderContentType =
+  | 'concept'
+  | 'deity'
+  | 'festival'
+  | 'story'
+  | 'scripture'
+  | 'foundations';
 
 export interface ReaderContent {
   contentType: ReaderContentType;
@@ -24,6 +32,19 @@ export interface ReaderContent {
   // the reader hides the menu item then.
   detailRoute?: { name: string; params: Record<string, string> };
   readerLabel: string; // cover eyebrow, e.g. 'Philosophy'
+
+  // ——— Foundations only ———
+  // The act's thesis line and the two paragraphs on its cover, so a Foundations
+  // cover can say what the act is for rather than just naming it.
+  kicker?: string;
+  intro?: string[];
+  // Replayed on this act's celebration ("you can now say…").
+  bankedTakeaways?: string[];
+  // The question the next act answers, shown above the celebration's next-step
+  // button so the reader walks straight into it.
+  handoff?: string;
+  // Present only on the capstone act. Its page is appended after the sections.
+  capstone?: Capstone;
 }
 
 const FALLBACK_COVER = require('../../assets/images/covers/generic-cover.jpg');
@@ -124,6 +145,30 @@ export function getReaderContent(
     };
   }
 
+  if (contentType === 'foundations') {
+    const act = getFoundationsAct(contentId);
+    if (!act?.sections?.length) return null;
+    return {
+      contentType,
+      id: act.id,
+      title: act.title,
+      subtitle: act.subtitle,
+      coverImage: act.coverImage,
+      sections: act.sections,
+      reflectionQuestions: act.reflectionQuestions,
+      sources: act.sources,
+      readerLabel: `Foundations · Act ${act.order}`,
+      kicker: act.kicker,
+      intro: act.intro,
+      bankedTakeaways: takeawaysForAct(act.id),
+      handoff: act.handoff,
+      capstone: act.capstone,
+    };
+  }
+
+  // NOTE: this is the FALLTHROUGH branch — anything that isn't matched above
+  // lands here and is treated as a festival. New content types must be added
+  // ABOVE this line, or they resolve as a festival and silently return null.
   const festival = festivalData.find(f => f.id === contentId);
   if (!festival?.sections?.length) return null;
   return {

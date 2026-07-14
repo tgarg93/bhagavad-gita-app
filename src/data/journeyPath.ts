@@ -9,16 +9,20 @@ import { getYogaPathsData } from './yogaAndPractices';
 import { hasReaderContent } from './readerContent';
 import { getChapterCover } from './gitaChapterCovers';
 import { getStoryById, UPANISHAD_JOURNEY_ORDER } from './stories';
+import { FOUNDATIONS_ACTS } from './foundations';
 import {
   getPartById,
   RAMAYANA_JOURNEY_ORDER,
   UPANISHAD_JOURNEY_ORDER as UPANISHAD_TEXT_JOURNEY_ORDER,
 } from './scriptureTexts';
 
-export type JourneyModule = 1 | 2 | 3 | 4 | 5;
+// Module 0 is Foundations — the Jigyasu track, eight short acts that a new user
+// walks before anything else. It sits below the Jigyasu milestone on the rail,
+// which is exactly where it belongs.
+export type JourneyModule = 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface JourneyItem {
-  id: string; // 'concept:karma' | 'gita:3' | 'deity:shiva' | 'practice:bhakti-yoga' | 'festival:diwali-2025'
+  id: string; // 'foundations:name' | 'concept:karma' | 'gita:3' | 'deity:shiva' | 'festival:diwali-2025'
   module: JourneyModule;
   title: string;
   route: { name: string; params?: Record<string, unknown> };
@@ -26,12 +30,15 @@ export interface JourneyItem {
 }
 
 export const JOURNEY_MODULES: Record<JourneyModule, string> = {
+  0: 'Foundations',
   1: 'Why We Believe',
   2: 'Stories That Guide Us',
   3: 'Divine Connections',
   4: 'Living the Path',
   5: 'Unity in Diversity',
 };
+
+export const ALL_MODULES: JourneyModule[] = [0, 1, 2, 3, 4, 5];
 
 const FALLBACK_COVER = require('../../assets/images/covers/generic-cover.jpg');
 
@@ -79,6 +86,10 @@ export function routeForContentRef(
   const id = ref.slice(sep + 1);
   if (!id) return null;
   switch (kind) {
+    case 'foundations':
+      return hasReaderContent('foundations', id)
+        ? { name: 'ContentReader', params: { contentType: 'foundations', contentId: id } }
+        : null;
     case 'gita': {
       const chapter = parseInt(id, 10);
       return Number.isFinite(chapter)
@@ -149,6 +160,21 @@ export function navigateToJourneyItem(navigation: any, item: JourneyItem, replac
 
 export function buildJourneyPath(): JourneyItem[] {
   const path: JourneyItem[] = [];
+
+  // Module 0 — Foundations. Eight short acts: the whole of Jigyasu, and the
+  // first thing a new user walks. The 13 concepts in Module 1 stay exactly where
+  // they are — Foundations is the on-ramp to them, not a replacement.
+  for (const act of FOUNDATIONS_ACTS) {
+    const route = routeForContentRef(`foundations:${act.id}`);
+    if (!route) continue;
+    path.push({
+      id: `foundations:${act.id}`,
+      module: 0,
+      title: act.title,
+      route,
+      cover: act.coverImage,
+    });
+  }
 
   // Module 1 — Why We Believe (core philosophy)
   for (const id of MODULE_1_CONCEPTS) {

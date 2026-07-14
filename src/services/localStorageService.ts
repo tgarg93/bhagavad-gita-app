@@ -120,7 +120,14 @@ export interface ReflectionTurn {
 
 // What kind of content a reflection belongs to. Entries with no contentType
 // (everything stored before Phase D) are legacy Gita chapter reflections.
-export type ReflectionContentType = 'gita' | 'festival' | 'deity' | 'concept' | 'story' | 'scripture';
+export type ReflectionContentType =
+  | 'gita'
+  | 'festival'
+  | 'deity'
+  | 'concept'
+  | 'story'
+  | 'scripture'
+  | 'foundations';
 
 // A single reflection: the reader's answer to a chapter question, Krishna's
 // response, and any follow-up conversation. `completed` marks the user having
@@ -153,6 +160,29 @@ export interface AppData {
   };
 }
 
+// The Foundations track's own store. Card ids and check ids are permanent.
+export interface FoundationsCheckResult {
+  correct: boolean;
+  attempts: number;
+  firstTry: boolean;
+  at: string; // ISO
+}
+
+export interface FoundationsCapstoneResult {
+  riteId: string;
+  passed: boolean;
+  graded: 'ai' | 'self'; // 'self' when the grader was unreachable and the reader self-marked
+  attempts: number;
+  answer: string;
+  at: string; // ISO
+}
+
+export interface FoundationsProgress {
+  cardsBanked: string[]; // NarrativeSection ids
+  checks: Record<string, FoundationsCheckResult>; // keyed on check id
+  capstone?: FoundationsCapstoneResult;
+}
+
 class LocalStorageService {
   private static readonly KEYS = {
     USER_PROGRESS: 'bhagavad_gita_user_progress',
@@ -170,6 +200,7 @@ class LocalStorageService {
     CHAI_LAST_OPENED: 'daily_chai_last_opened',
     LEVEL_LAST_CELEBRATED: 'level_last_celebrated',
     PRAYER_RECITATIONS: 'prayer_recitations',
+    FOUNDATIONS_PROGRESS: 'foundations_progress',
   };
 
   private static readonly TOTAL_GITA_VERSES = 700;
@@ -450,6 +481,34 @@ class LocalStorageService {
     } catch (error) {
       console.error('Error marking content completed:', error);
       return false;
+    }
+  }
+
+  // ——— Foundations (the Jigyasu track): banked cards, check results, capstone ———
+  // Owned by foundationsService. Counters are always DERIVED from this blob on
+  // read (never incremented), so progression can't drift — same property the
+  // rest of progressionService relies on.
+
+  static async getFoundationsProgress(): Promise<FoundationsProgress> {
+    try {
+      const json = await AsyncStorage.getItem(this.KEYS.FOUNDATIONS_PROGRESS);
+      const parsed = json ? JSON.parse(json) : null;
+      return {
+        cardsBanked: parsed?.cardsBanked ?? [],
+        checks: parsed?.checks ?? {},
+        capstone: parsed?.capstone,
+      };
+    } catch (error) {
+      console.error('Error getting foundations progress:', error);
+      return { cardsBanked: [], checks: {} };
+    }
+  }
+
+  static async saveFoundationsProgress(progress: FoundationsProgress): Promise<void> {
+    try {
+      await AsyncStorage.setItem(this.KEYS.FOUNDATIONS_PROGRESS, JSON.stringify(progress));
+    } catch (error) {
+      console.error('Error saving foundations progress:', error);
     }
   }
 
