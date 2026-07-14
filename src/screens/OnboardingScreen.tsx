@@ -196,6 +196,59 @@ const AppIntro: React.FC = () => {
   );
 };
 
+// Rises its children in once `active` turns true. Used to hold a step's answer
+// UI back until Krishna has finished speaking — he asks, *then* the options
+// arrive, rather than everything landing at once and the typing becoming decor.
+//
+// `delay` staggers a list: pass index * ~70ms.
+const Reveal: React.FC<{
+  active: boolean;
+  delay?: number;
+  style?: any;
+  children: React.ReactNode;
+}> = ({ active, delay = 0, style, children }) => {
+  const v = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (!active) {
+      v.setValue(0);
+      return;
+    }
+    let cancelled = false;
+    AccessibilityInfo.isReduceMotionEnabled().then(reduced => {
+      if (cancelled) return;
+      if (reduced) {
+        v.setValue(1);
+        return;
+      }
+      Animated.timing(v, {
+        toValue: 1,
+        duration: 420,
+        delay,
+        useNativeDriver: true,
+      }).start();
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, delay]);
+
+  return (
+    <Animated.View
+      style={[
+        style,
+        {
+          opacity: v,
+          transform: [{ translateY: v.interpolate({ inputRange: [0, 1], outputRange: [12, 0] }) }],
+        },
+      ]}
+    >
+      {children}
+    </Animated.View>
+  );
+};
+
 const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 'firstRun' }) => {
   const steps = mode === 'edit' ? EDIT_STEPS : FIRST_RUN_STEPS;
 
@@ -238,6 +291,16 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
       : "One more thing — each morning I'll have chai waiting for you: one small sip of wisdom and the day's verse, right on your Home screen. Under a minute, I promise.",
     sendoff: '', // the quiet transition screen — no bubble
   };
+
+  // A step's answer UI waits for Krishna to finish speaking. Steps where he says
+  // nothing (the app intro, which animates itself; the send-off, which has no
+  // bubble) must start ready — otherwise their content would wait on a
+  // `onTypingDone` that never fires, and never appear at all.
+  const [krishnaDone, setKrishnaDone] = useState(false);
+  useEffect(() => {
+    setKrishnaDone(!stepMessages[id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const toggle = (list: string[], setList: (v: string[]) => void, value: string) =>
     setList(list.includes(value) ? list.filter(v => v !== value) : [...list, value]);
@@ -382,7 +445,11 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
             He types every line. The effect is keyed on the message string, not
             on mount, so the name field's keystrokes cannot restart it. */}
         {id !== 'introApp' && !!stepMessages[id] && (
-          <KrishnaGuide message={stepMessages[id]} typewriter />
+          <KrishnaGuide
+            message={stepMessages[id]}
+            typewriter
+            onTypingDone={() => setKrishnaDone(true)}
+          />
         )}
 
         {/* Screen 1 — Dharma says what it is for. Its own component, so its
@@ -390,9 +457,12 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
             re-render of this screen. */}
         {id === 'introApp' && <AppIntro />}
 
+        {/* Everything below waits for Krishna to stop typing: he asks, then the
+            answers arrive. `krishnaDone` resets on every step change and starts
+            true on the steps where he says nothing. */}
         <View style={styles.options}>
           {id === 'name' && (
-            <>
+            <Reveal active={krishnaDone}>
               <TextInput
                 style={styles.nameInput}
                 value={name}
@@ -407,31 +477,41 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
               <TouchableOpacity onPress={next} style={styles.skipBtn}>
                 <Text style={styles.skipText}>I'd rather not say</Text>
               </TouchableOpacity>
-            </>
+            </Reveal>
           )}
 
           {id === 'familiarity' &&
-            FAMILIARITY_OPTIONS.map(o =>
-              renderOption(familiarity === o.value, o.label, o.sub, () => setFamiliarity(o.value), o.value)
-            )}
+            FAMILIARITY_OPTIONS.map((o, i) => (
+              <Reveal key={o.value} active={krishnaDone} delay={i * 70}>
+                {renderOption(familiarity === o.value, o.label, o.sub, () => setFamiliarity(o.value), o.value)}
+              </Reveal>
+            ))}
 
           {id === 'intentions' &&
-            INTENTION_OPTIONS.map(o =>
-              renderOption(intentions.includes(o), o, undefined, () => toggle(intentions, setIntentions, o), o)
-            )}
+            INTENTION_OPTIONS.map((o, i) => (
+              <Reveal key={o} active={krishnaDone} delay={i * 70}>
+                {renderOption(intentions.includes(o), o, undefined, () => toggle(intentions, setIntentions, o), o)}
+              </Reveal>
+            ))}
 
           {id === 'familyStream' &&
-            FAMILY_STREAM_OPTIONS.map(o =>
-              renderOption(familyStream === o.value, o.label, o.sub, () => setFamilyStream(o.value), o.value)
-            )}
+            FAMILY_STREAM_OPTIONS.map((o, i) => (
+              <Reveal key={o.value} active={krishnaDone} delay={i * 70}>
+                {renderOption(familyStream === o.value, o.label, o.sub, () => setFamilyStream(o.value), o.value)}
+              </Reveal>
+            ))}
 
           {id === 'goal' &&
-            GOAL_OPTIONS.map(o =>
-              renderOption(dailyGoal === o.value, o.label, o.sub, () => setDailyGoal(o.value), String(o.value))
-            )}
+            GOAL_OPTIONS.map((o, i) => (
+              <Reveal key={String(o.value)} active={krishnaDone} delay={i * 70}>
+                {renderOption(dailyGoal === o.value, o.label, o.sub, () => setDailyGoal(o.value), String(o.value))}
+              </Reveal>
+            ))}
         </View>
 
         {id === 'identity' && (
+          // Two animations on one card: Reveal brings it in after Krishna names
+          // the level, jigyasuExit shrinks it away into the next step.
           <Animated.View
             style={[
               styles.jigyasuWrap,
@@ -444,34 +524,41 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
               },
             ]}
           >
-            <View style={styles.jigyasuCard}>
-              <Text style={styles.jigyasuEmblem}>🪷</Text>
-              <Text style={styles.jigyasuEyebrow}>YOU BEGIN AS</Text>
-              <Text style={styles.jigyasuName}>Jigyasu</Text>
-              <Text style={styles.jigyasuEnglish}>The Curious · Level 1 of 7</Text>
-              <Text style={styles.jigyasuMeaning}>{LEVEL_MEANINGS[1]}</Text>
-              <ProgressRungs level={LEVELS[0]} nextLevel={LEVELS[1]} progressToNext={0} />
-            </View>
+            <Reveal active={krishnaDone}>
+              <View style={styles.jigyasuCard}>
+                <Text style={styles.jigyasuEmblem}>🪷</Text>
+                <Text style={styles.jigyasuEyebrow}>YOU BEGIN AS</Text>
+                <Text style={styles.jigyasuName}>Jigyasu</Text>
+                <Text style={styles.jigyasuEnglish}>The Curious · Level 1 of 7</Text>
+                <Text style={styles.jigyasuMeaning}>{LEVEL_MEANINGS[1]}</Text>
+                <ProgressRungs level={LEVELS[0]} nextLevel={LEVELS[1]} progressToNext={0} />
+              </View>
+            </Reveal>
           </Animated.View>
         )}
 
         {id === 'journey' && (
           <>
-            <Text style={styles.journeyHeading}>YOUR SPIRITUAL JOURNEY</Text>
-            <JourneyPathView scrollable={false} entrance />
+            <Reveal active={krishnaDone}>
+              <Text style={styles.journeyHeading}>YOUR SPIRITUAL JOURNEY</Text>
+            </Reveal>
+            {/* Mounted only once Krishna is done — JourneyPathView's `entrance`
+                stagger runs on ITS mount, so mounting it early would spend the
+                whole animation behind Krishna's typing. */}
+            {krishnaDone && <JourneyPathView scrollable={false} entrance />}
           </>
         )}
 
         {id === 'chai' && (
-          <View style={styles.rhythmWrap}>
+          <Reveal active={krishnaDone} style={styles.rhythmWrap}>
             {/* Live preview of today's actual chai — the same unified card the
                 Home screen shows, compact and action-less */}
             <DailyChaiCard atom={getDailyAtom()} compact />
-          </View>
+          </Reveal>
         )}
 
         {id === 'sendoff' && (
-          <View style={styles.transitionWrap}>
+          <Reveal active={krishnaDone} style={styles.transitionWrap}>
             <Text style={styles.transitionEyebrow}>YOUR FIRST STEP</Text>
             {firstStepCover != null && (
               <Image
@@ -489,7 +576,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
             <TouchableOpacity onPress={exploreInstead} style={styles.skipBtn}>
               <Text style={styles.skipText}>I'll explore on my own</Text>
             </TouchableOpacity>
-          </View>
+          </Reveal>
         )}
       </ScrollView>
 
