@@ -1774,9 +1774,13 @@ export const deitiesData: Deity[] = [
 ];
 
 // Utility functions
-export const getMajorDeities = (): Deity[] => {
-  return deitiesData.filter(deity => deity.category === 'major');
-};
+
+// Every deity, for browse surfaces. This used to be `getMajorDeities()`, which
+// filtered to `category === 'major'` and so silently hid Parvati, Lakshmi and
+// Saraswati (all `goddesses`) from the Learn tab. They were reachable only via
+// the guided journey — so trimming the journey would have orphaned them with no
+// entry point anywhere in the app. Browse shows everything; the journey curates.
+export const getAllDeities = (): Deity[] => deitiesData;
 
 export const getDeityById = (id: string): Deity | undefined => {
   return deitiesData.find(deity => deity.id === id);

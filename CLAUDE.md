@@ -9,6 +9,7 @@ Expo SDK 53 / React Native 0.79 Hindu learning companion. Specs that govern this
 
 Data (static TS, all content bundled):
 - `src/data/journeyPath.ts` — the guided journey: 6 modules (0 = Foundations), ordered ids; `navigateToJourneyItem` handles routing
+- `src/data/stageCapstones.ts` — the five stage capstones (Stages 1-5). Each rubric IS that stage's objective; passing confers the stage's level
 - `src/data/foundations.ts` — the Jigyasu track: 8 parts, 32 bite-sized cards, the capstone. **The 75-point sum at the top of that file is load-bearing** — see invariants. The `foundations:*` ids deliberately no longer match their titles (`faces` → "The Gods") — the titles were renamed for clarity, the ids can't be
 - `src/data/checkTypes.ts` — app-wide knowledge checks (mcq / recall / reflect); any `NarrativeSection` can carry `checks`
 - `src/data/philosophyAndTeachings.ts`, `godsAndDeities.ts`, `festivals.ts` — content with `sections: NarrativeSection[]`, `sources`, `reflectionQuestions`
@@ -29,7 +30,7 @@ Screens: paged readers are `GitaVersePlayerScreen` (Gita) and `ContentReaderScre
 
 ## Working rules
 
-- **tsc baseline**: `npx tsc --noEmit` currently has **104 pre-existing errors**. Hold or improve; never add new ones. (Style-union errors from spreading `typography.sizes.*` into Text styles are the common trap — write fontSize/lineHeight explicitly in new styles.)
+- **tsc baseline**: `npx tsc --noEmit` currently has **83 pre-existing errors**. Hold or improve; never add new ones. (Style-union errors from spreading `typography.sizes.*` into Text styles are the common trap — write fontSize/lineHeight explicitly in new styles.)
 - **TEMP-VERIFY discipline**: simulator verification hacks (initialRoute overrides, auto-press timers, forced state) are marked `// TEMP-VERIFY` and ALL removed before commit (`grep -rn "TEMP-VERIFY" src App.tsx` must be clean).
 - **Verified citations**: every content claim traces to a named public text; famous loci only; practices without scripture say so honestly. Per-section `citation` footnotes + item-level `sources`.
 - **Long-form content opens in the paged reader** (Gita-player pattern), never a plain scroll view.
@@ -40,12 +41,13 @@ Screens: paged readers are `GitaVersePlayerScreen` (Gita) and `ContentReaderScre
 
 ## Invariants (do not change casually)
 
-- **Points formula**: versesRead×2 + chaptersCompleted×30 + reflections×15 + cardsBanked×1 + checksPassed×4 + ritesPassed×30 (`progressionService`). **Only ever add terms that are additive and non-negative** — a user with none of that activity must keep exactly the total they had, or the change re-levels everyone.
-- **A rite is a floor, never a ceiling**: `level = max(levelForPoints(points), conferred rite level)`. The Foundations capstone confers Shishya. A ceiling would demote existing users and trap Gita readers at Jigyasu — hence the floor.
+- **Points formula**: versesRead×2 + chaptersCompleted×30 + reflections×15 + cardsBanked×1 + checksPassed×4 + ritesPassed×30 + journeyItemsCompleted×30 (`progressionService`). **Only ever add terms that are additive and non-negative, and never raise a threshold** — either one demotes somebody. `journeyItemsCompleted` excludes Foundations and capstone items (see below).
+- **A rite is a floor, never a ceiling**: `level = max(levelForPoints(points), conferred rite level)`. **Six rites — one per journey stage** (`stageCapstones.ts` + Foundations'). This is the only reason Rishi and Guru are reachable at all; the old journey topped out 38 points below Rishi. A ceiling would demote existing users and trap Gita readers at Jigyasu — hence the floor.
 - **The Foundations track sums to 75 points** — deliberately under the 100 for Shishya, so the capstone is what tips the reader over. Add a card or a second reflection and it crosses 100, the user levels up mid-track, and the capstone is deflated. **Redo the sum in `foundations.ts` if the content changes.**
 - **Journey completion** (`content_completion` map, id-keyed) is a parallel system to points — reaching a celebration page marks completion.
 - **AsyncStorage keys are append-only** — never rename/repurpose existing keys (users' devices hold data under them).
-- **Journey item ids** (`concept:karma`, `gita:3`, `foundations:name`…) are permanent — completion is keyed on them.
+- **Journey item ids** (`concept:karma`, `gita:3`, `foundations:name`, `capstone:gods`…) are permanent — completion is keyed on them.
+- **The journey is a curriculum, not a table of contents.** 65 curated items; everything else is self-serve in the Learn tab. **Before cutting an item from `journeyPath.ts`, confirm it is reachable from `contentAggregator.getContentSections()`** or you orphan it — `getMajorDeities()` was silently hiding three goddesses, who were journey-only.
 - **Bundle id is `com.tushargarg.dharma`** (com.dharma.app is stranded on an old team — never revert).
 
 ## Release

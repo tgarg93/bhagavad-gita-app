@@ -33,6 +33,9 @@ interface JourneyCelebrationProps {
   // The question the next act answers, shown directly above the next-step button
   // so the reader walks straight into it rather than stopping.
   handoff?: string;
+  // Stage capstones only: the stage's objective, which was a promise on the
+  // journey card and is now a thing they have done.
+  objective?: string;
   // The page mounts off-screen inside the reader's pager; the celebration
   // sequence should only start once it actually scrolls into view
   active?: boolean;
@@ -91,6 +94,7 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
   onBackToLearn,
   bankedTakeaways,
   handoff,
+  objective,
   active = true,
   pointsAtStart,
 }) => {
@@ -244,6 +248,13 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
                 }${progression.pointsToNext} to ${progression.nextLevel.sanskrit}`
               : "The path's last name is yours."}
           </Text>
+        </Animated.View>
+      )}
+
+      {!!objective && (
+        <Animated.View style={[styles.banked, riseStyle(nextAnim)]}>
+          <Text style={styles.bankedLabel}>You can now</Text>
+          <Text style={styles.objectiveEarned}>{objective}</Text>
         </Animated.View>
       )}
 
@@ -437,6 +448,12 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     color: colors.neutrals.charcoalBlack,
     fontWeight: '500',
+  },
+  objectiveEarned: {
+    fontSize: 17,
+    lineHeight: 25,
+    fontWeight: '600',
+    color: colors.neutrals.charcoalBlack,
   },
   handoff: {
     fontSize: 17,

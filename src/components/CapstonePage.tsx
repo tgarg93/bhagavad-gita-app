@@ -39,18 +39,19 @@ const CapstonePage: React.FC<Props> = ({ capstone, getTextStyle, onPassed, onDef
   const [selfMark, setSelfMark] = useState<Set<number> | null>(null);
   const [passed, setPassed] = useState(false);
 
-  // A capstone passed in an earlier session stays passed.
+  // A capstone passed in an earlier session stays passed. Looked up by riteId —
+  // there is one capstone per stage, not one in the app.
   useEffect(() => {
     (async () => {
-      const progress = await foundationsService.getProgress();
-      if (progress.capstone?.passed) {
+      const prior = await foundationsService.getCapstone(capstone.riteId);
+      if (prior?.passed) {
         setPassed(true);
-        setAnswer(progress.capstone.answer);
+        setAnswer(prior.answer);
         onPassed();
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [capstone.riteId]);
 
   const pass = useCallback(
     async (graded: 'ai' | 'self', text: string) => {

@@ -8,13 +8,13 @@ import { festivalData, getUpcomingFestivals } from './festivals';
 import { getYogaPathsData } from './yogaAndPractices';
 import { hasReaderContent } from './readerContent';
 import { getChapterCover } from './gitaChapterCovers';
-import { getStoryById, UPANISHAD_JOURNEY_ORDER } from './stories';
+import { getStoryById } from './stories';
 import { FOUNDATIONS_ACTS } from './foundations';
-import {
-  getPartById,
-  RAMAYANA_JOURNEY_ORDER,
-  UPANISHAD_JOURNEY_ORDER as UPANISHAD_TEXT_JOURNEY_ORDER,
-} from './scriptureTexts';
+import { capstoneForModule } from './stageCapstones';
+// The six raw Upanishad texts left the journey (dense; the four dialogues in
+// Stage 4 teach the same philosophy). They remain browsable via Learn →
+// The Principal Upanishads → ScriptureContents.
+import { getPartById, RAMAYANA_JOURNEY_ORDER } from './scriptureTexts';
 
 // Module 0 is Foundations — the Jigyasu track, eight short acts that a new user
 // walks before anything else. It sits below the Jigyasu milestone on the rail,
@@ -31,46 +31,79 @@ export interface JourneyItem {
 
 export const JOURNEY_MODULES: Record<JourneyModule, string> = {
   0: 'Foundations',
-  1: 'Why We Believe',
-  2: 'Stories That Guide Us',
-  3: 'Divine Connections',
-  4: 'Living the Path',
-  5: 'Unity in Diversity',
+  1: 'The Core Ideas',
+  2: 'The Gods',
+  3: 'The Gita',
+  4: 'The Stories',
+  5: 'Living It',
 };
 
 export const ALL_MODULES: JourneyModule[] = [0, 1, 2, 3, 4, 5];
 
+// What a walker can DO when they finish each stage. Not a description of the
+// content — a capability. Every stage ends with a capstone whose rubric is this
+// sentence, made testable, so the promise is kept rather than merely made.
+export const MODULE_OBJECTIVES: Record<JourneyModule, string> = {
+  0: 'Explain what Hinduism is to a friend.',
+  1: 'Explain karma, dharma and moksha properly — and correct someone who thinks karma means fate.',
+  2: "Walk into a temple and know who you're looking at, and how they're related.",
+  3: "Read the Gita end to end, and say what Krishna actually tells Arjuna to do.",
+  4: 'Tell the Ramayana. Know why Nachiketa questioned Death.',
+  5: "Keep the festival year, know what puja is, and know which of the four paths fits how you're built.",
+};
+
 const FALLBACK_COVER = require('../../assets/images/covers/generic-cover.jpg');
 
-const MODULE_1_CONCEPTS = [
-  'hinduism-overview', // Module 0 in spirit: the map before the journey
-  'branches-of-hinduism', // the map's second half: the streams
+// ─── THE JOURNEY IS A CURRICULUM, NOT A TABLE OF CONTENTS ────────────────────
+//
+// It used to contain everything the app had (82 items). It now contains only what
+// a learner must walk to reach the next stage. Everything cut is still fully
+// browsable in the Learn tab — the journey curates, browse shows all.
+//
+// Cutting an item from these lists NEVER deletes it. But before cutting anything,
+// check it is reachable from `contentAggregator.getContentSections()`, or you will
+// orphan it — that is exactly what nearly happened to Parvati, Lakshmi and
+// Saraswati, whom the Learn tab was silently filtering out.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Stage 1 — The Core Ideas. The eight that carry weight, read whole.
+// Cut to self-serve: hinduism-overview and branches-of-hinduism (Foundations
+// Parts 1-2 now cover exactly this ground), prana, guru, bhakti-paths.
+const STAGE_1_CONCEPTS = [
   'dharma',
   'karma',
-  'moksha',
-  'three-gunas',
-  'bhakti-paths',
-  'ahimsa',
   'samsara',
-  // The deeper beliefs, once the foundations are walked
-  'maya',
+  'moksha',
   'brahman-atman',
-  'prana',
-  'guru',
+  'maya',
+  'three-gunas',
+  'ahimsa',
 ];
 
-const MODULE_3_DEITIES = [
+// Stage 2 — The Gods. The seven you'd actually meet in a temple.
+// Cut to self-serve: brahma (barely worshipped anywhere), lakshmi, saraswati.
+const STAGE_2_DEITIES = [
   'krishna',
-  'ganesha',
+  'rama',
   'shiva',
+  'ganesha',
   'hanuman',
   'durga',
-  'rama',
-  // The divine family completed (appended — earlier ids keep their positions)
-  'brahma',
   'parvati',
-  'lakshmi',
-  'saraswati',
+];
+
+// Stage 4 — The Stories. The whole Ramayana, plus the four Upanishad dialogues
+// that carry the philosophy. Cut to self-serve: the 12 kathas, the other four
+// dialogues, and the six raw Upanishad texts (dense; the dialogues teach them).
+const STAGE_4_DIALOGUES = ['nachiketa', 'svetaketu-salt', 'two-birds', 'maitreyi'];
+
+// Stage 5 — Living It. Cut to self-serve: the four minor festivals.
+const STAGE_5_FESTIVALS = [
+  'diwali-2025',
+  'holi-2025',
+  'navratri-2025',
+  'janmashtami-2025',
+  'ganesh-chaturthi-2025',
 ];
 
 // Canonical route for a content ref ('gita:2' | 'concept:karma' |
@@ -89,6 +122,10 @@ export function routeForContentRef(
     case 'foundations':
       return hasReaderContent('foundations', id)
         ? { name: 'ContentReader', params: { contentType: 'foundations', contentId: id } }
+        : null;
+    case 'capstone':
+      return hasReaderContent('capstone', id)
+        ? { name: 'ContentReader', params: { contentType: 'capstone', contentId: id } }
         : null;
     case 'gita': {
       const chapter = parseInt(id, 10);
@@ -158,12 +195,28 @@ export function navigateToJourneyItem(navigation: any, item: JourneyItem, replac
   }
 }
 
+// Each stage ends with its capstone — the test of that stage's objective, and
+// the rite that confers its level. Appended last within the module, always.
+const pushCapstone = (path: JourneyItem[], module: JourneyModule) => {
+  const cap = capstoneForModule(module);
+  if (!cap) return;
+  const route = routeForContentRef(`capstone:${cap.id}`);
+  if (!route) return;
+  path.push({
+    id: `capstone:${cap.id}`,
+    module,
+    title: cap.title,
+    route,
+    cover: cap.coverImage,
+  });
+};
+
 export function buildJourneyPath(): JourneyItem[] {
   const path: JourneyItem[] = [];
 
-  // Module 0 — Foundations. Eight short acts: the whole of Jigyasu, and the
-  // first thing a new user walks. The 13 concepts in Module 1 stay exactly where
-  // they are — Foundations is the on-ramp to them, not a replacement.
+  // Stage 0 — Foundations. The whole of Jigyasu, and the first thing a new user
+  // walks. Its capstone lives inside foundations.ts (it predates stageCapstones),
+  // so no pushCapstone here.
   for (const act of FOUNDATIONS_ACTS) {
     const route = routeForContentRef(`foundations:${act.id}`);
     if (!route) continue;
@@ -176,8 +229,8 @@ export function buildJourneyPath(): JourneyItem[] {
     });
   }
 
-  // Module 1 — Why We Believe (core philosophy)
-  for (const id of MODULE_1_CONCEPTS) {
+  // Stage 1 — The Core Ideas. The eight concepts, read whole this time.
+  for (const id of STAGE_1_CONCEPTS) {
     const concept = getPhilosophyById(id);
     if (!concept) continue;
     path.push({
@@ -188,74 +241,67 @@ export function buildJourneyPath(): JourneyItem[] {
       cover: typeof concept.images.heroImage === 'number' ? concept.images.heroImage : FALLBACK_COVER,
     });
   }
-  // Principal Upanishads (the texts) — appended after the concepts (append-only)
-  for (const id of UPANISHAD_TEXT_JOURNEY_ORDER) {
-    const part = getPartById(id);
-    if (!part) continue;
-    path.push({
-      id: `scripture:${id}`,
-      module: 1,
-      title: part.name,
-      route: routeForContentRef(`scripture:${id}`)!,
-      cover: typeof part.coverImage === 'number' ? part.coverImage : FALLBACK_COVER,
-    });
-  }
+  pushCapstone(path, 1);
 
-  // Module 2 — Stories That Guide Us (the Gita, chapter by chapter, then the
-  // Upanishad dialogues; Ramayana kandas join this module in a later wave).
-  for (let ch = 1; ch <= 18; ch++) {
-    const chapter = bhagavadGitaData.find(c => c.number === ch);
-    path.push({
-      id: `gita:${ch}`,
-      module: 2,
-      title: `Gita Chapter ${ch}${chapter ? ` · ${chapter.name.english}` : ''}`,
-      route: routeForContentRef(`gita:${ch}`)!,
-      cover: getChapterCover(ch) as number,
-    });
-  }
-  // Appended after Gita 18 — existing journey positions never move
-  for (const id of UPANISHAD_JOURNEY_ORDER) {
-    const story = getStoryById(id);
-    if (!story) continue;
-    path.push({
-      id: `story:${id}`,
-      module: 2,
-      title: story.title,
-      route: routeForContentRef(`story:${id}`)!,
-      cover: typeof story.coverImage === 'number' ? story.coverImage : FALLBACK_COVER,
-    });
-  }
-  // Ramayana kandas — appended after the Upanishad stories (append-only)
-  for (const id of RAMAYANA_JOURNEY_ORDER) {
-    const part = getPartById(id);
-    if (!part) continue;
-    path.push({
-      id: `scripture:${id}`,
-      module: 2,
-      title: part.name,
-      route: routeForContentRef(`scripture:${id}`)!,
-      cover: typeof part.coverImage === 'number' ? part.coverImage : FALLBACK_COVER,
-    });
-  }
-
-  // Module 3 — Divine Connections (the gods)
-  for (const id of MODULE_3_DEITIES) {
+  // Stage 2 — The Gods.
+  for (const id of STAGE_2_DEITIES) {
     const deity = getDeityById(id);
     if (!deity) continue;
     path.push({
       id: `deity:${id}`,
-      module: 3,
+      module: 2,
       title: deity.name,
       route: routeForContentRef(`deity:${id}`)!,
       cover: typeof deity.images.heroImage === 'number' ? deity.images.heroImage : FALLBACK_COVER,
     });
   }
+  pushCapstone(path, 2);
 
-  // Module 4 — Living the Path (practices)
+  // Stage 3 — The Gita, whole. 18 chapters, 701 verses.
+  for (let ch = 1; ch <= 18; ch++) {
+    const chapter = bhagavadGitaData.find(c => c.number === ch);
+    path.push({
+      id: `gita:${ch}`,
+      module: 3,
+      title: `Gita Chapter ${ch}${chapter ? ` · ${chapter.name.english}` : ''}`,
+      route: routeForContentRef(`gita:${ch}`)!,
+      cover: getChapterCover(ch) as number,
+    });
+  }
+  pushCapstone(path, 3);
+
+  // Stage 4 — The Stories. The Ramayana entire, then the four Upanishad
+  // dialogues that carry the philosophy.
+  for (const id of RAMAYANA_JOURNEY_ORDER) {
+    const part = getPartById(id);
+    if (!part) continue;
+    path.push({
+      id: `scripture:${id}`,
+      module: 4,
+      title: part.name,
+      route: routeForContentRef(`scripture:${id}`)!,
+      cover: typeof part.coverImage === 'number' ? part.coverImage : FALLBACK_COVER,
+    });
+  }
+  for (const id of STAGE_4_DIALOGUES) {
+    const story = getStoryById(id);
+    if (!story) continue;
+    path.push({
+      id: `story:${id}`,
+      module: 4,
+      title: story.title,
+      route: routeForContentRef(`story:${id}`)!,
+      cover: typeof story.coverImage === 'number' ? story.coverImage : FALLBACK_COVER,
+    });
+  }
+  pushCapstone(path, 4);
+
+  // Stage 5 — Living It. The four paths, then the five festivals everyone keeps,
+  // in true calendar order (recomputed each call, so it follows the real year).
   for (const practice of getYogaPathsData()) {
     path.push({
       id: `practice:${practice.id}`,
-      module: 4,
+      module: 5,
       title: practice.name,
       route: routeForContentRef(`practice:${practice.id}`)!,
       cover:
@@ -264,12 +310,11 @@ export function buildJourneyPath(): JourneyItem[] {
           : FALLBACK_COVER,
     });
   }
-
-  // Module 5 — Unity in Diversity (festivals, in true calendar order —
-  // computed each call so the order follows the actual upcoming calendar)
-  const ordered = getUpcomingFestivals(festivalData.length);
+  const ordered = getUpcomingFestivals(festivalData.length).filter(f =>
+    STAGE_5_FESTIVALS.includes(f.id)
+  );
   const seen = new Set(ordered.map(f => f.id));
-  const rest = festivalData.filter(f => !seen.has(f.id)); // festivals with no upcoming occurrence
+  const rest = festivalData.filter(f => STAGE_5_FESTIVALS.includes(f.id) && !seen.has(f.id));
   for (const festival of [...ordered, ...rest]) {
     path.push({
       id: `festival:${festival.id}`,
@@ -279,6 +324,7 @@ export function buildJourneyPath(): JourneyItem[] {
       cover: typeof festival.heroImageUrl === 'number' ? festival.heroImageUrl : FALLBACK_COVER,
     });
   }
+  pushCapstone(path, 5);
 
   return path;
 }

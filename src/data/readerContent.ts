@@ -8,6 +8,7 @@ import { festivalData } from './festivals';
 import { getStoryById } from './stories';
 import { getPartById, getCollection } from './scriptureTexts';
 import { getFoundationsAct, takeawaysForAct, FOUNDATIONS_ACTS } from './foundations';
+import { getStageCapstone } from './stageCapstones';
 
 export type ReaderContentType =
   | 'concept'
@@ -15,7 +16,8 @@ export type ReaderContentType =
   | 'festival'
   | 'story'
   | 'scripture'
-  | 'foundations';
+  | 'foundations'
+  | 'capstone';
 
 export interface ReaderContent {
   contentType: ReaderContentType;
@@ -43,8 +45,11 @@ export interface ReaderContent {
   // The question the next act answers, shown above the celebration's next-step
   // button so the reader walks straight into it.
   handoff?: string;
-  // Present only on the capstone act. Its page is appended after the sections.
+  // Present only on a capstone item. Its page is appended after the sections.
   capstone?: Capstone;
+  // The stage objective — what the reader can now do. Shown on the capstone's
+  // celebration, where it reads as earned rather than promised.
+  objective?: string;
 }
 
 const FALLBACK_COVER = require('../../assets/images/covers/generic-cover.jpg');
@@ -163,6 +168,26 @@ export function getReaderContent(
       bankedTakeaways: takeawaysForAct(act.id),
       handoff: act.handoff,
       capstone: act.capstone,
+    };
+  }
+
+  if (contentType === 'capstone') {
+    const cap = getStageCapstone(contentId);
+    if (!cap) return null;
+    return {
+      contentType,
+      id: cap.id,
+      title: cap.title,
+      subtitle: cap.subtitle,
+      coverImage: cap.coverImage,
+      sections: [cap.recap],
+      reflectionQuestions: [],
+      sources: [],
+      readerLabel: `${cap.stageName} · The capstone`,
+      kicker: cap.kicker,
+      intro: cap.intro,
+      objective: cap.objective,
+      capstone: cap.capstone,
     };
   }
 

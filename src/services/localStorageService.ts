@@ -127,7 +127,8 @@ export type ReflectionContentType =
   | 'concept'
   | 'story'
   | 'scripture'
-  | 'foundations';
+  | 'foundations'
+  | 'capstone';
 
 // A single reflection: the reader's answer to a chapter question, Krishna's
 // response, and any follow-up conversation. `completed` marks the user having
@@ -180,7 +181,14 @@ export interface FoundationsCapstoneResult {
 export interface FoundationsProgress {
   cardsBanked: string[]; // NarrativeSection ids
   checks: Record<string, FoundationsCheckResult>; // keyed on check id
-  capstone?: FoundationsCapstoneResult;
+  // Every capstone the user has attempted, keyed on riteId. There are six — one
+  // per stage of the journey.
+  //
+  // This was a single `capstone?: FoundationsCapstoneResult` when Foundations was
+  // the only capstone in the app. The key is append-only, so devices in the wild
+  // still hold the old shape: getFoundationsProgress() migrates it on read rather
+  // than renaming or dropping the key.
+  capstones: Record<string, FoundationsCapstoneResult>;
 }
 
 class LocalStorageService {
@@ -493,14 +501,23 @@ class LocalStorageService {
     try {
       const json = await AsyncStorage.getItem(this.KEYS.FOUNDATIONS_PROGRESS);
       const parsed = json ? JSON.parse(json) : null;
+
+      // Migrate the single-capstone shape written before there were six. A device
+      // holding `{capstone: {...}}` is re-read as `{capstones: {[riteId]: {...}}}`.
+      // Never dropped, never renamed — the key is append-only.
+      const capstones: Record<string, FoundationsCapstoneResult> = parsed?.capstones ?? {};
+      if (parsed?.capstone?.riteId && !capstones[parsed.capstone.riteId]) {
+        capstones[parsed.capstone.riteId] = parsed.capstone;
+      }
+
       return {
         cardsBanked: parsed?.cardsBanked ?? [],
         checks: parsed?.checks ?? {},
-        capstone: parsed?.capstone,
+        capstones,
       };
     } catch (error) {
       console.error('Error getting foundations progress:', error);
-      return { cardsBanked: [], checks: {} };
+      return { cardsBanked: [], checks: {}, capstones: {} };
     }
   }
 

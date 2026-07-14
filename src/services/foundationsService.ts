@@ -102,14 +102,23 @@ class FoundationsService {
     return progress.checks[checkId];
   }
 
+  // One capstone per stage of the journey, keyed on riteId.
   async recordCapstone(result: Omit<FoundationsCapstoneResult, 'attempts' | 'at'>): Promise<void> {
     const progress = await this.getProgress();
-    progress.capstone = {
+    const prior = progress.capstones[result.riteId];
+    progress.capstones[result.riteId] = {
       ...result,
-      attempts: (progress.capstone?.attempts ?? 0) + 1,
+      // A capstone once passed stays passed — a later attempt can't un-earn it.
+      passed: prior?.passed || result.passed,
+      attempts: (prior?.attempts ?? 0) + 1,
       at: new Date().toISOString(),
     };
     await LocalStorageService.saveFoundationsProgress(progress);
+  }
+
+  async getCapstone(riteId: string): Promise<FoundationsCapstoneResult | undefined> {
+    const progress = await this.getProgress();
+    return progress.capstones[riteId];
   }
 
   // Rite ids the reader has actually earned. progressionService uses these as a
@@ -117,7 +126,9 @@ class FoundationsService {
   // lower it, so nobody is demoted and nobody is trapped.
   async getPassedRites(): Promise<string[]> {
     const progress = await this.getProgress();
-    return progress.capstone?.passed ? [progress.capstone.riteId] : [];
+    return Object.values(progress.capstones)
+      .filter(c => c.passed)
+      .map(c => c.riteId);
   }
 
   async getStats(): Promise<FoundationsStats> {
@@ -125,7 +136,7 @@ class FoundationsService {
     return {
       cardsBanked: progress.cardsBanked.length,
       checksPassed: Object.values(progress.checks).filter(c => c.correct).length,
-      ritesPassed: progress.capstone?.passed ? 1 : 0,
+      ritesPassed: Object.values(progress.capstones).filter(c => c.passed).length,
     };
   }
 }

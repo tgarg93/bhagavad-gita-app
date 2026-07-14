@@ -534,6 +534,9 @@ const ContentReaderScreen: React.FC = () => {
         // question the next act answers. Inert for every other content type.
         bankedTakeaways={content.bankedTakeaways}
         handoff={content.handoff}
+        // On a stage capstone: the objective, now in the past tense. It was a
+        // promise on the stage card; here it is a thing they did.
+        objective={content.objective}
         onNext={next => navigateToJourneyItem(navigation, next, true)}
         onBackToLearn={() => (navigation as any).navigate('MainTabs', { screen: 'Scriptures' })}
       />

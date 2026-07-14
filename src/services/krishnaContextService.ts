@@ -19,6 +19,7 @@ export interface CurrentContent {
     | 'story'
     | 'scripture'
     | 'foundations'
+    | 'capstone'
     | 'none';
   chapter?: number;
   verse?: number;

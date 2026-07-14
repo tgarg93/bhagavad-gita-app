@@ -31,7 +31,22 @@ interface ChapterReflectionProps {
   onSkipAll?: () => void; // parent jumps past the whole reflection block
 }
 
-const genId = () => `refl-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
+// One reflection, one id — derived from what actually identifies it, not from the
+// clock. It used to be `refl-${Date.now()}-${random}`, minted fresh on every
+// mount, so re-answering a question you had already answered appended a SECOND
+// ReflectionEntry. Since progression counts entries (× 15 points), that made
+// points farmable indefinitely by reopening the same page and typing again.
+// LocalStorageService.saveReflection already dedupes on id — it just never had a
+// stable one to match.
+const reflectionId = (
+  questionIndex: number,
+  chapterNumber?: number,
+  contentType?: string,
+  contentId?: string
+): string =>
+  chapterNumber != null
+    ? `refl-gita-${chapterNumber}-${questionIndex}`
+    : `refl-${contentType ?? 'unknown'}-${contentId ?? 'unknown'}-${questionIndex}`;
 
 const FALLBACK_STARTERS = [
   'Lately at work…',
@@ -210,7 +225,7 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
       if (!entry) {
         // First exchange for this question
         entry = {
-          id: genId(),
+          id: reflectionId(questionIndex, chapterNumber, contentType, contentId),
           userId,
           questionIndex,
           question: activeQuestion,

@@ -13,7 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import journeyService from '../services/journeyService';
 import { getProgression } from '../services/progressionService';
-import { ALL_MODULES, JourneyItem, JourneyModule, JOURNEY_MODULES } from '../data/journeyPath';
+import { ALL_MODULES, JourneyItem, JourneyModule, JOURNEY_MODULES, MODULE_OBJECTIVES } from '../data/journeyPath';
 
 // The guided journey as one continuous rail: spiritual-title milestones and
 // accordion stage cards hang on a single vertical line — teal where the
@@ -36,20 +36,20 @@ interface JourneyPathViewProps {
 const MODULE_EMOJI: Record<JourneyModule, string> = {
   0: '🌱',
   1: '🪔',
-  2: '📖',
-  3: '🕉️',
-  4: '🧘',
+  2: '🕉️',
+  3: '📖',
+  4: '🏹',
   5: '🎉',
 };
 
 // Why each stage sits where it does — the rationale lives on the card itself
 const MODULE_WHY: Record<JourneyModule, string> = {
   0: 'Start here. In one sitting, enough to explain Hinduism to a friend.',
-  1: 'Ideas first — they\'re the grammar everything else speaks.',
-  2: 'One story that uses every idea: the Gita, chapter by chapter.',
-  3: 'With the ideas in hand, the gods become faces, not a crowd.',
-  4: 'Knowing becomes doing — practice matched to your temperament.',
-  5: 'And the festivals, where it all turns into lamps, food, and family.',
+  1: 'The eight ideas everything else speaks in — this time, read whole.',
+  2: 'With the ideas in hand, the gods become faces, not a crowd.',
+  3: 'One text that uses every idea. Seven hundred verses, and worth all of them.',
+  4: 'The stories a Hindu child grows up inside.',
+  5: 'Knowing becomes doing — a path, a puja, and a year of festivals.',
 };
 
 // Spiritual titles as rail milestones. Jigyasu sits above Foundations, which is
@@ -62,9 +62,9 @@ const MODULE_WHY: Record<JourneyModule, string> = {
 const MILESTONES: { beforeModule: JourneyModule | null; level: number; label: string; sub: string }[] = [
   { beforeModule: 0, level: 1, label: 'Jigyasu — The Curious', sub: 'Every walker starts here.' },
   { beforeModule: 1, level: 2, label: 'Shishya — The Student', sub: 'The foundations are yours; the story begins.' },
-  { beforeModule: 2, level: 3, label: 'Sadhaka — The Practitioner', sub: 'The Gita is the long climb.' },
+  { beforeModule: 2, level: 3, label: 'Sadhaka — The Practitioner', sub: 'The ideas are yours. Knowledge is becoming practice.' },
   { beforeModule: 3, level: 4, label: 'Bhakta — The Devoted', sub: 'The faces of the divine are familiar now.' },
-  { beforeModule: 4, level: 5, label: 'Jnani — The Knower', sub: 'Practice has made the knowing yours.' },
+  { beforeModule: 4, level: 5, label: 'Jnani — The Knower', sub: 'You have read the whole of it. The teaching is how you see now.' },
   { beforeModule: 5, level: 6, label: 'Rishi — The Sage', sub: 'The questions come to you now.' },
   { beforeModule: null, level: 7, label: 'Guru — The Guide', sub: 'For those who keep returning.' },
 ];
@@ -207,6 +207,12 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
             <Text style={styles.cardEyebrow}>Stage {module}</Text>
             <Text style={styles.cardName}>{JOURNEY_MODULES[module]}</Text>
             <Text style={styles.cardWhy}>{MODULE_WHY[module]}</Text>
+            {/* The promise. The stage's capstone is this sentence made testable,
+                so it is a commitment rather than a description. */}
+            <View style={styles.objective}>
+              <Text style={styles.objectiveLabel}>After this you can</Text>
+              <Text style={styles.objectiveText}>{MODULE_OBJECTIVES[module]}</Text>
+            </View>
           </View>
           <Ionicons
             name={isOpen ? 'chevron-down' : 'chevron-forward'}
@@ -455,6 +461,27 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     color: '#6E6357',
     marginTop: 2,
+  },
+  objective: {
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'rgba(0,0,0,0.12)',
+  },
+  objectiveLabel: {
+    fontSize: 9.5,
+    lineHeight: 13,
+    letterSpacing: 1.2,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    color: colors.primary.peacockTeal,
+    marginBottom: 3,
+  },
+  objectiveText: {
+    fontSize: 13,
+    lineHeight: 18,
+    fontWeight: '600',
+    color: colors.neutrals.charcoalBlack,
   },
   items: {
     marginTop: spacing.sm + 4,

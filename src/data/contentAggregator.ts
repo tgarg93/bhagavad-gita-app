@@ -6,7 +6,7 @@ import { PRAYERS, lessonCount } from './prayers';
 import { getStoriesByCollection, Story } from './stories';
 import { expandedScripturesData } from './expandedScriptures';
 import { getMajorFestivals } from './festivals';
-import { getMajorDeities } from './godsAndDeities';
+import { getAllDeities } from './godsAndDeities';
 import { getCoreConceptsData, getEthicalValuesData, getSpiritualPathsData } from './philosophyAndTeachings';
 import { getYogaPathsData, getBeginnerPractices } from './yogaAndPractices';
 
@@ -118,7 +118,7 @@ const convertFestivalsToCards = (): ContentCard[] => {
 
 const convertDeitiesToCards = (): ContentCard[] => {
   try {
-    return getMajorDeities().map(deity => ({
+    return getAllDeities().map(deity => ({
       id: deity.id,
       title: deity.name,
       sanskritName: deity.sanskritName,
@@ -411,16 +411,10 @@ export const getProgressSummary = (userProgress: { [contentId: string]: number }
   };
 };
 
-// Export individual functions
-export {
-  getContentSections,
-  getAllContent,
-  getContentByCategory,
-  getFeaturedContent,
-  searchContent,
-  getRecommendations,
-  getProgressSummary
-};
+// Every function above is already declared `export const` — this block re-exported
+// them a second time, which is a hard error under both tsc and esbuild (Metro's
+// Babel pipeline happened to tolerate it, which is why it shipped). It accounted
+// for 21 of the repo's tsc baseline errors.
 
 // Also export as default object
 export default {

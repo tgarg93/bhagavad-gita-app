@@ -5,6 +5,7 @@
 import LocalStorageService from './localStorageService';
 import { foundationsService, EMPTY_FOUNDATIONS_STATS } from './foundationsService';
 import { CHECK_POINTS } from '../data/checkTypes';
+import { STAGE_RITES } from '../data/stageCapstones';
 
 export interface GitaLevel {
   level: number;
@@ -29,9 +30,9 @@ export const LEVELS: GitaLevel[] = [
 export const LEVEL_MEANINGS: Record<number, string> = {
   1: 'The one who asks. In this tradition the wish to know — jigyasa — is itself sacred: every seeker in every Upanishad began exactly here. Nothing is required of a Jigyasu except sincere questions.',
   2: 'The one who sits near. Questions have become study — upa-ni-shad, sitting close to the teaching, is now what you do. The foundations are yours; the story begins.',
-  3: 'The one who practices. Knowledge is becoming sadhana — something done, not only read. The Gita is the long climb, and you are on it.',
+  3: 'The one who practices. Knowledge is becoming sadhana — something done, not only read. The eight ideas the tradition turns on are yours now, whole.',
   4: 'The one whose practice has warmed into love. The faces of the divine are familiar now; what began as curiosity returns as devotion.',
-  5: 'The one in whom the knowing has settled. The teachings are no longer information; they are how you see. Practice has made the knowing yours.',
+  5: 'The one in whom the knowing has settled. You have read the Gita entire — seven hundred verses — and it is no longer information. It is how you see.',
   6: 'The one others sit near. What you carry has begun to light other rooms — the questions come to you now, and you recognize them as your own old ones.',
   7: 'The remover of darkness. The chain of handing-over — parampara — now runs through you. Sit near; then be sat near.',
 };
@@ -40,6 +41,9 @@ const POINTS = {
   versesRead: 2,
   chaptersCompleted: 30,
   reflections: 15,
+  // Completing a journey item — worth what finishing a Gita chapter is worth.
+  // Excludes Foundations and capstone items; see getProgression.
+  journeyItem: 30,
 };
 
 // A rite is earned, not accumulated: passing it confers a level directly.
@@ -52,8 +56,16 @@ const POINTS = {
 //     Shishya on points, so no content is ever locked behind the capstone.
 // A ceiling (level = min(points, cap)) would break both of those, which is why
 // this is a floor.
+//
+// One rite per stage of the journey. Each stage ends with a capstone that tests
+// the stage's stated objective; passing it confers that stage's level.
+//
+// This is also the only reason Rishi and Guru are reachable at all. The entire
+// journey yields ~2,962 points against thresholds of 3,000 and 5,000 — before
+// rites existed, the top two levels could not be earned by any amount of reading.
 const RITES: { riteId: string; conferLevel: number }[] = [
-  { riteId: 'foundations-capstone', conferLevel: 2 }, // Shishya
+  { riteId: 'foundations-capstone', conferLevel: 2 }, // Shishya  — Foundations
+  ...STAGE_RITES, // Sadhaka, Bhakta, Jnani, Rishi, Guru — stages 1-5
 ];
 
 export interface Progression {
@@ -73,6 +85,7 @@ export interface Progression {
     cardsBanked: number;
     checksPassed: number;
     ritesPassed: number;
+    journeyItemsCompleted: number;
   };
 }
 
@@ -100,16 +113,32 @@ export const progressWithinBand = (points: number): number => {
 const clamp01 = (n: number): number => Math.min(1, Math.max(0, n));
 
 export const getProgression = async (): Promise<Progression> => {
-  const [verseProgress, reflections, user, foundationsStats, passedRites] = await Promise.all([
-    LocalStorageService.getVerseProgress(),
-    LocalStorageService.getAllReflections(),
-    LocalStorageService.getCurrentUser(),
-    foundationsService.getStats().catch(() => EMPTY_FOUNDATIONS_STATS),
-    foundationsService.getPassedRites().catch(() => [] as string[]),
-  ]);
+  const [verseProgress, reflections, user, foundationsStats, passedRites, completion] =
+    await Promise.all([
+      LocalStorageService.getVerseProgress(),
+      LocalStorageService.getAllReflections(),
+      LocalStorageService.getCurrentUser(),
+      foundationsService.getStats().catch(() => EMPTY_FOUNDATIONS_STATS),
+      foundationsService.getPassedRites().catch(() => [] as string[]),
+      LocalStorageService.getContentCompletion().catch(() => ({} as Record<string, string>)),
+    ]);
   const userProgress = user
     ? await LocalStorageService.getUserProgress(user.id)
     : await LocalStorageService.getUserProgress('guest');
+
+  // Finishing a journey item is worth something. It was worth ZERO until now,
+  // which meant a user could complete every festival and every practice and move
+  // no needle at all.
+  //
+  // Foundations items are EXCLUDED, and that exclusion is load-bearing. Its eight
+  // parts are already scored per card (32 cards + 7 checks + 1 reflection = 75),
+  // and the 75-under-100 gap is exactly what makes the Foundations capstone the
+  // thing that tips a reader into Shishya. Paying another 8 × 30 there would put
+  // the track at 315 and the reader would level up mid-way, deflating the whole
+  // ceremony. Capstone items are excluded for the same reason — they pay a rite.
+  const journeyItemsCompleted = Object.keys(completion).filter(
+    id => !id.startsWith('foundations:') && !id.startsWith('capstone:')
+  ).length;
 
   const stats = {
     versesRead: verseProgress.readVerses.length,
@@ -118,19 +147,21 @@ export const getProgression = async (): Promise<Progression> => {
     cardsBanked: foundationsStats.cardsBanked,
     checksPassed: foundationsStats.checksPassed,
     ritesPassed: foundationsStats.ritesPassed,
+    journeyItemsCompleted,
   };
 
-  // Every term is additive and non-negative. A user with no Foundations activity
-  // has all three new stats at 0 and therefore the exact point total they had
-  // before this formula gained its new terms — nobody is re-levelled by the
-  // change itself, only by new activity.
+  // Every term is additive and non-negative. A user with none of this activity has
+  // exactly the point total they had before the formula gained the term — nobody is
+  // re-levelled by the change itself, only by new activity. Never add a term that
+  // can subtract, and never raise a threshold: either one demotes somebody.
   const points =
     stats.versesRead * POINTS.versesRead +
     stats.chaptersCompleted * POINTS.chaptersCompleted +
     stats.reflections * POINTS.reflections +
     stats.cardsBanked * CHECK_POINTS.card +
     stats.checksPassed * CHECK_POINTS.mcq +
-    stats.ritesPassed * CHECK_POINTS.rite;
+    stats.ritesPassed * CHECK_POINTS.rite +
+    stats.journeyItemsCompleted * POINTS.journeyItem;
 
   const earned = levelForPoints(points);
   const conferred = RITES.filter(r => passedRites.includes(r.riteId)).reduce(

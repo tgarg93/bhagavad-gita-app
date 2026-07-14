@@ -1204,6 +1204,9 @@ export const festivalData: Festival[] = [
     culturalImpact: 'Breaks social barriers, promotes unity, and celebrates the diversity of life through colors.',
     relatedFestivals: ['maha-shivratri-2025'],
     heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: holi-cover.png
+    reflectionQuestions: [
+      'Holi burns the old year and forgives what was in it. What would you actually have to let go of, to play?',
+    ],
     sources: [
       {
         text: 'Bhagavata Purana',
@@ -1568,6 +1571,9 @@ export const festivalData: Festival[] = [
         citation: 'Bhagavata Purana, Canto 10, Chapters 8\u20139 (the butter stories)',
       },
     ],
+    reflectionQuestions: [
+      'The divine arrives at midnight, in a prison, unnoticed by the powerful. Where in your life might something important be arriving quietly?',
+    ],
     sources: [
       {
         text: 'Bhagavata Purana (Srimad Bhagavatam)',
@@ -1880,6 +1886,9 @@ export const festivalData: Festival[] = [
     culturalImpact: 'Promotes community unity, artistic expression, and environmental awareness.',
     relatedFestivals: ['diwali-2025'],
     heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: ganesh-chaturthi-cover.png
+    reflectionQuestions: [
+      'Ganesha is welcomed in as a guest — and then, deliberately, given back to the water. What would it take for you to hold something that lightly?',
+    ],
     sources: [
       {
         text: 'Shiva Purana',
@@ -1939,6 +1948,9 @@ export const festivalData: Festival[] = [
         storyText: 'On Ashtami or Navami, the festival performs its most literal theology: **kanya puja**.\n\nYoung girls are invited in, their feet washed, tikka placed on their brows, and fed the best food in the house — worshipped, for one morning, as living embodiments of the Goddess. It is the Devi Mahatmya\'s great litany — **"to the Goddess who abides in ALL beings"** — enforced at household scale, and it lands with an edge in a world that does not always treat its daughters as divine.\n\nThen comes Vijayadashami: the demon falls, Ravana burns in the north, and the sprouted barley from the first night is distributed — nine nights of the dark made visibly, tenderly green.',
         teachingText: 'Kanya puja asks the festival\'s sharpest question on its way out the door: **is your reverence portable?**\n\nIt is easy to honor the Goddess in a pandal; the practice is honoring her in the beings around you — starting with the ones your culture is most tempted to overlook.'
       }
+    ],
+    reflectionQuestions: [
+      'Nine nights of the Goddess — fierce, nurturing, wise by turns. Which of her faces do you most need right now, and why that one?',
     ],
     sources: [
       {
@@ -2544,6 +2556,9 @@ export const festivalData: Festival[] = [
         citationLink: 'deity:krishna',
         citation: 'Narakasura: Bhagavata Purana, Canto 10, Chapter 59; Govardhan: Canto 10, Chapters 24–25; the five-day arc: living tradition.'
       }
+    ],
+    reflectionQuestions: [
+      'Diwali is a homecoming — the lamps are lit for someone returning. Who, or what, are you hoping comes home to you this year?',
     ],
     sources: [
       {
