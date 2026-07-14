@@ -16,8 +16,8 @@ Eleven steps in one state machine (`OnboardingScreen`), Krishna asking each ques
 
 | Step (`StepId`) | Content | Writes |
 |---|---|---|
-| `introApp` | **Dharma says what it is for.** Lotus, then three questions the app actually answers — *Why do we light lamps at Diwali? Why is Ganesha greeted first? What does karma actually mean?* — then *"You have probably been asked. You may have guessed. **Dharma is where you stop guessing — and become the one who knows.**"* **Krishna does not appear on this screen** (`KrishnaGuide` is gated off it): the app speaks first. | — |
-| `introKrishna` | **Krishna introduces himself**, at 96px — his first appearance, larger than the talking head he becomes later. *"Namaste. I am Krishna. When Arjuna lost his way, I guided him. That conversation became the Gita. I will do the same for you — at every step, and whenever you ask."* Names the Gita as credential without retelling it. | — |
+| `introApp` | **Dharma says what it is for**, revealed line by line (lotus → three questions → body → the promise last and alone). Lotus, then three questions the app actually answers — *Why do we light lamps at Diwali? Why is Ganesha greeted first? What does karma actually mean?* — then *"You have probably been asked. You may have guessed. **Dharma is where you stop guessing — and become the one who knows.**"* **Krishna does not appear on this screen** (`KrishnaGuide` is gated off it): the app speaks first. | — |
+| `introKrishna` | **Krishna introduces himself.** *"Namaste. I am Krishna. When Arjuna lost his way, I guided him. That conversation became the Gita. I will do the same for you — at every step, and whenever you ask."* Names the Gita as credential without retelling it. | — |
 | `name` | "So — what may I call you?" (skippable: "I'd rather not say") | `name` (first name only; skip preserves any earlier name) |
 | `familiarity` | Familiarity (new / some / deep) | `familiarity` |
 | `intentions` | Intentions (multi-select, 5 options) | `intentions` |
@@ -28,6 +28,9 @@ Eleven steps in one state machine (`OnboardingScreen`), Krishna asking each ques
 | `chai` | Daily rhythm: Krishna introduces Daily Chai; live preview of today's unified chai card → Continue | — |
 | `sendoff` | **Auto-advances** (~2.5s) into the first lesson ("Getting started with '{next step}'…" + spinner) via `setPendingStart()` + finish. Only escape: "I'll explore on my own" text link → Home | `onboarded: true` |
 
+- **Krishna types.** Every one of his onboarding lines reveals a character at a time (`KrishnaGuide`'s `typewriter` prop, ~22ms/char). Tapping the bubble completes it instantly and **Continue is never blocked** — nothing is locked behind an animation. Reduce-motion renders the full text at once. The full string is rendered invisibly underneath to reserve the bubble's final height, so it doesn't jump on every line wrap.
+- **One avatar size throughout.** The avatar is fixed-width next to a `flex: 1` bubble, so a larger one on the intro squeezed the text column to ~200pt. `KrishnaGuide`'s `typewriter` is **off by default**: the Profile tab's greeting card re-renders on focus and would otherwise re-type on every visit.
+- **Animations are keyed on content, not on mount.** OnboardingScreen re-renders on every keystroke of the name field, so the app intro is its own component (mounts once) and the typewriter keys its effect on the message string. Get this wrong and both replay mid-name.
 - `finish()` **merges** the patch (never overwrites the rolling summary/knowledge). Completing onboarding is the warm moment for the notification-permission ask.
 - **Begin handoff**: onboarding can't navigate (outside navigator) → `journeyService.setPendingStart()`; HomeScreen's focus effect consumes the flag and opens the first unfinished item. Skip lands on Home.
 - `interests` remains in the profile schema but is no longer asked — filled opportunistically from chat + editable in the profile card.

@@ -117,6 +117,85 @@ const GOAL_OPTIONS: { value: SpiritualProfile['dailyGoalMinutes']; label: string
   { value: 20, label: '20 min / day', sub: 'Immersed' },
 ];
 
+// Screen 1 — Dharma introduces itself, one line at a time. The three questions
+// are all answered in Foundations (Diwali in Part 7, Ganesha in Part 5, karma in
+// Part 4), so this teases content that actually exists.
+//
+// A component of its own, deliberately: OnboardingScreen re-renders on every
+// keystroke of the name field, so an entrance driven from a mount effect *there*
+// would replay itself mid-typing. Here the effect runs once, when this screen
+// mounts, and the parent's re-renders cannot reach it.
+const AppIntro: React.FC = () => {
+  const logo = useRef(new Animated.Value(0)).current;
+  const q1 = useRef(new Animated.Value(0)).current;
+  const q2 = useRef(new Animated.Value(0)).current;
+  const q3 = useRef(new Animated.Value(0)).current;
+  const body = useRef(new Animated.Value(0)).current;
+  const promise = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    let cancelled = false;
+    const all = [logo, q1, q2, q3, body, promise];
+
+    AccessibilityInfo.isReduceMotionEnabled().then(reduced => {
+      if (cancelled) return;
+      if (reduced) {
+        all.forEach(v => v.setValue(1));
+        return;
+      }
+      const rise = (value: Animated.Value, delay: number, duration = 480) =>
+        Animated.timing(value, { toValue: 1, duration, delay, useNativeDriver: true });
+
+      // The promise lands last and alone — that beat is what the copy is built on.
+      Animated.parallel([
+        rise(logo, 0, 600),
+        rise(q1, 350),
+        rise(q2, 650),
+        rise(q3, 950),
+        rise(body, 1350),
+        rise(promise, 1750, 600),
+      ]).start();
+    });
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const riseStyle = (value: Animated.Value) => ({
+    opacity: value,
+    transform: [{ translateY: value.interpolate({ inputRange: [0, 1], outputRange: [14, 0] }) }],
+  });
+
+  return (
+    <View style={styles.introWrap}>
+      <Animated.Image
+        source={require('../../assets/dharma-lotus-transparent.png')}
+        style={[introLogoStyle, riseStyle(logo)]}
+        resizeMode="contain"
+      />
+      <View style={styles.introQuestions}>
+        <Animated.Text style={[styles.introQuestion, riseStyle(q1)]}>
+          Why do we light lamps at Diwali?
+        </Animated.Text>
+        <Animated.Text style={[styles.introQuestion, riseStyle(q2)]}>
+          Why is Ganesha greeted first?
+        </Animated.Text>
+        <Animated.Text style={[styles.introQuestion, riseStyle(q3)]}>
+          What does karma actually mean?
+        </Animated.Text>
+      </View>
+      <Animated.Text style={[styles.introBody, riseStyle(body)]}>
+        You have probably been asked.{'\n'}You may have guessed.
+      </Animated.Text>
+      <Animated.Text style={[styles.introPromise, riseStyle(promise)]}>
+        Dharma is where you stop guessing — and become the one who knows.
+      </Animated.Text>
+    </View>
+  );
+};
+
 const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 'firstRun' }) => {
   const steps = mode === 'edit' ? EDIT_STEPS : FIRST_RUN_STEPS;
 
@@ -297,38 +376,19 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
 
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
         {/* Krishna is deliberately absent from the app intro — Dharma speaks
-            first, and his own screen is his first appearance. He arrives there
-            at full size, then shrinks to the talking head for the questions. */}
-        {id === 'introKrishna' && (
-          <KrishnaGuide size={96} message={stepMessages.introKrishna} />
-        )}
-        {id !== 'introApp' && id !== 'introKrishna' && !!stepMessages[id] && (
-          <KrishnaGuide message={stepMessages[id]} />
+            first, and his own screen is his first appearance. Same avatar size
+            throughout: a bigger one squeezes the bubble, because the avatar is
+            fixed-width next to a flex:1 bubble.
+            He types every line. The effect is keyed on the message string, not
+            on mount, so the name field's keystrokes cannot restart it. */}
+        {id !== 'introApp' && !!stepMessages[id] && (
+          <KrishnaGuide message={stepMessages[id]} typewriter />
         )}
 
-        {/* Screen 1 — Dharma says what it is for. The three questions are all
-            answered in Foundations (Diwali in Part 7, Ganesha in Part 5, karma
-            in Part 4), so this is a teaser for content that actually exists. */}
-        {id === 'introApp' && (
-          <View style={styles.introWrap}>
-            <Image
-              source={require('../../assets/dharma-lotus-transparent.png')}
-              style={introLogoStyle}
-              resizeMode="contain"
-            />
-            <View style={styles.introQuestions}>
-              <Text style={styles.introQuestion}>Why do we light lamps at Diwali?</Text>
-              <Text style={styles.introQuestion}>Why is Ganesha greeted first?</Text>
-              <Text style={styles.introQuestion}>What does karma actually mean?</Text>
-            </View>
-            <Text style={styles.introBody}>
-              You have probably been asked.{'\n'}You may have guessed.
-            </Text>
-            <Text style={styles.introPromise}>
-              Dharma is where you stop guessing — and become the one who knows.
-            </Text>
-          </View>
-        )}
+        {/* Screen 1 — Dharma says what it is for. Its own component, so its
+            entrance runs once on mount; inlined here it would replay on every
+            re-render of this screen. */}
+        {id === 'introApp' && <AppIntro />}
 
         <View style={styles.options}>
           {id === 'name' && (

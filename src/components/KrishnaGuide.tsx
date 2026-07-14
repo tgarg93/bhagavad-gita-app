@@ -1,31 +1,129 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Pressable,
+  AccessibilityInfo,
+} from 'react-native';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 
 interface KrishnaGuideProps {
   message: string;
   size?: number; // avatar size
   children?: React.ReactNode; // optional content under the message inside the bubble
+  // Reveal the message one character at a time, as if Krishna were writing it.
+  // OFF by default — the Profile tab's greeting card re-renders on every focus
+  // and would re-type itself on each visit, which gets irritating fast.
+  typewriter?: boolean;
+  onTypingDone?: () => void;
 }
+
+const CHAR_MS = 22; // ~150 chars ≈ 3.3s — a read-along pace, not a wait
 
 // Krishna as the consistent guide across the app (onboarding, reflections,
 // level-ups) — avatar + speech bubble, in the spirit of Duolingo's Duo.
-const KrishnaGuide: React.FC<KrishnaGuideProps> = ({ message, size = 64, children }) => (
-  <View style={styles.row}>
-    <Image
-      source={require('../../assets/krishna-avatar.png')}
-      style={{ width: size, height: size, borderRadius: size / 2 }}
-      resizeMode="cover"
-    />
-    <View style={styles.bubbleWrap}>
-      <View style={styles.bubbleTail} />
-      <View style={styles.bubble}>
-        <Text style={styles.bubbleText}>{message}</Text>
-        {children}
+const KrishnaGuide: React.FC<KrishnaGuideProps> = ({
+  message,
+  size = 64,
+  children,
+  typewriter = false,
+  onTypingDone,
+}) => {
+  const [revealed, setRevealed] = useState(typewriter ? 0 : message.length);
+  const doneRef = useRef(false);
+
+  // Keyed on the MESSAGE, not on mount. OnboardingScreen re-renders on every
+  // keystroke of the name field, so a mount-keyed effect would restart the
+  // typing mid-word. The message string is stable within a step (the name
+  // step's line is static, and every name-interpolated line belongs to a later
+  // step), so a keystroke cannot reset this — but a step change does.
+  useEffect(() => {
+    doneRef.current = false;
+
+    if (!typewriter) {
+      setRevealed(message.length);
+      return;
+    }
+
+    let cancelled = false;
+    let timer: ReturnType<typeof setInterval> | undefined;
+
+    AccessibilityInfo.isReduceMotionEnabled().then(reduced => {
+      if (cancelled) return;
+      if (reduced) {
+        setRevealed(message.length);
+        doneRef.current = true;
+        onTypingDone?.();
+        return;
+      }
+      setRevealed(0);
+      let i = 0;
+      timer = setInterval(() => {
+        i += 1;
+        setRevealed(i);
+        if (i >= message.length) {
+          if (timer) clearInterval(timer);
+          doneRef.current = true;
+          onTypingDone?.();
+        }
+      }, CHAR_MS);
+    });
+
+    return () => {
+      cancelled = true;
+      if (timer) clearInterval(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [message, typewriter]);
+
+  const finishNow = () => {
+    if (doneRef.current) return;
+    setRevealed(message.length);
+    doneRef.current = true;
+    onTypingDone?.();
+  };
+
+  const typing = typewriter && revealed < message.length;
+
+  return (
+    <View style={styles.row}>
+      <Image
+        source={require('../../assets/krishna-avatar.png')}
+        style={{ width: size, height: size, borderRadius: size / 2 }}
+        resizeMode="cover"
+      />
+      <View style={styles.bubbleWrap}>
+        <View style={styles.bubbleTail} />
+        <Pressable
+          style={styles.bubble}
+          onPress={finishNow}
+          disabled={!typing}
+          accessibilityRole={typing ? 'button' : undefined}
+          accessibilityLabel={typing ? 'Show the rest' : undefined}
+        >
+          {typewriter ? (
+            // The full string is rendered invisibly to reserve the bubble's
+            // final height; the revealed slice is drawn over it. Without this
+            // the bubble grows line by line and visibly jumps on every wrap.
+            <View>
+              <Text style={styles.bubbleText} accessible={false}>
+                <Text style={styles.hidden}>{message}</Text>
+              </Text>
+              <Text style={[styles.bubbleText, StyleSheet.absoluteFill]}>
+                {message.slice(0, revealed)}
+              </Text>
+            </View>
+          ) : (
+            <Text style={styles.bubbleText}>{message}</Text>
+          )}
+          {children}
+        </Pressable>
       </View>
     </View>
-  </View>
-);
+  );
+};
 
 const { colors, typography, spacing, borderRadius, shadows } = DharmaDesignSystem;
 
@@ -64,6 +162,9 @@ const styles = StyleSheet.create({
     ...typography.sizes.bodyLG,
     color: colors.neutrals.charcoalBlack,
     lineHeight: 26,
+  },
+  hidden: {
+    opacity: 0,
   },
 });
 
