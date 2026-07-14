@@ -540,6 +540,9 @@ const ProfileTabScreen: React.FC = () => {
         {/* Re-run onboarding inline; saving updates the profile and closes */}
         <Modal visible={showOnboarding} animationType="slide" onRequestClose={() => setShowOnboarding(false)}>
           <OnboardingScreen
+            // They have met Krishna and know what the app is — the two intro
+            // screens are skipped on a replay.
+            mode="edit"
             onComplete={() => {
               setShowOnboarding(false);
               load();

@@ -15,6 +15,11 @@ import {
 
 // Typed separately: inside StyleSheet.create the style resolves to a union
 // that Image's style prop rejects
+const introLogoStyle = {
+  width: 76,
+  height: 76,
+} as const;
+
 const transitionCoverStyle = {
   width: 120,
   height: 120,
@@ -34,7 +39,49 @@ import { LEVELS, LEVEL_MEANINGS } from '../services/progressionService';
 
 interface OnboardingScreenProps {
   onComplete: () => void;
+  // 'edit' = replayed from the Profile tab's "Edit my answers". Those users have
+  // already met Krishna and know what the app is for, so both intro screens are
+  // dropped from the sequence.
+  mode?: 'firstRun' | 'edit';
 }
+
+// The steps, named. This used to be a bare `step: number` with the index
+// hardcoded in seven different places — canContinue, next(), nine render blocks,
+// two `step < 8` literals, and the button labels — with no shared source of
+// truth, so inserting a step meant renumbering all of them by hand.
+//
+// Now `step` indexes into an ordered list of ids. Adding a screen is one line,
+// and skipping screens (the 'edit' replay) is a filter.
+type StepId =
+  | 'introApp'
+  | 'introKrishna'
+  | 'name'
+  | 'familiarity'
+  | 'intentions'
+  | 'familyStream'
+  | 'goal'
+  | 'identity'
+  | 'journey'
+  | 'chai'
+  | 'sendoff';
+
+const FIRST_RUN_STEPS: StepId[] = [
+  'introApp',
+  'introKrishna',
+  'name',
+  'familiarity',
+  'intentions',
+  'familyStream',
+  'goal',
+  'identity',
+  'journey',
+  'chai',
+  'sendoff',
+];
+
+const EDIT_STEPS: StepId[] = FIRST_RUN_STEPS.filter(
+  s => s !== 'introApp' && s !== 'introKrishna'
+);
 
 const FAMILIARITY_OPTIONS: { value: SpiritualProfile['familiarity']; label: string; sub: string }[] = [
   { value: 'new', label: 'Just beginning', sub: 'New to Hindu teachings' },
@@ -70,9 +117,9 @@ const GOAL_OPTIONS: { value: SpiritualProfile['dailyGoalMinutes']; label: string
   { value: 20, label: '20 min / day', sub: 'Immersed' },
 ];
 
-const TOTAL_STEPS = 9;
+const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 'firstRun' }) => {
+  const steps = mode === 'edit' ? EDIT_STEPS : FIRST_RUN_STEPS;
 
-const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   const [step, setStep] = useState(0);
   const [familiarity, setFamiliarity] = useState<SpiritualProfile['familiarity'] | null>(null);
   const [intentions, setIntentions] = useState<string[]>([]);
@@ -80,44 +127,55 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   const [name, setName] = useState('');
   const [dailyGoal, setDailyGoal] = useState<SpiritualProfile['dailyGoalMinutes'] | null>(null);
 
+  const id = steps[step];
+  const isLast = step === steps.length - 1;
   const firstName = name.trim().split(/\s+/)[0] || '';
 
-  const stepMessages = [
-    'Namaste! I’m Krishna — I’ll walk beside you on this journey. What may I call you?',
-    firstName
+  // Krishna's line for each step. He does NOT speak on the app intro — Dharma
+  // introduces itself first, and his own screen is his first appearance.
+  const stepMessages: Record<StepId, string> = {
+    introApp: '',
+    introKrishna:
+      'Namaste. I am Krishna.\n\nWhen Arjuna lost his way, I guided him. That conversation became the Gita.\n\nI will do the same for you — at every step, and whenever you ask.',
+    name: 'So — what may I call you?',
+    familiarity: firstName
       ? `Lovely to meet you, ${firstName}. How familiar are you with Hindu teachings?`
       : 'How familiar are you with Hindu teachings?',
-    'Wonderful. What brings you here? Choose all that speak to you.',
-    firstName
+    intentions: 'Wonderful. What brings you here? Choose all that speak to you.',
+    familyStream: firstName
       ? `Every family holds the divine through a face, ${firstName}. Growing up, whose was closest in your home?`
       : 'Every family holds the divine through a face. Growing up, whose was closest in your home?',
-    firstName
+    goal: firstName
       ? `One last thing, ${firstName} — how much time shall we spend together each day?`
       : 'One last thing — how much time shall we spend together each day?',
-    firstName
+    identity: firstName
       ? `Every seeker in every Upanishad began exactly where you stand now, ${firstName}.`
       : 'Every seeker in every Upanishad began exactly where you stand now.',
-    firstName
-      ? `Here is the road we'll walk together, ${firstName} — five stages, one step at a time.`
-      : "Here is the road we'll walk together — five stages, one step at a time.",
-    firstName
+    journey: firstName
+      ? `Here is the road we'll walk together, ${firstName} — six stages, one step at a time.`
+      : "Here is the road we'll walk together — six stages, one step at a time.",
+    chai: firstName
       ? `One more thing, ${firstName} — each morning I'll have chai waiting for you: one small sip of wisdom and the day's verse, right on your Home screen. Under a minute, I promise.`
       : "One more thing — each morning I'll have chai waiting for you: one small sip of wisdom and the day's verse, right on your Home screen. Under a minute, I promise.",
-    '', // step 8 is the quiet transition screen — no bubble
-  ];
+    sendoff: '', // the quiet transition screen — no bubble
+  };
 
   const toggle = (list: string[], setList: (v: string[]) => void, value: string) =>
     setList(list.includes(value) ? list.filter(v => v !== value) : [...list, value]);
 
+  // Steps that ask nothing (the two intros, the identity card, the journey
+  // finale, the chai preview) just need a look, not an answer.
   const canContinue =
-    (step === 0 && firstName.length > 0) ||
-    (step === 1 && familiarity !== null) ||
-    (step === 2 && intentions.length > 0) ||
-    (step === 3 && familyStream !== null) ||
-    (step === 4 && dailyGoal !== null) ||
-    step === 5 || // the Jigyasu identity card just needs a look, not an answer
-    step === 6 || // so does the journey finale
-    step === 7; // and the chai preview
+    id === 'introApp' ||
+    id === 'introKrishna' ||
+    (id === 'name' && firstName.length > 0) ||
+    (id === 'familiarity' && familiarity !== null) ||
+    (id === 'intentions' && intentions.length > 0) ||
+    (id === 'familyStream' && familyStream !== null) ||
+    (id === 'goal' && dailyGoal !== null) ||
+    id === 'identity' ||
+    id === 'journey' ||
+    id === 'chai';
 
   const finish = async () => {
     // Merge, don't overwrite: replaying onboarding ("Edit my answers") must
@@ -147,22 +205,24 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   const jigyasuExit = useRef(new Animated.Value(0)).current;
 
   const next = () => {
-    if (step === 5) {
+    // The identity card is the one step with bespoke behavior: it animates into
+    // the journey rail's first milestone rather than simply advancing.
+    if (id === 'identity') {
       AccessibilityInfo.isReduceMotionEnabled().then(reduced => {
         if (reduced) {
-          setStep(6);
+          setStep(step + 1);
           return;
         }
         Animated.timing(jigyasuExit, { toValue: 1, duration: 320, useNativeDriver: true }).start(
           () => {
             jigyasuExit.setValue(0); // reset in case the walker comes back
-            setStep(6);
+            setStep(step + 1);
           }
         );
       });
       return;
     }
-    if (step < TOTAL_STEPS - 1) setStep(step + 1);
+    if (!isLast) setStep(step + 1);
     else finish();
   };
 
@@ -185,7 +245,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
   }, []);
 
   useEffect(() => {
-    if (step !== TOTAL_STEPS - 1) return;
+    if (id !== 'sendoff') return;
     const timer = setTimeout(() => {
       if (departedRef.current) return;
       departedRef.current = true;
@@ -231,15 +291,47 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
           <View style={styles.backBtn} />
         )}
         <View style={styles.progressTrack}>
-          <View style={[styles.progressFill, { width: `${((step + 1) / TOTAL_STEPS) * 100}%` }]} />
+          <View style={[styles.progressFill, { width: `${((step + 1) / steps.length) * 100}%` }]} />
         </View>
       </View>
 
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-        {step < 8 && <KrishnaGuide message={stepMessages[step]} />}
+        {/* Krishna is deliberately absent from the app intro — Dharma speaks
+            first, and his own screen is his first appearance. He arrives there
+            at full size, then shrinks to the talking head for the questions. */}
+        {id === 'introKrishna' && (
+          <KrishnaGuide size={96} message={stepMessages.introKrishna} />
+        )}
+        {id !== 'introApp' && id !== 'introKrishna' && !!stepMessages[id] && (
+          <KrishnaGuide message={stepMessages[id]} />
+        )}
+
+        {/* Screen 1 — Dharma says what it is for. The three questions are all
+            answered in Foundations (Diwali in Part 7, Ganesha in Part 5, karma
+            in Part 4), so this is a teaser for content that actually exists. */}
+        {id === 'introApp' && (
+          <View style={styles.introWrap}>
+            <Image
+              source={require('../../assets/dharma-lotus-transparent.png')}
+              style={introLogoStyle}
+              resizeMode="contain"
+            />
+            <View style={styles.introQuestions}>
+              <Text style={styles.introQuestion}>Why do we light lamps at Diwali?</Text>
+              <Text style={styles.introQuestion}>Why is Ganesha greeted first?</Text>
+              <Text style={styles.introQuestion}>What does karma actually mean?</Text>
+            </View>
+            <Text style={styles.introBody}>
+              You have probably been asked.{'\n'}You may have guessed.
+            </Text>
+            <Text style={styles.introPromise}>
+              Dharma is where you stop guessing — and become the one who knows.
+            </Text>
+          </View>
+        )}
 
         <View style={styles.options}>
-          {step === 0 && (
+          {id === 'name' && (
             <>
               <TextInput
                 style={styles.nameInput}
@@ -258,28 +350,28 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
             </>
           )}
 
-          {step === 1 &&
+          {id === 'familiarity' &&
             FAMILIARITY_OPTIONS.map(o =>
               renderOption(familiarity === o.value, o.label, o.sub, () => setFamiliarity(o.value), o.value)
             )}
 
-          {step === 2 &&
+          {id === 'intentions' &&
             INTENTION_OPTIONS.map(o =>
               renderOption(intentions.includes(o), o, undefined, () => toggle(intentions, setIntentions, o), o)
             )}
 
-          {step === 3 &&
+          {id === 'familyStream' &&
             FAMILY_STREAM_OPTIONS.map(o =>
               renderOption(familyStream === o.value, o.label, o.sub, () => setFamilyStream(o.value), o.value)
             )}
 
-          {step === 4 &&
+          {id === 'goal' &&
             GOAL_OPTIONS.map(o =>
               renderOption(dailyGoal === o.value, o.label, o.sub, () => setDailyGoal(o.value), String(o.value))
             )}
         </View>
 
-        {step === 5 && (
+        {id === 'identity' && (
           <Animated.View
             style={[
               styles.jigyasuWrap,
@@ -303,14 +395,14 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
           </Animated.View>
         )}
 
-        {step === 6 && (
+        {id === 'journey' && (
           <>
             <Text style={styles.journeyHeading}>YOUR SPIRITUAL JOURNEY</Text>
             <JourneyPathView scrollable={false} entrance />
           </>
         )}
 
-        {step === 7 && (
+        {id === 'chai' && (
           <View style={styles.rhythmWrap}>
             {/* Live preview of today's actual chai — the same unified card the
                 Home screen shows, compact and action-less */}
@@ -318,7 +410,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
           </View>
         )}
 
-        {step === 8 && (
+        {id === 'sendoff' && (
           <View style={styles.transitionWrap}>
             <Text style={styles.transitionEyebrow}>YOUR FIRST STEP</Text>
             {firstStepCover != null && (
@@ -341,14 +433,19 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
         )}
       </ScrollView>
 
-      {step < 8 && (
+      {/* The send-off auto-advances; it has no button. */}
+      {id !== 'sendoff' && (
         <TouchableOpacity
           style={[styles.continueBtn, !canContinue && styles.continueBtnDisabled]}
           onPress={next}
           disabled={!canContinue}
         >
           <Text style={styles.continueText}>
-            {step === 4 ? "I'm committed" : step === 5 ? 'See your journey →' : 'Continue'}
+            {id === 'goal'
+              ? "I'm committed"
+              : id === 'identity'
+              ? 'See your journey →'
+              : 'Continue'}
           </Text>
         </TouchableOpacity>
       )}
@@ -417,6 +514,44 @@ const styles = StyleSheet.create({
     ...typography.sizes.bodySM,
     color: colors.neutrals.softAsh,
     marginTop: 2,
+  },
+  // Screen 1: Dharma introduces itself. Explicit fontSize/lineHeight rather than
+  // spreading typography.sizes.* — that union is the tsc trap in this repo.
+  introWrap: {
+    alignItems: 'center',
+    paddingTop: spacing.lg,
+    paddingHorizontal: spacing.sm,
+  },
+  introQuestions: {
+    marginTop: spacing.xl,
+    gap: spacing.md,
+    alignSelf: 'stretch',
+  },
+  introQuestion: {
+    fontSize: 21,
+    lineHeight: 29,
+    fontWeight: '700',
+    color: colors.neutrals.charcoalBlack,
+    textAlign: 'center',
+  },
+  introBody: {
+    fontSize: 16,
+    lineHeight: 25,
+    color: colors.neutrals.softAsh,
+    textAlign: 'center',
+    marginTop: spacing.xl,
+  },
+  introPromise: {
+    fontSize: 18,
+    lineHeight: 27,
+    fontWeight: '700',
+    color: colors.primary.deepSaffron,
+    textAlign: 'center',
+    marginTop: spacing.lg,
+    paddingTop: spacing.lg,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'rgba(0,0,0,0.14)',
+    alignSelf: 'stretch',
   },
   nameInput: {
     ...typography.sizes.bodyLG,

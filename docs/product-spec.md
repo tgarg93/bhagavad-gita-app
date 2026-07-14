@@ -8,19 +8,25 @@ Last synced: July 2026 (commit series through the onboarding family-stream chang
 
 ## 1. Onboarding
 
-Six steps in one state machine (`OnboardingScreen`), Krishna asking each question via `KrishnaGuide`. Renders **outside the navigator** (App.tsx swaps it for AppNavigator until `profile.onboarded`).
+Eleven steps in one state machine (`OnboardingScreen`), Krishna asking each question via `KrishnaGuide`. Renders **outside the navigator** (App.tsx swaps it for AppNavigator until `profile.onboarded`).
 
-| Step | Question | Writes |
+**Steps are named, not numbered.** `step` indexes into an ordered `StepId[]`; every branch tests `id === 'name'` rather than `step === 2`. It used to be a bare index hardcoded in seven places with no shared source of truth, so inserting a screen meant renumbering by hand. Adding a screen is now one line in one array.
+
+**Two intros come first, and they are skipped on replay.** `mode='edit'` (passed by the Profile tab's "Edit my answers") filters `introApp` and `introKrishna` out of the sequence — a returning user changing their daily goal should not be re-introduced to the app or to Krishna.
+
+| Step (`StepId`) | Content | Writes |
 |---|---|---|
-| 0 | Name (skippable: "I'd rather not say") | `name` (first name only; skip preserves any earlier name) |
-| 1 | Familiarity (new / some / deep) | `familiarity` |
-| 2 | Intentions (multi-select, 5 options) | `intentions` |
-| 3 | **Family stream** — "Growing up, whose face was closest in your home?" (single-select: Krishna, Shiva, The Goddess, Ganesha, Rama & Hanuman, A mix of many, Not sure) | `familyStream` |
-| 4 | Daily goal (5/10/15/20 min) — CTA "I'm committed" | `dailyGoalMinutes` |
-| 5 | **Jigyasu identity card**: 🪷 "YOU BEGIN AS Jigyasu — The Curious · Level 1 of 7" + `LEVEL_MEANINGS[1]` + the rung strip (outlined current rung, empty). CTA "See your journey →" — the card **morphs** (rise/shrink/fade, skipped under reduce-motion) into… | — |
-| 6 | **Your Spiritual Journey** finale: path view (rail + milestones), entered with the Jigyasu milestone settling in (`entrance` prop) → Continue | — |
-| 7 | Daily rhythm: Krishna introduces Daily Chai; live preview of today's unified chai card → Continue | — |
-| 8 | **Send-off**: **auto-advances** (~2.5s) into the first lesson ("Getting started with '{next step}'…" + spinner) via `setPendingStart()` + finish. Only escape: "I'll explore on my own" text link → Home | `onboarded: true` |
+| `introApp` | **Dharma says what it is for.** Lotus, then three questions the app actually answers — *Why do we light lamps at Diwali? Why is Ganesha greeted first? What does karma actually mean?* — then *"You have probably been asked. You may have guessed. **Dharma is where you stop guessing — and become the one who knows.**"* **Krishna does not appear on this screen** (`KrishnaGuide` is gated off it): the app speaks first. | — |
+| `introKrishna` | **Krishna introduces himself**, at 96px — his first appearance, larger than the talking head he becomes later. *"Namaste. I am Krishna. When Arjuna lost his way, I guided him. That conversation became the Gita. I will do the same for you — at every step, and whenever you ask."* Names the Gita as credential without retelling it. | — |
+| `name` | "So — what may I call you?" (skippable: "I'd rather not say") | `name` (first name only; skip preserves any earlier name) |
+| `familiarity` | Familiarity (new / some / deep) | `familiarity` |
+| `intentions` | Intentions (multi-select, 5 options) | `intentions` |
+| `familyStream` | **Family stream** — "Growing up, whose face was closest in your home?" (single-select: Krishna, Shiva, The Goddess, Ganesha, Rama & Hanuman, A mix of many, Not sure) | `familyStream` |
+| `goal` | Daily goal (5/10/15/20 min) — CTA "I'm committed" | `dailyGoalMinutes` |
+| `identity` | **Jigyasu identity card**: 🪷 "YOU BEGIN AS Jigyasu — The Curious · Level 1 of 7" + `LEVEL_MEANINGS[1]` + the rung strip (outlined current rung, empty). CTA "See your journey →" — the card **morphs** (rise/shrink/fade, skipped under reduce-motion) into… | — |
+| `journey` | **Your Spiritual Journey** finale: path view (rail + milestones), entered with the Jigyasu milestone settling in (`entrance` prop) → Continue | — |
+| `chai` | Daily rhythm: Krishna introduces Daily Chai; live preview of today's unified chai card → Continue | — |
+| `sendoff` | **Auto-advances** (~2.5s) into the first lesson ("Getting started with '{next step}'…" + spinner) via `setPendingStart()` + finish. Only escape: "I'll explore on my own" text link → Home | `onboarded: true` |
 
 - `finish()` **merges** the patch (never overwrites the rolling summary/knowledge). Completing onboarding is the warm moment for the notification-permission ask.
 - **Begin handoff**: onboarding can't navigate (outside navigator) → `journeyService.setPendingStart()`; HomeScreen's focus effect consumes the flag and opens the first unfinished item. Skip lands on Home.
