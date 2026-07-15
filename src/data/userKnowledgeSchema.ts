@@ -66,6 +66,7 @@ const FAMILIARITY_OPTIONS: FieldOption[] = [
 
 const INTENTION_OPTIONS: FieldOption[] = [
   "Answer my kids' questions",
+  'Get the big picture',
   'Explain Hinduism to others',
   'Understand our rituals',
   'Finally read the Gita',

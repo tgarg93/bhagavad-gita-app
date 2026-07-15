@@ -102,6 +102,7 @@ const FAMILIARITY_OPTIONS: { value: SpiritualProfile['familiarity']; label: stri
 // changing them here means changing them there too.
 const INTENTION_OPTIONS: { value: string; label: string; sub: string }[] = [
   { value: "Answer my kids' questions", label: "Answer my kids' questions", sub: 'Not just “that’s what we do”' },
+  { value: 'Get the big picture', label: 'Get the big picture', sub: 'Curious, with no background in it' },
   { value: 'Explain Hinduism to others', label: 'Explain Hinduism to others', sub: 'In plain words, with confidence' },
   { value: 'Understand our rituals', label: 'Understand our rituals', sub: 'What we do at the temple, and why' },
   { value: 'Finally read the Gita', label: 'Finally read the Gita', sub: 'All 18 chapters, with a guide' },
