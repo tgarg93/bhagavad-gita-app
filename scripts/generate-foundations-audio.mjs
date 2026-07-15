@@ -34,18 +34,24 @@ const VOICE_SETTINGS = {
 };
 
 // Act 1 — "What Hinduism Is". id → the narration script: the card's TAKEAWAY
-// first, a beat, then its BODY — verbatim with what's on screen and in reading
-// order, so the sentence highlight lines up. Sanskrit is spelled phonetically so
-// the voice says it rather than stumbling. Mirrors docs/foundations-narration-script.md.
+// first, a beat, then its BODY (including on-screen bullets, read as a list) —
+// verbatim with what's on screen and in reading order, so the sentence highlight
+// lines up. Sanskrit is spelled phonetically so the voice says it rather than
+// stumbling. Mirrors docs/foundations-narration-script.md (teaching-voice rewrite).
+//
+// `<break time="0.9s" />` tags insert real silence so each idea lands — they are
+// sent to the API but never spoken. Keep them ≤ ~1s and few per clip; overuse
+// destabilizes the voice. Template literals (not '') so apostrophes and the tags'
+// double quotes both survive untouched.
 const SCRIPTS = {
   'f-name-no-founder':
-    'Hinduism has no founder, no single book, and nobody in charge. Start with what it is not. Every other major religion can name the person who started it; this one cannot, because nobody did. It is a family of traditions that grew up alongside one another over three thousand years and were filed under a single name much later — largely by outsiders, for their own convenience.',
+    `Hinduism has no founder, no single book, and no one in charge. <break time="0.9s" /> Let's start with what Hinduism is not. Think of Christianity (Jesus), Islam (Muhammad), or Buddhism (the Buddha) — each has a founder you can name. <break time="0.6s" /> Hinduism has none. Nobody started it. Instead, many local traditions grew up side by side across India over more than three thousand years. Only much later were they gathered under one name — mostly by outsiders, to keep things simple. <break time="0.6s" /> So what you're left with is: no founder, no single person who began it; <break time="0.4s" /> no one holy book, a whole library instead; <break time="0.4s" /> and no central authority — nobody decides what counts as correct.`,
   'f-name-river':
-    'Even the name is not its own. It is a river, mispronounced. Those outsiders named it after water. Sanskrit called the great river the Sindhu; Persians to the west could not manage the S and said Hindu, meaning simply the people over there. The Greeks then dropped the H. Hindu, India and Indus are one word — and for most of history it named a place, not a faith.',
+    `Even the name isn't its own — it's a river, mispronounced. <break time="0.9s" /> So where did the word Hindu even come from? Not from Hindus. It began as the name of a river. <break time="0.6s" /> In Sanskrit, the great river to the northwest was called the Sindhu. Persians living west of it couldn't pronounce the S and said Hindu instead — they just meant the people over there, past the river. Later, the Greeks dropped the H too. <break time="0.6s" /> That single river-name became three words we still use: Hindu, India, and Indus. For most of history, Hindu pointed to a place — not a religion.`,
   'f-name-sanatana':
-    'The name it gives itself is Sanatana Dharma — the eternal way. Strip off what strangers called it and this is underneath. Not a religion you sign up to, but an order that was always here and will still be here: something you notice rather than join. Which explains the missing founder — nobody founds the weather.',
+    `The name it gives itself is Sanatana Dharma — the eternal way. <break time="0.9s" /> If outsiders supplied the word Hindu, what do followers call it themselves? Sanatana Dharma — usually translated as the eternal way. <break time="0.6s" /> The idea behind the name: this isn't a club you sign up for. It's more like a natural order that was always here and always will be — something you wake up to and live by, not something you join. <break time="0.6s" /> That's also why there's no founder. Nobody invents the sunrise; you just notice it.`,
   'f-name-sanskrit':
-    'An eternal way still has to be carried — so Sanskrit was built to be remembered, not read. For centuries there was no page to keep it on. Samskrita means refined, perfected: a language engineered for the ear, with exact metre, exact pitch and redundancy deliberately built in, so that two reciters a thousand miles apart still land on the same syllable. The Vedas were chanted long before anyone wrote them down.',
+    `An eternal way still has to be carried — so Sanskrit was built to be remembered, not read. <break time="0.9s" /> But it still had to be passed down somehow. For centuries there was no book to keep it in — writing wasn't used for it yet. <break time="0.6s" /> So how did it survive? People memorized it, word for word, and recited it aloud — one generation teaching the next. The language they used is Sanskrit — Samskrita, meaning put together properly. <break time="0.6s" /> It was practically built for the ear: exact rhythm, so a wrong word breaks the beat; <break time="0.4s" /> exact pitch, fixed for every syllable; <break time="0.4s" /> and repetition woven in as a backup. <break time="0.6s" /> The result: two reciters a thousand miles apart would land on the very same syllable. These spoken texts are the Vedas — chanted for centuries before anyone finally wrote them down.`,
 };
 
 const apiKey = process.env.ELEVENLABS_API_KEY;

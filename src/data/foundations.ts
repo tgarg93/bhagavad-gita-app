@@ -75,17 +75,22 @@ const ACT_NAME: FoundationsAct = {
     {
       id: 'f-name-no-founder',
       title: 'No founder',
-      takeaway: 'Hinduism has no founder, no single book, and nobody in charge.',
+      takeaway: 'Hinduism has no founder, no single book, and no one in charge.',
       storyText:
-        'Start with what it is *not*. Every other major religion can name the person who started it; this one cannot, because nobody did. It is a **family of traditions** that grew up alongside one another over three thousand years and were filed under a single name much later — largely by outsiders, for their own convenience.',
+        "Let's start with what Hinduism is *not*. Think of Christianity (Jesus), Islam (Muhammad), or Buddhism (the Buddha) — each has a founder you can name.\n\nHinduism has none. Nobody started it. Instead, many local traditions grew up side by side across India over more than three thousand years. Only much later were they gathered under one name — mostly by outsiders, to keep things simple.\n\nSo what you're left with is:",
+      bullets: [
+        '**No founder** — no single person who began it.',
+        '**No one holy book** — a whole library instead.',
+        '**No central authority** — nobody decides what counts as “correct.”',
+      ],
       citation: 'No founding figure or single canonical text is claimed by the tradition itself.',
     },
     {
       id: 'f-name-river',
       title: 'A river, mispronounced',
-      takeaway: 'Even the name is not its own. It is a river, mispronounced.',
+      takeaway: "Even the name isn't its own — it's a river, mispronounced.",
       storyText:
-        'Those outsiders named it after water. Sanskrit called the great river the *Sindhu*; Persians to the west could not manage the S and said *Hindū*, meaning simply **the people over there**. The Greeks then dropped the H. **Hindu, India and Indus are one word** — and for most of history it named a place, not a faith.',
+        "So where did the word *Hindu* even come from? Not from Hindus. It began as the name of a river.\n\nIn Sanskrit, the great river to the northwest was called the *Sindhu*. Persians living west of it couldn't pronounce the S and said *Hindu* instead — they just meant “the people over there,” past the river. Later, the Greeks dropped the H too.\n\nThat single river-name became three words we still use: **Hindu, India, and Indus**. For most of history, *Hindu* pointed to a place — not a religion.",
       citation: 'Sindhu → Hindū (Old Persian) → Indós (Greek) → India (Latin)',
     },
     {
@@ -93,7 +98,7 @@ const ACT_NAME: FoundationsAct = {
       title: 'Sanatana Dharma',
       takeaway: 'The name it gives itself is Sanatana Dharma — the eternal way.',
       storyText:
-        'Strip off what strangers called it and this is underneath. Not a religion you sign up to, but an order that was always here and will still be here: something you **notice** rather than join. Which explains the missing founder — nobody founds the weather.',
+        "If outsiders supplied the word *Hindu*, what do followers call it themselves? **Sanatana Dharma** — usually translated as “the eternal way.”\n\nThe idea behind the name: this isn't a club you sign up for. It's more like a natural order that was always here and always will be — something you *wake up to* and live by, not something you join.\n\nThat's also why there's no founder. Nobody invents the sunrise; you just notice it.",
       keyVerse: {
         sanskrit: 'सनातन धर्म',
         transliteration: 'sanātana dharma',
@@ -105,7 +110,7 @@ const ACT_NAME: FoundationsAct = {
       title: 'Sanskrit',
       takeaway: 'An eternal way still has to be carried — so Sanskrit was built to be remembered, not read.',
       storyText:
-        'For centuries there was no page to keep it on. *Saṃskṛta* means **refined, perfected**: a language engineered for the ear, with exact metre, exact pitch and redundancy deliberately built in, so that two reciters a thousand miles apart still land on the same syllable. The Vedas were chanted long before anyone wrote them down.',
+        "But it still had to be passed down somehow. For centuries there was no book to keep it in — writing wasn't used for it yet.\n\nSo how did it survive? People memorized it, word for word, and recited it aloud — one generation teaching the next. The language they used is **Sanskrit** (*saṃskṛta*, “put together properly”).\n\nIt was practically built for the ear: exact rhythm, so a wrong word breaks the beat; exact pitch, fixed for every syllable; and repetition woven in as a backup.\n\nThe result: two reciters a thousand miles apart would land on the very same syllable. These spoken texts are the **Vedas** — chanted for centuries before anyone finally wrote them down.",
       keyVerse: {
         sanskrit: 'संस्कृत',
         transliteration: 'saṃskṛta',

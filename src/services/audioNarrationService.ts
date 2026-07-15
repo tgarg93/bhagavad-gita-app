@@ -464,12 +464,16 @@ export class AudioNarrationService {
     }
   }
 
-  // Foundations narration segments: takeaway sentence(s) then storyText
-  // sentence(s), per section, in reading order. Block ids `section-{i}-takeaway`
+  // Foundations narration segments: takeaway sentence(s), then storyText, then
+  // any bullets, per section, in reading order. Block ids `section-{i}-takeaway`
   // / `section-{i}-story` match FoundationCard's TextHighlighter blocks; the
   // concatenated text is exactly what a section's clip speaks, which is what
   // lets the pre-recorded controller map playback position to a sentence.
-  buildFoundationsSegments(sections: { takeaway?: string; storyText?: string }[]): TextSegment[] {
+  // Each bullet is its own block `section-{i}-bullet-{j}`, matching the per-bullet
+  // Prose in FoundationCard, so bullets highlight in turn as the clip reads them
+  // (and their characters count toward the clip's totalChars, so the story
+  // highlight before them isn't stretched by the bullet audio).
+  buildFoundationsSegments(sections: { takeaway?: string; storyText?: string; bullets?: string[] }[]): TextSegment[] {
     const out: TextSegment[] = [];
     sections.forEach((section, i) => {
       const pushBlock = (suffix: string, raw?: string) => {
@@ -497,6 +501,7 @@ export class AudioNarrationService {
       };
       pushBlock('takeaway', section.takeaway);
       pushBlock('story', section.storyText);
+      section.bullets?.forEach((b, j) => pushBlock(`bullet-${j}`, b));
     });
     return out;
   }

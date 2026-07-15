@@ -70,6 +70,29 @@ const FoundationCard: React.FC<Props> = ({
         />
       )}
 
+      {/* Bullets render after the story prose, in reading order. Each bullet is
+          its own Prose block (`section-{i}-bullet-{j}`) so it highlights in turn
+          during read-along, exactly like the story sentences — the matching
+          segments come from buildFoundationsSegments. */}
+      {!!section.bullets?.length && (
+        <View style={styles.bullets}>
+          {section.bullets.map((item, j) => (
+            <View key={j} style={styles.bulletRow}>
+              <View style={styles.bulletDot} />
+              <View style={styles.bulletBody}>
+                <Prose
+                  text={item}
+                  blockId={sectionIndex != null ? `section-${sectionIndex}-bullet-${j}` : undefined}
+                  highlightedSegmentId={highlightedSegmentId}
+                  segments={segments}
+                  style={getTextStyle(styles.bulletText)}
+                />
+              </View>
+            </View>
+          ))}
+        </View>
+      )}
+
       {!!keyVerse && (
         <View style={styles.verse}>
           <Text style={getTextStyle(styles.sanskrit)}>{keyVerse.sanskrit}</Text>
@@ -134,6 +157,30 @@ const styles = StyleSheet.create({
   body: {
     fontSize: 16,
     lineHeight: 27,
+    color: C.neutrals.charcoalBlack,
+  },
+  bullets: {
+    marginTop: 16,
+    gap: 12,
+  },
+  bulletRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 11,
+  },
+  bulletBody: {
+    flex: 1,
+  },
+  bulletDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: C.primary.deepSaffron,
+    marginTop: 9,
+  },
+  bulletText: {
+    fontSize: 16,
+    lineHeight: 26,
     color: C.neutrals.charcoalBlack,
   },
   verse: {

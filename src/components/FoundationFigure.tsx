@@ -4,8 +4,9 @@
 //
 // Arrowheads are drawn as explicit <Path> triangles rather than SVG <Marker>,
 // which react-native-svg supports unevenly across platforms.
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Pressable, Modal, useWindowDimensions } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import Svg, { Rect, Circle, Ellipse, Path, Line, G, Text as SvgText } from 'react-native-svg';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 
@@ -25,12 +26,70 @@ const Caption: React.FC<{ children: string }> = ({ children }) => (
   <Text style={styles.caption}>{children}</Text>
 );
 
-const Figure: React.FC<{ caption: string; children: React.ReactNode }> = ({ caption, children }) => (
-  <View style={styles.figure}>
-    {children}
-    <Caption>{caption}</Caption>
-  </View>
-);
+const Figure: React.FC<{ caption: string; children: React.ReactElement }> = ({ caption, children }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <View style={styles.figure}>
+      <Pressable
+        onPress={() => setOpen(true)}
+        accessibilityRole="imagebutton"
+        accessibilityLabel={`Diagram: ${caption}. Tap to enlarge.`}
+      >
+        {children}
+        <View style={styles.enlargeHint}>
+          <Ionicons name="expand-outline" size={12} color={SOFT} />
+          <Text style={styles.enlargeText}>Tap to enlarge</Text>
+        </View>
+      </Pressable>
+      <Caption>{caption}</Caption>
+      <FigureModal open={open} onClose={() => setOpen(false)} svg={children} caption={caption} />
+    </View>
+  );
+};
+
+// Wide diagrams are unreadable at phone width, so a tap opens the SAME <Svg>
+// large and rotated to landscape — the only way a ~3:1 figure fills a portrait
+// screen. We clone the figure's Svg with a big width/height; its own viewBox does
+// the scaling, so the vectors stay crisp. Aspect ratio is read off the viewBox.
+const FigureModal: React.FC<{
+  open: boolean;
+  onClose: () => void;
+  svg: React.ReactElement;
+  caption: string;
+}> = ({ open, onClose, svg, caption }) => {
+  const { width, height } = useWindowDimensions();
+  const vb = String((svg.props as any).viewBox ?? '0 0 640 190').split(/\s+/).map(Number);
+  const ratio = (vb[3] || 190) / (vb[2] || 640);
+  // drawW runs along the screen's tall axis once rotated; clamp so the rotated
+  // drawH (which runs across the screen) still fits the width.
+  const drawW = Math.min(height * 0.9, (width * 0.88) / ratio);
+  const drawH = drawW * ratio;
+  return (
+    <Modal
+      visible={open}
+      transparent
+      animationType="fade"
+      onRequestClose={onClose}
+      supportedOrientations={['portrait']}
+    >
+      <Pressable style={styles.backdrop} onPress={onClose}>
+        <View style={[styles.expandRotate, { width: drawW }]}>
+          {React.cloneElement(svg, { width: drawW, height: drawH } as any)}
+          <Text style={styles.expandedCaption}>{caption}</Text>
+        </View>
+        <Pressable
+          style={styles.closeBtn}
+          onPress={onClose}
+          hitSlop={14}
+          accessibilityRole="button"
+          accessibilityLabel="Close"
+        >
+          <Ionicons name="close" size={30} color="#fff" />
+        </Pressable>
+      </Pressable>
+    </Modal>
+  );
+};
 
 // ── Sindhu → Hindū → Indós → India / Indus ──────────────────────────────────
 const Etymology = () => (
@@ -415,6 +474,41 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 8,
     fontStyle: 'italic',
+  },
+  enlargeHint: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 5,
+    marginTop: 8,
+  },
+  enlargeText: {
+    fontSize: 10.5,
+    letterSpacing: 0.3,
+    color: C.neutrals.softAsh,
+  },
+  backdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.93)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  expandRotate: {
+    transform: [{ rotate: '90deg' }],
+    alignItems: 'center',
+  },
+  closeBtn: {
+    position: 'absolute',
+    top: 52,
+    right: 22,
+  },
+  expandedCaption: {
+    marginTop: 14,
+    fontSize: 14,
+    lineHeight: 20,
+    fontStyle: 'italic',
+    color: 'rgba(255,255,255,0.82)',
+    textAlign: 'center',
   },
   table: {
     borderTopWidth: StyleSheet.hairlineWidth,
