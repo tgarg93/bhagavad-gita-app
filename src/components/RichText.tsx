@@ -27,13 +27,17 @@ const renderItalic = (chunk: string, keyBase: string): React.ReactNode => {
   );
 };
 
-const RichText: React.FC<{ text: string; style?: any }> = ({ text, style }) => {
+const RichText: React.FC<{ text: string; style?: any; numberOfLines?: number }> = ({
+  text,
+  style,
+  numberOfLines,
+}) => {
   const boldParts = text.split('**');
   if (boldParts.length === 1) {
-    return <Text style={style}>{renderItalic(text, 'r')}</Text>;
+    return <Text style={style} numberOfLines={numberOfLines}>{renderItalic(text, 'r')}</Text>;
   }
   return (
-    <Text style={style}>
+    <Text style={style} numberOfLines={numberOfLines}>
       {boldParts.map((part, i) =>
         i % 2 === 1 ? (
           <Text key={i} style={{ fontWeight: '700' }}>

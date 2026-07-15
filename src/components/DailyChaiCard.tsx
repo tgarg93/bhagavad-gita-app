@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import { DailyAtom, ATOM_TAGS } from '../data/dailyAtoms';
 import { TextSegment } from '../services/audioNarrationService';
+import RichText, { stripInlineMarkup } from './RichText';
 
 // The unified Daily Chai card: one slot on Home (and the onboarding preview)
 // whose content type rotates by weekday. Every type shares the same chrome —
@@ -25,16 +26,18 @@ export interface SpeakablePart {
 export const speakableSequence = (atom: DailyAtom): SpeakablePart[] => {
   if (atom.type === 'verse') {
     const reference = atom.citation.split('·')[0].trim();
-    return [{ text: `${atom.hook} ${reference}` }];
+    return [{ text: `${stripInlineMarkup(atom.hook)} ${reference}` }];
   }
   const parts: SpeakablePart[] = [];
   if (atom.sanskrit) {
     parts.push({ text: atom.sanskrit.devanagari, type: 'sanskrit' });
   }
+  // Body/hook may carry **bold** / *italic* markers for the card — strip them so
+  // the voice never reads "star star".
   if (atom.type === 'word' && atom.sanskrit?.meaning) {
-    parts.push({ text: `${atom.sanskrit.transliteration} — ${atom.sanskrit.meaning}. ${atom.body}` });
+    parts.push({ text: `${atom.sanskrit.transliteration} — ${atom.sanskrit.meaning}. ${stripInlineMarkup(atom.body)}` });
   } else {
-    parts.push({ text: `${atom.hook} ${atom.body}` });
+    parts.push({ text: stripInlineMarkup(`${atom.hook} ${atom.body}`) });
   }
   return parts;
 };
@@ -88,7 +91,7 @@ const DailyChaiCard: React.FC<DailyChaiCardProps> = ({
               </>
             )}
             {!atom.sanskrit && <Text style={styles.hook}>{atom.hook}</Text>}
-            <Text style={styles.body} numberOfLines={bodyLines}>{atom.body}</Text>
+            <RichText text={atom.body} style={styles.body} numberOfLines={bodyLines} />
           </>
         );
       case 'saying':
@@ -97,14 +100,14 @@ const DailyChaiCard: React.FC<DailyChaiCardProps> = ({
             {atom.sanskrit && <Text style={styles.sayingDevanagari}>{atom.sanskrit.devanagari}</Text>}
             <Text style={styles.sayingLine}>{atom.hook}</Text>
             <Text style={[styles.sayingEyebrow, { color: accent.text }]}>WHAT IT MEANS</Text>
-            <Text style={styles.body} numberOfLines={bodyLines}>{atom.body}</Text>
+            <RichText text={atom.body} style={styles.body} numberOfLines={bodyLines} />
           </>
         );
       case 'question':
         return (
           <View style={compact ? undefined : styles.questionWrap}>
             <Text style={styles.questionLine}>{atom.hook}</Text>
-            <Text style={styles.questionInsight} numberOfLines={bodyLines}>{atom.body}</Text>
+            <RichText text={atom.body} style={styles.questionInsight} numberOfLines={bodyLines} />
           </View>
         );
       case 'verse':
@@ -116,12 +119,32 @@ const DailyChaiCard: React.FC<DailyChaiCardProps> = ({
             )}
           </>
         );
-      default:
-        // story · why · festival · compare — the original hook/body layout
+      case 'compare':
+        // A cross-tradition maxim leads with the saying itself: the Sanskrit verse,
+        // then the English quote as the hero, then the convergence note. Compare
+        // atoms without sanskrit keep the title + body layout below.
+        if (atom.sanskrit) {
+          return (
+            <>
+              <Text style={styles.maximDevanagari}>{atom.sanskrit.devanagari}</Text>
+              <Text style={styles.maximTranslit}>{atom.sanskrit.transliteration}</Text>
+              <Text style={styles.maximLine}>{atom.hook}</Text>
+              <RichText text={atom.body} style={styles.body} numberOfLines={bodyLines} />
+            </>
+          );
+        }
         return (
           <>
             <Text style={styles.hook}>{atom.hook}</Text>
-            <Text style={styles.body} numberOfLines={bodyLines}>{atom.body}</Text>
+            <RichText text={atom.body} style={styles.body} numberOfLines={bodyLines} />
+          </>
+        );
+      default:
+        // story · why · festival — the original hook/body layout
+        return (
+          <>
+            <Text style={styles.hook}>{atom.hook}</Text>
+            <RichText text={atom.body} style={styles.body} numberOfLines={bodyLines} />
           </>
         );
     }
@@ -196,10 +219,34 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   body: {
-    fontSize: 14,
-    lineHeight: 21,
+    fontSize: 14.5,
+    lineHeight: 23,
     color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     marginBottom: 8,
+  },
+  // compare (Across Traditions) that carries a maxim: the Sanskrit verse, then the
+  // English quote as the hero, then the convergence note (styles.body).
+  maximDevanagari: {
+    fontSize: 22,
+    lineHeight: 34,
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
+    fontWeight: '600',
+    marginTop: 2,
+  },
+  maximTranslit: {
+    fontSize: 13,
+    lineHeight: 19,
+    fontStyle: 'italic',
+    color: DharmaDesignSystem.colors.neutrals.softAsh,
+    marginTop: 3,
+    marginBottom: 14,
+  },
+  maximLine: {
+    fontSize: 19,
+    lineHeight: 28,
+    fontWeight: '600',
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
+    marginBottom: 12,
   },
   citation: {
     fontSize: 11.5,

@@ -1107,11 +1107,12 @@ const COMPARE_ATOMS: DailyAtom[] = [
   {
     id: 'compare:golden-rule',
     type: 'compare',
-    hook: 'The golden rule, centuries early',
+    hook: '“Do not do to another what you would not have done to yourself — that, in brief, is the whole of dharma.”',
     body:
-      '“Do not do to another what you would not have done to yourself — this, in brief, is dharma. All else is elaboration.” The Mahabharata compresses ethics into one sentence generations before the Sermon on the Mount — and nearly every faith found the same sentence on its own. When every tradition converges on one rule, it stops being doctrine and starts looking like discovery.',
+      'The Mahabharata wrote it down centuries before the Sermon on the Mount — and **nearly every faith found the same rule on its own**. When traditions all converge on a single sentence like this, it stops looking like doctrine and starts looking like **discovery**.',
     citation: 'Mahabharata, Anushasana Parva 113.8',
     krishnaPrompt: 'If dharma is really that simple, why are the dharma texts so complicated?',
+    sanskrit: { devanagari: 'आत्मनः प्रतिकूलानि परेषां न समाचरेत्', transliteration: 'ātmanaḥ pratikūlāni pareṣāṁ na samācaret' },
   },
   {
     id: 'compare:pilgrimage',
