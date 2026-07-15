@@ -1273,8 +1273,7 @@ export const deitiesData: Deity[] = [
     ],
     regionalVariations: [],
     images: {
-      // TODO cover shopping list: brahma-cover.png
-      heroImage: require('../../assets/images/covers/generic-cover.jpg'),
+      heroImage: require('../../assets/images/covers/brahma-cover.jpg'),
       iconImage: '/images/deities/brahma-icon.jpg',
       galleryImages: []
     },

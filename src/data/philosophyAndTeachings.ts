@@ -166,7 +166,7 @@ export const philosophyData: PhilosophicalConcept[] = [
     },
     podcastEpisodes: [],
     images: {
-      heroImage: require('../../assets/images/covers/generic-cover.jpg'),
+      heroImage: require('../../assets/images/covers/hinduism-overview-cover.jpg'),
       iconImage: '/images/philosophy/overview-icon.jpg',
     },
     difficulty: 'beginner',
@@ -430,7 +430,7 @@ export const philosophyData: PhilosophicalConcept[] = [
     },
     podcastEpisodes: [],
     images: {
-      heroImage: require('../../assets/images/covers/generic-cover.jpg'),
+      heroImage: require('../../assets/images/covers/branches-of-hinduism-cover.jpg'),
       iconImage: '/images/philosophy/branches-icon.jpg',
     },
     difficulty: 'beginner',
