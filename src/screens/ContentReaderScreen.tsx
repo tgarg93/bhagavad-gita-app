@@ -38,6 +38,7 @@ import CapstonePage from '../components/CapstonePage';
 import journeyService from '../services/journeyService';
 import { foundationsService } from '../services/foundationsService';
 import { navigateToJourneyItem, navigateToContentRef } from '../data/journeyPath';
+import { prerecordedClipsFor } from '../data/foundationsAudioManifest';
 import { McqCheck, RecallCheck } from '../data/checkTypes';
 
 const { width } = Dimensions.get('window');
@@ -170,6 +171,26 @@ const ContentReaderScreen: React.FC = () => {
     [narrationContent, audioService]
   );
 
+  // Pre-recorded ElevenLabs narration for this content, if any (Foundations
+  // acts), keyed by section index. When present, ▶ plays one bundled clip per
+  // section and the sentence highlight follows from playback position.
+  const prerecordedClips = useMemo(
+    () => (content ? prerecordedClipsFor(contentType, contentId, content.sections.map(s => s.id)) : null),
+    [content, contentType, contentId]
+  );
+  // Per-sentence narration segments for a Foundations act (takeaway then story),
+  // shared by the highlight (FoundationCard) and the pre-recorded controller.
+  const foundationsSegments = useMemo(
+    () =>
+      content && contentType === 'foundations'
+        ? audioService.buildFoundationsSegments(content.sections)
+        : [],
+    [content, contentType, audioService]
+  );
+  // The segment list the transport reasons over — the same one the service is
+  // playing, so section indices line up for skip and seek.
+  const activeSegments: { id: string }[] = prerecordedClips ? foundationsSegments : audioSegments;
+
   // Resume last spot on mount; snapshot progression points so the celebration
   // can show how far this reading moved you
   const pointsAtStartRef = useRef<number | undefined>(undefined);
@@ -275,10 +296,6 @@ const ContentReaderScreen: React.FC = () => {
 
   // --- Playback ---------------------------------------------------------
   const startPlayback = useCallback(async (fromSectionIndex: number) => {
-    const startFromIndex = Math.max(
-      0,
-      audioSegments.findIndex(s => s.id.startsWith(`section-${fromSectionIndex}-`))
-    );
     const callbacks: NarrationCallbacks = {
       onSegmentStart: (segmentId) => {
         setHighlightedSegmentId(segmentId);
@@ -299,8 +316,21 @@ const ContentReaderScreen: React.FC = () => {
     };
     setIsPlaying(true);
     setIsPaused(false);
-    await audioService.startNarration(narrationContent, callbacks, startFromIndex);
-  }, [audioSegments, narrationContent, audioService]);
+    if (prerecordedClips) {
+      await audioService.startPrerecorded(
+        foundationsSegments,
+        prerecordedClips,
+        callbacks,
+        Math.max(0, fromSectionIndex)
+      );
+    } else {
+      const startFromIndex = Math.max(
+        0,
+        audioSegments.findIndex(s => s.id.startsWith(`section-${fromSectionIndex}-`))
+      );
+      await audioService.startNarration(narrationContent, callbacks, startFromIndex);
+    }
+  }, [audioSegments, narrationContent, audioService, prerecordedClips, foundationsSegments]);
 
   const handlePlayPause = useCallback(async () => {
     if (isPlaying) {
@@ -326,8 +356,8 @@ const ContentReaderScreen: React.FC = () => {
   const narrationActive = isPlaying || isPaused;
 
   const firstSegmentOfSection = useCallback(
-    (sectionIdx: number) => audioSegments.findIndex(s => s.id.startsWith(`section-${sectionIdx}-`)),
-    [audioSegments]
+    (sectionIdx: number) => activeSegments.findIndex(s => s.id.startsWith(`section-${sectionIdx}-`)),
+    [activeSegments]
   );
 
   // Page skip: when narrating, move the voice with the page (or stop it when
@@ -339,8 +369,10 @@ const ContentReaderScreen: React.FC = () => {
     if (narrationActive) {
       if (page.kind === 'section') {
         const segIdx = firstSegmentOfSection(page.sectionIndex);
-        if (segIdx >= 0) {
-          setHighlightedSegmentId(audioSegments[segIdx].id); // covers the paused case
+        if (segIdx >= 0) setHighlightedSegmentId(activeSegments[segIdx].id); // covers the paused case
+        if (prerecordedClips) {
+          await audioService.seekToSection(page.sectionIndex);
+        } else if (segIdx >= 0) {
           await audioService.seekToSegment(segIdx);
         }
       } else {
@@ -352,16 +384,21 @@ const ContentReaderScreen: React.FC = () => {
       }
     }
     scrollToIndex(target);
-  }, [activeIndex, pages, narrationActive, firstSegmentOfSection, audioSegments, audioService, scrollToIndex]);
+  }, [activeIndex, pages, narrationActive, firstSegmentOfSection, activeSegments, prerecordedClips, audioService, scrollToIndex]);
 
-  // Podcast-style ±10 seconds, resolved to the nearest segment boundary
+  // Podcast-style ±10 seconds
   const seekBySeconds = useCallback(async (deltaSeconds: number) => {
     if (!narrationActive) return;
+    // Pre-recorded clips seek by real position within the current section clip.
+    if (prerecordedClips) {
+      await audioService.prerecSeekRelative(deltaSeconds * 1000);
+      return;
+    }
     const total = audioService.getEstimatedTotalDuration();
     if (total <= 0) return;
     const targetMs = Math.max(0, Math.min(audioService.getElapsedDuration() + deltaSeconds * 1000, total - 1));
     await audioService.seekToProgress(targetMs / total);
-    const seg = audioSegments[audioService.getCurrentState().currentSegmentIndex];
+    const seg = activeSegments[audioService.getCurrentState().currentSegmentIndex];
     if (seg) {
       setHighlightedSegmentId(seg.id);
       const m = seg.id.match(/section-(\d+)/);
@@ -370,7 +407,7 @@ const ContentReaderScreen: React.FC = () => {
         if (target != null) scrollToIndex(target);
       }
     }
-  }, [narrationActive, audioService, audioSegments, scrollToIndex, pageIndexForSection]);
+  }, [narrationActive, prerecordedClips, audioService, activeSegments, scrollToIndex, pageIndexForSection]);
 
   const askKrishnaAboutThis = () => {
     setShowMenu(false);
@@ -481,6 +518,9 @@ const ContentReaderScreen: React.FC = () => {
             section={section}
             getTextStyle={getTextStyle}
             onGoDeeper={ref => navigateToContentRef(navigation, ref)}
+            highlightedSegmentId={highlightedSegmentId}
+            segments={foundationsSegments}
+            sectionIndex={sectionIndex}
           />
         ) : (
           <NarrativeSections

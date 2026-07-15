@@ -10,7 +10,10 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import { NarrativeSection } from '../data/narrativeTypes';
-import RichText from './RichText';
+import { TextSegment } from '../services/audioNarrationService';
+import { stripInlineMarkup } from './RichText';
+import TextHighlighter from './TextHighlighter';
+import Prose from './Prose';
 import FoundationFigure from './FoundationFigure';
 
 const C = DharmaDesignSystem.colors;
@@ -19,22 +22,52 @@ interface Props {
   section: NarrativeSection;
   getTextStyle: (base: any) => any;
   onGoDeeper?: (ref: string) => void;
+  // Read-along narration: when the card is being narrated, the takeaway and body
+  // highlight sentence by sentence. Block ids mirror the Foundations narration
+  // builder — `section-{sectionIndex}-takeaway` / `-story`. Absent → no highlight
+  // (every non-narrated render is unchanged).
+  highlightedSegmentId?: string | null;
+  segments?: TextSegment[];
+  sectionIndex?: number;
 }
 
-const FoundationCard: React.FC<Props> = ({ section, getTextStyle, onGoDeeper }) => {
+const FoundationCard: React.FC<Props> = ({
+  section,
+  getTextStyle,
+  onGoDeeper,
+  highlightedSegmentId = null,
+  segments = [],
+  sectionIndex,
+}) => {
   const { takeaway, storyText, keyVerse, citation, deeper, sectionHeader, teachingText } = section;
+  const takeawayBlock = sectionIndex != null ? `section-${sectionIndex}-takeaway` : undefined;
+  const storyBlock = sectionIndex != null ? `section-${sectionIndex}-story` : undefined;
 
   return (
     <View style={styles.card}>
       <Text style={styles.eyebrow}>{section.title}</Text>
 
-      <Text style={getTextStyle(styles.takeaway)}>{takeaway}</Text>
+      {!!takeaway && (
+        <TextHighlighter
+          text={stripInlineMarkup(takeaway)}
+          blockId={takeawayBlock}
+          highlightedSegmentId={highlightedSegmentId}
+          segments={segments}
+          style={getTextStyle(styles.takeaway)}
+        />
+      )}
       <View style={styles.rule} />
 
       <FoundationFigure sectionId={section.id} />
 
       {!!storyText && (
-        <RichText text={storyText} style={getTextStyle(styles.body)} />
+        <Prose
+          text={storyText}
+          blockId={storyBlock}
+          highlightedSegmentId={highlightedSegmentId}
+          segments={segments}
+          style={getTextStyle(styles.body)}
+        />
       )}
 
       {!!keyVerse && (
@@ -47,7 +80,7 @@ const FoundationCard: React.FC<Props> = ({ section, getTextStyle, onGoDeeper }) 
 
       {!!sectionHeader && <Text style={styles.subhead}>{sectionHeader}</Text>}
       {!!teachingText && (
-        <RichText text={teachingText} style={getTextStyle(styles.body)} />
+        <Prose text={teachingText} style={getTextStyle(styles.body)} />
       )}
 
       {!!deeper && (

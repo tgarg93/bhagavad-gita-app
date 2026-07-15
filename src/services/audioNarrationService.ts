@@ -1,6 +1,7 @@
 import * as Speech from 'expo-speech';
 import { Audio, InterruptionModeIOS, InterruptionModeAndroid } from 'expo-av';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { stripInlineMarkup } from '../components/RichText';
 
 export interface TextSegment {
   id: string;
@@ -52,7 +53,10 @@ export interface TTSBackend {
   speak(
     text: string,
     options: TTSSpeakOptions,
-    events: { onStart: () => void; onDone: () => void; onError: (error: unknown) => void }
+    events: { onStart: () => void; onDone: () => void; onError: (error: unknown) => void },
+    // Identifies which segment is speaking. TTS ignores it; the pre-recorded
+    // backend uses it to pick the clip.
+    segmentId?: string
   ): Promise<void>;
   stop(): Promise<void>;
 }
@@ -76,6 +80,157 @@ class SystemTTSBackend implements TTSBackend {
   }
 }
 
+// One section of pre-recorded narration: its clip, and the ordered sentence
+// segments whose concatenated text the clip speaks.
+interface PrerecordedSection {
+  sectionIndex: number;
+  clip: number;
+  segments: TextSegment[];
+  totalChars: number;
+}
+
+// Plays a bundled clip per section and drives the sentence highlight from real
+// playback position — no per-word timestamps needed. As position crosses each
+// sentence's proportional share of the clip (by character length), it fires
+// onSegmentStart, so the highlight follows and the page turns (the first segment
+// of a section carries the section index the screen scrolls to). Approximate,
+// and it self-corrects every status tick, so drift can't accumulate.
+class PrerecordedController {
+  private sound: Audio.Sound | null = null;
+  private sections: PrerecordedSection[] = [];
+  private pos = 0; // index into `sections`
+  private curSeg = -1;
+  private durationMs = 0;
+  private callbacks: NarrationCallbacks | null = null;
+  private active = false;
+  private paused = false;
+
+  configure(sections: PrerecordedSection[], callbacks: NarrationCallbacks) {
+    this.sections = sections;
+    this.callbacks = callbacks;
+  }
+
+  async start(fromSectionIndex: number): Promise<void> {
+    this.active = true;
+    this.paused = false;
+    const at = this.sections.findIndex(s => s.sectionIndex === fromSectionIndex);
+    this.pos = at >= 0 ? at : 0;
+    await this.playCurrent();
+  }
+
+  private async playCurrent(): Promise<void> {
+    if (!this.active) return;
+    if (this.pos >= this.sections.length) {
+      this.active = false;
+      this.callbacks?.onPlaybackComplete();
+      return;
+    }
+    const sec = this.sections[this.pos];
+    this.curSeg = -1;
+    this.durationMs = 0;
+    await this.unload();
+    try {
+      const { sound, status } = await Audio.Sound.createAsync(sec.clip, {
+        shouldPlay: true,
+        progressUpdateIntervalMillis: 120,
+      });
+      this.sound = sound;
+      if (status.isLoaded && status.durationMillis) this.durationMs = status.durationMillis;
+      this.fireSegment(0); // highlight + page scroll for the section's first sentence
+      sound.setOnPlaybackStatusUpdate((st) => this.onStatus(st));
+    } catch {
+      this.callbacks?.onError('Could not play narration clip');
+      this.advanceSection();
+    }
+  }
+
+  private onStatus(st: any): void {
+    if (!st?.isLoaded) {
+      if (st?.error) this.callbacks?.onError(String(st.error));
+      return;
+    }
+    if (this.durationMs === 0 && st.durationMillis) this.durationMs = st.durationMillis;
+    if (st.didJustFinish) {
+      this.advanceSection();
+      return;
+    }
+    if (this.paused || this.durationMs === 0) return;
+    const frac = Math.min(1, st.positionMillis / this.durationMs);
+    const target = this.segAtFraction(frac);
+    if (target !== this.curSeg) this.fireSegment(target);
+  }
+
+  private segAtFraction(frac: number): number {
+    const sec = this.sections[this.pos];
+    const targetChars = frac * sec.totalChars;
+    let cum = 0;
+    for (let k = 0; k < sec.segments.length; k++) {
+      cum += sec.segments[k].text.length;
+      if (targetChars < cum) return k;
+    }
+    return sec.segments.length - 1;
+  }
+
+  private fireSegment(k: number): void {
+    this.curSeg = k;
+    const seg = this.sections[this.pos]?.segments[k];
+    if (seg) this.callbacks?.onSegmentStart(seg.id, k);
+  }
+
+  private advanceSection(): void {
+    this.pos++;
+    this.callbacks?.onProgressUpdate((this.pos / Math.max(1, this.sections.length)) * 100);
+    this.playCurrent();
+  }
+
+  async pause(): Promise<void> {
+    this.paused = true;
+    if (this.sound) await this.sound.pauseAsync().catch(() => {});
+  }
+
+  async resume(): Promise<void> {
+    this.paused = false;
+    if (this.sound) await this.sound.playAsync().catch(() => {});
+  }
+
+  async stop(): Promise<void> {
+    this.active = false;
+    this.paused = false;
+    this.pos = 0;
+    this.curSeg = -1;
+    await this.unload();
+  }
+
+  async seekToSection(sectionIndex: number): Promise<void> {
+    const idx = this.sections.findIndex(s => s.sectionIndex === sectionIndex);
+    if (idx < 0) return;
+    this.pos = idx;
+    this.active = true;
+    await this.playCurrent();
+  }
+
+  async seekRelative(deltaMs: number): Promise<void> {
+    if (!this.sound || this.durationMs === 0) return;
+    const st = await this.sound.getStatusAsync();
+    if (!st.isLoaded) return;
+    const to = Math.max(0, Math.min(this.durationMs - 1, (st.positionMillis ?? 0) + deltaMs));
+    await this.sound.setPositionAsync(to).catch(() => {});
+  }
+
+  private async unload(): Promise<void> {
+    const sound = this.sound;
+    this.sound = null;
+    if (sound) {
+      try {
+        await sound.stopAsync();
+      } catch {}
+      try {
+        await sound.unloadAsync();
+      } catch {}
+    }
+  }
+}
+
 export class AudioNarrationService {
   private static instance: AudioNarrationService;
   private segments: TextSegment[] = [];
@@ -87,6 +242,10 @@ export class AudioNarrationService {
   private speechId: string | null = null;
   private backend: TTSBackend = new SystemTTSBackend();
   private currentSegmentStartedAt: number | null = null;
+  // Pre-recorded narration (Foundations audio) runs through its own controller;
+  // `mode` routes the shared transport (pause/resume/stop/seek) to the right one.
+  private prerec = new PrerecordedController();
+  private mode: 'tts' | 'prerecorded' = 'tts';
 
   private constructor() {
     this.loadSettings();
@@ -271,7 +430,8 @@ export class AudioNarrationService {
   ): Promise<void> {
     try {
       await this.initialize();
-      
+
+      this.mode = 'tts';
       this.segments = this.parseContentIntoSegments(content);
       this.callbacks = callbacks;
       this.currentIndex = startFromIndex;
@@ -285,8 +445,92 @@ export class AudioNarrationService {
     }
   }
 
+  // Foundations narration segments: takeaway sentence(s) then storyText
+  // sentence(s), per section, in reading order. Block ids `section-{i}-takeaway`
+  // / `section-{i}-story` match FoundationCard's TextHighlighter blocks; the
+  // concatenated text is exactly what a section's clip speaks, which is what
+  // lets the pre-recorded controller map playback position to a sentence.
+  buildFoundationsSegments(sections: { takeaway?: string; storyText?: string }[]): TextSegment[] {
+    const out: TextSegment[] = [];
+    sections.forEach((section, i) => {
+      const pushBlock = (suffix: string, raw?: string) => {
+        if (!raw) return;
+        const blockId = `section-${i}-${suffix}`;
+        const text = stripInlineMarkup(raw);
+        const sentences = this.splitIntoSentences(text);
+        let cursor = 0;
+        sentences.forEach((sentence, k) => {
+          const found = text.indexOf(sentence, cursor);
+          const start = found >= 0 ? found : cursor;
+          cursor = start + sentence.length;
+          out.push({
+            id: `${blockId}-${k}`,
+            blockId,
+            text: sentence,
+            type: 'story',
+            localStart: start,
+            localEnd: start + sentence.length,
+            startIndex: 0,
+            endIndex: 0,
+            duration: this.estimateReadingTime(sentence, 'story'),
+          });
+        });
+      };
+      pushBlock('takeaway', section.takeaway);
+      pushBlock('story', section.storyText);
+    });
+    return out;
+  }
+
+  // Pre-recorded narration for a Foundations act: one bundled clip per section,
+  // with the sentence highlight driven from real playback position (see
+  // PrerecordedController). `foundationsSegments` come from
+  // buildFoundationsSegments; `clipsBySection` maps a section INDEX to its clip.
+  async startPrerecorded(
+    foundationsSegments: TextSegment[],
+    clipsBySection: Record<number, number>,
+    callbacks: NarrationCallbacks,
+    fromSectionIndex: number = 0
+  ): Promise<void> {
+    try {
+      await this.initialize();
+      this.mode = 'prerecorded';
+
+      const bySection = new Map<number, TextSegment[]>();
+      for (const seg of foundationsSegments) {
+        const m = seg.blockId.match(/^section-(\d+)-/);
+        if (!m) continue;
+        const si = parseInt(m[1], 10);
+        if (clipsBySection[si] == null) continue; // only sections that have a clip
+        if (!bySection.has(si)) bySection.set(si, []);
+        bySection.get(si)!.push(seg);
+      }
+      const sections: PrerecordedSection[] = [...bySection.entries()]
+        .sort((a, b) => a[0] - b[0])
+        .map(([sectionIndex, segments]) => ({
+          sectionIndex,
+          clip: clipsBySection[sectionIndex],
+          segments,
+          totalChars: segments.reduce((n, s) => n + s.text.length, 0) || 1,
+        }));
+
+      this.callbacks = callbacks;
+      this.isActive = true;
+      this.isPaused = false;
+      this.prerec.configure(sections, callbacks);
+      await this.prerec.start(fromSectionIndex);
+    } catch (error) {
+      console.log('Error starting pre-recorded narration:', error);
+      this.callbacks?.onError('Failed to start audio narration');
+    }
+  }
+
   async pauseNarration(): Promise<void> {
     this.isPaused = true;
+    if (this.mode === 'prerecorded') {
+      await this.prerec.pause();
+      return;
+    }
     this.currentSegmentStartedAt = null;
     if (this.speechId) {
       await this.backend.stop();
@@ -295,10 +539,27 @@ export class AudioNarrationService {
   }
 
   async resumeNarration(): Promise<void> {
-    if (this.isPaused && this.isActive) {
-      this.isPaused = false;
-      await this.playNextSegment();
+    if (!this.isActive || !this.isPaused) return;
+    this.isPaused = false;
+    if (this.mode === 'prerecorded') {
+      await this.prerec.resume();
+      return;
     }
+    await this.playNextSegment();
+  }
+
+  // Jump the pre-recorded narration to a whole section (used by page-skip).
+  async seekToSection(sectionIndex: number): Promise<void> {
+    if (this.mode !== 'prerecorded') return;
+    this.isActive = true;
+    this.isPaused = false;
+    await this.prerec.seekToSection(sectionIndex);
+  }
+
+  // ±seconds within the current pre-recorded clip.
+  async prerecSeekRelative(deltaMs: number): Promise<void> {
+    if (this.mode !== 'prerecorded') return;
+    await this.prerec.seekRelative(deltaMs);
   }
 
   async stopNarration(): Promise<void> {
@@ -306,6 +567,10 @@ export class AudioNarrationService {
     this.isPaused = false;
     this.currentIndex = 0;
     this.currentSegmentStartedAt = null;
+    if (this.mode === 'prerecorded') {
+      await this.prerec.stop();
+      return;
+    }
     if (this.speechId) {
       await this.backend.stop();
       this.speechId = null;
@@ -316,6 +581,8 @@ export class AudioNarrationService {
     this.speed = Math.max(0.5, Math.min(2.0, newSpeed));
     await this.saveSettings();
 
+    // Pre-recorded clips play at their recorded rate; only TTS restarts here.
+    if (this.mode === 'prerecorded') return;
     // If currently playing, restart current segment with new speed
     if (this.isActive && !this.isPaused) {
       await this.backend.stop();
@@ -388,7 +655,8 @@ export class AudioNarrationService {
               this.advanceToNextSegment(segment, 300);
             }
           },
-        }
+        },
+        segment.id
       );
     } catch (error) {
       console.warn('Error playing segment:', error);

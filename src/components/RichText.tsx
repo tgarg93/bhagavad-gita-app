@@ -1,25 +1,46 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-// Minimal inline rich text for content strings: `**term**` renders bold.
-// That's the whole grammar — content stays close to plain prose, and the
-// narration pipeline strips the same markers so TTS and highlight offsets
-// operate on clean text (see stripInlineMarkup).
+// Minimal inline rich text for content strings: `**term**` renders bold and
+// `*term*` renders italic. That's the whole grammar — content stays close to
+// plain prose, and the narration pipeline strips the same markers so TTS and
+// highlight offsets operate on clean text (see stripInlineMarkup).
 
-export const stripInlineMarkup = (text: string): string => text.replace(/\*\*/g, '');
+// Remove BOTH bold and italic markers. Order matters: strip `**` first so the
+// leftover `*` pass doesn't chew through bold pairs.
+export const stripInlineMarkup = (text: string): string =>
+  text.replace(/\*\*/g, '').replace(/\*/g, '');
+
+// Render a chunk that may contain *italic* spans (no bold — bold is split off
+// by the caller first).
+const renderItalic = (chunk: string, keyBase: string): React.ReactNode => {
+  const parts = chunk.split('*');
+  if (parts.length === 1) return chunk;
+  return parts.map((part, i) =>
+    i % 2 === 1 ? (
+      <Text key={`${keyBase}-i${i}`} style={{ fontStyle: 'italic' }}>
+        {part}
+      </Text>
+    ) : (
+      <React.Fragment key={`${keyBase}-t${i}`}>{part}</React.Fragment>
+    )
+  );
+};
 
 const RichText: React.FC<{ text: string; style?: any }> = ({ text, style }) => {
-  const parts = text.split('**');
-  if (parts.length === 1) return <Text style={style}>{text}</Text>;
+  const boldParts = text.split('**');
+  if (boldParts.length === 1) {
+    return <Text style={style}>{renderItalic(text, 'r')}</Text>;
+  }
   return (
     <Text style={style}>
-      {parts.map((part, i) =>
+      {boldParts.map((part, i) =>
         i % 2 === 1 ? (
           <Text key={i} style={{ fontWeight: '700' }}>
             {part}
           </Text>
         ) : (
-          part
+          <React.Fragment key={i}>{renderItalic(part, `b${i}`)}</React.Fragment>
         )
       )}
     </Text>
