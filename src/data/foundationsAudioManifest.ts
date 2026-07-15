@@ -9,13 +9,59 @@
 // can't misalign them. One clip per section; the reader plays them in order
 // and turns the page as each finishes.
 //
-// Only Act 1 ('name') is recorded so far.
+// All eight Foundations acts recorded (ElevenLabs v3). The 32 content cards run
+// through FoundationCard, so their read-along highlights sentence-by-sentence; the
+// capstone recap plays its clip but doesn't sentence-highlight (it renders via
+// NarrativeSections, which isn't wired to the pre-recorded segment ids).
 export const foundationsAudioManifest: Record<string, Record<string, number>> = {
   name: {
     'f-name-no-founder': require('../../assets/audio/foundations/f-name-no-founder.mp3'),
     'f-name-river': require('../../assets/audio/foundations/f-name-river.mp3'),
     'f-name-sanatana': require('../../assets/audio/foundations/f-name-sanatana.mp3'),
     'f-name-sanskrit': require('../../assets/audio/foundations/f-name-sanskrit.mp3'),
+  },
+  thread: {
+    'f-thread-practice': require('../../assets/audio/foundations/f-thread-practice.mp3'),
+    'f-thread-compare': require('../../assets/audio/foundations/f-thread-compare.mp3'),
+    'f-thread-streams': require('../../assets/audio/foundations/f-thread-streams.mp3'),
+    'f-thread-ishta': require('../../assets/audio/foundations/f-thread-ishta.mp3'),
+  },
+  claim: {
+    'f-claim-brahman': require('../../assets/audio/foundations/f-claim-brahman.mp3'),
+    'f-claim-atman': require('../../assets/audio/foundations/f-claim-atman.mp3'),
+    'f-claim-tat-tvam-asi': require('../../assets/audio/foundations/f-claim-tat-tvam-asi.mp3'),
+    'f-claim-maya': require('../../assets/audio/foundations/f-claim-maya.mp3'),
+    'f-claim-prana': require('../../assets/audio/foundations/f-claim-prana.mp3'),
+    'f-claim-gunas': require('../../assets/audio/foundations/f-claim-gunas.mp3'),
+  },
+  wheel: {
+    'f-wheel-samsara': require('../../assets/audio/foundations/f-wheel-samsara.mp3'),
+    'f-wheel-karma': require('../../assets/audio/foundations/f-wheel-karma.mp3'),
+    'f-wheel-dharma': require('../../assets/audio/foundations/f-wheel-dharma.mp3'),
+    'f-wheel-ahimsa': require('../../assets/audio/foundations/f-wheel-ahimsa.mp3'),
+    'f-wheel-moksha': require('../../assets/audio/foundations/f-wheel-moksha.mp3'),
+    'f-wheel-aims': require('../../assets/audio/foundations/f-wheel-aims.mp3'),
+    'f-wheel-yogas': require('../../assets/audio/foundations/f-wheel-yogas.mp3'),
+  },
+  faces: {
+    'f-faces-trimurti': require('../../assets/audio/foundations/f-faces-trimurti.mp3'),
+    'f-faces-avatar': require('../../assets/audio/foundations/f-faces-avatar.mp3'),
+    'f-faces-shakti': require('../../assets/audio/foundations/f-faces-shakti.mp3'),
+    'f-faces-family': require('../../assets/audio/foundations/f-faces-family.mp3'),
+  },
+  library: {
+    'f-library-shelves': require('../../assets/audio/foundations/f-library-shelves.mp3'),
+    'f-library-epics': require('../../assets/audio/foundations/f-library-epics.mp3'),
+    'f-library-gita': require('../../assets/audio/foundations/f-library-gita.mp3'),
+  },
+  living: {
+    'f-living-murti': require('../../assets/audio/foundations/f-living-murti.mp3'),
+    'f-living-darshan': require('../../assets/audio/foundations/f-living-darshan.mp3'),
+    'f-living-year': require('../../assets/audio/foundations/f-living-year.mp3'),
+    'f-living-hard': require('../../assets/audio/foundations/f-living-hard.mp3'),
+  },
+  capstone: {
+    'f-capstone-recap': require('../../assets/audio/foundations/f-capstone-recap.mp3'),
   },
 };
 
