@@ -32,7 +32,7 @@ import KrishnaGuide from '../components/KrishnaGuide';
 import JourneyPathView from '../components/JourneyPathView';
 import LocalStorageService, { SpiritualProfile } from '../services/localStorageService';
 import journeyService from '../services/journeyService';
-import { getDailyAtom } from '../data/dailyAtoms';
+import { ONBOARDING_ATOM } from '../data/dailyAtoms';
 import DailyChaiCard from '../components/DailyChaiCard';
 import ProgressRungs from '../components/ProgressRungs';
 import { LEVELS, LEVEL_MEANINGS } from '../services/progressionService';
@@ -552,9 +552,10 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
 
         {id === 'chai' && (
           <Reveal active={krishnaDone} style={styles.rhythmWrap}>
-            {/* Live preview of today's actual chai — the same unified card the
-                Home screen shows, compact and action-less */}
-            <DailyChaiCard atom={getDailyAtom()} compact />
+            {/* A curated welcome atom (not the day's) — the same unified card the
+                Home screen shows, action-less. Fixed and short so the preview
+                reads clean on any date instead of truncating a long daily atom. */}
+            <DailyChaiCard atom={ONBOARDING_ATOM} />
           </Reveal>
         )}
 

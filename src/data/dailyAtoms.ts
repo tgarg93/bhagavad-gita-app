@@ -1212,6 +1212,20 @@ const festivalAtomFor = (date: Date): DailyAtom | null => {
   };
 };
 
+// Shown ONLY in the onboarding chai preview (OnboardingScreen), never in the
+// daily rotation — it's not in any ATOMS_BY_TYPE pool, so getDailyAtom can't
+// pick it. A fixed, short, welcoming first taste so the preview reads clean on
+// any date rather than truncating whatever the day's atom happens to be.
+export const ONBOARDING_ATOM: DailyAtom = {
+  id: 'onboarding:welcome',
+  type: 'word',
+  hook: 'Namaste',
+  body: 'namaḥ, “I bow,” plus te, “to you” — many read it as the divine in one honoring the divine in the other.',
+  citation: 'A traditional Sanskrit greeting — namaḥ (I bow) + te (to you).',
+  krishnaPrompt: 'What does “namaste” really mean?',
+  sanskrit: { devanagari: 'नमस्ते', transliteration: 'namaste', meaning: 'I bow to you' },
+};
+
 // Deterministic pick for a date: festival lens wins near a festival; verse
 // days come from the daily-verse rotation; otherwise the weekday's type,
 // rotating through its pool week by week.
