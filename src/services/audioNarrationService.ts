@@ -104,6 +104,12 @@ class PrerecordedController {
   private callbacks: NarrationCallbacks | null = null;
   private active = false;
   private paused = false;
+  // Bumped whenever the current clip changes (new section, stop). A status
+  // callback carries the token of the sound it was registered for, so a
+  // trailing tick from a swapped-out or already-unloaded sound is ignored —
+  // otherwise it could run after `pos` moves past the last section and
+  // dereference an out-of-range section.
+  private token = 0;
 
   configure(sections: PrerecordedSection[], callbacks: NarrationCallbacks) {
     this.sections = sections;
@@ -121,7 +127,11 @@ class PrerecordedController {
   private async playCurrent(): Promise<void> {
     if (!this.active) return;
     if (this.pos >= this.sections.length) {
+      // Reached the end: tear down the finished clip (its status callback would
+      // otherwise fire one more tick against an out-of-range section) before
+      // reporting completion.
       this.active = false;
+      await this.unload();
       this.callbacks?.onPlaybackComplete();
       return;
     }
@@ -129,6 +139,7 @@ class PrerecordedController {
     this.curSeg = -1;
     this.durationMs = 0;
     await this.unload();
+    const myToken = ++this.token;
     try {
       const { sound, status } = await Audio.Sound.createAsync(sec.clip, {
         shouldPlay: true,
@@ -137,14 +148,17 @@ class PrerecordedController {
       this.sound = sound;
       if (status.isLoaded && status.durationMillis) this.durationMs = status.durationMillis;
       this.fireSegment(0); // highlight + page scroll for the section's first sentence
-      sound.setOnPlaybackStatusUpdate((st) => this.onStatus(st));
+      sound.setOnPlaybackStatusUpdate((st) => this.onStatus(st, myToken));
     } catch {
       this.callbacks?.onError('Could not play narration clip');
       this.advanceSection();
     }
   }
 
-  private onStatus(st: any): void {
+  private onStatus(st: any, token: number): void {
+    // Drop callbacks from a swapped-out sound, or any that arrive after we've
+    // stopped or run off the end of the sections.
+    if (token !== this.token || !this.active || this.pos >= this.sections.length) return;
     if (!st?.isLoaded) {
       if (st?.error) this.callbacks?.onError(String(st.error));
       return;
@@ -162,6 +176,7 @@ class PrerecordedController {
 
   private segAtFraction(frac: number): number {
     const sec = this.sections[this.pos];
+    if (!sec) return 0;
     const targetChars = frac * sec.totalChars;
     let cum = 0;
     for (let k = 0; k < sec.segments.length; k++) {
@@ -198,6 +213,7 @@ class PrerecordedController {
     this.paused = false;
     this.pos = 0;
     this.curSeg = -1;
+    this.token++; // invalidate any in-flight status callback
     await this.unload();
   }
 
@@ -221,6 +237,9 @@ class PrerecordedController {
     const sound = this.sound;
     this.sound = null;
     if (sound) {
+      try {
+        sound.setOnPlaybackStatusUpdate(null); // no queued callback can land after this
+      } catch {}
       try {
         await sound.stopAsync();
       } catch {}
