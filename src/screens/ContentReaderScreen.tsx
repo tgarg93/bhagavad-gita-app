@@ -191,6 +191,30 @@ const ContentReaderScreen: React.FC = () => {
   // playing, so section indices line up for skip and seek.
   const activeSegments: { id: string }[] = prerecordedClips ? foundationsSegments : audioSegments;
 
+  // A section finishes when its LAST segment ends. Walk the segments in order and
+  // keep the last id seen per section, so onSegmentEnd can tell a section-ending
+  // segment from a mid-section one.
+  const lastSegmentIdOfSection = useMemo(() => {
+    const map = new Map<number, string>();
+    activeSegments.forEach(s => {
+      const m = s.id.match(/section-(\d+)/);
+      if (m) map.set(parseInt(m[1]), s.id);
+    });
+    return map;
+  }, [activeSegments]);
+
+  // Sections whose page is immediately followed by a check page. Narration reads
+  // by segment and checks aren't segments, so without this the voice would roll
+  // straight from one section into the next, scrolling past the check. Scoped to
+  // `check` — inline reflect pages stay on the old skip-through behavior.
+  const sectionsWithTrailingCheck = useMemo(() => {
+    const set = new Set<number>();
+    pageIndexForSection.forEach((pageIdx, sectionIdx) => {
+      if (pages[pageIdx + 1]?.kind === 'check') set.add(sectionIdx);
+    });
+    return set;
+  }, [pages, pageIndexForSection]);
+
   // Resume last spot on mount; snapshot progression points so the celebration
   // can show how far this reading moved you
   const pointsAtStartRef = useRef<number | undefined>(undefined);
@@ -243,6 +267,13 @@ const ContentReaderScreen: React.FC = () => {
   // map through a ref rather than a stale binding.
   const pageIndexForSectionRef = useRef(pageIndexForSection);
   pageIndexForSectionRef.current = pageIndexForSection;
+
+  // onSegmentEnd is captured in the same narration callback closure and needs the
+  // live check-detection maps, so it reads them through refs too.
+  const lastSegmentIdOfSectionRef = useRef(lastSegmentIdOfSection);
+  lastSegmentIdOfSectionRef.current = lastSegmentIdOfSection;
+  const sectionsWithTrailingCheckRef = useRef(sectionsWithTrailingCheck);
+  sectionsWithTrailingCheckRef.current = sectionsWithTrailingCheck;
 
   const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
     if (viewableItems.length > 0 && viewableItems[0].index != null) {
@@ -305,7 +336,23 @@ const ContentReaderScreen: React.FC = () => {
           if (target != null) listRef.current?.scrollToIndex({ index: target, animated: true });
         }
       },
-      onSegmentEnd: () => {},
+      onSegmentEnd: (segmentId) => {
+        // A section that ends into a check page: park the voice ON the check
+        // instead of rolling into the next section. The service has already
+        // incremented past this segment, so currentIndex now sits on the next
+        // section's first segment — exactly where a resume should pick up.
+        const m = segmentId.match(/section-(\d+)/);
+        if (!m) return;
+        const i = parseInt(m[1]);
+        if (lastSegmentIdOfSectionRef.current.get(i) !== segmentId) return;
+        if (!sectionsWithTrailingCheckRef.current.has(i)) return;
+        const checkPage = pageIndexForSectionRef.current[i] + 1;
+        audioService.pauseNarration();
+        setIsPlaying(false);
+        setIsPaused(true);
+        setHighlightedSegmentId(null);
+        listRef.current?.scrollToIndex({ index: checkPage, animated: true });
+      },
       onProgressUpdate: () => {},
       onPlaybackComplete: () => {
         setIsPlaying(false);
@@ -375,6 +422,18 @@ const ContentReaderScreen: React.FC = () => {
         } else if (segIdx >= 0) {
           await audioService.seekToSegment(segIdx);
         }
+        // seekToSegment only auto-plays when it was already playing, so when we
+        // were parked (paused) on a check page, kick the voice back on.
+        if (isPaused) await audioService.resumeNarration();
+        setIsPlaying(true);
+        setIsPaused(false);
+      } else if (page.kind === 'check') {
+        // Land on the check without leaving narration — pause the voice and stay,
+        // whether we arrived here by auto-advance or by a manual swipe mid-read.
+        await audioService.pauseNarration();
+        setIsPlaying(false);
+        setIsPaused(true);
+        setHighlightedSegmentId(null);
       } else {
         // Skipping onto cover/reflection/sources ends the narration
         await audioService.stopNarration();
@@ -384,7 +443,7 @@ const ContentReaderScreen: React.FC = () => {
       }
     }
     scrollToIndex(target);
-  }, [activeIndex, pages, narrationActive, firstSegmentOfSection, activeSegments, prerecordedClips, audioService, scrollToIndex]);
+  }, [activeIndex, pages, narrationActive, isPaused, firstSegmentOfSection, activeSegments, prerecordedClips, audioService, scrollToIndex]);
 
   // Podcast-style ±10 seconds
   const seekBySeconds = useCallback(async (deltaSeconds: number) => {
