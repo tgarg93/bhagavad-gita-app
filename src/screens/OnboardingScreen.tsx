@@ -434,7 +434,12 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
         </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.body}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
         {/* Krishna is deliberately absent from the app intro — Dharma speaks
             first, and his own screen is his first appearance. Same avatar size
             throughout: a bigger one squeezes the bubble, because the avatar is
@@ -624,6 +629,9 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 5,
     backgroundColor: colors.primary.deepSaffron,
+  },
+  scroll: {
+    flex: 1,
   },
   body: {
     padding: spacing.lg,
