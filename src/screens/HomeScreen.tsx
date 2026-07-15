@@ -424,18 +424,18 @@ const styles = StyleSheet.create({
     width: 50,
     alignItems: 'center',
     marginRight: DharmaDesignSystem.spacing.md,
-    backgroundColor: 'rgba(255, 182, 39, 0.12)',
+    backgroundColor: 'rgba(230, 81, 0, 0.10)',
     borderRadius: DharmaDesignSystem.borderRadius.small,
     paddingVertical: DharmaDesignSystem.spacing.xs,
   },
   festivalDay: {
     ...DharmaDesignSystem.typography.sizes.bodyLG,
     fontWeight: '700',
-    color: DharmaDesignSystem.colors.primary.turmericYellow,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
   },
   festivalMonth: {
     ...DharmaDesignSystem.typography.sizes.overline,
-    color: DharmaDesignSystem.colors.primary.turmericYellow,
+    color: DharmaDesignSystem.colors.primary.deepSaffron,
     fontSize: 10,
   },
   festivalDetails: {
