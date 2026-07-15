@@ -107,7 +107,7 @@ export const progressWithinBand = (points: number): number => {
 };
 
 // Both bounds matter. The upper one always did; the lower one became reachable
-// when rites landed — a reader who passes the capstone at 75 points is conferred
+// when rites landed — a reader who passes the capstone at 87 points is conferred
 // Shishya (minPoints 100), so points - level.minPoints goes NEGATIVE and an
 // unclamped value renders a backwards progress bar in ProgressRungs.
 const clamp01 = (n: number): number => Math.min(1, Math.max(0, n));
@@ -131,10 +131,10 @@ export const getProgression = async (): Promise<Progression> => {
   // no needle at all.
   //
   // Foundations items are EXCLUDED, and that exclusion is load-bearing. Its eight
-  // parts are already scored per card (32 cards + 7 checks + 1 reflection = 75),
-  // and the 75-under-100 gap is exactly what makes the Foundations capstone the
+  // parts are already scored per card (32 cards + 20 checks × 2 + 1 reflection = 87),
+  // and the 87-under-100 gap is exactly what makes the Foundations capstone the
   // thing that tips a reader into Shishya. Paying another 8 × 30 there would put
-  // the track at 315 and the reader would level up mid-way, deflating the whole
+  // the track at 327 and the reader would level up mid-way, deflating the whole
   // ceremony. Capstone items are excluded for the same reason — they pay a rite.
   const journeyItemsCompleted = Object.keys(completion).filter(
     id => !id.startsWith('foundations:') && !id.startsWith('capstone:')

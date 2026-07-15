@@ -1,7 +1,7 @@
 // FOUNDATIONS — the Jigyasu track.
 //
 // The first thing a new user walks. Seven parts of bite-sized cards (one idea per
-// page, ~60 words, one takeaway apiece), then a capstone: a friend asks them what
+// page, a few short paragraphs, one takeaway apiece), then a capstone: a friend asks them what
 // Hinduism actually is, and they answer in their own words. Passing that confers
 // Shishya.
 //
@@ -15,17 +15,19 @@
 // is keyed on them (CLAUDE.md invariant).
 //
 // ─── THE POINT ARITHMETIC IS LOAD-BEARING ────────────────────────────────────
-//   32 cards   × 1  = 32
-//    7 checks  × 4  = 28   (5 mcq + 2 recall; the 1 reflect scores via the
-//    1 reflect × 15 = 15    existing reflections × 15 term)
-//                    ────
-//                     75   ← must stay UNDER 100, the Shishya threshold.
+//   32 cards    × 1  = 32
+//   20 checks   × 2  = 40   (18 mcq + 2 recall; the 1 reflect scores via the
+//    1 reflect  × 15 = 15    existing reflections × 15 term)
+//                     ────
+//                      87   ← must stay UNDER 100, the Shishya threshold.
 //
-// The capstone confers Shishya *and* adds 30 (→105), so the level then holds on
-// points alone. That gap is the gate: a reader who does every card and skips the
-// capstone sits at 75, four-fifths of the way and visibly short. ADDING A CARD OR
-// A SECOND REFLECTION PUSHES THIS OVER 100 and the reader levels up mid-track,
-// which deflates the capstone entirely. If you change the content, redo this sum.
+// A check is worth 2 (see CHECK_POINTS in checkTypes.ts) so that 2–3 questions per
+// part still fit — 26 checks is the ceiling at value 2. The capstone confers Shishya
+// *and* adds 30 (→117), so the level then holds on points alone. That gap is the
+// gate: a reader who does every card and check but skips the capstone sits at 87 and
+// stays Jigyasu. ADDING A REFLECTION (×15), OR ENOUGH CHECKS TO CROSS 100, levels the
+// reader up mid-track and deflates the capstone. If you change the content, redo this
+// sum (and lower CHECK_POINTS if you need more check headroom).
 // ─────────────────────────────────────────────────────────────────────────────
 import { NarrativeSection, SourceNote } from './narrativeTypes';
 import { Capstone } from './checkTypes';
@@ -84,6 +86,19 @@ const ACT_NAME: FoundationsAct = {
         '**No central authority** — nobody decides what counts as “correct.”',
       ],
       citation: 'No founding figure or single canonical text is claimed by the tradition itself.',
+      checks: [
+        {
+          id: 'chk:foundations:no-founder',
+          kind: 'mcq',
+          prompt: 'Your friend asks, “So who founded Hinduism?” What is the most accurate reply?',
+          options: [
+            { text: 'A prophet in ancient India, though his name is mostly forgotten' },
+            { text: 'It began as one religion and later split into many' },
+            { text: 'Nobody — it is a family of traditions that grew together over thousands of years', correct: true },
+          ],
+          why: 'There is no founder to name. Many local traditions grew up side by side and were only later filed under one label — mostly by outsiders.',
+        },
+      ],
     },
     {
       id: 'f-name-river',
@@ -92,6 +107,19 @@ const ACT_NAME: FoundationsAct = {
       storyText:
         "So where did the word *Hindu* even come from? Not from Hindus. It began as the name of a river.\n\nIn Sanskrit, the great river to the northwest was called the *Sindhu*. Persians living west of it couldn't pronounce the S and said *Hindu* instead — they just meant “the people over there,” past the river. Later, the Greeks dropped the H too.\n\nThat single river-name became three words we still use: **Hindu, India, and Indus**. For most of history, *Hindu* pointed to a place — not a religion.",
       citation: 'Sindhu → Hindū (Old Persian) → Indós (Greek) → India (Latin)',
+      checks: [
+        {
+          id: 'chk:foundations:river-name',
+          kind: 'mcq',
+          prompt: 'Where does the word “Hindu” originally come from?',
+          options: [
+            { text: 'The name of a river — outsiders’ word for the people living beyond it', correct: true },
+            { text: 'A Sanskrit word meaning “believer”' },
+            { text: 'The name of the first Hindu king' },
+          ],
+          why: 'It started as the river Sindhu. Persians said “Hindu” for the people over there; for most of history the word named a place, not a faith.',
+        },
+      ],
     },
     {
       id: 'f-name-sanatana',
@@ -117,6 +145,19 @@ const ACT_NAME: FoundationsAct = {
         meaning: 'put together properly — refined',
       },
       citation: 'The Vedas were transmitted orally, with elaborate mnemonic schemes, long before manuscripts.',
+      checks: [
+        {
+          id: 'chk:foundations:sanskrit-oral',
+          kind: 'mcq',
+          prompt: 'Why was Sanskrit built with such exact rhythm and pitch?',
+          options: [
+            { text: 'So the texts could be memorized and recited identically, since they were carried by voice, not writing', correct: true },
+            { text: 'So only trained priests could ever read the script' },
+            { text: 'To make the language sound more beautiful than everyday speech' },
+          ],
+          why: 'For centuries there was no book. The precision was a memory system — it let reciters a thousand miles apart land on the very same syllable.',
+        },
+      ],
     },
   ],
   reflectionQuestions: [],
@@ -149,9 +190,9 @@ const ACT_THREAD: FoundationsAct = {
     {
       id: 'f-thread-practice',
       title: 'Practice, not creed',
-      takeaway: 'What holds it together is not a belief. It is what you do.',
+      takeaway: "What makes someone Hindu isn't a belief — it's what they practise.",
       storyText:
-        'There is no creed to sign, no conversion moment, no belief that gets you thrown out. A Hindu may hold that God is one, or many, or everything, or an entirely open question — and remain a Hindu in perfectly good standing. **Practice is the membership.** This is the hinge the whole tradition turns on.',
+        "If there's no founder, no single book, and no one in charge, what makes someone a Hindu at all?\n\nHere's the surprising part: it isn't what they believe. There's no creed to sign and no moment of conversion. A Hindu can hold that God is one, or many, or everything, or an open question — and still be a Hindu in good standing, with nobody calling them a heretic.\n\nWhat holds it all together is **practice** — how you live, what you do at the shrine, how you mark the year. Practice is the membership. That single idea is the hinge the whole tradition turns on.",
       citation: 'The tradition is orthoprax (right practice) rather than orthodox (right belief).',
       checks: [
         {
@@ -160,8 +201,8 @@ const ACT_THREAD: FoundationsAct = {
           prompt: 'Your friend asks what actually makes someone a Hindu. What is the truest answer?',
           options: [
             { text: 'Believing a specific set of doctrines about God' },
-            { text: 'What they practise — how they live, worship, and mark the year', correct: true },
             { text: 'Being born in India' },
+            { text: 'What they practise — how they live, worship, and mark the year', correct: true },
           ],
           why: 'Practice, not creed. It is why one family can hold a monotheist, a polytheist and a sceptic, and nobody is a heretic.',
         },
@@ -170,24 +211,43 @@ const ACT_THREAD: FoundationsAct = {
     {
       id: 'f-thread-compare',
       title: 'Beside the others',
-      takeaway: 'Judaism, Christianity and Islam ask what you believe. This one asks what you do.',
+      takeaway: 'Judaism, Christianity, and Islam ask what you believe; Hinduism asks what you do.',
       storyText:
-        'Set them side by side and the real difference is not the number of gods. Those three turn on a founder, a book, a confession, and a judgement at the end. **Judaism comes closest** — it too is a practice and a people more than a creed — but it still has Sinai, a covenant, and one God. Hinduism has none of those. And instead of ending, it goes round.',
+        "Line Hinduism up against Judaism, Christianity, and Islam, and the real difference isn't the number of gods.\n\nEach of those three turns on a **founder**, a **single book**, a **confession of faith**, and a **judgement** at the end of time. Judaism comes closest to Hinduism — it too is a practice and a people more than a set of beliefs — but it still has Sinai, a covenant, and one God.\n\nHinduism has none of those fixed anchors. And instead of ending in one final judgement, it pictures time as a wheel that keeps turning.",
+      checks: [
+        {
+          id: 'chk:foundations:practice-not-creed',
+          kind: 'mcq',
+          prompt: 'A friend raised Catholic asks what makes Hinduism most different from the faith she grew up in. The truest answer?',
+          options: [
+            { text: 'Hinduism has many gods instead of one' },
+            { text: 'Hinduism has no scriptures at all' },
+            { text: 'Hinduism turns on what you do — practice — more than on what you believe', correct: true },
+          ],
+          why: 'The number of gods is the surface difference. The deep one: Judaism, Christianity, and Islam ask what you believe; this one asks what you do.',
+        },
+      ],
     },
     {
       id: 'f-thread-streams',
       title: 'Four streams',
-      takeaway: 'Held together by practice rather than creed, it could branch without ever breaking.',
+      takeaway: 'Because practice holds it together, Hinduism could branch into four streams without ever splitting.',
       storyText:
-        'There was no council to expel anyone, so nobody was expelled. **Vaishnavas** centre Vishnu (and so Rama and Krishna). **Shaivas** centre Shiva. **Shaktas** centre the Goddess. **Smartas** keep several at once and treat them as faces of one thing. Most Hindus never announce which they are — the shrine at home simply tells you.',
+        "If no one polices belief, you might expect Hinduism to have split into rival churches, the way Christianity did. It never did.\n\nThere was no council with the power to expel anyone, so nobody was expelled. It simply branched — into four broad streams, each centred on a different face of the divine. Most Hindus never announce which one they belong to; the shrine at home quietly shows you.",
+      bullets: [
+        '**Vaishnavas** centre on Vishnu — and so on Rama and Krishna.',
+        '**Shaivas** centre on Shiva.',
+        '**Shaktas** centre on the Goddess (Devi).',
+        '**Smartas** keep several at once, treating them as faces of one reality.',
+      ],
       deeper: { ref: 'concept:branches-of-hinduism', label: 'The Four Great Streams' },
     },
     {
       id: 'f-thread-ishta',
       title: 'Your own god',
-      takeaway: 'And nobody hands you a branch. You choose the face you love.',
+      takeaway: 'Nobody assigns you a god — you choose the one you love. That is your ishta-devata.',
       storyText:
-        'Your *iṣṭa-devatā* is your **chosen deity**. A grandmother keeps Krishna, her son keeps Shiva, her granddaughter keeps Durga, all under one roof, and nothing is wrong. That is not the system straining to accommodate them. **That is the system working exactly as designed.**',
+        "So which stream are you? In Hinduism, nobody hands you the answer.\n\nYour **ishta-devata** (*iṣṭa-devatā*) is your *chosen deity* — the form of the divine you feel closest to. You pick it, and your worship reaches the one reality through that face.\n\nA grandmother keeps Krishna, her son keeps Shiva, her granddaughter keeps Durga — all under one roof, and nothing is wrong. That isn't the system straining to cope. **That is the system working exactly as designed.**",
       keyVerse: {
         sanskrit: 'इष्टदेवता',
         transliteration: 'iṣṭa-devatā',
@@ -195,6 +255,19 @@ const ACT_THREAD: FoundationsAct = {
       },
       citation:
         'Ishta-devata is a living practice rather than a scriptural rule — no text assigns anyone a deity.',
+      checks: [
+        {
+          id: 'chk:foundations:ishta-devata',
+          kind: 'mcq',
+          prompt: 'What is an ishta-devata?',
+          options: [
+            { text: 'The deity a person chooses for themselves, to focus their devotion', correct: true },
+            { text: 'The one god every Hindu is required to worship' },
+            { text: 'A family’s ancestral spirit' },
+          ],
+          why: 'Ishta-devata means “chosen deity.” Nobody assigns it — a grandmother’s Krishna and her granddaughter’s Durga sit under one roof, and nothing is wrong.',
+        },
+      ],
     },
   ],
   reflectionQuestions: [],
@@ -227,9 +300,9 @@ const ACT_CLAIM: FoundationsAct = {
     {
       id: 'f-claim-brahman',
       title: 'Brahman',
-      takeaway: 'Behind every face there is one reality. It is called Brahman.',
+      takeaway: 'Behind every god and every form is a single reality. It is called Brahman.',
       storyText:
-        'All four branches are reaching for this. Not a god sitting somewhere, watching — **the ground of everything that is**: awareness itself, without edges and without a face. Every deity you are about to meet is a face put on *this*, so that a human being has something to love.',
+        "So what is behind all those faces? The four streams are all reaching for the same thing.\n\nThey call it **Brahman** — not a god sitting somewhere watching you, but *the ground of everything that is*: pure awareness, without edges and without a face.\n\nEvery deity you're about to meet is a face placed on Brahman, so that a human being has something to love and hold onto. The formless is hard to pray to; a face is not.",
       keyVerse: {
         sanskrit: 'एकं सद्विप्रा बहुधा वदन्ति',
         transliteration: 'ekaṃ sad viprā bahudhā vadanti',
@@ -238,13 +311,26 @@ const ACT_CLAIM: FoundationsAct = {
       },
       citation: 'Rig Veda 1.164.46',
       deeper: { ref: 'concept:brahman-atman', label: 'Brahman & Atman' },
+      checks: [
+        {
+          id: 'chk:foundations:brahman',
+          kind: 'mcq',
+          prompt: 'What is Brahman?',
+          options: [
+            { text: 'The most powerful god, who rules over the smaller ones' },
+            { text: 'The priestly class of Hindu society' },
+            { text: 'The single formless reality underlying everything — awareness itself', correct: true },
+          ],
+          why: 'Brahman is not one god among many — and not the same word as “Brahmin,” the priesthood. It is the ground of everything; every deity is a face placed on it.',
+        },
+      ],
     },
     {
       id: 'f-claim-atman',
       title: 'Atman',
-      takeaway: 'And the same reality is what is looking out of you. That is atman.',
+      takeaway: 'The same one reality is also what looks out from inside you — your true self, atman.',
       storyText:
-        'Turn the telescope around. Notice that you can watch your own thoughts arrive — whatever is doing the watching is *ātman*. Not the body, which changes. Not the mood, which passes. **The witness that has been there the whole time.**',
+        "Now turn the telescope around, from the whole universe to you.\n\nNotice that you can watch your own thoughts arrive and pass. Whatever is doing the watching — the awareness behind your eyes — is **atman**, your true self.\n\nIt isn't the body, which changes with age. It isn't your mood, which comes and goes. Atman is *the witness that has been there the whole time*, unchanged since you were a child.",
       keyVerse: {
         sanskrit: 'आत्मन्',
         transliteration: 'ātman',
@@ -254,9 +340,9 @@ const ACT_CLAIM: FoundationsAct = {
     {
       id: 'f-claim-tat-tvam-asi',
       title: 'You are that',
-      takeaway: 'Those two are not two. That is the whole claim.',
+      takeaway: 'Brahman and atman are not two things — they are one. That is the whole claim.',
       storyText:
-        'The space inside a clay pot and the space of the sky are **not two spaces**. The pot has walls; the space does not. Break the pot and nothing is released — there was only ever one space, briefly shaped. **You are not near the divine. You are made of it, and have forgotten.**',
+        "Here is the turn the whole tradition is built on: Brahman — the one reality — and atman — your deepest self — are **not two things**. They are one and the same.\n\nPicture a clay pot sitting out in the open air. The space inside the pot and the vast space of the sky look separate, but they aren't. The pot has walls; the space doesn't. Break the pot and nothing is released, because there was only ever *one* space, briefly shaped.\n\nYou are the space inside the pot. **You are not standing near the divine — you are made of it, and have simply forgotten.**",
       keyVerse: {
         sanskrit: 'तत्त्वमसि',
         transliteration: 'tat tvam asi',
@@ -284,9 +370,9 @@ const ACT_CLAIM: FoundationsAct = {
     {
       id: 'f-claim-maya',
       title: 'Maya',
-      takeaway: 'So why does it not feel that way? Because the world is misread, not fake. That is maya.',
+      takeaway: "Why doesn't oneness feel true? Because the world is misread, not unreal — that misreading is maya.",
       storyText:
-        '"The world is an illusion" is the mistranslation that has done the most damage. A coiled rope at dusk **is** a rope — and you saw a serpent, and ran. The rope was never unreal. **Your reading of it was.** Maya is the misreading, not the thing; and the fear it produces is entirely genuine while it lasts.',
+        "If you really are one with everything, why doesn't it feel that way? The answer is **maya**.\n\n“Maya means the world is an illusion” is the mistranslation that has done the most damage. Maya isn't “fake.” It is *misreading* — seeing something as what it isn't.\n\nPicture a coiled rope on the ground at dusk. You see a snake, your heart pounds, and you run. The rope was never unreal — your **reading** of it was. That is maya: the misreading, not the thing. And notice: the fear it gave you was completely real while it lasted.",
       keyVerse: {
         sanskrit: 'माया',
         transliteration: 'māyā',
@@ -294,13 +380,26 @@ const ACT_CLAIM: FoundationsAct = {
       },
       citation: 'The rope-and-serpent illustration comes from the Advaita Vedanta commentarial tradition.',
       deeper: { ref: 'concept:maya', label: 'Maya' },
+      checks: [
+        {
+          id: 'chk:foundations:maya-misread',
+          kind: 'mcq',
+          prompt: 'You see a coiled rope at dusk and jump, sure it is a snake. In this famous image, what is maya?',
+          options: [
+            { text: 'The rope — which was never really there' },
+            { text: 'Your misreading of the rope as a snake — the thing was real, your reading wasn’t', correct: true },
+            { text: 'The fear you felt, which was imaginary' },
+          ],
+          why: 'Maya is not “the world is fake.” The rope is real; the snake was a misreading. And the fear was genuine while it lasted — that is exactly the point.',
+        },
+      ],
     },
     {
       id: 'f-claim-prana',
       title: 'Prana',
-      takeaway: 'What the misreading hides is a single live current running through all of it: prana.',
+      takeaway: 'One living current runs through all of it — breath, body, wind. It is called prana.',
       storyText:
-        '*Prāṇa* is breath — but not only breath. It is the animating current in a body, a tree, a wind: the tradition\'s **bridge between the physical and the spiritual**. It is also the most practical idea here, and the reason nearly every Hindu practice begins at the breath. **Steady the breath and you have a handle on the mind.**',
+        "Behind the misreading, one living current runs through everything. It is called **prana**.\n\nPrana means *breath* — but not only breath. It is the animating energy in a body, a tree, a gust of wind: the tradition's **bridge between the physical and the spiritual**, the life that moves.\n\nIt is also the most practical idea in this whole part. It is why nearly every Hindu practice — yoga, meditation, chanting — begins at the breath. **Steady the breath, and you have a handle on the mind.**",
       keyVerse: {
         sanskrit: 'प्राण',
         transliteration: 'prāṇa',
@@ -312,9 +411,14 @@ const ACT_CLAIM: FoundationsAct = {
     {
       id: 'f-claim-gunas',
       title: 'The three gunas',
-      takeaway: 'And everything that current moves through is woven from three strands — the gunas.',
+      takeaway: 'Everything nature makes is woven from three strands — the three gunas.',
       storyText:
-        '*Sattva*: clarity, light, balance. *Rajas*: heat, drive, restlessness. *Tamas*: inertia, heaviness, fog. Not good, better and best — and not three types of person. **Three threads in every person, every mood, every meal**, at shifting ratios. You do not eliminate any of them. You notice which one is currently running you.',
+        "Everything that current flows through — every person, every mood, every moment — is woven from **three strands**, called the *gunas*.\n\nThey aren't three types of person, and they aren't good, better, and best. All three run in everyone at once; only the ratio shifts through the day. The work isn't to erase any of them — it is to notice which one is running you right now:",
+      bullets: [
+        '**Sattva** — clarity, lightness, balance.',
+        '**Rajas** — heat, drive, restlessness.',
+        '**Tamas** — inertia, heaviness, fog.',
+      ],
       keyVerse: {
         sanskrit: 'त्रिगुण',
         transliteration: 'triguṇa',
@@ -357,9 +461,9 @@ const ACT_WHEEL: FoundationsAct = {
     {
       id: 'f-wheel-samsara',
       title: 'Samsara',
-      takeaway: 'If the witness is what you are, then death changes the clothes, not the wearer.',
+      takeaway: 'If the witness is what you truly are, death changes the clothes, not the wearer.',
       storyText:
-        'This is *samsara* — the wheel. Birth, a life, death, birth again. The Gita says the self changes bodies **"as a person changes worn-out clothes"**. It is not a horror and it is not a reward. It is simply how things are — until they are not.',
+        "So what happens when the body dies? If atman — the witness — is what you really are, then death isn't the end of you. It is a change of clothes.\n\nThis endless round is called **samsara**, the wheel: birth, a life, death, and birth again. The Gita puts it exactly this way — the self changes bodies *“as a person changes worn-out clothes.”*\n\nSamsara isn't a horror, and it isn't a reward. It is simply how things are — turning on and on, until one day they don't.",
       keyVerse: {
         sanskrit: 'वासांसि जीर्णानि यथा विहाय',
         transliteration: 'vāsāṃsi jīrṇāni yathā vihāya',
@@ -373,9 +477,9 @@ const ACT_WHEEL: FoundationsAct = {
     {
       id: 'f-wheel-karma',
       title: 'Karma',
-      takeaway: 'The wheel is steered by what you do — and karma means action, not fate.',
+      takeaway: 'What steers the wheel is what you do. Karma means action, not fate.',
       storyText:
-        'The word literally means **"doing"**. What you do plants what comes back: cause and effect, running on through lives instead of stopping politely at death. Nobody is sentencing you. Which is why *"it\'s my karma, I can\'t change it"* gets it exactly backwards — **karma is precisely the part you can change.**',
+        "So what steers the wheel — what shapes the next life? Not a judge. **Karma** does.\n\nThe word *karma* literally means **“action,” or “doing.”** What you do plants what comes back to you: cause and effect, carried on through lives instead of stopping politely at death. Nobody is sentencing you; you are planting seeds.\n\nThat is why *“it's my karma, I can't change it”* gets it exactly backwards. Karma is your own action — so it is precisely the part you *can* change.",
       keyVerse: {
         sanskrit: 'कर्म',
         transliteration: 'karma',
@@ -388,11 +492,11 @@ const ACT_WHEEL: FoundationsAct = {
           kind: 'mcq',
           prompt: 'Someone shrugs: "It\'s my karma. Nothing I can do." What has he misunderstood?',
           options: [
-            { text: 'Nothing — that is roughly what karma means' },
             {
               text: 'Karma is his own action, so it is the one thing he CAN do something about',
               correct: true,
             },
+            { text: 'Nothing — that is roughly what karma means' },
             { text: 'Karma only applies to the next life, not this one' },
           ],
           why: 'Karma is the verb, not the sentence. Treating it as fate turns the most agency-heavy idea in the tradition into an excuse — the single most common mistake outsiders and insiders both make.',
@@ -402,22 +506,35 @@ const ACT_WHEEL: FoundationsAct = {
     {
       id: 'f-wheel-dharma',
       title: 'Dharma',
-      takeaway: 'Which makes the urgent question not "what is the rule?" but "what is mine to do?"',
+      takeaway: "The real question isn't “what is the rule?” but “what is mine to do?” That is dharma.",
       storyText:
-        'That question is *dharma*. Not ten commandments issued to everyone: a soldier\'s dharma and a mother\'s dharma are **genuinely different, and both are right**. It is why Hindu ethics feels situational to outsiders — it is situational, deliberately, because a rule that fits every life fits no life particularly well.',
+        "If you can change your karma by acting well, the next question is obvious: what is the *right* action? Hinduism gives a surprising answer.\n\nThe question — “what is right for *me* to do?” — is **dharma**. It isn't ten commandments handed to everyone alike. A soldier's dharma and a mother's dharma are **genuinely different, and both are right**.\n\nThis is why Hindu ethics can feel situational to outsiders. It *is* situational, on purpose — because a single rule that fits every life ends up fitting no life particularly well.",
       keyVerse: {
         sanskrit: 'धर्म',
         transliteration: 'dharma',
         meaning: 'what upholds — duty, order, the right thing',
       },
       deeper: { ref: 'concept:dharma', label: 'Dharma' },
+      checks: [
+        {
+          id: 'chk:foundations:dharma-situational',
+          kind: 'mcq',
+          prompt: 'Why can a soldier’s dharma and a mother’s dharma be genuinely different — and both be right?',
+          options: [
+            { text: 'Because dharma is the right action for your particular role and situation, not one rule for everyone', correct: true },
+            { text: 'Because soldiers are simply held to a lower standard' },
+            { text: 'Because dharma only really applies to priests' },
+          ],
+          why: 'Dharma answers “what is mine to do?” — not “what is the universal rule?” A rule that fits every life fits no life particularly well.',
+        },
+      ],
     },
     {
       id: 'f-wheel-ahimsa',
       title: 'Ahimsa',
-      takeaway: 'One answer, though, comes close to universal: cause no harm you do not have to.',
+      takeaway: "One duty comes close to universal: cause no harm you don't have to. That is ahimsa.",
       storyText:
-        '*Ahiṃsā* — literally **"non-harming"**. It is the nearest thing the tradition has to a commandment, and it is a discipline rather than a temperament: harmlessness **chosen** by someone perfectly capable of doing otherwise. Gandhi built a movement on it. The Jains push it further than any Hindu does.',
+        "If duty depends on who you are, is anything close to a universal rule? One thing comes closest: **ahimsa**.\n\nAhimsa means literally **“non-harming”** — causing no harm you don't have to. It is the nearest thing the tradition has to a commandment.\n\nAnd it is a *discipline*, not a mood: harmlessness deliberately **chosen** by someone perfectly capable of doing otherwise. Gandhi built a freedom movement on it. The Jains carry it further than any Hindu does.",
       keyVerse: {
         sanskrit: 'अहिंसा परमो धर्मः',
         transliteration: 'ahiṃsā paramo dharmaḥ',
@@ -430,9 +547,9 @@ const ACT_WHEEL: FoundationsAct = {
     {
       id: 'f-wheel-moksha',
       title: 'Moksha',
-      takeaway: 'And the goal is not heaven. It is getting off the wheel altogether.',
+      takeaway: 'The goal is not heaven. It is getting off the wheel altogether — moksha.',
       storyText:
-        '*Moksha* — release. Waking up out of the whole round of birth and death, because you finally see what you always were. Heaven, in this system, is just another pleasant place you eventually have to leave. **Moksha is the only exit.**',
+        "So where does it all lead — what is the point of the turning wheel? Not heaven. The goal is **moksha**: getting off the wheel entirely.\n\nMoksha means *release*. It is waking up out of the whole round of birth and death, because you finally see what you always were — that space inside the pot, one with everything.\n\nEven heaven, in this system, is just another pleasant place you eventually have to leave. **Moksha is the only real exit.**",
       keyVerse: {
         sanskrit: 'मोक्ष',
         transliteration: 'mokṣa',
@@ -459,9 +576,15 @@ const ACT_WHEEL: FoundationsAct = {
     {
       id: 'f-wheel-aims',
       title: 'The four aims',
-      takeaway: 'Though you are not required to sprint for the exit — pleasure and prosperity are on the list too.',
+      takeaway: 'You are not required to sprint for the exit — pleasure and prosperity are proper goals too.',
       storyText:
-        'The *puruṣārthas*, the four proper aims of a human life: **dharma** (do right), **artha** (prosper), **kama** (enjoy, desire, love), **moksha** (be free). Look at what made the list. This is **not** an ascetic religion that grudgingly tolerates the world — it is a world-affirming one that also happens to keep a door open at the back.',
+        "You might expect the goal to be renouncing everything and racing for moksha. It isn't.\n\nHinduism names **four** proper aims of a human life — the *purusharthas*. Look at what made the list: this is not an ascetic religion that grudgingly tolerates the world. It is a world-affirming one that simply keeps an exit door open at the back.",
+      bullets: [
+        '**Dharma** — to live rightly.',
+        '**Artha** — to prosper, to build and provide for others.',
+        '**Kama** — to enjoy: desire, pleasure, love, beauty.',
+        '**Moksha** — to be free of the whole cycle.',
+      ],
       keyVerse: {
         sanskrit: 'पुरुषार्थ',
         transliteration: 'puruṣārtha',
@@ -472,9 +595,15 @@ const ACT_WHEEL: FoundationsAct = {
     {
       id: 'f-wheel-yogas',
       title: 'The four roads',
-      takeaway: 'And there are four roads to that door, matched to the kind of person you already are.',
+      takeaway: 'There are four roads to that exit, each matched to the kind of person you already are.',
       storyText:
-        'The *yogas*. **Bhakti** if you love. **Karma** if you would rather work. **Jnana** if you must reason it through. **Raja** if you can sit still. None outranks another; they are built for different temperaments. **You are not required to become someone else in order to arrive.**',
+        "And there isn't just one road to that exit. There are **four** — called the *yogas* — and each suits a different kind of person.\n\nNone outranks the others. **You don't have to become someone else to arrive**; you simply take the road that fits how you are already built:",
+      bullets: [
+        '**Bhakti** — the path of love and devotion, if your heart leads.',
+        '**Karma yoga** — the path of selfless work, if you would rather act than sit.',
+        '**Jnana** — the path of knowledge, if you must reason it through.',
+        '**Raja** — the path of meditation, if you can sit still.',
+      ],
       deeper: { ref: 'concept:bhakti-paths', label: 'Bhakti & the Paths of Yoga' },
       checks: [
         {
@@ -517,17 +646,30 @@ const ACT_FACES: FoundationsAct = {
     {
       id: 'f-faces-trimurti',
       title: 'The Trimurti',
-      takeaway: 'Nobody falls in love with a philosophy — so it grew faces. Start with three.',
+      takeaway: 'Nobody falls in love with a philosophy — so it grew faces. Start with the great three.',
       storyText:
-        'The *Trimurti*: **Brahma makes, Vishnu keeps, Shiva dissolves.** Notice what that third job means — destruction here is not evil, it is **what makes room**. The universe breathes in, and out, and in. (Oddly, Brahma the creator is barely worshipped anywhere. Making it, apparently, was the easy part.)',
+        "All that philosophy is true — but nobody falls in love with an abstraction. So Hinduism grew **faces**: gods you can picture, name, and pray to. Start with the great three, the *Trimurti*.\n\n**Brahma** creates the universe, **Vishnu** preserves it, and **Shiva** dissolves it. Notice what that third job means: destruction here isn't evil — it is **what makes room** for the next world. The universe breathes in, and out, and in.\n\nOne oddity: Brahma, the creator, is barely worshipped anywhere today. Making the world, apparently, was the easy part.",
       citation: 'The Trimurti as a formal triad is a Puranic development.',
+      checks: [
+        {
+          id: 'chk:foundations:shiva-destroyer',
+          kind: 'mcq',
+          prompt: 'Shiva’s role in the Trimurti is “the destroyer.” Why isn’t that an evil job?',
+          options: [
+            { text: 'Because Shiva only destroys bad people' },
+            { text: 'Because Shiva is weaker than Brahma and Vishnu' },
+            { text: 'Because destruction here means dissolving the old to make room for the new', correct: true },
+          ],
+          why: 'The universe breathes in and out. Ending is not evil — it is what clears space for the next creation. Destruction and renewal are one motion.',
+        },
+      ],
     },
     {
       id: 'f-faces-avatar',
       title: 'Vishnu comes down',
-      takeaway: 'One of the three has a habit: when things go badly wrong, Vishnu comes down.',
+      takeaway: 'When the world goes badly wrong, Vishnu comes down into it. Each descent is an avatar.',
       storyText:
-        'An *avatāra* — literally a **"crossing-down"** into the world. And this single fact untangles half the confusion a beginner has: **Rama is Vishnu. Krishna is Vishnu.** They are not rival gods competing for your attention. They are the same god, twice, in two different emergencies.',
+        "Of the three, Vishnu the preserver has a particular habit: when the world tips into chaos, he **comes down** into it, born in a body to set things right.\n\nEach of those descents is an **avatar** (*avatāra*) — literally a *“crossing-down”* into the world. And this one fact clears up half of a beginner's confusion.\n\n**Rama is Vishnu. Krishna is Vishnu.** They aren't rival gods competing for your attention — they are the same god, come down twice, into two different emergencies.",
       keyVerse: {
         sanskrit: 'यदा यदा हि धर्मस्य ग्लानिर्भवति भारत',
         transliteration: 'yadā yadā hi dharmasya glānir bhavati bhārata',
@@ -541,9 +683,9 @@ const ACT_FACES: FoundationsAct = {
     {
       id: 'f-faces-shakti',
       title: 'Shakti',
-      takeaway: 'And not one of them can act at all without her. Shakti is the power itself.',
+      takeaway: 'Not one of the gods can act without her. The Goddess is power itself — Shakti.',
       storyText:
-        '*Shakti* means **energy, capability, power** — and Shiva without her is famously described as inert. She is one goddess with many tempers: **Parvati is Durga is Kali** — the wife, the warrior, and the terrifying one who ends things. For millions of Hindus, She is the supreme reality, full stop.',
+        "So far the gods have been male. Here is the twist: **not one of them can act without her.**\n\n**Shakti** means *energy, capability, power* — the very ability to do anything at all. Shiva without his Shakti is famously pictured as *inert*, a corpse. She is the force behind every god's action.\n\nAnd she is one Goddess with many tempers: **Parvati is Durga is Kali** — the gentle wife, the lion-riding warrior, and the terrifying one who ends things. For millions of Hindus, She is the supreme reality, full stop.",
       keyVerse: {
         sanskrit: 'शक्ति',
         transliteration: 'śakti',
@@ -551,13 +693,26 @@ const ACT_FACES: FoundationsAct = {
       },
       citation: 'Devi Mahatmya — the Goddess as the supreme power',
       deeper: { ref: 'deity:durga', label: 'Durga' },
+      checks: [
+        {
+          id: 'chk:foundations:shakti-power',
+          kind: 'mcq',
+          prompt: 'What does Shakti — the Goddess — represent?',
+          options: [
+            { text: 'The wife who stays out of the gods’ affairs' },
+            { text: 'The power itself — the energy that lets any god act at all', correct: true },
+            { text: 'A minor goddess of luck' },
+          ],
+          why: 'Shakti means energy, capability, power. Shiva without her is described as inert. Parvati, Durga, and Kali are all her — for millions, She is the supreme reality.',
+        },
+      ],
     },
     {
       id: 'f-faces-family',
       title: 'The family map',
-      takeaway: 'Six names and their relationships, and any Hindu story becomes readable.',
+      takeaway: 'Learn six names and how they connect, and almost any Hindu story becomes readable.',
       storyText:
-        'Each god paired with a goddess. Vishnu descending as Rama and Krishna. Shiva and Parvati with a son — **Ganesha, greeted first, before anything at all begins**. And Hanuman, who can do absolutely anything and wants nothing except to serve Rama. **That last one is held up as the ideal**, which tells you a great deal about what the tradition actually admires.',
+        "You now have the main cast. The last trick is seeing how they connect — because the relationships are what make the stories readable. The chart above lays them out; here is the shape of it.\n\nEvery god is paired with a goddess. Vishnu comes down as **Rama** and **Krishna**. Shiva and Parvati have a son — **Ganesha**, the elephant-headed one, greeted first before anything at all begins.\n\nAnd off to the side stands **Hanuman**, who can do absolutely anything and wants nothing except to serve Rama. That he is held up as the ideal tells you a great deal about what the tradition actually admires.",
       deeper: { ref: 'deity:ganesha', label: 'Ganesha' },
       checks: [
         {
@@ -600,23 +755,36 @@ const ACT_LIBRARY: FoundationsAct = {
     {
       id: 'f-library-shelves',
       title: 'Two shelves',
-      takeaway: 'There is no one book. There is a library, and it has two shelves.',
+      takeaway: 'There is no one holy book. There is a library — and it has just two shelves.',
       storyText:
-        '*Shruti* — "heard" — is the Vedas and, at their end, the **Upanishads**: received rather than authored, and holding the real authority. Everything in **Core Beliefs** came from that shelf — *brahman*, *atman*, "you are that". *Smriti* — "remembered" — is the Gita, the epics, the Puranas: retold, adapted, argued with. **The stories everyone actually knows live on the second shelf.**',
+        "So where are all these gods and ideas actually written down? There is no single Bible. There is a whole **library** — but knowing its two shelves is most of what a beginner needs.\n\nThe top shelf is **shruti**, meaning *“heard.”* It holds the Vedas and, at their end, the **Upanishads** — received rather than authored, and carrying the real authority. Everything back in Core Beliefs came from this shelf: *Brahman*, *atman*, “you are that.”\n\nThe bottom shelf is **smriti**, meaning *“remembered”* — the Gita, the two epics, the Puranas: retold, adapted, and argued with over centuries. **The stories everyone actually knows live on this second shelf.**",
+      checks: [
+        {
+          id: 'chk:foundations:shruti-smriti',
+          kind: 'mcq',
+          prompt: 'What is the difference between the two shelves — shruti and smriti?',
+          options: [
+            { text: 'Shruti is for priests; smriti is for everyone else' },
+            { text: 'Shruti is ancient and smriti was written in the last century' },
+            { text: 'Shruti is “heard” and holds the authority (Vedas, Upanishads); smriti is “remembered” — the epics, Gita, Puranas', correct: true },
+          ],
+          why: 'Shruti (“heard”) carries the real authority; smriti (“remembered”) is retold and adapted. The stories everyone knows live on the smriti shelf.',
+        },
+      ],
     },
     {
       id: 'f-library-epics',
       title: 'The two epics',
-      takeaway: 'On that second shelf sit two epics: one man does right at any cost, one family destroys itself.',
+      takeaway: 'Two great epics sit on that second shelf: one man does right at any cost; one family destroys itself.',
       storyText:
-        'The **Ramayana**: Rama is exiled, Sita is taken, Hanuman finds her, Ravana falls — a story about holding to your duty when it costs you everything. The **Mahabharata**: two halves of one family go to war over a throne, and almost everyone loses. Far longer, far murkier, and far more honest about how people actually are.',
+        "Two great epics sit on that second shelf, and between them they hold most of the stories you will ever hear.\n\nThe **Ramayana** is the tidy one. Rama is exiled, his wife Sita is stolen by the demon king Ravana, Hanuman finds her, and Ravana falls. At heart it is a story about holding to your duty even when it costs you everything.\n\nThe **Mahabharata** is the messy one. Two halves of one family go to war over a throne, and almost everyone loses. It is far longer, far murkier, and far more honest about how people actually are.",
     },
     {
       id: 'f-library-gita',
       title: 'The Gita\'s moment',
-      takeaway: 'And inside the second epic, a soldier puts down his bow and gets a 700-verse answer.',
+      takeaway: 'Inside that messy epic, a soldier lays down his bow — and gets a 700-verse answer.',
       storyText:
-        'Arjuna sees his own cousins and teachers in the army opposite, and he cannot do it. What his charioteer says next *is* the **Bhagavad Gita** — and the charioteer is Krishna, who is Vishnu, as you now know. The most-read text in Hinduism is 700 verses of a man being talked out of a breakdown. Which is precisely why it travels.',
+        "Buried inside the Mahabharata is its most famous moment. On the eve of battle, a warrior named **Arjuna** looks across the field, sees his own cousins, teachers, and friends in the enemy army — and simply cannot do it. He lays down his bow.\n\nWhat his charioteer says next, to talk him through it, *is* the **Bhagavad Gita**. And the charioteer is **Krishna** — who is Vishnu, as you now know.\n\nSo the most-read text in all of Hinduism is 700 verses of a man being gently talked out of a breakdown. That is precisely why it travels: everyone, sooner or later, freezes at a choice like Arjuna's.",
       citation: 'Bhagavad Gita 1.28–47 — Arjuna\'s despair',
       citationLink: 'gita:1',
       deeper: { ref: 'gita:1', label: 'Bhagavad Gita, Chapter 1' },
@@ -666,34 +834,66 @@ const ACT_LIVING: FoundationsAct = {
     {
       id: 'f-living-murti',
       title: 'The murti',
-      takeaway: 'None of this is a religion you read. It is one you do — beginning with a guest.',
+      takeaway: 'None of this is a religion you read. It is one you do — starting by welcoming a guest.',
       storyText:
-        '"Idol" gets the grammar completely wrong. In *puja* the image is **bathed, dressed, fed, sung to, and put to bed** — precisely the etiquette you would offer an honoured visitor in your home. The question was never "is the statue God?" The question is: **has the guest been welcomed properly?**',
+        "Remember the very first idea: Hinduism is something you *do*, not something you sign up to believe. So what does the doing look like? It begins in front of a **murti** — the sculpted image of a god.\n\nCalling a murti an “idol” gets the grammar completely wrong. In **puja** (worship), the image is **bathed, dressed, fed, sung to, and put to bed at night** — exactly the etiquette you would offer an honoured guest in your home.\n\nSo the question was never “is the statue God?” The real question is warmer and simpler: **has the guest been welcomed properly?**",
       keyVerse: {
         sanskrit: 'मूर्ति',
         transliteration: 'mūrti',
         meaning: 'a form — something given shape so it can be met',
       },
       citation: 'The sixteen services of puja (shodasha-upachara) are set out in the Agama texts.',
+      checks: [
+        {
+          id: 'chk:foundations:puja-guest',
+          kind: 'mcq',
+          prompt: 'In puja the image is bathed, dressed, fed, and put to bed. What does that tell you worship is really about?',
+          options: [
+            { text: 'Welcoming and hosting the divine as an honoured guest', correct: true },
+            { text: 'Believing the statue is literally made of god' },
+            { text: 'Keeping the temple staff busy with chores' },
+          ],
+          why: '“Idol” gets the grammar wrong. The question was never “is the statue God?” — it is “has the guest been welcomed properly?”',
+        },
+      ],
     },
     {
       id: 'f-living-darshan',
       title: 'Darshan and prasad',
-      takeaway: 'And you go to see the guest, and to be seen by them.',
+      takeaway: 'You go to the temple to see the god — and to be seen by them. That is darshan.',
       storyText:
-        '*Darshan* means **"sight"** — you go to look at the deity, and to be looked at in return. You come home with *prasad*: food that has already been offered, and tasted, by the god. Worship here is **exchange and hospitality**, not petition. Nobody is filing a request.',
+        "So why go to a temple at all? Not mainly to ask for things. You go for **darshan**.\n\nDarshan means *“seeing.”* You go to *look at* the deity — and, just as much, to *be looked at* in return. The meeting runs both ways.\n\nYou come home carrying **prasad**: food that has first been offered to the god and tasted by them, then handed back to you. Worship here is **exchange and hospitality**, not petition. Nobody is filing a request.",
       keyVerse: {
         sanskrit: 'दर्शन',
         transliteration: 'darśana',
         meaning: 'seeing — and being seen',
       },
+      checks: [
+        {
+          id: 'chk:foundations:darshan',
+          kind: 'mcq',
+          prompt: 'What is darshan?',
+          options: [
+            { text: 'Reciting a fixed prayer to request a favour' },
+            { text: 'Seeing the deity and being seen in return — a mutual meeting', correct: true },
+            { text: 'The donation you leave at the temple' },
+          ],
+          why: 'Darshan means “seeing.” You go to look at the deity and be looked at back. Worship here is exchange and hospitality, not petition — nobody is filing a request.',
+        },
+      ],
     },
     {
       id: 'f-living-year',
       title: 'The festival year',
-      takeaway: 'Scale that from one room to one year, and the calendar becomes a story you can read.',
+      takeaway: 'Scale that hospitality from one room to a whole year, and the calendar becomes a story you can read.',
       storyText:
-        '**Diwali**: lamps light the road because Rama is coming home. **Holi**: spring, colour, forgiveness. **Navaratri**: nine nights of the Goddess. **Janmashtami**: Krishna, born at midnight, in a prison cell. You know every one of these characters now — **which means the whole year has just become legible.**',
+        "Now scale that welcome up from a single room to a whole **year**. The Hindu calendar is packed with festivals — and because you now know the characters, each one has turned into a sentence you can read:",
+      bullets: [
+        '**Diwali** — lamps light the road home because Rama is returning from exile.',
+        '**Holi** — spring, colour thrown in the streets, and old grudges forgiven.',
+        '**Navaratri** — nine nights for the Goddess, in all her forms.',
+        '**Janmashtami** — Krishna, born at midnight in a prison cell.',
+      ],
       deeper: { ref: 'festival:diwali-2025', label: 'Diwali' },
       checks: [
         {
@@ -712,12 +912,12 @@ const ACT_LIVING: FoundationsAct = {
     {
       id: 'f-living-hard',
       title: 'The two hard questions',
-      takeaway: 'And two questions have no tidy answer. Saying so is the honest move.',
+      takeaway: 'Two questions have no tidy answer. Saying so honestly is the right move.',
       storyText:
-        'Within about ninety seconds of telling anyone you are learning about Hinduism, one of these arrives.\n\n**Caste.** The old texts describe a fourfold order; what it became — fixed at birth, brutally hierarchical, defended with scripture — is a real and unfinished injustice, and Hindus have fought it from the inside for centuries. Do not defend it. Explain it.\n\n**Beef.** The cow is honoured as the one who gives without ever taking. Plenty of Hindus eat meat; most will not eat beef.',
+        "One honest warning before you go. Within about ninety seconds of telling someone you are learning about Hinduism, one of two hard questions tends to arrive. Neither has a tidy answer, and pretending otherwise helps no one.\n\n**Caste.** The old texts describe a fourfold ordering of society. What it hardened into — fixed at birth, brutally hierarchical, defended with scripture — is a real and unfinished injustice, one that many Hindus have fought from the inside for centuries. Don't defend it. Explain it.\n\n**Beef.** The cow is honoured as the animal that gives, in milk, without ever taking. Plenty of Hindus eat meat; most will not eat beef.",
       sectionHeader: 'What to actually say',
       teachingText:
-        '**"It is complicated, and here is how" is the honest answer — and a far better one than a slogan.** A tradition confident enough to argue with itself for three thousand years does not need you to defend its worst chapters.',
+        '**“It is complicated, and here is how” is the honest answer — and a far better one than any slogan.** A tradition confident enough to argue with itself for three thousand years does not need you to defend its worst chapters.',
       citation:
         'The fourfold varna order appears at Rig Veda 10.90 (Purusha Sukta); birth-fixed caste as practised is a much later development.',
     },
@@ -733,7 +933,7 @@ const ACT_LIVING: FoundationsAct = {
 // ═══════════════════════════════════════════════════════════════════════════
 // PART 8 — EXPLAIN IT YOURSELF
 // The recap section carries no `takeaway`, so it is NOT banked and does not
-// disturb the 75-point arithmetic at the top of this file. It renders as an
+// disturb the 87-point arithmetic at the top of this file. It renders as an
 // ordinary prose page (bullets) through NarrativeSections.
 // ═══════════════════════════════════════════════════════════════════════════
 const ACT_CAPSTONE: FoundationsAct = {

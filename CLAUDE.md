@@ -10,7 +10,7 @@ Expo SDK 53 / React Native 0.79 Hindu learning companion. Specs that govern this
 Data (static TS, all content bundled):
 - `src/data/journeyPath.ts` — the guided journey: 6 modules (0 = Foundations), ordered ids; `navigateToJourneyItem` handles routing
 - `src/data/stageCapstones.ts` — the five stage capstones (Stages 1-5). Each rubric IS that stage's objective; passing confers the stage's level
-- `src/data/foundations.ts` — the Jigyasu track: 8 parts, 32 bite-sized cards, the capstone. **The 75-point sum at the top of that file is load-bearing** — see invariants. The `foundations:*` ids deliberately no longer match their titles (`faces` → "The Gods") — the titles were renamed for clarity, the ids can't be
+- `src/data/foundations.ts` — the Jigyasu track: 8 parts, 32 bite-sized cards, the capstone. **The 87-point sum at the top of that file is load-bearing** — see invariants. The `foundations:*` ids deliberately no longer match their titles (`faces` → "The Gods") — the titles were renamed for clarity, the ids can't be
 - `src/data/checkTypes.ts` — app-wide knowledge checks (mcq / recall / reflect); any `NarrativeSection` can carry `checks`
 - `src/data/philosophyAndTeachings.ts`, `godsAndDeities.ts`, `festivals.ts` — content with `sections: NarrativeSection[]`, `sources`, `reflectionQuestions`
 - `src/data/readerContent.ts` — adapter: any concept/deity/festival/story/scripture/foundations act with sections becomes reader content. **Its last branch is an unguarded festival fallthrough — new content types go ABOVE it** or they silently resolve as a festival
@@ -41,9 +41,9 @@ Screens: paged readers are `GitaVersePlayerScreen` (Gita) and `ContentReaderScre
 
 ## Invariants (do not change casually)
 
-- **Points formula**: versesRead×2 + chaptersCompleted×30 + reflections×15 + cardsBanked×1 + checksPassed×4 + ritesPassed×30 + journeyItemsCompleted×30 (`progressionService`). **Only ever add terms that are additive and non-negative, and never raise a threshold** — either one demotes somebody. `journeyItemsCompleted` excludes Foundations and capstone items (see below).
+- **Points formula**: versesRead×2 + chaptersCompleted×30 + reflections×15 + cardsBanked×1 + checksPassed×2 + ritesPassed×30 + journeyItemsCompleted×30 (`progressionService`; check value lives in `CHECK_POINTS`). **Only ever add terms that are additive and non-negative, and never raise a threshold** — either one demotes somebody. (A check is worth 2, retuned down from 4 pre-launch so 2–3 questions per part fit under the Shishya gate; safe only because there were no users yet.) `journeyItemsCompleted` excludes Foundations and capstone items (see below).
 - **A rite is a floor, never a ceiling**: `level = max(levelForPoints(points), conferred rite level)`. **Six rites — one per journey stage** (`stageCapstones.ts` + Foundations'). This is the only reason Rishi and Guru are reachable at all; the old journey topped out 38 points below Rishi. A ceiling would demote existing users and trap Gita readers at Jigyasu — hence the floor.
-- **The Foundations track sums to 75 points** — deliberately under the 100 for Shishya, so the capstone is what tips the reader over. Add a card or a second reflection and it crosses 100, the user levels up mid-track, and the capstone is deflated. **Redo the sum in `foundations.ts` if the content changes.**
+- **The Foundations track sums to 87 points** (32 cards + 20 graded checks × 2 + 1 reflection) — deliberately under the 100 for Shishya, so the capstone is what tips the reader over. Add a reflection (×15), or enough checks to cross 100, and the user levels up mid-track and the capstone is deflated. Checks are worth 2, so ~26 fit under the gate. **Redo the sum in `foundations.ts` if the content changes.**
 - **Journey completion** (`content_completion` map, id-keyed) is a parallel system to points — reaching a celebration page marks completion.
 - **AsyncStorage keys are append-only** — never rename/repurpose existing keys (users' devices hold data under them).
 - **Journey item ids** (`concept:karma`, `gita:3`, `foundations:name`, `capstone:gods`…) are permanent — completion is keyed on them.

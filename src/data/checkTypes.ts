@@ -67,17 +67,18 @@ export interface Capstone {
   rubricSource?: string[];
 }
 
-// Point values for the new progression terms. These are ADDITIVE ONLY: they are
-// new terms in the points formula, so they can raise a user's total but never
-// lower it, and no existing user is re-levelled downward. See progressionService.
+// Point values for the progression terms. Only Foundations consumes `checks`, so
+// these values are effectively the Foundations scoring knobs.
 //
-// Card = 1 (not 2) deliberately: the Foundations track is 32 cards + 7 graded
-// checks + 1 reflection = 32 + 28 + 15 = 75 points, which must stay UNDER the
-// 100 that buys Shishya, so that the capstone is what tips the reader over.
+// A check is worth 2 (not 4): with 2–3 checks per part the track now holds ~20
+// graded checks, so 32 cards + 20 checks × 2 + 1 reflection × 15 = 32 + 40 + 15 =
+// 87 points — which must stay UNDER the 100 that buys Shishya, so that the capstone
+// (a rite, +30 → ~117) is what tips the reader over. Card = 1 keeps cards cheap.
+// If you add checks, keep the pre-capstone total under 100 (≤26 checks at value 2).
 export const CHECK_POINTS = {
   card: 1,
-  mcq: 4,
-  recall: 4,
+  mcq: 2,
+  recall: 2,
   rite: 30,
 } as const;
 
