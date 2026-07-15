@@ -624,8 +624,15 @@ const ContentReaderScreen: React.FC = () => {
         contentContainerStyle={styles.pageScroll}
         keyboardShouldPersistTaps="handled"
       >
-        {/* A wrong answer still advances — the check teaches, it does not gate. */}
-        <CheckPage check={check} getTextStyle={getTextStyle} onResolved={() => {}} />
+        {/* A wrong answer still advances — the check teaches, it does not gate.
+            Continue turns to the next page (and resumes narration if the voice
+            was paused on this check), so the reader never has to guess to swipe. */}
+        <CheckPage
+          check={check}
+          getTextStyle={getTextStyle}
+          onResolved={() => {}}
+          onContinue={() => skipPage(1)}
+        />
       </ScrollView>
     </KeyboardAvoidingView>
   );

@@ -30,21 +30,23 @@ interface Props {
   check: McqCheck | RecallCheck;
   getTextStyle: (base: any) => any;
   onResolved: () => void; // the reader unlocks "continue" on this
+  onContinue?: () => void; // advance the pager to the next page
 }
 
-const CheckPage: React.FC<Props> = ({ check, getTextStyle, onResolved }) => {
+const CheckPage: React.FC<Props> = ({ check, getTextStyle, onResolved, onContinue }) => {
   return check.kind === 'mcq' ? (
-    <Mcq check={check} getTextStyle={getTextStyle} onResolved={onResolved} />
+    <Mcq check={check} getTextStyle={getTextStyle} onResolved={onResolved} onContinue={onContinue} />
   ) : (
-    <Recall check={check} getTextStyle={getTextStyle} onResolved={onResolved} />
+    <Recall check={check} getTextStyle={getTextStyle} onResolved={onResolved} onContinue={onContinue} />
   );
 };
 
 // ─── MCQ ────────────────────────────────────────────────────────────────────
-const Mcq: React.FC<{ check: McqCheck; getTextStyle: any; onResolved: () => void }> = ({
+const Mcq: React.FC<{ check: McqCheck; getTextStyle: any; onResolved: () => void; onContinue?: () => void }> = ({
   check,
   getTextStyle,
   onResolved,
+  onContinue,
 }) => {
   const [picked, setPicked] = useState<number | null>(null);
   const correctIndex = check.options.findIndex(o => o.correct);
@@ -70,6 +72,7 @@ const Mcq: React.FC<{ check: McqCheck; getTextStyle: any; onResolved: () => void
   };
 
   const answered = picked !== null;
+  const answeredCorrectly = picked === correctIndex;
 
   return (
     <View style={styles.page}>
@@ -112,19 +115,42 @@ const Mcq: React.FC<{ check: McqCheck; getTextStyle: any; onResolved: () => void
       </View>
 
       {answered && (
-        <View style={styles.why}>
+        <View style={[styles.resultCard, answeredCorrectly ? styles.resultGood : styles.resultMiss]}>
+          <View style={styles.resultHeader}>
+            <Ionicons
+              name={answeredCorrectly ? 'checkmark-circle' : 'alert-circle'}
+              size={20}
+              color={answeredCorrectly ? GOOD : MISS}
+            />
+            <Text style={[styles.resultLabel, { color: answeredCorrectly ? GOOD : MISS }]}>
+              {answeredCorrectly ? 'Correct!' : 'Not quite'}
+            </Text>
+          </View>
           <Text style={getTextStyle(styles.whyText)}>{check.why}</Text>
         </View>
+      )}
+
+      {answered && onContinue && (
+        <TouchableOpacity
+          style={styles.continueBtn}
+          onPress={onContinue}
+          accessibilityRole="button"
+          accessibilityLabel="Continue"
+        >
+          <Text style={styles.continueBtnText}>Continue</Text>
+          <Ionicons name="arrow-forward" size={18} color="#fff" />
+        </TouchableOpacity>
       )}
     </View>
   );
 };
 
 // ─── RECALL ─────────────────────────────────────────────────────────────────
-const Recall: React.FC<{ check: RecallCheck; getTextStyle: any; onResolved: () => void }> = ({
+const Recall: React.FC<{ check: RecallCheck; getTextStyle: any; onResolved: () => void; onContinue?: () => void }> = ({
   check,
   getTextStyle,
   onResolved,
+  onContinue,
 }) => {
   const [answer, setAnswer] = useState('');
   const [grading, setGrading] = useState(false);
@@ -263,6 +289,18 @@ const Recall: React.FC<{ check: RecallCheck; getTextStyle: any; onResolved: () =
           </View>
         </View>
       )}
+
+      {(grade || selfMark !== null) && onContinue && (
+        <TouchableOpacity
+          style={styles.continueBtn}
+          onPress={onContinue}
+          accessibilityRole="button"
+          accessibilityLabel="Continue"
+        >
+          <Text style={styles.continueBtnText}>Continue</Text>
+          <Ionicons name="arrow-forward" size={18} color="#fff" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -313,15 +351,32 @@ const styles = StyleSheet.create({
   dotWrong: { backgroundColor: MISS, borderColor: MISS },
   optText: { flex: 1, fontSize: 15, lineHeight: 21, color: C.neutrals.charcoalBlack },
   optTextDim: { color: C.neutrals.softAsh },
-  why: {
-    marginTop: 20,
-    padding: 14,
-    borderLeftWidth: 2,
-    borderLeftColor: C.primary.turmericYellow,
-    backgroundColor: C.neutrals.warmIvory,
-    borderRadius: 4,
-  },
   whyText: { fontSize: 14.5, lineHeight: 22, color: C.neutrals.charcoalBlack },
+  // One integrated result card: verdict header above the explanation, tinted by
+  // correctness (replaces the old separate green banner + why box).
+  resultCard: {
+    marginTop: 20,
+    paddingVertical: 14,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+    borderLeftWidth: 3,
+  },
+  resultGood: { backgroundColor: 'rgba(56,142,60,0.10)', borderLeftColor: GOOD },
+  resultMiss: { backgroundColor: 'rgba(198,40,40,0.08)', borderLeftColor: MISS },
+  resultHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 },
+  resultLabel: { fontSize: 16, lineHeight: 20, fontWeight: '700' },
+  // The explicit way forward — swiping wasn't discoverable
+  continueBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    marginTop: 24,
+    paddingVertical: 15,
+    borderRadius: 8,
+    backgroundColor: C.primary.deepSaffron,
+  },
+  continueBtnText: { fontSize: 16, fontWeight: '700', color: '#fff' },
   input: {
     minHeight: 120,
     padding: 14,
