@@ -275,6 +275,13 @@ const ContentReaderScreen: React.FC = () => {
   const sectionsWithTrailingCheckRef = useRef(sectionsWithTrailingCheck);
   sectionsWithTrailingCheckRef.current = sectionsWithTrailingCheck;
 
+  // The section the voice is currently reading (set in onSegmentStart). Lets a
+  // user swipe seek the audio while a snap-back to the same page is a no-op.
+  const audioSectionRef = useRef<number | null>(null);
+  // Set by onScrollBeginDrag so onMomentumScrollEnd can tell a real swipe from
+  // the audio's own programmatic scrollToIndex (which never drags).
+  const userSwipeRef = useRef(false);
+
   const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
     if (viewableItems.length > 0 && viewableItems[0].index != null) {
       const idx = viewableItems[0].index;
@@ -332,6 +339,7 @@ const ContentReaderScreen: React.FC = () => {
         setHighlightedSegmentId(segmentId);
         const m = segmentId.match(/section-(\d+)/);
         if (m) {
+          audioSectionRef.current = parseInt(m[1]);
           const target = pageIndexForSectionRef.current[parseInt(m[1])];
           if (target != null) listRef.current?.scrollToIndex({ index: target, animated: true });
         }
@@ -407,43 +415,51 @@ const ContentReaderScreen: React.FC = () => {
     [activeSegments]
   );
 
-  // Page skip: when narrating, move the voice with the page (or stop it when
-  // leaving the sections); when idle, just turn the page
+  // Move the voice to whatever page the reader landed on — shared by the
+  // transport buttons (skipPage) and a manual swipe. No-op when not narrating.
+  const syncAudioToPage = useCallback(async (idx: number) => {
+    const page = pages[idx];
+    if (!page || !narrationActive) return;
+    if (page.kind === 'section') {
+      // Already reading this section (e.g. a half-swipe that snapped back) —
+      // don't restart the clip.
+      if (page.sectionIndex === audioSectionRef.current && !isPaused) return;
+      const segIdx = firstSegmentOfSection(page.sectionIndex);
+      if (segIdx >= 0) setHighlightedSegmentId(activeSegments[segIdx].id); // covers the paused case
+      if (prerecordedClips) {
+        await audioService.seekToSection(page.sectionIndex);
+      } else if (segIdx >= 0) {
+        await audioService.seekToSegment(segIdx);
+      }
+      // seekToSegment only auto-plays when it was already playing, so when we
+      // were parked (paused) on a check page, kick the voice back on.
+      if (isPaused) await audioService.resumeNarration();
+      audioSectionRef.current = page.sectionIndex;
+      setIsPlaying(true);
+      setIsPaused(false);
+    } else if (page.kind === 'check') {
+      // Land on the check without leaving narration — pause the voice and stay,
+      // whether we arrived here by auto-advance, a button, or a manual swipe.
+      await audioService.pauseNarration();
+      setIsPlaying(false);
+      setIsPaused(true);
+      setHighlightedSegmentId(null);
+    } else {
+      // Cover/reflection/sources — leaving the reading ends the narration
+      await audioService.stopNarration();
+      setIsPlaying(false);
+      setIsPaused(false);
+      setHighlightedSegmentId(null);
+    }
+  }, [pages, narrationActive, isPaused, firstSegmentOfSection, activeSegments, prerecordedClips, audioService]);
+
+  // Page skip: when narrating, move the voice with the page; when idle, just turn it
   const skipPage = useCallback(async (direction: 1 | -1) => {
     const target = activeIndex + direction;
     if (target < 0 || target >= pages.length) return;
-    const page = pages[target];
-    if (narrationActive) {
-      if (page.kind === 'section') {
-        const segIdx = firstSegmentOfSection(page.sectionIndex);
-        if (segIdx >= 0) setHighlightedSegmentId(activeSegments[segIdx].id); // covers the paused case
-        if (prerecordedClips) {
-          await audioService.seekToSection(page.sectionIndex);
-        } else if (segIdx >= 0) {
-          await audioService.seekToSegment(segIdx);
-        }
-        // seekToSegment only auto-plays when it was already playing, so when we
-        // were parked (paused) on a check page, kick the voice back on.
-        if (isPaused) await audioService.resumeNarration();
-        setIsPlaying(true);
-        setIsPaused(false);
-      } else if (page.kind === 'check') {
-        // Land on the check without leaving narration — pause the voice and stay,
-        // whether we arrived here by auto-advance or by a manual swipe mid-read.
-        await audioService.pauseNarration();
-        setIsPlaying(false);
-        setIsPaused(true);
-        setHighlightedSegmentId(null);
-      } else {
-        // Skipping onto cover/reflection/sources ends the narration
-        await audioService.stopNarration();
-        setIsPlaying(false);
-        setIsPaused(false);
-        setHighlightedSegmentId(null);
-      }
-    }
+    await syncAudioToPage(target);
     scrollToIndex(target);
-  }, [activeIndex, pages, narrationActive, isPaused, firstSegmentOfSection, activeSegments, prerecordedClips, audioService, scrollToIndex]);
+  }, [activeIndex, pages.length, syncAudioToPage, scrollToIndex]);
 
   // Podcast-style ±10 seconds
   const seekBySeconds = useCallback(async (deltaSeconds: number) => {
@@ -738,6 +754,15 @@ const ContentReaderScreen: React.FC = () => {
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
+          onScrollBeginDrag={() => { userSwipeRef.current = true; }}
+          onMomentumScrollEnd={(e) => {
+            // Only a real finger-drag moves the voice; the audio's own
+            // scrollToIndex never sets userSwipeRef, so it no-ops here.
+            if (!userSwipeRef.current) return;
+            userSwipeRef.current = false;
+            const idx = Math.round(e.nativeEvent.contentOffset.x / width);
+            syncAudioToPage(idx);
+          }}
           onViewableItemsChanged={onViewableItemsChanged}
           viewabilityConfig={viewabilityConfig}
           getItemLayout={(_, index) => ({ length: width, offset: width * index, index })}
