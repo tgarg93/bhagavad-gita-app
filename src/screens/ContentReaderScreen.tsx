@@ -150,6 +150,9 @@ const ContentReaderScreen: React.FC = () => {
   deepLinkIndexRef.current = deepLinkIndex;
 
   const listRef = useRef<FlatList<ReaderPage>>(null);
+  // Per-section vertical scroll views, so read-along can scroll the active page to
+  // keep the narrated block in view (see FoundationCard's onActiveBlockLayout).
+  const pageScrollRefs = useRef<Record<number, ScrollView | null>>({});
   const [activeIndex, setActiveIndex] = useState(0);
   const [ready, setReady] = useState(false);
   const [initialIndex, setInitialIndex] = useState(0);
@@ -585,7 +588,11 @@ const ContentReaderScreen: React.FC = () => {
 
   const renderSection = (section: NarrativeSection, sectionIndex: number) => (
     <View style={styles.page}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.pageScroll}>
+      <ScrollView
+        ref={r => { pageScrollRefs.current[sectionIndex] = r; }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.pageScroll}
+      >
         {/* A section carrying a takeaway is a bite-sized card; everything else
             is prose and renders exactly as it always has. */}
         {section.takeaway ? (
@@ -596,6 +603,13 @@ const ContentReaderScreen: React.FC = () => {
             highlightedSegmentId={highlightedSegmentId}
             segments={foundationsSegments}
             sectionIndex={sectionIndex}
+            onActiveBlockLayout={y => {
+              // Only the audio drives this (fires on segment change), so it won't
+              // fight a manual scroll. Keep the narrated block just below the top.
+              if (narrationActive) {
+                pageScrollRefs.current[sectionIndex]?.scrollTo({ y: Math.max(0, y - 24), animated: true });
+              }
+            }}
           />
         ) : (
           <NarrativeSections

@@ -5,7 +5,7 @@
 // the saffron rule. Everything under it is support: ~60 words of body, an
 // optional Sanskrit block, an optional figure, and an optional invitation into
 // the long-form content this card is a doorway to.
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
@@ -29,6 +29,10 @@ interface Props {
   highlightedSegmentId?: string | null;
   segments?: TextSegment[];
   sectionIndex?: number;
+  // Read-along auto-scroll: reports the Y of the block being narrated (takeaway /
+  // story / a bullet) so the page can scroll it into view. Called on every
+  // segment change; the parent decides whether/how far to scroll.
+  onActiveBlockLayout?: (y: number) => void;
 }
 
 const FoundationCard: React.FC<Props> = ({
@@ -38,36 +42,57 @@ const FoundationCard: React.FC<Props> = ({
   highlightedSegmentId = null,
   segments = [],
   sectionIndex,
+  onActiveBlockLayout,
 }) => {
   const { takeaway, storyText, keyVerse, citation, deeper, sectionHeader, teachingText } = section;
   const takeawayBlock = sectionIndex != null ? `section-${sectionIndex}-takeaway` : undefined;
   const storyBlock = sectionIndex != null ? `section-${sectionIndex}-story` : undefined;
+
+  // Y offset of each highlightable block within the card, filled by onLayout.
+  const blockYs = useRef<Record<string, number>>({});
+  const setBlockY = (id: string | undefined, y: number) => {
+    if (id) blockYs.current[id] = y;
+  };
+
+  // When the narrated block changes, hand its measured Y up so the page scrolls to it.
+  useEffect(() => {
+    if (!highlightedSegmentId || !onActiveBlockLayout) return;
+    const blockId = segments.find(s => s.id === highlightedSegmentId)?.blockId;
+    if (!blockId) return;
+    const y = blockYs.current[blockId];
+    if (y != null) onActiveBlockLayout(y);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [highlightedSegmentId]);
 
   return (
     <View style={styles.card}>
       <Text style={styles.eyebrow}>{section.title}</Text>
 
       {!!takeaway && (
-        <TextHighlighter
-          text={stripInlineMarkup(takeaway)}
-          blockId={takeawayBlock}
-          highlightedSegmentId={highlightedSegmentId}
-          segments={segments}
-          style={getTextStyle(styles.takeaway)}
-        />
+        <View onLayout={e => setBlockY(takeawayBlock, e.nativeEvent.layout.y)}>
+          <TextHighlighter
+            text={stripInlineMarkup(takeaway)}
+            blockId={takeawayBlock}
+            highlightedSegmentId={highlightedSegmentId}
+            segments={segments}
+            style={getTextStyle(styles.takeaway)}
+          />
+        </View>
       )}
       <View style={styles.rule} />
 
       <FoundationFigure sectionId={section.id} />
 
       {!!storyText && (
-        <Prose
-          text={storyText}
-          blockId={storyBlock}
-          highlightedSegmentId={highlightedSegmentId}
-          segments={segments}
-          style={getTextStyle(styles.body)}
-        />
+        <View onLayout={e => setBlockY(storyBlock, e.nativeEvent.layout.y)}>
+          <Prose
+            text={storyText}
+            blockId={storyBlock}
+            highlightedSegmentId={highlightedSegmentId}
+            segments={segments}
+            style={getTextStyle(styles.body)}
+          />
+        </View>
       )}
 
       {/* Bullets render after the story prose, in reading order. Each bullet is
@@ -75,9 +100,22 @@ const FoundationCard: React.FC<Props> = ({
           during read-along, exactly like the story sentences — the matching
           segments come from buildFoundationsSegments. */}
       {!!section.bullets?.length && (
-        <View style={styles.bullets}>
+        <View
+          style={styles.bullets}
+          onLayout={e => (blockYs.current['__bulletsTop'] = e.nativeEvent.layout.y)}
+        >
           {section.bullets.map((item, j) => (
-            <View key={j} style={styles.bulletRow}>
+            <View
+              key={j}
+              style={styles.bulletRow}
+              onLayout={e =>
+                setBlockY(
+                  sectionIndex != null ? `section-${sectionIndex}-bullet-${j}` : undefined,
+                  // bullets sit inside the styles.bullets wrapper, so add its offset
+                  (blockYs.current[`__bulletsTop`] ?? 0) + e.nativeEvent.layout.y
+                )
+              }
+            >
               <View style={styles.bulletDot} />
               <View style={styles.bulletBody}>
                 <Prose
