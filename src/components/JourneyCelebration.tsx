@@ -7,6 +7,7 @@ import journeyService from '../services/journeyService';
 import { JourneyItem, JOURNEY_MODULES } from '../data/journeyPath';
 import MarigoldShower from './MarigoldShower';
 import ProgressRungs from './ProgressRungs';
+import CelebrationGauge from './CelebrationGauge';
 import {
   getProgression,
   progressWithinBand,
@@ -101,7 +102,6 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
   onExit,
   onReadAgain,
   bankedTakeaways,
-  handoff,
   objective,
   active = true,
   pointsAtStart,
@@ -194,34 +194,19 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
 
   return (
     <View style={styles.container}>
+      {/* The completion check now marks the header — the moment the reading is
+          done — rather than riding on Krishna's avatar below. */}
       <Animated.View
         style={[
-          styles.avatarRing,
+          styles.headerCheck,
           {
-            opacity: ringAnim,
-            transform: [
-              { scale: ringAnim.interpolate({ inputRange: [0, 1], outputRange: [0.85, 1] }) },
-            ],
+            opacity: checkAnim.interpolate({ inputRange: [0, 0.15, 1], outputRange: [0, 1, 1] }),
+            transform: [{ scale: checkAnim }],
           },
         ]}
       >
-        <Image
-          source={require('../../assets/krishna-avatar.png')}
-          style={styles.avatar}
-        />
-        <Animated.View
-          style={[
-            styles.checkBadge,
-            {
-              opacity: checkAnim.interpolate({ inputRange: [0, 0.15, 1], outputRange: [0, 1, 1] }),
-              transform: [{ scale: checkAnim }],
-            },
-          ]}
-        >
-          <Ionicons name="checkmark" size={22} color="#FFFFFF" />
-        </Animated.View>
+        <Ionicons name="checkmark" size={20} color="#FFFFFF" />
       </Animated.View>
-
       <Animated.Text style={[styles.completedLabel, riseStyle(labelAnim)]}>
         Completed
       </Animated.Text>
@@ -229,58 +214,71 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
         {completedTitle}
       </Animated.Text>
 
-      {!!message && (
-        <Animated.Text style={[styles.message, riseStyle(messageAnim)]}>{message}</Animated.Text>
-      )}
-
+      {/* Progress: one arc for the current level band only. The fill (and the %)
+          sweep from where the reader stood before this reading up to now, so the
+          gain shows as motion — no separate "+N" chip. */}
       {progression && (
-        <Animated.View style={[styles.progressStrip, riseStyle(progAnim)]}>
-          <ProgressRungs
-            level={progression.level}
-            nextLevel={progression.nextLevel}
-            progressToNext={progression.progressToNext}
-            animateFrom={
+        <Animated.View style={[styles.gaugeWrap, riseStyle(messageAnim)]}>
+          <CelebrationGauge
+            fromFrac={
               pointsAtStart != null
                 ? levelForPoints(pointsAtStart).level === progression.level.level
                   ? progressWithinBand(pointsAtStart)
                   : 0 // crossed into a new band — fill it fresh
-                : undefined
+                : progression.progressToNext
             }
+            toFrac={progression.progressToNext}
+            stageName={progression.level.sanskrit}
+            active={active}
           />
-          <Text style={styles.progressLine}>
-            {progression.nextLevel
-              ? `${
-                  pointsAtStart != null && progression.points - pointsAtStart > 0
-                    ? `+${progression.points - pointsAtStart} points · `
-                    : ''
-                }${progression.pointsToNext} to ${progression.nextLevel.sanskrit}`
-              : "The path's last name is yours."}
-          </Text>
         </Animated.View>
       )}
 
-      {!!objective && (
-        <Animated.View style={[styles.banked, riseStyle(nextAnim)]}>
-          <Text style={styles.bankedLabel}>You can now</Text>
-          <Text style={styles.objectiveEarned}>{objective}</Text>
+      {/* Krishna delivers the blessing — and, on a Foundations act, the
+          takeaways — so they read as spoken. He's on every completion; the list
+          only appears when the act banked one. */}
+      <Animated.View style={[styles.voice, riseStyle(progAnim)]}>
+        <Animated.View
+          style={[
+            styles.avatarRing,
+            {
+              opacity: ringAnim,
+              transform: [
+                { scale: ringAnim.interpolate({ inputRange: [0, 1], outputRange: [0.85, 1] }) },
+              ],
+            },
+          ]}
+        >
+          <Image source={require('../../assets/krishna-avatar.png')} style={styles.avatar} />
         </Animated.View>
-      )}
 
-      {!!bankedTakeaways?.length && (
-        <Animated.View style={[styles.banked, riseStyle(nextAnim)]}>
-          <Text style={styles.bankedLabel}>You can now say</Text>
-          {bankedTakeaways.map(t => (
-            <View key={t} style={styles.bankedRow}>
-              <Text style={styles.bankedDot}>◆</Text>
-              <Text style={styles.bankedText}>{t}</Text>
-            </View>
-          ))}
-        </Animated.View>
-      )}
-
-      {!!handoff && (
-        <Animated.Text style={[styles.handoff, riseStyle(nextAnim)]}>{handoff}</Animated.Text>
-      )}
+        <View style={styles.bubble}>
+          {/* Foundations: the recap list. Capstone: the earned objective.
+              Everything else (Gita/concept): Krishna's blessing line — kept only
+              when there's no list/objective so his bubble is never empty. */}
+          {bankedTakeaways?.length ? (
+            <>
+              <Text style={styles.bankedLabel}>What you've learned</Text>
+              <View style={styles.learnedList}>
+                {/* Short one-clause recaps (see RECAP_BY_ID in foundations.ts). */}
+                {bankedTakeaways.map(t => (
+                  <View key={t} style={styles.bankedRow}>
+                    <Text style={styles.bankedDot}>◆</Text>
+                    <Text style={styles.bankedText}>{t}</Text>
+                  </View>
+                ))}
+              </View>
+            </>
+          ) : objective ? (
+            <>
+              <Text style={styles.bankedLabel}>You can now</Text>
+              <Text style={styles.objectiveEarned}>{objective}</Text>
+            </>
+          ) : (
+            !!message && <Text style={styles.message}>{message}</Text>
+          )}
+        </View>
+      </Animated.View>
 
       {pathDone ? (
         <Animated.Text style={[styles.pathDone, riseStyle(nextAnim)]}>
@@ -308,15 +306,27 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
         {/* The way back INTO the reading. The celebration is a page in the
             reader's own pager, so this is a scroll, not a navigation. */}
         {!!onReadAgain && (
-          <TouchableOpacity style={styles.backBtn} onPress={onReadAgain}>
-            <Text style={styles.backBtnText}>Read it again</Text>
+          <TouchableOpacity
+            style={styles.iconBtn}
+            onPress={onReadAgain}
+            accessibilityRole="button"
+            accessibilityLabel="Read it again"
+          >
+            <Ionicons name="refresh" size={22} color={colors.neutrals.softAsh} />
+            <Text style={styles.iconBtnText}>Read again</Text>
           </TouchableOpacity>
         )}
         {/* Goes BACK — to the journey path if that's where you came from. It used
             to jump to the Learn tab, which popped the path off the stack and made
             a completed item a dead end. */}
-        <TouchableOpacity style={styles.backBtn} onPress={onExit}>
-          <Text style={styles.backBtnText}>Done</Text>
+        <TouchableOpacity
+          style={styles.iconBtn}
+          onPress={onExit}
+          accessibilityRole="button"
+          accessibilityLabel="Done"
+        >
+          <Ionicons name="close" size={24} color={colors.neutrals.softAsh} />
+          <Text style={styles.iconBtnText}>Done</Text>
         </TouchableOpacity>
       </Animated.View>
 
@@ -364,7 +374,7 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
 
 const { colors, typography, spacing, borderRadius, shadows } = DharmaDesignSystem;
 
-const AVATAR_SIZE = 156;
+const AVATAR_SIZE = 52; // small now — Krishna sits beside his words, not as a hero
 
 const styles = StyleSheet.create({
   container: {
@@ -375,14 +385,16 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xxl,
   },
   avatarRing: {
-    width: AVATAR_SIZE + 12,
-    height: AVATAR_SIZE + 12,
-    borderRadius: (AVATAR_SIZE + 12) / 2,
-    borderWidth: 3,
+    width: AVATAR_SIZE + 6,
+    height: AVATAR_SIZE + 6,
+    borderRadius: (AVATAR_SIZE + 6) / 2,
+    borderWidth: 2.5,
     borderColor: colors.primary.deepSaffron,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: spacing.lg,
+    marginLeft: spacing.md,
+    marginBottom: -14, // tuck onto the bubble's shoulder
+    zIndex: 2,
   },
   avatar: {
     width: AVATAR_SIZE,
@@ -390,18 +402,17 @@ const styles = StyleSheet.create({
     borderRadius: AVATAR_SIZE / 2,
     resizeMode: 'cover',
   },
-  checkBadge: {
-    position: 'absolute',
-    bottom: 2,
-    right: 2,
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+  // The completion check, now in the header.
+  headerCheck: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     backgroundColor: colors.primary.peacockTeal,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 3,
     borderColor: colors.neutrals.sandstoneBeige,
+    marginBottom: spacing.sm,
   },
   completedLabel: {
     ...typography.sizes.caption,
@@ -416,16 +427,16 @@ const styles = StyleSheet.create({
     color: colors.neutrals.charcoalBlack,
     fontWeight: '700',
     textAlign: 'center',
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
   },
+  // Krishna's line, inside the speech bubble — left-aligned, no longer a centered
+  // hero caption. Explicit sizes (the typography.sizes.* spread is the tsc trap).
   message: {
-    ...typography.sizes.bodyLG,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
     color: colors.neutrals.charcoalBlack,
-    textAlign: 'center',
-    lineHeight: 28,
     fontStyle: 'italic',
-    marginBottom: spacing.xl,
   },
   pathDone: {
     ...typography.sizes.bodyLG,
@@ -434,16 +445,35 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: spacing.lg,
   },
+  // The arc gauge sits centered under the title.
+  gaugeWrap: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    marginBottom: spacing.md,
+  },
+  // Krishna sits ABOVE a full-width bubble (tucked onto its top-left shoulder),
+  // so his words get the whole width instead of a squished column beside him.
+  voice: {
+    alignSelf: 'stretch',
+    alignItems: 'flex-start',
+    marginBottom: spacing.md,
+  },
+  bubble: {
+    alignSelf: 'stretch',
+    backgroundColor: colors.neutrals.white,
+    borderRadius: borderRadius.medium,
+    borderWidth: 1,
+    borderColor: 'rgba(230,81,0,0.12)',
+    paddingTop: spacing.lg,
+    paddingBottom: spacing.md,
+    paddingHorizontal: spacing.md,
+    ...shadows.soft,
+  },
   // Foundations: the act's takeaways, replayed. Explicit fontSize/lineHeight
   // rather than spreading typography.sizes.* — that union is the tsc trap here.
-  banked: {
-    alignSelf: 'stretch',
-    marginBottom: spacing.lg,
-    paddingVertical: spacing.md,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(0,0,0,0.12)',
+  learnedList: {
     gap: 9,
+    marginTop: 2,
   },
   bankedLabel: {
     fontSize: 10.5,
@@ -472,15 +502,6 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     fontWeight: '600',
     color: colors.neutrals.charcoalBlack,
-  },
-  handoff: {
-    fontSize: 17,
-    lineHeight: 25,
-    fontStyle: 'italic',
-    color: colors.neutrals.charcoalBlack,
-    textAlign: 'center',
-    marginBottom: spacing.lg,
-    paddingHorizontal: spacing.sm,
   },
   nextBtnWrap: {
     alignSelf: 'stretch',
@@ -513,33 +534,21 @@ const styles = StyleSheet.create({
   exitRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.md,
-  },
-  backBtn: {
+    justifyContent: 'center',
+    gap: spacing.xxl,
     marginTop: spacing.md,
-    paddingVertical: spacing.sm,
   },
-  backBtnText: {
-    ...typography.sizes.bodyMD,
-    color: colors.neutrals.softAsh,
-    fontWeight: '600',
-  },
-  progressStrip: {
-    alignSelf: 'stretch',
+  iconBtn: {
     alignItems: 'center',
-    backgroundColor: colors.neutrals.white,
-    borderRadius: borderRadius.medium,
-    borderWidth: 1,
-    borderColor: 'rgba(230, 81, 0, 0.14)',
-    paddingVertical: spacing.md,
+    gap: 5,
+    paddingVertical: spacing.xs,
     paddingHorizontal: spacing.sm,
-    marginBottom: spacing.lg,
   },
-  progressLine: {
-    fontSize: 12,
-    lineHeight: 17,
+  iconBtnText: {
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: '600',
     color: colors.neutrals.softAsh,
-    marginTop: 8,
   },
   levelUpOverlay: {
     ...StyleSheet.absoluteFillObject,

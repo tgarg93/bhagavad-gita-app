@@ -298,18 +298,18 @@ Every status below was checked directly against the data layer (`foundations.ts`
 
 Format for every 🆕 entry: 1:1 square, see Part 6. Border: slender gold/floral. No text.
 
-## Foundations (Jigyasu Track — Module 0) — 9 covers, all on the generic fallback
+## Foundations (Jigyasu Track — Module 0) — first 4 acts delivered; 5 covers still on the generic fallback
 
-`src/data/foundations.ts` ships 8 acts plus a capstone, each declaring `coverImage` — and every one currently resolves to `generic-cover.jpg`. This is **Module 0**: the first content a new user opens, ahead of everything in Module 1. The nine fallbacks here are, collectively, the most-seen bug in the whole backlog. Filenames follow the shopping list already written into `foundations.ts`: `foundations-{name,thread,claim,wheel,faces,library,living,capstone}-cover.jpg`. (Note the deliberate id/title drift flagged in CLAUDE.md: the file id is `faces`, the act title is "The Gods" — the filename stays `foundations-faces-cover.jpg`.)
+`src/data/foundations.ts` ships 8 acts plus a capstone, each declaring `coverImage`. **The first four acts now carry bespoke covers** — `foundations-{name,thread,claim,wheel}-cover.jpg`, wired via `require()` (`COVER_NAME`/`COVER_THREAD`/`COVER_CLAIM`/`COVER_WHEEL`). The remaining five (`faces`, `library`, `living`, `capstone`, plus the capstone reader item) still resolve to `generic-cover.jpg`, which today is the **Tree of Life** fallback (see App-wide fallback, below). Because that tree reads as intentional rather than as a placeholder, those acts *look* illustrated in the simulator while sharing one image — the repetition is only obvious in a list, where the thumbnails are identical but for a completion tint. This is **Module 0**: the first content a new user opens, ahead of everything in Module 1, so the remaining fallbacks stay the highest-priority slice of the backlog. Filenames follow the shopping list already written into `foundations.ts`: `foundations-{name,thread,claim,wheel,faces,library,living,capstone}-cover.jpg`. (Note the deliberate id/title drift flagged in CLAUDE.md: the file id is `faces`, the act title is "The Gods" — the filename stays `foundations-faces-cover.jpg`.) **Note on the delivered four:** they ship as pre-framed non-square establishing plates (2:3 / 3:2, not the 1:1 master the budget assumes) — the reader center-crops them full-bleed, so the two landscape plates (name, claim) lose their left/right border on a portrait screen. Accepted as delivered.
 
 **The governing rule for this set — read before generating any of the nine.** Each act teaches 4–5 ideas that *already own a canonical image twice over*: once as a Module 1 concept cover (Dharma, Maya, Samsara, Brahman & Atman, Three Gunas, The Four Great Streams, What is Hinduism?…), and once as the act's own in-body schematic figure (Part 4a). **An act cover may never use any of those concept-vehicles** — not the doorways, the four-bough tree, the pot, the rope, the three threads, the wheel, the caged bird, a book, a shelf, a lamp-as-subject, a deity figure. Instead every act cover is an **establishing image** — a place, an object, or a quality of light that sets the act's subject and mood *without* illustrating any single idea inside it. Told this way the nine become a coherent Module 0 series: eight quiet establishing plates for a primer, warming and cooling along a loose dawn-to-golden-hour arc (like the seven kandas), then one human-scale close. No figures appear until the capstone, deliberately.
 
 | Act | id / order | Cover | Status |
 |---|---|---|---|
-| What Hinduism Is | `name` · 1 | `foundations-name-cover.jpg` | 🆕 generic fallback |
-| What Makes Someone Hindu | `thread` · 2 | `foundations-thread-cover.jpg` | 🆕 generic fallback |
-| Core Beliefs | `claim` · 3 | `foundations-claim-cover.jpg` | 🆕 generic fallback |
-| Karma & Rebirth | `wheel` · 4 | `foundations-wheel-cover.jpg` | 🆕 generic fallback |
+| What Hinduism Is | `name` · 1 | `foundations-name-cover.jpg` | ✅ done — river at dawn (1536×1024) |
+| What Makes Someone Hindu | `thread` · 2 | `foundations-thread-cover.jpg` | ✅ done — footprints in stone (1024×1536) |
+| Core Beliefs | `claim` · 3 | `foundations-claim-cover.jpg` | ✅ done — window onto open sky (1536×1024) |
+| Karma & Rebirth | `wheel` · 4 | `foundations-wheel-cover.jpg` | ✅ done — stone stair up a hill (1024×1536) |
 | The Gods | `faces` · 5 | `foundations-faces-cover.jpg` | 🆕 generic fallback |
 | The Scriptures | `library` · 6 | `foundations-library-cover.jpg` | 🆕 generic fallback |
 | Rituals & Festivals | `living` · 7 | `foundations-living-cover.jpg` | 🆕 generic fallback |
@@ -575,7 +575,10 @@ Treat these as one continuous sequence, not seven independent covers. The light 
 
 `assets/images/covers/generic-cover.jpg` is the real fallback, wired as `FALLBACK_COVER` in `src/data/readerContent.ts` and `src/data/journeyPath.ts` and used by `contentAggregator.ts`. (v3.0 wrongly named `dharma-cover.png` here — that file is now the *real* Dharma concept cover, not a fallback.)
 
-Keep the generic cover deliberately abstract — a lotus/diya/wheel motif, no specific character or story — precisely so it reads as a placeholder rather than a bespoke choice. It should never be mistaken for real content art. **Every appearance of it is a bug in the backlog above.**
+**What the file actually is (corrected in 4.1):** not the abstract lotus/diya/wheel motif prior versions described, but an elaborate, museum-quality **Tree of Life** — a dense banyan teeming with animals, sages, birds and roots into water. It is bespoke-grade art, and that is a **problem**, not a feature: a fallback that looks intentional *masks the backlog*. All eight Foundations acts render this single tree (`journeyPath.ts` → `act.coverImage` → the fallback), and because it reads as deliberate, the missing covers went unnoticed for a full release — the whole point of a fallback is to look like a gap so gaps get filled.
+
+The guidance therefore stands and the current file violates it: keep the generic cover **deliberately abstract** — a lotus/diya/wheel motif, no specific character or story — precisely so it reads as a placeholder rather than a bespoke choice. Replacing today's tree-of-life fallback with a true placeholder is its own small backlog item. Until then, remember that an item "having art" in the simulator is not evidence it is off this backlog — check the data layer, not the screen. **Every appearance of the fallback is a bug in the backlog above.**
+*(Collision note: because the fallback is itself a tree, it reinforces why no Foundations act cover — nor the Four Great Streams concept's near-neighbour — may lean on a tree; see the Foundations governing rule.)*
 
 ---
 

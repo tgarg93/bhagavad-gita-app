@@ -54,10 +54,14 @@ export interface FoundationsAct {
   sources: SourceNote[];
 }
 
-// TODO cover shopping list: foundations-{name,thread,claim,wheel,faces,library,
-// living,capstone}-cover.jpg — see docs/dharma-illustration-spec.md. Until they
-// land, each act borrows the cover of the concept it most points at.
+// Bespoke Jigyasu-track covers. Remaining acts (faces, library, living, capstone)
+// still borrow the shared GENERIC until their covers land — see
+// docs/dharma-illustration-spec.md.
 const GENERIC = require('../../assets/images/covers/generic-cover.jpg');
+const COVER_NAME = require('../../assets/images/covers/foundations-name-cover.jpg');
+const COVER_THREAD = require('../../assets/images/covers/foundations-thread-cover.jpg');
+const COVER_CLAIM = require('../../assets/images/covers/foundations-claim-cover.jpg');
+const COVER_WHEEL = require('../../assets/images/covers/foundations-wheel-cover.jpg');
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PART 1 — WHAT HINDUISM IS
@@ -72,7 +76,7 @@ const ACT_NAME: FoundationsAct = {
     'You already have a picture of Hinduism. Almost certainly it came from someone outside it — and so did the name.',
     'Four ideas. By the end of them you will know what it is **not**, where the word came from, what the tradition calls itself, and how something with no book survived three thousand years without one.',
   ],
-  coverImage: GENERIC,
+  coverImage: COVER_NAME,
   sections: [
     {
       id: 'f-name-no-founder',
@@ -185,7 +189,7 @@ const ACT_THREAD: FoundationsAct = {
     'This part contains the single most useful sentence in the whole track. Once you have it, every strange thing about Hinduism stops being strange.',
     'Four ideas: **what actually makes someone a Hindu**, how that compares with the traditions you already know, why it could branch without ever splitting, and why nobody assigns you a god.',
   ],
-  coverImage: GENERIC,
+  coverImage: COVER_THREAD,
   sections: [
     {
       id: 'f-thread-practice',
@@ -295,7 +299,7 @@ const ACT_CLAIM: FoundationsAct = {
     'This is the deep end, and it is shorter than you fear. Everything so far was the shape of the house. This is what lives in it.',
     'Six ideas: **Brahman**, the one reality · **atman**, the one who watches · the claim that they are the same · **maya**, why you cannot see it · **prana**, the current running through it · and the **three gunas**, the threads it is all woven from.',
   ],
-  coverImage: GENERIC,
+  coverImage: COVER_CLAIM,
   sections: [
     {
       id: 'f-claim-brahman',
@@ -456,7 +460,7 @@ const ACT_WHEEL: FoundationsAct = {
     'The philosophy is settled. Now the machinery: how a life leads to another life, what steers it, what you owe while you are here, and where the exit is.',
     'Seven ideas — **samsara**, **karma**, **dharma**, **ahimsa**, **moksha**, the four aims of a life, and the four roads out. This is the part your friend will ask you about first.',
   ],
-  coverImage: GENERIC,
+  coverImage: COVER_WHEEL,
   sections: [
     {
       id: 'f-wheel-samsara',
@@ -1012,10 +1016,56 @@ export const allTakeaways = (): string[] =>
 // the content stays in exactly one place.
 ACT_CAPSTONE.sections[0].bullets = allTakeaways();
 
+// Short one-clause recaps for the completion screen's "What you've learned" list,
+// keyed by section id. The cards themselves still show the full `takeaway`; this
+// keeps the celebration recap tight so the Next button clears the fold even on
+// the seven-card acts. Falls back to the full takeaway for any id not listed.
+const RECAP_BY_ID: Record<string, string> = {
+  // What Hinduism Is
+  'f-name-no-founder': 'No founder, no single book, no one in charge.',
+  'f-name-river': 'Even the name is a river, mispronounced.',
+  'f-name-sanatana': 'It calls itself Sanatana Dharma — the eternal way.',
+  'f-name-sanskrit': 'Sanskrit was built to be remembered, not read.',
+  // What Makes Someone Hindu
+  'f-thread-practice': 'Being Hindu is what you practise, not what you believe.',
+  'f-thread-compare': 'Others ask what you believe; Hinduism asks what you do.',
+  'f-thread-streams': 'It branched into four streams without ever splitting.',
+  'f-thread-ishta': 'You choose the god you love — your ishta-devata.',
+  // Core Beliefs
+  'f-claim-brahman': 'Behind every form is one reality: Brahman.',
+  'f-claim-atman': 'That same reality looks out from inside you: atman.',
+  'f-claim-tat-tvam-asi': 'Brahman and atman are one — the whole claim.',
+  'f-claim-maya': 'The world is misread, not unreal — that is maya.',
+  'f-claim-prana': 'One living current runs through all of it: prana.',
+  'f-claim-gunas': 'Nature is woven from three strands — the gunas.',
+  // Karma & Rebirth
+  'f-wheel-samsara': 'Death changes the clothes, not the wearer.',
+  'f-wheel-karma': 'Karma means action, not fate.',
+  'f-wheel-dharma': 'Dharma is “what is mine to do?”',
+  'f-wheel-ahimsa': 'Ahimsa — cause no harm you don’t have to.',
+  'f-wheel-moksha': 'Moksha — getting off the wheel altogether.',
+  'f-wheel-aims': 'Pleasure and prosperity are proper goals too.',
+  'f-wheel-yogas': 'Four roads out, one for each kind of person.',
+  // The Gods
+  'f-faces-trimurti': 'It grew faces — start with the great three.',
+  'f-faces-avatar': 'When the world goes wrong, Vishnu comes down: an avatar.',
+  'f-faces-shakti': 'The Goddess is power itself — Shakti.',
+  'f-faces-family': 'Six names unlock almost any Hindu story.',
+  // The Scriptures
+  'f-library-shelves': 'Not one book — a library, on two shelves.',
+  'f-library-epics': 'Two epics: one man does right; one family self-destructs.',
+  'f-library-gita': 'A soldier lays down his bow — and gets the Gita.',
+  // Rituals & Festivals
+  'f-living-murti': 'It’s a religion you do — starting by welcoming a guest.',
+  'f-living-darshan': 'You go to see the god, and to be seen: darshan.',
+  'f-living-year': 'The festival calendar is a story you can read.',
+  'f-living-hard': 'Two questions have no tidy answer — say so honestly.',
+};
+
 export const takeawaysForAct = (actId: string): string[] =>
   FOUNDATIONS_ACTS.find(a => a.id === actId)
-    ?.sections.map(s => s.takeaway)
-    .filter((t): t is string => !!t) ?? [];
+    ?.sections.filter(s => !!s.takeaway)
+    .map(s => RECAP_BY_ID[s.id] ?? (s.takeaway as string)) ?? [];
 
 export const getFoundationsAct = (id: string): FoundationsAct | null =>
   FOUNDATIONS_ACTS.find(a => a.id === id) ?? null;
