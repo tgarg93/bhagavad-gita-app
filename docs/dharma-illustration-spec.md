@@ -1,8 +1,10 @@
 # Dharma Illustration Spec
 
-**Version:** 4.0
+**Version:** 4.1
 **Status:** Production Ready
 **Supersedes:** v3.0, `bhagavad-gita-chapter-images.md` v1 (Gita chapters only), and the standalone "Dharma Design System v2.0" style guide — all folded into this one document, which is the canonical spec for **every** piece of cover, icon, and interior artwork in the app.
+
+**What changed in 4.1.** The Foundations track (the Jigyasu track — Module 0 of the guided journey, `src/data/foundations.ts`: 8 acts + a capstone) shipped after v4.0 and the spec never caught up with it. Two gaps. First, all nine acts declare a `coverImage` that currently resolves to `generic-cover.jpg` — nine appearances of the fallback, and `foundations.ts` carries a TODO cover shopping list pointing straight at this document. **Module 0 is now literally the first content a new user opens**, ahead of the "What is Hinduism?" concept that v4.0 called the first cover — so these nine are the new highest-priority slice. They are added to Part 5 as their own category, with a governing rule that keeps them clear of the Module 1 concepts they overlap. Second, Foundations shipped the app's first **in-body** illustration — but as code-drawn schematic SVG diagrams (`FoundationFigure.tsx`), not commissioned raster art. Part 4's "cover-only" stance for commissioned art is unchanged and correct; a new **Part 4a** records the figure layer so nobody commissions raster section art for it or is surprised it exists.
 
 **What changed in 4.0.** v3.0 drifted out of sync with the repo in both directions. It listed work as outstanding that had already shipped (Gita chapters 1–3; all six deity covers; the six Module 1 concept covers), and it had no entry at all for the ~114 content items added by the content-expansion commit (20 stories, 7 prayers, 13 scripture parts) or for six philosophy concepts and four deities that were in the data layer all along. Meanwhile the art that *did* ship broke two of the spec's own rules — six concept covers landed at 408×617px against a mandated 2048² master, and files landed as `.jpg` against a mandated `.png`. This version restates every status against the actual data layer, blesses `.jpg` with a real size budget, adds prompts for every outstanding item on a user-reachable surface, and adds a Phase 2 backlog for stories, prayers, and scripture parts.
 
@@ -140,12 +142,13 @@ Known **visual clusters** — different content, same picture if you're not care
 - **Lotus on water.** Lakshmi, Gita Chapter 5, and Brahma's seat. Lakshmi = a lotus opening, coins beneath the water at its roots · Chapter 5 = extreme close-up of a leaf with one droplet beading off · Brahma = the lotus is a seat, not the subject.
 - **Trees.** The Four Great Streams (upright banyan, four boughs), Gita Chapter 15 (the *inverted* cosmic tree, roots up), Gita Chapter 6 (one tree, one yogi beneath it), The Two Birds story (two birds on one branch). Silhouettes must not rhyme.
 - **Teacher and student, seated.** The Upanishads scripture cover, the Katha Upanishad part, the Satyakama story, and the Guru concept. Only the Upanishads cover gets the canonical two-figures-and-a-lamp composition; the other three must find another way in.
+- **The Foundations acts double every concept.** Each Module 0 act (Part 5's Foundations section) teaches the same ideas as a Module 1 concept and reuses that concept's vehicle in an in-body figure (Part 4a) — so the streams-tree, the pot, the rope, the three threads, the samsara-wheel, the caged bird, the doorways, books, shelves, lamps and deity figures are all *doubly* spoken for. A Foundations act cover may use none of them; it must be an establishing image instead. This is the widest collision surface in the app — see the governing rule in Part 5.
 
 ---
 
 # Part 2 — Image Types & Where They're Used
 
-Every content item in the app (a Gita chapter, a deity, a philosophy concept, a yoga practice, a festival, a scripture, a story, a prayer) carries an image field in the data layer — `images.heroImage` for concepts/deities/practices, `heroImageUrl` for festivals, `coverImage` for stories/prayers/scripture parts, and a chapter-number lookup for the Gita. This spec produces art for all of them, plus reasons through a third, not-yet-built option.
+Every content item in the app (a Gita chapter, a deity, a philosophy concept, a yoga practice, a festival, a scripture, a story, a prayer, a Foundations act) carries an image field in the data layer — `images.heroImage` for concepts/deities/practices, `heroImageUrl` for festivals, `coverImage` for stories/prayers/scripture parts and Foundations acts, and a chapter-number lookup for the Gita. This spec produces art for all of them, reasons through a third not-yet-built option (Part 4), and records the one in-body exception that has already shipped (Part 4a).
 
 ### 1. Cover — build this for everything
 
@@ -272,9 +275,21 @@ Per how this app is built elsewhere (concepts/deities/festivals/stories already 
 
 ---
 
+# Part 4a — In-body illustration that *did* ship: the Foundations schematic figures
+
+The Foundations track broke the cover-only default on purpose — but not with the art this spec commissions. Its in-body illustrations are **code-drawn schematic SVG diagrams** (`src/components/FoundationFigure.tsx`, on `react-native-svg`), not raster miniature paintings. They are a different medium doing a different job, and they sit **outside** this spec's art pipeline:
+
+- **What they are.** ~10 line-and-label diagrams — an etymology chain, a comparison table, the four-stream tree, the pot-and-space, the rope-and-serpent, the three gunas, the samsara wheel, the trimurti, the family map, the two shelves. Each is keyed on a card's section id (`f-name-river`, `f-thread-streams`, `f-claim-maya`, …) via the `FIGURES` map; a card with no matching id is text-only. Some draw themselves in when their page becomes active (the `active` prop). A tap opens the same vector large and rotated to landscape.
+- **Why they are not in this backlog.** They explain *structure* (how ideas relate, how a word changed, what sits on which shelf) — the one thing the "one unforgettable image" raster style is deliberately bad at. They render from code, cost nothing per unit, restyle instantly from `DharmaDesignSystem` tokens, and stay crisp at any size. Commissioning miniature-painting versions of them would be strictly worse.
+- **The rule this creates.** **Never commission raster section art for a Foundations act.** Its interior illustration need is already met by the figure layer. If a *new* Foundations card wants a diagram, it's a `FoundationFigure` addition (code), not an entry in Part 5.
+- **The rule it does *not* change.** The cover-only default for commissioned raster art (Part 4) stands for every content type, Foundations included — the schematic figures are interior *diagrams*, the raster covers below are the *cover*. They coexist; they don't compete.
+- **The collision it *does* create — critical.** Every Foundations figure uses the canonical vehicle of the concept it teaches (the streams figure *is* the four-bough tree; the maya figure *is* the rope-and-serpent; the samsara figure *is* the wheel). So a Foundations act cover may not reuse that vehicle either — it is now spoken for twice (the Module 1 concept cover **and** the act's own in-body figure). This is the governing constraint on the covers in Part 5's Foundations section.
+
+---
+
 # Part 5 — Cover Art Backlog
 
-Every status below was checked directly against the data layer (`godsAndDeities.ts`, `philosophyAndTeachings.ts`, `yogaAndPractices.ts`, `expandedScriptures.ts`, `festivals.ts`, `stories.ts`, `prayers.ts`, `scriptureTexts.ts`). Four kinds of entry:
+Every status below was checked directly against the data layer (`foundations.ts`, `godsAndDeities.ts`, `philosophyAndTeachings.ts`, `yogaAndPractices.ts`, `expandedScriptures.ts`, `festivals.ts`, `stories.ts`, `prayers.ts`, `scriptureTexts.ts`). Four kinds of entry:
 
 - **✅ Done** — a real, distinct asset exists and is correctly wired.
 - **⚠️ Regenerate** — real art exists but fails this spec (below the resolution floor in Part 6). Prompt unchanged; only the output size changes.
@@ -282,6 +297,47 @@ Every status below was checked directly against the data layer (`godsAndDeities.
 - **⏸ Reserved** — no reader content shipped, so no screen would render the art. Don't generate.
 
 Format for every 🆕 entry: 1:1 square, see Part 6. Border: slender gold/floral. No text.
+
+## Foundations (Jigyasu Track — Module 0) — 9 covers, all on the generic fallback
+
+`src/data/foundations.ts` ships 8 acts plus a capstone, each declaring `coverImage` — and every one currently resolves to `generic-cover.jpg`. This is **Module 0**: the first content a new user opens, ahead of everything in Module 1. The nine fallbacks here are, collectively, the most-seen bug in the whole backlog. Filenames follow the shopping list already written into `foundations.ts`: `foundations-{name,thread,claim,wheel,faces,library,living,capstone}-cover.jpg`. (Note the deliberate id/title drift flagged in CLAUDE.md: the file id is `faces`, the act title is "The Gods" — the filename stays `foundations-faces-cover.jpg`.)
+
+**The governing rule for this set — read before generating any of the nine.** Each act teaches 4–5 ideas that *already own a canonical image twice over*: once as a Module 1 concept cover (Dharma, Maya, Samsara, Brahman & Atman, Three Gunas, The Four Great Streams, What is Hinduism?…), and once as the act's own in-body schematic figure (Part 4a). **An act cover may never use any of those concept-vehicles** — not the doorways, the four-bough tree, the pot, the rope, the three threads, the wheel, the caged bird, a book, a shelf, a lamp-as-subject, a deity figure. Instead every act cover is an **establishing image** — a place, an object, or a quality of light that sets the act's subject and mood *without* illustrating any single idea inside it. Told this way the nine become a coherent Module 0 series: eight quiet establishing plates for a primer, warming and cooling along a loose dawn-to-golden-hour arc (like the seven kandas), then one human-scale close. No figures appear until the capstone, deliberately.
+
+| Act | id / order | Cover | Status |
+|---|---|---|---|
+| What Hinduism Is | `name` · 1 | `foundations-name-cover.jpg` | 🆕 generic fallback |
+| What Makes Someone Hindu | `thread` · 2 | `foundations-thread-cover.jpg` | 🆕 generic fallback |
+| Core Beliefs | `claim` · 3 | `foundations-claim-cover.jpg` | 🆕 generic fallback |
+| Karma & Rebirth | `wheel` · 4 | `foundations-wheel-cover.jpg` | 🆕 generic fallback |
+| The Gods | `faces` · 5 | `foundations-faces-cover.jpg` | 🆕 generic fallback |
+| The Scriptures | `library` · 6 | `foundations-library-cover.jpg` | 🆕 generic fallback |
+| Rituals & Festivals | `living` · 7 | `foundations-living-cover.jpg` | 🆕 generic fallback |
+| Explain It Yourself | `capstone` · 8 | `foundations-capstone-cover.jpg` | 🆕 generic fallback |
+
+**What Hinduism Is** (`foundations-name-cover.jpg`) — Tier 1, Panorama, first light. *A wide, slow river curves through a bare open plain at dawn, open at both edges of the frame — never closing on itself. No boat, no temple, no figure. This is the Sindhu, the river the whole tradition was misnamed after, before it had a name.* Emotion: origin, older than the word. Palette: Warm Ivory dawn sky, Peacock Teal `#00796B` water, Gold `#D4AF37` rim-light.
+*Collision guard: Vishnu Purana's river closes into a complete circle at night and is empty — this one is open, and at dawn. The act's own in-body Etymology figure owns the Sindhu→Hindū→India word-chain; the cover is the river as landscape, never as diagram.*
+
+**What Makes Someone Hindu** (`foundations-thread-cover.jpg`) — Tier 1, Portrait (close, from just above), early morning. *A single broad temple threshold-stone, worn smooth and bowed in the middle by centuries of bare feet, seen close from above. One faint set of damp footprints crosses it. No door, no figure, no object set upon it.* Emotion: you belong by what you do, repeatedly — not by what you profess. Palette: warm stone-grey, Deep Saffron `#E65100` low light, Warm Ivory.
+*Collision guard: the four-bough tree belongs both to the Four Great Streams concept and to this act's own in-body Streams figure — the cover must not use a tree. Ganesh Chaturthi's threshold holds a clay figure; this threshold is bare worn stone with footprints alone.*
+
+**Core Beliefs** (`foundations-claim-cover.jpg`) — Tier 1, Landscape, midday. *Looking out from a dim interior through one small window cut in a thick pale wall onto a vast bright sky — the little framed opening and the enormous sky beyond it are painted as one continuous field of light, so the small window seems to hold the whole outside. No pot, no lamp, no rope, no threads, no figure.* Emotion: the small self is an opening onto the whole — never two. Palette: Warm Ivory wall, Indigo `#303F9F` → Turmeric `#FFC107` sky, Gold `#D4AF37` sill.
+*Collision guard — heavy. This act teaches brahman/atman (the pot, owned by the Brahman & Atman concept cover and the in-body PotSpace figure), maya (the rope), and the gunas (three threads) — the cover uses none of them. The window-onto-sky is a coordinated variant of the pot's inside-equals-outside doctrine: same idea, different object, deliberately split. Janmashtami is a barred window glowing at night from outside; this is an open window seen from inside in daylight.*
+
+**Karma & Rebirth** (`foundations-wheel-cover.jpg`) — Tier 1, Vertical, afternoon. *A single flight of worn stone steps climbs a bare hillside and disappears over a rise into soft light — you cannot see where it goes, but it plainly continues. No fork, no summit, no figure.* Emotion: what happens next, and that you are already walking it. Palette: Banyan Green `#388E3C` hillside, Warm Ivory light, Gold `#D4AF37` step-edges.
+*Collision guard: Samsara owns the wheel (concept cover **and** this act's in-body Samsara figure); Moksha owns the caged bird — the cover uses neither. Dharma's cover is many coloured paths converging on a summit; Chapter 16 is one figure at a fork. This is one continuous stepped path — no fork, no convergence, no figure.*
+
+**The Gods** (`foundations-faces-cover.jpg`) — Tier 1, Cosmic, night. *A deep indigo night sky in which a handful of the brightest stars are joined by fine gold lines into a single constellation — a shape you only see once someone draws the lines. No deity, no face, no figure.* Emotion: the gods are not a crowd — they are a pattern, once you see how they relate. Palette: Indigo `#303F9F` sky, Gold `#D4AF37` lines, one Turmeric `#FFC107` bright star.
+*Collision guard: no deity may appear — this act sits beside all ten deity covers and its own in-body Trimurti and Family-Map figures. Dhruva's story is one fixed star with the others smeared into trails; Samsara is a wheel of seasonal motifs. This is a static, linked constellation.*
+
+**The Scriptures** (`foundations-library-cover.jpg`) — Tier 1, Diagrammatic (perspective), late afternoon. *One deep stone archway opens onto a receding corridor of ever-smaller archways, each framed inside the last, dissolving into warm shadow — the depth of a tradition, one opening into the next. No book, no shelf, no text, no figure.* Emotion: not one book — a corridor without end. Palette: warm sandstone, Deep Saffron `#E65100` depth-light, Gold `#D4AF37` arch-edges.
+*Collision guard: the book cluster is full (Ganesha open, Basant Panchami open, Brahma closed), and this act's own in-body Shelves figure owns the two literal shelves — the cover uses neither book nor shelf. Hinduism-overview's doorways are many, seen bird's-eye, opening on one courtyard; this is a single axis of nested arches receding in perspective at ground level.*
+
+**Rituals & Festivals** (`foundations-living-cover.jpg`) — Tier 1, Symbolic Still Life (bird's-eye), evening. *A brass puja thali seen from directly above on a plain floor — a few grains of rice, a small heap of vermilion, one marigold, a twist of incense smoke rising off the edge. The ordinary kit of daily worship, mid-use. No hands, no figure.* Emotion: the faith as it is actually done, in a room, in a year. Palette: Gold `#D4AF37` brass, Vermillion `#DC143C`, Turmeric `#FFC107` marigold, Warm Ivory floor.
+*Collision guard — the lamp cluster is full, so keep an oil-lamp off the plate; the incense smoke, vermilion and rice carry it instead. Sukhkarta Dukhharta's prayer cover is an aarti plate seen from below, lighting a crowd's hands; Om Jai Jagdish is a swinging aarti lamp. This plate is still, seen from directly above, with no hands. Ganesh Chaturthi's threshold and Diwali's many lamps stay clear.*
+
+**Explain It Yourself** (`foundations-capstone-cover.jpg`) — Tier 2, Portrait, golden hour. *Two ordinary people sit facing each other on a plain rooftop or step at golden hour — one leaning in mid-question, the other open-handed mid-answer. Seen from behind and at a distance so they read small and faceless, two warm silhouettes in low gold light. No temple, no book, no deity.* Emotion: you can say all of it now, in your own words, to someone who asked. Palette: Deep Saffron `#E65100` → Gold `#D4AF37` golden hour, Warm Ivory ground.
+*Collision guard: the only Foundations cover with figures, and the only one at plain human scale — deliberately, to mark the track's end (the way Gita Chapter 12 is the smallest, most human image after the cosmic ones). This is **not** the teacher-and-student-with-a-lamp composition (that belongs to the Upanishads cover) — these two are equals, outdoors, no lamp — nor the Guru concept's flame passing between two lamps.*
 
 ## Scriptures
 
@@ -574,13 +630,15 @@ Every illustration must pass:
 
 Sequenced by what a user actually hits first (`journeyPath.ts` module order), then by whether the current image is *wrong* rather than merely missing — a borrowed image is worse for trust than a bland fallback, so those go first within their round.
 
-## Phase 1 — core surfaces (42 images)
+## Phase 1 — core surfaces (51 images)
+
+**Round 0 — Foundations, Module 0 (9).** The eight act covers plus the capstone (Part 5's Foundations section). These now precede the Gita and Module 1 in real reading order — Foundations is the first track a new user walks — and all nine currently show the generic fallback. Generate as one designed series so the dawn-to-golden-hour arc reads; obey the governing rule (no act cover reuses a concept-vehicle or an in-body figure). If batching, do **`name`, `faces`, and `capstone` first** — `name` is the very first cover in the app, `faces` is where beginners most often drown, and `capstone` closes the track.
 
 **Round 1 — the Gita (16).** Chapters 4–18 plus the preface. Sixteen of the nineteen pages in the Gita player currently show one identical image; this is the app's largest visual defect and Module 2 is the longest stretch of the journey. If batching: generate **11, 18, and the preface first** — Chapter 11 is the book's climax, Chapter 18 closes the continuity arc opened by the already-finished Chapter 1, and the preface is the first page of the whole reading experience. Then fill 4–10 and 12–17 in order.
 
 **Round 2 — regenerate the six low-res concept covers (6).** Dharma, Moksha, Three Gunas, Ahimsa, Samsara, Bhakti Paths. Same prompts, correct output size. These are Module 1 — the first content any new user touches — and they are currently the *worst-looking* art in the app despite being nominally done.
 
-**Round 3 — the six unillustrated concepts (6).** What is Hinduism?, The Four Great Streams, Maya, Brahman & Atman, Prana, The Guru. Do **What is Hinduism? first** — it is the literal first content item a new user opens, and it currently shows the generic fallback. Completing rounds 2 and 3 makes Module 1 the first fully-illustrated module in the app.
+**Round 3 — the six unillustrated concepts (6).** What is Hinduism?, The Four Great Streams, Maya, Brahman & Atman, Prana, The Guru. Do **What is Hinduism? first** — it is the first content item in Module 1 (now behind Module 0's Foundations track, Round 0), and it currently shows the generic fallback. Completing rounds 2 and 3 makes Module 1 the first fully-illustrated module in the app.
 
 **Round 4 — the four remaining deities (4).** Brahma, Parvati, Lakshmi, Saraswati. Completes Module 3. Apply the new character canon from Part 1 exactly — Parvati/Durga and Saraswati/Lakshmi are the highest collision risk in the whole system.
 
