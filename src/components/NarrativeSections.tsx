@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import TextHighlighter from './TextHighlighter';
-import RichText, { stripInlineMarkup } from './RichText';
+import RichText from './RichText';
 import { TextSegment } from '../services/audioNarrationService';
 import { NarrativeSection, NarrativeVerse } from '../data/narrativeTypes';
 import { navigateToContentRef } from '../data/journeyPath';
@@ -43,8 +43,9 @@ const NarrativeSections: React.FC<NarrativeSectionsProps> = ({
 }) => {
   const navigation = useNavigation();
   // Prose renderer: rich (bold) normally; while THIS block is being narrated,
-  // fall back to TextHighlighter on marker-stripped text so the highlight's
-  // substring offsets (computed against stripped narration text) stay exact
+  // fall back to TextHighlighter, which parses the same markup so bold/italic
+  // survive the highlight (its runs concatenate to the stripped text, keeping the
+  // highlight's substring offsets exact)
   const Prose = ({ text, blockId, style }: { text: string; blockId?: string; style: any }) => {
     const activeHere =
       blockId != null &&
@@ -53,7 +54,7 @@ const NarrativeSections: React.FC<NarrativeSectionsProps> = ({
     if (activeHere) {
       return (
         <TextHighlighter
-          text={stripInlineMarkup(text)}
+          text={text}
           blockId={blockId}
           highlightedSegmentId={highlightedSegmentId}
           segments={audioSegments}

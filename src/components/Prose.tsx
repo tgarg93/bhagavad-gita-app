@@ -1,14 +1,15 @@
 import React from 'react';
 import { View } from 'react-native';
-import RichText, { stripInlineMarkup } from './RichText';
+import RichText from './RichText';
 import TextHighlighter from './TextHighlighter';
 import { TextSegment } from '../services/audioNarrationService';
 
 // Body prose that reads as rich text (bold/italic) normally, and — while THIS
-// block is the one being narrated — swaps to TextHighlighter on marker-stripped
-// text so the highlight's substring offsets (computed against stripped narration
-// text) line up exactly. Extracted from NarrativeSections so FoundationCard can
-// use the same behavior.
+// block is the one being narrated — swaps to TextHighlighter, which now parses the
+// same **bold**/*italic* markup so emphasis survives the highlight (its runs
+// concatenate to the stripped text, keeping the highlight's substring offsets
+// exact). Extracted from NarrativeSections so FoundationCard can use the same
+// behavior.
 const Prose: React.FC<{
   text: string;
   blockId?: string;
@@ -24,7 +25,7 @@ const Prose: React.FC<{
   if (activeHere) {
     return (
       <TextHighlighter
-        text={stripInlineMarkup(text)}
+        text={text}
         blockId={blockId}
         highlightedSegmentId={highlightedSegmentId}
         segments={segments}

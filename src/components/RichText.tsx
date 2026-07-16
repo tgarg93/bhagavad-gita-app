@@ -11,6 +11,27 @@ import { Text } from 'react-native';
 export const stripInlineMarkup = (text: string): string =>
   text.replace(/\*\*/g, '').replace(/\*/g, '');
 
+export interface InlineRun { text: string; bold?: boolean; italic?: boolean; }
+
+// Parse `**bold**` / `*italic*` into styled runs. Concatenating run.text yields
+// exactly stripInlineMarkup(raw), so highlight offsets computed on stripped text
+// map straight onto these runs (see TextHighlighter). Mirrors this file's own
+// rendering grammar: bold parts are bold only; italics are parsed inside non-bold
+// parts. Kept in sync with RichText below by hand — the two share the grammar.
+export const parseInlineRuns = (raw: string): InlineRun[] => {
+  const runs: InlineRun[] = [];
+  raw.split('**').forEach((part, bi) => {
+    if (bi % 2 === 1) {
+      if (part) runs.push({ text: part, bold: true });
+    } else {
+      part.split('*').forEach((seg, si) => {
+        if (seg) runs.push({ text: seg, italic: si % 2 === 1 });
+      });
+    }
+  });
+  return runs;
+};
+
 // Render a chunk that may contain *italic* spans (no bold — bold is split off
 // by the caller first).
 const renderItalic = (chunk: string, keyBase: string): React.ReactNode => {

@@ -11,7 +11,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import { NarrativeSection } from '../data/narrativeTypes';
 import { TextSegment } from '../services/audioNarrationService';
-import { stripInlineMarkup } from './RichText';
 import TextHighlighter from './TextHighlighter';
 import Prose from './Prose';
 import FoundationFigure from './FoundationFigure';
@@ -75,7 +74,7 @@ const FoundationCard: React.FC<Props> = ({
       {!!takeaway && (
         <View onLayout={e => setBlockY(takeawayBlock, e.nativeEvent.layout.y)}>
           <TextHighlighter
-            text={stripInlineMarkup(takeaway)}
+            text={takeaway}
             blockId={takeawayBlock}
             highlightedSegmentId={highlightedSegmentId}
             segments={segments}

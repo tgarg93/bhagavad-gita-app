@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import { TextSegment } from '../services/audioNarrationService';
+import { parseInlineRuns } from './RichText';
 
 interface TextHighlighterProps {
   text: string;
@@ -23,36 +24,59 @@ const TextHighlighter: React.FC<TextHighlighterProps> = ({
   onSegmentPress
 }) => {
   const renderHighlightedText = useMemo(() => {
-    if (!highlightedSegmentId || !blockId || segments.length === 0) {
-      return <Text style={style}>{text}</Text>;
+    // Parse inline **bold**/*italic* into runs so emphasis survives while a block
+    // is being narrated. Runs concatenate to the marker-stripped text, so the
+    // highlight's stripped-space offsets map straight onto them. Plain text (no
+    // markers) yields a single run — identical output to before for every caller
+    // that passes unformatted strings (verses, meanings, etc.).
+    const runs = parseInlineRuns(text);
+    const total = runs.reduce((n, r) => n + r.text.length, 0);
+
+    // Highlight only when the active segment belongs to this block (unchanged rules);
+    // -1/-1 means no highlight here.
+    let hlStart = -1;
+    let hlEnd = -1;
+    const seg = highlightedSegmentId && blockId
+      ? segments.find(s => s.id === highlightedSegmentId)
+      : undefined;
+    if (seg && seg.blockId === blockId) {
+      hlStart = Math.max(0, Math.min(seg.localStart, total));
+      hlEnd = Math.max(hlStart, Math.min(seg.localEnd, total));
     }
 
-    // Only highlight when the active segment belongs to this block,
-    // using its offsets within the block's own text
-    const highlightedSegment = segments.find(s => s.id === highlightedSegmentId);
-    if (!highlightedSegment || highlightedSegment.blockId !== blockId) {
-      return <Text style={style}>{text}</Text>;
-    }
-
-    const startIndex = Math.max(0, Math.min(highlightedSegment.localStart, text.length));
-    const endIndex = Math.max(startIndex, Math.min(highlightedSegment.localEnd, text.length));
-
-    const beforeText = text.substring(0, startIndex);
-    const highlightedText = text.substring(startIndex, endIndex);
-    const afterText = text.substring(endIndex);
-
-    return (
-      <Text style={style}>
-        {beforeText}
+    const nodes: React.ReactNode[] = [];
+    let offset = 0;
+    runs.forEach((run, ri) => {
+      const emphasis = {
+        ...(run.bold ? { fontWeight: '700' as const } : null),
+        ...(run.italic ? { fontStyle: 'italic' as const } : null),
+      };
+      const rs = offset;
+      const re = offset + run.text.length;
+      offset = re;
+      const hs = Math.max(rs, hlStart);
+      const he = Math.min(re, hlEnd);
+      if (hlStart < 0 || he <= hs) {
+        nodes.push(<Text key={ri} style={emphasis}>{run.text}</Text>);
+        return;
+      }
+      const before = run.text.slice(0, hs - rs);
+      const inside = run.text.slice(hs - rs, he - rs);
+      const after = run.text.slice(he - rs);
+      if (before) nodes.push(<Text key={`${ri}a`} style={emphasis}>{before}</Text>);
+      nodes.push(
         <Text
-          style={[styles.highlight, highlightStyle]}
-          onPress={() => onSegmentPress?.(highlightedSegmentId)}
+          key={`${ri}b`}
+          style={[emphasis, styles.highlight, highlightStyle]}
+          onPress={() => onSegmentPress?.(highlightedSegmentId!)}
         >
-          {highlightedText}
+          {inside}
         </Text>
-        {afterText}
-      </Text>
-    );
+      );
+      if (after) nodes.push(<Text key={`${ri}c`} style={emphasis}>{after}</Text>);
+    });
+
+    return <Text style={style}>{nodes}</Text>;
   }, [text, blockId, highlightedSegmentId, segments, style, highlightStyle, onSegmentPress]);
 
   return <View>{renderHighlightedText}</View>;
