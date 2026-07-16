@@ -38,6 +38,18 @@ export interface NarrationCallbacks {
 const NARRATION_SPEED_KEY = 'narration_speed';
 const DEFAULT_SPEED = 1.0;
 
+// Deliberate silence between pages/sections (finished page stays, then turns and
+// the next page begins). Users found back-to-back pages too abrupt. One knob for
+// both the prerecorded (Foundations read-along) and TTS paths.
+const INTER_SECTION_PAUSE_MS = 1500;
+
+// The section a segment belongs to, from its `section-N-...` id. Used to detect a
+// page boundary so the inter-section pause only lands when crossing sections.
+const sectionOf = (id: string): string | null => {
+  const m = id.match(/section-(\d+)/);
+  return m ? m[1] : null;
+};
+
 // --- TTS backend seam ---------------------------------------------------
 // The player logic talks only to this interface, so a cloud TTS backend
 // (ElevenLabs/Google TTS + audio file playback) can replace the system
@@ -209,7 +221,20 @@ class PrerecordedController {
   private advanceSection(): void {
     this.pos++;
     this.callbacks?.onProgressUpdate((this.pos / Math.max(1, this.sections.length)) * 100);
-    this.playCurrent();
+    if (this.pos >= this.sections.length) {
+      // End of act — no inter-page pause; playCurrent handles teardown + onPlaybackComplete.
+      this.playCurrent();
+      return;
+    }
+    // Hold a beat of silence on the finished page before the next clip loads and
+    // the page turns. Bump the token so any late status tick from the clip we just
+    // finished is dropped, and re-check active/paused/token when the timer fires so
+    // a stop/seek/pause during the gap wins.
+    const myToken = ++this.token;
+    setTimeout(() => {
+      if (!this.active || this.paused || this.token !== myToken) return;
+      this.playCurrent();
+    }, INTER_SECTION_PAUSE_MS);
   }
 
   async pause(): Promise<void> {
@@ -219,6 +244,12 @@ class PrerecordedController {
 
   async resume(): Promise<void> {
     this.paused = false;
+    // Resuming during the inter-section gap: no clip is loaded yet, so kick off the
+    // next section's clip instead of trying to play a sound that isn't there.
+    if (!this.sound && this.active && this.pos < this.sections.length) {
+      await this.playCurrent();
+      return;
+    }
     if (this.sound) await this.sound.playAsync().catch(() => {});
   }
 
@@ -658,9 +689,15 @@ export class AudioNarrationService {
     const progress = (this.currentIndex / this.segments.length) * 100;
     this.callbacks?.onProgressUpdate(progress);
 
+    // Crossing into a new section is a page turn — give it at least the deliberate
+    // inter-section beat, but keep a naturally longer type pause if one applies.
+    const next = this.segments[this.currentIndex];
+    const crossingSection = !!next && sectionOf(segment.id) !== sectionOf(next.id);
+    const delay = crossingSection ? Math.max(pauseMs, INTER_SECTION_PAUSE_MS) : pauseMs;
+
     setTimeout(() => {
       this.playNextSegment();
-    }, pauseMs);
+    }, delay);
   }
 
   private async playCurrentSegment(): Promise<void> {
