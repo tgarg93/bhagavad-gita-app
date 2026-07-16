@@ -101,6 +101,7 @@ class PrerecordedController {
   private pos = 0; // index into `sections`
   private curSeg = -1;
   private durationMs = 0;
+  private lastPositionMs = 0; // latest reported position, so a relative seek has a solid base
   private callbacks: NarrationCallbacks | null = null;
   private active = false;
   private paused = false;
@@ -138,6 +139,7 @@ class PrerecordedController {
     const sec = this.sections[this.pos];
     this.curSeg = -1;
     this.durationMs = 0;
+    this.lastPositionMs = 0;
     await this.unload();
     const myToken = ++this.token;
     try {
@@ -146,7 +148,18 @@ class PrerecordedController {
         progressUpdateIntervalMillis: 120,
       });
       this.sound = sound;
-      if (status.isLoaded && status.durationMillis) this.durationMs = status.durationMillis;
+      let dur = status.isLoaded && status.durationMillis ? status.durationMillis : 0;
+      // durationMillis is frequently absent on createAsync's initial status (the file
+      // isn't parsed yet), and until it's known onStatus can't map position → sentence,
+      // so the highlight freezes on the first line. Fetch it up front (resolves in a
+      // tick or two) so advancement is deterministic instead of racing the clip's load.
+      for (let tries = 0; !dur && this.token === myToken && tries < 12; tries++) {
+        await new Promise((r) => setTimeout(r, 40));
+        const s = await sound.getStatusAsync();
+        if (s.isLoaded && s.durationMillis) dur = s.durationMillis;
+      }
+      if (this.token !== myToken) return; // clip was swapped out while we polled
+      this.durationMs = dur;
       this.fireSegment(0); // highlight + page scroll for the section's first sentence
       sound.setOnPlaybackStatusUpdate((st) => this.onStatus(st, myToken));
     } catch {
@@ -169,6 +182,7 @@ class PrerecordedController {
       return;
     }
     if (this.paused || this.durationMs === 0) return;
+    if (typeof st.positionMillis === 'number') this.lastPositionMs = st.positionMillis;
     const frac = Math.min(1, st.positionMillis / this.durationMs);
     const target = this.segAtFraction(frac);
     if (target !== this.curSeg) this.fireSegment(target);
@@ -229,8 +243,20 @@ class PrerecordedController {
     if (!this.sound || this.durationMs === 0) return;
     const st = await this.sound.getStatusAsync();
     if (!st.isLoaded) return;
-    const to = Math.max(0, Math.min(this.durationMs - 1, (st.positionMillis ?? 0) + deltaMs));
+    // Base the jump on the last position we actually saw tick by. A fresh status read
+    // can come back with positionMillis === 0 mid-playback, which would turn a +10s
+    // jump into an absolute seek to 10s — snapping the highlight back near the top.
+    const base = this.lastPositionMs || (typeof st.positionMillis === 'number' ? st.positionMillis : 0);
+    const to = Math.max(0, Math.min(this.durationMs - 1, base + deltaMs));
     await this.sound.setPositionAsync(to).catch(() => {});
+    this.lastPositionMs = to;
+    // setPositionAsync can leave iOS playback stalled and the next status tick can
+    // report the pre-seek (or a zeroed) position, which would snap the highlight back
+    // to the first sentence. Re-assert playback and move the highlight to the seek
+    // target now, instead of waiting on a tick that may not reflect the seek.
+    if (!this.paused) await this.sound.playAsync().catch(() => {});
+    const target = this.segAtFraction(Math.min(1, to / this.durationMs));
+    if (target !== this.curSeg) this.fireSegment(target);
   }
 
   private async unload(): Promise<void> {

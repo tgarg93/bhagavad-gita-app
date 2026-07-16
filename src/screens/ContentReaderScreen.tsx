@@ -603,6 +603,7 @@ const ContentReaderScreen: React.FC = () => {
             highlightedSegmentId={highlightedSegmentId}
             segments={foundationsSegments}
             sectionIndex={sectionIndex}
+            active={activeIndex === pageIndexForSection[sectionIndex]}
             onActiveBlockLayout={y => {
               // Only the audio drives this (fires on segment change), so it won't
               // fight a manual scroll. Keep the narrated block just below the top.

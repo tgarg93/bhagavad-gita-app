@@ -33,6 +33,9 @@ interface Props {
   // story / a bullet) so the page can scroll it into view. Called on every
   // segment change; the parent decides whether/how far to scroll.
   onActiveBlockLayout?: (y: number) => void;
+  // True when this card is the visible page — triggers the figure's build-in
+  // animation (so it plays on arrival, not while mounted off-screen).
+  active?: boolean;
 }
 
 const FoundationCard: React.FC<Props> = ({
@@ -43,6 +46,7 @@ const FoundationCard: React.FC<Props> = ({
   segments = [],
   sectionIndex,
   onActiveBlockLayout,
+  active,
 }) => {
   const { takeaway, storyText, keyVerse, citation, deeper, sectionHeader, teachingText } = section;
   const takeawayBlock = sectionIndex != null ? `section-${sectionIndex}-takeaway` : undefined;
@@ -81,7 +85,7 @@ const FoundationCard: React.FC<Props> = ({
       )}
       <View style={styles.rule} />
 
-      <FoundationFigure sectionId={section.id} />
+      <FoundationFigure sectionId={section.id} active={active} />
 
       {!!storyText && (
         <View onLayout={e => setBlockY(storyBlock, e.nativeEvent.layout.y)}>

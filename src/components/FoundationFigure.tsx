@@ -4,8 +4,8 @@
 //
 // Arrowheads are drawn as explicit <Path> triangles rather than SVG <Marker>,
 // which react-native-svg supports unevenly across platforms.
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Modal, useWindowDimensions } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, Pressable, Modal, useWindowDimensions, Animated, Easing, AccessibilityInfo } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Svg, { Rect, Circle, Ellipse, Path, Line, G, Text as SvgText } from 'react-native-svg';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
@@ -26,7 +26,11 @@ const Caption: React.FC<{ children: string }> = ({ children }) => (
   <Text style={styles.caption}>{children}</Text>
 );
 
-const Figure: React.FC<{ caption: string; children: React.ReactElement }> = ({ caption, children }) => {
+const Figure: React.FC<{ caption: string; children: React.ReactElement; viewBox?: string }> = ({
+  caption,
+  children,
+  viewBox,
+}) => {
   const [open, setOpen] = useState(false);
   return (
     <View style={styles.figure}>
@@ -42,7 +46,7 @@ const Figure: React.FC<{ caption: string; children: React.ReactElement }> = ({ c
         </View>
       </Pressable>
       <Caption>{caption}</Caption>
-      <FigureModal open={open} onClose={() => setOpen(false)} svg={children} caption={caption} />
+      <FigureModal open={open} onClose={() => setOpen(false)} svg={children} caption={caption} viewBox={viewBox} />
     </View>
   );
 };
@@ -56,9 +60,10 @@ const FigureModal: React.FC<{
   onClose: () => void;
   svg: React.ReactElement;
   caption: string;
-}> = ({ open, onClose, svg, caption }) => {
+  viewBox?: string;
+}> = ({ open, onClose, svg, caption, viewBox }) => {
   const { width, height } = useWindowDimensions();
-  const vb = String((svg.props as any).viewBox ?? '0 0 640 190').split(/\s+/).map(Number);
+  const vb = String(viewBox ?? (svg.props as any).viewBox ?? '0 0 640 190').split(/\s+/).map(Number);
   const ratio = (vb[3] || 190) / (vb[2] || 640);
   // drawW runs along the screen's tall axis once rotated; clamp so the rotated
   // drawH (which runs across the screen) still fits the width.
@@ -165,27 +170,75 @@ const Compare = () => (
 );
 
 // ── One trunk, four boughs ──────────────────────────────────────────────────
-const Streams = () => (
-  <Figure caption="Not sects at war. Four answers to “which face do you love?”">
-    <Svg width="100%" height={190} viewBox="0 0 640 244">
-      <Path d="M320 244 L320 166" stroke={GOLD} strokeWidth={9} strokeLinecap="round" fill="none" />
-      {[
-        { d: 'M320 170 C320 138, 120 148, 92 104', c: TEAL, cx: 92, name: 'Vaishnava', god: 'Vishnu', foot: 'Rama · Krishna' },
-        { d: 'M320 170 C320 138, 240 146, 232 102', c: INDIGO, cx: 232, name: 'Shaiva', god: 'Shiva', foot: 'the ascetic' },
-        { d: 'M320 170 C320 138, 400 146, 408 102', c: PINK, cx: 408, name: 'Shakta', god: 'the Goddess', foot: 'Durga · Kali' },
-        { d: 'M320 170 C320 138, 520 148, 548 104', c: GREEN, cx: 548, name: 'Smarta', god: 'all of them', foot: 'five at once' },
-      ].map(b => (
-        <G key={b.cx}>
-          <Path d={b.d} stroke={b.c} strokeWidth={4} strokeLinecap="round" fill="none" />
-          <Circle cx={b.cx} cy={86} r={26} fill={b.c} opacity={0.14} />
-          <SvgText x={b.cx} y={42} textAnchor="middle" fontSize={12} fontWeight="700" fill={INK}>{b.name}</SvgText>
-          <SvgText x={b.cx} y={91} textAnchor="middle" fontSize={10} fill={SOFT}>{b.god}</SvgText>
-          <SvgText x={b.cx} y={130} textAnchor="middle" fontSize={9} fill={SOFT}>{b.foot}</SvgText>
-        </G>
-      ))}
-      <SvgText x={320} y={212} textAnchor="middle" fontSize={10} fill={SOFT}>one root</SvgText>
-      <SvgText x={320} y={231} textAnchor="middle" fontSize={12} fontWeight="600" fill={INK}>Sanatana Dharma</SvgText>
-    </Svg>
+const STREAM_BOUGHS = [
+  { d: 'M320 170 C320 138, 120 148, 92 104', c: TEAL, cx: 92, name: 'Vaishnava', god: 'Vishnu', foot: 'Rama · Krishna' },
+  { d: 'M320 170 C320 138, 240 146, 232 102', c: INDIGO, cx: 232, name: 'Shaiva', god: 'Shiva', foot: 'the ascetic' },
+  { d: 'M320 170 C320 138, 400 146, 408 102', c: PINK, cx: 408, name: 'Shakta', god: 'the Goddess', foot: 'Durga · Kali' },
+  { d: 'M320 170 C320 138, 520 148, 548 104', c: GREEN, cx: 548, name: 'Smarta', god: 'all of them', foot: 'five at once' },
+];
+
+// The tree builds in once, when `active` first turns true — i.e. when the reader
+// lands on this page (for a read-along, the moment the narration reaches it). The
+// whole figure fades and grows up from the root. react-native-svg won't reliably
+// animate stroke props, so the motion lives on an Animated.View wrapper driven by the
+// native driver (the MarigoldShower pattern); the SVG itself stays static.
+//
+// Memoized so the parent's per-sentence re-renders during narration don't re-run the
+// build-in. After it plays, opacity/transform stay at their final values (the
+// Animated.Value holds at 1), so a later re-render or swiping back keeps it drawn.
+const StreamsSvg: React.FC<{ active?: boolean; width?: number | string; height?: number }> = React.memo(({
+  active,
+  width = '100%',
+  height = 190,
+}) => {
+  const progress = useRef(new Animated.Value(0)).current;
+  const played = useRef(false);
+
+  useEffect(() => {
+    if (!active || played.current) return;
+    played.current = true;
+    let cancelled = false;
+    AccessibilityInfo.isReduceMotionEnabled().then(reduced => {
+      if (cancelled) return;
+      if (reduced) { progress.setValue(1); return; }
+      Animated.timing(progress, {
+        toValue: 1,
+        duration: 850,
+        easing: Easing.out(Easing.cubic),
+        useNativeDriver: true,
+      }).start();
+    });
+    return () => { cancelled = true; };
+  }, [active, progress]);
+
+  const translateY = progress.interpolate({ inputRange: [0, 1], outputRange: [16, 0] });
+  const scale = progress.interpolate({ inputRange: [0, 1], outputRange: [0.9, 1] });
+
+  return (
+    <Animated.View
+      style={{ opacity: progress, transformOrigin: '50% 100%', transform: [{ translateY }, { scale }] }}
+    >
+      <Svg width={width} height={height} viewBox="0 0 640 244">
+        <Path d="M320 244 L320 166" stroke={GOLD} strokeWidth={9} strokeLinecap="round" fill="none" />
+        {STREAM_BOUGHS.map(b => (
+          <G key={b.cx}>
+            <Path d={b.d} stroke={b.c} strokeWidth={4} strokeLinecap="round" fill="none" />
+            <Circle cx={b.cx} cy={86} r={26} fill={b.c} opacity={0.14} />
+            <SvgText x={b.cx} y={42} textAnchor="middle" fontSize={12} fontWeight="700" fill={INK}>{b.name}</SvgText>
+            <SvgText x={b.cx} y={91} textAnchor="middle" fontSize={10} fill={SOFT}>{b.god}</SvgText>
+            <SvgText x={b.cx} y={130} textAnchor="middle" fontSize={9} fill={SOFT}>{b.foot}</SvgText>
+          </G>
+        ))}
+        <SvgText x={320} y={212} textAnchor="middle" fontSize={10} fill={SOFT}>one root</SvgText>
+        <SvgText x={320} y={231} textAnchor="middle" fontSize={12} fontWeight="600" fill={INK}>Sanatana Dharma</SvgText>
+      </Svg>
+    </Animated.View>
+  );
+});
+
+const Streams: React.FC<{ active?: boolean }> = ({ active }) => (
+  <Figure caption="Not sects at war. Four answers to “which face do you love?”" viewBox="0 0 640 244">
+    <StreamsSvg active={active} />
   </Figure>
 );
 
@@ -444,7 +497,9 @@ const Shelves = () => (
   </Figure>
 );
 
-const FIGURES: Record<string, React.FC> = {
+// Figures accept an optional `active` (the section is the visible page) to trigger
+// their build-in; the static ones simply ignore it.
+const FIGURES: Record<string, React.FC<{ active?: boolean }>> = {
   'f-name-river': Etymology,
   'f-thread-compare': Compare,
   'f-thread-streams': Streams,
@@ -457,9 +512,9 @@ const FIGURES: Record<string, React.FC> = {
   'f-library-shelves': Shelves,
 };
 
-const FoundationFigure: React.FC<{ sectionId: string }> = ({ sectionId }) => {
+const FoundationFigure: React.FC<{ sectionId: string; active?: boolean }> = ({ sectionId, active }) => {
   const Fig = FIGURES[sectionId];
-  return Fig ? <Fig /> : null;
+  return Fig ? <Fig active={active} /> : null;
 };
 
 const styles = StyleSheet.create({
