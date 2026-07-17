@@ -14,16 +14,18 @@ import {
   Switch,
   Image,
 } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
-import KrishnaGuide from '../components/KrishnaGuide';
+import CelebrationGauge from '../components/CelebrationGauge';
 import OnboardingScreen from './OnboardingScreen';
 import LocalStorageService, { SpiritualProfile, ReflectionEntry, NotificationSettings } from '../services/localStorageService';
 import notificationService from '../services/notificationService';
-import { getProgression, Progression } from '../services/progressionService';
+import journeyService from '../services/journeyService';
+import { JourneyItem, JOURNEY_MODULES, navigateToJourneyItem } from '../data/journeyPath';
+import { getProgression, Progression, LEVELS } from '../services/progressionService';
 import krishnaContext from '../services/krishnaContextService';
 import { userKnowledge } from '../services/userKnowledgeService';
 import { profilePhotoStore, useProfilePhoto } from '../services/profilePhotoStore';
@@ -44,10 +46,28 @@ const photoStyle = {
   resizeMode: 'cover',
 } as const;
 
+// Image styles hit a union error inside StyleSheet.create — keep as a const.
+const nextThumbStyle = { width: 44, height: 44, borderRadius: 10 } as const;
+
+// Plain-language mirror of the points formula in progressionService (POINTS +
+// CHECK_POINTS). Capstones are called out separately below — a rite confers the
+// level as a floor, which matters more than its point value.
+const EARN_ROWS: { label: string; pts: string }[] = [
+  { label: 'Read a Gita verse', pts: '+2' },
+  { label: 'Complete a chapter', pts: '+30' },
+  { label: 'Write a reflection', pts: '+15' },
+  { label: 'Finish a journey step', pts: '+30' },
+  { label: 'Pass a knowledge check', pts: '+2' },
+  { label: 'Bank a Foundations card', pts: '+1' },
+];
+
 const ProfileTabScreen: React.FC = () => {
+  const navigation = useNavigation();
   const [profile, setProfile] = useState<SpiritualProfile | null>(null);
   const [progression, setProgression] = useState<Progression | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const [nextStep, setNextStep] = useState<JourneyItem | null>(null);
 
   const [reminders, setReminders] = useState<NotificationSettings | null>(null);
   const [remindersPermitted, setRemindersPermitted] = useState(true);
@@ -55,6 +75,7 @@ const ProfileTabScreen: React.FC = () => {
   const load = useCallback(async () => {
     setProfile(await LocalStorageService.getSpiritualProfile());
     setProgression(await getProgression());
+    setNextStep(await journeyService.getNextUnfinished());
     setReminders(await notificationService.getSettings());
     setRemindersPermitted(await notificationService.hasPermission());
   }, []);
@@ -154,14 +175,6 @@ const ProfileTabScreen: React.FC = () => {
     setProfile(await userKnowledge.setField(key, value, 'user'));
     setExpandedKey(null);
   };
-
-  const greeting = profile?.name ? `Namaste, ${profile.name}.` : 'Namaste.';
-  const levelLine = progression
-    ? `You walk as a ${progression.level.sanskrit} — ${progression.level.english}.` +
-      (progression.nextLevel
-        ? ` ${progression.pointsToNext} wisdom points until ${progression.nextLevel.sanskrit}.`
-        : ' You have reached the highest step — now you guide others.')
-    : '';
 
   // ---- Dev tools (development builds only) --------------------------------
   const synthesizeReflections = (count: number): ReflectionEntry[] => {
@@ -273,8 +286,6 @@ const ProfileTabScreen: React.FC = () => {
             {!!profile?.name && <Text style={styles.photoName}>{profile.name}</Text>}
           </View>
 
-          <KrishnaGuide message={`${greeting} ${levelLine}`} />
-
           {progression && (
             <View style={styles.levelCard}>
               <View style={styles.levelRow}>
@@ -282,9 +293,18 @@ const ProfileTabScreen: React.FC = () => {
                 <Text style={styles.levelPoints}>{progression.points} pts</Text>
               </View>
               <Text style={styles.levelEnglish}>{progression.level.english} · Level {progression.level.level} of 7</Text>
-              <View style={styles.levelTrack}>
-                <View style={[styles.levelFill, { width: `${Math.round(progression.progressToNext * 100)}%` }]} />
+
+              {/* The same arch gauge the completion screen uses — filled to the
+                  reader's place within the current level band. Static here (no
+                  sweep), so fromFrac === toFrac. */}
+              <View style={styles.gaugeWrap}>
+                <CelebrationGauge
+                  fromFrac={progression.progressToNext}
+                  toFrac={progression.progressToNext}
+                  stageName={progression.level.sanskrit}
+                />
               </View>
+
               {progression.nextLevel && (
                 <Text style={styles.levelNext}>
                   Next: {progression.nextLevel.sanskrit} ({progression.nextLevel.english}) at {progression.nextLevel.minPoints} pts
@@ -309,6 +329,15 @@ const ProfileTabScreen: React.FC = () => {
                   <Text style={styles.statLabel}>daily goal</Text>
                 </View>
               </View>
+
+              <TouchableOpacity
+                style={styles.detailsRow}
+                onPress={() => setShowDetails(true)}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.detailsText}>How your level works</Text>
+                <Ionicons name="chevron-forward" size={16} color={colors.primary.peacockTeal} />
+              </TouchableOpacity>
             </View>
           )}
 
@@ -537,6 +566,99 @@ const ProfileTabScreen: React.FC = () => {
         </ScrollView>
         </KeyboardAvoidingView>
 
+        {/* "See details" — how the journey is tracked, the seven steps, next step */}
+        <Modal
+          visible={showDetails}
+          transparent
+          animationType="slide"
+          onRequestClose={() => setShowDetails(false)}
+        >
+          <View style={styles.sheetBackdrop}>
+            <TouchableOpacity
+              style={styles.sheetDismiss}
+              activeOpacity={1}
+              onPress={() => setShowDetails(false)}
+            />
+            <View style={styles.sheet}>
+              <View style={styles.sheetGrip} />
+              <ScrollView contentContainerStyle={styles.sheetBody} showsVerticalScrollIndicator={false}>
+                <Text style={styles.sheetTitle}>How your journey is tracked</Text>
+                {progression && (
+                  <Text style={styles.sheetSub}>
+                    You walk as {progression.level.sanskrit} — {progression.level.english}.
+                    {progression.nextLevel
+                      ? ` ${progression.pointsToNext} wisdom points until ${progression.nextLevel.sanskrit}.`
+                      : ' You have reached the highest step — now you guide others.'}
+                  </Text>
+                )}
+
+                <Text style={styles.sheetHeading}>How you earn wisdom points</Text>
+                {EARN_ROWS.map(row => (
+                  <View key={row.label} style={styles.earnRow}>
+                    <Text style={styles.earnLabel}>{row.label}</Text>
+                    <Text style={styles.earnPts}>{row.pts}</Text>
+                  </View>
+                ))}
+                <Text style={styles.sheetFloor}>
+                  Stage capstones confer the level outright — a floor you never drop below.
+                </Text>
+
+                <Text style={styles.sheetHeading}>The seven steps</Text>
+                {LEVELS.map(l => {
+                  const here = progression?.level.level === l.level;
+                  const done = (progression?.level.level ?? 1) > l.level;
+                  return (
+                    <View key={l.level} style={styles.rung}>
+                      <View
+                        style={[
+                          styles.rungNode,
+                          done && styles.rungNodeDone,
+                          here && styles.rungNodeHere,
+                        ]}
+                      />
+                      <Text style={[styles.rungName, here && styles.rungNameHere]}>
+                        {l.sanskrit} — {l.english}
+                      </Text>
+                      <Text style={styles.rungPts}>{l.minPoints.toLocaleString()}</Text>
+                    </View>
+                  );
+                })}
+
+                {nextStep && (
+                  <>
+                    <Text style={styles.sheetHeading}>Your next step</Text>
+                    <TouchableOpacity
+                      style={styles.dNext}
+                      activeOpacity={0.85}
+                      onPress={() => {
+                        setShowDetails(false);
+                        navigateToJourneyItem(navigation, nextStep);
+                      }}
+                    >
+                      <Image
+                        source={typeof nextStep.cover === 'string' ? { uri: nextStep.cover } : nextStep.cover}
+                        style={nextThumbStyle}
+                      />
+                      <View style={styles.dNextText}>
+                        <Text style={styles.dNextEyebrow}>Continue your path</Text>
+                        <Text style={styles.dNextTitle} numberOfLines={1}>
+                          {nextStep.title} · {JOURNEY_MODULES[nextStep.module]}
+                        </Text>
+                      </View>
+                      <View style={styles.dNextGo}>
+                        <Ionicons name="play" size={15} color="#FFFFFF" style={{ marginLeft: 2 }} />
+                      </View>
+                    </TouchableOpacity>
+                  </>
+                )}
+              </ScrollView>
+              <TouchableOpacity style={styles.sheetClose} onPress={() => setShowDetails(false)}>
+                <Text style={styles.sheetCloseText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
         {/* Re-run onboarding inline; saving updates the profile and closes */}
         <Modal visible={showOnboarding} animationType="slide" onRequestClose={() => setShowOnboarding(false)}>
           <OnboardingScreen
@@ -621,7 +743,107 @@ const styles = StyleSheet.create({
   levelEnglish: { ...typography.sizes.bodyMD, color: colors.neutrals.charcoalBlack, marginTop: 2, marginBottom: spacing.md },
   levelTrack: { height: 8, borderRadius: 4, backgroundColor: colors.neutrals.gentleMist, overflow: 'hidden' },
   levelFill: { height: '100%', borderRadius: 4, backgroundColor: colors.primary.deepSaffron },
-  levelNext: { ...typography.sizes.bodySM, color: colors.neutrals.softAsh, marginTop: spacing.sm },
+  gaugeWrap: { alignItems: 'center', marginTop: spacing.sm, marginBottom: spacing.xs },
+  levelNext: { ...typography.sizes.bodySM, color: colors.neutrals.softAsh, marginTop: spacing.sm, textAlign: 'center' },
+  detailsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
+    marginTop: spacing.md,
+    paddingTop: spacing.md,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(33, 33, 33, 0.08)',
+  },
+  detailsText: { fontSize: 13.5, lineHeight: 18, fontWeight: '700', color: colors.primary.peacockTeal },
+  // ---- See-details bottom sheet -------------------------------------------
+  sheetBackdrop: { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.4)', justifyContent: 'flex-end' },
+  sheetDismiss: { flex: 1 },
+  sheet: {
+    backgroundColor: colors.neutrals.sandstoneBeige,
+    borderTopLeftRadius: 22,
+    borderTopRightRadius: 22,
+    maxHeight: '88%',
+    paddingBottom: spacing.md,
+  },
+  sheetGrip: {
+    width: 40,
+    height: 5,
+    borderRadius: 3,
+    backgroundColor: 'rgba(0, 0, 0, 0.18)',
+    alignSelf: 'center',
+    marginTop: 10,
+    marginBottom: 4,
+  },
+  sheetBody: { paddingHorizontal: spacing.lg, paddingTop: spacing.sm, paddingBottom: spacing.lg },
+  sheetTitle: { fontSize: 19, lineHeight: 24, fontWeight: '700', color: colors.neutrals.charcoalBlack },
+  sheetSub: { fontSize: 13.5, lineHeight: 19, color: colors.neutrals.softAsh, marginTop: 4 },
+  sheetHeading: {
+    fontSize: 11,
+    lineHeight: 14,
+    letterSpacing: 1,
+    textTransform: 'uppercase',
+    color: colors.primary.peacockTeal,
+    fontWeight: '800',
+    marginTop: spacing.lg,
+    marginBottom: spacing.sm,
+  },
+  earnRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 7,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'rgba(33, 33, 33, 0.08)',
+  },
+  earnLabel: { fontSize: 14, lineHeight: 18, color: colors.neutrals.charcoalBlack },
+  earnPts: { fontSize: 14, fontWeight: '800', color: colors.primary.deepSaffron },
+  sheetFloor: { fontSize: 12.5, lineHeight: 17, color: colors.neutrals.softAsh, fontStyle: 'italic', marginTop: spacing.sm },
+  rung: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm + 4, paddingVertical: 5 },
+  rungNode: {
+    width: 13,
+    height: 13,
+    borderRadius: 7,
+    borderWidth: 2,
+    borderColor: colors.neutrals.gentleMist,
+    backgroundColor: colors.neutrals.sandstoneBeige,
+  },
+  rungNodeDone: { backgroundColor: colors.primary.peacockTeal, borderColor: colors.primary.peacockTeal },
+  rungNodeHere: { backgroundColor: colors.primary.deepSaffron, borderColor: colors.primary.deepSaffron },
+  rungName: { flex: 1, fontSize: 14, lineHeight: 18, color: colors.neutrals.charcoalBlack },
+  rungNameHere: { fontWeight: '700', color: colors.primary.deepSaffron },
+  rungPts: { fontSize: 12, lineHeight: 16, color: colors.neutrals.softAsh, fontVariant: ['tabular-nums'] },
+  dNext: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    backgroundColor: colors.neutrals.warmIvory,
+    borderWidth: 1,
+    borderColor: 'rgba(230, 81, 0, 0.2)',
+    borderRadius: borderRadius.medium,
+    padding: spacing.md,
+    marginTop: spacing.xs,
+  },
+  dNextText: { flex: 1, minWidth: 0 },
+  dNextEyebrow: {
+    fontSize: 10,
+    lineHeight: 13,
+    fontWeight: '800',
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+    color: colors.primary.deepSaffron,
+  },
+  dNextTitle: { fontSize: 14, lineHeight: 18, fontWeight: '600', color: colors.neutrals.charcoalBlack, marginTop: 1 },
+  dNextGo: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: colors.primary.deepSaffron,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  sheetClose: { alignSelf: 'center', marginTop: spacing.sm, paddingVertical: spacing.sm, paddingHorizontal: spacing.xl },
+  sheetCloseText: { fontSize: 14, lineHeight: 18, fontWeight: '700', color: colors.neutrals.softAsh },
   statsRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: spacing.lg },
   stat: { alignItems: 'center', flex: 1 },
   statNum: { ...typography.sizes.headingMD, color: colors.neutrals.charcoalBlack, fontWeight: '700' },

@@ -13,7 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import journeyService from '../services/journeyService';
 import { getProgression } from '../services/progressionService';
-import { ALL_MODULES, JourneyItem, JourneyModule, JOURNEY_MODULES, MODULE_OBJECTIVES } from '../data/journeyPath';
+import { ALL_MODULES, JourneyItem, JourneyModule, JOURNEY_MODULES } from '../data/journeyPath';
 
 // The guided journey as one continuous rail: spiritual-title milestones and
 // accordion stage cards hang on a single vertical line — teal where the
@@ -192,9 +192,14 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
     items: path.filter(item => item.module === module),
   })).filter(m => m.items.length > 0);
 
-  const renderStageCard = (module: JourneyModule, items: JourneyItem[]) => {
+  const renderStageCard = (
+    module: JourneyModule,
+    items: JourneyItem[],
+    milestone: (typeof MILESTONES)[number] | undefined,
+  ) => {
     const isOpen = !!expanded[module];
     const isCurrent = currentModule === module;
+    const attained = milestone ? levelNumber >= milestone.level : false;
     return (
       <View style={[styles.card, isCurrent && styles.cardCurrent]}>
         <TouchableOpacity
@@ -204,15 +209,15 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
         >
           <Text style={styles.cardEmoji}>{MODULE_EMOJI[module]}</Text>
           <View style={styles.cardInfo}>
-            <Text style={styles.cardEyebrow}>Stage {module}</Text>
-            <Text style={styles.cardName}>{JOURNEY_MODULES[module]}</Text>
+            {/* The spiritual title leads: the card is who you are becoming
+                first, the module (what you will read) second. */}
+            {milestone && (
+              <Text style={[styles.cardLevel, attained && styles.cardLevelAttained]}>
+                {milestone.label}
+              </Text>
+            )}
+            <Text style={styles.cardModule}>{JOURNEY_MODULES[module]}</Text>
             <Text style={styles.cardWhy}>{MODULE_WHY[module]}</Text>
-            {/* The promise. The stage's capstone is this sentence made testable,
-                so it is a commitment rather than a description. */}
-            <View style={styles.objective}>
-              <Text style={styles.objectiveLabel}>After this you can</Text>
-              <Text style={styles.objectiveText}>{MODULE_OBJECTIVES[module]}</Text>
-            </View>
           </View>
           <Ionicons
             name={isOpen ? 'chevron-down' : 'chevron-forward'}
@@ -242,11 +247,6 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
                   >
                     {item.title}
                   </Text>
-                  {state === 'current' && (
-                    <View style={styles.nextPill}>
-                      <Text style={styles.nextPillText}>Next</Text>
-                    </View>
-                  )}
                 </>
               );
               return onItemPress ? (
@@ -270,6 +270,8 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
     );
   };
 
+  // Only the terminal Guru node uses this now — a standalone rail end-cap with
+  // no stage card to fold into.
   const renderMilestone = (m: (typeof MILESTONES)[number]) => {
     const attained = levelNumber >= m.level;
     return (
@@ -277,33 +279,45 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
         <Text style={[styles.milestoneLabel, attained && styles.milestoneLabelAttained]}>
           {m.label}
         </Text>
-        <Text style={styles.milestoneSub}>{m.sub}</Text>
       </View>
     );
   };
 
-  // The first stage is whichever module actually leads the path — not a
-  // hardcoded 1. Foundations (module 0) leads it today.
-  const firstModule = modules[0]?.module ?? 0;
-  const firstMilestone =
-    MILESTONES.find(m => m.beforeModule === firstModule) ?? MILESTONES[0];
+  // Each stage card carries its own level identity now, so the rail is one row
+  // per stage: teal for the current stage and everything before it, its dot
+  // marking whether that stage's level has been attained.
+  const renderModuleRow = (module: JourneyModule, items: JourneyItem[]) => {
+    const milestone = MILESTONES.find(m => m.beforeModule === module);
+    const walked = currentModule >= module;
+    const dot: 'attained' | 'ahead' =
+      milestone && levelNumber >= milestone.level ? 'attained' : 'ahead';
+    return (
+      <RailRow key={module} walked={walked} dot={dot}>
+        {renderStageCard(module, items, milestone)}
+      </RailRow>
+    );
+  };
+
+  // Foundations (module 0) leads the path today, but read it off the data.
+  const leadModule = modules[0];
+  const restModules = modules.slice(1);
+  const terminal = MILESTONES[MILESTONES.length - 1];
   const body = (
     <View style={styles.container}>
-      <RailRow
-        walked={currentModule >= firstModule}
-        dot={levelNumber >= firstMilestone.level ? 'attained' : 'ahead'}
-      >
+      {/* The lead card literally "became" the Jigyasu identity card in the
+          onboarding hand-off, so it carries the settle-in pulse. */}
+      {leadModule && (
         <Animated.View
           style={{
             opacity: milestoneIn,
             transform: [
-              { scale: milestoneIn.interpolate({ inputRange: [0, 1], outputRange: [1.25, 1] }) },
+              { scale: milestoneIn.interpolate({ inputRange: [0, 1], outputRange: [1.06, 1] }) },
             ],
           }}
         >
-          {renderMilestone(firstMilestone)}
+          {renderModuleRow(leadModule.module, leadModule.items)}
         </Animated.View>
-      </RailRow>
+      )}
       <Animated.View
         style={{
           opacity: restIn,
@@ -312,32 +326,12 @@ const JourneyPathView: React.FC<JourneyPathViewProps> = ({
           ],
         }}
       >
-        {modules.map(({ module, items }) => {
-          const milestone = MILESTONES.find(m => m.beforeModule === module);
-          // Rail is teal for everything strictly before the current stage
-          const milestoneWalked = currentModule >= module;
-          const cardWalked = currentModule > module;
-          return (
-            <React.Fragment key={module}>
-              {/* The lead module's milestone is already rendered above, outside
-                  the stagger, so it can carry the onboarding entrance pulse. */}
-              {module !== firstModule && milestone && (
-                <RailRow
-                  walked={milestoneWalked}
-                  dot={levelNumber >= milestone.level ? 'attained' : 'ahead'}
-                >
-                  {renderMilestone(milestone)}
-                </RailRow>
-              )}
-              <RailRow walked={cardWalked}>{renderStageCard(module, items)}</RailRow>
-            </React.Fragment>
-          );
-        })}
+        {restModules.map(({ module, items }) => renderModuleRow(module, items))}
         <RailRow
           walked={currentModule > 5}
-          dot={levelNumber >= 7 ? 'attained' : 'ahead'}
+          dot={levelNumber >= terminal.level ? 'attained' : 'ahead'}
         >
-          {renderMilestone(MILESTONES[MILESTONES.length - 1])}
+          {renderMilestone(terminal)}
         </RailRow>
       </Animated.View>
     </View>
@@ -363,12 +357,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   railCol: {
-    width: 26,
+    width: 32,
     alignItems: 'flex-start',
   },
   railLine: {
     position: 'absolute',
-    left: 7,
+    left: 11,
     top: 0,
     bottom: 0,
     width: 3,
@@ -376,12 +370,12 @@ const styles = StyleSheet.create({
   },
   railDot: {
     position: 'absolute',
-    left: 1,
-    top: 2,
-    width: 15,
-    height: 15,
-    borderRadius: 8,
-    borderWidth: 3,
+    left: 1.5,
+    top: 24,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    borderWidth: 4,
     backgroundColor: colors.neutrals.sandstoneBeige,
   },
   railDotAttained: {
@@ -407,11 +401,6 @@ const styles = StyleSheet.create({
   },
   milestoneLabelAttained: {
     color: colors.primary.peacockTeal,
-  },
-  milestoneSub: {
-    fontSize: 11,
-    color: colors.neutrals.softAsh,
-    marginTop: 1,
   },
   card: {
     backgroundColor: colors.neutrals.white,
@@ -443,45 +432,31 @@ const styles = StyleSheet.create({
     flex: 1,
     minWidth: 0,
   },
-  cardEyebrow: {
-    fontSize: 10,
-    fontWeight: '800',
-    letterSpacing: 1,
+  cardLevel: {
+    fontSize: 18,
+    lineHeight: 22,
+    fontWeight: '700',
+    letterSpacing: 0.2,
+    color: colors.primary.deepSaffron,
+  },
+  cardLevelAttained: {
+    color: colors.primary.peacockTeal,
+  },
+  cardModule: {
+    fontSize: 12,
+    lineHeight: 16,
+    fontWeight: '700',
+    letterSpacing: 0.8,
     textTransform: 'uppercase',
     color: colors.neutrals.softAsh,
-  },
-  cardName: {
-    ...typography.sizes.headingSM,
-    color: colors.neutrals.charcoalBlack,
-    fontWeight: '700',
+    marginTop: 4,
   },
   cardWhy: {
     fontSize: 11.5,
     lineHeight: 16,
     fontStyle: 'italic',
     color: '#6E6357',
-    marginTop: 2,
-  },
-  objective: {
-    marginTop: 8,
-    paddingTop: 8,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'rgba(0,0,0,0.12)',
-  },
-  objectiveLabel: {
-    fontSize: 9.5,
-    lineHeight: 13,
-    letterSpacing: 1.2,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    color: colors.primary.peacockTeal,
-    marginBottom: 3,
-  },
-  objectiveText: {
-    fontSize: 13,
-    lineHeight: 18,
-    fontWeight: '600',
-    color: colors.neutrals.charcoalBlack,
+    marginTop: 6,
   },
   items: {
     marginTop: spacing.sm + 4,
@@ -553,19 +528,6 @@ const styles = StyleSheet.create({
   itemTitleCurrent: {
     color: colors.primary.deepSaffron,
     fontWeight: '700',
-  },
-  nextPill: {
-    backgroundColor: colors.primary.deepSaffron,
-    borderRadius: 8,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 2,
-  },
-  nextPillText: {
-    color: '#FFFFFF',
-    fontSize: 10,
-    fontWeight: '800',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
   },
 });
 
