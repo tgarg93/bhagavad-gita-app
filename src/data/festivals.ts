@@ -1220,6 +1220,172 @@ export const festivalData: Festival[] = [
     ],
   },
   {
+    id: 'ugadi-gudi-padwa-2025',
+    name: 'Ugadi & Gudi Padwa',
+    sanskritName: 'युगादि · गुढी पाडवा',
+    date: '2025-03-30',
+    occurrences: ['2025-03-30', '2026-03-19', '2027-04-07', '2028-03-27'], // Chaitra Shukla Pratipada; verified vs Drik Panchang (New Delhi), Jul 2026
+    emoji: '🚩',
+    dateType: 'lunar',
+    type: 'new_year',
+    significance: 'The lunar new year of the Deccan — Ugadi in Telugu and Kannada lands, Gudi Padwa in Maharashtra',
+    description: 'One spring morning when half of India starts its year, tastes all six flavors at once, and raises a victory flag',
+    traditions: [
+      'Ugadi pachadi (the six-taste chutney)',
+      'Raising the gudi at the door or balcony',
+      'Oil bath before sunrise',
+      'Panchanga shravanam (hearing the year\'s almanac read)',
+      'Fresh mango-leaf torans on doorways'
+    ],
+    prayers: [
+      'Panchanga shravanam',
+      'Prayers to Brahma and to the new year itself'
+    ],
+    foods: [
+      'Ugadi pachadi',
+      'Bobbatlu / holige / puran poli',
+      'Shrikhand with puri',
+      'Raw mango dishes'
+    ],
+    colors: ['Yellow', 'Mango green', 'Saffron'],
+    deity: 'Brahma',
+    scripture: 'Brahma Purana',
+    duration: 1,
+    region: 'Andhra Pradesh, Telangana, Karnataka, Maharashtra, Goa',
+    importance: 'regional',
+    rituals: [
+      {
+        id: 'ugadi-pachadi-making',
+        name: 'Ugadi Pachadi',
+        description: 'The new year\'s first food: a small bowl mixing six tastes, eaten by every member of the family before anything sweet-only is touched.',
+        timeOfDay: 'morning',
+        materials: ['Neem flowers (bitter)', 'Jaggery (sweet)', 'Raw mango (tang)', 'Tamarind (sour)', 'Salt', 'Green chili or pepper (heat)', 'A small bowl of water to bind it'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'After an oil bath and fresh clothes, mix all six ingredients into one loose chutney.',
+            explanation: 'Nothing is left out on purpose. The year ahead will contain all six experiences, so the dish does too.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Offer the first spoon to the family deity or simply set it before a lamp.',
+            explanation: 'The year is received as a gift before it is consumed.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Each family member eats a spoonful, tasting every flavor together, and only then moves to the festive meal.',
+            explanation: 'Eating bitterness and sweetness in the same mouthful is the whole teaching. You accept the year whole, in advance.'
+          }
+        ],
+        significance: 'The pachadi is a philosophy served as food: joy, grief, surprise, anger, fear, and zest will all visit this year, and the family agrees to taste them all.',
+        tips: ['Let children guess which ingredient stands for which experience', 'This is one common way — ask your family how they walk it.'],
+        commonMistakes: ['Sweetening it until the neem disappears; the bitter note is the point, not a flaw']
+      }
+    ],
+    fullStory: 'Ugadi and Gudi Padwa are one day with two names: Chaitra Shukla Pratipada, the first day after the new moon of Chaitra, when the lunar new year begins for the Telugu, Kannada, Marathi, and Konkani worlds. Tradition holds that Brahma began creation on this day. Telugu and Kannada homes greet the year with ugadi pachadi, a chutney of six tastes eaten so that the whole year, bitter and sweet alike, is accepted in advance. Marathi homes raise the gudi, a silk-draped pole crowned with an upturned pot, as a flag of victory and welcome. The same day opens Chaitra Navratri, and nine days later comes Ram Navami.',
+    sections: [
+      {
+        id: 'ugadi-new-year',
+        title: 'The Morning the Year Begins',
+        subtitle: 'One Day, Two Names',
+        storyText: 'When does the Hindu year begin? The honest answer is that it depends on where your family is from, and one of the great answers is today.\n\n**Chaitra Shukla Pratipada** is the first day after the new moon of the month of Chaitra, in early spring. On this morning the Telugu and Kannada worlds celebrate **Ugadi**, from yuga and adi, meaning the beginning of the age. Maharashtra and Goa celebrate the same day as **Gudi Padwa**.\n\nThe day carries an old weight. Tradition holds that Brahma, the creator, began the making of the universe on this morning, so every new year since is a small echo of the first one.\n\nThe same sunrise also opens Chaitra Navratri, nine nights of the Goddess, and on the ninth day Rama is born. The spring calendar is built like a staircase, and today is its first step.',
+        citationLink: 'festival:ram-navami-2025',
+        citation: 'Brahma Purana — creation beginning on Chaitra Shukla Pratipada; purana tradition.'
+      },
+      {
+        id: 'ugadi-pachadi',
+        title: 'Six Tastes in One Spoon',
+        subtitle: 'The New Year, Served as a Chutney',
+        storyText: 'Before the feasting, a Telugu or Kannada home does something quietly profound. It serves the year.\n\n**Ugadi pachadi** is a small bowl of chutney with six ingredients, one for each taste the tongue knows. Neem flowers for the bitter. Jaggery for the sweet. Raw mango for the tang. Tamarind for the sour. Salt for itself. Chili for the heat.\n\nEvery member of the family eats a spoonful, all six tastes at once, before anything else. The meaning is spoken aloud to children every year. The months ahead will bring sweetness, and they will also bring bitterness, sourness, and heat, and the family accepts all of it in advance, together, in one bite.\n\nMost new year customs promise a good year. This one promises a whole year, and calls that better.',
+        citation: 'Ugadi pachadi — festival practice, labeled as tradition.'
+      },
+      {
+        id: 'ugadi-gudi',
+        title: 'The Flag at the Window',
+        subtitle: 'A Silk Banner and an Upturned Pot',
+        storyText: 'In Maharashtra the day announces itself from the balconies.\n\nAt sunrise a household raises the **gudi**: a tall bamboo pole wrapped in a bright silk cloth, topped with neem leaves, a garland of flowers, sometimes a string of sugar crystals, and crowned with an upturned copper or silver pot. It leans out of a window or stands by the door, visible to the whole street.\n\nThe gudi is a victory flag, and the traditions behind it are plural. Some homes call it **Brahmadhvaj**, the flag of Brahma, for the first morning of creation. Others raise it for remembered victories, of good over harm, of new over stale. Nobody is required to pick one story. The flag means the household expects good things and is not shy about saying so.\n\nUnder it, the day fills with rangoli at the threshold, shrikhand and puran poli at the table, and mango leaves over every door.',
+        citation: 'The gudi and its tellings — Marathi tradition; the stories vary by family and are given here as tradition.'
+      },
+      {
+        id: 'ugadi-panchanga',
+        title: 'Hearing the Year Out Loud',
+        subtitle: 'The Almanac Read to the Family',
+        storyText: 'The old centerpiece of the evening is a custom called **panchanga shravanam**, which means hearing the almanac.\n\nThe **panchanga** is the traditional Hindu calendar, the book that holds the year\'s festival dates, eclipses, auspicious windows, and forecasts. On Ugadi evening, at temples and in homes, someone reads the new year\'s panchanga aloud while the family listens. Rain prospects, harvest prospects, the year\'s character.\n\nUnderneath the astrology sits a simple habit worth keeping. Once a year, the whole household sits down and looks at the entire year ahead, out loud, together.',
+        teachingText: 'You could keep this new year in one evening. Taste something bitter and something sweet in the same bite, and say what you are accepting in advance. Then talk through the year ahead as a household, plans and festivals and hard months alike.\n\nThe day\'s two customs, the pachadi and the almanac, are the same teaching twice. Meet the year whole, with your eyes open.',
+        citation: 'Panchanga shravanam — festival practice, labeled as tradition.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Brahma Purana',
+        locator: 'Creation beginning on Chaitra Shukla Pratipada — purana tradition for the day\'s significance',
+        translation: 'named as tradition; the festival\'s customs are practice, not liturgy',
+      },
+      {
+        text: 'Festival practice',
+        locator: 'Ugadi pachadi, the gudi, panchanga shravanam — living regional tradition of the Deccan, labeled as tradition',
+      },
+      {
+        text: 'Drik Panchang',
+        locator: 'Ugadi / Gudi Padwa dates 2025–2028 (Chaitra Shukla Pratipada)',
+      },
+    ],
+    mythology: [
+      'Brahma beginning creation on this morning',
+      'The gudi as Brahmadhvaj, the creator\'s flag',
+      'The Shalivahana era, counted from this day'
+    ],
+    historicalContext: 'The day begins the Shalivahana Shaka era used across the Deccan, and remains the civil new year for Telugu, Kannada, Marathi, and Konkani communities. Parallel new years fall nearby for other regions: Cheti Chand for Sindhis on the following day, and the solar new years of Baisakhi, Vishu, and Puthandu in mid-April.',
+    scriptureReferences: [
+      {
+        id: 'ugadi-brahma-purana',
+        text: 'puranas',
+        section: 'Brahma Purana — creation narrative',
+        relevance: 'The tradition that Brahma began creation on Chaitra Shukla Pratipada, making this the anniversary of the world'
+      }
+    ],
+    regionalVariations: [
+      {
+        region: 'Andhra Pradesh, Telangana, Karnataka',
+        localName: 'Ugadi / Yugadi',
+        uniqueTraditions: ['Ugadi pachadi', 'Panchanga shravanam at temples', 'Kavi sammelanam (new year poetry gatherings)'],
+        specialFoods: ['Ugadi pachadi', 'Bobbatlu / holige', 'Pulihora'],
+        localCustoms: 'The day opens with an oil bath and ends, in many towns, with poets reading new work for the new year.'
+      },
+      {
+        region: 'Maharashtra and Goa',
+        localName: 'Gudi Padwa / Samvatsar Padvo',
+        uniqueTraditions: ['Raising the gudi at sunrise', 'Rangoli at thresholds', 'New ventures begun on the day'],
+        specialFoods: ['Shrikhand-puri', 'Puran poli', 'Neem with jaggery'],
+        localCustoms: 'Counted among the year\'s most auspicious days, when new homes are entered and new businesses opened without consulting the calendar further.'
+      }
+    ],
+    modernAdaptations: [
+      'New year poetry meets (kavi sammelanam) broadcast on Telugu television',
+      'Gudi-raising photos as the day\'s social media ritual',
+      'Six-tastes reflections used in classrooms and family WhatsApp groups'
+    ],
+    familyActivities: [
+      {
+        id: 'ugadi-six-tastes',
+        title: 'Name Your Six Tastes',
+        description: 'While eating the pachadi, each person names one hope (sweet), one worry (bitter), and one thing that will take real effort (heat) for the year ahead.',
+        ageGroup: 'all_ages',
+        duration: '30 minutes',
+        materials: ['The ugadi pachadi, or simply a piece of jaggery and a neem or bitter-gourd sliver'],
+        instructions: [
+          'Pass the bowl around the table',
+          'With each spoonful, the eater names their sweet, their bitter, and their heat for the coming year',
+          'Nobody fixes or answers anyone; the year is tasted, not solved'
+        ],
+        learningObjective: 'A year accepted whole in advance is easier to live through than a year negotiated month by month'
+      }
+    ],
+    culturalImpact: 'The Deccan\'s new year keeps alive one of the tradition\'s most practical philosophies: the six-taste teaching that a good life is a complete one, not a uniformly sweet one.',
+    relatedFestivals: ['ram-navami-2025', 'makar-sankranti-2025'],
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: ugadi-gudi-padwa-cover.png
+  },
+  {
     id: 'ram-navami-2025',
     name: 'Ram Navami',
     sanskritName: 'राम नवमी',
@@ -1359,8 +1525,740 @@ export const festivalData: Festival[] = [
     ],
     familyActivities: [],
     culturalImpact: 'Teaches moral values, righteousness, and the importance of duty and honor.',
-    relatedFestivals: ['diwali-2025'],
+    relatedFestivals: ['diwali-2025', 'hanuman-jayanti-2025', 'ugadi-gudi-padwa-2025', 'dussehra-2025'],
     heroImageUrl: require('../../assets/images/covers/ramayana-cover.png'),
+  },
+  {
+    id: 'hanuman-jayanti-2025',
+    name: 'Hanuman Jayanti',
+    sanskritName: 'हनुमान जयन्ती',
+    date: '2025-04-12',
+    occurrences: ['2025-04-12', '2026-04-02', '2027-04-20', '2028-04-09'], // Chaitra Purnima; verified vs Drik Panchang (New Delhi), Jul 2026
+    emoji: '⛰️',
+    dateType: 'lunar',
+    type: 'deity_celebration',
+    significance: 'The birth of Hanuman, on the full moon of Chaitra',
+    description: 'The birthday of the servant who forgot his own strength, six days after his lord\'s',
+    traditions: [
+      'Sunrise celebrations (Hanuman was born at dawn)',
+      'Reciting the Hanuman Chalisa',
+      'Reading the Sundara Kanda aloud',
+      'Offering sindoor and oil',
+      'Boondi and besan laddus as prasad'
+    ],
+    prayers: [
+      'Hanuman Chalisa',
+      'Sundara Kanda recitation',
+      'Bajrang Baan'
+    ],
+    foods: [
+      'Boondi laddu',
+      'Besan laddu',
+      'Bananas',
+      'Paan (offered, then shared)'
+    ],
+    colors: ['Sindoor orange', 'Red', 'Saffron'],
+    deity: 'Hanuman',
+    scripture: 'Ramayana',
+    duration: 1,
+    importance: 'major',
+    rituals: [
+      {
+        id: 'hanuman-chalisa-recitation',
+        name: 'The Chalisa at Dawn',
+        description: 'Hanuman was born at sunrise, so his day begins there: a lamp, a little sindoor, and the forty verses that most of North India knows by heart.',
+        timeOfDay: 'dawn',
+        materials: ['A picture or murti of Hanuman', 'A ghee or mustard-oil lamp', 'Sindoor and a few drops of oil', 'Boondi or besan laddus for prasad', 'The Hanuman Chalisa text (or memory)'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'Bathe, light the lamp, and touch a little sindoor to Hanuman\'s image (or simply to the base of the picture).',
+            explanation: 'Sindoor recalls the story of Hanuman covering his whole body in it for Rama\'s sake, told below in this reader.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Recite the Hanuman Chalisa once, slowly enough to hear the words.',
+            explanation: 'Forty verses by the poet Tulsidas. Speed is traditional on hard days; on his birthday, take your time.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Offer the laddus, then share them as prasad.',
+            explanation: 'Prasad is an offering returned as blessing; Hanuman\'s is famously sweet and simple.'
+          },
+          {
+            stepNumber: 4,
+            instruction: 'Before you rise, name one strength you have been talking yourself out of.',
+            explanation: 'Hanuman\'s story turns on being reminded of what he could already do. The birthday works best as that reminder.'
+          }
+        ],
+        mantras: [
+          {
+            sanskrit: 'मनोजवं मारुततुल्यवेगं जितेन्द्रियं बुद्धिमतां वरिष्ठम्। वातात्मजं वानरयूथमुख्यं श्रीरामदूतं शरणं प्रपद्ये॥',
+            transliteration: 'manojavaṁ māruta-tulya-vegaṁ jitendriyaṁ buddhimatāṁ variṣṭham, vātātmajaṁ vānara-yūtha-mukhyaṁ śrī-rāma-dūtaṁ śaraṇaṁ prapadye',
+            meaning: 'Swift as thought, fast as the wind, master of his senses, first among the wise — son of the wind, chief of the vanaras, messenger of Rama: in him I take refuge',
+            pronunciation: 'ma-no-ja-vam maa-ru-ta-tul-ya-ve-gam ji-ten-dri-yam bud-dhi-ma-taam va-rish-tham'
+          }
+        ],
+        significance: 'The dhyana shloka recited before Hanuman worship across traditions, gathering his qualities into four lines: speed, discipline, wisdom, service.',
+        tips: ['Tuesdays and Saturdays are Hanuman\'s weekly days; the Jayanti is their once-a-year crown', 'This is one common way — ask your family how they walk it.'],
+        commonMistakes: ['Racing the Chalisa; the verses are a portrait, not a countdown']
+      }
+    ],
+    fullStory: 'Hanuman Jayanti celebrates the birth of Hanuman on the full moon of Chaitra, six days after Ram Navami. Son of Anjana and the wind god Vayu, Hanuman is the Ramayana\'s greatest devotee: the vanara who leapt the ocean to find Sita, carried a mountain to save a life, and asked for nothing but service. His story carries one of the tradition\'s most loved teachings — as a child he was made to forget his own powers, and at the shore of the ocean an old friend had to remind him who he was before he could leap.',
+    sections: [
+      {
+        id: 'hanuman-jayanti-birth',
+        title: 'Born of the Wind',
+        subtitle: 'A Full Moon, Six Days After Ram Navami',
+        storyText: 'Walk through almost any town in India and count the temples. In much of the country, the god you will meet most often is not one of the great three. He has a monkey\'s face, a mace on his shoulder, and a mountain in his hand.\n\n**Hanuman Jayanti**, on the full moon of Chaitra, is his birthday. The calendar\'s placement is quiet poetry: Rama is born on the ninth day, and his greatest servant six days later, as if the story were already assembling itself.\n\nHanuman is the son of **Anjana**, a vanara queen, and of **Vayu**, the wind itself. His other names remember this. Maruti and Pavan-putra both mean son of the wind, and the wind\'s gifts, speed and breath and tirelessness, run through everything he does.',
+        citation: 'Valmiki Ramayana — Hanuman\'s parentage; birth-day observance per Drik Panchang convention (Chaitra Purnima).'
+      },
+      {
+        id: 'hanuman-jayanti-sun',
+        title: 'The Baby Who Leapt at the Sun',
+        subtitle: 'A Fruit Too Bright to Resist',
+        storyText: 'The Ramayana\'s final book tells his childhood in one astonishing scene.\n\nThe infant Hanuman wakes hungry. Through the trees he sees the rising sun, round and golden, and takes it for a ripe fruit. So he jumps for it. Not toward the treetops. Toward the sun, gaining on it, while the sky gods watch in alarm.\n\nIndra, king of the gods, hurls his thunderbolt. It strikes the child\'s jaw and drops him to the earth, and from that broken jaw, hanu in Sanskrit, comes the name **Hanuman**. His father the wind, in grief, pulls the air out of the world until the gods relent. They heap the boy with boons: strength no weapon can undo, life no fight can end.\n\nBut power like that in a child is chaos, and after some well-aimed mischief at the hermitages, the sages set one final condition on him. **Hanuman would forget what he could do, until someone reminded him.**',
+        citation: 'Valmiki Ramayana, Uttara Kanda, sargas 35–36 — the childhood story, as the epic\'s tradition tells it.'
+      },
+      {
+        id: 'hanuman-jayanti-leap',
+        title: 'The Friend Who Reminded Him',
+        subtitle: 'At the Shore of a Hundred-Yojana Sea',
+        storyText: 'Years later that condition becomes the hinge of the whole epic.\n\nThe search parties looking for the kidnapped Sita reach the southern shore and stop dead. The ocean to Lanka is a hundred yojanas wide. No monkey on the beach can jump it, and the mission is hours from failing.\n\nThen **Jambavan**, the old bear king, turns to the quiet one sitting apart and begins to speak. He tells Hanuman his own story back to him. Son of the wind. The child who leapt at the sun. Strength without measure, sleeping only because you forgot it. Why do you sit silent, he asks, when you alone can do this?\n\nAnd Hanuman remembers. He grows until the mountain he stands on groans under him, and he leaps, and the next book of the Ramayana, the **Sundara Kanda**, the beautiful chapter, is his alone: the crossing, the finding of Sita, the burning of Lanka, the return.',
+        teachingText: 'The tradition has held onto this scene for thousands of years because everyone is standing on that beach eventually.\n\nHanuman\'s strength was never gone. It was forgotten, and it took a friend naming it out loud to bring it back. Some years you are Hanuman, talked out of your own capacity. Some years your only job is to be Jambavan for somebody else.',
+        citation: 'Valmiki Ramayana, Kishkindha Kanda, sargas 66–67; Sundara Kanda, sarga 1.'
+      },
+      {
+        id: 'hanuman-jayanti-devotee',
+        title: 'The Perfect Servant',
+        subtitle: 'Sindoor, a Torn-Open Heart, and Forty Verses',
+        storyText: 'For all his power, what the tradition worships in Hanuman is not strength. It is what the strength is for.\n\nHe asks Rama for no kingdom and no boon, only to serve. Later tradition tells two stories that devotees love. In one, Hanuman sees Sita put sindoor in her hair for Rama\'s long life, and covers his entire body in it, reasoning that more must be better. In the other, asked what Rama means to him, he tears open his chest, and Rama and Sita are seated in his heart. Both are later devotional tellings rather than Valmiki\'s text, and both are told because they are true to him.\n\nIn the sixteenth century the poet **Tulsidas** gathered this devotion into forty Hindi verses, the **Hanuman Chalisa**, now recited daily by more people than almost any poem on earth. On Hanuman Jayanti it is sung at sunrise, because that is when he was born.',
+        teachingText: 'Hanuman is the tradition\'s answer to a hard question: what does power look like when the ego is gone from it? It looks like this. Immense capacity, complete devotion, and no interest at all in credit.',
+        citation: 'Sindoor and heart stories — later devotional tradition, labeled as such; Hanuman Chalisa, Tulsidas (16th c.).'
+      }
+    ],
+    sources: [
+      {
+        text: 'Valmiki Ramayana',
+        locator: 'Kishkindha Kanda 66–67 (Jambavan\'s reminder), Sundara Kanda (the leap and search), Uttara Kanda 35–36 (childhood and the sun)',
+        translation: 'valmikiramayan.net (public)',
+        url: 'https://www.valmikiramayan.net/',
+      },
+      {
+        text: 'Hanuman Chalisa',
+        locator: 'Tulsidas (16th c.) — devotional tradition; sindoor and opened-chest stories named as later tradition',
+      },
+      {
+        text: 'Drik Panchang',
+        locator: 'Hanuman Jayanti dates 2025–2028 (Chaitra Purnima); regional observances noted',
+      },
+    ],
+    mythology: [
+      'The infant\'s leap at the sun and Indra\'s thunderbolt',
+      'The boon-and-forgetting that shaped his life',
+      'The leap to Lanka and the burning of the city',
+      'Carrying the mountain of herbs to save Lakshmana'
+    ],
+    historicalContext: 'Hanuman worship is among the most widespread in Hinduism, with wayside shrines outnumbering those of most major deities across North India. The Chalisa tradition dates to Tulsidas in the sixteenth century.',
+    scriptureReferences: [
+      {
+        id: 'hanuman-sundara-kanda',
+        text: 'ramayana',
+        section: 'Sundara Kanda',
+        relevance: 'The book named for its beauty is Hanuman\'s book: the crossing of the ocean, the finding of Sita, and the proof of what remembered strength can do'
+      }
+    ],
+    regionalVariations: [
+      {
+        region: 'Tamil Nadu',
+        localName: 'Hanumath Jayanti',
+        uniqueTraditions: ['Observed in Margashirsha (December–January) on the new moon, by a different reckoning of his birth'],
+        specialFoods: ['Vada mala (garlands of savory vadas)'],
+        localCustoms: 'The vada garland draped on Hanuman\'s murti is the distinctive southern offering.'
+      },
+      {
+        region: 'Andhra Pradesh and Telangana',
+        localName: 'Hanuman Jayanti (Deeksha)',
+        uniqueTraditions: ['A 41-day deeksha (vow) ending on Bahula Dashami in Vaishakha'],
+        specialFoods: ['Simple sattvic meals through the deeksha'],
+        localCustoms: 'Devotees keep an austere vow for 41 days, the festival arriving as its completion rather than a single morning.'
+      }
+    ],
+    modernAdaptations: [
+      'Chalisa recitation streaks kept on apps and family groups',
+      'Sundara Kanda parayana (full readings) organized in housing societies',
+      'Hanuman as the icon of gyms and akharas across North India'
+    ],
+    familyActivities: [
+      {
+        id: 'hanuman-jayanti-jambavan',
+        title: 'Play Jambavan',
+        description: 'Around the table, each person is reminded of a strength they have stopped using — by someone else, out loud, the way Jambavan did it.',
+        ageGroup: 'all_ages',
+        duration: '20 minutes',
+        materials: ['None'],
+        instructions: [
+          'Go around the circle; for each person, someone else names a real capacity they have seen them use',
+          'The rule from the story: it must be a reminder of something true, not flattery',
+          'End with each person saying what they will do with the reminded strength this month'
+        ],
+        learningObjective: 'Hanuman\'s teaching in practice: most forgotten strength comes back when a friend names it'
+      }
+    ],
+    culturalImpact: 'Hanuman gives the tradition its model of strength without ego and devotion without transaction, and his Chalisa is arguably the most-recited poem in the world.',
+    relatedFestivals: ['ram-navami-2025', 'dussehra-2025'],
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: hanuman-jayanti-cover.png
+  },
+  {
+    id: 'ratha-yatra-2025',
+    name: 'Ratha Yatra',
+    sanskritName: 'रथ यात्रा',
+    date: '2025-06-27',
+    occurrences: ['2025-06-27', '2026-07-16', '2027-07-05', '2028-06-24'], // Ashadha Shukla Dwitiya; verified vs Drik Panchang (New Delhi), Jul 2026
+    emoji: '🛞',
+    dateType: 'lunar',
+    type: 'pilgrimage',
+    significance: 'Jagannath\'s chariot journey at Puri — the day the god leaves his temple to meet everyone',
+    description: 'Three colossal wooden chariots, a million hands on the ropes, and a deity who comes out to the street',
+    traditions: [
+      'Pulling the chariot ropes',
+      'Chhera Pahanra (the king sweeps the chariots)',
+      'Nine days at the Gundicha temple',
+      'Bahuda Yatra (the return journey)',
+      'Kirtan and mahaprasad'
+    ],
+    prayers: [
+      'Jagannath ashtakam',
+      'Hare Krishna kirtan along the route'
+    ],
+    foods: [
+      'Mahaprasad from the temple kitchen',
+      'Khaja (layered sweet)',
+      'Dalma (dal with vegetables)',
+      'Poda pitha'
+    ],
+    colors: ['Red and yellow (Nandighosha)', 'Black and white (Jagannath\'s round eyes)', 'Green'],
+    deity: 'Jagannath (Krishna), with Balabhadra and Subhadra',
+    scripture: 'Skanda Purana',
+    duration: 9,
+    region: 'Odisha (Puri), now worldwide',
+    importance: 'regional',
+    rituals: [
+      {
+        id: 'ratha-yatra-joining',
+        name: 'Joining a Ratha Yatra',
+        description: 'The festival\'s only real ritual is participation: being in the crowd, touching the rope, and pulling. Most large cities now have one.',
+        timeOfDay: 'afternoon',
+        materials: ['Comfortable clothes for a crowd', 'Water', 'Something to offer the prasad line (optional)'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'Find the nearest Ratha Yatra — Puri if you are lucky, otherwise the local ISKCON or Odia association procession.',
+            explanation: 'The festival went global in 1968 when ISKCON held one in San Francisco; London, New York, and hundreds of cities now roll chariots every summer.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'When the chariot passes, take hold of the rope and pull, even for a few steps.',
+            explanation: 'Pulling the ratha is the heart of the festival and is open to absolutely anyone; tradition holds the act itself to be purifying.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Accept the prasad, stay for the kirtan, and look up at the eyes.',
+            explanation: 'Jagannath\'s huge round eyes are the point of the journey: darshan, the exchange of seeing, offered to the whole street at once.'
+          }
+        ],
+        significance: 'On the street there is no doorway, no queue, and no restriction; the rope is the same thickness in every hand.',
+        tips: ['Go early; the chariot moves in surges with long pauses that are themselves part of the tradition', 'This is one common way — ask your family how they walk it.'],
+        commonMistakes: ['Treating it as a spectacle to photograph rather than a rope to hold']
+      }
+    ],
+    fullStory: 'Every summer at Puri, on the second day of the bright fortnight of Ashadha, the deities Jagannath, Balabhadra, and Subhadra leave their temple and ride three newly built wooden chariots down the Grand Road to the Gundicha temple, where they stay nine days before the return journey. It is one of the oldest continuously celebrated processions on earth, the origin of the English word "juggernaut," and its meaning is radical hospitality: the god who is normally approached through temple doors comes out to be seen by everyone, and anyone at all may pull his chariot.',
+    sections: [
+      {
+        id: 'ratha-yatra-out',
+        title: 'The Day the God Comes Out',
+        subtitle: 'Grand Road, Puri, a Sea of Hands',
+        storyText: 'A temple is a house with a threshold, and a threshold can be a barrier. For centuries, not everyone could enter the great temple at Puri.\n\nOnce a year, the temple answers that problem in the most direct way imaginable. **The god comes out.**\n\nOn Ratha Yatra morning, **Jagannath**, whose name means Lord of the Universe, is carried out of his sanctum with his elder brother **Balabhadra** and his sister **Subhadra**, and the three are seated on three enormous wooden chariots, as tall as buildings, on the Grand Road. Then a million people take up the ropes and pull them, three kilometers, to the Gundicha temple where they will spend nine days.\n\nOn the road there is no doorway and no restriction of caste, creed, or faith. Whoever reaches the rope, pulls. Nineteenth-century British observers, staggered by the scale of the unstoppable chariots, took one of Jagannath\'s names into English: **juggernaut**.',
+        citation: 'Skanda Purana, Purushottama Kshetra Mahatmya — the festival\'s charter; "juggernaut" etymology, documented history.'
+      },
+      {
+        id: 'ratha-yatra-jagannath',
+        title: 'The Unfinished God',
+        subtitle: 'Great Round Eyes in Neem Wood',
+        storyText: 'Jagannath does not look like other murtis, and that is the first thing everyone notices. A great blocky form of painted neem wood, stumps for arms, and enormous round eyes that never blink.\n\nOdia tradition tells why with a story. The divine craftsman **Vishwakarma** agreed to carve the deity on one condition: the door stays shut until the work is done. Weeks passed in silence. The king, unable to bear it, opened the door early, and the craftsman vanished, leaving the form unfinished. The unfinished form is what has been worshiped ever since.\n\nThe tradition kept the accident as a teaching. The god does not require completion to be present, and neither does anything else you are waiting to finish before you show it.\n\nHe is understood as **Krishna** in his Puri form, and unlike stone deities, the wooden bodies are periodically remade in a rite called Nabakalebara, the new embodiment. The god stays; the form is allowed to be replaced.',
+        citation: 'The unfinished-murti story — Odia tradition, labeled as tradition; Jagannath as Krishna, per the Puri tradition.'
+      },
+      {
+        id: 'ratha-yatra-king-sweeps',
+        title: 'The King Sweeps the Floor',
+        subtitle: 'A Golden Broom on a Chariot Platform',
+        storyText: 'Before a single rope is pulled, the festival performs its sharpest teaching.\n\nThe **Gajapati**, the hereditary king of Puri, arrives in state. He climbs onto each chariot in turn. And then, with a gold-handled broom, the king sweeps the chariot platforms clean, like the lowest servant of the house. The rite is called **Chhera Pahanra**.\n\nThe crowd watches the region\'s most exalted man do a sweeper\'s work for the god, and the message needs no sermon. Before Jagannath, the king of Puri holds the same rank as everyone else holding the rope.\n\nThe chariots themselves carry a related lesson. All three, Nandighosha, Taladhwaja, and Darpadalana, are built new every single year, by hereditary carpenter families working to measurements passed down for centuries, and dismantled after. Nothing about the festival is stored. It is rebuilt, every year, by hand.',
+        teachingText: 'A festival is a machine for saying something too big for words. This one says: rank ends where the rope begins.\n\nThe king sweeping is the old society inverting itself on purpose, once a year, in public, so nobody forgets it can.',
+        citation: 'Chhera Pahanra and the yearly chariot-building — documented Puri temple tradition.'
+      },
+      {
+        id: 'ratha-yatra-journey',
+        title: 'Nine Days at the Aunt\'s House',
+        subtitle: 'There, a Stay, and the Ride Home',
+        storyText: 'Where are the chariots going? Tradition gives the warmest possible answer: to the aunt\'s house.\n\nThe **Gundicha temple**, three kilometers away, is described as the home of the deities\' aunt, and by some tellings the garden where they were first carved. The three stay nine days, fed and fussed over, and then ride home on the **Bahuda Yatra**, the return journey, pausing on the way for poda pitha, a rustic burnt rice cake said to be Jagannath\'s favorite, exactly the kind of thing an aunt would make.\n\nThe theology inside the sweetness is real. For nine days the Lord of the Universe keeps a family visit, because in the Krishna tradition, God is not primarily a judge or a king. He is a relative. The festival lets the whole city walk along on the family errand.\n\nSince 1968, when devotees rolled a chariot through San Francisco, Ratha Yatra has gone wherever Odias and the Hare Krishna movement have gone. There is likely one within reach of you every summer.',
+        teachingText: 'You do not have to travel to Puri. Find a local yatra, put a hand on the rope, and pull. The festival\'s whole teaching passes through the palm: grace does not wait indoors for the qualified. Once a year, at minimum, it comes down your street.',
+        citation: 'Gundicha stay and Bahuda Yatra — Puri tradition; ISKCON\'s 1968 San Francisco yatra, documented history.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Skanda Purana',
+        locator: 'Purushottama Kshetra Mahatmya — the sanctity of Puri and the chariot festival; purana tradition',
+        translation: 'named as tradition; cross-checked against public summaries (wisdomlib.org)',
+      },
+      {
+        text: 'Puri temple tradition',
+        locator: 'Chhera Pahanra, yearly chariot construction, Nabakalebara, the Gundicha stay — documented living tradition of the Jagannath temple',
+      },
+      {
+        text: 'Documented history',
+        locator: '"Juggernaut" entering English (19th c.); ISKCON\'s first overseas Ratha Yatra, San Francisco, 1968',
+      },
+      {
+        text: 'Drik Panchang',
+        locator: 'Ratha Yatra dates 2025–2028 (Ashadha Shukla Dwitiya)',
+      },
+    ],
+    mythology: [
+      'The unfinished murti and the impatient king',
+      'Jagannath as Krishna, with Balabhadra and Subhadra',
+      'The journey to the Gundicha temple and the return'
+    ],
+    historicalContext: 'The Puri Ratha Yatra is among the oldest continuously observed processions in the world, recorded by travelers for many centuries, and the source of the English word "juggernaut." ISKCON carried the festival worldwide beginning in 1968.',
+    scriptureReferences: [
+      {
+        id: 'ratha-yatra-skanda',
+        text: 'puranas',
+        section: 'Skanda Purana, Purushottama Kshetra Mahatmya',
+        relevance: 'The purana\'s praise of Puri and its festival, the traditional charter for the yatra'
+      }
+    ],
+    regionalVariations: [
+      {
+        region: 'Puri, Odisha',
+        localName: 'Shri Gundicha Yatra',
+        uniqueTraditions: ['Chhera Pahanra by the Gajapati king', 'Three chariots built new each year', 'Nabakalebara in designated years'],
+        specialFoods: ['Mahaprasad from the world\'s largest temple kitchen', 'Poda pitha on the return'],
+        localCustoms: 'The original: a million or more pilgrims on the Grand Road, and the deities treated as family members on a family visit.'
+      },
+      {
+        region: 'Worldwide (ISKCON and Odia associations)',
+        localName: 'Festival of the Chariots',
+        uniqueTraditions: ['City-center processions with kirtan', 'Free feast distribution'],
+        specialFoods: ['Vegetarian feast plates'],
+        localCustoms: 'From Trafalgar Square to Fifth Avenue, the chariot rolls through secular downtowns, which is precisely the point.'
+      }
+    ],
+    modernAdaptations: [
+      'Live broadcast of the Puri yatra watched by tens of millions',
+      'City Ratha Yatras on every continent each summer',
+      'Volunteer-run free kitchens along procession routes'
+    ],
+    familyActivities: [
+      {
+        id: 'ratha-yatra-pull',
+        title: 'Find Your Local Yatra',
+        description: 'Look up the nearest summer Ratha Yatra, go as a family, and make sure every member, from the youngest up, gets a hand on the rope.',
+        ageGroup: 'all_ages',
+        duration: 'Half a day',
+        materials: ['Nothing but the trip'],
+        instructions: [
+          'Search for a Ratha Yatra or "Festival of the Chariots" in your city or the nearest large one',
+          'Explain the one rule before you go: anyone may pull, which is the entire teaching',
+          'Afterward, ask each person what they noticed from inside the crowd'
+        ],
+        learningObjective: 'Some teachings are transmitted by rope rather than by explanation'
+      }
+    ],
+    culturalImpact: 'Ratha Yatra is Hinduism\'s great festival of access: the deity out of the sanctum, the king with a broom, and a rope that makes no distinctions, now enacted in cities on every continent.',
+    relatedFestivals: ['janmashtami-2025'],
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: ratha-yatra-cover.png
+  },
+  {
+    id: 'guru-purnima-2025',
+    name: 'Guru Purnima',
+    sanskritName: 'गुरु पूर्णिमा',
+    date: '2025-07-10',
+    occurrences: ['2025-07-10', '2026-07-29', '2027-07-18', '2028-07-06'], // Ashadha Purnima; verified vs Drik Panchang (New Delhi), Jul 2026
+    emoji: '📿',
+    dateType: 'lunar',
+    type: 'spiritual',
+    significance: 'The full moon of Ashadha, honoring the guru — and Vyasa, the tradition\'s first great teacher',
+    description: 'A whole holiday for saying thank you to whoever taught you',
+    traditions: [
+      'Guru puja and pada puja',
+      'Visiting or writing to one\'s teachers',
+      'Reading from Vyasa\'s works',
+      'Beginning of chaturmasya (the monsoon study season)',
+      'Offering dakshina (a gift of gratitude)'
+    ],
+    prayers: [
+      'Guru Brahma verse',
+      'Guru vandana',
+      'Readings from the Gita'
+    ],
+    foods: [
+      'Simple sattvic meals',
+      'Fruit and sweets offered to teachers',
+      'Khichdi (monsoon season fare)'
+    ],
+    colors: ['White', 'Saffron', 'Gold'],
+    deity: 'Vyasa',
+    scripture: 'Mahabharata',
+    duration: 1,
+    importance: 'major',
+    rituals: [
+      {
+        id: 'guru-purnima-vandana',
+        name: 'A Guru Vandana at Home',
+        description: 'A short evening rite of gratitude: a lamp, the Guru Brahma verse, and the naming, out loud, of the people who actually taught you.',
+        timeOfDay: 'evening',
+        materials: ['A lamp', 'Flowers or a single fruit', 'Photographs of teachers, living or gone, if you have them', 'Paper for a thank-you note'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'Light the lamp and place before it whatever stands for your teachers: photos, a parent\'s letter, a worn textbook.',
+            explanation: 'The guru of this festival is not only the robed kind. Anyone who moved you from not-knowing to knowing qualifies.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Recite the Guru Brahma verse once, slowly.',
+            explanation: 'The verse is given with this ritual; its meaning is the day\'s teaching in four lines.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Name your teachers aloud, one by one, and what each gave you. Include the hard ones.',
+            explanation: 'The tradition counts difficult teachers among the real ones; some lessons only they could give.'
+          },
+          {
+            stepNumber: 4,
+            instruction: 'Before the lamp burns down, write to one living teacher and tell them what stuck.',
+            explanation: 'Dakshina, the student\'s gift, need not be money. For most teachers the rarest gift is learning what became of the seed.'
+          }
+        ],
+        mantras: [
+          {
+            sanskrit: 'गुरुर्ब्रह्मा गुरुर्विष्णुः गुरुर्देवो महेश्वरः। गुरुः साक्षात् परं ब्रह्म तस्मै श्रीगुरवे नमः॥',
+            transliteration: 'gurur brahmā gurur viṣṇuḥ gurur devo maheśvaraḥ, guruḥ sākṣāt paraṁ brahma tasmai śrī-gurave namaḥ',
+            meaning: 'The guru is Brahma, the guru is Vishnu, the guru is Shiva; the guru is the supreme reality itself made visible — to that guru, salutation',
+            pronunciation: 'gu-rur brah-maa gu-rur vish-nuh gu-rur de-vo ma-hesh-va-rah'
+          }
+        ],
+        significance: 'The most recited of all guru verses, attributed to the Guru Gita of the Skanda Purana tradition: the claim that the teacher does for a mind what the great gods do for the cosmos — creates, sustains, and transforms it.',
+        tips: ['If your teacher is gone, the letter still works; read it to the lamp', 'This is one common way — ask your family how they walk it.'],
+        commonMistakes: ['Reserving the day for spiritual gurus only; the school teacher, the grandmother, and the strict coach all belong in the naming']
+      }
+    ],
+    fullStory: 'Guru Purnima, the full moon of Ashadha, is the tradition\'s day of gratitude to teachers. It is also called Vyasa Purnima, for tradition holds it as the birthday of Vyasa — the sage who arranged the one Veda into four, composed the Mahabharata with the Gita inside it, and compiled the Puranas. Hinduism reserves one of its holiest full moons not for a warrior or king but for its editor, and every teaching lineage since traces its authority through him. Students honor their gurus, and the guru honored can be anyone who ever genuinely taught you.',
+    sections: [
+      {
+        id: 'guru-purnima-day',
+        title: 'A Holiday for Teachers',
+        subtitle: 'The Full Moon of Ashadha',
+        storyText: 'Every culture thanks its heroes. Hinduism went further and scheduled a full moon for thanking its **teachers**.\n\n**Guru Purnima** falls on the full moon of Ashadha, as the monsoon breaks over India. The word guru is usually translated as teacher, and a beloved traditional etymology, given in the Guru Gita, reads it as two syllables: **gu**, darkness, and **ru**, its removal. The one who removes darkness.\n\nThe tradition means the word generously. The sage on a riverbank is a guru, and so is the woman who taught you to read, the father who taught you to drive, the senior who showed you how the job is really done. Today is for all of them.\n\nWhy this full moon? The rains were when India\'s wandering teachers stopped wandering. For four months, the **chaturmasya**, monks settled in one place, and students gathered. The year\'s great season of learning opened tonight.',
+        citation: 'Guru Gita (Skanda Purana tradition) — the gu-ru etymology, given as traditional; chaturmasya, monastic tradition.'
+      },
+      {
+        id: 'guru-purnima-vyasa',
+        title: 'The Editor the Tradition Worships',
+        subtitle: 'Vyasa Purnima',
+        storyText: 'The day\'s older name is **Vyasa Purnima**, because tradition holds it as the birthday of **Vyasa**, and his resume explains the honor.\n\nTradition credits Vyasa with arranging the single ocean of the Veda into the **four Vedas**, so that human memory could carry them. With composing the **Mahabharata**, the world\'s longest epic, holding the Bhagavad Gita inside it. With compiling the great **Puranas**. His name literally means the arranger, the editor.\n\nNotice what the tradition did here. Of all its kings, warriors, and miracle-workers, it gave one of the year\'s holiest days to the man who **organized knowledge and passed it on**.\n\nTo this day, the seat a traditional teacher speaks from is called the **vyasa-pitha**, Vyasa\'s seat, and every guru lineage, the parampara, traces its line back through him. When anyone teaches dharma anywhere, the tradition says, they are sitting in his chair.',
+        citation: 'Mahabharata, Adi Parva — Vyasa as arranger of the Vedas and author of the epic (tr. Ganguli); his jayanti on this day, tradition.'
+      },
+      {
+        id: 'guru-purnima-parampara',
+        title: 'Hand to Hand, for Three Thousand Years',
+        subtitle: 'How Knowledge Traveled Before Books',
+        storyText: 'For most of its history, Hinduism\'s deepest knowledge was never written down. It moved from one living person to another.\n\nThe oldest texts are called **shruti**, "the heard," because that is how you received them: sitting close to someone who knew, listening, repeating, for years. The very word **Upanishad** means sitting down near. The chain of teacher to student to student\'s student is the **guru-shishya parampara**, and some chains alive today claim an unbroken line running back thousands of years.\n\nThe Gita states the method in one verse. Approach the wise, Krishna tells Arjuna. Ask your questions. Serve, and be humble. **Those who have seen the truth will teach it to you.** Knowledge, in this tradition, is not found. It is handed over, person to person, like a flame passed from lamp to lamp.',
+        teachingText: 'You are already inside a parampara, whether you noticed or not. Everything you know arrived through somebody: a parent, a teacher, an author, a stranger who took ten minutes.\n\nGuru Purnima asks you to see the chain, and then to be a link and not an endpoint. What you were given, someone is waiting to receive from you.',
+        citationLink: 'gita:4',
+        citation: 'Bhagavad Gita 4.34 (tr. Sivananda).'
+      },
+      {
+        id: 'guru-purnima-keeping',
+        title: 'How to Keep It',
+        subtitle: 'A Verse, a Visit, a Letter',
+        storyText: 'The day\'s observance is as simple as its idea.\n\nStudents visit their teachers, or write to them, bringing fruit, a gift, or just the report every teacher actually wants: here is what you taught me, and here is what it became. Ashrams hold **guru puja**, ceremonial honoring of the lineage. Homes recite the **Guru Brahma** verse, which dares to say that the teacher is Brahma, Vishnu, and Shiva at once, because creating, sustaining, and transforming a mind is the same work those gods do for a world.\n\nThe day is also shared beyond Hinduism. Buddhists honor this same full moon as the day the Buddha gave his first sermon at Sarnath, five weeks after his awakening, and Jains remember Mahavira accepting his first disciple. Across traditions, the same instinct: the moment teaching begins is worth a festival.',
+        teachingText: 'Keep it in one act. Find the teacher who changed your direction and tell them, today, specifically, what they did.\n\nIf they are gone, tell their story to someone younger. That is the parampara doing what it has always done.',
+        citation: 'Guru Brahma verse — Guru Gita, Skanda Purana tradition, attribution as traditional; Sarnath first sermon, Buddhist tradition.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Bhagavad Gita',
+        locator: '4.34 — the method of approaching a teacher',
+        translation: 'Swami Sivananda (public)',
+        url: 'https://www.gitasupersite.iitk.ac.in/',
+      },
+      {
+        text: 'Mahabharata',
+        locator: 'Adi Parva — Vyasa as arranger of the Vedas and composer of the epic',
+        translation: 'K.M. Ganguli (public domain)',
+      },
+      {
+        text: 'Guru Gita',
+        locator: 'Skanda Purana tradition — the Guru Brahma verse and gu-ru etymology; attribution given as traditional',
+      },
+      {
+        text: 'Drik Panchang',
+        locator: 'Guru Purnima / Vyasa Purnima dates 2025–2028 (Ashadha Purnima)',
+      },
+    ],
+    mythology: [
+      'Vyasa\'s birth to the sage Parashara and Satyavati',
+      'The dividing of the one Veda into four',
+      'Ganesha as the scribe who wrote the Mahabharata to Vyasa\'s dictation'
+    ],
+    historicalContext: 'The guru-shishya parampara predates writing in India, and Guru Purnima remains the day new students are traditionally accepted and the four-month monsoon study season begins. The same full moon is sacred to Buddhists (the first sermon at Sarnath) and Jains.',
+    scriptureReferences: [
+      {
+        id: 'guru-purnima-gita-434',
+        text: 'bhagavad_gita',
+        chapter: 4,
+        verse: 34,
+        relevance: 'Krishna\'s instruction on how knowledge is received: approach, inquire, serve — and the seers of truth will teach you',
+        quote: 'Know that by long prostration, by question and by service; the wise who have realised the Truth will instruct thee in that knowledge.'
+      }
+    ],
+    regionalVariations: [
+      {
+        region: 'Maharashtra',
+        localName: 'Vyasa Puja',
+        uniqueTraditions: ['Honoring the whole chain of one\'s teachers in a single rite', 'Warkari kirtans in the Pandharpur pilgrimage season'],
+        specialFoods: ['Simple monsoon fare, khichdi and kadhi'],
+        localCustoms: 'The day falls amid the great Pandharpur wari pilgrimage, when the saints\' songs make every walker both student and teacher.'
+      },
+      {
+        region: 'Nepal',
+        localName: 'Guru Purnima (Teacher\'s Day)',
+        uniqueTraditions: ['Observed nationally as the day to honor schoolteachers'],
+        specialFoods: ['Sweets brought to teachers'],
+        localCustoms: 'Students garland their schoolteachers and offer colored tika, the classroom becoming the temple for a day.'
+      }
+    ],
+    modernAdaptations: [
+      'Gratitude messages to old teachers as the day\'s social ritual',
+      'Yoga schools worldwide honoring their lineage on this full moon',
+      'Alumni groups organizing visits to retired teachers'
+    ],
+    familyActivities: [
+      {
+        id: 'guru-purnima-chain',
+        title: 'Draw the Chain',
+        description: 'Map your family\'s parampara: who taught whom what, going back as far as anyone can remember.',
+        ageGroup: 'all_ages',
+        duration: '45 minutes',
+        materials: ['A big sheet of paper', 'Pens'],
+        instructions: [
+          'Start with each family member and one real skill or value they carry',
+          'Trace each one backward: who taught it, and who taught them, as far as the story goes',
+          'Circle the links who are still alive, and pick one to thank this week'
+        ],
+        learningObjective: 'Knowledge has a genealogy, and children who can see the chain treat their own learning as something held in trust'
+      }
+    ],
+    culturalImpact: 'Guru Purnima institutionalizes gratitude for teaching itself, and its choice of hero — an editor and teacher over any conqueror — says more about the tradition\'s values than almost any other holiday.',
+    relatedFestivals: ['basant-panchami-2025'],
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: guru-purnima-cover.png
+  },
+  {
+    id: 'raksha-bandhan-2025',
+    name: 'Raksha Bandhan',
+    sanskritName: 'रक्षाबन्धन',
+    date: '2025-08-09',
+    occurrences: ['2025-08-09', '2026-08-28', '2027-08-17', '2028-08-05'], // Shravana Purnima; verified vs Drik Panchang (New Delhi), Jul 2026
+    emoji: '🧵',
+    dateType: 'lunar',
+    type: 'cultural',
+    significance: 'The bond of protection — a thread tied on the wrist, and a promise renewed',
+    description: 'A sister ties a thread, a brother makes a promise, and a one-day festival holds a family together all year',
+    traditions: [
+      'Tying the rakhi on the brother\'s wrist',
+      'Aarti and tilak for the brother',
+      'Gifts and sweets exchanged',
+      'Rakhis mailed across the world',
+      'Upakarma (sacred-thread renewal) in the south'
+    ],
+    prayers: [
+      'The raksha mantra (yena baddho balī rājā)',
+      'Aarti for the sibling'
+    ],
+    foods: [
+      'Kaju katli',
+      'Laddus',
+      'Ghevar (the Shravana sweet)',
+      'The brother\'s favorite dish, by custom'
+    ],
+    colors: ['Red', 'Gold', 'Yellow'],
+    duration: 1,
+    importance: 'major',
+    rituals: [
+      {
+        id: 'raksha-bandhan-tying',
+        name: 'Tying the Rakhi',
+        description: 'The whole festival in five minutes: a decorated thread, a tilak, a sweet, and a promise said or unsaid.',
+        timeOfDay: 'morning',
+        materials: ['A rakhi (the decorated thread)', 'A thali with roli (vermilion), rice grains, and a diya', 'Sweets', 'A gift from the brother\'s side'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'The sister marks the brother\'s forehead with a roli tilak and a few grains of rice, and circles the diya before him in aarti.',
+            explanation: 'The aarti honors the person before the promise is asked of him.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'She ties the rakhi on his right wrist, speaking the raksha mantra or her own words.',
+            explanation: 'The thread is the visible form of an invisible agreement; the wrist is where he will see it for weeks.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'She feeds him a sweet; he gives his gift, and with it the promise of protection.',
+            explanation: 'The gift is not payment. It is his side of a bond that the tradition insists must run both ways.'
+          },
+          {
+            stepNumber: 4,
+            instruction: 'Where distance separates, the rakhi goes by mail and the aarti happens over a call.',
+            explanation: 'India\'s postal service runs special rakhi envelopes every Shravana; the bond has never required the same room.'
+          }
+        ],
+        mantras: [
+          {
+            sanskrit: 'येन बद्धो बली राजा दानवेन्द्रो महाबलः। तेन त्वामनुबध्नामि रक्षे मा चल मा चल॥',
+            transliteration: 'yena baddho balī rājā dānavendro mahābalaḥ, tena tvām anubadhnāmi rakṣe mā cala mā cala',
+            meaning: 'By that which bound Bali, the mighty king of the danavas, I bind you — O protection, do not waver, do not waver',
+            pronunciation: 'ye-na bad-dho ba-lee raa-jaa daa-na-ven-dro ma-haa-ba-lah'
+          }
+        ],
+        significance: 'The traditional raksha mantra invokes the binding of King Bali — the same generous king Onam welcomes home — as the strongest of all bonds.',
+        tips: ['Sisters, cousins, and friends all tie; the ritual has always stretched to fit the family at hand', 'This is one common way — ask your family how they walk it.'],
+        commonMistakes: ['Letting the gift become the point; the thread outranks everything in the thali']
+      }
+    ],
+    fullStory: 'Raksha Bandhan, on the full moon of Shravana, ties the year\'s most visible knot: a sister fastens a decorated thread, a rakhi, on her brother\'s wrist, and he renews a promise of protection. The name says exactly what it is — raksha, protection; bandhan, the bond. The old sources remember the rite before it belonged to siblings: in the Bhavishya Purana it is a wife, Indra\'s queen, who ties the consecrated thread that turns a losing war. Over centuries the thread found its home between brothers and sisters, and it has stretched gladly ever since — to cousins, friends, neighbors, and wrists on the far side of the world.',
+    sections: [
+      {
+        id: 'raksha-bandhan-thread',
+        title: 'A Thread Against the World',
+        subtitle: 'The Full Moon of Shravana',
+        storyText: 'Can a piece of thread protect anyone?\n\nEvery Shravana full moon, millions of families answer yes. A sister circles a lamp before her brother, marks his forehead, and ties a **rakhi**, a decorated thread, on his right wrist. He gives a gift, and with it renews an old promise: whatever comes, you can call me.\n\nThe festival\'s name is its definition. **Raksha** means protection. **Bandhan** means the bond, the tie. The bond of protection.\n\nThe thread itself costs almost nothing, and that is part of the teaching. What is being tied is not the cotton. It is the promise, made visible, renewed annually, worn where the man will see it every day for weeks. In the days before the full moon, India\'s post offices run special envelopes, because the promise has to reach wrists in London and New Jersey too.',
+        citation: 'Raksha Bandhan practice — pan-Indian tradition; postal rakhi, documented custom.'
+      },
+      {
+        id: 'raksha-bandhan-indra',
+        title: 'The First Rakhi Was Not a Sister\'s',
+        subtitle: 'A Queen, a Losing War, and a Consecrated Thread',
+        storyText: 'The oldest story attached to the day surprises most people: the first raksha was tied by a wife.\n\nThe **Bhavishya Purana** tells of a war the gods were losing. Indra, their king, faced the asura Bali\'s forces and was being driven back. His queen, **Shachi**, prepared a thread, consecrated by prayer, and bound it to her husband\'s wrist on the full moon of Shravana. Indra returned to the field and won.\n\nThe same purana gives the rite its mantra, still recited today, which swears by the binding of **King Bali**, the same generous demon king whom Kerala\'s Onam welcomes home every year. The traditions braid into each other like this constantly.\n\nSo before the rakhi belonged to siblings, it was simply a **raksha**: a protection any loving hand could tie onto any wrist being sent out into danger. Priests tied them to patrons. Wives to husbands. Mothers to sons. The sister-brother form came to hold the center, but the older, wider meaning never left.',
+        citationLink: 'festival:onam-2025',
+        citation: 'Bhavishya Purana, Uttara Parva — the Indra-Shachi raksha and the yena baddho mantra.'
+      },
+      {
+        id: 'raksha-bandhan-draupadi',
+        title: 'A Strip of Silk, Repaid Without Limit',
+        subtitle: 'Krishna and Draupadi',
+        storyText: 'The story most families tell over the thali is about Krishna and **Draupadi**.\n\nKrishna\'s finger is bleeding, cut by his own discus in one telling. Court remedies are sent for, but Draupadi does not wait. She tears a strip from the end of her own sari, silk she is wearing, and binds the wound on the spot.\n\nKrishna, the story says, counted the torn strip as a rakhi, and declared the debt open-ended. Years later, when Draupadi is dragged into the Kaurava court and a hand grips her sari to strip her before the assembly, she calls his name. The sari becomes endless. The hall fills with cloth, and the man pulling at it collapses exhausted. One strip of silk, repaid without limit.\n\nBe honest about the source, as this app tries to be: the rakhi framing of this story is later devotional tradition, not the critical text of the Mahabharata. It is told every Shravana anyway, because it teaches what the thread means better than any definition: protection flows toward spontaneous love, and it returns multiplied.',
+        citation: 'Krishna-Draupadi rakhi — later devotional tradition, labeled as such; the court scene, Mahabharata, Sabha Parva (tr. Ganguli).'
+      },
+      {
+        id: 'raksha-bandhan-many-threads',
+        title: 'One Full Moon, Many Threads',
+        subtitle: 'What Else Shravana Purnima Carries',
+        storyText: 'Step outside the brother-sister frame and the same full moon is tying threads all over the map.\n\nIn the south, this is **Upakarma** day, when those who wear the sacred thread, the janeu, ceremonially replace it for the year and renew the student\'s vow that came with it. On the Konkan coast it is **Narali Purnima**, when fishing communities offer coconuts to the sea and reopen it for the season after the monsoon\'s fury, a raksha asked of the ocean itself.\n\nAnd in 1905, when the British moved to partition Bengal along religious lines, Rabindranath **Tagore** answered with this festival: he called Hindus and Muslims to tie rakhis on each other\'s wrists in the streets of Calcutta, protection promised across the exact line the empire was drawing.',
+        bullets: [
+          '**Rakhi** for siblings, the festival\'s beating heart',
+          '**Upakarma**, the south\'s sacred-thread renewal, same moon',
+          '**Narali Purnima**, coconuts to the sea on the Konkan coast',
+          '**Rakhi Purnima** in Bengal, with Tagore\'s 1905 protest in its memory'
+        ],
+        teachingText: 'The forms differ, and the grammar underneath does not. A thread is tied, and a relationship is renewed with it, between siblings, between a student and a vow, between a coast and its sea, between neighbors an empire wanted separated.\n\nTie yours wide this year. The festival has always let you.',
+        citation: 'Upakarma, Narali Purnima — regional tradition; Tagore\'s 1905 rakhi movement — documented history.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Bhavishya Purana',
+        locator: 'Uttara Parva — the Indra-Shachi raksha episode and the yena baddho raksha mantra',
+        translation: 'named as purana tradition; cross-checked against public summaries (wisdomlib.org)',
+      },
+      {
+        text: 'Mahabharata',
+        locator: 'Sabha Parva — Draupadi in the Kaurava court; the rakhi framing of the sari story is later devotional tradition, labeled as such',
+        translation: 'K.M. Ganguli (public domain)',
+      },
+      {
+        text: 'Documented history',
+        locator: 'Tagore\'s rakhi bandhan movement against the 1905 partition of Bengal',
+      },
+      {
+        text: 'Drik Panchang',
+        locator: 'Raksha Bandhan dates 2025–2028 (Shravana Purnima, aparahna observance)',
+      },
+    ],
+    mythology: [
+      'Shachi\'s thread and Indra\'s turned battle',
+      'Draupadi\'s strip of silk and the endless sari',
+      'Yama and the Yamuna\'s rakhi, in some tellings'
+    ],
+    historicalContext: 'The raksha rite appears in purana literature as a protection blessing tied by priests and wives; its sibling-centered form rose to prominence over the medieval period and is now among the most widely kept Hindu festivals, including across religious lines in parts of the subcontinent.',
+    scriptureReferences: [
+      {
+        id: 'raksha-bhavishya',
+        text: 'puranas',
+        section: 'Bhavishya Purana, Uttara Parva',
+        relevance: 'The Indra-Shachi episode: the oldest scriptural anchor for the consecrated protection thread and its mantra'
+      }
+    ],
+    regionalVariations: [
+      {
+        region: 'South India',
+        localName: 'Avani Avittam / Upakarma',
+        uniqueTraditions: ['Annual replacement of the sacred thread', 'Renewal of Vedic study vows'],
+        specialFoods: ['Payasam', 'Vadai'],
+        localCustoms: 'The same full moon renews a different thread: the janeu, and with it the wearer\'s identity as a lifelong student.'
+      },
+      {
+        region: 'Konkan coast (Maharashtra, Goa)',
+        localName: 'Narali Purnima',
+        uniqueTraditions: ['Coconuts offered to the sea', 'Fishing season reopened after the monsoon'],
+        specialFoods: ['Narali bhat (sweet coconut rice)'],
+        localCustoms: 'Fishing families ask the calmed sea for protection before the boats go back out — a raksha at civilizational scale.'
+      },
+      {
+        region: 'Bengal',
+        localName: 'Rakhi Purnima / Jhulan Purnima',
+        uniqueTraditions: ['Rakhi across communities, remembering 1905', 'Jhulan swing festival for Radha-Krishna'],
+        specialFoods: ['Sandesh', 'Rasgulla'],
+        localCustoms: 'Tagore\'s protest gave the Bengali rakhi a second meaning it has never lost: the tied wrist as an act of unity.'
+      }
+    ],
+    modernAdaptations: [
+      'Sisters tying rakhis to sisters, friends, and mentors',
+      'Video-call aartis with mailed rakhis timed for the day',
+      'Rakhis tied to soldiers, police, and trees in civic campaigns'
+    ],
+    familyActivities: [
+      {
+        id: 'raksha-bandhan-promises',
+        title: 'Say the Promise Out Loud',
+        description: 'After the tying, each pair states one concrete way they will show up for each other this year — specific, not ceremonial.',
+        ageGroup: 'all_ages',
+        duration: '20 minutes',
+        materials: ['The rakhis already tied'],
+        instructions: [
+          'Each protected person asks: what is one thing you actually need from me this year?',
+          'The answer must be concrete (a monthly call, help with an application, showing up in December)',
+          'Write the two promises on the rakhi packaging and keep it until next year'
+        ],
+        learningObjective: 'The thread lasts weeks; a named, specific promise is what lasts the year'
+      }
+    ],
+    culturalImpact: 'Raksha Bandhan keeps kinship in repair on an annual schedule, and its thread has proven elastic enough to bind siblings, students to vows, coasts to seas, and communities to each other.',
+    relatedFestivals: ['janmashtami-2025', 'onam-2025'],
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: raksha-bandhan-cover.png
   },
   {
     id: 'janmashtami-2025',
@@ -1675,7 +2573,7 @@ export const festivalData: Festival[] = [
       }
     ],
     culturalImpact: 'Teaches devotion, divine love, and the importance of dharma through Krishna\'s teachings.',
-    relatedFestivals: ['holi-2025', 'diwali-2025'],
+    relatedFestivals: ['holi-2025', 'diwali-2025', 'raksha-bandhan-2025', 'ratha-yatra-2025'],
     heroImageUrl: require('../../assets/images/covers/janmashtami-cover.jpg'),
   },
   {
@@ -1905,6 +2803,195 @@ export const festivalData: Festival[] = [
         locator: 'Lokmanya Tilak\'s sarvajanik Ganeshotsav, 1893 — documented history, not scripture',
       },
     ],
+  },
+  {
+    id: 'onam-2025',
+    name: 'Onam',
+    sanskritName: 'ഓണം (Thiruvonam)',
+    date: '2025-09-05',
+    occurrences: ['2025-09-05', '2026-08-26', '2027-09-12', '2028-09-01'], // Thiruvonam day; verified vs Drik Panchang, Jul 2026 (celebrations begin 10 days earlier, on Atham)
+    emoji: '🌼',
+    dateType: 'solar',
+    type: 'harvest',
+    significance: 'Kerala\'s harvest festival and the annual homecoming of King Mahabali',
+    description: 'Ten days of flower carpets, boat races, and feasting that welcome a beloved king back to his people',
+    traditions: [
+      'Pookalam flower carpets',
+      'Onasadya feast on banana leaves',
+      'Vallam kali snake-boat races',
+      'Onakkodi new clothes',
+      'Kaikottikali dance'
+    ],
+    prayers: [
+      'Onappattu (Onam songs)',
+      'Vamana puja at Thrikkakara temple'
+    ],
+    foods: [
+      'Onasadya (the full feast)',
+      'Avial',
+      'Sambar and rice',
+      'Olan and thoran',
+      'Sharkara varatti (jaggery banana chips)',
+      'Payasam'
+    ],
+    colors: ['Yellow', 'Cream and gold (kasavu)', 'Marigold orange'],
+    deity: 'Vamana (Vishnu) and King Mahabali',
+    scripture: 'Bhagavata Purana',
+    duration: 2,
+    region: 'Kerala',
+    importance: 'regional',
+    rituals: [
+      {
+        id: 'onam-pookalam',
+        name: 'The Pookalam',
+        description: 'The flower carpet laid at the front door across the days of Onam, growing by one ring of petals each morning until Thiruvonam.',
+        timeOfDay: 'morning',
+        materials: ['Fresh flower petals in several colors (marigold, chrysanthemum, ixora, rose)', 'A swept patch of floor at the entrance', 'A simple circular design to start from', 'A small lamp for the center (optional)'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'On Atham morning, sweep and wash the space at the front door and lay a small circle of yellow petals.',
+            explanation: 'The carpet begins humbly. Yellow is traditional for the first day.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Each following morning, add one new ring of a different color around yesterday\'s circle.',
+            explanation: 'The growing carpet counts down the days of welcome, and new flowers and bolder designs join as Thiruvonam nears.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'On Thiruvonam morning, complete the largest ring and set a lamp or small clay cones at the center.',
+            explanation: 'The clay cones, called Onathappan, stand for Vamana and Mahabali in many homes. The finished carpet says the house is ready for its guest.'
+          },
+          {
+            stepNumber: 4,
+            instruction: 'Keep the carpet fresh through the day of the feast, then let it go without ceremony.',
+            explanation: 'Like the visit itself, the pookalam is beautiful and brief, made to be renewed next year.'
+          }
+        ],
+        significance: 'The pookalam is Kerala\'s welcome mat for Mahabali, a visible and growing signal that the household is expecting its king.',
+        tips: ['Children own this ritual in most homes; let them design the rings', 'This is one common way — ask your family how they walk it.'],
+        commonMistakes: ['Making it a competition of size; a small fresh carpet honors the day better than a large stale one']
+      }
+    ],
+    fullStory: 'Onam is Kerala\'s harvest festival and its grandest celebration, ten days of flower carpets, boat races, and feasting that welcome the annual homecoming of King Mahabali. The Bhagavata Purana tells how the generous asura king surrendered everything to Vishnu in his Vamana avatar, keeping his word at the cost of his kingdom, and was granted the boon of visiting his people once a year. On Thiruvonam day Kerala lays flower carpets at its thresholds and serves the Onasadya feast, so the returning king finds his land as happy and as equal as he left it.',
+    sections: [
+      {
+        id: 'onam-banished-king',
+        title: 'The Festival for a Banished King',
+        subtitle: 'Kerala Waits for a Guest',
+        storyText: 'Every year, as the monsoon ends, Kerala prepares for a guest.\n\nHouses are cleaned. New clothes are bought. Flower carpets appear on doorsteps and grow larger every morning for ten days. And then comes the strangest part. The guest everyone is waiting for is an **asura**, a being from the family that Hindu stories usually cast as the villains.\n\nHis name is **Mahabali**, or Maveli for short, and Malayalis will tell you with real affection that he was the best king their land ever had. An old Onam song says that when Maveli ruled, all people were equal, nobody cheated anybody, and nobody went hungry.\n\nOnam is the time of year his people believe he comes back to visit them. The whole festival is a welcome.',
+        citation: 'The Maveli song (Onappattu) — Malayalam folk tradition, not scripture.'
+      },
+      {
+        id: 'onam-vamana',
+        title: 'The Small Boy at the Sacrifice',
+        subtitle: 'Three Paces of Land',
+        storyText: 'So how did a beloved king end up banished? The story is told in the **Bhagavata Purana**.\n\nBali was the grandson of **Prahlada**, the boy devotee the Holi story remembers. Like his grandfather he was devoted to Vishnu, and he was generous almost beyond sense. By strength and by virtue he won all three worlds, and the unseated gods went looking for help.\n\nVishnu came, but not with a weapon. He was born as **Vamana**, a small brahmin boy with an umbrella, and he walked into the great sacrifice where Bali was giving gifts to anyone who asked.\n\nThe boy asked for something absurdly small. Three paces of land, measured by his own little feet. Bali smiled and agreed. His teacher Shukracharya pulled him aside and warned him that the boy was Vishnu himself and that the gift would cost him everything. Bali gave his word anyway. A king who breaks a promise, he said, loses more than land.',
+        citationLink: 'festival:holi-2025',
+        citation: 'Bhagavata Purana, Canto 8, chapters 15–19.'
+      },
+      {
+        id: 'onam-three-steps',
+        title: 'Two Steps Cover the Worlds',
+        subtitle: 'And a King Offers His Head',
+        storyText: 'Then the small boy began to grow.\n\nHe grew until his first stride covered the whole earth. His second stride covered the heavens. Then he looked down at Bali and asked, politely, where the third pace should go, since everything Bali owned had been used up in two.\n\nThe watching crowd expected excuses. Instead the king bowed and offered the one thing still his. **He asked Vishnu to place the third step on his own head.**\n\nVishnu did, and pressed him down out of this world, to a realm below called Sutala. But the Purana does not tell it as a defeat. Vishnu was won over by the king who kept his word when it cost him everything. He promised to guard Bali\'s realm himself, and he granted the fallen king a boon. Once a year, Bali may come home and see his people.',
+        teachingText: 'The tradition reads the foot on Bali\'s head as a blessing, because for a devotee the touch of the god is the goal, whatever form it arrives in.\n\nBali\'s flaw was small and very human. He had begun to believe his own generosity made him untouchable. What survived his fall was the part of him that was actually great, the kept promise. That is the king Kerala remembers.',
+        citation: 'Bhagavata Purana, Canto 8, chapters 20–23.'
+      },
+      {
+        id: 'onam-ten-days',
+        title: 'Ten Days of Welcome',
+        subtitle: 'A Flower Carpet Grows at the Door',
+        storyText: 'How do you prepare for a king\'s visit? Kerala answers with ten days of it, from the day of **Atham** to the day of **Thiruvonam**, the star under which the visit happens.\n\nThe most beautiful of the customs is the **pookalam**, a carpet of fresh flower petals laid on the ground at the front door. It starts small on Atham morning, and every morning a new ring of color is added, so that by Thiruvonam it has grown into a great circle. The idea is plain and warm. The house is telling its king, from a distance, that he is expected.',
+        bullets: [
+          '**Pookalam**, the flower carpet at the threshold, one new ring each morning',
+          '**Onakkodi**, new clothes for the whole family, worn on Thiruvonam day',
+          '**Vallam kali**, the snake-boat races on the backwaters, a hundred rowers to a boat',
+          '**Kaikottikali**, the clap dance performed in a circle around the pookalam',
+          'Swings hung from high branches, games, and songs that fill the ten days'
+        ],
+        citation: 'Onam customs — festival practice, labeled as tradition.'
+      },
+      {
+        id: 'onam-sadya',
+        title: 'A Feast Where Everyone Sits Together',
+        subtitle: 'Rows of Banana Leaves',
+        storyText: 'Thiruvonam afternoon belongs to the **Onasadya**, and for many Malayalis the feast is the point of the whole festival.\n\nIt is a spread of two dozen or more vegetarian dishes served on a fresh banana leaf. Rice, sambar, avial, olan, thoran, crisp banana chips, and payasam to finish. There is an old saying that a Malayali will sell all he has to celebrate Onam with a feast, and it is quoted every year with pride.\n\nThe deeper rule of the sadya is where the old song comes back. Everyone sits in the same rows, eats the same food, off the same leaf. On the day Mahabali visits, his people show him the kingdom he remembers, one where all are equal.\n\nOnam long ago outgrew any one religion. In Kerala it is kept by Hindu, Christian, and Muslim families alike, and the state government celebrates it as the official festival of Kerala. A festival that began with a king keeping his word has become a yearly rehearsal of his kingdom.',
+        teachingText: 'Keep Onam the way Kerala does, by feeding people. Cook more than you need, lay the food out in one row, and let there be no head of the table.\n\nUnderneath the flowers and the feast, the festival asks one quiet question. If the good king came back this year and looked around your home, would he recognize his kingdom in it?',
+        citation: 'Onasadya and public celebration — Kerala tradition; Onam is attested as early as Tamil Sangam-era literature.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Bhagavata Purana',
+        locator: 'Canto 8, chapters 15–23 (Vamana avatara: Bali\'s sacrifice, the three steps, the boon of return)',
+        translation: 'cross-checked against public translations (vedabase.io / wisdomlib.org)',
+        url: 'https://vedabase.io/en/library/sb/8/',
+      },
+      {
+        text: 'Onappattu (the Maveli song)',
+        locator: '"Maveli nadu vanidum kalam…" — Malayalam folk tradition, labeled as tradition',
+      },
+      {
+        text: 'Drik Panchang',
+        locator: 'Thiruvonam dates 2025–2028 (Thiruvonam nakshatra in Chingam)',
+      },
+    ],
+    mythology: [
+      'King Mahabali\'s golden reign and his yearly return to Kerala',
+      'Vishnu\'s Vamana avatar and the three paces of land',
+      'Bali as grandson of Prahlada, the great devotee of the Holi story'
+    ],
+    historicalContext: 'Onam is attested remarkably early; Tamil Sangam-era literature already mentions the festival, and it has been Kerala\'s defining celebration for well over a millennium. Today it is the official state festival, kept across religious lines.',
+    scriptureReferences: [
+      {
+        id: 'onam-bhagavata-8',
+        text: 'puranas',
+        section: 'Bhagavata Purana, Canto 8, chapters 15–23',
+        relevance: 'The Vamana avatar: Bali\'s gift of three paces, the two strides that covered the worlds, and the boon that lets the king visit his people once a year'
+      }
+    ],
+    regionalVariations: [
+      {
+        region: 'Thrikkakara (Kochi)',
+        localName: 'Thrikkakara Onam',
+        uniqueTraditions: ['Ten-day festival at the Vamana temple that anchors the legend', 'Onathappan clay cones placed at the pookalam center'],
+        specialFoods: ['The full 20+ dish sadya'],
+        localCustoms: 'Thrikkakara temple, dedicated to Vamana, is held to stand at the seat of Mahabali\'s old capital; its flag-raising on Atham day opens Onam for the whole state.'
+      },
+      {
+        region: 'Malayali diaspora',
+        localName: 'Community Onam',
+        uniqueTraditions: ['Community sadyas in rented halls from the Gulf to New Jersey', 'Pookalam competitions'],
+        specialFoods: ['Catered sadya on banana leaf'],
+        localCustoms: 'Outside Kerala, Onam functions as the great annual gathering of Malayali associations, kept by families of every faith.'
+      }
+    ],
+    modernAdaptations: [
+      'Government-run Onam week with pookalam competitions',
+      'Televised vallam kali races',
+      'Community sadyas organized by diaspora associations'
+    ],
+    familyActivities: [
+      {
+        id: 'onam-mini-sadya',
+        title: 'A Mini Sadya on Banana Leaves',
+        description: 'Cook a scaled-down Onam feast together and serve it the traditional way, everyone in one row, same dishes, same leaves.',
+        ageGroup: 'all_ages',
+        duration: '2-3 hours',
+        materials: ['Banana leaves (or large plates)', 'Rice and three or four sadya dishes', 'Payasam or another sweet'],
+        instructions: [
+          'Assign every family member one dish to make or plate',
+          'Lay the leaves in a single row, narrow tips pointing left',
+          'Serve everyone the same items in the same order, and eat with your hands'
+        ],
+        learningObjective: 'The sadya\'s rule of equality is easier to feel than to explain when everyone shares one row and one menu'
+      }
+    ],
+    culturalImpact: 'Onam carries Kerala\'s founding ideal of an equal society, rehearsed each year in the shared sadya row, and holds the rare distinction of a purana story kept as a festival by an entire multi-religious state.',
+    relatedFestivals: ['holi-2025', 'makar-sankranti-2025'],
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: onam-cover.png
   },
   {
     id: 'navratri-2025',
@@ -2503,6 +3590,382 @@ export const festivalData: Festival[] = [
     relatedFestivals: ['dussehra-2025', 'diwali-2025', 'chaitra-navratri-2025']
   },
   {
+    id: 'dussehra-2025',
+    name: 'Dussehra',
+    sanskritName: 'विजयादशमी',
+    date: '2025-10-02',
+    occurrences: ['2025-10-02', '2026-10-20', '2027-10-09', '2028-09-27'], // Ashvina Shukla Dashami; verified vs Drik Panchang (New Delhi), Jul 2026 — lands at the close of each verified Navratri span
+    emoji: '🔥',
+    dateType: 'lunar',
+    type: 'victory_celebration',
+    significance: 'Vijayadashami, the tenth of victory: Rama\'s defeat of Ravana, and evil burned in effigy',
+    description: 'The evening India burns a ten-headed king, and why it has to do it again every year',
+    traditions: [
+      'Burning effigies of Ravana, Meghnada, and Kumbhakarna',
+      'Ramlila performances in the preceding days',
+      'Ayudha Puja (honoring the tools of one\'s work)',
+      'Shami and apta leaves exchanged as "gold"',
+      'Vidyarambham (children\'s first letters) in Kerala'
+    ],
+    prayers: [
+      'Rama aarti at the effigy grounds',
+      'Aparajita puja',
+      'Shami tree prayer'
+    ],
+    foods: [
+      'Jalebi and fafda',
+      'Sondesh and festival sweets',
+      'The season\'s first jaggery preparations'
+    ],
+    colors: ['Fire orange', 'Red', 'Gold'],
+    deity: 'Rama',
+    scripture: 'Ramayana',
+    duration: 1,
+    importance: 'major',
+    rituals: [
+      {
+        id: 'dussehra-ayudha-puja',
+        name: 'Ayudha Puja at Home',
+        description: 'The southern custom of honoring the instruments of your livelihood — once swords and ploughs, today laptops, ladles, and vehicles.',
+        timeOfDay: 'morning',
+        materials: ['The real tools of your work (laptop, instruments, kitchen knives, vehicle keys, textbooks)', 'A cloth to lay them on', 'Turmeric, kumkum, and flowers', 'A lamp'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'Clean the tools of your trade properly, then lay them together on a fresh cloth.',
+            explanation: 'The cleaning is the puja\'s first half; a tool maintained is a tool respected.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'Mark each with a dab of turmeric or kumkum, lay a flower on them, and light the lamp.',
+            explanation: 'The gesture treats your instruments as partners in your dharma rather than possessions.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Let them rest for the day; take the day off from them if you can.',
+            explanation: 'One day of deliberate rest marks the difference between using your tools and being used by them.'
+          },
+          {
+            stepNumber: 4,
+            instruction: 'Before picking them up again tomorrow, name what you intend to build with them this year.',
+            explanation: 'Vijayadashami is the traditional day for beginnings; ventures started today are held to carry the day\'s victory in them.'
+          }
+        ],
+        significance: 'Ayudha Puja extends the day\'s victory to ordinary work: the tools that feed a family are honored as weapons in the daily fight for a good life.',
+        tips: ['Children\'s school books belong on the cloth too; in Kerala, today is the day children write their very first letters', 'This is one common way — ask your family how they walk it.'],
+        commonMistakes: ['Honoring the tools and skipping the rest day; the pause is half the point']
+      }
+    ],
+    fullStory: 'Dussehra, or Vijayadashami, falls on the tenth day of Ashvina\'s bright fortnight, immediately after Navratri\'s nine nights. Two great victories share the day: Durga\'s over the buffalo demon, told in the Navratri story, and Rama\'s over the ten-headed Ravana, told here. For weeks beforehand, towns across North India stage the Ramlila, the epic performed by neighbors; on Dussehra evening, colossal effigies of Ravana and his brothers, packed with fireworks, burn before roaring crowds. The south keeps the day as Ayudha Puja, honoring the tools of work; Kerala\'s children write their first letters; and everywhere the day is held auspicious for beginnings, because it is the anniversary of good winning.',
+    sections: [
+      {
+        id: 'dussehra-tenth-day',
+        title: 'The Tenth of Victory',
+        subtitle: 'When the Nine Nights End',
+        storyText: 'For nine nights, India honors the Goddess. Then comes the tenth day, and it has its own name: **Vijayadashami**, the tenth of victory.\n\nTwo victories share this one date, and the tradition sees them as the same victory wearing two faces. In the Goddess\'s story, this is the dawn when **Durga** finally pins the shape-shifting buffalo demon. In the Ramayana, this is the day **Rama** kills **Ravana**, the ten-headed king of Lanka who stole his wife.\n\nThe northern name of the day comes from the second story. **Dussehra**, from dasha-hara, the destruction of the ten-headed one.\n\nNavratri\'s reader tells the Goddess\'s war. This one tells Rama\'s, and what a billion people do with its ending.',
+        citationLink: 'festival:navratri-2025',
+        citation: 'Vijayadashami as the shared victory day — Devi Mahatmya tradition and Ramayana tradition.'
+      },
+      {
+        id: 'dussehra-lanka',
+        title: 'The Last Day of the War',
+        subtitle: 'Rama and Ravana on the Field of Lanka',
+        storyText: 'The Valmiki Ramayana builds its final duel like a storm gathering.\n\nThe bridge has been crossed, the armies broken, Kumbhakarna and Meghnada fallen. At last **Ravana** himself rides out, and for a day the fight is even, because Ravana is no cartoon villain. He is a scholar of the Vedas, a devotee whose austerities once shook the gods, a king whose city is golden. That is the horror of him: so much greatness, bent entirely around its own wanting.\n\nRama\'s arrows cut down head after head, and the heads return. The ten heads will not stay severed, and the war cannot be won a head at a time.\n\nThen the charioteer sage Matali reminds Rama of the **Brahmastra**, the weapon given him by the sage Agastya. Rama looses it with the full focus of everything he is, and it takes Ravana not in the head but in the chest, in the heart of the wanting itself, and the ten-headed king falls. Later tellings, like Tulsidas\'s beloved Ramcharitmanas, aim the arrow at Ravana\'s navel, where his stolen immortality pooled. Every version agrees on the lesson: you do not defeat such an enemy by trimming his heads.',
+        citation: 'Valmiki Ramayana, Yuddha Kanda, sargas 102–111; navel telling — Ramcharitmanas, later tradition.'
+      },
+      {
+        id: 'dussehra-ramlila',
+        title: 'Why the Effigy Burns Every Year',
+        subtitle: 'Ramlila Grounds at Dusk',
+        storyText: 'For weeks before Dussehra, in thousands of towns, the Ramayana is not read. It is **performed**.\n\nThe **Ramlila** is the epic staged by ordinary neighbors: the schoolteacher as Dasharatha, the wrestler as Hanuman, boys as the princes. UNESCO lists it among humanity\'s cultural treasures, and Varanasi\'s Ramnagar Ramlila runs a full month with the whole town as its stage. By the ninth night, everyone, performer and audience, has walked the exile again.\n\nThen, on Dussehra evening, the crowds gather on open grounds where three towering effigies stand: **Ravana** with his ten heads, flanked by his brother Kumbhakarna and son Meghnada, all packed with fireworks. The actor playing Rama looses a flaming arrow, and the ten-headed king goes up in a roar of fire and light.\n\nAnd next year they will build him again, and burn him again. That is not a failure of the ritual. It is the ritual\'s honest heart.',
+        teachingText: 'A popular reading gives Ravana\'s ten heads names: lust, anger, greed, pride, envy, and their cousins. Take the reading or leave it; the burning teaches the same thing either way.\n\nEvil does not stay defeated. It regrows, in the world and in a person, which is why the arrow has to be loosed again every single year. The festival is not a monument to one old victory. It is scheduled practice.',
+        citation: 'Ramlila — UNESCO Intangible Cultural Heritage (2008), documented tradition; ten-vices reading, popular tradition, labeled as such.'
+      },
+      {
+        id: 'dussehra-other-keepings',
+        title: 'The Same Day, Kept Four Ways',
+        subtitle: 'Weapons, Tools, First Letters, and Leaves of Gold',
+        storyText: 'Travel the country on Vijayadashami and the day changes shape, while its meaning holds.\n\nThe Mahabharata adds the day\'s second great scene. The Pandavas, ending their year in disguise, return to the **shami tree** where they had hidden their weapons, take them back, and reveal themselves. Victory day is therefore also reclamation day: the day you take back what your hard years made you set down.',
+        bullets: [
+          '**Ayudha Puja** in the south: the tools of one\'s work, from lathes to laptops, cleaned, marked, and honored',
+          '**Vidyarambham** in Kerala: small children write their first-ever letters, traced in rice, on the day of victory',
+          '**Shami and apta leaves** exchanged as "gold" in Maharashtra, remembering the tree that kept the weapons safe',
+          '**Mysore Dasara**: the old royal procession, elephants and lamps, a documented tradition of the Wodeyar court for four centuries'
+        ],
+        teachingText: 'Every version is the same sentence in a different dialect: the good fight has instruments, and today you honor yours.\n\nSo begin something today. The tradition holds Vijayadashami auspicious for first steps, first letters, first ventures, precisely because beginnings are the form victory takes in an ordinary life.',
+        citation: 'Mahabharata, Virata Parva (tr. Ganguli) — the shami tree; regional observances, documented tradition.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Valmiki Ramayana',
+        locator: 'Yuddha Kanda, sargas 102–111 — the duel and Ravana\'s fall by the Brahmastra',
+        translation: 'valmikiramayan.net (public)',
+        url: 'https://www.valmikiramayan.net/',
+      },
+      {
+        text: 'Mahabharata',
+        locator: 'Virata Parva — the Pandavas reclaim their weapons from the shami tree on Vijayadashami',
+        translation: 'K.M. Ganguli (public domain)',
+      },
+      {
+        text: 'Ramcharitmanas',
+        locator: 'Tulsidas (16th c.) — the navel telling and the Ramlila tradition; named as devotional tradition',
+      },
+      {
+        text: 'Documented history',
+        locator: 'Ramlila inscribed by UNESCO (2008); Mysore Dasara of the Wodeyar court',
+      },
+      {
+        text: 'Drik Panchang',
+        locator: 'Vijayadashami dates 2025–2028 (Ashvina Shukla Dashami, Vijay Muhurat convention)',
+      },
+    ],
+    mythology: [
+      'Rama\'s defeat of the ten-headed Ravana',
+      'The Pandavas\' weapons in the shami tree',
+      'Durga\'s victory dawn, shared with this day'
+    ],
+    historicalContext: 'Ramlila traditions are documented across North India for centuries and recognized by UNESCO; the Mysore Dasara procession has run under royal patronage since the early 17th century. The day\'s auspiciousness for beginnings (seemollanghana, first ventures, first letters) is pan-Indian.',
+    scriptureReferences: [
+      {
+        id: 'dussehra-yuddha-kanda',
+        text: 'ramayana',
+        section: 'Yuddha Kanda, sargas 102–111',
+        relevance: 'The war\'s final duel: the regrowing heads, the Brahmastra, and the fall of Ravana'
+      },
+      {
+        id: 'dussehra-virata-parva',
+        text: 'mahabharata',
+        section: 'Virata Parva',
+        relevance: 'The weapons reclaimed from the shami tree — Vijayadashami as the day of taking back what exile made you set down'
+      }
+    ],
+    regionalVariations: [
+      {
+        region: 'North India',
+        localName: 'Dussehra',
+        uniqueTraditions: ['Ramlila cycles ending in effigy burning', 'Fairs on the burning grounds'],
+        specialFoods: ['Jalebi (by custom, Rama\'s favorite as "shashkuli")'],
+        localCustoms: 'The effigy grounds fair, with the year\'s biggest crowds standing shoulder to shoulder for the arrow.'
+      },
+      {
+        region: 'Karnataka (Mysore)',
+        localName: 'Dasara / Nadahabba',
+        uniqueTraditions: ['The illuminated palace', 'The Jamboo Savari elephant procession with the goddess Chamundeshwari'],
+        specialFoods: ['Mysore pak'],
+        localCustoms: 'The state festival of Karnataka: the goddess rides a golden howdah through the city her hill overlooks.'
+      },
+      {
+        region: 'Kerala',
+        localName: 'Vidyarambham',
+        uniqueTraditions: ['Children initiated into letters, tracing the first aksharas in rice'],
+        specialFoods: ['Payasam'],
+        localCustoms: 'Writers, teachers, and grandparents guide thousands of small hands through their first letters on victory day.'
+      },
+      {
+        region: 'Himachal (Kullu)',
+        localName: 'Kullu Dussehra',
+        uniqueTraditions: ['The festival begins when others end: a week of village deities processing to meet Raghunath'],
+        specialFoods: ['Siddu and mountain fare'],
+        localCustoms: 'Hundreds of local deities travel by palanquin to the valley floor — the epic\'s victory kept as a gathering of gods.'
+      }
+    ],
+    modernAdaptations: [
+      'Eco-effigies and reduced-firework burnings',
+      'Office Ayudha Puja for servers, code, and instruments',
+      'Ramlila streamed for diaspora audiences'
+    ],
+    familyActivities: [
+      {
+        id: 'dussehra-name-the-head',
+        title: 'Name One Head',
+        description: 'Before watching an effigy burn (in person or on screen), each family member privately names one habit they are burning this year — and one thing they are reclaiming from the shami tree.',
+        ageGroup: 'all_ages',
+        duration: '15 minutes',
+        materials: ['Paper slips', 'A bowl'],
+        instructions: [
+          'Each person writes one "head" to burn and folds it into the bowl; no reading aloud required',
+          'Each person also names, out loud, one set-down thing they are taking back: an instrument, a friendship, a practice',
+          'Burn or discard the slips together when the effigy goes up'
+        ],
+        learningObjective: 'The festival\'s two scenes made personal: what regrows must be fought yearly, and what was set down can be taken back'
+      }
+    ],
+    culturalImpact: 'Dussehra turns moral struggle into civic theater: an entire society rehearses, every single year, that evil regrows and must be re-defeated, and that the day of victory is the right day to begin.',
+    relatedFestivals: ['navratri-2025', 'ram-navami-2025', 'diwali-2025'],
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: dussehra-cover.png
+  },
+  {
+    id: 'karva-chauth-2025',
+    name: 'Karwa Chauth',
+    sanskritName: 'करवा चौथ',
+    date: '2025-10-10',
+    occurrences: ['2025-10-10', '2026-10-29', '2027-10-18', '2028-10-07'], // Kartika Krishna Chaturthi; verified vs Drik Panchang (New Delhi), Jul 2026
+    emoji: '🌙',
+    dateType: 'lunar',
+    type: 'fast',
+    significance: 'The day-long fast broken only by moonrise, kept for a spouse\'s long life',
+    description: 'Rooftops at dusk, a sieve raised to the sky, and a marriage given one day of complete attention',
+    traditions: [
+      'Nirjala fast from sunrise to moonrise',
+      'Sargi (the pre-dawn meal from the mother-in-law)',
+      'The evening katha circle with karwa pots',
+      'Viewing the moon, then the spouse, through a sieve',
+      'Mehndi and bridal dress for the day'
+    ],
+    prayers: [
+      'The Karwa Chauth vrat katha',
+      'Gauri-Ganesh puja before the katha'
+    ],
+    foods: [
+      'Sargi: fruits, feni, sweets before dawn',
+      'The fast itself through the day',
+      'The first sip of water at moonrise',
+      'A full family dinner after'
+    ],
+    colors: ['Bridal red', 'Maroon', 'Gold'],
+    deity: 'Parvati (Gauri) and Chauth Mata',
+    duration: 1,
+    region: 'North and Northwest India',
+    importance: 'major',
+    rituals: [
+      {
+        id: 'karva-chauth-moonrise',
+        name: 'The Moonrise',
+        description: 'The fast\'s famous final scene: the moon sighted through a sieve, the spouse seen through the same sieve, and the first water in a day.',
+        timeOfDay: 'night',
+        materials: ['A sieve (chalni)', 'A diya placed in the sieve', 'A karwa (small clay pot) of water', 'A plate with a sweet'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'When the moon is sighted, go to the roof or courtyard with the thali; place the lit diya in the sieve.',
+            explanation: 'Moonrise on Chaturthi is late and often maddeningly cloud-hidden; the shared waiting is part of the ritual\'s memory.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'View the moon through the sieve, offer water from the karwa toward it, and pray.',
+            explanation: 'The sieve softens the moon\'s brightness through a hundred small windows; the custom\'s meaning is explained many ways, and honestly, no single official one exists.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Turn and view your spouse through the same sieve.',
+            explanation: 'The fast\'s quiet climax: the person prayed for, seen in the same frame as the moon just prayed to.'
+          },
+          {
+            stepNumber: 4,
+            instruction: 'The spouse offers the first sip of water and the first bite, and the fast ends.',
+            explanation: 'The day of abstaining closes with being fed by the very person it was kept for.'
+          }
+        ],
+        significance: 'The moonrise ritual compresses the whole vrat into one image: devotion held all day, released only when the sky itself signs off.',
+        tips: ['Many couples now keep the fast for each other, both abstaining and both breaking it together', 'This is one common way — ask your family how they walk it.'],
+        commonMistakes: ['Spending the wait scanning the sky alone; the katha circle and the rooftop crowd are the festival']
+      }
+    ],
+    fullStory: 'Karwa Chauth falls on the fourth day of Kartika\'s dark fortnight, eleven days before Diwali. Married women, dressed in bridal finery, keep a fast without food or water from sunrise until the moon rises, for the long life of their husbands. The day is named for its two instruments: the karwa, a small clay pot, and chauth, the fourth. Its evening katha tells of Veervati, whose fast was broken by a trick and whose steadfastness won her husband\'s life back; its rooftop climax, moon and spouse seen through the same sieve, is one of the most photographed moments in Hindu domestic life. Increasingly, couples keep the fast for each other.',
+    sections: [
+      {
+        id: 'karva-chauth-rooftops',
+        title: 'Waiting for the Moon',
+        subtitle: 'Dusk, a Rooftop, a Sieve',
+        storyText: 'On one October evening a year, the rooftops of North India fill with women in bridal red, holding sieves, watching the horizon.\n\nThey have not eaten since before sunrise. Most have not taken water. This is **Karwa Chauth**, the fourth day of Kartika\'s dark fortnight, and the fast, among the strictest in the Hindu year, is kept by married women for one stated purpose: the long life of their husbands.\n\nThe name is domestic on purpose. A **karwa** is a small clay water pot, the kind every old kitchen held. **Chauth** just means the fourth. No cosmic vocabulary, because the festival\'s subject is not the cosmos. It is a marriage.\n\nThe fast ends only when the moon rises, and Chaturthi moons rise late. So the day builds toward the year\'s most patient hour: everyone on the roof, hungry and laughing, scanning the clouds for a rim of silver.',
+        citation: 'Karwa Chauth vrat — North Indian tradition; the fast\'s form is folk practice, stated as such.'
+      },
+      {
+        id: 'karva-chauth-veervati',
+        title: 'The Story Told at the Fast',
+        subtitle: 'Veervati and the False Moon',
+        storyText: 'Every vrat, every ritual fast, carries a story that is retold while it is kept. Karwa Chauth\'s is the katha of **Veervati**.\n\nVeervati, the only sister of seven brothers, keeps her first Karwa Chauth at her parents\' home. By late afternoon she is faint with thirst, and her brothers cannot bear to watch. So they stage a mercy: one climbs a distant tree with a lamp and a sieve, and they tell her the moon has risen. She breaks her fast.\n\nWith the first bite, word arrives that her husband is dead.\n\nThe rest of the katha is her refusal to accept it. In the telling most families use, she keeps vigil by his body for a year of fourth-days, fasting each one fully, until the goddess **Parvati** is moved and restores his life. Other tellings bring Yama, the death god, into the negotiation, as with Savitri of the Mahabharata, the scriptural grandmother of every wife-versus-death story.\n\nSay it plainly, as the katha tradition itself would: this is a folk story, not scripture. It is told because it teaches the vrat\'s one rule about devotion: kept fully, it holds; interrupted kindly, it breaks.',
+        citation: 'Karwa Chauth vrat katha — folk tradition, labeled as such; Savitri and Yama — Mahabharata, Vana Parva (tr. Ganguli).'
+      },
+      {
+        id: 'karva-chauth-day',
+        title: 'How the Day Runs',
+        subtitle: 'From Sargi to the Sieve',
+        storyText: 'The fast has an architecture, and it begins in the dark.\n\nBefore dawn comes **sargi**: a meal of fruits, sweets, and feni sent by the mother-in-law, eaten before the first light. The gesture matters more than the menu. The fast for her son opens with the older woman feeding the younger one.\n\nThrough the day, life continues, work, errands, children, carried on without food or water. By afternoon the women gather for the **katha circle**: dressed in wedding finery, mehndi on their hands, karwa pots exchanged in a circle as the Veervati story is told aloud.\n\nThen the rooftop, the sighted moon, the offered water, and the sieve: the moon viewed through it, and then the husband viewed through the same sieve, prayed-for and moonlit in one frame. He offers her the first water and the first bite, and the day ends with the household eating together.',
+        citation: 'Sargi, katha circle, and moonrise sequence — festival practice, labeled as tradition.'
+      },
+      {
+        id: 'karva-chauth-now',
+        title: 'One Day of Complete Attention',
+        subtitle: 'What the Fast Means Now',
+        storyText: 'Karwa Chauth sits in the middle of a live conversation, and honesty requires saying so.\n\nSome see in it an asymmetry: why does she fast for him? Others answer from inside the practice: because it is hers, chosen, and no one else\'s to grade. Both voices exist within Hindu households, and the tradition, being plural, holds them both.\n\nMeanwhile the practice itself has been quietly rewriting the script. In many homes the husband now fasts too, the two of them hungry together and breaking the fast face to face. Unmarried women keep it for intended partners. The Bollywood rooftop scene made the festival famous far beyond the northwest, and diaspora couples time video calls to two different moonrises.\n\nUnder all the change, the vrat\'s core has not moved. For one day, a marriage, the thing most easily taken for granted in a busy life, is the object of complete, deliberate, hungry attention.',
+        teachingText: 'Whether or not you ever keep this fast, it asks a portable question. What would it look like to give your most important relationship one full day of undivided attention a year, on the calendar, non-negotiable?\n\nThe moon rises either way. The attention is the offering.',
+        citation: 'Contemporary practice — described as such; the plurality of views stated per the tradition\'s own diversity.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Karwa Chauth vrat katha',
+        locator: 'The Veervati katha and its variants — folk vrat tradition, told at the fast itself; labeled as tradition, not scripture',
+      },
+      {
+        text: 'Mahabharata',
+        locator: 'Vana Parva (the Savitri-Satyavan episode) — the scriptural archetype of the wife\'s vigil against death',
+        translation: 'K.M. Ganguli (public domain)',
+      },
+      {
+        text: 'Drik Panchang',
+        locator: 'Karwa Chauth dates 2025–2028 (Kartika Krishna Chaturthi, moonrise-dependent)',
+      },
+    ],
+    mythology: [
+      'Veervati and the false moon',
+      'Karwa, who bound a crocodile with cotton thread and argued with Yama for her husband\'s life',
+      'Savitri, the archetype who followed Death and won'
+    ],
+    historicalContext: 'A northwest-Indian vrat tradition (Punjab, Haryana, Rajasthan, UP) that cinema carried to pan-Indian and diaspora prominence in the 1990s; its practice is visibly evolving toward mutual fasting.',
+    scriptureReferences: [
+      {
+        id: 'karva-chauth-savitri',
+        text: 'mahabharata',
+        section: 'Vana Parva — the Savitri episode',
+        relevance: 'The epic ancestor of the vrat: a wife\'s single-pointed devotion contested with Death himself, and winning'
+      }
+    ],
+    regionalVariations: [
+      {
+        region: 'Punjab',
+        localName: 'Karwa Chauth',
+        uniqueTraditions: ['Sargi from the mother-in-law', 'Baya gifts sent to the daughter\'s home'],
+        specialFoods: ['Feni and seviyan at sargi'],
+        localCustoms: 'The fullest form of the festival, with the sargi and katha circle at its heart.'
+      },
+      {
+        region: 'Rajasthan',
+        localName: 'Karwa Chauth',
+        uniqueTraditions: ['Elaborate karwa pots exchanged seven times in the katha circle'],
+        specialFoods: ['Ghevar'],
+        localCustoms: 'The katha circle\'s pot exchange is at its most formal, with the story punctuated by the passing karwas.'
+      }
+    ],
+    modernAdaptations: [
+      'Couples fasting for each other',
+      'Moonrise apps and video-call moon sightings across time zones',
+      'Karwa Chauth mehndi evenings as community events'
+    ],
+    familyActivities: [
+      {
+        id: 'karva-chauth-attention',
+        title: 'The Attention Hour',
+        description: 'While the fast waits for the moon, the couple answers three questions in writing and swaps: what I most value in you this year, what I most miss, what I want us to build next year.',
+        ageGroup: 'adults',
+        duration: '1 hour',
+        materials: ['Two pens, two cards'],
+        instructions: [
+          'Write the three answers separately, without discussing',
+          'Exchange at moonrise, after the fast is broken',
+          'Keep the cards with the karwa for next year\'s comparison'
+        ],
+        learningObjective: 'The fast\'s modern core, made explicit: scheduled, undivided attention to the relationship itself'
+      }
+    ],
+    culturalImpact: 'Karwa Chauth gives a marriage an annual day of deliberate attention, and its evolving practice — from one spouse fasting to both — is Hindu tradition adapting in real time while keeping its center.',
+    relatedFestivals: ['diwali-2025'],
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: karva-chauth-cover.png
+  },
+  {
     id: 'diwali-2025',
     name: 'Diwali',
     sanskritName: 'दीपावली',
@@ -2993,7 +4456,188 @@ export const festivalData: Festival[] = [
       }
     ],
     culturalImpact: 'Diwali transcends religious boundaries, promoting universal values of light over darkness, good over evil. It strengthens family bonds, supports local economies through increased commerce, and spreads messages of hope, prosperity, and renewal. The festival has become a global celebration of Indian culture and values.',
-    relatedFestivals: ['dhanteras-2025', 'karva-chauth-2025', 'govardhan-puja-2025', 'bhai-dooj-2025']
+    relatedFestivals: ['dhanteras-2025', 'karva-chauth-2025', 'govardhan-puja-2025', 'bhai-dooj-2025', 'dussehra-2025', 'chhath-puja-2025']
+  },
+  {
+    id: 'chhath-puja-2025',
+    name: 'Chhath Puja',
+    sanskritName: 'छठ पूजा',
+    date: '2025-10-27',
+    occurrences: ['2025-10-27', '2026-11-15', '2027-11-04', '2028-10-23'], // Kartika Shukla Shashthi (Sandhya Arghya day); verified vs Drik Panchang (New Delhi), Jul 2026 — the four days run Nahay Khay (Shashthi minus 2) through Usha Arghya (the morning after)
+    emoji: '🌅',
+    dateType: 'lunar',
+    type: 'nature_worship',
+    significance: 'The great sun festival of Bihar and Mithila — four days of austerity, ending waist-deep in a river at dawn',
+    description: 'No priest, no murti, no temple: the oldest god in the book, worshipped face to face',
+    traditions: [
+      'The 36-hour nirjala fast of the vratis',
+      'Sandhya Arghya (offering to the setting sun)',
+      'Usha Arghya (offering to the rising sun)',
+      'Thekua and offerings carried in bamboo soops',
+      'Riverbanks and ghats cleaned by volunteers'
+    ],
+    prayers: [
+      'Chhath geet (the folk songs of the festival)',
+      'Arghya to Surya',
+      'Prayers to Chhathi Maiya'
+    ],
+    foods: [
+      'Thekua (the festival\'s signature wheat-jaggery cookie)',
+      'Kheer-roti at Kharna',
+      'Sugarcane, whole fruits, and coconut in the soop',
+      'Kaddu-bhat at Nahay Khay'
+    ],
+    colors: ['Sunrise gold', 'Turmeric yellow', 'River silver'],
+    deity: 'Surya and Chhathi Maiya',
+    scripture: 'Rig Veda (the sun hymns)',
+    duration: 2,
+    region: 'Bihar, Jharkhand, Eastern UP, and the Nepal Terai',
+    importance: 'regional',
+    rituals: [
+      {
+        id: 'chhath-arghya',
+        name: 'A Simple Arghya',
+        description: 'The festival\'s essential act, scaled to any home: water offered to the rising sun with full attention.',
+        timeOfDay: 'dawn',
+        materials: ['A small vessel of clean water (a lota if you have one)', 'A place with a clear view of the sunrise', 'Flowers or a few grains of rice (optional)'],
+        steps: [
+          {
+            stepNumber: 1,
+            instruction: 'Rise before dawn, bathe, and stand facing the eastern horizon.',
+            explanation: 'Chhath\'s vratis stand in rivers; standing anywhere deliberate, at the actual hour, keeps the form\'s heart.'
+          },
+          {
+            stepNumber: 2,
+            instruction: 'As the sun clears the horizon, pour the water slowly toward it from raised hands.',
+            explanation: 'The arghya is the oldest gesture in the tradition\'s repertoire: an offering to the one deity every eye can see.'
+          },
+          {
+            stepNumber: 3,
+            instruction: 'Stand for a moment of thanks before turning away.',
+            explanation: 'Chhath\'s distinctive teaching is gratitude to the setting sun as well; if you can, watch this evening\'s sunset with the same attention.'
+          }
+        ],
+        mantras: [
+          {
+            sanskrit: 'ॐ सूर्याय नमः',
+            transliteration: 'oṁ sūryāya namaḥ',
+            meaning: 'Salutation to Surya, the sun',
+            pronunciation: 'om soor-yaa-ya na-mah'
+          }
+        ],
+        significance: 'The arghya needs no intermediary and no image, which is the whole point of Chhath: between the worshipper and this god stands nothing at all.',
+        tips: ['The full vrat (the 36-hour fast) is undertaken with family support and preparation; the simple arghya is the honest entry point', 'This is one common way — ask your family how they walk it.'],
+        commonMistakes: ['Treating the sunset offering as optional; honoring the descending sun first is the festival\'s signature']
+      }
+    ],
+    fullStory: 'Chhath Puja, kept on the sixth day of Kartika\'s bright fortnight, is the great festival of Bihar, Jharkhand, eastern Uttar Pradesh, and the Nepal Terai — four days of escalating austerity in worship of Surya, the sun, and Chhathi Maiya, the mother of the sixth. It is Hinduism at its most stripped down: no priest officiates, no murti is dressed, no temple is required. The vrati — usually a mother, fasting even from water for thirty-six hours — stands waist-deep in a river and offers arghya first to the setting sun and then, after a night of vigil, to the rising one. Everything offered is handmade, everything is cleaned, and every class and caste stands in the same water.',
+    sections: [
+      {
+        id: 'chhath-ghat',
+        title: 'The Festival With Nothing in Between',
+        subtitle: 'A River Ghat at Dusk',
+        storyText: 'Picture a festival with no priest, no idol, and no temple. What is left?\n\nEverything, it turns out. At dusk on Kartika\'s sixth day, the riverbanks of Bihar fill with thousands of families. Women in turmeric-yellow saris walk into the water until it reaches their waists. In their raised hands are winnowing baskets of fruit and homemade sweets. Facing them: the setting sun. Nothing stands between the worshipper and the worshipped, and that is the design.\n\nThis is **Chhath**, from the word for sixth. It honors **Surya**, the sun, the one deity in the Hindu world no one has ever needed a murti to see, together with **Chhathi Maiya**, the mother goddess of the sixth day, protector of children. Most vratis, the fasting worshippers, are mothers, and the blessing most asked is not for themselves. It is for their children\'s lives and health.\n\nThe sun is the oldest god in the tradition\'s book. The Rig Veda, its most ancient text, sings to him again and again. Chhath\'s form is folk and regional; its object is as old as the scriptures get.',
+        citation: 'Rig Veda 1.50 (to Surya, tr. Griffith); the festival\'s form — regional tradition of Bihar and Mithila, labeled as such.'
+      },
+      {
+        id: 'chhath-four-days',
+        title: 'Four Days, Climbing',
+        subtitle: 'From a Clean Meal to an Empty Cup',
+        storyText: 'Chhath is built like a staircase of increasing discipline, and every household knows its steps by heart.',
+        bullets: [
+          '**Nahay Khay** (day one): the vrati bathes, the house is scrubbed, and one pure meal is eaten — traditionally kaddu-bhat, pumpkin and rice',
+          '**Kharna** (day two): a day\'s fast, broken at dusk with kheer and roti; after that final bite begins the full fast, without food or water, for roughly thirty-six hours',
+          '**Sandhya Arghya** (day three): the evening offering — the vrati stands in the river as the sun sets, family passing the soop baskets of thekua, sugarcane, and fruit for the offering',
+          '**Usha Arghya** (day four): after a night of vigil and song, the same water, the rising sun, the morning offering — and only then is the fast broken'
+        ],
+        teachingText: 'Notice the order, because it is the festival\'s most quoted teaching. Chhath honors the **setting** sun first, and the rising one only after.\n\nGratitude that faces only what is rising is half a gratitude. The sun that is leaving gave you today; you thank it first, and trust it back at dawn.',
+        citation: 'The four-day sequence — Chhath tradition of Bihar and Mithila, labeled as tradition.'
+      },
+      {
+        id: 'chhath-discipline',
+        title: 'Everything by Hand, Everyone in the Water',
+        subtitle: 'Thekua, Scrubbed Ghats, and No Officials',
+        storyText: 'Two disciplines give Chhath its character, and neither requires a single official.\n\nThe first is **purity by labor**. Everything offered is made at home, by hand: the thekua, the festival\'s dense wheat-and-jaggery cookie, is shaped by the family and cooked over a mud stove kept only for this. Wheat is washed and dried in the courtyard, guarded from birds by children assigned the job as an honor. In the days before, volunteers scrub the public ghats until riverbanks that carry a city\'s traffic all year are, for one week, spotless.\n\nThe second is **the leveling**. Because there is no priest, every family conducts its own worship, and because there is one river, everyone stands in it together. Officials and laborers, side by side, waist-deep in the same cold water, holding up the same baskets. Bihar\'s great folk voice Sharda Sinha, whose Chhath geet float over every ghat, sang for exactly this festival because it is the one that belongs to everybody.\n\nFor the vast Bihari and Purvanchali diaspora, Chhath is the homecoming festival, and where home is too far, the festival adapts: arghya is offered from the Yamuna\'s ghats in Delhi, from Mumbai\'s beaches, from inflatable pools in New Jersey parking lots, which is not a compromise but the point. The sun rises everywhere.',
+        teachingText: 'Chhath argues, by demonstration, that the holiest things need the fewest intermediaries. A clean bank, handmade food, a standing family, and the actual sun.\n\nIts portable practice fits any life: watch one sunset and the next sunrise with complete attention, and say thank you at both. That is Chhath, scaled to one.',
+        citation: 'Chhath practice and diaspora observance — documented living tradition; Sharda Sinha\'s Chhath geet, documented cultural history.'
+      }
+    ],
+    sources: [
+      {
+        text: 'Rig Veda',
+        locator: 'Mandala 1, hymn 50 (to Surya), among the sun hymns — the scriptural anchor of sun worship',
+        translation: 'R.T.H. Griffith (public domain)',
+      },
+      {
+        text: 'Chhath tradition',
+        locator: 'The four-day vrat, Chhathi Maiya, thekua, and ghat practice — regional folk tradition of Bihar, Jharkhand, eastern UP, and the Nepal Terai, labeled as tradition (no scriptural liturgy claim)',
+      },
+      {
+        text: 'Drik Panchang',
+        locator: 'Chhath (Surya Shashthi) dates 2025–2028; Sandhya Arghya on Kartika Shukla Shashthi',
+      },
+    ],
+    mythology: [
+      'Chhathi Maiya as guardian of children and the sixth day after birth',
+      'Draupadi and the Pandavas keeping a sun vrat in exile, in regional tellings',
+      'Karna, the Mahabharata\'s sun-born hero and a king of this region, offering arghya daily'
+    ],
+    historicalContext: 'Chhath is among the rare major festivals conducted entirely without priestly mediation, and has become the signature festival of the Bihari and Purvanchali diaspora worldwide, reshaping public space (ghats, beaches, city parks) wherever it travels.',
+    scriptureReferences: [
+      {
+        id: 'chhath-rigveda',
+        text: 'vedas',
+        section: 'Rig Veda 1.50',
+        relevance: 'The ancient hymn to Surya — the god of Chhath is the oldest continuously worshipped deity in the tradition'
+      }
+    ],
+    regionalVariations: [
+      {
+        region: 'Bihar and Jharkhand',
+        localName: 'Chhath / Dala Chhath',
+        uniqueTraditions: ['The full four-day vrat', 'Ghats cleaned and decorated by neighborhood committees'],
+        specialFoods: ['Thekua', 'Kasar (rice laddus)'],
+        localCustoms: 'The state\'s defining festival; cities empty toward the rivers, and the diaspora books trains home months ahead.'
+      },
+      {
+        region: 'Delhi, Mumbai, and the diaspora',
+        localName: 'Chhath',
+        uniqueTraditions: ['Arghya from urban riverbanks, beaches, and constructed pools'],
+        specialFoods: ['Thekua made in apartment kitchens'],
+        localCustoms: 'Municipal ghats on the Yamuna and artificial ponds in public parks — the festival remaking whatever geography it finds.'
+      },
+      {
+        region: 'Nepal (Terai / Mithila)',
+        localName: 'Chhathi',
+        uniqueTraditions: ['A national holiday in Nepal\'s Terai; Janakpur\'s ponds as the great gathering points'],
+        specialFoods: ['Thekua', 'Bhusawa'],
+        localCustoms: 'Mithila keeps Chhath on both sides of the border, one festival across two countries.'
+      }
+    ],
+    modernAdaptations: [
+      'Municipal artificial ponds and cleaned urban ghats for arghya',
+      'Chhath geet playlists carrying the ghats into headphones',
+      'Community thekua-making evenings for apartment-dwelling families'
+    ],
+    familyActivities: [
+      {
+        id: 'chhath-two-suns',
+        title: 'The Two-Sun Day',
+        description: 'Keep Chhath\'s essential discipline as a family: one sunset and the next sunrise, both watched together, with a thank-you said at each.',
+        ageGroup: 'all_ages',
+        duration: 'Two short outings',
+        materials: ['A view of the horizon', 'A small vessel of water for the morning arghya'],
+        instructions: [
+          'At sunset, watch until the sun is fully down; each person thanks the day for one specific thing it gave',
+          'Wake before dawn; watch the sun rise and offer the water toward it',
+          'On the walk home, talk about which was harder to attend to, the ending or the beginning'
+        ],
+        learningObjective: 'Chhath\'s signature teaching in one exercise: gratitude faces what is leaving as well as what is arriving'
+      }
+    ],
+    culturalImpact: 'Chhath demonstrates that grandeur needs no apparatus: a festival with no priests, no idols, and no temples that nonetheless moves millions, cleans rivers, levels social rank in cold water, and calls a diaspora home every Kartika.',
+    relatedFestivals: ['diwali-2025', 'makar-sankranti-2025'],
+    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: chhath-puja-cover.png
   }
 ];
 
@@ -3004,7 +4648,10 @@ export const ekadashiData: Ekadashi[] = [];
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 // Parse YYYY-MM-DD as local midnight (new Date('YYYY-MM-DD') is UTC and can shift a day)
-const parseLocalDate = (dateStr: string): Date => {
+// Exported for display formatting: `new Date('YYYY-MM-DD')` parses as UTC
+// midnight and shows the previous day in western timezones — always parse
+// festival date strings through this instead.
+export const parseLocalDate = (dateStr: string): Date => {
   const [year, month, day] = dateStr.split('-').map(Number);
   return new Date(year, month - 1, day);
 };
@@ -3093,6 +4740,19 @@ export const getFestivalsByMonth = (month: number, year: number): Festival[] => 
 
 export const getFestivalsByType = (type: FestivalType): Festival[] => {
   return festivalData.filter(festival => festival.type === type);
+};
+
+// Every festival (major AND regional), sorted by next occurrence. List surfaces
+// (Learn tab, calendar list) use this — filtering on importance would hide the
+// regional entries entirely, the same trap that once hid the journey-only goddesses.
+export const getAllFestivals = (): Festival[] => {
+  return [...festivalData].sort((a, b) => {
+    const nextA = getNextOccurrence(a);
+    const nextB = getNextOccurrence(b);
+    const timeA = nextA ? nextA.start.getTime() : Number.MAX_SAFE_INTEGER;
+    const timeB = nextB ? nextB.start.getTime() : Number.MAX_SAFE_INTEGER;
+    return timeA - timeB;
+  });
 };
 
 export const getMajorFestivals = (): Festival[] => {

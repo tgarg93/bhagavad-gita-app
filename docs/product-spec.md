@@ -199,6 +199,17 @@ Long texts read in the **Gita reading pattern** but via the shared reader (no fu
 - **Journey**: Ramayana kandas append to Module 2, Upanishad texts to Module 1, via `RAMAYANA_JOURNEY_ORDER` / `UPANISHAD_JOURNEY_ORDER` (append-only — existing positions never move).
 - **v1 scope**: Ramayana = 7 kandas (Bala…Uttara); Upanishads = Core 6 (Isha, Kena, Katha, Mundaka, Mandukya, Taittiriya). Phase A shipped Bala Kanda + Katha Upanishad; remaining parts land in follow-up passes. Per-part cover art is a follow-up (illustration spec); parts reuse existing covers for now.
 
+### 5.4 Festival library (`src/data/festivals.ts` → ContentReader + FestivalDetail)
+
+18 festivals, all at full reader depth (5–7 `NarrativeSection`s with citations + `SourcesCard`, plus detail-screen rituals/traditions/regional variations). `festival:<id>-2025` ids are permanent (the `-2025` suffix is vestigial; `occurrences` carries 2025–2028 per entry).
+
+- **Coverage** (July 2026 expansion, 9 → 18). Original nine: Makar Sankranti, Basant Panchami, Maha Shivratri, Holi, Ram Navami, Janmashtami, Ganesh Chaturthi, Navratri, Diwali. Added nine — pan-Indian: Raksha Bandhan, Dussehra (standalone; Navratri keeps the Durga framing, Dussehra tells Rama/Ravana + Ramlila), Guru Purnima, Hanuman Jayanti, Karwa Chauth; regional anchors (`importance: 'regional'`): Onam, Chhath Puja, Ugadi & Gudi Padwa (one entry, two names), Ratha Yatra. Deliberately folded, not standalone: Pongal/Lohri/Magh Bihu (inside Makar Sankranti), Durga Puja (inside Navratri), Dhanteras/Govardhan/Bhai Dooj (inside Diwali). Deferred: Gita Jayanti, Teej, Akshaya Tritiya.
+- **Dates**: every `occurrences` array is verified against Drik Panchang **pinned to New Delhi** (observance dates differ by a day between India and the US; the app uses India dates app-wide) — except Onam, pinned to Thiruvananthapuram. Multi-day entries anchor the **main day** (Diwali precedent): Onam anchors Thiruvonam (Atham begins 10 days earlier, told in the narrative), Chhath anchors Sandhya Arghya (`duration: 2` covers Usha Arghya), Ratha Yatra anchors departure (`duration: 9` to Bahuda).
+- **Surfaces**: Learn tab and the calendar's list view use `getAllFestivals()` (all entries, sorted by next occurrence) — **never `getMajorFestivals()`**, which would silently hide the regional four. Month grid, Daily Chai countdown atoms, and festival notifications pick new entries up automatically via the existing date helpers.
+- **Editorial**: same rules as everywhere (§8) — scripture-anchored stories cite loci (Vamana → Bhagavata Purana Canto 8; Ravana's fall → Yuddha Kanda 102–111); folk material labeled honestly (Karwa Chauth vrat katha, the Maveli song, sindoor/opened-chest stories); documented history cited as history (Tagore's 1905 rakhi movement, ISKCON 1968, Ramlila's UNESCO listing). Cross-links ride `citationLink` (Onam ↔ Holi via Prahlada/Bali; Dussehra ↔ Navratri; Raksha Bandhan's raksha mantra ↔ Onam's Bali).
+- **Journey untouched**: `STAGE_5_FESTIVALS` stays the curated five; the other 13 are self-serve in Learn. New entries confer no points (not journey items) — progression invariants unaffected.
+- Cover art: the new nine ship on the generic fallback; prompts are a follow-up in the illustration spec's Festivals table.
+
 ## 6. Ask Krishna
 
 - Gemini 2.5 Flash; persona + compact context block: profile (name, familiarity, intentions, interests, family stream — "Not sure" excluded), progression level/stats, rolling profile summary, structured knowledge facts, and current content when arriving from a reader.

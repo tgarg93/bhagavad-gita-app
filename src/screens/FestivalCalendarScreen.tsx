@@ -20,8 +20,9 @@ import {
   getTodaysFestivals,
   getFestivalsOnDate,
   getFestivalsByMonth,
-  getMajorFestivals,
+  getAllFestivals,
   getNextOccurrence,
+  parseLocalDate,
   Festival,
 } from '../data/festivals';
 
@@ -193,7 +194,7 @@ const FestivalCalendarScreen: React.FC = () => {
   };
 
   const renderCardsView = () => {
-    const allFestivals = getMajorFestivals();
+    const allFestivals = getAllFestivals();
 
     return (
       <FlatList
@@ -212,7 +213,7 @@ const FestivalCalendarScreen: React.FC = () => {
               <View style={styles.festivalOverlay}>
                 <View style={styles.festivalDateBadge}>
                   <Text style={styles.festivalDateText}>
-                    {new Date(item.date).toLocaleDateString('en-US', {
+                    {parseLocalDate(item.date).toLocaleDateString('en-US', {
                       month: 'short',
                       day: 'numeric'
                     })}

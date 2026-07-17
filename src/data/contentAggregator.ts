@@ -5,7 +5,7 @@ import { ContentCard, ContentSection, ContentCategory } from '../types/contentTy
 import { PRAYERS, lessonCount } from './prayers';
 import { getStoriesByCollection, Story } from './stories';
 import { expandedScripturesData } from './expandedScriptures';
-import { getMajorFestivals } from './festivals';
+import { getAllFestivals } from './festivals';
 import { getAllDeities } from './godsAndDeities';
 import { getCoreConceptsData, getEthicalValuesData, getSpiritualPathsData } from './philosophyAndTeachings';
 import { getYogaPathsData, getBeginnerPractices } from './yogaAndPractices';
@@ -82,7 +82,7 @@ const convertScripturesToCards = (): ContentCard[] => {
 const convertFestivalsToCards = (): ContentCard[] => {
   try {
     const today = new Date();
-    return getMajorFestivals().map(festival => {
+    return getAllFestivals().map(festival => {
       const festivalStartDate = new Date(festival.date);
       const festivalEndDate = new Date(festivalStartDate.getTime() + ((festival.duration - 1) * 24 * 60 * 60 * 1000));
       const daysUntilStart = Math.ceil((festivalStartDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));

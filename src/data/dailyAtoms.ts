@@ -1203,7 +1203,7 @@ const festivalAtomFor = (date: Date): DailyAtom | null => {
     type: 'festival',
     hook: `${next.name} ${when}`,
     body: next.significance
-      ? `${next.significance} Read the story now, so the day itself needs no explaining.`
+      ? `${next.significance.replace(/([^.!?])$/, '$1.')} Read the story now, so the day itself needs no explaining.`
       : `${next.name} is approaching — read its story now so the day itself needs no explaining.`,
     citation: 'From the festival guide',
     // routeForContentRef falls back to the festival calendar when there is no

@@ -472,6 +472,15 @@ All four new deities need their canonical descriptions from Part 1's character s
 | Basant Panchami | 🆕 | generic fallback |
 | Maha Shivratri | 🆕 | generic fallback |
 | Holi | 🆕 | generic fallback |
+| Ugadi & Gudi Padwa | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
+| Hanuman Jayanti | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
+| Ratha Yatra | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
+| Guru Purnima | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
+| Raksha Bandhan | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
+| Onam | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
+| Dussehra | 🆕 | generic fallback (added July 2026, prompt not yet authored) — collision guard: Ram Navami owns the dawn courtyard, Navratri the lion; the burning effigy is unclaimed |
+| Karwa Chauth | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
+| Chhath Puja | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
 
 **Janmashtami** (`janmashtami-cover.jpg`) — Tier 2, Narrative (ground level). *A single small barred window glows with warm lamplight from within a dark prison wall at midnight. No figure is visible through the window. One small star sits directly above the wall outside. The whole frame is the wall; the light is tiny.* Emotion: divinity arriving unnoticed by the powerful. Palette: Indigo-charcoal wall, Deep Saffron `#E65100` window-glow.
 *Collision guard: Krishna himself must not appear — that is exactly the collision being fixed.*
