@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
   },
   festivalsCard: {
     backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,
-    marginHorizontal: DharmaDesignSystem.spacing.lg,
+    marginHorizontal: DharmaDesignSystem.spacing.md,
     marginTop: DharmaDesignSystem.spacing.sm,
     marginBottom: DharmaDesignSystem.spacing.xl,
     borderRadius: DharmaDesignSystem.borderRadius.large,

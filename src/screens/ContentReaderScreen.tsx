@@ -712,6 +712,7 @@ const ContentReaderScreen: React.FC = () => {
           getTextStyle={getTextStyle}
           onResolved={() => {}}
           onContinue={() => skipPage(1)}
+          contentTitle={content.title}
         />
       </ScrollView>
     </KeyboardAvoidingView>

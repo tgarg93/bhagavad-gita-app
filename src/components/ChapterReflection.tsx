@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
-  Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
@@ -14,7 +13,11 @@ import LocalStorageService, { ReflectionContentType, ReflectionEntry, Reflection
 import { geminiService, isAuthError } from '../services/geminiService';
 import krishnaContext from '../services/krishnaContextService';
 import { userKnowledge } from '../services/userKnowledgeService';
-import { useProfilePhoto } from '../services/profilePhotoStore';
+import { Bubble, AVATAR } from './Bubble';
+
+// Re-exported so the existing import sites (AskKrishnaScreen) keep working —
+// the bubbles themselves now live in Bubble.tsx, shared with the check pages.
+export { Bubble };
 
 interface ChapterReflectionProps {
   // Gita chapters pass chapterNumber; other content passes contentType+contentId.
@@ -83,44 +86,6 @@ const fetchSuggestions = (cacheKey: string, questions: string[]): Promise<string
   promise.catch(() => suggestionsCache.delete(cacheKey));
   suggestionsCache.set(cacheKey, promise);
   return promise;
-};
-
-// A chat bubble with the speaker's avatar: Krishna on the left, the reader on
-// the right (profile photo when set). Exported — the Ask Krishna chat uses
-// the same bubbles so every conversation with Krishna looks identical.
-export const Bubble: React.FC<{ role: 'krishna' | 'user'; text: string }> = ({ role, text }) => {
-  if (role === 'krishna') {
-    return (
-      <View style={styles.krishnaRow}>
-        <Image source={require('../../assets/krishna-avatar.png')} style={styles.avatar} resizeMode="cover" />
-        <View style={styles.krishnaBubble}>
-          <Text style={styles.krishnaBubbleText}>{text}</Text>
-        </View>
-      </View>
-    );
-  }
-  return (
-    <View style={styles.userRow}>
-      <View style={styles.userBubble}>
-        <Text style={styles.userBubbleText}>{text}</Text>
-      </View>
-      <UserAvatar />
-    </View>
-  );
-};
-
-// The reader's own face beside their words, once a profile photo is set
-const userPhotoAvatarStyle = { width: 30, height: 30, borderRadius: 15 } as const;
-const UserAvatar: React.FC = () => {
-  const photoUri = useProfilePhoto();
-  if (photoUri) {
-    return <Image source={{ uri: photoUri }} style={userPhotoAvatarStyle} />;
-  }
-  return (
-    <View style={styles.userAvatar}>
-      <Ionicons name="person" size={16} color={DharmaDesignSystem.colors.neutrals.softAsh} />
-    </View>
-  );
 };
 
 // Inline conversational reflection: Krishna asks one question at a time; the
@@ -425,8 +390,6 @@ const ChapterReflection: React.FC<ChapterReflectionProps> = ({
 
 const { colors, typography, spacing, borderRadius, shadows } = DharmaDesignSystem;
 
-const AVATAR = 36;
-
 const styles = StyleSheet.create({
   container: {
     marginTop: spacing.md,
@@ -451,60 +414,6 @@ const styles = StyleSheet.create({
   exchange: {
     marginBottom: spacing.md,
     gap: spacing.md,
-  },
-  krishnaRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    gap: spacing.xs,
-    paddingRight: spacing.xl,
-  },
-  avatar: {
-    width: AVATAR,
-    height: AVATAR,
-    borderRadius: AVATAR / 2,
-  },
-  krishnaBubble: {
-    flex: 1,
-    backgroundColor: colors.neutrals.white,
-    borderRadius: borderRadius.large,
-    borderBottomLeftRadius: borderRadius.small,
-    padding: spacing.md,
-    borderWidth: 1,
-    borderColor: 'rgba(230, 81, 0, 0.12)',
-    ...shadows.soft,
-  },
-  krishnaBubbleText: {
-    ...typography.sizes.bodyMD,
-    color: colors.neutrals.charcoalBlack,
-    lineHeight: 24,
-  },
-  userRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-    gap: spacing.xs,
-    paddingLeft: spacing.xl,
-  },
-  userAvatar: {
-    width: AVATAR - 6,
-    height: AVATAR - 6,
-    borderRadius: (AVATAR - 6) / 2,
-    backgroundColor: colors.neutrals.gentleMist,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  userBubble: {
-    flexShrink: 1,
-    backgroundColor: colors.primary.deepSaffron,
-    borderRadius: borderRadius.large,
-    borderBottomRightRadius: borderRadius.small,
-    paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.md,
-  },
-  userBubbleText: {
-    ...typography.sizes.bodyMD,
-    color: '#FFFFFF',
-    lineHeight: 22,
   },
   typingRow: {
     flexDirection: 'row',
