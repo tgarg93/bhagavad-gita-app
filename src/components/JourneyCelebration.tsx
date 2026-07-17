@@ -6,6 +6,7 @@ import LocalStorageService from '../services/localStorageService';
 import journeyService from '../services/journeyService';
 import { JourneyItem, JOURNEY_MODULES } from '../data/journeyPath';
 import MarigoldShower from './MarigoldShower';
+import LearnList from './LearnList';
 import ProgressRungs from './ProgressRungs';
 import CelebrationGauge from './CelebrationGauge';
 import {
@@ -38,6 +39,11 @@ interface JourneyCelebrationProps {
   // sees what they are actually carrying out of it — this is the act summary,
   // folded into the celebration rather than made a screen of its own.
   bankedTakeaways?: string[];
+  // Depth-reworked Foundations acts: the same concept checklist the intro
+  // promised and the waypoints ticked off, now fully checked. Takes precedence
+  // over bankedTakeaways — the loop the reader has been watching must close on
+  // the exact list it opened with.
+  learnItems?: string[];
   // The question the next act answers, shown directly above the next-step button
   // so the reader walks straight into it rather than stopping.
   handoff?: string;
@@ -102,6 +108,7 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
   onExit,
   onReadAgain,
   bankedTakeaways,
+  learnItems,
   objective,
   active = true,
   pointsAtStart,
@@ -256,7 +263,16 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
           {/* Foundations: the recap list. Capstone: the earned objective.
               Everything else (Gita/concept): Krishna's blessing line — kept only
               when there's no list/objective so his bubble is never empty. */}
-          {bankedTakeaways?.length ? (
+          {learnItems?.length ? (
+            <>
+              <Text style={styles.bankedLabel}>What you've just learned</Text>
+              <View style={styles.learnedList}>
+                {/* The intro's exact checklist, all ticked — same renderer as
+                    the intro and the waypoints, so the loop closes visibly. */}
+                <LearnList items={learnItems} doneCount={learnItems.length} />
+              </View>
+            </>
+          ) : bankedTakeaways?.length ? (
             <>
               <Text style={styles.bankedLabel}>What you've learned</Text>
               <View style={styles.learnedList}>

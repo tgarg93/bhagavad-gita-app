@@ -676,7 +676,7 @@ const KATHA_STORIES: Story[] = [
         id: 'the-scale',
         title: 'Flesh for flesh',
         storyText:
-          'A scale was brought. The dove sat in one pan; Shibi cut flesh from his own thigh into the other. The dove was heavier. He cut more — from his arms, his body — and the scale would not balance; the small grey bird outweighed everything a king could carve from himself. Understanding at last what was being weighed, Shibi stepped into the pan entire: take all of it. The court wept. The scale moved.',
+          'A scale was brought. The dove sat in one pan; Shibi cut flesh from his own thigh into the other. The dove was heavier. He cut more — from his arms, his body — and the scale would not balance; the small gray bird outweighed everything a king could carve from himself. Understanding at last what was being weighed, Shibi stepped into the pan entire: take all of it. The court wept. The scale moved.',
         citation: 'Mahabharata, Vana Parva (the Shibi episode)',
       },
       {

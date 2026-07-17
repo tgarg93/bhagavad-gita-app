@@ -619,7 +619,7 @@ export const deitiesData: Deity[] = [
         id: 'ganesha-threshold',
         title: 'The God of Thresholds',
         subtitle: 'A Doorway Garlanded with Marigolds',
-        storyText: 'Before a Hindu wedding begins, before a shop opens its first ledger, before a child writes the first letter of the alphabet, one name is spoken: **Ganesha**.\n\nHe is **Vighnaharta**, the remover of obstacles, and every threshold belongs to him — doorways, journeys, new ventures, first pages. This custom traces straight back to his origin story, where Shiva decreed that the boy he had wounded and restored would be **worshipped first among all the gods**.\n\nThe teaching hidden in the custom is quietly profound: every beginning carries fear, and the tradition answers fear not with a pep talk but with a companion.',
+        storyText: 'Before a Hindu wedding begins, before a shop opens its first ledger, before a child writes the first letter of the alphabet, one name is spoken: **Ganesha**.\n\nHe is **Vighnaharta**, the remover of obstacles, and every threshold belongs to him — doorways, journeys, new ventures, first pages. This custom traces straight back to his origin story, where Shiva decreed that the boy he had wounded and restored would be **worshiped first among all the gods**.\n\nThe teaching hidden in the custom is quietly profound: every beginning carries fear, and the tradition answers fear not with a pep talk but with a companion.',
         teachingText: 'Notice what you do at your own thresholds. Do you rush through beginnings — new jobs, new relationships, new years — or do you pause and consecrate them?\n\nBeginning with prayer, or even a deliberate breath of intention, changes the spirit of everything that follows. That is Ganesha\'s first lesson, and you don\'t need an elephant\'s head to practice it.',
         citation: 'The first-worship decree: Shiva Purana, Rudra Samhita (Kumara Khanda).'
       },
@@ -1170,7 +1170,7 @@ export const deitiesData: Deity[] = [
         id: 'durga-nine-nights',
         title: 'Nine Nights of the Mother',
         subtitle: 'A Lamp Lit Beside a Sprouting Pot of Grain',
-        storyText: 'Twice a year, at the great turning of the seasons, India gives Durga nine nights — **Navratri**.\n\nA pot of grain is sprouted, a lamp kept burning, and night by night the Goddess is honored in her forms: fierce **Durga**, wealth-giving **Lakshmi**, wisdom-bestowing **Saraswati** — by one beloved arrangement, three nights each. On Ashtami, young girls are worshipped as her living embodiment — the theology of "the Goddess abides in all beings" made into a household act.\n\nThe festival ends in **Vijayadashami**, the day of victory, when Mahishasura falls and, in the north, Ravana burns: all the traditions agreeing that after nine nights of honoring the sacred feminine, the tenth day belongs to triumph.',
+        storyText: 'Twice a year, at the great turning of the seasons, India gives Durga nine nights — **Navratri**.\n\nA pot of grain is sprouted, a lamp kept burning, and night by night the Goddess is honored in her forms: fierce **Durga**, wealth-giving **Lakshmi**, wisdom-bestowing **Saraswati** — by one beloved arrangement, three nights each. On Ashtami, young girls are worshiped as her living embodiment — the theology of "the Goddess abides in all beings" made into a household act.\n\nThe festival ends in **Vijayadashami**, the day of victory, when Mahishasura falls and, in the north, Ravana burns: all the traditions agreeing that after nine nights of honoring the sacred feminine, the tenth day belongs to triumph.',
         teachingText: 'Navratri\'s structure is itself the teaching: **protection first (Durga), then abundance (Lakshmi), then wisdom (Saraswati)** — in that order, because abundance without protection is looted and wisdom without abundance starves.\n\nAudit your own life in her sequence. And the kanya puja asks the sharpest question: do you actually treat the ordinary beings around you as places where the Goddess lives?',
         citationLink: 'festival:navratri-2025',
         citation: 'Navratri: living tradition; the three-by-three arrangement and kanya puja: widespread devotional practice.'
@@ -1249,7 +1249,7 @@ export const deitiesData: Deity[] = [
       {
         id: 'brahma-pillar',
         title: 'The Pillar Without End',
-        content: 'Brahma and Vishnu once argued over which of them was supreme. As they quarreled, an immense pillar of light erupted between them, without visible top or bottom. They agreed to search: Vishnu dove as a boar toward its base, Brahma flew as a swan toward its summit. Vishnu returned and admitted he found no bottom. Brahma, unable to reach the top, met a falling ketaki flower and persuaded it to testify that he had — a small, polished lie. The pillar split open: it was Shiva, the light itself. For the lie, Brahma lost the right to be worshipped; the honest Vishnu was honored. The flower, for its part, was banned from Shiva\'s altars.',
+        content: 'Brahma and Vishnu once argued over which of them was supreme. As they quarreled, an immense pillar of light erupted between them, without visible top or bottom. They agreed to search: Vishnu dove as a boar toward its base, Brahma flew as a swan toward its summit. Vishnu returned and admitted he found no bottom. Brahma, unable to reach the top, met a falling ketaki flower and persuaded it to testify that he had — a small, polished lie. The pillar split open: it was Shiva, the light itself. For the lie, Brahma lost the right to be worshiped; the honest Vishnu was honored. The flower, for its part, was banned from Shiva\'s altars.',
         moralLesson: 'The tradition\'s explanation for its own empty Brahma temples is a warning it aims at every creator: the maker who must also be declared supreme unmakes himself. Honesty about your limits is worth more than your greatest work.',
         category: 'teaching',
         relatedScripture: 'Shiva Purana, Vidyeshvara Samhita (the Lingodbhava story)'
@@ -1452,7 +1452,7 @@ export const deitiesData: Deity[] = [
         title: 'The Mother of New Beginnings',
         subtitle: 'A household on a mountaintop',
         storyText: 'Kailash, as the Puranas paint it, is **the strangest household in literature**: the ascetic father with snakes for ornaments, the mountain-princess mother, one son with an elephant\'s head shaped by her own hands from turmeric paste, another born to command the armies of heaven, a lion, a bull, a mouse, and a peacock in the yard.\n\nIt should not work, and it is the most beloved family in the tradition.\n\n**Parvati is its center of gravity** — the one who turned the great renouncer into a father, absolute stillness into a home.',
-        teachingText: 'The tradition could have left divinity solitary and abstract. Instead its most worshipped god is half of a marriage, and the goddess who arranged that is the patron of everyone who has ever **built a family out of unlikely materials**.\n\nAsk her blessing not for a perfect household but for a whole one — held together, like hers, by a love that outlasted every winter it stood in.',
+        teachingText: 'The tradition could have left divinity solitary and abstract. Instead its most worshiped god is half of a marriage, and the goddess who arranged that is the patron of everyone who has ever **built a family out of unlikely materials**.\n\nAsk her blessing not for a perfect household but for a whole one — held together, like hers, by a love that outlasted every winter it stood in.',
         citationLink: 'deity:ganesha',
         citation: 'The Kailash household: Shiva Purana, Rudra Samhita (Kumara Khanda); Ganesha\'s shaping: same, Kumara Khanda'
       }
@@ -1595,7 +1595,7 @@ export const deitiesData: Deity[] = [
         title: 'The Owl at Her Feet',
         subtitle: 'The warning built into the blessing',
         storyText: 'It is easy to miss, at the foot of all that gold: Lakshmi\'s vahana is **an owl**.\n\nThe tradition chose it deliberately and lets the double meaning stand. The owl sees in the dark — wealth rightly held illuminates places nothing else reaches. And the owl is blind in daylight — **the being who cannot see precisely when everything is bright.**\n\nSanskrit proverb sharpened the point long ago: riches without wisdom is an owl at noon.',
-        teachingText: 'Every gift in this tradition ships with its own warning label, and the owl is Lakshmi\'s. **Wealth amplifies; it does not educate.** It will light the dark or blind you at noon depending entirely on what you bring to it.\n\nWhich is why the goddess of fortune is traditionally worshipped alongside Ganesha, remover of obstacles and lord of wisdom — the tradition refusing to hand you the gold without the sight.',
+        teachingText: 'Every gift in this tradition ships with its own warning label, and the owl is Lakshmi\'s. **Wealth amplifies; it does not educate.** It will light the dark or blind you at noon depending entirely on what you bring to it.\n\nWhich is why the goddess of fortune is traditionally worshiped alongside Ganesha, remover of obstacles and lord of wisdom — the tradition refusing to hand you the gold without the sight.',
         citation: 'Uluka vahana: standard Lakshmi iconography, especially in Bengal; the paired Lakshmi–Ganesha Diwali worship is living tradition'
       }
     ],
@@ -1627,7 +1627,7 @@ export const deitiesData: Deity[] = [
     titles: ['Sharada', 'Vagdevi (Goddess of Speech)', 'Veenapani', 'Hamsavahini'],
     category: 'goddesses',
     description: 'The river that became the goddess of everything that flows: speech, music, learning',
-    mythology: 'Saraswati is the oldest of the great goddesses still worshipped — she enters the Rig Veda as a mighty river, praised as "best of mothers, best of rivers, best of goddesses," and as the waters themselves went underground in legend, she flowed instead into everything else that moves like water: speech, thought, music, learning. She is the tradition\'s statement that knowledge is sacred in itself. Dressed in white with no gold at all, seated on a white lotus with a veena in her hands, a book and a rosary beside her, a swan at her feet — she is the one great deity who owns almost nothing, and the one whom students, musicians, and writers cannot do without.',
+    mythology: 'Saraswati is the oldest of the great goddesses still worshiped — she enters the Rig Veda as a mighty river, praised as "best of mothers, best of rivers, best of goddesses," and as the waters themselves went underground in legend, she flowed instead into everything else that moves like water: speech, thought, music, learning. She is the tradition\'s statement that knowledge is sacred in itself. Dressed in white with no gold at all, seated on a white lotus with a veena in her hands, a book and a rosary beside her, a swan at her feet — she is the one great deity who owns almost nothing, and the one whom students, musicians, and writers cannot do without.',
     attributes: ['Knowledge', 'Speech and eloquence', 'Music', 'Purity of focus', 'The wealth that grows when given'],
     symbols: ['Veena', 'Book', 'White lotus', 'Swan', 'Flowing water'],
     mantras: [
@@ -1670,14 +1670,14 @@ export const deitiesData: Deity[] = [
         id: 'saraswati-river',
         title: 'The River That Went Underground',
         content: 'In the Rig Veda, Saraswati is no metaphor: she is a vast river of the northwest, "surpassing in majesty and might all other waters," on whose banks the hymns themselves were composed. Tradition holds that as ages passed the river dwindled and vanished into the desert — and the tradition\'s response is the whole story: the goddess did not die with her waters. She went underground like her river and surfaced as every other kind of flow — the stream of speech, the current of thought, the river of music running through a raga. At Prayag, where two visible rivers meet, the tradition insists a third joins them invisibly: Saraswati, still flowing where only the mind can see.',
-        moralLesson: 'What is truly essential does not perish when its first form does — it changes channel. The river became learning itself, and her worshippers dip into it daily.',
+        moralLesson: 'What is truly essential does not perish when its first form does — it changes channel. The river became learning itself, and her worshipers dip into it daily.',
         category: 'origin',
         relatedScripture: 'Rig Veda 6.61, 7.95; the Triveni Sangam tradition of Prayag'
       },
       {
         id: 'saraswati-basant',
         title: 'The Day the Books Rest',
-        content: 'On Vasant Panchami, the fifth day of spring, Saraswati\'s worshippers do something almost paradoxical: students place their books, pens, and instruments at her altar — and do not study. The tools rest at the goddess\'s feet for the day. Small children are brought to write their first letters that morning, a grain of rice or a slate under a guiding hand, the alphabet begun as a sacrament. Mustard fields bloom yellow, her devotees wear yellow, and for one day the whole apparatus of learning is treated not as a grind but as a grace.',
+        content: 'On Vasant Panchami, the fifth day of spring, Saraswati\'s worshipers do something almost paradoxical: students place their books, pens, and instruments at her altar — and do not study. The tools rest at the goddess\'s feet for the day. Small children are brought to write their first letters that morning, a grain of rice or a slate under a guiding hand, the alphabet begun as a sacrament. Mustard fields bloom yellow, her devotees wear yellow, and for one day the whole apparatus of learning is treated not as a grind but as a grace.',
         moralLesson: 'The tradition knows that tools become burdens unless regularly re-consecrated. Rest the instruments, honor the source, and begin again as if writing your first letter.',
         category: 'teaching',
         relatedScripture: 'Vasant Panchami / Vidyarambham living tradition across India'
@@ -1709,7 +1709,7 @@ export const deitiesData: Deity[] = [
     sections: [
       {
         id: 'saraswati-oldest',
-        title: 'The Oldest Goddess Still Worshipped',
+        title: 'The Oldest Goddess Still Worshiped',
         subtitle: 'From riverbank to raga',
         storyText: 'Before she held a veena, Saraswati held a watershed.\n\nIn the **Rig Veda** — humanity\'s oldest religious text in continuous use — she is a physical river, hymned with awe: best of mothers, best of rivers, best of goddesses. The sages composed on her banks; her water was the first thing the tradition called sacred.\n\nThen, over centuries, the river of legend dwindled into the desert — and the goddess performed **the most graceful pivot in religious history**. She went underground and resurfaced as every flow that remained: speech, memory, mathematics, music. The river became the current of thought itself.',
         teachingText: 'There is a teaching in the transformation beyond the history: **what is essential survives the loss of its original container.**\n\nWhen a chapter of your life dries up — a career, a role, a place — the Saraswati move is not to mourn the riverbed but to ask **where the water went**. It is usually still flowing, one channel over.',

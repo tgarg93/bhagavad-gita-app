@@ -42,6 +42,10 @@ export interface ReaderContent {
   intro?: string[];
   // Replayed on this act's celebration ("you can now say…").
   bankedTakeaways?: string[];
+  // The act's concept checklist (FoundationsAct.learnItems): rendered by the
+  // intro page, ticked off by waypoints, and replayed checked on the
+  // celebration. Absent on acts without the depth rework.
+  learnItems?: string[];
   // The question the next act answers, shown above the celebration's next-step
   // button so the reader walks straight into it.
   handoff?: string;
@@ -166,6 +170,7 @@ export function getReaderContent(
       kicker: act.kicker,
       intro: act.intro,
       bankedTakeaways: takeawaysForAct(act.id),
+      learnItems: act.learnItems,
       handoff: act.handoff,
       capstone: act.capstone,
     };
@@ -230,7 +235,10 @@ const stripMarkup = (text: string): string => text.replace(/\*\*/g, '');
 export function sectionsToNarrationContent(sections: NarrativeSection[]) {
   return sections.map(section => ({
     title: section.title,
-    blocks: [
+    // Waypoints are quiet checkpoints — the voice parks on them and never reads
+    // them (ContentReaderScreen pauses there, like a check page). An empty
+    // block list yields no segments while keeping section indices stable.
+    blocks: section.kind === 'waypoint' ? [] : [
       {
         type: 'verse',
         verse: {

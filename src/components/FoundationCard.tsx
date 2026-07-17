@@ -50,6 +50,7 @@ const FoundationCard: React.FC<Props> = ({
   const { takeaway, storyText, keyVerse, citation, deeper, sectionHeader, teachingText } = section;
   const takeawayBlock = sectionIndex != null ? `section-${sectionIndex}-takeaway` : undefined;
   const storyBlock = sectionIndex != null ? `section-${sectionIndex}-story` : undefined;
+  const teachingBlock = sectionIndex != null ? `section-${sectionIndex}-teaching` : undefined;
 
   // Y offset of each highlightable block within the card, filled by onLayout.
   const blockYs = useRef<Record<string, number>>({});
@@ -143,8 +144,21 @@ const FoundationCard: React.FC<Props> = ({
       )}
 
       {!!sectionHeader && <Text style={styles.subhead}>{sectionHeader}</Text>}
+      {/* Post-verse prose: the inline-keyVerse convention puts the paragraphs
+          that FOLLOW the Sanskrit block here, so it highlights like the story. */}
       {!!teachingText && (
-        <Prose text={teachingText} style={getTextStyle(styles.body)} />
+        <View
+          style={styles.teaching}
+          onLayout={e => setBlockY(teachingBlock, e.nativeEvent.layout.y)}
+        >
+          <Prose
+            text={teachingText}
+            blockId={teachingBlock}
+            highlightedSegmentId={highlightedSegmentId}
+            segments={segments}
+            style={getTextStyle(styles.body)}
+          />
+        </View>
       )}
 
       {!!deeper && (
@@ -248,6 +262,9 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     color: C.neutrals.softAsh,
     marginTop: 5,
+  },
+  teaching: {
+    marginTop: 18,
   },
   subhead: {
     fontSize: 12,

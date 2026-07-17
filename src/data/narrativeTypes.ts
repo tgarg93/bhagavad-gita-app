@@ -51,7 +51,38 @@ export interface NarrativeSection {
   // Checks that fire as their own pages immediately AFTER this section's page.
   // This is the interleaving mechanism — see ContentReaderScreen's page builder.
   checks?: KnowledgeCheck[];
+
+  // Page kind for the special Foundations page types. Absent = a regular
+  // section/card, rendered exactly as before.
+  //  'intro'    — the act's "what you'll learn" on-ramp, by convention
+  //               sections[0]: storyText = the Krishna-bubble framing line,
+  //               the learn list comes from the act's learnItems. Never banks.
+  //  'term'     — a key-word flashcard page: keyVerse = the word (Devanagari /
+  //               transliteration / one-line meaning), storyText = the
+  //               "hold onto this" framing, bullets = optional word-by-word
+  //               trio rows ("tat — that, the one reality"). Never banks.
+  //  'waypoint' — a checkpoint after a concept: storyText = the Krishna bridge
+  //               line, learnIndex = how many learnItems are done. Never banks.
+  kind?: 'intro' | 'term' | 'waypoint';
+  // Term pages only: the forward pointer row ("You'll meet this word again in
+  // Part 4 …").
+  reappears?: string;
+  // Waypoint pages only: how many of the act's learnItems are complete at this
+  // point; the item at this index renders as "up next".
+  learnIndex?: number;
+  // false = renders as a FoundationCard (takeaway leads) but does NOT bank a
+  // point and does NOT appear in recaps. Absent = banks, as all pre-existing
+  // cards do. Supporting analogy/story cards set banked: false — the points
+  // invariant in foundations.ts depends on it.
+  banked?: boolean;
 }
+
+// The single gate for "does this section score a point / appear in recaps".
+// The bank call in ContentReaderScreen and the recap builders in foundations.ts
+// must all use this — a stray `!!takeaway` check would over-credit users
+// permanently (cardsBanked is append-only).
+export const isBankedCard = (s: NarrativeSection): boolean =>
+  !!s.takeaway && s.banked !== false;
 
 // A human-readable SOURCES entry rendered at the foot of seed content.
 // Every story or claim in seed content traces to one of these.

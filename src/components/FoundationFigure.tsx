@@ -140,7 +140,7 @@ const Etymology = () => (
 const COMPARE_ROWS: [string, string, string, string, string][] = [
   ['Founder', 'None', 'Abraham, Moses', 'Jesus', 'Muhammad'],
   ['One book', 'No — a library', 'The Torah', 'The Bible', 'The Qur’an'],
-  ['You join by', 'Practising', 'Birth or covenant', 'Professing faith', 'The shahada'],
+  ['You join by', 'Practicing', 'Birth or covenant', 'Professing faith', 'The shahada'],
   ['After death', 'Reborn — again', 'Rarely the point', 'Judgement, once', 'Judgement, once'],
   ['The goal', 'Escape the cycle', 'Live the covenant', 'Salvation', 'Paradise'],
 ];
@@ -274,46 +274,148 @@ const PotSpace = () => (
   </Figure>
 );
 
-// ── The rope and the serpent ────────────────────────────────────────────────
-const RopeSerpent = () => (
-  <Figure caption="Maya isn’t “the world is fake.” The rope was always a rope.">
-    <Svg width="100%" height={180} viewBox="0 0 640 236">
-      <Rect x={0} y={0} width={640} height={236} fill={INDIGO} opacity={0.1} rx={4} />
-      {/* One continuous coil: rope where the light falls, serpent where it doesn't */}
-      <Path
-        d="M60 176 C120 120, 200 200, 268 152 C336 104, 380 190, 452 150 C500 124, 520 92, 540 70"
-        fill="none"
-        stroke="#A87C4F"
-        strokeWidth={13}
-        strokeLinecap="round"
-      />
-      <Path
-        d="M340 168 C380 190, 400 176, 452 150 C500 124, 520 92, 540 70"
-        fill="none"
-        stroke={INDIGO}
-        strokeWidth={13}
-        strokeLinecap="round"
-        opacity={0.7}
-      />
-      <G stroke="#7A5636" strokeWidth={1.4} opacity={0.65}>
-        <Line x1={86} y1={150} x2={94} y2={164} />
-        <Line x1={112} y1={136} x2={120} y2={150} />
-        <Line x1={140} y1={132} x2={146} y2={147} />
-        <Line x1={170} y1={142} x2={175} y2={157} />
-        <Line x1={200} y1={158} x2={204} y2={173} />
-      </G>
-      {/* serpent head */}
-      <Path d="M540 70 C556 60, 572 64, 578 76 C583 87, 574 96, 560 94 C548 92, 540 84, 540 70 Z" fill={INDIGO} opacity={0.85} />
-      <Circle cx={566} cy={76} r={2.4} fill={TURMERIC} />
-      <Path d="M578 76 L594 70" stroke={INDIGO} strokeWidth={1.6} opacity={0.85} />
-      <Path d="M578 78 L594 84" stroke={INDIGO} strokeWidth={1.6} opacity={0.85} />
-      <SvgText x={110} y={210} fontSize={12} fontWeight="700" fill={INK}>rope</SvgText>
-      <SvgText x={110} y={226} fontSize={10} fill={SOFT}>where the light falls</SvgText>
-      <SvgText x={500} y={210} fontSize={12} fontWeight="700" fill={INK}>serpent</SvgText>
-      <SvgText x={500} y={226} fontSize={10} fill={SOFT}>where it doesn’t</SvgText>
-      <SvgText x={320} y={30} textAnchor="middle" fontSize={12} fontStyle="italic" fontWeight="600" fill={INK}>
-        One object. Two readings.
+// ── The ocean and its waves ─────────────────────────────────────────────────
+const OceanWaves = () => (
+  <Figure caption="Every wave is water.">
+    <Svg width="100%" height={160} viewBox="0 0 640 200">
+      <Rect x={0} y={0} width={640} height={200} fill={INDIGO} opacity={0.06} rx={4} />
+      {/* two airborne drops */}
+      <Path d="M430 30 q-13 20 -13 29 a13 13 0 0 0 26 0 q0 -9 -13 -29" fill={INDIGO} opacity={0.55} />
+      <Path d="M360 52 q-8 13 -8 18 a8 8 0 0 0 16 0 q0 -5 -8 -18" fill={INDIGO} opacity={0.4} />
+      {/* three swells */}
+      <Path d="M18 108 C70 78, 120 138, 172 108 C224 78, 274 138, 326 108 C378 78, 428 138, 480 108 C532 78, 582 130, 622 106" fill="none" stroke={INDIGO} strokeWidth={4} strokeLinecap="round" opacity={0.85} />
+      <Path d="M18 138 C70 116, 120 158, 172 138 C224 116, 274 158, 326 138 C378 116, 428 158, 480 138 C532 116, 582 152, 622 134" fill="none" stroke={TEAL} strokeWidth={4} strokeLinecap="round" opacity={0.7} />
+      <Path d="M18 164 C70 148, 120 178, 172 164 C224 148, 274 178, 326 164 C378 148, 428 178, 480 164 C532 148, 582 174, 622 160" fill="none" stroke={TEAL} strokeWidth={3} strokeLinecap="round" opacity={0.4} />
+      <SvgText x={96} y={44} fontSize={13} fontWeight="700" fontStyle="italic" fill={INK}>brahman</SvgText>
+      <SvgText x={96} y={62} fontSize={10} fill={SOFT}>the ocean — the one water</SvgText>
+      <SvgText x={470} y={72} fontSize={10} fill={SOFT}>waves, foam, drops —</SvgText>
+      <SvgText x={470} y={87} fontSize={10} fill={SOFT}>shapes the water takes</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── One current, many lamps ─────────────────────────────────────────────────
+const OneCurrentManyLamps = () => (
+  <Figure caption="One current; many lamps.">
+    <Svg width="100%" height={165} viewBox="0 0 640 206">
+      {/* the wire */}
+      <Path d="M20 168 L620 168" stroke={TEAL} strokeWidth={4} strokeLinecap="round" />
+      {[
+        { x: 170, r: 22, glow: TURMERIC, label: 'a lamp' },
+        { x: 320, r: 28, glow: SAFFRON, label: 'a fan' },
+        { x: 470, r: 22, glow: TURMERIC, label: 'a kettle' },
+      ].map(l => (
+        <G key={l.x}>
+          <Line x1={l.x} y1={168} x2={l.x} y2={104 + l.r} stroke={TEAL} strokeWidth={3} />
+          <Circle cx={l.x} cy={96} r={l.r + 12} fill={l.glow} opacity={0.18} />
+          <Circle cx={l.x} cy={96} r={l.r} fill={l.glow} opacity={0.45} />
+          <Circle cx={l.x} cy={96} r={l.r - 12} fill={l.glow} opacity={0.9} />
+          <SvgText x={l.x} y={46} textAnchor="middle" fontSize={10} fill={SOFT}>{l.label}</SvgText>
+        </G>
+      ))}
+      <SvgText x={320} y={192} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill={INK}>
+        brahman — the current you never see
       </SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── The drop and the ocean ──────────────────────────────────────────────────
+const DropAndOcean = () => (
+  <Figure caption="Same water, smaller shape.">
+    <Svg width="100%" height={165} viewBox="0 0 640 206">
+      <Rect x={0} y={0} width={640} height={206} fill={INDIGO} opacity={0.06} rx={4} />
+      {/* the drop */}
+      <Path d="M320 26 q-22 34 -22 48 a22 22 0 0 0 44 0 q0 -14 -22 -48" fill={INDIGO} opacity={0.65} />
+      <SvgText x={368} y={62} fontSize={13} fontWeight="700" fontStyle="italic" fill={INK}>ātman</SvgText>
+      <SvgText x={368} y={79} fontSize={10} fill={SOFT}>the drop</SvgText>
+      {/* falling home */}
+      <Line x1={320} y1={110} x2={320} y2={138} stroke={SOFT} strokeWidth={2} strokeDasharray="3 5" />
+      {/* the ocean */}
+      <Path d="M18 152 C70 128, 120 172, 172 152 C224 128, 274 172, 326 152 C378 128, 428 172, 480 152 C532 128, 582 166, 622 148" fill="none" stroke={INDIGO} strokeWidth={4} strokeLinecap="round" opacity={0.85} />
+      <Path d="M18 178 C70 160, 120 190, 172 178 C224 160, 274 190, 326 178 C378 160, 428 190, 480 178 C532 160, 582 186, 622 172" fill="none" stroke={TEAL} strokeWidth={3} strokeLinecap="round" opacity={0.5} />
+      <SvgText x={92} y={116} fontSize={13} fontWeight="700" fontStyle="italic" fill={INK}>brahman</SvgText>
+      <SvgText x={92} y={133} fontSize={10} fill={SOFT}>the ocean</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── The salt in the water ───────────────────────────────────────────────────
+const SaltBowl = () => (
+  <Figure caption="Gone from sight — present in every sip.">
+    <Svg width="100%" height={160} viewBox="0 0 640 200">
+      {/* the bowl */}
+      <Path d="M170 58 L470 58 C458 152, 400 178, 320 178 C240 178, 182 152, 170 58 Z" fill={INDIGO} opacity={0.1} />
+      <Path d="M170 58 L470 58 C458 152, 400 178, 320 178 C240 178, 182 152, 170 58" fill="none" stroke="#B07050" strokeWidth={6} strokeLinecap="round" />
+      <Path d="M188 76 C240 92, 400 92, 452 76" fill="none" stroke={INDIGO} strokeWidth={2.5} opacity={0.55} />
+      {/* the dissolved salt */}
+      {[[236, 100], [280, 118], [322, 96], [366, 120], [404, 102], [258, 140], [318, 148], [372, 142], [300, 122], [348, 108]].map(([cx, cy]) => (
+        <Circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={2.4} fill={INK} opacity={0.5} />
+      ))}
+      <SvgText x={536} y={96} textAnchor="middle" fontSize={12} fontWeight="700" fontStyle="italic" fill={INK}>the salt</SvgText>
+      <SvgText x={536} y={113} textAnchor="middle" fontSize={10} fill={SOFT}>nowhere to point at,</SvgText>
+      <SvgText x={536} y={128} textAnchor="middle" fontSize={10} fill={SOFT}>nowhere it isn’t</SvgText>
+      <SvgText x={104} y={96} textAnchor="middle" fontSize={10} fill={SOFT}>sip from any side:</SvgText>
+      <SvgText x={104} y={111} textAnchor="middle" fontSize={10} fill={SOFT}>salty</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── Namaste ─────────────────────────────────────────────────────────────────
+const NamasteHands = () => (
+  <Figure caption="“The divine in me bows to the divine in you” — tat tvam asi, said twice.">
+    <Svg width="100%" height={165} viewBox="0 0 640 206">
+      <Circle cx={320} cy={22} r={5} fill={TURMERIC} />
+      {/* two palms, mirrored, meeting at the center line */}
+      <Path d="M320 40 C290 76, 282 120, 286 148 C289 172, 302 186, 320 190" fill="none" stroke={SAFFRON} strokeWidth={5} strokeLinecap="round" />
+      <Path d="M320 40 C350 76, 358 120, 354 148 C351 172, 338 186, 320 190" fill="none" stroke={SAFFRON} strokeWidth={5} strokeLinecap="round" />
+      <Line x1={320} y1={52} x2={320} y2={182} stroke={SAFFRON} strokeWidth={1.6} opacity={0.5} />
+      {/* wrists */}
+      <Path d="M292 122 C258 132, 238 150, 228 172" fill="none" stroke={SAFFRON} strokeWidth={4} strokeLinecap="round" opacity={0.55} />
+      <Path d="M348 122 C382 132, 402 150, 412 172" fill="none" stroke={SAFFRON} strokeWidth={4} strokeLinecap="round" opacity={0.55} />
+      <SvgText x={132} y={96} textAnchor="middle" fontSize={11} fontStyle="italic" fill={SOFT}>the divine in me</SvgText>
+      <SvgText x={508} y={96} textAnchor="middle" fontSize={11} fontStyle="italic" fill={SOFT}>the divine in you</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── The mirage ──────────────────────────────────────────────────────────────
+const Mirage = () => (
+  <Figure caption="The road is real. “Water” was the reading.">
+    <Svg width="100%" height={165} viewBox="0 0 640 206">
+      <Rect x={0} y={0} width={640} height={206} fill={SAFFRON} opacity={0.06} rx={4} />
+      {/* the sun */}
+      <Circle cx={560} cy={44} r={22} fill={TURMERIC} opacity={0.85} />
+      <Circle cx={560} cy={44} r={34} fill={TURMERIC} opacity={0.18} />
+      {/* the road, narrowing to the horizon */}
+      <Line x1={110} y1={188} x2={296} y2={66} stroke={SOFT} strokeWidth={4} strokeLinecap="round" />
+      <Line x1={530} y1={188} x2={344} y2={66} stroke={SOFT} strokeWidth={4} strokeLinecap="round" />
+      <Path d="M320 184 L320 160 M320 146 L320 128 M320 118 L320 106 M320 98 L320 90" stroke={SOFT} strokeWidth={4} strokeDasharray="1 0" />
+      {/* the shimmer, always farther ahead */}
+      <Ellipse cx={320} cy={72} rx={34} ry={7} fill={INDIGO} opacity={0.4} />
+      <Ellipse cx={320} cy={72} rx={18} ry={4} fill={INDIGO} opacity={0.75} />
+      <SvgText x={320} y={44} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill={INK}>“water”</SvgText>
+      <SvgText x={148} y={92} textAnchor="middle" fontSize={10} fill={SOFT}>dry when</SvgText>
+      <SvgText x={148} y={107} textAnchor="middle" fontSize={10} fill={SOFT}>you arrive</SvgText>
+      <SvgText x={320} y={200} textAnchor="middle" fontSize={10} fill={SOFT}>the road — real the whole way</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── The breath wave ─────────────────────────────────────────────────────────
+const BreathWave = () => (
+  <Figure caption="Automatic, and steerable — the one lever that is both.">
+    <Svg width="100%" height={140} viewBox="0 0 640 176">
+      <Path
+        d="M20 110 C55 30, 90 30, 125 110 C160 190, 195 190, 230 110 C265 30, 300 30, 335 110 C370 190, 405 190, 440 110 C475 30, 510 30, 545 110 C570 168, 595 172, 620 140"
+        fill="none"
+        stroke={TEAL}
+        strokeWidth={4}
+        strokeLinecap="round"
+      />
+      <Circle cx={335} cy={110} r={7} fill={SAFFRON} />
+      <SvgText x={72} y={22} textAnchor="middle" fontSize={10} fontWeight="700" fill={SOFT}>IN</SvgText>
+      <SvgText x={177} y={172} textAnchor="middle" fontSize={10} fontWeight="700" fill={SOFT}>OUT — slower</SvgText>
     </Svg>
   </Figure>
 );
@@ -337,6 +439,313 @@ const Gunas = () => (
       <SvgText x={630} y={28} textAnchor="end" fontSize={9.5} fontWeight="700" fill={SOFT}>
         ALL THREE, ALWAYS — ONLY THE RATIO MOVES
       </SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── Seed and harvest ────────────────────────────────────────────────────────
+const KarmaSeed = () => (
+  <Figure caption="The harvest is true to the seed. You are not sentenced — you are farming.">
+    <Svg width="100%" height={165} viewBox="0 0 640 206">
+      {/* ground */}
+      <Line x1={30} y1={150} x2={610} y2={150} stroke={GOLD} strokeWidth={2.5} />
+      {/* seed */}
+      <Circle cx={140} cy={168} r={8} fill={GOLD} />
+      <SvgText x={140} y={196} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>the action</SvgText>
+      {/* arrow of time */}
+      <Path d="M170 120 C240 84, 330 84, 400 104" stroke={SOFT} strokeWidth={1.6} strokeDasharray="5 5" fill="none" />
+      <Path d="M406,107 L395,102 L398,112 Z" fill={SOFT} />
+      <SvgText x={286} y={72} textAnchor="middle" fontSize={10} fill={SOFT}>seasons — sometimes lives — later</SvgText>
+      {/* tree */}
+      <Path d="M470 150 L470 92" stroke={GREEN} strokeWidth={5} strokeLinecap="round" />
+      <Circle cx={470} cy={70} r={34} fill={GREEN} opacity={0.25} />
+      <Circle cx={470} cy={70} r={22} fill={GREEN} opacity={0.4} />
+      <Circle cx={452} cy={62} r={5} fill={SAFFRON} />
+      <Circle cx={484} cy={78} r={5} fill={SAFFRON} />
+      <Circle cx={476} cy={52} r={5} fill={SAFFRON} />
+      <SvgText x={470} y={196} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>the consequence — true to its kind</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── One person, three duties ────────────────────────────────────────────────
+const DharmaRoles = () => (
+  <Figure caption="Three roles in one afternoon — three different right things.">
+    <Svg width="100%" height={165} viewBox="0 0 640 206">
+      {/* the person */}
+      <Circle cx={320} cy={52} r={20} fill="none" stroke={INK} strokeWidth={2.5} />
+      <Path d="M320 72 L320 118" stroke={INK} strokeWidth={2.5} />
+      <SvgText x={320} y={26} textAnchor="middle" fontSize={10} fill={SOFT}>the same you</SvgText>
+      {/* three branches */}
+      <Path d="M320 118 L150 158" stroke={TEAL} strokeWidth={2} />
+      <Path d="M320 118 L320 158" stroke={SAFFRON} strokeWidth={2} />
+      <Path d="M320 118 L490 158" stroke={INDIGO} strokeWidth={2} />
+      <Rect x={86} y={160} width={128} height={38} rx={4} fill={TEAL} opacity={0.13} />
+      <SvgText x={150} y={177} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>3 pm · parent</SvgText>
+      <SvgText x={150} y={192} textAnchor="middle" fontSize={9} fill={SOFT}>patience</SvgText>
+      <Rect x={256} y={160} width={128} height={38} rx={4} fill={SAFFRON} opacity={0.13} />
+      <SvgText x={320} y={177} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>4 pm · employee</SvgText>
+      <SvgText x={320} y={192} textAnchor="middle" fontSize={9} fill={SOFT}>honest work</SvgText>
+      <Rect x={426} y={160} width={128} height={38} rx={4} fill={INDIGO} opacity={0.13} />
+      <SvgText x={490} y={177} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>6 pm · driver</SvgText>
+      <SvgText x={490} y={192} textAnchor="middle" fontSize={9} fill={SOFT}>make way</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── The surgeon's knife ─────────────────────────────────────────────────────
+const TwoKnives = () => (
+  <Figure caption="Same blade, opposite deeds. Ahimsa reads the intention and the necessity.">
+    <Svg width="100%" height={150} viewBox="0 0 640 188">
+      {/* two knives, mirrored */}
+      <Path d="M120 40 L196 128" stroke={TEAL} strokeWidth={7} strokeLinecap="round" />
+      <Path d="M104 26 L124 48" stroke={TEAL} strokeWidth={13} strokeLinecap="round" />
+      <SvgText x={160} y={160} textAnchor="middle" fontSize={12} fontWeight="700" fill={INK}>to heal</SvgText>
+      <SvgText x={160} y={177} textAnchor="middle" fontSize={10} fill={SOFT}>as little as possible · ahimsa kept</SvgText>
+      <Path d="M520 40 L444 128" stroke={PINK} strokeWidth={7} strokeLinecap="round" opacity={0.8} />
+      <Path d="M536 26 L516 48" stroke={PINK} strokeWidth={13} strokeLinecap="round" opacity={0.8} />
+      <SvgText x={480} y={160} textAnchor="middle" fontSize={12} fontWeight="700" fill={INK}>to harm</SvgText>
+      <SvgText x={480} y={177} textAnchor="middle" fontSize={10} fill={SOFT}>harm you don’t have to · broken</SvgText>
+      <Line x1={320} y1={36} x2={320} y2={140} stroke={RULE} strokeWidth={1.5} strokeDasharray="4 5" />
+    </Svg>
+  </Figure>
+);
+
+// ── Rivers into the sea ─────────────────────────────────────────────────────
+const RiverToSea = () => (
+  <Figure caption="The banks fall away; the water does not die. The drop comes home.">
+    <Svg width="100%" height={160} viewBox="0 0 640 200">
+      {/* two rivers converging */}
+      <Path d="M60 24 C160 40, 240 76, 330 108" stroke={TEAL} strokeWidth={6} strokeLinecap="round" fill="none" opacity={0.75} />
+      <Path d="M120 8 C200 26, 270 64, 342 100" stroke={TEAL} strokeWidth={4} strokeLinecap="round" fill="none" opacity={0.45} />
+      <SvgText x={92} y={58} fontSize={10} fill={SOFT}>a name, two banks</SvgText>
+      {/* the sea */}
+      <Path d="M300 128 C350 108, 420 148, 470 128 C520 108, 580 148, 622 130" stroke={INDIGO} strokeWidth={4.5} strokeLinecap="round" fill="none" opacity={0.85} />
+      <Path d="M300 154 C350 138, 420 170, 470 154 C520 138, 580 168, 622 154" stroke={INDIGO} strokeWidth={3.5} strokeLinecap="round" fill="none" opacity={0.55} />
+      <Path d="M300 176 C350 164, 420 188, 470 176 C520 164, 580 186, 622 176" stroke={INDIGO} strokeWidth={2.5} strokeLinecap="round" fill="none" opacity={0.3} />
+      <SvgText x={470} y={104} textAnchor="middle" fontSize={12} fontWeight="700" fontStyle="italic" fill={INK}>the sea</SvgText>
+      <SvgText x={470} y={196} textAnchor="middle" fontSize={9} fill={SOFT}>MUNDAKA UPANISHAD 3.2.8</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── The four aims ───────────────────────────────────────────────────────────
+const FourAims = () => (
+  <Figure caption="Three aims for the world, and a door at the back.">
+    <Svg width="100%" height={160} viewBox="0 0 640 200">
+      {[
+        { x: 30, name: 'dharma', sub: 'live rightly', c: TEAL },
+        { x: 180, name: 'artha', sub: 'prosper', c: GOLD },
+        { x: 330, name: 'kama', sub: 'enjoy', c: PINK },
+      ].map(b => (
+        <G key={b.x}>
+          <Rect x={b.x} y={54} width={130} height={70} rx={5} fill={b.c} opacity={0.14} />
+          <Rect x={b.x} y={54} width={130} height={70} rx={5} fill="none" stroke={b.c} strokeWidth={1.6} />
+          <SvgText x={b.x + 65} y={86} textAnchor="middle" fontSize={14} fontWeight="700" fontStyle="italic" fill={INK}>{b.name}</SvgText>
+          <SvgText x={b.x + 65} y={106} textAnchor="middle" fontSize={10} fill={SOFT}>{b.sub}</SvgText>
+        </G>
+      ))}
+      {/* the door */}
+      <Rect x={510} y={44} width={92} height={90} rx={5} fill="none" stroke={SAFFRON} strokeWidth={2} strokeDasharray="6 4" />
+      <Circle cx={588} cy={92} r={3.5} fill={SAFFRON} />
+      <SvgText x={556} y={86} textAnchor="middle" fontSize={14} fontWeight="700" fontStyle="italic" fill={INK}>moksha</SvgText>
+      <SvgText x={556} y={106} textAnchor="middle" fontSize={10} fill={SOFT}>the open door</SvgText>
+      <SvgText x={320} y={168} textAnchor="middle" fontSize={10} fill={SOFT}>lived in these three — with the fourth kept open</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── Four paths, one summit ──────────────────────────────────────────────────
+const FourPaths = () => (
+  <Figure caption="Four trails. One summit. The hikers meet at the top.">
+    <Svg width="100%" height={170} viewBox="0 0 640 214">
+      {/* the mountain */}
+      <Path d="M110 190 L320 44 L530 190 Z" fill={GOLD} opacity={0.12} />
+      <Path d="M110 190 L320 44 L530 190" fill="none" stroke={GOLD} strokeWidth={2.5} />
+      {/* the temple mark */}
+      <Circle cx={320} cy={38} r={9} fill="none" stroke={SAFFRON} strokeWidth={2.5} />
+      <Circle cx={320} cy={38} r={3} fill={SAFFRON} />
+      {/* four trails */}
+      <Path d="M136 186 C200 150, 250 100, 316 48" stroke={PINK} strokeWidth={2.2} strokeDasharray="6 4" fill="none" />
+      <Path d="M240 186 C270 140, 296 96, 318 50" stroke={TEAL} strokeWidth={2.2} strokeDasharray="6 4" fill="none" />
+      <Path d="M400 186 C372 140, 346 96, 322 50" stroke={INDIGO} strokeWidth={2.2} strokeDasharray="6 4" fill="none" />
+      <Path d="M504 186 C440 150, 390 100, 324 48" stroke={GREEN} strokeWidth={2.2} strokeDasharray="6 4" fill="none" />
+      <SvgText x={128} y={206} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill={INK}>bhakti</SvgText>
+      <SvgText x={240} y={206} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill={INK}>karma</SvgText>
+      <SvgText x={400} y={206} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill={INK}>jnana</SvgText>
+      <SvgText x={512} y={206} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill={INK}>raja</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── The lifeguard dives ─────────────────────────────────────────────────────
+const AvatarDescent = () => (
+  <Figure caption="Not instructions from the chair — a dive into the same water.">
+    <Svg width="100%" height={160} viewBox="0 0 640 200">
+      {/* the chair */}
+      <Line x1={120} y1={166} x2={120} y2={56} stroke={GOLD} strokeWidth={4} />
+      <Line x1={96} y1={166} x2={144} y2={166} stroke={GOLD} strokeWidth={4} />
+      <Rect x={96} y={40} width={48} height={18} rx={3} fill={GOLD} opacity={0.6} />
+      <SvgText x={120} y={26} textAnchor="middle" fontSize={10} fill={SOFT}>present, but apart</SvgText>
+      {/* the dive arc */}
+      <Path d="M150 52 C260 20, 380 48, 452 108" stroke={SAFFRON} strokeWidth={3} strokeDasharray="7 5" fill="none" />
+      <Path d="M456,113 L446,104 L443,115 Z" fill={SAFFRON} />
+      <SvgText x={306} y={20} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill={INK}>avatāra — the crossing-down</SvgText>
+      {/* the water */}
+      <Path d="M180 150 C240 128, 300 168, 360 150 C420 132, 480 168, 540 148 C580 136, 610 148, 622 144" stroke={INDIGO} strokeWidth={4} strokeLinecap="round" fill="none" opacity={0.75} />
+      <Path d="M200 176 C260 158, 320 190, 380 174 C440 158, 500 188, 560 172" stroke={INDIGO} strokeWidth={3} strokeLinecap="round" fill="none" opacity={0.4} />
+      <Circle cx={470} cy={130} r={7} fill="none" stroke={INK} strokeWidth={2} />
+      <SvgText x={470} y={196} textAnchor="middle" fontSize={10} fill={SOFT}>into the same waves</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── Fire and its heat ───────────────────────────────────────────────────────
+const FlameAndHeat = () => (
+  <Figure caption="The god is the flame's shape. Shakti is what makes it burn.">
+    <Svg width="100%" height={160} viewBox="0 0 640 200">
+      {/* the flame */}
+      <Path d="M320 36 q-34 44 -34 78 a34 34 0 0 0 68 0 q0 -34 -34 -78" fill={SAFFRON} opacity={0.8} />
+      <Path d="M320 74 q-16 24 -16 40 a16 16 0 0 0 32 0 q0 -16 -16 -40" fill={TURMERIC} opacity={0.95} />
+      {/* the heat */}
+      {[52, 76, 100].map(r => (
+        <Circle key={r} cx={320} cy={116} r={r + 18} fill="none" stroke={PINK} strokeWidth={1.8} opacity={0.5 - (r - 52) / 160} strokeDasharray="2 7" />
+      ))}
+      <SvgText x={140} y={110} textAnchor="middle" fontSize={12} fontWeight="700" fill={INK}>the flame</SvgText>
+      <SvgText x={140} y={127} textAnchor="middle" fontSize={10} fill={SOFT}>the god’s shape</SvgText>
+      <SvgText x={504} y={110} textAnchor="middle" fontSize={12} fontWeight="700" fontStyle="italic" fill={INK}>śakti — the heat</SvgText>
+      <SvgText x={504} y={127} textAnchor="middle" fontSize={10} fill={SOFT}>what makes it fire at all</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── The two epics ───────────────────────────────────────────────────────────
+const TwoEpics = () => (
+  <Figure caption="One epic is the ideal. The other is the mirror.">
+    <Svg width="100%" height={165} viewBox="0 0 640 206">
+      {/* Ramayana: a straight road into the forest */}
+      <Path d="M60 170 L60 60" stroke={TEAL} strokeWidth={3.5} strokeLinecap="round" />
+      <Path d="M60 60 L54 74 M60 60 L66 74" stroke={TEAL} strokeWidth={2.5} strokeLinecap="round" />
+      <SvgText x={160} y={40} textAnchor="middle" fontSize={13} fontWeight="700" fill={INK}>Ramayana</SvgText>
+      <SvgText x={160} y={58} textAnchor="middle" fontSize={10} fill={SOFT}>the tidy one</SvgText>
+      <SvgText x={160} y={110} textAnchor="middle" fontSize={10} fill={SOFT}>exile accepted the same hour —</SvgText>
+      <SvgText x={160} y={125} textAnchor="middle" fontSize={10} fill={SOFT}>duty held, whatever it costs</SvgText>
+      <SvgText x={160} y={160} textAnchor="middle" fontSize={11} fontStyle="italic" fill={INK}>the ideal</SvgText>
+      <Line x1={320} y1={30} x2={320} y2={180} stroke={RULE} strokeWidth={1.5} />
+      {/* Mahabharata: dice */}
+      <Rect x={430} y={64} width={34} height={34} rx={6} fill="none" stroke={PINK} strokeWidth={2.2} transform="rotate(12 447 81)" />
+      <Circle cx={441} cy={76} r={2.4} fill={PINK} /><Circle cx={455} cy={90} r={2.4} fill={PINK} />
+      <Rect x={476} y={70} width={34} height={34} rx={6} fill="none" stroke={PINK} strokeWidth={2.2} transform="rotate(-9 493 87)" />
+      <Circle cx={493} cy={87} r={2.4} fill={PINK} />
+      <SvgText x={480} y={40} textAnchor="middle" fontSize={13} fontWeight="700" fill={INK}>Mahabharata</SvgText>
+      <SvgText x={480} y={58} textAnchor="middle" fontSize={10} fill={SOFT}>the messy one</SvgText>
+      <SvgText x={480} y={128} textAnchor="middle" fontSize={10} fill={SOFT}>a kingdom lost, one throw at a time</SvgText>
+      <SvgText x={480} y={160} textAnchor="middle" fontSize={11} fontStyle="italic" fill={INK}>the mirror</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── The bow slips ───────────────────────────────────────────────────────────
+const BowDown = () => (
+  <Figure caption="Between two armies — and between two duties.">
+    <Svg width="100%" height={160} viewBox="0 0 640 200">
+      {/* two armies */}
+      {[70, 100, 130].map(y => (
+        <G key={`l${y}`}>
+          <Line x1={40} y1={y} x2={150} y2={y} stroke={TEAL} strokeWidth={3} strokeLinecap="round" opacity={0.6} />
+          <Line x1={490} y1={y} x2={600} y2={y} stroke={PINK} strokeWidth={3} strokeLinecap="round" opacity={0.6} />
+        </G>
+      ))}
+      <SvgText x={95} y={54} textAnchor="middle" fontSize={10} fill={SOFT}>his brothers’ army</SvgText>
+      <SvgText x={545} y={54} textAnchor="middle" fontSize={10} fill={SOFT}>teachers · cousins · kin</SvgText>
+      {/* the chariot pole + the fallen bow */}
+      <Line x1={320} y1={64} x2={320} y2={128} stroke={INK} strokeWidth={2.5} />
+      <Circle cx={320} cy={56} r={8} fill="none" stroke={INK} strokeWidth={2.5} />
+      <Path d="M290 156 Q320 178 350 156" fill="none" stroke={GOLD} strokeWidth={3.5} strokeLinecap="round" />
+      <Line x1={292} y1={158} x2={348} y2={158} stroke={GOLD} strokeWidth={1.4} opacity={0.7} />
+      <SvgText x={320} y={192} textAnchor="middle" fontSize={10} fill={SOFT}>the bow, laid down — Gita 1.47</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── The guest is welcomed ───────────────────────────────────────────────────
+const GuestLamp = () => (
+  <Figure caption="Sixteen services — and every one is manners, not magic.">
+    <Svg width="100%" height={150} viewBox="0 0 640 188">
+      {[
+        { x: 100, label: 'a seat', d: 'M-16 12 L-16 -8 L16 -8 L16 12 M-16 -8 L-16 -22 M16 -8 L16 -22' },
+        { x: 250, label: 'water', d: 'M0 -20 q-11 16 -11 24 a11 11 0 0 0 22 0 q0 -8 -11 -24' },
+        { x: 400, label: 'food', d: 'M-18 6 A18 10 0 0 0 18 6 M-22 6 L22 6' },
+      ].map(s => (
+        <G key={s.x}>
+          <Circle cx={s.x} cy={70} r={34} fill={TEAL} opacity={0.1} />
+          <G transform={`translate(${s.x}, 70)`}>
+            <Path d={s.d} fill="none" stroke={TEAL} strokeWidth={2.5} strokeLinecap="round" />
+          </G>
+          <SvgText x={s.x} y={130} textAnchor="middle" fontSize={11} fill={SOFT}>{s.label}</SvgText>
+        </G>
+      ))}
+      {/* the lamp */}
+      <Circle cx={545} cy={70} r={34} fill={SAFFRON} opacity={0.12} />
+      <Path d="M527 82 A18 9 0 0 0 563 82 M523 82 L567 82" fill="none" stroke={SAFFRON} strokeWidth={2.5} strokeLinecap="round" />
+      <Path d="M545 74 q-7 -12 0 -22 q7 10 0 22" fill={TURMERIC} />
+      <SvgText x={545} y={130} textAnchor="middle" fontSize={11} fill={SOFT}>a lamp</SvgText>
+      <SvgText x={320} y={168} textAnchor="middle" fontSize={10} fill={SOFT}>ṣoḍaśa upacāra — the sixteen services of puja</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── The darshan loop ────────────────────────────────────────────────────────
+const DarshanLoop = () => (
+  <Figure caption="Give, see, be seen, receive, carry home. A loop — not a letter of requests.">
+    <Svg width="100%" height={165} viewBox="0 0 640 206">
+      {/* the loop */}
+      <Circle cx={320} cy={100} r={62} fill="none" stroke={GOLD} strokeWidth={2} strokeDasharray="6 5" />
+      <Path d="M320,32 L310,42 L322,44 Z" fill={GOLD} />
+      {/* you and the murti */}
+      <Circle cx={180} cy={100} r={16} fill="none" stroke={INK} strokeWidth={2.5} />
+      <SvgText x={180} y={146} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>you</SvgText>
+      <Rect x={438} y={72} width={56} height={62} rx={5} fill={SAFFRON} opacity={0.16} />
+      <Circle cx={466} cy={94} r={11} fill="none" stroke={SAFFRON} strokeWidth={2.5} />
+      <SvgText x={466} y={152} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>the murti</SvgText>
+      {/* the two gazes */}
+      <Line x1={202} y1={94} x2={430} y2={90} stroke={TEAL} strokeWidth={1.8} />
+      <Path d="M436,90 L425,85 L426,95 Z" fill={TEAL} />
+      <SvgText x={318} y={80} textAnchor="middle" fontSize={9.5} fill={TEAL}>you see — darśana</SvgText>
+      <Line x1={430} y1={110} x2={202} y2={112} stroke={INDIGO} strokeWidth={1.8} />
+      <Path d="M196,112 L207,107 L206,117 Z" fill={INDIGO} />
+      <SvgText x={318} y={130} textAnchor="middle" fontSize={9.5} fill={INDIGO}>and are seen</SvgText>
+      <SvgText x={320} y={196} textAnchor="middle" fontSize={10} fill={SOFT}>in: fruit, flowers · out: prasād, carried home</SvgText>
+    </Svg>
+  </Figure>
+);
+
+// ── The festival year ───────────────────────────────────────────────────────
+const YearWheel = () => (
+  <Figure caption="The year, read as a story — one festival per season.">
+    <Svg width="100%" height={185} viewBox="0 0 640 232">
+      <Circle cx={320} cy={116} r={74} fill="none" stroke={GOLD} strokeWidth={2.5} />
+      {[
+        { a: -90, name: 'Diwali', sub: 'Rama comes home', c: SAFFRON },
+        { a: 0, name: 'Holi', sub: 'spring, forgiven', c: PINK },
+        { a: 90, name: 'Janmashtami', sub: 'Krishna at midnight', c: INDIGO },
+        { a: 180, name: 'Navaratri', sub: 'nine nights for Her', c: TEAL },
+      ].map(f => {
+        const rad = (f.a * Math.PI) / 180;
+        const cx = 320 + Math.cos(rad) * 74;
+        const cy = 116 + Math.sin(rad) * 74;
+        const tx = 320 + Math.cos(rad) * 118;
+        const ty = 116 + Math.sin(rad) * 108;
+        return (
+          <G key={f.name}>
+            <Circle cx={cx} cy={cy} r={7} fill={f.c} />
+            <SvgText x={tx} y={ty} textAnchor="middle" fontSize={12} fontWeight="700" fill={INK}>{f.name}</SvgText>
+            <SvgText x={tx} y={ty + 15} textAnchor="middle" fontSize={9} fill={SOFT}>{f.sub}</SvgText>
+          </G>
+        );
+      })}
+      <SvgText x={320} y={112} textAnchor="middle" fontSize={10} fill={SOFT}>the whole cast,</SvgText>
+      <SvgText x={320} y={127} textAnchor="middle" fontSize={10} fill={SOFT}>once a year, with food</SvgText>
     </Svg>
   </Figure>
 );
@@ -394,7 +803,7 @@ const Trimurti = () => (
       <Circle cx={160} cy={98} r={42} fill={GREEN} opacity={0.13} />
       <SvgText x={160} y={94} textAnchor="middle" fontSize={13} fontWeight="700" fill={INK}>Brahma</SvgText>
       <SvgText x={160} y={112} textAnchor="middle" fontSize={10} fill={SOFT}>creates</SvgText>
-      <SvgText x={160} y={158} textAnchor="middle" fontSize={9} fill={SOFT}>barely worshipped</SvgText>
+      <SvgText x={160} y={158} textAnchor="middle" fontSize={9} fill={SOFT}>barely worshiped</SvgText>
       <Circle cx={480} cy={98} r={42} fill={TEAL} opacity={0.13} />
       <SvgText x={480} y={94} textAnchor="middle" fontSize={13} fontWeight="700" fill={INK}>Vishnu</SvgText>
       <SvgText x={480} y={112} textAnchor="middle" fontSize={10} fill={SOFT}>preserves</SvgText>
@@ -503,13 +912,37 @@ const FIGURES: Record<string, React.FC<{ active?: boolean }>> = {
   'f-name-river': Etymology,
   'f-thread-compare': Compare,
   'f-thread-streams': Streams,
-  'f-claim-tat-tvam-asi': PotSpace,
-  'f-claim-maya': RopeSerpent,
+  // Act 3 (depth rework, July 2026): every concept carries a figure. PotSpace
+  // moved from f-claim-tat-tvam-asi to the support page that now tells its
+  // story; RopeSerpent retired with the rope analogy (maya runs on the mirage).
+  'f-claim-brahman': OceanWaves,
+  'f-claim-brahman-faces': OneCurrentManyLamps,
+  'f-claim-atman-drop': DropAndOcean,
+  'f-claim-tta-salt': SaltBowl,
+  'f-claim-tta-pot': PotSpace,
+  'f-claim-tta-so-what': NamasteHands,
+  'f-claim-maya': Mirage,
+  'f-claim-prana-try': BreathWave,
   'f-claim-gunas': Gunas,
+  // Acts 4–7 (depth rework): every concept carries a figure; new figures sit on
+  // the support page that tells their story, existing ones stay on their cards.
   'f-wheel-samsara': Samsara,
+  'f-wheel-seed': KarmaSeed,
+  'f-wheel-roles': DharmaRoles,
+  'f-wheel-surgeon': TwoKnives,
+  'f-wheel-river': RiverToSea,
+  'f-wheel-permission': FourAims,
+  'f-wheel-mountain': FourPaths,
   'f-faces-trimurti': Trimurti,
+  'f-faces-lifeguard': AvatarDescent,
+  'f-faces-fire': FlameAndHeat,
   'f-faces-family': FamilyMap,
   'f-library-shelves': Shelves,
+  'f-library-two-scenes': TwoEpics,
+  'f-library-bow': BowDown,
+  'f-living-guest': GuestLamp,
+  'f-living-exchange': DarshanLoop,
+  'f-living-year': YearWheel,
 };
 
 const FoundationFigure: React.FC<{ sectionId: string; active?: boolean }> = ({ sectionId, active }) => {

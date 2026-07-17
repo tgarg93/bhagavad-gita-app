@@ -376,14 +376,14 @@ const WHY_ATOMS: DailyAtom[] = [
     type: 'why',
     hook: 'Why are goddesses so central in Hinduism?',
     body:
-      'Almost alone among the world’s major living religions, Hinduism never stopped worshipping God as her. Knowledge is Saraswati; wealth is Lakshmi; and power itself — shakti — is not something the Goddess has but something she is. When the demon Mahisha could not be stopped, the gods did not send a stronger god. They pooled their fire, and it took a woman’s form.',
+      'Almost alone among the world’s major living religions, Hinduism never stopped worshiping God as her. Knowledge is Saraswati; wealth is Lakshmi; and power itself — shakti — is not something the Goddess has but something she is. When the demon Mahisha could not be stopped, the gods did not send a stronger god. They pooled their fire, and it took a woman’s form.',
     citation: 'Devi Mahatmya 2 (the emergence of Durga)',
     krishnaPrompt: 'What does it mean that power itself is feminine in Hinduism?',
   },
   {
     id: 'why:snakes',
     type: 'why',
-    hook: 'Why are snakes worshipped, not just feared?',
+    hook: 'Why are snakes worshiped, not just feared?',
     body:
       'On Nag Panchami, the creature most traditions cast as the villain gets milk and marigolds. Krishna, dancing on the serpent Kaliya’s hoods, chose to banish him, not destroy him. The tradition’s steady instinct: what cannot be removed from the world — venom, fear, death itself — must be honored into balance instead.',
     citation: 'Bhagavata Purana 10.16 (Kaliya); Nag Panchami is living tradition',
@@ -394,7 +394,7 @@ const WHY_ATOMS: DailyAtom[] = [
     type: 'why',
     hook: 'Why does every puja begin with Ganesha?',
     body:
-      'By his parents’ own boon, the remover of obstacles is worshipped before any other god — even, charmingly, before his own father. The psychology under the myth is sound: begin any undertaking by first honoring the wisdom that clears the path, or spend the whole undertaking tripping over what you didn’t.',
+      'By his parents’ own boon, the remover of obstacles is worshiped before any other god — even, charmingly, before his own father. The psychology under the myth is sound: begin any undertaking by first honoring the wisdom that clears the path, or spend the whole undertaking tripping over what you didn’t.',
     citation: 'Shiva Purana, Rudra Samhita',
     krishnaPrompt: 'What are the “obstacles” Ganesha removes — outer ones, or inner?',
   },
@@ -554,7 +554,7 @@ const WHY_ATOMS: DailyAtom[] = [
       'Both — and the order matters. The Ramayana’s vanara is devotion wearing an ordinary creature’s body: forgetful of his own power, boundless the moment he remembers it in Rama’s service. The tradition’s claim is quietly radical — divinity is not about what you are born as, but what you give yourself to.',
     citation: 'Valmiki Ramayana, Sundara Kanda',
     sourceRef: 'scripture:sundara-kanda',
-    krishnaPrompt: 'Hanuman is worshipped as a god but calls himself a servant. What does his path say about mine?',
+    krishnaPrompt: 'Hanuman is worshiped as a god but calls himself a servant. What does his path say about mine?',
   },
   {
     id: 'why:pradakshina',
@@ -826,7 +826,7 @@ const STORY_ATOMS: DailyAtom[] = [
     type: 'story',
     hook: 'The boy who wouldn’t stop praying',
     body:
-      'A demon king demanded to be worshipped as god; his own small son Prahlada kept praying to Vishnu instead. Poison, elephants, a bonfire in the arms of the fireproof aunt Holika — nothing touched the boy. Holika burned; Prahlada walked out singing. That bonfire is why Holi begins with one.',
+      'A demon king demanded to be worshiped as god; his own small son Prahlada kept praying to Vishnu instead. Poison, elephants, a bonfire in the arms of the fireproof aunt Holika — nothing touched the boy. Holika burned; Prahlada walked out singing. That bonfire is why Holi begins with one.',
     citation: 'Bhagavata Purana, Canto 7',
     krishnaPrompt: 'Prahlada defied his own father out of devotion. How does the tradition think about faith versus family?',
   },
@@ -1033,7 +1033,7 @@ const COMPARE_ATOMS: DailyAtom[] = [
     type: 'compare',
     hook: 'Why do Hindus bow to images while others forbid them?',
     body:
-      'The deepest visual divide in religion. The aniconic traditions fear the image will replace God — a finite thing worshipped in place of the infinite. Hinduism runs the risk on purpose: the formless is a hard road for embodied minds, says the Gita, so let form be the ramp. One side protects God’s transcendence; the other trusts God’s availability. Both are arguments about love.',
+      'The deepest visual divide in religion. The aniconic traditions fear the image will replace God — a finite thing worshiped in place of the infinite. Hinduism runs the risk on purpose: the formless is a hard road for embodied minds, says the Gita, so let form be the ramp. One side protects God’s transcendence; the other trusts God’s availability. Both are arguments about love.',
     citation: 'Bhagavad Gita 12.5',
     sourceRef: 'gita:12#5',
     krishnaPrompt: 'Is there a danger of the murti becoming the destination instead of the door?',

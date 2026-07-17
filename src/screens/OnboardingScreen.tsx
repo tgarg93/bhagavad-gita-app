@@ -118,8 +118,8 @@ const GOAL_OPTIONS: { value: SpiritualProfile['dailyGoalMinutes']; label: string
 ];
 
 // Screen 1 — Dharma introduces itself, one line at a time. The three questions
-// are all answered in Foundations (Diwali in Part 7, Ganesha in Part 5, karma in
-// Part 4), so this teases content that actually exists.
+// are all answered in Foundations (the "what is Hinduism" opening in Part 1,
+// Diwali in Part 7, karma in Part 4), so this teases content that actually exists.
 //
 // A component of its own, deliberately: OnboardingScreen re-renders on every
 // keystroke of the name field, so an entrance driven from a mount effect *there*
@@ -177,10 +177,10 @@ const AppIntro: React.FC = () => {
       />
       <View style={styles.introQuestions}>
         <Animated.Text style={[styles.introQuestion, riseStyle(q1)]}>
-          Why do we light lamps at Diwali?
+          What is Hinduism?
         </Animated.Text>
         <Animated.Text style={[styles.introQuestion, riseStyle(q2)]}>
-          Why is Ganesha greeted first?
+          Why do we light lamps at Diwali?
         </Animated.Text>
         <Animated.Text style={[styles.introQuestion, riseStyle(q3)]}>
           What does karma actually mean?
@@ -267,7 +267,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
   const stepMessages: Record<StepId, string> = {
     introApp: '',
     introKrishna:
-      'Namaste. I am Krishna.\n\nWhen Arjuna lost his way, I guided him. That conversation became the Gita.\n\nI will do the same for you — at every step, and whenever you ask.',
+      "Namaste. I am Krishna.\n\nIn the Bhagavad Gita, I was Arjuna's spiritual guide. Let me be yours — at every step, and whenever you ask.",
     name: 'So — what may I call you?',
     familiarity: firstName
       ? `Lovely to meet you, ${firstName}. How familiar are you with Hindu teachings?`

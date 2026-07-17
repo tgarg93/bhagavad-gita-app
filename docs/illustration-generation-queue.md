@@ -152,7 +152,7 @@ Chapters 1–3 are already done. Generate **preface, 11, and 18 first** (the arc
 > Modern Editorial Miniature: contemporary editorial illustration inspired by Rajput and Pahari miniature painting. Fine hand-painted outlines, gouache texture on parchment, slender gold-and-floral border. 1:1 square, focal subject in the upper two-thirds. No text or watermarks.
 > Scene: three small offerings laid out side by side on plain ground, and nothing else in the frame. The first is arranged with care on clean cloth. The second is showy and over-decorated, arranged to be seen. The third is dropped carelessly, half-spilled. The same act, three intentions — the offerings alone tell it.
 > Emotion: the same act, three intentions.
-> Palette: Gold `#D4AF37`, Vermillion `#DC143C`, and a dull grey-ochre.
+> Palette: Gold `#D4AF37`, Vermillion `#DC143C`, and a dull gray-ochre.
 > Exclude: any figure, any shrine, and **no lamp or flame** — that motif is reserved for other items.
 
 ---
@@ -226,7 +226,7 @@ Generate **What is Hinduism? first** — it is the literal first content item a 
 - [ ] **`assets/images/covers/branches-of-hinduism-cover.jpg` — The Four Great Streams**
 
 > Modern Editorial Miniature: contemporary editorial illustration inspired by Rajput and Pahari miniature painting. Fine hand-painted outlines, gouache texture on parchment, slender gold-and-floral border. 1:1 square, focal subject in the upper two-thirds. No text or watermarks.
-> Scene: one old banyan tree seen straight on, a single broad trunk dividing into exactly four great boughs of equal weight. Each bough's foliage is a different jewel tone — teal, vermillion, gold, deep green — while the trunk and roots are one continuous unbroken colour.
+> Scene: one old banyan tree seen straight on, a single broad trunk dividing into exactly four great boughs of equal weight. Each bough's foliage is a different jewel tone — teal, vermillion, gold, deep green — while the trunk and roots are one continuous unbroken color.
 > Emotion: one root, four canopies.
 > Palette: Peacock Teal, Vermillion, Turmeric and Banyan Green foliage over a Warm Ivory sky, Gold `#D4AF37` trunk linework.
 > Exclude: figures, temples; the tree is **upright** (an inverted tree belongs to Gita Chapter 15) and has **no yogi beneath it** (that is Chapter 6). Despite the item's name, use no rivers or streams.
@@ -234,7 +234,7 @@ Generate **What is Hinduism? first** — it is the literal first content item a 
 - [ ] **`assets/images/covers/maya-cover.jpg` — Maya**
 
 > Modern Editorial Miniature: contemporary editorial illustration inspired by Rajput and Pahari miniature painting. Fine hand-painted outlines, gouache texture on parchment, dusk light, slender gold-and-floral border. 1:1 square, focal subject in the upper two-thirds. No text or watermarks.
-> Scene: a coiled rope lies across a path at dusk. Where the fading light falls on it, it is unmistakably rope — fibre, twist, a frayed end. Where the shadow deepens, the very same coil reads as a serpent, raised and alive. One object, two readings, rendered as a single continuous form so the eye cannot settle on either.
+> Scene: a coiled rope lies across a path at dusk. Where the fading light falls on it, it is unmistakably rope — fiber, twist, a frayed end. Where the shadow deepens, the very same coil reads as a serpent, raised and alive. One object, two readings, rendered as a single continuous form so the eye cannot settle on either.
 > Emotion: not fake — misread.
 > Palette: Indigo `#303F9F` shadow, Deep Saffron `#E65100` low light, Warm Ivory `#FFF8E7` path.
 > Exclude: any figure; a snake's face or fangs; and do not illustrate maya as a veil, a mask, or a mirage — the rope-and-serpent is the canonical image and carries the actual doctrine.
@@ -282,7 +282,7 @@ Highest collision risk in the system. **Parvati must not read as Durga; Saraswat
 > Modern Editorial Miniature: contemporary editorial illustration inspired by Rajput and Pahari miniature painting. Fine hand-painted outlines, gouache texture on parchment, cool light, slender gold-and-floral border. 1:1 square, focal subject in the upper two-thirds. No text or watermarks.
 > Scene: Parvati sits alone in tapas on a bare Himalayan rock, utterly still, in falling snow — warm ochre skin, two arms, plainly dressed, minimal jewelry, hair simply bound. Beside her, a single green shoot has pushed up through a crack in the rock.
 > Emotion: love as patience, not passion.
-> Palette: cool grey-white rock and snow, Banyan Green `#388E3C` shoot, one Lotus Pink `#E91E63` accent.
+> Palette: cool gray-white rock and snow, Banyan Green `#388E3C` shoot, one Lotus Pink `#E91E63` accent.
 > Exclude: **a lion, a crown, weapons, extra arms, and gold-and-vermillion robes** — every one of those belongs to Durga, and Parvati must not be confusable with her at card size. Also exclude Shiva, any wedding scene, and any Ardhanarishvara composite.
 
 - [ ] **`assets/images/covers/lakshmi-cover.jpg` — Lakshmi**

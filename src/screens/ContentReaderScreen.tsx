@@ -24,7 +24,7 @@ import {
   sectionsToNarrationContent,
   ReaderContentType,
 } from '../data/readerContent';
-import { NarrativeSection } from '../data/narrativeTypes';
+import { NarrativeSection, isBankedCard } from '../data/narrativeTypes';
 import LocalStorageService from '../services/localStorageService';
 import krishnaContext from '../services/krishnaContextService';
 import { AudioNarrationService, NarrationCallbacks } from '../services/audioNarrationService';
@@ -33,6 +33,9 @@ import SourcesCard from '../components/SourcesCard';
 import ChapterReflection from '../components/ChapterReflection';
 import JourneyCelebration from '../components/JourneyCelebration';
 import FoundationCard from '../components/FoundationCard';
+import IntroCard from '../components/IntroCard';
+import TermCard from '../components/TermCard';
+import WaypointCard from '../components/WaypointCard';
 import CheckPage from '../components/CheckPage';
 import CapstonePage from '../components/CapstonePage';
 import journeyService from '../services/journeyService';
@@ -129,6 +132,19 @@ const ContentReaderScreen: React.FC = () => {
     return map;
   }, [pages]);
 
+  // Ordinal of each takeaway-bearing section among its peers, so the header can
+  // read "Card 3 of 14" over a 26-section act whose intro/term/waypoint pages
+  // carry their own labels instead of inflating the card count.
+  const cardOrdinals = useMemo(() => {
+    const map = new Map<number, number>();
+    let n = 0;
+    content?.sections.forEach((s, i) => {
+      if (s.takeaway) map.set(i, ++n);
+    });
+    return map;
+  }, [content]);
+  const cardCount = cardOrdinals.size;
+
   const positionKey = `${contentType}:${contentId}`;
 
   // A citation that names a section must land ON it. This has to outrank the
@@ -206,14 +222,22 @@ const ContentReaderScreen: React.FC = () => {
     return map;
   }, [activeSegments]);
 
-  // Sections whose page is immediately followed by a check page. Narration reads
-  // by segment and checks aren't segments, so without this the voice would roll
-  // straight from one section into the next, scrolling past the check. Scoped to
-  // `check` — inline reflect pages stay on the old skip-through behavior.
+  // Sections whose page is immediately followed by a page the voice must PARK
+  // on rather than roll past: a check page, or a waypoint (checkpoints carry no
+  // narration and no transport — the reader looks, then swipes on to resume).
+  // Narration reads by segment and neither is a segment, so without this the
+  // voice would roll straight from one section into the next, scrolling past
+  // them. Inline reflect pages stay on the old skip-through behavior.
   const sectionsWithTrailingCheck = useMemo(() => {
     const set = new Set<number>();
     pageIndexForSection.forEach((pageIdx, sectionIdx) => {
-      if (pages[pageIdx + 1]?.kind === 'check') set.add(sectionIdx);
+      const next = pages[pageIdx + 1];
+      if (
+        next?.kind === 'check' ||
+        (next?.kind === 'section' && next.section.kind === 'waypoint')
+      ) {
+        set.add(sectionIdx);
+      }
     });
     return set;
   }, [pages, pageIndexForSection]);
@@ -261,8 +285,6 @@ const ContentReaderScreen: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [positionKey]);
 
-
-
   const pagesRef = useRef(pages);
   pagesRef.current = pages;
 
@@ -305,8 +327,10 @@ const ContentReaderScreen: React.FC = () => {
         });
         // A Foundations card is banked simply by being read. This is the point
         // tick the reader feels on every page — and it is idempotent, so a
-        // second pass over the same card awards nothing.
-        if (page.section.takeaway) {
+        // second pass over the same card awards nothing. isBankedCard is the
+        // gate (NOT `takeaway` alone): supporting cards set banked: false and
+        // must never enter the append-only cardsBanked list.
+        if (isBankedCard(page.section)) {
           foundationsService.bankCard(page.section.id);
         }
       }
@@ -405,7 +429,10 @@ const ContentReaderScreen: React.FC = () => {
     }
     // Fresh start from the active page; covers/reflection/sources start at part 1
     const page = pages[activeIndex];
-    const from = page?.kind === 'section' ? page.sectionIndex : 0;
+    let from = page?.kind === 'section' ? page.sectionIndex : 0;
+    // Waypoints have no narration (and normally no transport) — a play that
+    // somehow starts there belongs to the next section.
+    if (page?.kind === 'section' && page.section.kind === 'waypoint') from = page.sectionIndex + 1;
     if (page?.kind !== 'section') scrollToIndex(1);
     await startPlayback(from);
   }, [isPlaying, isPaused, pages, activeIndex, startPlayback, audioService, scrollToIndex]);
@@ -423,7 +450,15 @@ const ContentReaderScreen: React.FC = () => {
   const syncAudioToPage = useCallback(async (idx: number) => {
     const page = pages[idx];
     if (!page || !narrationActive) return;
-    if (page.kind === 'section') {
+    if (page.kind === 'section' && page.section.kind === 'waypoint') {
+      // A checkpoint behaves like a check page for the voice: land quietly and
+      // stay parked (its Krishna line has no narration segments); the swipe
+      // into the next section is what resumes.
+      await audioService.pauseNarration();
+      setIsPlaying(false);
+      setIsPaused(true);
+      setHighlightedSegmentId(null);
+    } else if (page.kind === 'section') {
       // Already reading this section (e.g. a half-swipe that snapped back) —
       // don't restart the clip.
       if (page.sectionIndex === audioSectionRef.current && !isPaused) return;
@@ -527,11 +562,19 @@ const ContentReaderScreen: React.FC = () => {
   const headerInfo = (() => {
     if (!activePage || activePage.kind === 'cover') return { sub: content.readerLabel, progress: 0 };
     if (activePage.kind === 'section') {
+      // The depth-rework page kinds carry their own labels — they are not cards
+      // and must not move the card counter.
+      if (activePage.section.kind === 'intro') return { sub: 'Overview', progress };
+      if (activePage.section.kind === 'term') return { sub: 'Key word', progress };
+      if (activePage.section.kind === 'waypoint') return { sub: 'Checkpoint', progress };
       // In Foundations a section IS a card, and "Part" is already taken there —
       // the cover reads "Foundations · Part 3 of 8", meaning the part of the
       // track. Calling these cards keeps the two counters from colliding.
-      const unit = activePage.section.takeaway ? 'Card' : 'Part';
-      return { sub: `${unit} ${activePage.sectionIndex + 1} of ${partCount}`, progress };
+      // Ordinals count takeaway-bearing sections only ("Card 3 of 14", not
+      // "Card 5 of 26").
+      const ordinal = cardOrdinals.get(activePage.sectionIndex);
+      if (ordinal != null) return { sub: `Card ${ordinal} of ${cardCount}`, progress };
+      return { sub: `Part ${activePage.sectionIndex + 1} of ${partCount}`, progress };
     }
     if (activePage.kind === 'check') return { sub: 'Check yourself', progress };
     if (activePage.kind === 'capstone') return { sub: 'The capstone', progress };
@@ -567,15 +610,20 @@ const ContentReaderScreen: React.FC = () => {
           <View style={styles.coverMetaRow}>
             <Ionicons name="time-outline" size={16} color="rgba(255,255,255,0.9)" />
             <Text style={styles.coverMeta}>
-              {readingMinutes(content.sections)} min · {partCount} parts
+              {/* Depth-reworked acts count their cards; everything else keeps
+                  counting sections as parts (identical when no special kinds). */}
+              {readingMinutes(content.sections)} min ·{' '}
+              {cardCount > 0 && cardCount !== partCount
+                ? `${cardCount} cards`
+                : `${partCount} parts`}
             </Text>
           </View>
           <TouchableOpacity
             style={styles.coverBegin}
             onPress={() => {
-              // Begin = turn the page AND start the voice
+              // Begin = turn the page. Narration never auto-starts; the reader
+              // taps the play control when they want the voice.
               scrollToIndex(1);
-              startPlayback(0);
             }}
           >
             <Text style={styles.coverBeginText}>Begin</Text>
@@ -593,9 +641,26 @@ const ContentReaderScreen: React.FC = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.pageScroll}
       >
-        {/* A section carrying a takeaway is a bite-sized card; everything else
-            is prose and renders exactly as it always has. */}
-        {section.takeaway ? (
+        {/* The depth-rework page kinds render first — they carry no takeaway,
+            so they'd otherwise fall through to prose. Then: a section carrying
+            a takeaway is a bite-sized card; everything else is prose and
+            renders exactly as it always has. */}
+        {section.kind === 'intro' && content.learnItems ? (
+          <IntroCard
+            section={section}
+            learnItems={content.learnItems}
+            minutes={readingMinutes(content.sections)}
+            getTextStyle={getTextStyle}
+          />
+        ) : section.kind === 'term' ? (
+          <TermCard section={section} getTextStyle={getTextStyle} />
+        ) : section.kind === 'waypoint' && content.learnItems ? (
+          <WaypointCard
+            section={section}
+            learnItems={content.learnItems}
+            getTextStyle={getTextStyle}
+          />
+        ) : section.takeaway ? (
           <FoundationCard
             section={section}
             getTextStyle={getTextStyle}
@@ -720,7 +785,10 @@ const ContentReaderScreen: React.FC = () => {
         pointsAtStart={pointsAtStartRef.current}
         // Foundations only: replay what this act banked, then hand off into the
         // question the next act answers. Inert for every other content type.
+        // A depth-reworked act replays its learnItems (the same list the intro
+        // promised and the waypoints ticked off) instead of the takeaway recap.
         bankedTakeaways={content.bankedTakeaways}
+        learnItems={content.learnItems}
         handoff={content.handoff}
         // On a stage capstone: the objective, now in the past tense. It was a
         // promise on the stage card; here it is a thing they did.
@@ -794,8 +862,11 @@ const ContentReaderScreen: React.FC = () => {
         />
       )}
 
-      {/* Playback bar — transport lives inside the content only */}
-      {(activePage?.kind === 'section' || activePage?.kind === 'reflection') && (
+      {/* Playback bar — transport lives inside the content only. Waypoints are
+          checkpoints, not content: no transport (the voice parks there, like a
+          check page, and resumes on the swipe forward). */}
+      {((activePage?.kind === 'section' && activePage.section.kind !== 'waypoint') ||
+        activePage?.kind === 'reflection') && (
       <View style={styles.playbackBar}>
         <View style={styles.transport}>
           <TouchableOpacity onPress={() => skipPage(-1)} style={styles.transportBtn}>

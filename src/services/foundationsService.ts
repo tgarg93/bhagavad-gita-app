@@ -133,9 +133,16 @@ class FoundationsService {
 
   async getStats(): Promise<FoundationsStats> {
     const progress = await this.getProgress();
+    // Practice checks (McqCheck.practice) record results like any other check —
+    // same UX, same storage — but never count toward points. The scored set is
+    // frozen at 20 (see the arithmetic in foundations.ts); every check added by
+    // the depth expansion is practice, so checksPassed can never grow past it.
+    const { PRACTICE_CHECK_IDS } = require('../data/foundations');
     return {
       cardsBanked: progress.cardsBanked.length,
-      checksPassed: Object.values(progress.checks).filter(c => c.correct).length,
+      checksPassed: Object.entries(progress.checks).filter(
+        ([id, c]) => c.correct && !PRACTICE_CHECK_IDS.has(id)
+      ).length,
       ritesPassed: Object.values(progress.capstones).filter(c => c.passed).length,
     };
   }

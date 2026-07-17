@@ -444,13 +444,13 @@ const GitaVersePlayerScreen: React.FC = () => {
             <TouchableOpacity
               style={styles.coverBegin}
               onPress={() => {
-                // Begin = turn the page AND start the voice (preface has no verses)
+                // Begin = turn the page. Narration never auto-starts; the reader
+                // taps the play control when they want the voice.
                 if (isPreface) {
                   scrollToIndex(activeIndex + 1);
                   return;
                 }
                 scrollToIndex(verseStartIndex[chapter]);
-                startPlayback(chapter, 0, mode);
               }}
             >
               <Text style={styles.coverBeginText}>{isPreface ? 'Begin' : 'Begin chapter'}</Text>

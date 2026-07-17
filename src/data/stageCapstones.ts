@@ -60,7 +60,7 @@ const IDEAS: StageCapstone = {
   kicker: 'You have the ideas. Now use one.',
   intro: [
     'You have read the eight ideas the tradition actually turns on — not as cards this time, but whole.',
-    'Here is the test. Not "define karma" — anyone can memorise a definition. **Someone is about to get it wrong in front of you.** Put them right.',
+    'Here is the test. Not "define karma" — anyone can memorize a definition. **Someone is about to get it wrong in front of you.** Put them right.',
   ],
   coverImage: GENERIC,
   recap: {
@@ -296,7 +296,7 @@ const LIVING: StageCapstone = {
     subtitle: 'Four paths, one welcome, and a year of stories.',
     bullets: [
       '**Bhakti** — through love. **Karma** — through work. **Jnana** — through knowledge. **Raja** — through stillness. None outranks another.',
-      '**The murti is not the god.** In puja the image is bathed, dressed, fed and sung to — the etiquette of an honoured guest.',
+      '**The murti is not the god.** In puja the image is bathed, dressed, fed and sung to — the etiquette of an honored guest.',
       '**Darshan** — you go to see, and be seen. **Prasad** — you come home with food the god has already tasted.',
       '**Diwali** is Rama coming home. **Holi** is spring and forgiveness. **Navaratri** is nine nights of the Goddess. **Janmashtami** is Krishna, born at midnight in a prison.',
     ],
@@ -311,7 +311,7 @@ const LIVING: StageCapstone = {
     rubric: [
       'Names one of the four paths — bhakti (love), karma (work), jnana (knowledge) or raja (stillness)',
       'Says why it fits their temperament — not why it is best, why it is theirs',
-      'Describes what practising it would actually look like for them',
+      'Describes what practicing it would actually look like for them',
       'Shows they know the paths are equal, and matched to different people',
     ],
     rubricSource: [

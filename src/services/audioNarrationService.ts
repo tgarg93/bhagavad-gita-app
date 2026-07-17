@@ -530,9 +530,12 @@ export class AudioNarrationService {
   // Prose in FoundationCard, so bullets highlight in turn as the clip reads them
   // (and their characters count toward the clip's totalChars, so the story
   // highlight before them isn't stretched by the bullet audio).
-  buildFoundationsSegments(sections: { takeaway?: string; storyText?: string; bullets?: string[] }[]): TextSegment[] {
+  buildFoundationsSegments(sections: { kind?: string; takeaway?: string; storyText?: string; bullets?: string[]; teachingText?: string }[]): TextSegment[] {
     const out: TextSegment[] = [];
     sections.forEach((section, i) => {
+      // Waypoint checkpoints carry no narration — the reader parks the voice on
+      // them (see ContentReaderScreen) and no clip will ever be recorded.
+      if (section.kind === 'waypoint') return;
       const pushBlock = (suffix: string, raw?: string) => {
         if (!raw) return;
         const blockId = `section-${i}-${suffix}`;
@@ -559,6 +562,10 @@ export class AudioNarrationService {
       pushBlock('takeaway', section.takeaway);
       pushBlock('story', section.storyText);
       section.bullets?.forEach((b, j) => pushBlock(`bullet-${j}`, b));
+      // Post-verse prose (the inline-keyVerse convention: storyText before the
+      // verse, teachingText after it). The clips speak it — f-living-hard
+      // always did — so the highlight must cover it too.
+      pushBlock('teaching', section.teachingText);
     });
     return out;
   }

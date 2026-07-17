@@ -9,10 +9,13 @@
 // can't misalign them. One clip per section; the reader plays them in order
 // and turns the page as each finishes.
 //
-// All eight Foundations acts recorded (ElevenLabs v3). The 32 content cards run
-// through FoundationCard, so their read-along highlights sentence-by-sentence; the
-// capstone recap plays its clip but doesn't sentence-highlight (it renders via
-// NarrativeSections, which isn't wired to the pre-recorded segment ids).
+// All eight acts recorded (ElevenLabs v3; Parts 3–7 re-recorded July 2026 after
+// the depth rework, scripts derived verbatim from foundations.ts). Waypoint
+// checkpoints are deliberately absent — they are silent, and narration parks on
+// them like a check page. Cards run through FoundationCard, so their read-along
+// highlights sentence-by-sentence; term/intro pages play their clips without
+// sentence highlight (TermCard/IntroCard aren't wired to segment ids), and the
+// capstone recap likewise (it renders via NarrativeSections).
 export const foundationsAudioManifest: Record<string, Record<string, number>> = {
   name: {
     'f-name-no-founder': require('../../assets/audio/foundations/f-name-no-founder.mp3'),
@@ -27,37 +30,86 @@ export const foundationsAudioManifest: Record<string, Record<string, number>> = 
     'f-thread-ishta': require('../../assets/audio/foundations/f-thread-ishta.mp3'),
   },
   claim: {
+    'f-claim-intro': require('../../assets/audio/foundations/f-claim-intro.mp3'),
     'f-claim-brahman': require('../../assets/audio/foundations/f-claim-brahman.mp3'),
+    'f-claim-term-brahman': require('../../assets/audio/foundations/f-claim-term-brahman.mp3'),
+    'f-claim-brahman-faces': require('../../assets/audio/foundations/f-claim-brahman-faces.mp3'),
     'f-claim-atman': require('../../assets/audio/foundations/f-claim-atman.mp3'),
+    'f-claim-atman-drop': require('../../assets/audio/foundations/f-claim-atman-drop.mp3'),
+    'f-claim-term-atman': require('../../assets/audio/foundations/f-claim-term-atman.mp3'),
     'f-claim-tat-tvam-asi': require('../../assets/audio/foundations/f-claim-tat-tvam-asi.mp3'),
+    'f-claim-term-tat-tvam-asi': require('../../assets/audio/foundations/f-claim-term-tat-tvam-asi.mp3'),
+    'f-claim-tta-salt': require('../../assets/audio/foundations/f-claim-tta-salt.mp3'),
+    'f-claim-tta-pot': require('../../assets/audio/foundations/f-claim-tta-pot.mp3'),
+    'f-claim-tta-so-what': require('../../assets/audio/foundations/f-claim-tta-so-what.mp3'),
     'f-claim-maya': require('../../assets/audio/foundations/f-claim-maya.mp3'),
+    'f-claim-maya-teaches': require('../../assets/audio/foundations/f-claim-maya-teaches.mp3'),
+    'f-claim-term-maya': require('../../assets/audio/foundations/f-claim-term-maya.mp3'),
     'f-claim-prana': require('../../assets/audio/foundations/f-claim-prana.mp3'),
+    'f-claim-prana-try': require('../../assets/audio/foundations/f-claim-prana-try.mp3'),
+    'f-claim-term-prana': require('../../assets/audio/foundations/f-claim-term-prana.mp3'),
     'f-claim-gunas': require('../../assets/audio/foundations/f-claim-gunas.mp3'),
+    'f-claim-gunas-day': require('../../assets/audio/foundations/f-claim-gunas-day.mp3'),
+    'f-claim-term-gunas': require('../../assets/audio/foundations/f-claim-term-gunas.mp3'),
   },
   wheel: {
+    'f-wheel-intro': require('../../assets/audio/foundations/f-wheel-intro.mp3'),
     'f-wheel-samsara': require('../../assets/audio/foundations/f-wheel-samsara.mp3'),
+    'f-wheel-term-samsara': require('../../assets/audio/foundations/f-wheel-term-samsara.mp3'),
+    'f-wheel-carryover': require('../../assets/audio/foundations/f-wheel-carryover.mp3'),
     'f-wheel-karma': require('../../assets/audio/foundations/f-wheel-karma.mp3'),
+    'f-wheel-term-karma': require('../../assets/audio/foundations/f-wheel-term-karma.mp3'),
+    'f-wheel-seed': require('../../assets/audio/foundations/f-wheel-seed.mp3'),
     'f-wheel-dharma': require('../../assets/audio/foundations/f-wheel-dharma.mp3'),
+    'f-wheel-term-dharma': require('../../assets/audio/foundations/f-wheel-term-dharma.mp3'),
+    'f-wheel-roles': require('../../assets/audio/foundations/f-wheel-roles.mp3'),
     'f-wheel-ahimsa': require('../../assets/audio/foundations/f-wheel-ahimsa.mp3'),
+    'f-wheel-term-ahimsa': require('../../assets/audio/foundations/f-wheel-term-ahimsa.mp3'),
+    'f-wheel-surgeon': require('../../assets/audio/foundations/f-wheel-surgeon.mp3'),
     'f-wheel-moksha': require('../../assets/audio/foundations/f-wheel-moksha.mp3'),
+    'f-wheel-term-moksha': require('../../assets/audio/foundations/f-wheel-term-moksha.mp3'),
+    'f-wheel-river': require('../../assets/audio/foundations/f-wheel-river.mp3'),
     'f-wheel-aims': require('../../assets/audio/foundations/f-wheel-aims.mp3'),
+    'f-wheel-term-aims': require('../../assets/audio/foundations/f-wheel-term-aims.mp3'),
+    'f-wheel-permission': require('../../assets/audio/foundations/f-wheel-permission.mp3'),
     'f-wheel-yogas': require('../../assets/audio/foundations/f-wheel-yogas.mp3'),
+    'f-wheel-term-yoga': require('../../assets/audio/foundations/f-wheel-term-yoga.mp3'),
+    'f-wheel-mountain': require('../../assets/audio/foundations/f-wheel-mountain.mp3'),
   },
   faces: {
+    'f-faces-intro': require('../../assets/audio/foundations/f-faces-intro.mp3'),
     'f-faces-trimurti': require('../../assets/audio/foundations/f-faces-trimurti.mp3'),
+    'f-faces-term-trimurti': require('../../assets/audio/foundations/f-faces-term-trimurti.mp3'),
+    'f-faces-breath': require('../../assets/audio/foundations/f-faces-breath.mp3'),
     'f-faces-avatar': require('../../assets/audio/foundations/f-faces-avatar.mp3'),
+    'f-faces-term-avatar': require('../../assets/audio/foundations/f-faces-term-avatar.mp3'),
+    'f-faces-lifeguard': require('../../assets/audio/foundations/f-faces-lifeguard.mp3'),
     'f-faces-shakti': require('../../assets/audio/foundations/f-faces-shakti.mp3'),
+    'f-faces-term-shakti': require('../../assets/audio/foundations/f-faces-term-shakti.mp3'),
+    'f-faces-fire': require('../../assets/audio/foundations/f-faces-fire.mp3'),
     'f-faces-family': require('../../assets/audio/foundations/f-faces-family.mp3'),
+    'f-faces-read-one': require('../../assets/audio/foundations/f-faces-read-one.mp3'),
   },
   library: {
+    'f-library-intro': require('../../assets/audio/foundations/f-library-intro.mp3'),
     'f-library-shelves': require('../../assets/audio/foundations/f-library-shelves.mp3'),
+    'f-library-term-shelves': require('../../assets/audio/foundations/f-library-term-shelves.mp3'),
+    'f-library-kitchen': require('../../assets/audio/foundations/f-library-kitchen.mp3'),
     'f-library-epics': require('../../assets/audio/foundations/f-library-epics.mp3'),
+    'f-library-two-scenes': require('../../assets/audio/foundations/f-library-two-scenes.mp3'),
     'f-library-gita': require('../../assets/audio/foundations/f-library-gita.mp3'),
+    'f-library-bow': require('../../assets/audio/foundations/f-library-bow.mp3'),
   },
   living: {
+    'f-living-intro': require('../../assets/audio/foundations/f-living-intro.mp3'),
     'f-living-murti': require('../../assets/audio/foundations/f-living-murti.mp3'),
+    'f-living-term-murti': require('../../assets/audio/foundations/f-living-term-murti.mp3'),
+    'f-living-guest': require('../../assets/audio/foundations/f-living-guest.mp3'),
     'f-living-darshan': require('../../assets/audio/foundations/f-living-darshan.mp3'),
+    'f-living-term-darshan': require('../../assets/audio/foundations/f-living-term-darshan.mp3'),
+    'f-living-exchange': require('../../assets/audio/foundations/f-living-exchange.mp3'),
     'f-living-year': require('../../assets/audio/foundations/f-living-year.mp3'),
+    'f-living-diwali-read': require('../../assets/audio/foundations/f-living-diwali-read.mp3'),
     'f-living-hard': require('../../assets/audio/foundations/f-living-hard.mp3'),
   },
   capstone: {

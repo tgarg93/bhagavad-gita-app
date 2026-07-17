@@ -22,6 +22,13 @@ export interface McqCheck {
   // Shown after the tap, for a right answer AND a wrong one. This is where the
   // teaching actually lands, so it is required, not optional.
   why: string;
+  // True = a practice check: identical UX, but it never scores a point.
+  // POLICY (July 2026 depth expansion): every check ADDED after launch is a
+  // practice check, so the pre-capstone points total never moves — the 20
+  // originally-scored checks are the permanent scored set. foundationsService
+  // filters practice ids out of checksPassed via PRACTICE_CHECK_IDS
+  // (foundations.ts).
+  practice?: boolean;
 }
 
 export interface RecallCheck {
@@ -70,11 +77,15 @@ export interface Capstone {
 // Point values for the progression terms. Only Foundations consumes `checks`, so
 // these values are effectively the Foundations scoring knobs.
 //
-// A check is worth 2 (not 4): with 2–3 checks per part the track now holds ~20
-// graded checks, so 32 cards + 20 checks × 2 + 1 reflection × 15 = 32 + 40 + 15 =
+// A check is worth 2 (not 4): with 2–3 checks per part the track holds 20
+// SCORED checks, so 32 cards + 20 checks × 2 + 1 reflection × 15 = 32 + 40 + 15 =
 // 87 points — which must stay UNDER the 100 that buys Shishya, so that the capstone
 // (a rite, +30 → ~117) is what tips the reader over. Card = 1 keeps cards cheap.
-// If you add checks, keep the pre-capstone total under 100 (≤26 checks at value 2).
+//
+// THE SUM IS FROZEN AT 87 (July 2026 depth expansion): new pages are point-free
+// (intro/term/waypoint kinds carry no takeaway; supporting cards set
+// banked: false) and new checks set practice: true (0 pts). Never grow the
+// scored set — the pre-capstone total must stay under 100 in every act mix.
 export const CHECK_POINTS = {
   card: 1,
   mcq: 2,

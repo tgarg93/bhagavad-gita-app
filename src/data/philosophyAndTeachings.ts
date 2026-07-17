@@ -396,7 +396,7 @@ export const philosophyData: PhilosophicalConcept[] = [
     modernRelevance: 'Diaspora Hindus constantly meet versions of the tradition unlike their family\'s and wonder which is authentic. The branches answer: authenticity in Hinduism is lineage-deep, not uniformity-wide — knowing your stream turns confusing difference into legible inheritance.',
     commonMisunderstandings: [
       'The branches are not rival religions or "denominations" with membership — most families blend streams freely',
-      'Worshipping Shiva does not mean rejecting Vishnu: Smarta practice honors all faces as one',
+      'Worshiping Shiva does not mean rejecting Vishnu: Smarta practice honors all faces as one',
       'No branch is "orthodox Hinduism" — each is an old, complete, legitimate path',
       'The philosophical schools (Vedanta, Yoga) are not branches of worship but disciplines of understanding that run beneath them all',
     ],
@@ -474,7 +474,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'branches-smarta',
         title: 'Smartism and the Schools',
         subtitle: 'All faces, one reality — and the philosophers underneath',
-        storyText: 'The fourth stream, associated with the great reformer **Shankara**, refuses to choose.\n\nSmarta practice sets five (sometimes six) deities on one altar — Vishnu, Shiva, Devi, Ganesha, Surya — and worships the one Brahman through whichever face the worshipper loves: the **ishta-devata** principle made liturgy.\n\nBeneath all four streams run the **darshanas**, the six classical schools of philosophy. Two remain giants: **Vedanta**, the inquiry into Brahman and Atman that Shankara sharpened into Advaita (non-dualism), and **Yoga**, Patanjali\'s discipline of stilling the mind. The streams tell you whom to love; the schools examine what loving them means.',
+        storyText: 'The fourth stream, associated with the great reformer **Shankara**, refuses to choose.\n\nSmarta practice sets five (sometimes six) deities on one altar — Vishnu, Shiva, Devi, Ganesha, Surya — and worships the one Brahman through whichever face the worshiper loves: the **ishta-devata** principle made liturgy.\n\nBeneath all four streams run the **darshanas**, the six classical schools of philosophy. Two remain giants: **Vedanta**, the inquiry into Brahman and Atman that Shankara sharpened into Advaita (non-dualism), and **Yoga**, Patanjali\'s discipline of stilling the mind. The streams tell you whom to love; the schools examine what loving them means.',
         teachingText: 'Smartism is the tradition auditing itself: if Truth is one and the wise call it by many names, then the names must be interchangeable at the altar.\n\nAnd the schools are the tradition thinking: Hinduism never separated devotion from philosophy — its greatest philosophers wrote hymns, and its greatest hymns argue metaphysics.',
         citation: 'Smarta panchayatana worship: tradition attributed to Adi Shankara; the six darshanas: classical doxography',
       },
@@ -1516,7 +1516,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         keyVerse: {
           sanskrit: 'यतः प्रवृत्तिर्भूतानां येन सर्वमिदं ततम्। स्वकर्मणा तमभ्यर्च्य सिद्धिं विन्दति मानवः॥',
           transliteration: 'yataḥ pravṛittir bhūtānāṁ yena sarvam idaṁ tatam, sva-karmaṇā tam abhyarchya siddhiṁ vindati mānavaḥ',
-          meaning: 'He from whom all beings have evolved and by whom all this is pervaded — worshipping Him with one\'s own duty, a person attains perfection.',
+          meaning: 'He from whom all beings have evolved and by whom all this is pervaded — worshiping Him with one\'s own duty, a person attains perfection.',
           source: 'Bhagavad Gita 18.46 (tr. Swami Sivananda)'
         },
         storyText: 'In the Gita\'s final chapter, the teaching of karma completes its arc.\n\nIt began with a frightened warrior being told he could not escape action. It ends with the revelation that action itself — your own ordinary work, done as offering — is a form of **worship** equal to any ritual.\n\nNot someone else\'s more impressive work: yours. **Sva-karmana**, "by one\'s own action," Krishna says, a person worships the source of all beings and finds perfection.',

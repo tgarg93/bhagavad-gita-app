@@ -658,7 +658,7 @@ export const festivalData: Festival[] = [
     description: 'Festival dedicated to Goddess Saraswati, the deity of knowledge, music, and arts',
     traditions: [
       'Wearing yellow clothes',
-      'Worshipping Goddess Saraswati',
+      'Worshiping Goddess Saraswati',
       'Teaching children to write first letters',
       'Flying kites'
     ],
@@ -944,7 +944,7 @@ export const festivalData: Festival[] = [
         id: 'shivratri-hunter',
         title: 'The Hunter in the Bilva Tree',
         subtitle: 'Leaves Falling One by One onto a Stone Below',
-        storyText: 'The Shiva Purana\'s beloved Shivratri story stars no sage but **a hunter** — a rough man who had never worshipped anything.\n\nBenighted in the forest and afraid of beasts, he climbed a bilva tree and, to stay awake through the cold night, plucked its leaves one by one and dropped them below. Unknown to him, **a Shiva linga stood at the tree\'s foot**; unknowing, hungry, and frightened, he kept an accidental all-night vigil, showering it with Shiva\'s favorite leaves on Shiva\'s own night.\n\nBy dawn, the story insists, his heart had changed — and heaven counted the night as perfect worship.',
+        storyText: 'The Shiva Purana\'s beloved Shivratri story stars no sage but **a hunter** — a rough man who had never worshiped anything.\n\nBenighted in the forest and afraid of beasts, he climbed a bilva tree and, to stay awake through the cold night, plucked its leaves one by one and dropped them below. Unknown to him, **a Shiva linga stood at the tree\'s foot**; unknowing, hungry, and frightened, he kept an accidental all-night vigil, showering it with Shiva\'s favorite leaves on Shiva\'s own night.\n\nBy dawn, the story insists, his heart had changed — and heaven counted the night as perfect worship.',
         teachingText: 'The hunter\'s story is the tradition at its most generous: intention matters, but **attention counts even when it doesn\'t know itself as worship**.\n\nWhatever kept you awake and watchful through your own hard nights — grief, fear, care — may have been closer to prayer than you knew. Tonight, do knowingly what the hunter did by accident.',
         citationLink: 'deity:shiva',
         citation: 'Shiva Purana (Shivratri mahatmya tellings).'
@@ -978,7 +978,7 @@ export const festivalData: Festival[] = [
     mythology: [
       'Divine marriage of Shiva and Parvati',
       'Night when Shiva performed the cosmic dance of Tandava',
-      'Legend of the hunter who unknowingly worshipped Shiva all night'
+      'Legend of the hunter who unknowingly worshiped Shiva all night'
     ],
     historicalContext: 'One of the oldest festivals in Hinduism, mentioned in Puranas and celebrated for thousands of years.',
     scriptureReferences: [],
@@ -1786,7 +1786,7 @@ export const festivalData: Festival[] = [
         commonMistakes: ['Treating visarjan as disposal rather than farewell — the send-off deserves as much love as the welcome']
       }
     ],
-    fullStory: 'Ganesh Chaturthi celebrates the birth of Lord Ganesha, the beloved elephant-headed deity who removes obstacles and grants wisdom. This festival involves bringing beautifully crafted Ganesha idols into homes and communities, worshipping them for 1-11 days, and then ceremonially immersing them in water bodies. The festival combines devotion, artistry, community spirit, and environmental consciousness.',
+    fullStory: 'Ganesh Chaturthi celebrates the birth of Lord Ganesha, the beloved elephant-headed deity who removes obstacles and grants wisdom. This festival involves bringing beautifully crafted Ganesha idols into homes and communities, worshiping them for 1-11 days, and then ceremonially immersing them in water bodies. The festival combines devotion, artistry, community spirit, and environmental consciousness.',
     sections: [
       {
         id: 'ganesh-chaturthi-guest',
@@ -1798,7 +1798,7 @@ export const festivalData: Festival[] = [
         id: 'ganesh-chaturthi-birth',
         title: 'The Birthday Being Celebrated',
         subtitle: 'Parvati\'s Hands Shaping a Boy from Turmeric',
-        storyText: 'The birth the festival honors is the Shiva Purana\'s fierce and tender story: Parvati shaping a son from the turmeric paste of her own body, the boy\'s unbending loyalty at her door, Shiva\'s terrible mistake, and **the repair that outgrew the wound** — an elephant\'s head, command of the ganas, and the decree that this child would be worshipped first among all gods.\n\n**Chaturthi**, the fourth day of the waxing moon of Bhadrapada, is kept as the day that grace took form.',
+        storyText: 'The birth the festival honors is the Shiva Purana\'s fierce and tender story: Parvati shaping a son from the turmeric paste of her own body, the boy\'s unbending loyalty at her door, Shiva\'s terrible mistake, and **the repair that outgrew the wound** — an elephant\'s head, command of the ganas, and the decree that this child would be worshiped first among all gods.\n\n**Chaturthi**, the fourth day of the waxing moon of Bhadrapada, is kept as the day that grace took form.',
         teachingText: 'Every murti brought home on Chaturthi re-enacts the story\'s ending: **the wounded one enthroned first**.\n\nFamilies who have weathered their own ruptures know why India loves this birthday — it celebrates not a perfect family, but a repaired one.',
         citationLink: 'deity:ganesha',
         citation: 'Shiva Purana, Rudra Samhita, Kumara Khanda, Chapters 13–18.'
@@ -1945,7 +1945,7 @@ export const festivalData: Festival[] = [
         id: 'navratri-kanya-vijaya',
         title: 'The Goddess at the Door',
         subtitle: 'Young Girls Seated as Honored Guests',
-        storyText: 'On Ashtami or Navami, the festival performs its most literal theology: **kanya puja**.\n\nYoung girls are invited in, their feet washed, tikka placed on their brows, and fed the best food in the house — worshipped, for one morning, as living embodiments of the Goddess. It is the Devi Mahatmya\'s great litany — **"to the Goddess who abides in ALL beings"** — enforced at household scale, and it lands with an edge in a world that does not always treat its daughters as divine.\n\nThen comes Vijayadashami: the demon falls, Ravana burns in the north, and the sprouted barley from the first night is distributed — nine nights of the dark made visibly, tenderly green.',
+        storyText: 'On Ashtami or Navami, the festival performs its most literal theology: **kanya puja**.\n\nYoung girls are invited in, their feet washed, tikka placed on their brows, and fed the best food in the house — worshiped, for one morning, as living embodiments of the Goddess. It is the Devi Mahatmya\'s great litany — **"to the Goddess who abides in ALL beings"** — enforced at household scale, and it lands with an edge in a world that does not always treat its daughters as divine.\n\nThen comes Vijayadashami: the demon falls, Ravana burns in the north, and the sprouted barley from the first night is distributed — nine nights of the dark made visibly, tenderly green.',
         teachingText: 'Kanya puja asks the festival\'s sharpest question on its way out the door: **is your reverence portable?**\n\nIt is easy to honor the Goddess in a pandal; the practice is honoring her in the beings around you — starting with the ones your culture is most tempted to overlook.'
       }
     ],
@@ -1995,7 +1995,7 @@ export const festivalData: Festival[] = [
       'Traditional sweets like kheer and halwa',
       'Regional specialties: Gujarati thali, Bengali bhog'
     ],
-    colors: ['Day 1: Orange', 'Day 2: White', 'Day 3: Red', 'Day 4: Royal Blue', 'Day 5: Yellow', 'Day 6: Green', 'Day 7: Grey', 'Day 8: Purple', 'Day 9: Peacock Green'],
+    colors: ['Day 1: Orange', 'Day 2: White', 'Day 3: Red', 'Day 4: Royal Blue', 'Day 5: Yellow', 'Day 6: Green', 'Day 7: Gray', 'Day 8: Purple', 'Day 9: Peacock Green'],
     deity: 'Goddess Durga (Nine Forms: Navdurga)',
     scriptureReferences: [
       {
@@ -2101,7 +2101,7 @@ export const festivalData: Festival[] = [
       {
         id: 'navratri-daily-worship',
         name: 'Daily Navdurga Worship',
-        description: 'Nine-day cycle of worshipping different forms of Goddess Durga',
+        description: 'Nine-day cycle of worshiping different forms of Goddess Durga',
         timeOfDay: 'morning',
         materials: ['Flowers specific to each day', 'Incense', 'Oil lamps', 'Offerings', 'Red cloth'],
         steps: [
@@ -2353,19 +2353,19 @@ export const festivalData: Festival[] = [
             'Perform vigorous Garba and Dandiya',
             'Seek blessings for marriage and relationships'
           ],
-          culturalContext: 'Katyayani is especially worshipped by unmarried women seeking good husbands',
+          culturalContext: 'Katyayani is especially worshiped by unmarried women seeking good husbands',
           tips: ['Green represents growth and harmony', 'Powerful day for removing obstacles'],
           imageUrl: '/images/guides/day6-katyayani.jpg'
         },
         {
           stepNumber: 7,
-          title: 'Day 7 - Kalaratri Worship (Grey Day)',
+          title: 'Day 7 - Kalaratri Worship (Gray Day)',
           description: 'Worship Goddess Kalaratri, the fierce form who destroys ignorance',
           timeOfDay: 'Morning',
           duration: '1.5 hours',
-          materialsNeeded: ['Dark flowers', 'Grey clothes', 'Jaggery offering', 'Oil lamps'],
+          materialsNeeded: ['Dark flowers', 'Gray clothes', 'Jaggery offering', 'Oil lamps'],
           detailedInstructions: [
-            'Wear grey or dark colored clothes',
+            'Wear gray or dark colored clothes',
             'Offer dark colored flowers',
             'Light multiple oil lamps',
             'Pray for removal of fear and ignorance',
@@ -2373,7 +2373,7 @@ export const festivalData: Festival[] = [
             'Offer jaggery as prasadam'
           ],
           culturalContext: 'Kalaratri destroys darkness and negative energies',
-          tips: ['Grey represents neutrality and balance', 'Focus on overcoming inner darkness'],
+          tips: ['Gray represents neutrality and balance', 'Focus on overcoming inner darkness'],
           imageUrl: '/images/guides/day7-kalaratri.jpg'
         },
         {
@@ -2398,7 +2398,7 @@ export const festivalData: Festival[] = [
         {
           stepNumber: 9,
           title: 'Day 9 - Siddhidatri Worship (Peacock Green Day)',
-          description: 'Complete Navratri by worshipping Goddess Siddhidatri, the grantor of supernatural powers',
+          description: 'Complete Navratri by worshiping Goddess Siddhidatri, the grantor of supernatural powers',
           timeOfDay: 'Morning to evening',
           duration: '3 hours',
           materialsNeeded: ['Peacock green flowers', 'Green/blue clothes', 'Nine types of food', 'Kanya Puja items'],

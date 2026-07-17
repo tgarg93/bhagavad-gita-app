@@ -81,7 +81,7 @@ const STAGE_1_CONCEPTS = [
 ];
 
 // Stage 2 — The Gods. The seven you'd actually meet in a temple.
-// Cut to self-serve: brahma (barely worshipped anywhere), lakshmi, saraswati.
+// Cut to self-serve: brahma (barely worshiped anywhere), lakshmi, saraswati.
 const STAGE_2_DEITIES = [
   'krishna',
   'rama',
@@ -130,7 +130,7 @@ export function routeForContentRef(
   const kind = ref.slice(0, sep);
   const id = ref.slice(sep + 1);
   if (!id) return null;
-  // The reader takes the fragment as a section id; screens that can't honour one
+  // The reader takes the fragment as a section id; screens that can't honor one
   // simply never receive it.
   const reader = (contentType: string, contentId: string) => ({
     name: 'ContentReader',
