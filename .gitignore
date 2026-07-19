@@ -44,3 +44,6 @@ app.json.backup
 
 # Native build artifacts
 build/
+
+# Expert review packets — point-in-time artifacts, regenerate with scripts/export-review-packets.mjs
+docs/review-packets/
