@@ -22,6 +22,7 @@ Services (singletons, AsyncStorage-local via `localStorageService`):
 - `progressionService` — points/levels (see invariants)
 - `foundationsService` — banked cards, check results, capstone; owns `foundations_progress`. `init()` runs from HomeScreen **before** `getNextUnfinished` so existing users aren't rewound into Foundations
 - `checkService` — grades free-recall answers against a rubric via Gemini; returns `null` when unreachable so callers fall back to self-marking
+- `supabaseClient` — anonymous Supabase identity (silent sign-in at launch, retry on foreground; fail-soft, app never waits on it). **All Gemini traffic goes through the `gemini-proxy` edge function** (`supabase/functions/`) — the API key lives in Supabase secrets, never the app; per-user rate limits (10/min, 60/day) enforced by the `ai_usage` RPC. The proxy is deliberately dumb: prompts/persona stay client-built in `geminiConfig.ts`, so prompt changes never need a function deploy (`npx supabase functions deploy gemini-proxy --use-api` when the function itself changes).
 - `krishnaContextService` — context block fed to Gemini (profile + progression + current content)
 - `audioNarrationService` — expo-speech TTS; segment queue + `speakOnce`/`stopSpeaking` for one-offs
 - `notificationService` — 4 local notification types, idempotent reschedule-all on app open

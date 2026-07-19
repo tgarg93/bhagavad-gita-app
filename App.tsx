@@ -4,6 +4,7 @@ import * as Sentry from '@sentry/react-native';
 import * as Notifications from 'expo-notifications';
 import { initTelemetry, capture } from './src/services/telemetryService';
 import { initSupabaseAuth } from './src/services/supabaseClient';
+import syncService from './src/services/syncService';
 import AppNavigator, { navigationRef } from './src/navigation/AppNavigator';
 import ErrorBoundary from './src/components/ErrorBoundary';
 import SplashScreen from './src/screens/SplashScreen';
@@ -35,8 +36,10 @@ function App() {
     initializeAudio();
 
     // Silent anonymous Supabase identity (retries on each foreground; the app
-    // never waits on it — see supabaseClient.ts)
+    // never waits on it — see supabaseClient.ts). Sync is push-only backup for
+    // now (C3): server mirrors AsyncStorage, nothing is ever pulled.
     initSupabaseAuth();
+    syncService.init();
 
       // Reopen a COMPLETED item — this is the one that used to land on the celebration
 

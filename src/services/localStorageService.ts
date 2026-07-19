@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import syncService from './syncService';
 
 export interface UserProgress {
   userId: string;
@@ -213,6 +214,13 @@ class LocalStorageService {
 
   private static readonly TOTAL_GITA_VERSES = 700;
 
+  // Write-through for synced keys: AsyncStorage stays the source of truth,
+  // syncService mirrors the key to the server later (fire-and-forget).
+  private static async setAndSync(key: string, value: string): Promise<void> {
+    await AsyncStorage.setItem(key, value);
+    syncService.markDirty(key);
+  }
+
   // User Authentication (Local)
   static async saveCurrentUser(user: { id: string; username: string; email: string; createdAt: string }) {
     try {
@@ -244,7 +252,7 @@ class LocalStorageService {
   static async saveUserProgress(progress: UserProgress) {
     try {
       progress.lastUpdated = new Date().toISOString();
-      await AsyncStorage.setItem(this.KEYS.USER_PROGRESS, JSON.stringify(progress));
+      await this.setAndSync(this.KEYS.USER_PROGRESS, JSON.stringify(progress));
     } catch (error) {
       console.error('Error saving user progress:', error);
     }
@@ -296,7 +304,7 @@ class LocalStorageService {
         notes.push(note);
       }
       
-      await AsyncStorage.setItem(this.KEYS.STUDY_NOTES, JSON.stringify(notes));
+      await this.setAndSync(this.KEYS.STUDY_NOTES, JSON.stringify(notes));
     } catch (error) {
       console.error('Error saving study note:', error);
     }
@@ -326,7 +334,7 @@ class LocalStorageService {
     try {
       const notes = await this.getAllStudyNotes();
       const filteredNotes = notes.filter(note => note.id !== noteId);
-      await AsyncStorage.setItem(this.KEYS.STUDY_NOTES, JSON.stringify(filteredNotes));
+      await this.setAndSync(this.KEYS.STUDY_NOTES, JSON.stringify(filteredNotes));
     } catch (error) {
       console.error('Error deleting study note:', error);
     }
@@ -345,7 +353,7 @@ class LocalStorageService {
 
   static async saveSpiritualProfile(profile: SpiritualProfile) {
     try {
-      await AsyncStorage.setItem(this.KEYS.SPIRITUAL_PROFILE, JSON.stringify(profile));
+      await this.setAndSync(this.KEYS.SPIRITUAL_PROFILE, JSON.stringify(profile));
     } catch (error) {
       console.error('Error saving spiritual profile:', error);
     }
@@ -370,7 +378,7 @@ class LocalStorageService {
 
   private static async saveVerseProgress(progress: VerseProgress) {
     try {
-      await AsyncStorage.setItem(this.KEYS.VERSE_PROGRESS, JSON.stringify(progress));
+      await this.setAndSync(this.KEYS.VERSE_PROGRESS, JSON.stringify(progress));
     } catch (error) {
       console.error('Error saving verse progress:', error);
     }
@@ -442,7 +450,7 @@ class LocalStorageService {
 
   static async saveChaiLastOpened(dateKey: string) {
     try {
-      await AsyncStorage.setItem(this.KEYS.CHAI_LAST_OPENED, dateKey);
+      await this.setAndSync(this.KEYS.CHAI_LAST_OPENED, dateKey);
     } catch (error) {
       console.error('Error saving chai opened date:', error);
     }
@@ -461,7 +469,7 @@ class LocalStorageService {
 
   static async saveLastCelebratedLevel(level: number) {
     try {
-      await AsyncStorage.setItem(this.KEYS.LEVEL_LAST_CELEBRATED, String(level));
+      await this.setAndSync(this.KEYS.LEVEL_LAST_CELEBRATED, String(level));
     } catch (error) {
       console.error('Error saving last celebrated level:', error);
     }
@@ -484,7 +492,7 @@ class LocalStorageService {
       const map = await this.getContentCompletion();
       if (map[journeyItemId]) return false; // keep the first completion timestamp
       map[journeyItemId] = new Date().toISOString();
-      await AsyncStorage.setItem(this.KEYS.CONTENT_COMPLETION, JSON.stringify(map));
+      await this.setAndSync(this.KEYS.CONTENT_COMPLETION, JSON.stringify(map));
       return true;
     } catch (error) {
       console.error('Error marking content completed:', error);
@@ -523,7 +531,7 @@ class LocalStorageService {
 
   static async saveFoundationsProgress(progress: FoundationsProgress): Promise<void> {
     try {
-      await AsyncStorage.setItem(this.KEYS.FOUNDATIONS_PROGRESS, JSON.stringify(progress));
+      await this.setAndSync(this.KEYS.FOUNDATIONS_PROGRESS, JSON.stringify(progress));
     } catch (error) {
       console.error('Error saving foundations progress:', error);
     }
@@ -545,7 +553,7 @@ class LocalStorageService {
     try {
       const map = await this.getPrayerRecitations();
       map[prayerId] = (map[prayerId] ?? 0) + 1;
-      await AsyncStorage.setItem(this.KEYS.PRAYER_RECITATIONS, JSON.stringify(map));
+      await this.setAndSync(this.KEYS.PRAYER_RECITATIONS, JSON.stringify(map));
       return map[prayerId];
     } catch (error) {
       console.error('Error incrementing prayer recitation:', error);
@@ -567,7 +575,7 @@ class LocalStorageService {
 
   static async saveJourneyActivity(activity: JourneyActivity) {
     try {
-      await AsyncStorage.setItem(this.KEYS.JOURNEY_ACTIVITY, JSON.stringify(activity));
+      await this.setAndSync(this.KEYS.JOURNEY_ACTIVITY, JSON.stringify(activity));
     } catch (error) {
       console.error('Error saving journey activity:', error);
     }
@@ -618,7 +626,7 @@ class LocalStorageService {
       } else {
         all.push(entry);
       }
-      await AsyncStorage.setItem(this.KEYS.REFLECTIONS, JSON.stringify(all));
+      await this.setAndSync(this.KEYS.REFLECTIONS, JSON.stringify(all));
     } catch (error) {
       console.error('Error saving reflection:', error);
     }
@@ -657,7 +665,7 @@ class LocalStorageService {
   static async deleteReflection(id: string) {
     try {
       const all = await this.getAllReflections();
-      await AsyncStorage.setItem(this.KEYS.REFLECTIONS, JSON.stringify(all.filter(r => r.id !== id)));
+      await this.setAndSync(this.KEYS.REFLECTIONS, JSON.stringify(all.filter(r => r.id !== id)));
     } catch (error) {
       console.error('Error deleting reflection:', error);
     }
@@ -773,15 +781,15 @@ class LocalStorageService {
       const promises = [];
       
       if (data.userProgress) {
-        promises.push(AsyncStorage.setItem(this.KEYS.USER_PROGRESS, JSON.stringify(data.userProgress)));
+        promises.push(this.setAndSync(this.KEYS.USER_PROGRESS, JSON.stringify(data.userProgress)));
       }
       
       if (data.studyNotes) {
-        promises.push(AsyncStorage.setItem(this.KEYS.STUDY_NOTES, JSON.stringify(data.studyNotes)));
+        promises.push(this.setAndSync(this.KEYS.STUDY_NOTES, JSON.stringify(data.studyNotes)));
       }
 
       if (data.reflections) {
-        promises.push(AsyncStorage.setItem(this.KEYS.REFLECTIONS, JSON.stringify(data.reflections)));
+        promises.push(this.setAndSync(this.KEYS.REFLECTIONS, JSON.stringify(data.reflections)));
       }
 
       if (data.preferences) {
