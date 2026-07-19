@@ -9,6 +9,7 @@ import LocalStorageService, {
   FoundationsProgress,
   FoundationsCapstoneResult,
 } from './localStorageService';
+import { capture } from './telemetryService';
 
 export interface FoundationsStats {
   cardsBanked: number;
@@ -106,6 +107,9 @@ class FoundationsService {
   async recordCapstone(result: Omit<FoundationsCapstoneResult, 'attempts' | 'at'>): Promise<void> {
     const progress = await this.getProgress();
     const prior = progress.capstones[result.riteId];
+    if (result.passed && !prior?.passed) {
+      capture('capstone_passed', { riteId: result.riteId, attempts: (prior?.attempts ?? 0) + 1 });
+    }
     progress.capstones[result.riteId] = {
       ...result,
       // A capstone once passed stays passed — a later attempt can't un-earn it.

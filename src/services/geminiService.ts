@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GEMINI_CONFIG as CONFIG, KRISHNA_PERSONA } from '../config/geminiConfig';
+import { capture } from './telemetryService';
 
 export interface GeminiMessage {
   id: string;
@@ -120,6 +121,9 @@ class GeminiService {
     if (!message || message.trim() === '') {
       throw new Error('Message cannot be empty');
     }
+
+    // Counts only — chat content never leaves the Gemini pipeline
+    capture('krishna_message_sent', { messageLength: message.length });
 
     // Add user message to session
     const userMessage: GeminiMessage = {

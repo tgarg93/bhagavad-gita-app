@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import LocalStorageService from '../services/localStorageService';
 import journeyService from '../services/journeyService';
+import { capture } from '../services/telemetryService';
 import { JourneyItem, JOURNEY_MODULES } from '../data/journeyPath';
 import MarigoldShower from './MarigoldShower';
 import LearnList from './LearnList';
@@ -163,6 +164,7 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
       const lastCelebrated = await LocalStorageService.getLastCelebratedLevel();
       if (prog.level.level > lastCelebrated) {
         await LocalStorageService.saveLastCelebratedLevel(prog.level.level);
+        capture('level_up', { level: prog.level.level, levelName: prog.level.sanskrit });
         setTimeout(() => {
           setLevelUp(true);
           Animated.timing(levelUpAnim, { toValue: 1, duration: 400, useNativeDriver: true }).start();

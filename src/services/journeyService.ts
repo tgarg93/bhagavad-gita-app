@@ -2,6 +2,7 @@
 // activity streak. Completion is a parallel system to progression points —
 // the points formula in progressionService is untouched.
 import LocalStorageService from './localStorageService';
+import { capture } from './telemetryService';
 import {
   ALL_MODULES,
   buildJourneyPath,
@@ -67,6 +68,7 @@ class JourneyService {
     const newlyCompleted = await LocalStorageService.markContentCompleted(id);
     if (newlyCompleted) {
       console.log('[journey] completed:', id);
+      capture('journey_item_completed', { itemId: id });
       try {
         // Lazy require — notificationService imports journeyService for nudge content
         const { notificationService } = require('./notificationService');

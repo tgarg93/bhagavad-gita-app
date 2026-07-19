@@ -25,6 +25,7 @@ Services (singletons, AsyncStorage-local via `localStorageService`):
 - `krishnaContextService` — context block fed to Gemini (profile + progression + current content)
 - `audioNarrationService` — expo-speech TTS; segment queue + `speakOnce`/`stopSpeaking` for one-offs
 - `notificationService` — 4 local notification types, idempotent reschedule-all on app open
+- `telemetryService` — Sentry (crashes) + PostHog (anonymous product events); env-gated, silently no-ops without keys. **Events carry ids/counts/levels only — never reflection text, chat content, or profile fields.** Capture points: `journeyService.markCompleted`, `foundationsService.recordCapstone`, `geminiService.sendMessage`, `JourneyCelebration` level-up, onboarding complete in App.tsx. `@sentry/react-native` is a **native dep** (post-add builds are native, not OTA).
 
 Screens: paged readers are `GitaVersePlayerScreen` (Gita) and `ContentReaderScreen` (everything else) — horizontal FlatList, cover → sections (+ any inline checks) → reflections → capstone → celebration. Narration maps a segment back to a page via `pageIndexForSection`, **never `1 + sectionIndex`** — that assumption breaks the moment a section carries a check.
 

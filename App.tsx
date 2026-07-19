@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import * as Sentry from '@sentry/react-native';
 import * as Notifications from 'expo-notifications';
+import { initTelemetry, capture } from './src/services/telemetryService';
 import AppNavigator, { navigationRef } from './src/navigation/AppNavigator';
 import ErrorBoundary from './src/components/ErrorBoundary';
 import SplashScreen from './src/screens/SplashScreen';
@@ -12,7 +14,9 @@ import journeyService from './src/services/journeyService';
 import notificationService from './src/services/notificationService';
 import { profilePhotoStore } from './src/services/profilePhotoStore';
 
-export default function App() {
+initTelemetry();
+
+function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [needsOnboarding, setNeedsOnboarding] = useState(false);
 
@@ -89,7 +93,12 @@ export default function App() {
   if (needsOnboarding) {
     return (
       <ErrorBoundary>
-        <OnboardingScreen onComplete={() => setNeedsOnboarding(false)} />
+        <OnboardingScreen
+          onComplete={() => {
+            capture('onboarding_completed');
+            setNeedsOnboarding(false);
+          }}
+        />
         <StatusBar style="dark" />
       </ErrorBoundary>
     );
@@ -103,3 +112,5 @@ export default function App() {
     </ErrorBoundary>
   );
 }
+
+export default Sentry.wrap(App);
