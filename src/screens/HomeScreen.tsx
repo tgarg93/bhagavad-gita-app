@@ -30,6 +30,7 @@ import {
   navigateToJourneyItem,
   navigateToContentRef,
 } from '../data/journeyPath';
+import { posthog } from '../config/posthog';
 
 const { width } = Dimensions.get('window');
 
@@ -79,6 +80,11 @@ const HomeScreen: React.FC = () => {
         const key = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
         LocalStorageService.saveChaiLastOpened(key);
         journeyService.touchActivity();
+        posthog.capture('daily_chai_viewed', {
+          atom_hook: todaysAtom.hook,
+          atom_type: todaysAtom.type,
+          date_key: key,
+        });
         // "Begin the path" from onboarding lands here — carry it through
         if (journeyService.consumePendingStart() && next) {
           navigateToJourneyItem(navigation, next);

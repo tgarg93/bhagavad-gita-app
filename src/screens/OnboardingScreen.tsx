@@ -36,6 +36,7 @@ import { ONBOARDING_ATOM } from '../data/dailyAtoms';
 import DailyChaiCard from '../components/DailyChaiCard';
 import ProgressRungs from '../components/ProgressRungs';
 import { LEVELS, LEVEL_MEANINGS } from '../services/progressionService';
+import { posthog } from '../config/posthog';
 
 interface OnboardingScreenProps {
   onComplete: () => void;
@@ -328,6 +329,14 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
     };
     if (firstName) patch.name = firstName; // first name only; skip keeps any earlier name
     await LocalStorageService.updateSpiritualProfile(patch);
+
+    posthog.capture('onboarding_completed', {
+      familiarity: familiarity ?? 'some',
+      intentions_count: intentions.length,
+      daily_goal_minutes: dailyGoal ?? 10,
+      name_provided: firstName.length > 0,
+      mode,
+    });
     // A completed onboarding is the warm moment to ask about reminders
     try {
       const { notificationService } = require('../services/notificationService');

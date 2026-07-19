@@ -46,6 +46,8 @@ export default {
       vapiApiKey: process.env.EXPO_PUBLIC_VAPI_API_KEY,
       vapiAssistantId: process.env.EXPO_PUBLIC_VAPI_ASSISTANT_ID,
       appEnv: process.env.EXPO_PUBLIC_APP_ENV,
+      posthogProjectToken: process.env.POSTHOG_PROJECT_TOKEN,
+      posthogHost: process.env.POSTHOG_HOST || 'https://us.i.posthog.com',
     }
   }
 };

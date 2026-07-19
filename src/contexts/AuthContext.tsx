@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import LocalStorageService from '../services/localStorageService';
+import { posthog } from '../config/posthog';
 
 export interface LocalUser {
   id: string;
@@ -101,6 +102,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await LocalStorageService.saveCurrentUser(localUser);
       await LocalStorageService.createDefaultUserProgress(localUser.id, localUser.username, localUser.email);
       await LocalStorageService.trackFeatureUsage('user_registration');
+
+      posthog.identify(localUser.id, {
+        $set: { username: localUser.username },
+        $set_once: { first_registration_date: localUser.createdAt },
+      });
+      posthog.capture('user_registered', { is_guest: false });
     } catch (error) {
       console.error('Registration error:', error);
       throw error;
@@ -126,6 +133,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setCurrentUser(localUser);
       await LocalStorageService.saveCurrentUser(localUser);
       await LocalStorageService.trackFeatureUsage('user_login');
+
+      posthog.identify(localUser.id, {
+        $set: { username: localUser.username },
+      });
+      posthog.capture('user_logged_in');
     } catch (error) {
       console.error('Login error:', error);
       throw error;
@@ -145,6 +157,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await LocalStorageService.saveCurrentUser(guestUser);
       await LocalStorageService.createDefaultUserProgress(guestUser.id, guestUser.username, guestUser.email);
       await LocalStorageService.trackFeatureUsage('guest_login');
+
+      posthog.identify(guestUser.id);
+      posthog.capture('guest_session_started');
     } catch (error) {
       console.error('Guest login error:', error);
       throw error;
@@ -153,6 +168,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = async () => {
     try {
+      posthog.capture('user_logged_out');
+      posthog.reset();
       await LocalStorageService.clearCurrentUser();
       setCurrentUser(null);
       await LocalStorageService.trackFeatureUsage('user_logout');
@@ -167,8 +184,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setLoading(true);
         const user = await LocalStorageService.getCurrentUser();
         setCurrentUser(user);
-        
+
         if (user) {
+          posthog.identify(user.id, { $set: { username: user.username } });
           await LocalStorageService.trackAppOpen();
         }
       } catch (error) {

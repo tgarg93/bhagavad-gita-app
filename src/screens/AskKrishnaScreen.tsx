@@ -23,6 +23,7 @@ import { KRISHNA_PERSONA, ERROR_MESSAGES, RATE_LIMITS } from '../config/geminiCo
 import { useFocusEffect } from '@react-navigation/native';
 import krishnaContext, { CurrentContent } from '../services/krishnaContextService';
 import { getDailyAtom } from '../data/dailyAtoms';
+import { posthog } from '../config/posthog';
 
 const AskKrishnaScreen: React.FC = () => {
   // Today's chai question leads the suggestions — the brief's hand-off
@@ -129,6 +130,12 @@ const AskKrishnaScreen: React.FC = () => {
     }
 
     setInputText('');
+
+    posthog.capture('ask_krishna_message_sent', {
+      message_length: messageText.length,
+      is_suggested_question: suggestedQuestions.includes(messageText),
+      conversation_length: chatSession.messages.length,
+    });
 
     try {
       // Update UI to show user message and typing indicator

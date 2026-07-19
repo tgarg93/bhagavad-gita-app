@@ -43,6 +43,7 @@ import { foundationsService } from '../services/foundationsService';
 import { navigateToJourneyItem, navigateToContentRef } from '../data/journeyPath';
 import { prerecordedClipsFor } from '../data/foundationsAudioManifest';
 import { McqCheck, RecallCheck } from '../data/checkTypes';
+import { posthog } from '../config/posthog';
 
 const { width } = Dimensions.get('window');
 
@@ -277,6 +278,13 @@ const ContentReaderScreen: React.FC = () => {
       setReady(true);
       const { getProgression } = require('../services/progressionService');
       pointsAtStartRef.current = (await getProgression()).points;
+
+      posthog.capture('content_reader_opened', {
+        content_type: contentType,
+        content_id: contentId,
+        title: content?.title ?? contentId,
+        resuming: !completion[positionKey] && last > 0,
+      });
     })();
     return () => { audioService.cleanup(); };
     // positionKey: navigateToJourneyItem uses navigate (not push), so a

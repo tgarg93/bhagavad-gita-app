@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Animated } from 'react
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import LocalStorageService from '../services/localStorageService';
+import { posthog } from '../config/posthog';
 import journeyService from '../services/journeyService';
 import { JourneyItem, JOURNEY_MODULES } from '../data/journeyPath';
 import MarigoldShower from './MarigoldShower';
@@ -136,6 +137,12 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
     if (!active || startedRef.current) return;
     startedRef.current = true; // once per arrival — no replay on swipe-back
     setStarted(true);
+
+    posthog.capture('journey_item_completed', {
+      item_id: completedItemId,
+      item_title: completedTitle,
+      item_type: completedItemId.split(':')[0] ?? 'unknown',
+    });
 
     const rise = (value: Animated.Value, delay: number, duration = 450) =>
       Animated.timing(value, { toValue: 1, duration, delay, useNativeDriver: true });

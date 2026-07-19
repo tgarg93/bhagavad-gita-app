@@ -28,6 +28,7 @@ import { checkService, GradeResult } from '../services/checkService';
 import { geminiService } from '../services/geminiService';
 import krishnaContext from '../services/krishnaContextService';
 import { Bubble } from './Bubble';
+import { posthog } from '../config/posthog';
 
 const C = DharmaDesignSystem.colors;
 const GOOD = C.sacred.banyanGreen;
@@ -80,6 +81,9 @@ const Mcq: React.FC<{ check: McqCheck; getTextStyle: any; onResolved: () => void
     setPicked(index);
     const correct = index === correctIndex;
     await foundationsService.recordCheck(check.id, correct);
+    if (correct) {
+      posthog.capture('knowledge_check_passed', { check_kind: 'mcq', check_id: check.id });
+    }
     onResolved(); // right or wrong, the reader may continue
   };
 
@@ -220,6 +224,9 @@ const Recall: React.FC<{
     setGrade(result);
     setTranscript(t => [...t, { role: 'krishna', text: result.feedback }]);
     await foundationsService.recordCheck(check.id, result.passed);
+    if (result.passed) {
+      posthog.capture('knowledge_check_passed', { check_kind: 'recall', check_id: check.id });
+    }
     onResolved();
   }, [answer, grading, check, onResolved]);
 

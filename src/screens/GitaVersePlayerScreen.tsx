@@ -36,6 +36,7 @@ import ChapterReflection from '../components/ChapterReflection';
 import JourneyCelebration from '../components/JourneyCelebration';
 import journeyService from '../services/journeyService';
 import { navigateToJourneyItem } from '../data/journeyPath';
+import { posthog } from '../config/posthog';
 
 const { width } = Dimensions.get('window');
 const TOTAL_GITA_VERSES = 700;
@@ -171,6 +172,17 @@ const GitaVersePlayerScreen: React.FC = () => {
       // Snapshot progression so celebrations can show this session's gains
       const { getProgression } = require('../services/progressionService');
       pointsAtStartRef.current = (await getProgression()).points;
+
+      const openedPage = pages[idx];
+      const openedChapter =
+        openedPage?.kind === 'verse' || openedPage?.kind === 'cover' || openedPage?.kind === 'reflection'
+          ? (openedPage as any).chapter
+          : requestedChapter ?? 0;
+      posthog.capture('gita_chapter_opened', {
+        chapter_number: openedChapter,
+        requested_chapter: requestedChapter ?? null,
+        requested_verse: requestedVerse ?? null,
+      });
     })();
     return () => { audioService.cleanup(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -212,6 +224,10 @@ const GitaVersePlayerScreen: React.FC = () => {
       if (page?.kind === 'celebration') {
         // Reaching the chapter's celebration page IS completing the chapter
         journeyService.markCompleted(`gita:${page.chapter}`);
+        posthog.capture('gita_chapter_completed', {
+          chapter_number: page.chapter,
+          chapter_name: chapterName(page.chapter),
+        });
       }
     }
   }).current;

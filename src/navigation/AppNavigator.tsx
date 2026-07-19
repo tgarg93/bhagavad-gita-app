@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -6,6 +6,8 @@ import { View, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { profilePhotoStore, useProfilePhoto } from '../services/profilePhotoStore';
+import { PostHogProvider } from 'posthog-react-native';
+import { posthog } from '../config/posthog';
 
 import HomeScreen from '../screens/HomeScreen';
 import WisdomHubScreen from '../screens/WisdomHubScreen';
@@ -146,27 +148,51 @@ const TabNavigator = () => {
 };
 
 const AppNavigator = () => {
+  const routeNameRef = useRef<string | undefined>(undefined);
+
   return (
-    <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="MainTabs" component={TabNavigator} />
-        <Stack.Screen name="ChapterDetail" component={ChapterDetailScreen} />
-        <Stack.Screen name="VerseDetail" component={VerseDetailScreen} />
-        <Stack.Screen name="PracticeDetail" component={PracticeDetailScreen} />
-        <Stack.Screen name="DeityDetail" component={DeityDetailScreen} />
-        <Stack.Screen name="FestivalDetail" component={FestivalDetailScreen} />
-        <Stack.Screen name="PhilosophyDetail" component={PhilosophyDetailScreen} />
-        <Stack.Screen name="ScriptureDetail" component={ScriptureDetailScreen} />
-        <Stack.Screen name="BhagavadGitaChapters" component={BhagavadGitaChaptersScreen} />
-        <Stack.Screen name="ChapterReading" component={ChapterReadingScreen} />
-        <Stack.Screen name="BhagavadGitaChapter1" component={BhagavadGitaChapter1Screen} />
-        <Stack.Screen name="BhagavadGitaComplete" component={BhagavadGitaCompleteScreen} />
-        <Stack.Screen name="GitaVersePlayer" component={GitaVersePlayerScreen} />
-        <Stack.Screen name="ContentReader" component={ContentReaderScreen} />
-        <Stack.Screen name="PrayerPlayer" component={PrayerPlayerScreen} />
-        <Stack.Screen name="ScriptureContents" component={ScriptureContentsScreen} />
-        <Stack.Screen name="JourneyPath" component={JourneyPathScreen} />
-      </Stack.Navigator>
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() => {
+        routeNameRef.current = navigationRef.getCurrentRoute()?.name;
+      }}
+      onStateChange={() => {
+        const currentRouteName = navigationRef.getCurrentRoute()?.name;
+        if (currentRouteName && currentRouteName !== routeNameRef.current) {
+          posthog.screen(currentRouteName);
+          routeNameRef.current = currentRouteName;
+        }
+      }}
+    >
+      <PostHogProvider
+        client={posthog}
+        autocapture={{
+          captureScreens: false,
+          captureTouches: true,
+          propsToCapture: ['testID'],
+          maxElementsCaptured: 20,
+        }}
+      >
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="MainTabs" component={TabNavigator} />
+          <Stack.Screen name="ChapterDetail" component={ChapterDetailScreen} />
+          <Stack.Screen name="VerseDetail" component={VerseDetailScreen} />
+          <Stack.Screen name="PracticeDetail" component={PracticeDetailScreen} />
+          <Stack.Screen name="DeityDetail" component={DeityDetailScreen} />
+          <Stack.Screen name="FestivalDetail" component={FestivalDetailScreen} />
+          <Stack.Screen name="PhilosophyDetail" component={PhilosophyDetailScreen} />
+          <Stack.Screen name="ScriptureDetail" component={ScriptureDetailScreen} />
+          <Stack.Screen name="BhagavadGitaChapters" component={BhagavadGitaChaptersScreen} />
+          <Stack.Screen name="ChapterReading" component={ChapterReadingScreen} />
+          <Stack.Screen name="BhagavadGitaChapter1" component={BhagavadGitaChapter1Screen} />
+          <Stack.Screen name="BhagavadGitaComplete" component={BhagavadGitaCompleteScreen} />
+          <Stack.Screen name="GitaVersePlayer" component={GitaVersePlayerScreen} />
+          <Stack.Screen name="ContentReader" component={ContentReaderScreen} />
+          <Stack.Screen name="PrayerPlayer" component={PrayerPlayerScreen} />
+          <Stack.Screen name="ScriptureContents" component={ScriptureContentsScreen} />
+          <Stack.Screen name="JourneyPath" component={JourneyPathScreen} />
+        </Stack.Navigator>
+      </PostHogProvider>
     </NavigationContainer>
   );
 };
