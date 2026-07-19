@@ -8,7 +8,6 @@ import {
   ScrollView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useAuth } from '../contexts/AuthContext';
 import DataExportService from '../services/dataExportService';
 import AnalyticsService from '../services/analyticsService';
 import LocalStorageService from '../services/localStorageService';
@@ -16,7 +15,6 @@ import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 
 const DataManagementScreen: React.FC = () => {
-  const { currentUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const [analyticsData, setAnalyticsData] = useState<any>(null);
 
@@ -34,12 +32,10 @@ const DataManagementScreen: React.FC = () => {
   }, []);
 
   const handleExportData = async () => {
-    if (!currentUser) return;
-    
     setLoading(true);
     try {
       await DataExportService.exportUserData();
-      await AnalyticsService.trackDataExported('full', currentUser.id);
+      await AnalyticsService.trackDataExported('full');
       Alert.alert('Success', 'Your data has been exported successfully!');
     } catch (error: any) {
       Alert.alert('Error', error.message || 'Failed to export data');
@@ -49,12 +45,11 @@ const DataManagementScreen: React.FC = () => {
   };
 
   const handleExportNotes = async () => {
-    if (!currentUser) return;
-    
     setLoading(true);
     try {
-      await DataExportService.exportUserNotes(currentUser.id);
-      await AnalyticsService.trackDataExported('notes', currentUser.id);
+      const localUser = await LocalStorageService.getCurrentUser();
+      await DataExportService.exportUserNotes(localUser?.id ?? 'local');
+      await AnalyticsService.trackDataExported('notes');
       Alert.alert('Success', 'Your notes have been exported successfully!');
     } catch (error: any) {
       Alert.alert('Error', error.message || 'Failed to export notes');
@@ -64,12 +59,11 @@ const DataManagementScreen: React.FC = () => {
   };
 
   const handleExportProgress = async () => {
-    if (!currentUser) return;
-    
     setLoading(true);
     try {
-      await DataExportService.exportProgressSummary(currentUser.id);
-      await AnalyticsService.trackDataExported('progress', currentUser.id);
+      const localUser = await LocalStorageService.getCurrentUser();
+      await DataExportService.exportProgressSummary(localUser?.id ?? 'local');
+      await AnalyticsService.trackDataExported('progress');
       Alert.alert('Success', 'Your progress summary has been shared!');
     } catch (error: any) {
       Alert.alert('Error', error.message || 'Failed to export progress');

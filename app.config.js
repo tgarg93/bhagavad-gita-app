@@ -28,9 +28,7 @@ export default {
       bundleIdentifier: "com.tushargarg.dharma",
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
-        NSMicrophoneUsageDescription: "This app needs microphone access to enable voice conversations with Krishna",
-        NSPhotoLibraryUsageDescription: "Choose a profile photo from your library",
-        NSCameraUsageDescription: "This app may need camera access for video calls (optional)"
+        NSPhotoLibraryUsageDescription: "Choose a profile photo from your library"
       },
     },
     android: {
@@ -43,8 +41,6 @@ export default {
     },
     extra: {
       geminiApiKey: process.env.EXPO_PUBLIC_GEMINI_API_KEY,
-      vapiApiKey: process.env.EXPO_PUBLIC_VAPI_API_KEY,
-      vapiAssistantId: process.env.EXPO_PUBLIC_VAPI_ASSISTANT_ID,
       appEnv: process.env.EXPO_PUBLIC_APP_ENV,
     }
   }

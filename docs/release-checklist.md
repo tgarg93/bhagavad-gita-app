@@ -4,7 +4,7 @@ Manual smoke tests until automated coverage lands (Wave 2). Run the **Simulator 
 
 ## Pre-flight (code)
 
-- [ ] `npx tsc --noEmit` — at or below the current baseline (116); no new errors
+- [ ] `npx tsc --noEmit` — at or below the current baseline (77); no new errors
 - [ ] `grep -rn "TEMP-VERIFY" src App.tsx` — clean
 - [ ] `CFBundleVersion` bumped in `ios/Dharma/Info.plist` (every upload needs a new build number)
 - [ ] `docs/product-spec.md` reflects everything in this release

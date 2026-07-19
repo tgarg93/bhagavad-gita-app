@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import * as Notifications from 'expo-notifications';
 import AppNavigator, { navigationRef } from './src/navigation/AppNavigator';
+import ErrorBoundary from './src/components/ErrorBoundary';
 import SplashScreen from './src/screens/SplashScreen';
 import OnboardingScreen from './src/screens/OnboardingScreen';
 import { AudioNarrationService } from './src/services/audioNarrationService';
@@ -87,18 +88,18 @@ export default function App() {
   // First launch: Krishna-guided onboarding before the main app
   if (needsOnboarding) {
     return (
-      <>
+      <ErrorBoundary>
         <OnboardingScreen onComplete={() => setNeedsOnboarding(false)} />
         <StatusBar style="dark" />
-      </>
+      </ErrorBoundary>
     );
   }
 
   // Show main app after splash
   return (
-    <>
+    <ErrorBoundary>
       <AppNavigator />
       <StatusBar style="dark" />
-    </>
+    </ErrorBoundary>
   );
 }

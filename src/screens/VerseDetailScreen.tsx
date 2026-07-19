@@ -13,7 +13,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { DharmaColors } from '../constants/colors';
 import { bhagavadGitaData } from '../data/bhagavadGitaData';
 import { Verse } from '../types/content';
-import { VapiService } from '../services/vapiService';
 import AudioControls from '../components/AudioControls';
 import TextHighlighter from '../components/TextHighlighter';
 import { AudioNarrationService, TextSegment } from '../services/audioNarrationService';
@@ -32,8 +31,6 @@ const VerseDetailScreen: React.FC = () => {
   const [verse, setVerse] = useState<Verse | null>(null);
   const [showTransliteration, setShowTransliteration] = useState(true);
   const [showCommentary, setShowCommentary] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [vapiService] = useState(() => VapiService.getInstance());
   const [highlightedSegmentId, setHighlightedSegmentId] = useState<string | null>(null);
   const [audioSegments, setAudioSegments] = useState<TextSegment[]>([]);
 
@@ -60,46 +57,6 @@ const VerseDetailScreen: React.FC = () => {
         const segments = audioService.parseContentIntoSegments(content);
         setAudioSegments(segments);
       }
-    }
-  };
-
-  const handlePlayNarration = async () => {
-    if (!verse) return;
-    
-    try {
-      setIsPlaying(true);
-      
-      // Create narration text combining Sanskrit, transliteration, and English
-      const narrationText = `
-        Chapter ${verse.chapterNumber}, Verse ${verse.verseNumber} of the Bhagavad Gita.
-        
-        Sanskrit verse: ${verse.sanskrit}
-        
-        Transliteration: ${verse.transliteration}
-        
-        English translation: ${verse.english}
-      `;
-
-      await vapiService.startCall(narrationText);
-      
-      // Set up call end listener
-      vapiService.onCallEnd(() => {
-        setIsPlaying(false);
-      });
-      
-    } catch (error) {
-      console.error('Error starting narration:', error);
-      setIsPlaying(false);
-    }
-  };
-
-  const handleStopNarration = async () => {
-    try {
-      await vapiService.endCall();
-      setIsPlaying(false);
-    } catch (error) {
-      console.error('Error stopping narration:', error);
-      setIsPlaying(false);
     }
   };
 
@@ -151,22 +108,6 @@ const VerseDetailScreen: React.FC = () => {
               onScrollToSegment={handleScrollToSegment}
               compact={false}
             />
-
-            {/* Voice Narration Button */}
-            <TouchableOpacity
-              style={styles.playButton}
-              onPress={isPlaying ? handleStopNarration : handlePlayNarration}
-              disabled={isPlaying}
-            >
-              <Ionicons
-                name={isPlaying ? 'stop' : 'play'}
-                size={20}
-                color={DharmaColors.text.inverse}
-              />
-              <Text style={styles.playButtonText}>
-                {isPlaying ? 'Voice' : 'Voice'}
-              </Text>
-            </TouchableOpacity>
           </View>
         </View>
 
@@ -308,20 +249,6 @@ const styles = StyleSheet.create({
     color: DharmaColors.primary[400],
     letterSpacing: 0.5,
     marginBottom: 16,
-  },
-  playButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: DharmaColors.primary[500],
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 24,
-    gap: 8,
-  },
-  playButtonText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: DharmaColors.text.inverse,
   },
   section: {
     marginBottom: 32,

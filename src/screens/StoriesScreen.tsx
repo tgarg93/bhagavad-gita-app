@@ -13,13 +13,11 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
-import { useAuth } from '../contexts/AuthContext';
 import { AudioService } from '../services/audioService';
 
 const { width } = Dimensions.get('window');
 
 const StoriesScreen: React.FC = () => {
-  const { currentUser, loginAsGuest } = useAuth();
   const navigation = useNavigation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -233,16 +231,6 @@ const StoriesScreen: React.FC = () => {
   };
 
   const startStory = async () => {
-    if (!currentUser) {
-      // Auto-login as guest if not logged in
-      try {
-        await loginAsGuest();
-      } catch (error) {
-        Alert.alert('Error', 'Unable to start. Please try again.');
-        return;
-      }
-    }
-    
     try {
       setIsLoading(true);
       
@@ -470,11 +458,6 @@ const StoriesScreen: React.FC = () => {
         
         <Text style={styles.appTitle}>🎧 Bhagavad Gita Stories</Text>
         
-        {currentUser && (
-          <View style={styles.streakContainer}>
-            <Text style={styles.streakText}>🔥 7</Text>
-          </View>
-        )}
       </View>
 
       {/* Main Content */}

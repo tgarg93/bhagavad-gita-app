@@ -30,14 +30,13 @@ Screens: paged readers are `GitaVersePlayerScreen` (Gita) and `ContentReaderScre
 
 ## Working rules
 
-- **tsc baseline**: `npx tsc --noEmit` currently has **83 pre-existing errors**. Hold or improve; never add new ones. (Style-union errors from spreading `typography.sizes.*` into Text styles are the common trap — write fontSize/lineHeight explicitly in new styles.)
+- **tsc baseline**: `npx tsc --noEmit` currently has **77 pre-existing errors**. Hold or improve; never add new ones. (Style-union errors from spreading `typography.sizes.*` into Text styles are the common trap — write fontSize/lineHeight explicitly in new styles.)
 - **TEMP-VERIFY discipline**: simulator verification hacks (initialRoute overrides, auto-press timers, forced state) are marked `// TEMP-VERIFY` and ALL removed before commit (`grep -rn "TEMP-VERIFY" src App.tsx` must be clean).
 - **Verified citations**: every content claim traces to a named public text; famous loci only; practices without scripture say so honestly. Per-section `citation` footnotes + item-level `sources`.
 - **Long-form content opens in the paged reader** (Gita-player pattern), never a plain scroll view.
 - **Status over streaks**: no streak counters or daily-pressure UI; progression surfaces as identity (Jigyasu→Guru levels). Streak logic exists only for the streak-protection notification.
 - **Nothing locked**: the journey suggests order, never enforces it.
 - Image styles inside `StyleSheet.create` hit union errors — define them as `const xStyle = {...} as const` outside.
-- npm installs need `--legacy-peer-deps` (daily-js peer conflict).
 
 ## Invariants (do not change casually)
 

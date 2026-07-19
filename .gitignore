@@ -34,9 +34,9 @@ yarn-error.*
 .env*.local
 .env
 
-# API Keys and sensitive configuration
-**/config/*Config.ts
-!**/config/*Config.example.ts
+# API keys live in .env only — config files are tracked product assets
+# (the old **/config/*Config.ts ignore predates keys moving to env vars;
+# it silently kept the Krishna persona in geminiConfig.ts out of the repo)
 
 # typescript
 *.tsbuildinfo
