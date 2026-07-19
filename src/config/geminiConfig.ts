@@ -1,49 +1,21 @@
-// Gemini AI Configuration for Dharma App
-import Constants from 'expo-constants';
-import { HarmCategory, HarmBlockThreshold, SafetySetting } from '@google/generative-ai';
-
-// Get API key from app config extra (app.config.js) or env — no hardcoded fallback
-const getApiKey = () => {
-  const fromExtra = Constants.expoConfig?.extra?.geminiApiKey;
-  const fromEnv = process.env.EXPO_PUBLIC_GEMINI_API_KEY;
-
-  if (__DEV__) {
-    console.log('Gemini API Key loaded from:', fromExtra ? 'Constants.extra' : fromEnv ? 'process.env' : 'none');
-  }
-
-  return fromExtra || fromEnv || '';
-};
-
-const API_KEY = getApiKey();
-
-const SAFETY_SETTINGS: SafetySetting[] = [
-  {
-    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-  },
-  {
-    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-  },
-  {
-    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-  },
-  {
-    category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-  },
+// Gemini AI Configuration for Dharma App.
+// No API key here: all traffic goes through the authenticated `gemini-proxy`
+// Supabase edge function, which holds the key in server-side secrets (C2 of
+// the production plan). These are the REST API's string forms of the old SDK
+// enums — the proxy forwards them to Gemini verbatim.
+const SAFETY_SETTINGS = [
+  { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+  { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+  { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+  { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
 ];
 
 export const GEMINI_CONFIG = {
-  // API Configuration
-  apiKey: API_KEY,
   // Rolling alias, not a pinned model: the July 2026 key rotation moved the app to a
   // new Google project where gemini-2.5-flash is closed to new users — pinned models
   // retire out from under you. The alias tracks the current stable flash (3.5-flash
   // as of July 2026); re-verify persona tone after Google moves it.
   model: 'gemini-flash-latest',
-  enabled: !!API_KEY, // Auto-enabled when API key is available
 
   // Generation Configuration
   generationConfig: {
