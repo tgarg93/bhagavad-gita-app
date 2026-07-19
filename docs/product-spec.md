@@ -133,16 +133,16 @@ All current notifications are **local** — scheduled on-device, no backend, no 
 
 | Type | When | Content | Deep link |
 |---|---|---|---|
-| Daily Chai | 8:00 daily (7 one-shots) | "☕ Your chai is ready" + that day's atom hook | Home tab |
-| Journey nudge | 19:00 on days 1/3/7 of absence | next step title | JourneyPath |
-| Festival | 9:00 three days before + 8:30 day-of (next 2 festivals) | name/countdown/significance | FestivalDetail |
+| Daily Chai | 8:00 daily (28 one-shots) | "☕ Your chai is ready" + that day's atom hook | Home tab |
+| Journey nudge | 19:00 on days 1/3/7/14/21/28 of absence | next step title | JourneyPath |
+| Festival | 9:00 three days before + 8:30 day-of (next 4 festivals) | name/countdown/significance | FestivalDetail |
 | Streak protection | 21:00 tomorrow if streak ≥ 1 | "n-day streak on the line" | JourneyPath |
 
 Tap handling: `navigationRef` + response listener in App.tsx (incl. cold-start via `getLastNotificationResponseAsync`). Permission is requested only at warm moments (onboarding finish, celebrations) and never re-nagged.
 
 ### 4.1 Remote push (future — wave 2, not implemented)
 
-**Why**: local one-shots exhaust ~7 days after the last app open — the lapsed user, the one notifications exist for, hears nothing after that. Remote push is the only complete fix. The cheap interim (no backend) is extending the local horizon: ~28 Daily Chai one-shots + absence nudges at days 14/21/28 ≈ 40 pending, comfortably under iOS's 64-pending limit.
+**Why**: local one-shots exhaust after the last app open — the lapsed user, the one notifications exist for, eventually hears nothing. Remote push is the only complete fix. The cheap interim **shipped July 2026** (build 9): 28 Daily Chai one-shots + absence nudges through day 28 + next 4 festivals ≈ 42 pending, comfortably under iOS's 64-pending limit. Decision recorded in the production plan: push stays out of v1.
 
 **Requires**:
 - Backend + device push-token registry — build alongside accounts in wave 2; until accounts land, tokens key to the local anonymous id.

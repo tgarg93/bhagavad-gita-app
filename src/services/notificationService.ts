@@ -1,6 +1,6 @@
 // Local daily notifications — no backend. Strategy: idempotent reschedule-all
 // on every app open (and after journey completions), so every notification's
-// content is baked fresh and the pending count stays small (~27 « iOS's 64).
+// content is baked fresh and the pending count stays small (~42 « iOS's 64).
 //
 // "Only if the app wasn't opened today" is achieved with one-shot triggers
 // scheduled for FUTURE days and cancelled/rescheduled on every open: they can
@@ -105,12 +105,12 @@ class NotificationService {
       await Notifications.cancelAllScheduledNotificationsAsync();
       let scheduled = 0;
 
-      // 1) Morning Daily Chai — 14 one-shots, each with that day's atom hook,
-      //    tapping deep-links straight into the brief. Two weeks (not one) so a
+      // 1) Morning Daily Chai — 28 one-shots, each with that day's atom hook,
+      //    tapping deep-links straight into the brief. Four weeks (not one) so a
       //    lapsed reader keeps hearing from the app longer — there is no server
-      //    push to fall back on (production-plan decision, July 2026).
+      //    push to fall back on (product-spec §4.1 interim; push itself is wave 2).
       if (settings.dailyWisdom) {
-        for (let day = 0; day < 14; day++) {
+        for (let day = 0; day < 28; day++) {
           const fireDate = at(daysFromNow(day), 8, 0);
           if (fireDate.getTime() <= Date.now()) continue; // today 8am already past
           const atom = getDailyAtom(fireDate);
@@ -133,7 +133,7 @@ class NotificationService {
       if (settings.journeyNudge) {
         const next = await journeyService.getNextUnfinished();
         if (next) {
-          for (const day of [1, 3, 7, 14]) {
+          for (const day of [1, 3, 7, 14, 21, 28]) {
             await Notifications.scheduleNotificationAsync({
               content: {
                 title: 'Your path awaits 🛕',
