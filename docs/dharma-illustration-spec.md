@@ -300,7 +300,7 @@ Format for every 🆕 entry: 1:1 square, see Part 6. Border: slender gold/floral
 
 ## Foundations (Jigyasu Track — Module 0) — first 4 acts delivered; 5 covers still on the generic fallback
 
-`src/data/foundations.ts` ships 8 acts plus a capstone, each declaring `coverImage`. **The first four acts now carry bespoke covers** — `foundations-{name,thread,claim,wheel}-cover.jpg`, wired via `require()` (`COVER_NAME`/`COVER_THREAD`/`COVER_CLAIM`/`COVER_WHEEL`). The remaining five (`faces`, `library`, `living`, `capstone`, plus the capstone reader item) still resolve to `generic-cover.jpg`, which today is the **Tree of Life** fallback (see App-wide fallback, below). Because that tree reads as intentional rather than as a placeholder, those acts *look* illustrated in the simulator while sharing one image — the repetition is only obvious in a list, where the thumbnails are identical but for a completion tint. This is **Module 0**: the first content a new user opens, ahead of everything in Module 1, so the remaining fallbacks stay the highest-priority slice of the backlog. Filenames follow the shopping list already written into `foundations.ts`: `foundations-{name,thread,claim,wheel,faces,library,living,capstone}-cover.jpg`. (Note the deliberate id/title drift flagged in CLAUDE.md: the file id is `faces`, the act title is "The Gods" — the filename stays `foundations-faces-cover.jpg`.) **Note on the delivered four:** they ship as pre-framed non-square establishing plates (2:3 / 3:2, not the 1:1 master the budget assumes) — the reader center-crops them full-bleed, so the two landscape plates (name, claim) lose their left/right border on a portrait screen. Accepted as delivered.
+`src/data/foundations.ts` ships 8 acts plus a capstone, each declaring `coverImage`. **All eight acts now carry bespoke covers** (July 2026) — `foundations-{name,thread,claim,wheel,faces,library,living,capstone}-cover.jpg`, wired via `require()` consts; no `GENERIC` reference remains in `foundations.ts`. Module 0 — the first content a new user opens — is fully illustrated. Filenames follow the shopping list already written into `foundations.ts`: `foundations-{name,thread,claim,wheel,faces,library,living,capstone}-cover.jpg`. (Note the deliberate id/title drift flagged in CLAUDE.md: the file id is `faces`, the act title is "The Gods" — the filename stays `foundations-faces-cover.jpg`.) **Note on the delivered four:** they ship as pre-framed non-square establishing plates (2:3 / 3:2, not the 1:1 master the budget assumes) — the reader center-crops them full-bleed, so the two landscape plates (name, claim) lose their left/right border on a portrait screen. Accepted as delivered.
 
 **The governing rule for this set — read before generating any of the nine.** Each act teaches 4–5 ideas that *already own a canonical image twice over*: once as a Module 1 concept cover (Dharma, Maya, Samsara, Brahman & Atman, Three Gunas, The Four Great Streams, What is Hinduism?…), and once as the act's own in-body schematic figure (Part 4a). **An act cover may never use any of those concept-vehicles** — not the doorways, the four-bough tree, the pot, the rope, the three threads, the wheel, the caged bird, a book, a shelf, a lamp-as-subject, a deity figure. Instead every act cover is an **establishing image** — a place, an object, or a quality of light that sets the act's subject and mood *without* illustrating any single idea inside it. Told this way the nine become a coherent Module 0 series: eight quiet establishing plates for a primer, warming and cooling along a loose dawn-to-golden-hour arc (like the seven kandas), then one human-scale close. No figures appear until the capstone, deliberately.
 
@@ -310,10 +310,10 @@ Format for every 🆕 entry: 1:1 square, see Part 6. Border: slender gold/floral
 | What Makes Someone Hindu | `thread` · 2 | `foundations-thread-cover.jpg` | ✅ done — footprints in stone (1024×1536) |
 | Core Beliefs | `claim` · 3 | `foundations-claim-cover.jpg` | ✅ done — window onto open sky (1536×1024) |
 | Karma & Rebirth | `wheel` · 4 | `foundations-wheel-cover.jpg` | ✅ done — stone stair up a hill (1024×1536) |
-| The Gods | `faces` · 5 | `foundations-faces-cover.jpg` | 🆕 generic fallback |
-| The Scriptures | `library` · 6 | `foundations-library-cover.jpg` | 🆕 generic fallback |
-| Rituals & Festivals | `living` · 7 | `foundations-living-cover.jpg` | 🆕 generic fallback |
-| Explain It Yourself | `capstone` · 8 | `foundations-capstone-cover.jpg` | 🆕 generic fallback |
+| The Gods | `faces` · 5 | `foundations-faces-cover.jpg` | ✅ done — July 2026 (1086×1448) |
+| The Scriptures | `library` · 6 | `foundations-library-cover.jpg` | ✅ done — July 2026 (1086×1448) |
+| Rituals & Festivals | `living` · 7 | `foundations-living-cover.jpg` | ✅ done — July 2026 (1254×1254) |
+| Explain It Yourself | `capstone` · 8 | `foundations-capstone-cover.jpg` | ✅ done — two friends at golden hour, the set's human-scale close (1086×1448) |
 
 **What Hinduism Is** (`foundations-name-cover.jpg`) — Tier 1, Panorama, first light. *A wide, slow river curves through a bare open plain at dawn, open at both edges of the frame — never closing on itself. No boat, no temple, no figure. This is the Sindhu, the river the whole tradition was misnamed after, before it had a name.* Emotion: origin, older than the word. Palette: Warm Ivory dawn sky, Peacock Teal `#00796B` water, Gold `#D4AF37` rim-light.
 *Collision guard: Vishnu Purana's river closes into a complete circle at night and is empty — this one is open, and at dawn. The act's own in-body Etymology figure owns the Sindhu→Hindū→India word-chain; the cover is the river as landscape, never as diagram.*
@@ -539,12 +539,12 @@ The governing constraint: stories are the app's most collision-prone category, b
 
 ## Prayers — Phase 2 (7 items, all currently on the generic fallback)
 
-`prayers.ts` shipped 7 prayers, all sharing `generic-cover.jpg` — including Hanuman Chalisa, which doesn't even reuse the Hanuman cover. **Dedicated art per prayer.** The overriding rule for this category: a prayer's cover must **never** be its deity's cover, nor resemble it. A prayer is an act, not a person — illustrate the *act of saying it*, or what it asks for.
+`prayers.ts` shipped 7 prayers sharing `generic-cover.jpg`; **Mahamrityunjaya and Hanuman Chalisa now have dedicated covers** (July 2026), five remain on the fallback. **Dedicated art per prayer.** The overriding rule for this category: a prayer's cover must **never** be its deity's cover, nor resemble it. A prayer is an act, not a person — illustrate the *act of saying it*, or what it asks for.
 
 | Prayer | Tier | Archetype | Core image direction | Guard against |
 |---|---|---|---|---|
-| Mahamrityunjaya Mantra | 1 | Symbolic Still Life | A cucumber-vine gourd parting from its stem, ripe and released — the mantra's own image of dying free of fear | Om Namah Shivaya; Maha Shivratri |
-| Hanuman Chalisa | 1 | Diagrammatic | Forty small identical marks, made one at a time, ascending — a devotion counted, not performed | `hanuman-cover.jpg` — no Hanuman figure at all |
+| Mahamrityunjaya Mantra | 1 | Symbolic Still Life | ✅ **done** (`mahamrityunjaya-cover.jpg`, 1086×1448) — gourd on the vine at sunset, exactly the urvārukam image | Om Namah Shivaya; Maha Shivratri |
+| Hanuman Chalisa | 1 | Diagrammatic | ✅ **done** (`hanuman-chalisa-cover.jpg`, 1086×1448) — forty numbered steps ascending, 1→40 | `hanuman-cover.jpg` — no Hanuman figure at all |
 | Om Namah Shivaya | 1 | Mandala | Five syllables as five concentric rings of ash-white on indigo, the center empty | Shiva's cover; Mahamrityunjaya |
 | Shanti Mantras | 1 | Panorama | The same still horizon repeated three times as three bands — invoking peace threefold | Meditation; Raja Yoga |
 | Om Jai Jagdish Hare | 2 | Narrative | A hanging aarti lamp mid-swing, its arc traced in gold light, the room dark behind | Diwali; the lamp cluster — this one is **moving** |

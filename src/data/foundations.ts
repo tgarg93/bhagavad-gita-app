@@ -67,14 +67,16 @@ export interface FoundationsAct {
   sources: SourceNote[];
 }
 
-// Bespoke Jigyasu-track covers. Remaining acts (faces, library, living, capstone)
-// still borrow the shared GENERIC until their covers land — see
-// docs/dharma-illustration-spec.md.
-const GENERIC = require('../../assets/images/covers/generic-cover.jpg');
+// Bespoke Jigyasu-track covers — the full Module 0 set (see
+// docs/dharma-illustration-spec.md, Part 5).
 const COVER_NAME = require('../../assets/images/covers/foundations-name-cover.jpg');
 const COVER_THREAD = require('../../assets/images/covers/foundations-thread-cover.jpg');
 const COVER_CLAIM = require('../../assets/images/covers/foundations-claim-cover.jpg');
 const COVER_WHEEL = require('../../assets/images/covers/foundations-wheel-cover.jpg');
+const COVER_FACES = require('../../assets/images/covers/foundations-faces-cover.jpg');
+const COVER_LIBRARY = require('../../assets/images/covers/foundations-library-cover.jpg');
+const COVER_LIVING = require('../../assets/images/covers/foundations-living-cover.jpg');
+const COVER_CAPSTONE = require('../../assets/images/covers/foundations-capstone-cover.jpg');
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PART 1 — WHAT HINDUISM IS
@@ -1227,7 +1229,7 @@ const ACT_FACES: FoundationsAct = {
     'Most beginners drown here: too many names, no map. So we will do the map first and the names second.',
     'Four ideas: the **three great gods** and their jobs · the one who **comes down in a body** · the **Goddess**, who is the power the others act by · and a single chart that makes almost any Hindu story readable.',
   ],
-  coverImage: GENERIC,
+  coverImage: COVER_FACES,
   learnItems: [
     '**The Trimurti** — three jobs, not three ranks',
     '**Avatars** — when Vishnu comes down',
@@ -1471,7 +1473,7 @@ const ACT_LIBRARY: FoundationsAct = {
     'Every Hindu text you have ever heard named sits on one of two shelves, and knowing which one is most of what a beginner needs.',
     'Three ideas: **shruti and smriti** — including the Upanishads, where **Core Beliefs** came from · the **two epics** · and the **one conversation**, inside one of them, that outgrew the war it interrupted.',
   ],
-  coverImage: GENERIC,
+  coverImage: COVER_LIBRARY,
   learnItems: [
     '**The two shelves** — shruti “heard,” smriti “remembered”',
     '**The two epics** — one man does right; one family falls apart',
@@ -1639,7 +1641,7 @@ const ACT_LIVING: FoundationsAct = {
     'Everything so far has been what Hindus think. This is what they *do* — which, as you saw early on, is the part that actually counts.',
     'Four ideas: what the **murti** really is (almost everyone gets this wrong) · what you go to a temple **for** · how the **year** becomes a story you can now read · and the **two questions** no honest account is allowed to dodge.',
   ],
-  coverImage: GENERIC,
+  coverImage: COVER_LIVING,
   learnItems: [
     '**The murti** — worship as welcoming a guest',
     '**Darshan & prasad** — seeing, being seen, carrying it home',
@@ -1866,7 +1868,7 @@ const ACT_CAPSTONE: FoundationsAct = {
     'Seven acts ago you could not have started the sentence. Now you can.',
     'One page to gather the thirty-two ideas you are carrying, and then the question itself — asked plainly, answered in your own words. **Pass it and you are no longer Jigyasu.**',
   ],
-  coverImage: GENERIC,
+  coverImage: COVER_CAPSTONE,
   sections: [
     {
       id: 'f-capstone-recap',

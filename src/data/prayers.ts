@@ -41,6 +41,8 @@ export interface Prayer {
 }
 
 const GENERIC_COVER = require('../../assets/images/covers/generic-cover.jpg');
+const COVER_MAHAMRITYUNJAYA = require('../../assets/images/covers/mahamrityunjaya-cover.jpg');
+const COVER_HANUMAN_CHALISA = require('../../assets/images/covers/hanuman-chalisa-cover.jpg');
 
 export const PRAYERS: Prayer[] = [
   {
@@ -78,7 +80,7 @@ export const PRAYERS: Prayer[] = [
     ],
     lessonSize: 1,
     complete: true,
-    coverImage: GENERIC_COVER,
+    coverImage: COVER_MAHAMRITYUNJAYA,
   },
   {
     id: 'hanuman-chalisa',
@@ -437,7 +439,7 @@ export const PRAYERS: Prayer[] = [
     ],
     lessonSize: 4,
     complete: true,
-    coverImage: GENERIC_COVER,
+    coverImage: COVER_HANUMAN_CHALISA,
   },
   {
     id: 'om-namah-shivaya',
