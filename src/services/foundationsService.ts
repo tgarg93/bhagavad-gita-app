@@ -11,6 +11,7 @@ import LocalStorageService, {
 } from './localStorageService';
 import { capture } from './telemetryService';
 
+
 export interface FoundationsStats {
   cardsBanked: number;
   checksPassed: number;
@@ -89,6 +90,9 @@ class FoundationsService {
   async recordCheck(checkId: string, correct: boolean): Promise<void> {
     const progress = await this.getProgress();
     const prior = progress.checks[checkId];
+    if (correct && !prior?.correct) {
+      capture('knowledge_check_passed', { checkId, attempts: (prior?.attempts ?? 0) + 1 });
+    }
     progress.checks[checkId] = {
       correct: prior?.correct || correct,
       attempts: (prior?.attempts ?? 0) + 1,

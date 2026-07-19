@@ -6,6 +6,7 @@ import { View, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { profilePhotoStore, useProfilePhoto } from '../services/profilePhotoStore';
+import { trackScreen } from '../services/telemetryService';
 
 import HomeScreen from '../screens/HomeScreen';
 import WisdomHubScreen from '../screens/WisdomHubScreen';
@@ -146,8 +147,24 @@ const TabNavigator = () => {
 };
 
 const AppNavigator = () => {
+  // Screen-level funnels: emit a $screen event on every route change (names
+  // only, never params — reader content is already covered by
+  // content_reader_opened with its ids).
+  const routeNameRef = React.useRef<string | undefined>(undefined);
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() => {
+        routeNameRef.current = navigationRef.getCurrentRoute()?.name;
+      }}
+      onStateChange={() => {
+        const current = navigationRef.getCurrentRoute()?.name;
+        if (current && current !== routeNameRef.current) {
+          trackScreen(current);
+          routeNameRef.current = current;
+        }
+      }}
+    >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="MainTabs" component={TabNavigator} />
         <Stack.Screen name="ChapterDetail" component={ChapterDetailScreen} />

@@ -51,3 +51,13 @@ export function capture(event: string, properties?: Record<string, string | numb
     // analytics must never break the app
   }
 }
+
+// $screen event for navigation funnels — wired to NavigationContainer's
+// onStateChange in AppNavigator. Screen names only, never params.
+export function trackScreen(name: string): void {
+  try {
+    posthog?.screen(name);
+  } catch {
+    // analytics must never break the app
+  }
+}

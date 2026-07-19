@@ -23,6 +23,7 @@ import journeyService from '../services/journeyService';
 import { foundationsService } from '../services/foundationsService';
 import { getProgression, Progression } from '../services/progressionService';
 import LocalStorageService from '../services/localStorageService';
+import { capture } from '../services/telemetryService';
 import { AudioNarrationService } from '../services/audioNarrationService';
 import {
   JourneyItem,
@@ -79,6 +80,7 @@ const HomeScreen: React.FC = () => {
         const key = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
         LocalStorageService.saveChaiLastOpened(key);
         journeyService.touchActivity();
+        capture('daily_chai_viewed', { atomType: todaysAtom.type });
         // "Begin the path" from onboarding lands here — carry it through
         if (journeyService.consumePendingStart() && next) {
           navigateToJourneyItem(navigation, next);

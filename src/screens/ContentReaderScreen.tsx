@@ -43,6 +43,7 @@ import { foundationsService } from '../services/foundationsService';
 import { navigateToJourneyItem, navigateToContentRef } from '../data/journeyPath';
 import { prerecordedClipsFor } from '../data/foundationsAudioManifest';
 import { McqCheck, RecallCheck } from '../data/checkTypes';
+import { capture } from '../services/telemetryService';
 
 const { width } = Dimensions.get('window');
 
@@ -277,6 +278,7 @@ const ContentReaderScreen: React.FC = () => {
       setReady(true);
       const { getProgression } = require('../services/progressionService');
       pointsAtStartRef.current = (await getProgression()).points;
+      capture('content_reader_opened', { contentType, contentId });
     })();
     return () => { audioService.cleanup(); };
     // positionKey: navigateToJourneyItem uses navigate (not push), so a
