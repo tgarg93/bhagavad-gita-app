@@ -40,8 +40,17 @@ export default {
       package: "com.tushargarg.dharma"
     },
     extra: {
-      geminiApiKey: process.env.EXPO_PUBLIC_GEMINI_API_KEY,
+      // The `extra` block is the config channel PROVEN to survive the Xcode
+      // release bundling (dotenv/config above runs when EXConstants embeds this
+      // file's output). Plain EXPO_PUBLIC_ babel inlining does NOT reliably
+      // reach release bundles in this project — always mirror new runtime
+      // config here and read it via Constants.expoConfig.extra first.
       appEnv: process.env.EXPO_PUBLIC_APP_ENV,
+      supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
+      supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
+      sentryDsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+      posthogApiKey: process.env.EXPO_PUBLIC_POSTHOG_API_KEY,
+      posthogHost: process.env.EXPO_PUBLIC_POSTHOG_HOST,
     }
   }
 };

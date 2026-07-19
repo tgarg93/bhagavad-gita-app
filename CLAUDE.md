@@ -40,6 +40,7 @@ Screens: paged readers are `GitaVersePlayerScreen` (Gita) and `ContentReaderScre
 - **Status over streaks**: no streak counters or daily-pressure UI; progression surfaces as identity (Jigyasu→Guru levels). Streak logic exists only for the streak-protection notification.
 - **Nothing locked**: the journey suggests order, never enforces it.
 - Image styles inside `StyleSheet.create` hit union errors — define them as `const xStyle = {...} as const` outside.
+- **Runtime config must go through `app.config.js` `extra`** (read `Constants.expoConfig.extra.x` first, `process.env.EXPO_PUBLIC_x` as dev fallback). Plain `EXPO_PUBLIC_` babel inlining silently produces empty values in Xcode **release** bundles here (caught pre-upload on build 9 — the bundle shipped with Supabase/Sentry/PostHog config missing). The `extra` channel survives because `app.config.js` itself loads `dotenv/config` when EXConstants embeds the manifest. Always grep the archived `.app` for expected config before uploading.
 
 ## Invariants (do not change casually)
 
