@@ -112,6 +112,21 @@ export const DEFAULT_NOTIFICATION_SETTINGS: NotificationSettings = {
   streak: true,
 };
 
+// Device-calendar sync bookkeeping (deviceCalendarService). Distinct from
+// syncService — that's the push-only Supabase mirror; this is local-only
+// state about what's been written into the OS calendar.
+export interface CalendarSyncState {
+  permissionAsked?: boolean;
+  // Cached id of the "Dharma Festivals" calendar this app created on-device.
+  calendarId?: string;
+  // `${festivalId}:${occurrenceDate}` -> the device event id created for it.
+  syncedEvents: Record<string, string>;
+}
+
+export const DEFAULT_CALENDAR_SYNC_STATE: CalendarSyncState = {
+  syncedEvents: {},
+};
+
 // One turn in an ongoing reflection conversation (beyond the first exchange)
 export interface ReflectionTurn {
   role: 'user' | 'krishna';
@@ -206,6 +221,7 @@ class LocalStorageService {
     CONTENT_COMPLETION: 'content_completion',
     JOURNEY_ACTIVITY: 'journey_activity',
     NOTIFICATION_SETTINGS: 'notification_settings',
+    CALENDAR_SYNC_STATE: 'calendar_sync_state',
     CHAI_LAST_OPENED: 'daily_chai_last_opened',
     LEVEL_LAST_CELEBRATED: 'level_last_celebrated',
     PRAYER_RECITATIONS: 'prayer_recitations',
@@ -598,6 +614,26 @@ class LocalStorageService {
       await AsyncStorage.setItem(this.KEYS.NOTIFICATION_SETTINGS, JSON.stringify(settings));
     } catch (error) {
       console.error('Error saving notification settings:', error);
+    }
+  }
+
+  // ——— Device calendar sync state ———
+
+  static async getCalendarSyncState(): Promise<CalendarSyncState> {
+    try {
+      const json = await AsyncStorage.getItem(this.KEYS.CALENDAR_SYNC_STATE);
+      if (json) return { ...DEFAULT_CALENDAR_SYNC_STATE, ...JSON.parse(json) };
+    } catch (error) {
+      console.error('Error getting calendar sync state:', error);
+    }
+    return { ...DEFAULT_CALENDAR_SYNC_STATE };
+  }
+
+  static async saveCalendarSyncState(state: CalendarSyncState) {
+    try {
+      await AsyncStorage.setItem(this.KEYS.CALENDAR_SYNC_STATE, JSON.stringify(state));
+    } catch (error) {
+      console.error('Error saving calendar sync state:', error);
     }
   }
 

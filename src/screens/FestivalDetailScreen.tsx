@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -14,12 +14,15 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import SourcesCard from '../components/SourcesCard';
 import ChapterReflection from '../components/ChapterReflection';
+import deviceCalendarService from '../services/deviceCalendarService';
 import {
   festivalData,
   getNextOccurrence,
   getDaysUntilFestival,
   Festival,
 } from '../data/festivals';
+
+type CalendarSyncStatus = 'idle' | 'syncing' | 'added' | 'denied';
 
 type FestivalDetailParams = {
   FestivalDetail: { festivalId: string };
@@ -45,6 +48,18 @@ const FestivalDetailScreen: React.FC = () => {
 
   const nextOccurrence = getNextOccurrence(festival);
   const daysUntil = getDaysUntilFestival(festival);
+  const [calendarStatus, setCalendarStatus] = useState<CalendarSyncStatus>('idle');
+
+  const handleAddToCalendar = async () => {
+    setCalendarStatus('syncing');
+    const granted = await deviceCalendarService.ensurePermissions();
+    if (!granted) {
+      setCalendarStatus('denied');
+      return;
+    }
+    await deviceCalendarService.syncFestival(festival);
+    setCalendarStatus('added');
+  };
 
   const formatOccurrenceDate = (): string => {
     const date = nextOccurrence ? nextOccurrence.start : new Date(festival.date);
@@ -115,6 +130,30 @@ const FestivalDetailScreen: React.FC = () => {
             </View>
           )}
         </View>
+
+        <TouchableOpacity
+          style={[styles.calendarButton, calendarStatus === 'added' && styles.calendarButtonDone]}
+          onPress={handleAddToCalendar}
+          disabled={calendarStatus === 'syncing' || calendarStatus === 'added'}
+        >
+          <Ionicons
+            name={calendarStatus === 'added' ? 'checkmark-circle' : 'calendar-outline'}
+            size={18}
+            color={calendarStatus === 'added' ? colors.primary.peacockTeal : colors.primary.deepSaffron}
+          />
+          <Text style={[styles.calendarButtonText, calendarStatus === 'added' && styles.calendarButtonTextDone]}>
+            {calendarStatus === 'added'
+              ? 'Added to your calendar'
+              : calendarStatus === 'syncing'
+              ? 'Adding…'
+              : 'Add to Calendar'}
+          </Text>
+        </TouchableOpacity>
+        {calendarStatus === 'denied' && (
+          <Text style={styles.calendarHint}>
+            Calendar access needed — enable it for Dharma in Settings to add festivals.
+          </Text>
+        )}
 
         <View style={styles.content}>
           {/* Seed festivals open the story in the paged reader — prominent, right under the date */}
@@ -413,6 +452,38 @@ const styles = StyleSheet.create({
     ...typography.sizes.caption,
     color: '#FFFFFF',
     fontWeight: '600',
+  },
+  // Add-to-calendar action, under the date banner
+  calendarButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.xs,
+    marginHorizontal: layout.containerPadding,
+    marginTop: spacing.sm,
+    paddingVertical: spacing.sm,
+    borderRadius: borderRadius.medium,
+    borderWidth: 1,
+    borderColor: 'rgba(230, 81, 0, 0.3)',
+    backgroundColor: colors.neutrals.warmIvory,
+  },
+  calendarButtonDone: {
+    borderColor: 'rgba(0, 121, 107, 0.3)',
+  },
+  calendarButtonText: {
+    ...typography.sizes.bodySM,
+    fontWeight: '600',
+    color: colors.primary.deepSaffron,
+  },
+  calendarButtonTextDone: {
+    color: colors.primary.peacockTeal,
+  },
+  calendarHint: {
+    ...typography.sizes.caption,
+    color: colors.neutrals.softAsh,
+    textAlign: 'center',
+    marginHorizontal: layout.containerPadding,
+    marginTop: spacing.xs,
   },
   // Content
   content: {

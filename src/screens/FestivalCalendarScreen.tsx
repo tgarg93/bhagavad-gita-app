@@ -16,6 +16,7 @@ import { DharmaColors } from '../constants/colors';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import DharmaHeader from '../components/ui/DharmaHeader';
 import DharmaHeaderAction from '../components/ui/DharmaHeaderAction';
+import deviceCalendarService from '../services/deviceCalendarService';
 import {
   getTodaysFestivals,
   getFestivalsOnDate,
@@ -32,8 +33,23 @@ const FestivalCalendarScreen: React.FC = () => {
   const navigation = useNavigation();
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [viewMode, setViewMode] = useState<'cards' | 'calendar' | 'list'>('cards');
+  const [viewMode, setViewMode] = useState<'cards' | 'calendar' | 'list'>('calendar');
   const [todaysFestivals, setTodaysFestivals] = useState<Festival[]>([]);
+  const [syncStatus, setSyncStatus] = useState<'idle' | 'syncing' | 'done' | 'denied'>('idle');
+  const [syncSummary, setSyncSummary] = useState<{ added: number; skipped: number } | null>(null);
+
+  const handleSyncAll = async () => {
+    if (syncStatus === 'syncing') return;
+    setSyncStatus('syncing');
+    const granted = await deviceCalendarService.ensurePermissions();
+    if (!granted) {
+      setSyncStatus('denied');
+      return;
+    }
+    const result = await deviceCalendarService.syncAllUpcoming();
+    setSyncSummary(result);
+    setSyncStatus('done');
+  };
 
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -61,8 +77,8 @@ const FestivalCalendarScreen: React.FC = () => {
     return getFestivalsOnDate(dateStr);
   };
 
+  const today = new Date();
   const isToday = (day: number) => {
-    const today = new Date();
     return today.getDate() === day &&
            today.getMonth() === selectedMonth &&
            today.getFullYear() === selectedYear;
@@ -111,8 +127,11 @@ const FestivalCalendarScreen: React.FC = () => {
         key={day}
         style={[
           styles.calendarDay,
-          isCurrentDay && styles.todayDay,
           hasFestival && styles.festivalDay,
+          // Today must stay legible even on a festival day — a ring layered on
+          // top of the festival tint, rather than a solid fill that would
+          // otherwise be clobbered by festivalDay's background below it.
+          isCurrentDay && (hasFestival ? styles.todayRing : styles.todayDay),
         ]}
         onPress={() => {
           if (hasFestival) {
@@ -122,8 +141,8 @@ const FestivalCalendarScreen: React.FC = () => {
       >
         <Text style={[
           styles.dayNumber,
-          isCurrentDay && styles.todayDayNumber,
           hasFestival && styles.festivalDayNumber,
+          isCurrentDay && !hasFestival && styles.todayDayNumber,
         ]}>
           {day}
         </Text>
@@ -316,9 +335,32 @@ const FestivalCalendarScreen: React.FC = () => {
               onPress={() => setViewMode('list')}
               variant={viewMode === 'list' ? 'primary' : 'default'}
             />
+            <DharmaHeaderAction
+              iconName="sync-outline"
+              onPress={handleSyncAll}
+              disabled={syncStatus === 'syncing'}
+            />
           </View>
         }
       />
+
+      {syncStatus === 'done' && syncSummary && (
+        <View style={styles.syncBanner}>
+          <Ionicons name="checkmark-circle" size={16} color={DharmaColors.text.inverse} />
+          <Text style={styles.syncBannerText}>
+            {syncSummary.added > 0
+              ? `${syncSummary.added} festival${syncSummary.added === 1 ? '' : 's'} added to your calendar`
+              : 'Your calendar is already up to date'}
+          </Text>
+        </View>
+      )}
+      {syncStatus === 'denied' && (
+        <View style={[styles.syncBanner, styles.syncBannerWarn]}>
+          <Text style={[styles.syncBannerText, styles.syncBannerTextWarn]}>
+            Calendar access needed — enable it for Dharma in Settings to sync festivals.
+          </Text>
+        </View>
+      )}
 
       {/* Conditional Month Navigation - for calendar and list views */}
       {viewMode !== 'cards' && (
@@ -370,6 +412,30 @@ const styles = StyleSheet.create({
   headerControls: {
     flexDirection: 'row',
     gap: DharmaDesignSystem.spacing.sm,
+  },
+  syncBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    marginHorizontal: 24,
+    marginTop: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 8,
+    backgroundColor: DharmaColors.secondary[500],
+  },
+  syncBannerText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: DharmaColors.text.inverse,
+    textAlign: 'center',
+  },
+  syncBannerWarn: {
+    backgroundColor: 'rgba(117, 117, 117, 0.12)',
+  },
+  syncBannerTextWarn: {
+    color: DharmaColors.text.primary,
   },
   contentSpacer: {
     height: DharmaDesignSystem.spacing.lg,
@@ -446,6 +512,10 @@ const styles = StyleSheet.create({
   },
   todayDay: {
     backgroundColor: DharmaColors.secondary[500],
+  },
+  todayRing: {
+    borderWidth: 2,
+    borderColor: DharmaColors.secondary[500],
   },
   festivalDay: {
     backgroundColor: 'rgba(230, 81, 0, 0.12)',

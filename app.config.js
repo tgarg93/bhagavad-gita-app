@@ -13,7 +13,8 @@ export default {
     description: "Comprehensive Hindu wisdom platform with scriptures, festival calendar, daily insights, and AI-powered spiritual guidance.",
     plugins: [
       "expo-dev-client",
-      "expo-notifications"
+      "expo-notifications",
+      "expo-calendar"
     ],
     splash: {
       image: "./assets/dharma-lotus-transparent.png",
@@ -28,7 +29,11 @@ export default {
       bundleIdentifier: "com.tushargarg.dharma",
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
-        NSPhotoLibraryUsageDescription: "Choose a profile photo from your library"
+        NSPhotoLibraryUsageDescription: "Choose a profile photo from your library",
+        NSCalendarsUsageDescription: "Add festival dates to your calendar",
+        NSCalendarsFullAccessUsageDescription: "Add festival dates to your calendar",
+        NSRemindersUsageDescription: "Add festival dates to your calendar",
+        NSRemindersFullAccessUsageDescription: "Add festival dates to your calendar"
       },
     },
     android: {
