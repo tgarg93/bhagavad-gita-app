@@ -115,8 +115,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 23,
     color: C.neutrals.softAsh,
-    textDecorationLine: 'line-through',
-    textDecorationColor: 'rgba(0,0,0,0.25)',
   },
   itemAhead: {
     fontSize: 15,

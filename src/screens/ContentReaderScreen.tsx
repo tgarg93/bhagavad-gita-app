@@ -181,6 +181,10 @@ const ContentReaderScreen: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [highlightedSegmentId, setHighlightedSegmentId] = useState<string | null>(null);
+  // Mirrors the last real segment highlighted, so a pause (which clears the
+  // highlight) can restore it on resume instead of leaving the reader blank
+  // until the next sentence boundary — see handlePlayPause.
+  const lastSegmentIdRef = useRef<string | null>(null);
 
   const narrationContent = useMemo(
     () => (content ? sectionsToNarrationContent(content.sections) : []),
@@ -365,6 +369,7 @@ const ContentReaderScreen: React.FC = () => {
   const startPlayback = useCallback(async (fromSectionIndex: number) => {
     const callbacks: NarrationCallbacks = {
       onSegmentStart: (segmentId) => {
+        lastSegmentIdRef.current = segmentId;
         setHighlightedSegmentId(segmentId);
         const m = segmentId.match(/section-(\d+)/);
         if (m) {
@@ -421,12 +426,14 @@ const ContentReaderScreen: React.FC = () => {
       await audioService.pauseNarration();
       setIsPlaying(false);
       setIsPaused(true);
+      setHighlightedSegmentId(null);
       return;
     }
     if (isPaused) {
       await audioService.resumeNarration();
       setIsPlaying(true);
       setIsPaused(false);
+      setHighlightedSegmentId(lastSegmentIdRef.current);
       return;
     }
     // Fresh start from the active page; covers/reflection/sources start at part 1
@@ -465,7 +472,10 @@ const ContentReaderScreen: React.FC = () => {
       // don't restart the clip.
       if (page.sectionIndex === audioSectionRef.current && !isPaused) return;
       const segIdx = firstSegmentOfSection(page.sectionIndex);
-      if (segIdx >= 0) setHighlightedSegmentId(activeSegments[segIdx].id); // covers the paused case
+      if (segIdx >= 0) {
+        lastSegmentIdRef.current = activeSegments[segIdx].id;
+        setHighlightedSegmentId(activeSegments[segIdx].id); // covers the paused case
+      }
       if (prerecordedClips) {
         await audioService.seekToSection(page.sectionIndex);
       } else if (segIdx >= 0) {
@@ -515,6 +525,7 @@ const ContentReaderScreen: React.FC = () => {
     await audioService.seekToProgress(targetMs / total);
     const seg = activeSegments[audioService.getCurrentState().currentSegmentIndex];
     if (seg) {
+      lastSegmentIdRef.current = seg.id;
       setHighlightedSegmentId(seg.id);
       const m = seg.id.match(/section-(\d+)/);
       if (m) {
@@ -661,6 +672,7 @@ const ContentReaderScreen: React.FC = () => {
             section={section}
             learnItems={content.learnItems}
             getTextStyle={getTextStyle}
+            onContinue={() => skipPage(1)}
           />
         ) : section.takeaway ? (
           <FoundationCard
