@@ -666,6 +666,7 @@ const ProfileTabScreen: React.FC = () => {
             // screens are skipped on a replay.
             mode="edit"
             onComplete={() => {
+              journeyService.consumePendingStart();
               setShowOnboarding(false);
               load();
             }}

@@ -78,7 +78,7 @@ const FIRST_RUN_STEPS: StepId[] = [
 ];
 
 const EDIT_STEPS: StepId[] = FIRST_RUN_STEPS.filter(
-  s => s !== 'introApp' && s !== 'introKrishna'
+  s => s !== 'introApp' && s !== 'introKrishna' && s !== 'sendoff'
 );
 
 // Every option label has to survive on ONE line. The label column is 290pt
@@ -111,10 +111,10 @@ const INTENTION_OPTIONS: { value: string; label: string; sub: string }[] = [
 ];
 
 const GOAL_OPTIONS: { value: SpiritualProfile['dailyGoalMinutes']; label: string; sub: string }[] = [
-  { value: 5, label: '5 min / day', sub: 'Gentle' },
-  { value: 10, label: '10 min / day', sub: 'Steady' },
-  { value: 15, label: '15 min / day', sub: 'Devoted' },
-  { value: 20, label: '20 min / day', sub: 'Immersed' },
+  { value: 5, label: '5 min', sub: 'Great for busy days' },
+  { value: 10, label: '10 min', sub: 'A comfortable daily habit' },
+  { value: 15, label: '15 min', sub: 'When you want to go deeper' },
+  { value: 20, label: '20 min', sub: 'For days you can linger' },
 ];
 
 // Screen 1 — Dharma introduces itself, one line at a time. The three questions
@@ -274,8 +274,8 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
       : 'How familiar are you with Hindu teachings?',
     intentions: 'What would you like to be able to do? Choose all that speak to you.',
     goal: firstName
-      ? `One last thing, ${firstName} — how much time shall we spend together each day?`
-      : 'One last thing — how much time shall we spend together each day?',
+      ? `I'll check in with you each day, ${firstName}. How much time would you like to aim for?`
+      : "I'll check in with you each day. How much time would you like to aim for?",
     identity: firstName
       ? `Every seeker in every Upanishad began exactly where you stand now, ${firstName}.`
       : 'Every seeker in every Upanishad began exactly where you stand now.',
@@ -454,6 +454,12 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
           />
         )}
 
+        {id === 'goal' && (
+          <Reveal active={krishnaDone}>
+            <Text style={styles.goalHint}>You can change this anytime — there's no wrong answer.</Text>
+          </Reveal>
+        )}
+
         {/* Screen 1 — Dharma says what it is for. Its own component, so its
             entrance runs once on mount; inlined here it would replay on every
             re-render of this screen. */}
@@ -502,12 +508,20 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete, mode = 
               </Reveal>
             ))}
 
-          {id === 'goal' &&
-            GOAL_OPTIONS.map((o, i) => (
-              <Reveal key={String(o.value)} active={krishnaDone} delay={i * 70}>
-                {renderOption(dailyGoal === o.value, o.label, o.sub, () => setDailyGoal(o.value), String(o.value))}
+          {id === 'goal' && (
+            <>
+              {GOAL_OPTIONS.map((o, i) => (
+                <Reveal key={String(o.value)} active={krishnaDone} delay={i * 70}>
+                  {renderOption(dailyGoal === o.value, o.label, o.sub, () => setDailyGoal(o.value), String(o.value))}
+                </Reveal>
+              ))}
+              <Reveal active={krishnaDone} delay={GOAL_OPTIONS.length * 70}>
+                <TouchableOpacity onPress={next} style={styles.skipBtn}>
+                  <Text style={styles.skipText}>Not sure yet? Set this up later</Text>
+                </TouchableOpacity>
               </Reveal>
-            ))}
+            </>
+          )}
         </View>
 
         {id === 'identity' && (
@@ -726,6 +740,13 @@ const styles = StyleSheet.create({
     ...typography.sizes.bodySM,
     color: colors.neutrals.softAsh,
     textDecorationLine: 'underline',
+  },
+  goalHint: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: colors.neutrals.softAsh,
+    marginTop: spacing.sm,
+    marginBottom: spacing.md,
   },
   rhythmWrap: {
     paddingHorizontal: spacing.md,

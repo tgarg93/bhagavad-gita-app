@@ -83,10 +83,10 @@ const INTEREST_OPTIONS: FieldOption[] = [
 ].map(v => ({ value: v, label: v }));
 
 const GOAL_OPTIONS: FieldOption[] = [
-  { value: '5', label: '5 min / day' },
-  { value: '10', label: '10 min / day' },
-  { value: '15', label: '15 min / day' },
-  { value: '20', label: '20 min / day' },
+  { value: '5', label: '5 min' },
+  { value: '10', label: '10 min' },
+  { value: '15', label: '15 min' },
+  { value: '20', label: '20 min' },
 ];
 
 export const USER_KNOWLEDGE_FIELDS: UserKnowledgeField[] = [

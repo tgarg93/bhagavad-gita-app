@@ -10,6 +10,7 @@ import {
   Alert,
   Platform,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -55,6 +56,11 @@ const HomeScreen: React.FC = () => {
   const [nextStep, setNextStep] = useState<JourneyItem | null>(null);
   const [journeyDone, setJourneyDone] = useState(0);
   const [journeyTotal, setJourneyTotal] = useState(0);
+  // Onboarding's "begin the path" hand-off lands here as a pending-start flag
+  // (see journeyService). Peeked synchronously before first paint so the real
+  // dashboard never flashes empty/loading content in the moment before the
+  // redirect below fires — cleared once that check resolves either way.
+  const [suppressContent, setSuppressContent] = useState(() => journeyService.hasPendingStart());
 
   // Refresh the journey position whenever Home regains focus
   useFocusEffect(
@@ -85,6 +91,7 @@ const HomeScreen: React.FC = () => {
         if (journeyService.consumePendingStart() && next) {
           navigateToJourneyItem(navigation, next);
         }
+        setSuppressContent(false);
       })();
       return () => {
         audioService.stopSpeaking();
@@ -151,9 +158,22 @@ const HomeScreen: React.FC = () => {
     navigation.navigate('Ask Krishna' as never);
   };
 
+  // A pending-start redirect (fresh onboarding) is about to navigate away —
+  // show a bare loading state instead of the real dashboard for that one
+  // brief window, rather than flashing empty/loading cards.
+  if (suppressContent) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.suppressedLoading}>
+          <ActivityIndicator size="small" color={DharmaDesignSystem.colors.primary.deepSaffron} />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView 
+      <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -286,6 +306,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: DharmaDesignSystem.colors.neutrals.sandstoneBeige,
+  },
+  suppressedLoading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   scrollView: {
     flex: 1,

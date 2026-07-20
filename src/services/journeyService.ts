@@ -50,6 +50,13 @@ class JourneyService {
     return value;
   }
 
+  // Read-only peek, unlike consumePendingStart — lets a screen check the flag
+  // before first paint (e.g. to suppress content during the redirect) without
+  // clearing it, since only the actual consumer should do that.
+  hasPendingStart(): boolean {
+    return this.pendingStart;
+  }
+
   getPath(): JourneyItem[] {
     return buildJourneyPath();
   }
