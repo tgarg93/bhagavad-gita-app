@@ -175,7 +175,7 @@ const DailyChaiCard: React.FC<DailyChaiCardProps> = ({
           <TouchableOpacity activeOpacity={0.6} onPress={onOpenSource}>
             <Text style={styles.citation}>
               {atom.citation}
-              <Text style={[styles.citationLink, { color: accent.text }]}>{'  '}Read in app ›</Text>
+              <Text style={[styles.citationLink, { color: accent.text }]}>{'  '}Read More ›</Text>
             </Text>
           </TouchableOpacity>
         ) : (

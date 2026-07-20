@@ -79,7 +79,9 @@ const FigureModal: React.FC<{
     >
       <Pressable style={styles.backdrop} onPress={onClose}>
         <View style={[styles.expandRotate, { width: drawW }]}>
-          {React.cloneElement(svg, { width: drawW, height: drawH } as any)}
+          <View style={styles.expandCard}>
+            {React.cloneElement(svg, { width: drawW, height: drawH } as any)}
+          </View>
           <Text style={styles.expandedCaption}>{caption}</Text>
         </View>
         <Pressable
@@ -984,6 +986,11 @@ const styles = StyleSheet.create({
   expandRotate: {
     transform: [{ rotate: '90deg' }],
     alignItems: 'center',
+  },
+  expandCard: {
+    backgroundColor: C.neutrals.warmIvory,
+    borderRadius: 20,
+    padding: 16,
   },
   closeBtn: {
     position: 'absolute',

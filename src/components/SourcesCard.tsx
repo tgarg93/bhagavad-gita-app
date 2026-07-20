@@ -37,7 +37,7 @@ const SourcesCard: React.FC<{ sources: SourceNote[] }> = ({ sources }) => {
           >
             <Text style={styles.sourceLine}>
               {line}
-              <Text style={styles.sourceLinkText}>{'  '}Read in app ›</Text>
+              <Text style={styles.sourceLinkText}>{'  '}Read More ›</Text>
             </Text>
           </TouchableOpacity>
         );

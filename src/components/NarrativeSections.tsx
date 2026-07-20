@@ -170,7 +170,7 @@ const NarrativeSections: React.FC<NarrativeSectionsProps> = ({
                   >
                     <Text style={styles.citationText}>
                       {section.citation}
-                      <Text style={styles.citationLinkText}>{'  '}Read in app ›</Text>
+                      <Text style={styles.citationLinkText}>{'  '}Read More ›</Text>
                     </Text>
                   </TouchableOpacity>
                 ) : (
