@@ -1391,38 +1391,145 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/hanuman-icon.jpg',
       galleryImages: []
     },
+    kicker: 'The mighty monkey-god who can leap oceans and lift mountains — and pours every bit of that power into loving service, keeping none for himself.',
+    learnItems: [
+      'Hanuman is the mighty monkey-god and the greatest devotee of Rama',
+      'Most of what we call inability is really just forgetting',
+      'Strength given to service has no ego, and no drag',
+      'Power gets you there; gentleness accomplishes the mission',
+      "Devotion is measured by what's truly in your heart",
+    ],
+    handoff:
+      "Hanuman's power is devotion turned outward. The next face of God is power itself, fierce and protective — the warrior goddess who rides a lion into battle against the demons no one else can defeat: Durga.",
     sections: [
+      {
+        id: 'hanuman-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Hanuman is the beloved monkey-god — immensely strong, able to fly, and the most famous devotee in all of Hinduism. If you have ever seen a small orange shrine by an Indian roadside, it is very often his.\n\nOver the next few pages you'll meet him, and discover why a being who can leap across an ocean is worshipped above all for his humility and his heart.",
+      },
+      {
+        id: 'hanuman-who',
+        title: 'Who Hanuman Is',
+        subtitle: 'The monkey-god of pure devotion',
+        takeaway:
+          'Hanuman is the mighty monkey-god and the greatest devotee in all of Hinduism — a being of limitless strength who uses every bit of it not for himself, but in loving service to Rama.',
+        storyText:
+          "Hanuman is the **monkey-god**: immensely strong, able to fly and to change his size, and the most famous devotee in all of Hinduism. He is the son of **Vayu**, the wind-god, which is why he moves like the wind itself.\n\nHis whole story sits inside the **Ramayana**, the epic of Rama you met a few gods ago. When Rama's wife Sita is kidnapped and carried across the sea to the island of Lanka, it is Hanuman who leaps the ocean, finds her, and helps win the war to bring her home.\n\nBut here is what truly makes him special: Hanuman can do almost anything, and he wants nothing for himself. Every ounce of his enormous power is poured into serving the one he loves. He is what the tradition prizes most of all — total strength, wholly given away.",
+        teachingText:
+          "That combination — great power and zero ego — is far rarer than either one alone. Most powerful people spend much of their strength protecting their own image. Hanuman spends none. It is worth asking, of your own strengths: how much goes into the work itself, and how much goes into looking good while you do it?",
+        citation: 'Hanuman throughout the Valmiki Ramayana; son of Vayu, the wind: traditional.'
+      },
       {
         id: 'hanuman-forgotten-strength',
         title: 'The Strength You Forgot You Had',
-        subtitle: 'An Old Bear Speaking to a Silent Monkey',
-        storyText: 'The Ramayana\'s most quietly devastating scene is not a battle.\n\nThe vanaras sit defeated at the ocean\'s edge — the strongest among them can leap ninety yojanas, and Lanka lies at a hundred. Hanuman sits apart, saying nothing. He does not volunteer because **it does not occur to him that he can do it**: a childhood curse made him forget his own powers until reminded.\n\nThen **Jambavan**, the ancient bear, walks over and does the only heroic thing left to old age — **he remembers on another\'s behalf**. Son of the wind. The infant who leapt for the sun. The one for whom this ocean is a puddle. And Hanuman grows with every sentence, because the words are not flattery; they are facts he had misplaced.',
-        teachingText: 'The curse of forgotten strength is not mythology — it is Monday morning. Capability you demonstrated for years disappears from your self-image after one season of defeat.\n\nHanuman\'s teaching here is double: **seek your Jambavans**, the ones who state your powers as facts; and **be one**, because reminding someone of their strength is not encouragement, it is testimony.',
-        citation: 'Valmiki Ramayana, Kishkindha Kanda, sargas 65–67.'
+        subtitle: 'An old bear speaking to a silent monkey',
+        takeaway:
+          "Hanuman sat silent at the ocean's edge, having literally forgotten he was strong enough to leap it. An old friend simply reminded him who he was — and he grew with every word.",
+        storyText:
+          "The Ramayana's most quietly moving scene is not a battle. Rama's search party of monkey-warriors sits defeated at the edge of the ocean. Somewhere far across that sea is Lanka, where Sita is held prisoner, and it is simply too wide to jump. The strongest among them try in their minds and fall short.\n\nHanuman sits apart, saying nothing. He does not offer to try, because it genuinely does not occur to him that he can: as a child he was cursed to forget his own powers until someone reminded him of them.\n\nThen **Jambavan**, an ancient and wise bear, walks over and does the one heroic thing still left to the old — he remembers on Hanuman's behalf. You are the son of the wind, he says. You are the child who once leapt for the sun. For you, this whole ocean is a puddle. And with every sentence, Hanuman literally grows larger, because the words are not flattery. They are facts about himself that he had simply misplaced.",
+        teachingText:
+          "This curse of forgotten strength is not just a myth; it is Monday morning. Abilities you showed for years can vanish from your own self-image after a single season of failure. Hanuman's lesson here runs both ways: seek out your 'Jambavans,' the people who will state your strengths back to you as plain facts. And be one for others, because reminding someone of their own power is not merely encouragement. It is testimony.",
+        citation: 'Valmiki Ramayana, Kishkindha Kanda, sargas 65–67.',
+        checks: [
+          {
+            id: 'chk:deity:hanuman:strength',
+            kind: 'mcq',
+            prompt: 'Hanuman sat silent while the others despaired at the ocean, even though he alone could cross it. Why?',
+            options: [
+              {
+                text: 'A childhood curse had made him forget his own powers — he needed a friend to remind him who he was',
+                correct: true,
+              },
+              { text: 'He was too proud to help the other monkeys' },
+              { text: 'He was genuinely too weak to make the leap' },
+            ],
+            why: 'Most of what we call inability is really forgetting. Everyone needs a Jambavan to remind them of powers they have stopped believing in — and everyone must sometimes be one.',
+          },
+        ],
+      },
+      {
+        id: 'hanuman-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          'His strength came back the moment he remembered whose it was for. That is the real secret of his power, and the next card names it.',
       },
       {
         id: 'hanuman-whose-work',
         title: 'Strength That Serves',
-        subtitle: 'A Mace Laid at Two Pairs of Feet',
-        storyText: 'Everything Hanuman does is enormous — oceans leapt, cities burned, mountains carried — and **none of it is for himself**.\n\nThis is the engineering secret of his character: **strength without ego has no drag.** The mighty in the epics who serve themselves — Ravana above all, with his ten heads of self-regard — spend most of their power maintaining their own image. Hanuman spends nothing on himself.\n\nAsked how he crossed the impossible ocean, his answer is always the same: by Rama\'s name and Rama\'s work. The strength is real, but the frictionlessness comes from the devotion.',
-        teachingText: 'Watch what happens to your own capability when the work is genuinely for something beyond you — the meeting where you stop defending your idea and start serving the problem. **Ego is drag.**\n\nHanuman\'s question for any undertaking: whose work is this? When the honest answer is "something larger than me," you will find, like him, that you are suddenly bigger than the obstacle.',
-        citation: 'Valmiki Ramayana, Sundara Kanda (the crossing).'
+        subtitle: 'Power with nothing left over for the self',
+        takeaway:
+          "Everything Hanuman does is enormous, and none of it is for himself. Strength without ego has no drag: because he serves something larger, he ends up bigger than any obstacle.",
+        storyText:
+          "Everything Hanuman does is enormous — oceans leapt, cities burned, mountains carried — and none of it is for himself.\n\nThis is the secret engine of his character: strength without ego has no drag. The mighty figures in the epics who serve only themselves — like **Ravana**, the ten-headed demon-king who kidnapped Sita — burn most of their power simply defending their own image. Hanuman spends nothing on himself.\n\nAsked how he crossed the impossible ocean, his answer is always the same: by Rama's name, and for Rama's sake. The strength is real, but its effortlessness comes from the devotion.",
+        teachingText:
+          "Watch what happens to your own ability when the work is genuinely for something beyond you — the meeting where you stop defending your idea and start serving the actual problem. Ego is drag. Hanuman's question for any task is simple: whose work is this? When the honest answer is 'something larger than me,' you may find, as he did, that you have suddenly become bigger than the obstacle.",
+        citation: 'Valmiki Ramayana, Sundara Kanda (the crossing).',
+        checks: [
+          {
+            id: 'chk:deity:hanuman:service',
+            kind: 'mcq',
+            prompt: 'Hanuman does enormous things but keeps nothing for himself. What does the tradition say makes his strength so effortless?',
+            options: [
+              {
+                text: 'It is given entirely to service — strength without ego has no drag, so he ends up bigger than any obstacle',
+                correct: true,
+              },
+              { text: 'He is simply the strongest being in the universe by nature' },
+              { text: 'He uses secret magic weapons the others do not have' },
+            ],
+            why: 'Those who serve only themselves spend most of their power protecting their own image. Hanuman spends none, so all of it reaches the work. Ego is drag.',
+          },
+        ],
       },
       {
         id: 'hanuman-in-lanka',
         title: 'Alone in the Enemy City',
-        subtitle: 'A Small Monkey in Golden Lanka at Night',
-        storyText: 'Having crossed the ocean as a giant, Hanuman enters Lanka the opposite way — **shrunk to the size of a cat**, slipping through the golden city by night.\n\nThe Sundara Kanda lingers on his searching: palace by palace, room by room, through Ravana\'s sleeping splendor, discipline holding against despair as Sita is nowhere.\n\nWhen he finally finds her under the ashoka tree — guarded, grieving, refusing Ravana — he faces a subtle problem: how does a monkey appear before a captive queen without terrifying her? **He begins softly, from the branches, singing Rama\'s story** — her own story — until hope arrives before he does. Then he presents the ring.',
-        teachingText: 'Power got him to Lanka; **gentleness accomplished the mission**.\n\nApproaching someone in despair takes Hanuman\'s branch-singing: not bursting in with solutions, but letting the familiar story of what they love reach them first. The Sundara Kanda is recited in Indian homes precisely in seasons of crisis — a manual for carrying hope into dark places without breaking anything.',
+        subtitle: 'A small monkey in golden Lanka at night',
+        takeaway:
+          "Hanuman crossed the ocean by force, but rescued hope by gentleness. Finding the grieving Sita, he didn't burst in — he softly sang her husband's story from the branches until hope reached her first.",
+        storyText:
+          "Having crossed the ocean as a giant, Hanuman enters Lanka the opposite way — shrinking himself to the size of a cat, and slipping through the glittering city by night.\n\nThe epic lingers on his search: palace by palace, room by room, through the sleeping splendour of Ravana's city, his discipline holding against despair as Sita is nowhere to be found.\n\nWhen he finally spots her, held in a grove of **ashoka** trees, guarded and grieving but still refusing Ravana, he faces a delicate problem: how does a strange monkey appear before a captive, frightened queen without terrifying her? So he doesn't. He begins softly, hidden in the branches above her, singing the story of Rama — her own story — until hope reaches her before he does. Only then does he show himself, and give her a ring that Rama had sent as proof.",
+        teachingText:
+          "Power got him to Lanka; gentleness accomplished the actual mission. Reaching someone in despair takes Hanuman's branch-singing: not bursting in with solutions, but letting the familiar story of what they love reach them first. This part of the epic is recited in Indian homes precisely in times of crisis, as a kind of manual for carrying hope into dark places without breaking anything.",
         citation: 'Valmiki Ramayana, Sundara Kanda.'
+      },
+      {
+        id: 'hanuman-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          "Strength, service, and gentleness. One image of Hanuman remains, and it is the one carved deepest into the tradition's heart.",
       },
       {
         id: 'hanuman-chest',
         title: 'What Lives in the Chest',
-        subtitle: 'Pearls Torn, a Chest Opened',
-        storyText: 'At Rama\'s coronation, gifts flowed. Sita gave Hanuman a necklace of pearls beyond price.\n\nHe held it to his ear, bit a pearl open, frowned, bit another, discarding each — searching. Asked what he was doing, he said: **I keep nothing that does not contain Rama.** The court laughed at the simple monkey.\n\nAnd Hanuman, in the telling beloved of the later tradition, **tore open his own chest** — and there, seated in his heart, were Rama and Sita. The court stopped laughing. Whatever one makes of the image, its claim is exact: the measure of devotion is not what you wear or say, but what an honest opening of your chest would reveal.',
+        subtitle: 'A necklace bitten open, a chest torn wide',
+        takeaway:
+          "Given a priceless pearl necklace, Hanuman tore each pearl open looking for Rama inside — then tore open his own chest, and there sat Rama in his heart. Devotion is measured by what's really inside you, not what you wear or say.",
+        storyText: "At Rama's coronation, gifts flowed, and Sita gave Hanuman a necklace of priceless pearls.\n\nHe held it to his ear, bit one pearl open, frowned, bit another, and threw each aside — searching for something. Asked what on earth he was doing, he answered: I keep nothing that does not contain Rama. The court laughed at the simple-minded monkey.\n\nAnd then Hanuman, in the version the later tradition loves most, tore open his own chest with his hands — and there, seated inside his heart, were Rama and Sita. The court stopped laughing. Whatever you make of the image, its claim is exact: the true measure of devotion is not what you wear or say, but what an honest look inside your chest would reveal.",
         teachingText: 'This story is later tradition rather than Valmiki, and the tradition kept it because it asks the only question that matters: **if your chest were opened** — your calendar, your accounts, your browser history, your 3 a.m. thoughts — **what would be found enthroned there?**\n\nHanuman\'s answer had the advantage of being true. The practice is to make yours true too, one relocation of the heart at a time.',
-        citation: 'The opened chest: later devotional tradition (not Valmiki), widely told.'
+        citation: 'The opened chest: later devotional tradition (not Valmiki), widely told.',
+        checks: [
+          {
+            id: 'chk:deity:hanuman:chest',
+            kind: 'mcq',
+            prompt: 'Given a priceless pearl necklace, Hanuman bit each pearl open, then tore open his own chest. Why?',
+            options: [
+              {
+                text: 'He kept nothing that did not contain Rama — and inside his own heart sat Rama himself; devotion is what an honest look inside would reveal',
+                correct: true,
+              },
+              { text: 'He was only checking whether the pearls were real' },
+              { text: 'He wanted to prove he was stronger than the whole court' },
+            ],
+            why: 'The measure of devotion is not what you wear or say, but what would be found enthroned in your heart if it were opened. Hanuman\'s answer had the advantage of being true.',
+          },
+        ],
       }
     ],
     sources: [
@@ -1443,7 +1550,9 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Hanuman forgot his own strength until a friend reminded him. What are you good at that you tend to forget?'
+      'Hanuman forgot his own strength until a friend reminded him. What are you good at that you tend to forget?',
+      "Whose 'Jambavan' could you be this week — reminding someone of a strength they've stopped believing they have?",
+      'Think of a task that feels too big. How would it change if you asked Hanuman\'s question: whose work is this, really?',
     ]
   },
   {
