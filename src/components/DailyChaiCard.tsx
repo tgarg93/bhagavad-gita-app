@@ -152,7 +152,7 @@ const DailyChaiCard: React.FC<DailyChaiCardProps> = ({
   };
 
   return (
-    <View style={[styles.card, { borderColor: accent.border }]}>
+    <View style={[styles.card, compact && styles.cardCompact, { borderColor: accent.border }]}>
       <View style={styles.top}>
         <Text style={[styles.tag, { color: accent.text }]}>
           ☕ DAILY CHAI · {(atom.tagOverride ?? ATOM_TAGS[atom.type]).toUpperCase()}
@@ -187,23 +187,29 @@ const DailyChaiCard: React.FC<DailyChaiCardProps> = ({
 };
 
 const styles = StyleSheet.create({
+  // The Home hero: generous padding and a real vertical rhythm so the insight
+  // has room to breathe (the card used to feel cramped and dense).
   card: {
     backgroundColor: DharmaDesignSystem.colors.neutrals.white,
-    borderRadius: DharmaDesignSystem.borderRadius.large,
+    borderRadius: DharmaDesignSystem.borderRadius.xLarge,
     borderWidth: 1,
-    padding: DharmaDesignSystem.spacing.md,
+    padding: DharmaDesignSystem.spacing.lg,
     ...DharmaDesignSystem.shadows.soft,
+  },
+  // Onboarding preview sits inside a tighter frame — keep it from ballooning.
+  cardCompact: {
+    padding: DharmaDesignSystem.spacing.md,
   },
   top: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 6,
+    marginBottom: 16,
   },
   tag: {
-    fontSize: 10.5,
+    fontSize: 11,
     fontWeight: '800',
-    letterSpacing: 0.8,
+    letterSpacing: 0.9,
     flexShrink: 1,
     paddingRight: DharmaDesignSystem.spacing.sm,
   },
@@ -212,18 +218,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 14,
   },
+  // The insight itself — the hero line. Large enough to read as a pull-quote so
+  // you get the point without reading the body.
   hook: {
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 24,
+    lineHeight: 32,
+    letterSpacing: -0.2,
     color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     fontWeight: '700',
-    marginBottom: 6,
+    marginBottom: 15,
   },
+  // Body recedes under the hero: smaller, a touch softer, with air above.
   body: {
-    fontSize: 14.5,
-    lineHeight: 23,
-    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
-    marginBottom: 8,
+    fontSize: 15,
+    lineHeight: 24,
+    color: '#4A453E',
+    marginBottom: 18,
   },
   // compare (Across Traditions) that carries a maxim: the Sanskrit verse, then the
   // English quote as the hero, then the convergence note (styles.body).
@@ -295,8 +305,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   sayingLine: {
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 18,
+    lineHeight: 26,
     color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     fontWeight: '600',
     marginBottom: 10,
@@ -331,8 +341,8 @@ const styles = StyleSheet.create({
   },
   // verse — English carries, Sanskrit ornaments (ported from the old card)
   verseEnglish: {
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 19,
+    lineHeight: 28,
     fontWeight: '600',
     color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     marginBottom: 6,

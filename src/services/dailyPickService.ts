@@ -5,29 +5,31 @@
 // 28 future days from a single snapshot, and HomeScreen and every notification
 // agree for a given day.
 //
-// The blend the user asked for: candidates are filtered to unseen + routable,
-// scored by interest/family-stream overlap + journey proximity + level fit, then
-// INTERLEAVED across content kinds (deity, concept, story, …) so consecutive
-// discovery days rotate through different parts of the app rather than serving a
-// run of deities. Within each kind, the most relevant item comes first.
+// The card copy is AUTHORED, not generated: each candidate's headline/body come
+// from src/data/discoveryTeasers.ts (an "aha" insight in the Jigyasu-track
+// voice). Discovery is gated to refs that HAVE a teaser, so a flat catalog blurb
+// can never ship. On top of the teaser gate the blend still applies: candidates
+// are filtered to unseen + routable, scored by interest/family-stream overlap +
+// journey proximity + level fit, then INTERLEAVED across content kinds (deity,
+// concept, story, …) so consecutive discovery days rotate through different parts
+// of the app. Within each kind, the most relevant item comes first.
 import { getAllContent } from '../data/contentAggregator';
 import { routeForContentRef } from '../data/journeyPath';
-import { FOUNDATIONS_ACTS } from '../data/foundations';
+import { DISCOVERY_TEASERS } from '../data/discoveryTeasers';
 import LocalStorageService from './localStorageService';
 import { journeyService } from './journeyService';
 import { getProgression } from './progressionService';
 import { buildDailyAtom, DailyAtom, DailyPickSnapshot, DiscoveryCandidate } from '../data/dailyAtoms';
 
-// Which ContentCard categories become discovery candidates, and how each kind
-// presents. Prayers ('mantras') are excluded: they aren't tracked in the
-// completion map (so "unseen" can't be honored) and open a different player.
-const CATEGORY_KINDS: Record<string, { kind: string; tag: string; citation: string }> = {
-  deities: { kind: 'deity', tag: 'Meet a deity', citation: 'From the guide to the gods' },
-  philosophy: { kind: 'concept', tag: 'An idea to explore', citation: 'From the teachings' },
-  stories: { kind: 'story', tag: 'A story to know', citation: 'From the stories' },
-  scriptures: { kind: 'scripture', tag: 'A text to open', citation: 'From the scriptures' },
-  festivals: { kind: 'festival', tag: 'A festival to know', citation: 'From the festival guide' },
-  practices: { kind: 'practice', tag: 'A practice to try', citation: 'From the practices' },
+// ContentCard category → content-ref kind, used only to look up a card's
+// tags/difficulty for scoring (the display copy comes from the teaser).
+const KIND_BY_CATEGORY: Record<string, string> = {
+  deities: 'deity',
+  philosophy: 'concept',
+  stories: 'story',
+  scriptures: 'scripture',
+  festivals: 'festival',
+  practices: 'practice',
 };
 
 // Round-robin order for interleaving. Foundations sit last so the structured
@@ -49,28 +51,6 @@ interface RankContext {
   nextUnfinishedKind: string | null;
   level: number;
 }
-
-// First 1–2 sentences of a description, capped, so the card body stays tight.
-const teaser = (text: string): string => {
-  const trimmed = (text || '').trim();
-  if (trimmed.length <= 180) return trimmed;
-  const cut = trimmed.slice(0, 180);
-  const lastStop = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('! '), cut.lastIndexOf('? '));
-  return lastStop > 80 ? cut.slice(0, lastStop + 1) : cut.trimEnd() + '…';
-};
-
-const krishnaPromptFor = (kind: string, title: string): string => {
-  switch (kind) {
-    case 'deity':
-      return `Who is ${title}, and what does this form teach me?`;
-    case 'festival':
-      return `What is ${title} about, and how is it celebrated?`;
-    case 'practice':
-      return `How do I begin practicing ${title}, and what is it for?`;
-    default:
-      return `Tell me about ${title} — what should I understand about it?`;
-  }
-};
 
 const scoreCandidate = (
   kind: string,
@@ -99,66 +79,41 @@ const scoreCandidate = (
   return score;
 };
 
-// Build every routable, unseen candidate with its blend score.
+// Build every teaser-backed, routable, unseen candidate with its blend score.
+// Sourced from the authored DISCOVERY_TEASERS map; the catalog is consulted only
+// to pull each item's tags/difficulty for scoring.
 const collectCandidates = (ctx: RankContext): Scored[] => {
-  const out: Scored[] = [];
-  const seenRefs = new Set<string>();
-
-  const add = (
-    kind: string,
-    id: string,
-    title: string,
-    description: string,
-    tag: string,
-    citation: string,
-    tags: string[],
-    difficulty: string
-  ) => {
-    const ref = `${kind}:${id}`;
-    if (seenRefs.has(ref)) return;
-    if (ctx.completed.has(ref)) return; // unseen only
-    if (!routeForContentRef(ref)) return; // must be navigable (some story/scripture refs aren't)
-    seenRefs.add(ref);
-    out.push({
-      kind,
-      score: scoreCandidate(kind, tags, difficulty, ref, title, ctx),
-      cand: {
-        ref,
-        tag,
-        hook: title,
-        body: teaser(description),
-        citation,
-        krishnaPrompt: krishnaPromptFor(kind, title),
-      },
-    });
-  };
-
+  // ref → scoring signals from the browse catalog (teasers carry no tags).
+  const catalog = new Map<string, { tags: string[]; difficulty: string }>();
   for (const card of getAllContent()) {
-    const config = CATEGORY_KINDS[card.category as string];
-    if (!config) continue;
-    add(
-      config.kind,
-      card.id,
-      card.title,
-      card.description,
-      config.tag,
-      config.citation,
-      card.tags ?? [],
-      (card.difficulty as string) ?? 'beginner'
-    );
+    const kind = KIND_BY_CATEGORY[card.category as string];
+    if (!kind) continue;
+    catalog.set(`${kind}:${card.id}`, {
+      tags: card.tags ?? [],
+      difficulty: (card.difficulty as string) ?? 'beginner',
+    });
   }
 
-  for (const act of FOUNDATIONS_ACTS) {
-    add(
-      'foundations',
-      act.id,
-      act.title,
-      act.kicker || act.subtitle || '',
-      'A foundation to build',
-      'From the Foundations',
-      [],
-      'beginner'
-    );
+  const out: Scored[] = [];
+  for (const [ref, teaser] of Object.entries(DISCOVERY_TEASERS)) {
+    if (ctx.completed.has(ref)) continue; // unseen only
+    if (!routeForContentRef(ref)) continue; // must be navigable
+    const kind = ref.slice(0, ref.indexOf(':'));
+    const meta = catalog.get(ref) ?? { tags: [], difficulty: 'beginner' };
+    out.push({
+      kind,
+      // eyebrow (not headline) carries the subject name, so it's the better
+      // haystack for a family-stream match ("Meet Shiva" → shaiva readers).
+      score: scoreCandidate(kind, meta.tags, meta.difficulty, ref, teaser.eyebrow, ctx),
+      cand: {
+        ref,
+        tag: teaser.eyebrow,
+        hook: teaser.headline,
+        body: teaser.body,
+        citation: teaser.citation,
+        krishnaPrompt: teaser.krishnaPrompt,
+      },
+    });
   }
 
   return out;

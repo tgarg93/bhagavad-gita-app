@@ -425,7 +425,10 @@ const styles = StyleSheet.create({
   },
   chaiSlot: {
     marginHorizontal: DharmaDesignSystem.spacing.md,
-    marginTop: DharmaDesignSystem.spacing.sm,
+    // Extra air above so the chai reads as the hero of Home, not one card among
+    // equals with the status row and Continue card.
+    marginTop: DharmaDesignSystem.spacing.lg,
+    marginBottom: DharmaDesignSystem.spacing.xs,
   },
   festivalsCard: {
     backgroundColor: DharmaDesignSystem.colors.neutrals.warmIvory,
