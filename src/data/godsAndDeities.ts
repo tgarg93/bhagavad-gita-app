@@ -566,45 +566,144 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/rama-icon.jpg',
       galleryImages: ['/images/deities/rama-sita.jpg', '/images/deities/rama-court.jpg']
     },
+    kicker: 'Another human form of Vishnu — the prince who keeps his word even when it costs him his crown, his home, and fourteen years.',
+    learnItems: [
+      'Rama is a human form of Vishnu, whose whole life turns on keeping his word',
+      "A promise doesn't expire just because keeping it got expensive",
+      'His years of exile in the forest were the making of him, not an interruption',
+      "Every contribution counts — even a squirrel's grains of sand",
+      'His greatest gift was the smallest: a name to repeat',
+    ],
+    handoff:
+      'Krishna and Rama are both Vishnu, the protector, walking the earth as humans. But the Hindu God wears other faces too. The next is the strangest and most powerful: the god who destroys the old world so a new one can begin — Shiva.',
     sections: [
       {
+        id: 'rama-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Rama is one of Hinduism's most beloved gods, and the hero of a vast, thrilling epic called the **Ramayana** — a story of exile, a kidnapped wife, a war, and a monkey army. But at its centre is a simple idea: a good man who keeps his word no matter what it costs him.\n\nOver the next few pages you'll meet him, and the moments that made him India's model for how to live.",
+      },
+      {
         id: 'rama-ideal',
-        title: 'The Man Who Never Broke',
-        subtitle: 'A Straight Line Drawn Through a Crooked World',
-        storyText: 'Rama\'s title is unique among the gods: **Maryada Purushottama** — the supreme man of boundaries, the one who never once crossed the line of dharma.\n\nWhere Krishna bends rules with a smile, Rama holds them with his life. The Valmiki Ramayana presents him not as a god acting a part but as **a man** — tempted, bereaved, furious, heartbroken — who at every fork chooses the harder right over the easier wrong.\n\nThat is precisely why India gave him its highest reverence: anyone can admire a god\'s perfection; Rama\'s perfection is the kind a human being could bleed for and still choose.',
-        teachingText: 'Rama\'s question for your life is the boundary question: **what line would you not cross at any price** — not when it costs a kingdom, not when it costs fourteen years?\n\nA person who has answered it walks differently. The Ramayana is one long demonstration of that walk.',
+        title: 'Who Rama Is',
+        subtitle: 'The prince who would not cross a line',
+        takeaway:
+          'Rama is another human form of Vishnu — a prince whose whole life turns on keeping his word and doing the right thing, even when it costs him everything.',
+        storyText:
+          "Like Krishna, Rama is an **avatar** of **Vishnu**, the god who protects the world — in fact the incarnation just before Krishna. But where Krishna is playful and bends the rules with a smile, Rama is his opposite: the man who never crosses a line.\n\nRama was a prince of **Ayodhya**, a north-Indian kingdom, and his life is told in the **Ramayana**, one of Hinduism's two great epic poems. It is the story of a thoroughly good man who loses almost everything — his crown, his home, and eventually his wife **Sita** — because he refuses, again and again, to take the easy wrong path.\n\nHis title says it all: **Maryada Purushottama**, which means 'the perfect man of right conduct' — the one who never once stepped over the line of what was right, whatever it cost him.",
+        teachingText:
+          "That is why Hindus give Rama such deep reverence. Anyone can admire a god's flawless perfection from a safe distance. Rama's kind of goodness is different: it is the sort an ordinary person could actually bleed for and still choose. His whole story asks you one question — what line would you refuse to cross, even if crossing it would win you a kingdom?",
         citation: 'Valmiki Ramayana (throughout); Maryada Purushottama: traditional epithet.'
       },
       {
         id: 'rama-word',
         title: 'A Father\'s Word, Kept by the Son',
-        subtitle: 'Royal Ornaments Set Down Without a Tremor',
-        storyText: 'The exile turns on a single principle: **a promise does not expire because keeping it became expensive.**\n\nDasharatha\'s old boon to Kaikeyi was legally his to break and emotionally everyone\'s to excuse — the whole city begged Rama to ignore it. He would not, because the word of the house of Raghu was the house of Raghu: **"Rama does not speak two ways."**\n\nHe kept a promise he never made, at a price he did not owe, to preserve a thing no one could see — and the tradition judged that invisible thing worth more than the visible throne.',
-        teachingText: 'Every family and institution runs on invisible collateral: the confidence that its word means something. Each kept promise deposits; each clever escape withdraws.\n\nRama\'s extreme is a compass, not a demand — but ask what your own word is currently worth to the people who hold it, and what one expensive kept promise would do to that account.',
-        citation: 'Valmiki Ramayana, Ayodhya Kanda.'
+        subtitle: 'A crown set down without a tremor',
+        takeaway:
+          "A promise doesn't expire just because keeping it turned expensive. Rama gave up his crown to honour a word that wasn't even his own.",
+        storyText:
+          "Rama's exile turns on one idea: a promise does not stop being binding just because keeping it has become painful.\n\nYears earlier, Rama's father, King **Dasharatha**, had granted his queen **Kaikeyi** two wishes, whenever she chose to claim them. Now, on the very eve of Rama's coronation, she claimed them: send Rama away to the forest for fourteen years, and crown her own son **Bharata** (Rama's younger half-brother) instead. The promise was old, the king was collapsing with grief, and the whole city begged Rama to just ignore it. He would not. His family's given word, he believed, was the family's honour itself, and he would not let it die.\n\nSo he set down a crown that was rightfully his, to keep a promise he had never personally made, at a price he did not owe — because both he and the tradition judged that invisible thing, a word kept, to be worth more than the visible throne.",
+        teachingText:
+          'Every family and every institution runs on invisible trust: the quiet confidence that its word means something. Each promise kept adds to that account; each clever escape drains it.\n\nRama\'s extreme is a compass, not a demand. But it is worth asking what your own word is currently worth to the people who rely on it, and what one expensive kept promise would do for that trust.',
+        citation: 'Valmiki Ramayana, Ayodhya Kanda.',
+        checks: [
+          {
+            id: 'chk:deity:rama:word',
+            kind: 'mcq',
+            prompt: "Rama could have legally broken his late father's promise, and the whole city urged him to. Why did he keep it and accept exile instead?",
+            options: [
+              {
+                text: "Because a promise doesn't stop being binding just because keeping it became painful — his family's word was its honour",
+                correct: true,
+              },
+              { text: 'Because he was afraid of his stepmother, Kaikeyi' },
+              { text: 'Because he did not really want to be king anyway' },
+            ],
+            why: 'Rama gave up a throne that was rightfully his to keep a word he had never even made himself. The tradition judged that invisible thing, a promise kept, to be worth more than the visible crown.',
+          },
+        ],
+      },
+      {
+        id: 'rama-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          'You have met Rama and the promise that cost him his crown. Now the forest, where losing everything quietly turned him into the king he would become.',
       },
       {
         id: 'rama-exile-years',
         title: 'Fourteen Years of Forest',
-        subtitle: 'A Palace Prince Learning the Names of Trees',
-        storyText: 'The exile was not an interlude; **it was the making.**\n\nIn the forest, the prince became something Ayodhya could never have taught him: a man acquainted with hardship, with hermits and tribal chiefs, with hunger, with the grief of losing Sita to Ravana\'s deceit.\n\nHis alliances there — **Guha** the boatman, the vulture **Jatayu** who died defending Sita, **Shabari** with her berries, **Hanuman** and the vanaras — were friendships of the excluded, and they, not Ayodhya\'s armies, won the war. When he returned to rule, he ruled as a king who had slept on the ground of his own kingdom.',
-        teachingText: 'The forest years reframe every derailment: the demotion, the illness, the season everything was taken away.\n\nRama\'s exile suggests the wilderness is where your future allies are met and your real education happens — and that the ones who return from it rule differently. **What did (or does) your forest teach that the palace never could?**',
-        citation: 'Valmiki Ramayana, Aranya Kanda.'
+        subtitle: 'A palace prince learning the names of trees',
+        takeaway:
+          "Rama's fourteen years of exile weren't an interruption — they were the making of him. The hardest stretch is often where your real education, and your real allies, are found.",
+        storyText:
+          "Rama's exile was not a sad gap in his life. It was the making of him.\n\nIn the forest, the pampered prince became something the palace could never have taught him: a man who knew hardship and hunger, who lived among hermits and forest tribes, and who suffered the worst grief of his life when **Ravana**, the demon-king of the faraway island of **Lanka**, kidnapped his wife Sita.\n\nAnd the friends he made in that hard place — a humble boatman, a dying vulture who tried to save Sita, an old forest woman who fed him berries, and above all **Hanuman** and his army of **vanaras** (a race of noble, intelligent monkey-people) — were the friendships of the overlooked. It was they, not the armies of his kingdom, who finally won his war. When Rama at last returned to rule, he ruled as a king who had slept on the bare ground of his own land.",
+        teachingText:
+          "The forest years reframe every setback: the demotion, the illness, the season when everything was taken. Rama's exile suggests the wilderness is exactly where your real education happens and your future allies are met, and that people who come back from it lead differently. What did your own 'forest' teach you that no comfortable stretch ever could?",
+        citation: 'Valmiki Ramayana, Aranya Kanda.',
+        checks: [
+          {
+            id: 'chk:deity:rama:exile',
+            kind: 'mcq',
+            prompt: "The tradition insists Rama's fourteen years of forest exile were not a sad interruption. What were they?",
+            options: [
+              {
+                text: 'The making of him — where he learned hardship and won the friends of the overlooked who would later win his war',
+                correct: true,
+              },
+              { text: 'A punishment he secretly deserved for a past mistake' },
+              { text: 'Wasted years that he spent the rest of his life regretting' },
+            ],
+            why: "The forest taught the pampered prince what the palace never could, and his allies there — not his kingdom's armies — won the war. He came back a king who had slept on the bare ground of his own land.",
+          },
+        ],
       },
       {
         id: 'rama-bridge',
         title: 'The Bridge and the Squirrel',
-        subtitle: 'An Ocean Crossed Stone by Floating Stone',
-        storyText: 'To reach Lanka and Sita, an ocean had to be crossed. The army of monkeys and bears built a **bridge of floating stones** — and the tradition\'s favorite worker on it is the smallest: a squirrel, rolling in sand and shaking it between the stones.\n\nWhen the great monkeys laughed, Rama picked the squirrel up and stroked its back — the stripes squirrels carry to this day, says the beloved tale.\n\nThe bridge held. The war was won by an alliance in which **every contribution, from Hanuman\'s mountain-carrying to the squirrel\'s sand, counted as sacred**.',
+        subtitle: 'An ocean crossed stone by floating stone',
+        takeaway:
+          'In the war to rescue Sita, even a squirrel carrying grains of sand mattered. A great leader makes the smallest helper feel honoured, not laughed at.',
+        storyText: 'To reach Lanka and rescue Sita, Rama\'s army had to cross the ocean. The army of monkeys and bears built a **bridge of floating stones** — and the tradition\'s favorite worker on it is the smallest: a squirrel, rolling in sand and shaking it between the stones.\n\nWhen the great monkeys laughed, Rama picked the squirrel up and stroked its back — the stripes squirrels carry to this day, says the beloved tale.\n\nThe bridge held. The war was won by an alliance in which **every contribution, from Hanuman\'s mountain-carrying to the squirrel\'s sand, counted as sacred**.',
         teachingText: 'Every great work is a bridge of odd stones — and its Rama is the one who makes the smallest contributor feel stroked on the back, not laughed at.\n\nIn whatever you are building, notice who is carrying sand. **The leader\'s hand on the squirrel is why the army stays an army.**',
-        citation: 'Valmiki Ramayana, Yuddha Kanda (the bridge); the squirrel: later devotional tellings (not Valmiki).'
+        citation: 'Valmiki Ramayana, Yuddha Kanda (the bridge); the squirrel: later devotional tellings (not Valmiki).',
+        checks: [
+          {
+            id: 'chk:deity:rama:squirrel',
+            kind: 'mcq',
+            prompt: 'As the great monkeys built the bridge to Lanka, a tiny squirrel rolled in sand to help fill the gaps — and they laughed at it. What did Rama do?',
+            options: [
+              {
+                text: 'He picked the squirrel up and stroked its back, honouring the smallest helper as much as the strongest',
+                correct: true,
+              },
+              { text: 'He agreed the squirrel was useless and sent it away' },
+              { text: 'He ignored it and kept directing the monkeys' },
+            ],
+            why: 'The war was won by an alliance in which every contribution counted, from Hanuman carrying whole mountains to the squirrel carrying sand. A leader who honours the smallest helper is the reason the army stays an army.',
+          },
+        ],
+      },
+      {
+        id: 'rama-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          'Rama kept his word, grew in the forest, and honoured every helper. One gift of his remains, the smallest and most lasting of all: his name.',
       },
       {
         id: 'rama-name',
         title: 'The Name That Outlived the Man',
-        subtitle: 'Two Syllables Carried Across Centuries',
-        storyText: 'Rama\'s final gift to India is the smallest: **his name.**\n\n"Ram-nam" became the tradition\'s most portable practice — the greeting of villages, the chant of Kabir\'s weavers and Tulsidas\'s verses, the word Gandhi carried, the sound accompanying millions to the funeral ground: **"Ramanama satya hai."**\n\nThe tradition even claims the name outweighs the man — the stones of the bridge floated, one telling goes, because his name was written on them, while stones Rama threw himself sank. Whatever else is beyond reach on a given day — scripture, temple, teacher — two syllables are not.',
-        teachingText: 'The practice is as simple as it sounds and older than any app: **a name, said with attention, as often as remembered** — walking, waiting, worrying.\n\nPick your name for the divine (Rama\'s or another) and let it run under a single ordinary day. That thread, the tradition promises, is strong enough to hold everything else.',
+        subtitle: 'Two syllables carried across centuries',
+        takeaway:
+          "Rama's greatest gift was also his smallest: his name. Repeating a name of God, with attention, through an ordinary day is a practice anyone can carry anywhere.",
+        storyText:
+          "Rama's final gift to India is his smallest: his name.\n\nSimply repeating **'Ram, Ram'** became one of Hinduism's most portable practices — a village greeting, the chant of poet-saints like **Kabir** and **Tulsidas** centuries ago, the word Mahatma Gandhi kept on his lips, and the line spoken as people carry the dead to be cremated: **Ramanama satya hai**, 'the name of Rama is truth.'\n\nThere is even a saying that the name is greater than the man. The stones of the bridge to Lanka floated, one story goes, because Rama's name was written on them, while a stone Rama himself threw in sank. Whatever else is out of reach on a hard day — a temple, a teacher, a holy book — a name is not.",
+        teachingText:
+          "The practice is exactly as simple as it sounds, and older than any app: a name, said with attention, as often as you remember it, while walking, waiting, or worrying. Pick a name for the divine, Rama's or any other, and let it run quietly under a single ordinary day. That thin thread, the tradition promises, is strong enough to hold everything else.",
         citation: 'Ram-nam: living tradition (Kabir, Tulsidas, Gandhi); the floating-stones telling: devotional tradition.'
       }
     ],
@@ -621,7 +720,9 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Rama had one line he would never cross. What is one line you won\'t cross, no matter what?'
+      'Rama had one line he would never cross. What is one line you won\'t cross, no matter what?',
+      'Think of a promise you made that has become inconvenient to keep. What would keeping it anyway do to the trust others place in you?',
+      "Recall your own 'forest' — a hard stretch you didn't choose. What did it teach you, or who did it bring into your life, that comfort never would have?",
     ]
   },
   {
