@@ -1670,39 +1670,141 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/durga-icon.jpg',
       galleryImages: []
     },
+    kicker: "The warrior-goddess born from the combined fire of all the gods — a serene mother's face above ten arms full of weapons, riding a lion into battle.",
+    learnItems: [
+      'Durga is the fierce, protective face of the Divine Mother',
+      'What no god could do alone, the gods did by combining their power',
+      'She is a fierce mother: total protection, zero hatred',
+      'Evil survives by shape-shifting; the answer is steady clarity',
+      "The Goddess lives in every being — reverence isn't only for temples",
+    ],
+    handoff:
+      "Durga is the Goddess with her sword drawn. But the same Goddess has a gentler face — the patient mountain-daughter who won Shiva's heart and became the mother of his family: Parvati. She is the last of the gods we'll meet together.",
     sections: [
+      {
+        id: 'durga-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Most of the gods so far have been male, but in Hinduism God is very much a She as well. Durga is one of her most thrilling forms: a warrior-goddess who rides a lion, carries a weapon in each of her many hands, and yet wears the calm face of a loving mother.\n\nOver the next few pages you'll meet her, and the surprising idea at her heart — that fierceness and tenderness can be the very same thing.",
+      },
+      {
+        id: 'durga-who',
+        title: 'Who Durga Is',
+        subtitle: 'The warrior form of the Divine Mother',
+        takeaway:
+          'Durga is the great warrior-goddess — the fierce, protective face of the Divine Mother, who rides a lion into battle against the evils no one else can defeat.',
+        storyText:
+          "In Hinduism, God is not only pictured as male. Many Hindus worship the **Divine Mother** — the Goddess, called simply **Devi** — as the supreme power behind the whole universe.\n\n**Durga** is her warrior form. She is usually shown as a calm, beautiful woman with many arms, each hand holding a different weapon, riding a lion into the middle of a battle. She was created, the stories say, to destroy a monster that all the male gods together could not defeat.\n\nAnd here is the twist that Hindus love: this fierce warrior is also a **mother**. She fights so hard precisely because she is protecting her children. Her fierceness is not the opposite of her tenderness. It *is* her tenderness, turned toward whatever threatens the ones she loves.",
+        teachingText:
+          "Durga answers a question many of us live with: can you be gentle and unyielding at the same time? Most of us split the two — soft until we snap into anger we later regret, or so calm that we fail to protect what needs us. Durga holds both at once, and the next few pages show exactly how.",
+        citation: 'Durga as the warrior form of Devi (the Goddess): Devi Mahatmya tradition.'
+      },
       {
         id: 'durga-when-gods-pool',
         title: 'When the Gods Stopped Competing',
-        subtitle: 'Streams of Light Fusing into a Woman on a Lion',
-        storyText: 'The Devi Mahatmya opens with the divine order defeated. Mahishasura\'s boon — invulnerable to man and god — had found the loophole in heaven\'s power, and the gods, individually magnificent, were individually useless.\n\nWhat saved the worlds was not a bigger god but **a different geometry: they combined.** Radiance poured from every divine body, fused, and took the form of a woman.\n\nAnd then came the detail the text lingers on: **each god handed her his signature weapon.** Shiva gave the trident. Vishnu gave the discus. Not copies — their own. Durga rides out armed with everything heaven owns, freely given.',
+        subtitle: 'Streams of light fusing into a woman on a lion',
+        takeaway:
+          'No single god could defeat the demon Mahishasura, so they combined: their light fused into Durga, and each god handed her his own weapon. Pooled power does what separate power cannot.',
+        storyText:
+          "The **Devi Mahatmya** — the great scripture of the Goddess — opens with heaven defeated. A buffalo-shaped demon named **Mahishasura** had won a magic promise that no man and no god could ever kill him, and with that loophole he had thrown the gods out of heaven. Each god, magnificent on his own, was useless alone.\n\nWhat saved the world was not a bigger god, but a different idea: they combined. Blazing light poured out of every god's body, fused into a single blaze, and took the shape of a woman.\n\nThen comes the detail the text lingers on: each god handed her his own signature weapon. Shiva gave his trident, Vishnu his spinning discus — not copies, but their very own. Durga rode out armed with everything heaven owned, all of it freely given. The demon's loophole had missed her completely: she was no man, and no ordinary god.",
         teachingText: 'Notice what the story requires before the rescue: every powerful being had to admit his individual power was not enough, and hand his best weapon to another.\n\nWhere in your family or work is the crisis persisting because everyone fights it separately, each guarding their own trident? **Durga is born wherever that surrender into combination happens.**',
-        citation: 'Devi Mahatmya (Markandeya Purana), Chapters 2–3.'
+        citation: 'Devi Mahatmya (Markandeya Purana), Chapters 2–3.',
+        checks: [
+          {
+            id: 'chk:deity:durga:combined',
+            kind: 'mcq',
+            prompt: 'A demon had a magic promise that no god could kill him, and he threw the gods out of heaven. How was he finally defeated?',
+            options: [
+              {
+                text: 'The gods combined their power and weapons into a new being, Durga — pooled power did what no single god could',
+                correct: true,
+              },
+              { text: 'One god finally grew strong enough to beat him alone' },
+              { text: 'They simply paid the demon to leave heaven in peace' },
+            ],
+            why: 'The promise protected him from every individual god. Durga was something new, born of all of them at once, so the loophole missed her. What no power can do alone, pooled power does easily.',
+          },
+        ],
+      },
+      {
+        id: 'durga-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          'Born of every god at once, and armed with all their weapons. Now the strangest thing about her: the calm mother\'s face she wears in the middle of the fight.',
       },
       {
         id: 'durga-fierce-mother',
         title: 'The Mother Who Carries Weapons',
-        subtitle: 'A Serene Face Above Ten Armed Hands',
-        storyText: 'Durga\'s iconography holds a deliberate contradiction: **the face of a serene mother above arms full of weapons mid-battle.**\n\nIndia has never seen a conflict between the two. Ask anyone raised on her images — she fights like that because she is a mother; the fierceness is the tenderness, pointed at what threatens the child.\n\nThe texts underline it: she battles Mahishasura with a calm face, even laughing, because rage is absent — protection is total but hatred never arrives. This is what the tradition means by **fierce compassion**: love with a sword, wielded without cruelty.',
+        subtitle: 'A serene face above ten armed hands',
+        takeaway:
+          "Durga fights with a calm mother's face above arms full of weapons. She is fierce because she is a mother: total protection for the vulnerable, with no hatred for the attacker. That is fierce compassion.",
+        storyText: "Durga's images hold a deliberate contradiction: the face of a serene mother, resting above ten arms full of weapons in the middle of battle.\n\nIndia has never seen those two things as a conflict. Ask anyone raised on her pictures, and they will tell you: she fights like that *because* she is a mother. The fierceness is the tenderness, pointed at whatever threatens the child.\n\nThe texts underline it: she battles Mahishasura with a calm face, even laughing, because rage is simply absent. Her protection is total, but hatred never arrives. This is what the tradition means by **fierce compassion**: love holding a sword, and wielding it without cruelty.",
         teachingText: 'Most of us split these energies — gentle until pushed into rage that we later regret, or so calm we fail to protect what needs us. Durga is the integration: **total ferocity in defense of the vulnerable, zero hatred toward the attacker.**\n\nNext time you must confront someone, try her posture — the serene face above the armed hands. Firm action, quiet eyes.',
-        citation: 'Devi Mahatmya, Chapter 3.'
+        citation: 'Devi Mahatmya, Chapter 3.',
+        checks: [
+          {
+            id: 'chk:deity:durga:fierce',
+            kind: 'mcq',
+            prompt: 'Durga fights the demon with a calm, even smiling face. What is the tradition showing with that serene look above her weapons?',
+            options: [
+              {
+                text: 'Fierce compassion — total protection for the vulnerable, with no hatred toward the attacker; the fierceness is the tenderness',
+                correct: true,
+              },
+              { text: 'That she is not really trying very hard in the fight' },
+              { text: 'That she enjoys the violence for its own sake' },
+            ],
+            why: 'She battles so hard because she is a mother protecting her children, yet rage never arrives. It is love with a sword, wielded without cruelty.',
+          },
+        ],
       },
       {
         id: 'durga-shapeshifter',
         title: 'Fighting the Shape-Shifter',
-        subtitle: 'A Buffalo Becoming a Lion Becoming a Man',
+        subtitle: 'A buffalo becoming a lion becoming a man',
+        takeaway:
+          "The demon kept changing shape the instant he was losing, so the fight could never end. Durga didn't chase his disguises — she stayed calm and steady, and struck when he was caught between forms.",
         storyText: 'Mahishasura never fought fair — that was the point of him. Buffalo, lion, swordsman, elephant, buffalo again: each form abandoned at the moment of losing, so **the fight could never end**.\n\nDurga\'s response was not to match his changes but to **refuse their premise**. She held her ground, stayed serene, and let each disguise exhaust itself — striking finally when he was caught halfway between forms, neither buffalo nor man, the deception itself exposed.\n\nThe Devi Mahatmya was composed by people who understood that evil\'s chief weapon is not strength but **redefinition**.',
         teachingText: 'Everything destructive in a life shape-shifts when confronted: the addiction becomes "just relaxing," the cruel relationship becomes "passionate," the compromise becomes "pragmatism." Chasing each new form is exhausting by design.\n\nDurga\'s method: **name the thing once, clearly, and hold that clarity while the disguises cycle.** The moment of half-transformation — when the old excuse is dying and the new one isn\'t ready — is when truth can pin it.',
         citation: 'Devi Mahatmya, Chapter 3 (the slaying of Mahishasura).'
       },
       {
+        id: 'durga-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          'Born of all the gods, fierce yet loving, steady against every disguise. One idea remains, and it is the widest: where the Goddess actually lives.',
+      },
+      {
         id: 'durga-nine-nights',
         title: 'Nine Nights of the Mother',
-        subtitle: 'A Lamp Lit Beside a Sprouting Pot of Grain',
-        storyText: 'Twice a year, at the great turning of the seasons, India gives Durga nine nights — **Navratri**.\n\nA pot of grain is sprouted, a lamp kept burning, and night by night the Goddess is honored in her forms: fierce **Durga**, wealth-giving **Lakshmi**, wisdom-bestowing **Saraswati** — by one beloved arrangement, three nights each. On Ashtami, young girls are worshiped as her living embodiment — the theology of "the Goddess abides in all beings" made into a household act.\n\nThe festival ends in **Vijayadashami**, the day of victory, when Mahishasura falls and, in the north, Ravana burns: all the traditions agreeing that after nine nights of honoring the sacred feminine, the tenth day belongs to triumph.',
+        subtitle: 'A lamp lit beside a sprouting pot of grain',
+        takeaway:
+          'Twice a year, Hindus honour the Goddess for nine nights — the festival of Navratri. The order of the nights is itself a lesson: protection first, then abundance, then wisdom.',
+        storyText: 'Twice a year, at the great turning of the seasons, India gives the Goddess nine nights of celebration — the festival of **Navratri** (the word simply means "nine nights").\n\nA pot of grain is sprouted, a lamp is kept burning, and night by night the Goddess is honoured in three of her forms: fierce **Durga** the protector, **Lakshmi** the giver of wealth, and **Saraswati** the giver of wisdom, three nights each by one beloved arrangement. On the eighth night, families worship young girls as the living Goddess herself — turning the idea that "the Goddess lives in all beings" into a simple household act.\n\nThe festival ends on the tenth day, **Vijayadashami** ("the victory tenth"), when Durga slays the demon and, in the north of India, giant effigies of the demon-king Ravana are burned. All the traditions agree: after nine nights of honouring the sacred feminine, the tenth day belongs to triumph.',
         teachingText: 'Navratri\'s structure is itself the teaching: **protection first (Durga), then abundance (Lakshmi), then wisdom (Saraswati)** — in that order, because abundance without protection is looted and wisdom without abundance starves.\n\nAudit your own life in her sequence. And the kanya puja asks the sharpest question: do you actually treat the ordinary beings around you as places where the Goddess lives?',
         citationLink: 'festival:navratri-2025',
-        citation: 'Navratri: living tradition; the three-by-three arrangement and kanya puja: widespread devotional practice.'
+        citation: 'Navratri: living tradition; the three-by-three arrangement and kanya puja: widespread devotional practice.',
+        checks: [
+          {
+            id: 'chk:deity:durga:navratri',
+            kind: 'mcq',
+            prompt: 'During Navratri the Goddess is honoured in a set order — Durga, then Lakshmi, then Saraswati. What does that order teach?',
+            options: [
+              {
+                text: 'Protection first, then abundance, then wisdom — because abundance without protection is looted, and wisdom without abundance starves',
+                correct: true,
+              },
+              { text: 'That Durga is simply more important than the other goddesses' },
+              { text: 'That the order is random and carries no meaning' },
+            ],
+            why: 'The sequence itself is the teaching: first make things safe, then let them grow, then understand them. It is a pattern you can audit your own life against.',
+          },
+        ],
       }
     ],
     sources: [
@@ -1718,7 +1820,9 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Durga is fierce without hatred. When did you last have to stand firm — and did you manage it without anger?'
+      'Durga is fierce without hatred. When did you last have to stand firm — and did you manage it without anger?',
+      'What problem in your life keeps changing shape whenever you nearly pin it down? What would naming it once, clearly, and holding steady look like?',
+      "Durga's order is protection, then abundance, then wisdom. Which of the three is your life short on right now?",
     ]
   },
   {
