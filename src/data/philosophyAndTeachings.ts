@@ -1634,7 +1634,7 @@ export const philosophyData: PhilosophicalConcept[] = [
           'One of dharma\u2019s most compassionate teachings: **you don\u2019t have to be perfect to be dharmic.** Even the greatest figures in the epics make real mistakes:',
         bullets: [
           '**Rama** banishes Sita based on public opinion rather than his own judgment',
-          '**Yudhishthira\u2019s** gambling addiction leads to his family\u2019s exile',
+          '**Yudhishthira**, the eldest and most honest of the five royal Pandava brothers (the heroes of the Mahabharata), gambles his family into exile',
           '**Arjuna** initially refuses to fight, paralyzed by attachment',
         ],
         teachingText:
@@ -1997,7 +1997,7 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'The true nature of action should be known, of forbidden action, and of inaction — the way of action is hard to understand.',
           source: 'Bhagavad Gita 4.17 (tr. Swami Sivananda)'
         },
-        storyText: '**Gahana karmano gatih** — deep, dense, hard to fathom is the course of action. Even Krishna, in the middle of explaining karma, pauses to admit its mystery.\n\nA harsh word spoken in love can heal; a kind word spoken in cowardice can wound. Help given carelessly can weaken the helped. The epics are full of this ambiguity: Yudhishthira\'s truthfulness enables a deception at Kurukshetra; Karna\'s legendary generosity, offered to the wrong request, costs him his armor and his life.\n\nThis is why karma cannot be reduced to a rulebook. Before a significant act, the tradition suggests **three lamps** to examine it by:',
+        storyText: '**Gahana karmano gatih** — deep, dense, hard to fathom is the course of action. Even Krishna, in the middle of explaining karma, pauses to admit its mystery.\n\nA harsh word spoken in love can heal; a kind word spoken in cowardice can wound. Help given carelessly can weaken the helped. The great epics are full of this ambiguity. Even Yudhishthira, a king famous for never telling a lie, once let his honesty be used to deceive an enemy in battle. And Karna, a warrior famous for never refusing a request, gave away the armour that was keeping him alive, because someone simply asked for it.\n\nThis is why karma cannot be reduced to a rulebook. Before a significant act, the tradition suggests **three lamps** to examine it by:',
         bullets: [
           'Is my **intention** clean?',
           'Does it serve **more than myself**?',
