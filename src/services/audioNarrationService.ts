@@ -156,7 +156,11 @@ class PrerecordedController {
     const myToken = ++this.token;
     try {
       const { sound, status } = await Audio.Sound.createAsync(sec.clip, {
-        shouldPlay: true,
+        // Respect a standing pause: a rewind (-10s) that crosses back into the
+        // previous card while paused must load it without auto-playing, or the
+        // screen's play/pause icon desyncs. Every other caller has cleared
+        // `paused` before it wants sound, so this is `true` for them.
+        shouldPlay: !this.paused,
         progressUpdateIntervalMillis: 120,
       });
       this.sound = sound;
@@ -219,11 +223,31 @@ class PrerecordedController {
   }
 
   private advanceSection(): void {
+    // Signal that the section that just finished has ended, BEFORE moving on.
+    // The screen uses this (onSegmentEnd) to PARK the voice on a following check
+    // or waypoint page instead of rolling past it — the TTS path fires the same
+    // callback; without this the pre-recorded read-along would auto-scroll past a
+    // quiz. Pass the section's LAST segment id so the screen's section-boundary
+    // guard matches (the ids are the same objects it built its map from).
+    const finished = this.sections[this.pos];
+    if (finished && finished.segments.length) {
+      this.callbacks?.onSegmentEnd(finished.segments[finished.segments.length - 1].id);
+    }
     this.pos++;
     this.callbacks?.onProgressUpdate((this.pos / Math.max(1, this.sections.length)) * 100);
     if (this.pos >= this.sections.length) {
       // End of act — no inter-page pause; playCurrent handles teardown + onPlaybackComplete.
       this.playCurrent();
+      return;
+    }
+    // The screen parked us: onSegmentEnd synchronously called pauseNarration (which
+    // sets this.paused before its first await), so hold here — don't load the next
+    // clip. Tear down the finished clip and bump the token so a resume starts the
+    // next section fresh via playCurrent, rather than replaying the just-ended clip
+    // (a playAsync at end-position can immediately re-fire didJustFinish → double-advance).
+    if (this.paused) {
+      this.token++;
+      this.unload();
       return;
     }
     // Hold a beat of silence on the finished page before the next clip loads and
@@ -267,6 +291,11 @@ class PrerecordedController {
     if (idx < 0) return;
     this.pos = idx;
     this.active = true;
+    // This is a user-driven "play this section" (e.g. Continue off a parked check),
+    // so clear any lingering pause — mirroring start(). Without this the section
+    // plays with paused stale-true: the highlight freezes and advanceSection's
+    // park-teardown misfires at the clip's end, stranding playback on the card.
+    this.paused = false;
     await this.playCurrent();
   }
 
@@ -278,6 +307,14 @@ class PrerecordedController {
     // can come back with positionMillis === 0 mid-playback, which would turn a +10s
     // jump into an absolute seek to 10s — snapping the highlight back near the top.
     const base = this.lastPositionMs || (typeof st.positionMillis === 'number' ? st.positionMillis : 0);
+    // Rewinding past the top of this card steps back to the previous card (from its
+    // start), so -10s can walk back through the reading instead of dead-ending at 0.
+    // playCurrent's fireSegment(0) scrolls the reader there and respects the pause.
+    if (base + deltaMs < 0 && this.pos > 0) {
+      this.pos--;
+      await this.playCurrent();
+      return;
+    }
     const to = Math.max(0, Math.min(this.durationMs - 1, base + deltaMs));
     await this.sound.setPositionAsync(to).catch(() => {});
     this.lastPositionMs = to;

@@ -13,8 +13,9 @@ import {
   Modal,
   KeyboardAvoidingView,
   Platform,
+  Animated,
 } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
@@ -36,6 +37,9 @@ import ChapterReflection from '../components/ChapterReflection';
 import JourneyCelebration from '../components/JourneyCelebration';
 import journeyService from '../services/journeyService';
 import { navigateToJourneyItem } from '../data/journeyPath';
+import KrishnaFab from '../components/KrishnaFab';
+import KrishnaChatSheet from '../components/KrishnaChatSheet';
+import { capture } from '../services/telemetryService';
 
 const { width } = Dimensions.get('window');
 const TOTAL_GITA_VERSES = 700;
@@ -121,6 +125,9 @@ const GitaVersePlayerScreen: React.FC = () => {
   const [fontSize, setFontSize] = useState<'small' | 'medium' | 'large'>('medium');
   const [totalProgress, setTotalProgress] = useState(0);
   const [showMenu, setShowMenu] = useState(false);
+  const [showKrishnaSheet, setShowKrishnaSheet] = useState(false);
+  // FAB dims during page swipes (native driver, no re-render)
+  const fabOpacity = useRef(new Animated.Value(1)).current;
   const [showChapters, setShowChapters] = useState(false);
 
   // Playback
@@ -175,6 +182,20 @@ const GitaVersePlayerScreen: React.FC = () => {
     return () => { audioService.cleanup(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Stop-on-blur: narration is a shared singleton, and a screen pushed over this
+  // player (or any reader) leaves it mounted, so the unmount cleanup won't fire.
+  // Stop here on focus loss so this chapter's audio can't keep playing underneath.
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        audioService.stopNarration();
+        setIsPlaying(false);
+        setIsPaused(false);
+        setHighlightedSegmentId(null);
+      };
+    }, [audioService])
+  );
 
   // Re-navigation with a different chapter/verse while already mounted
   useEffect(() => {
@@ -379,14 +400,14 @@ const GitaVersePlayerScreen: React.FC = () => {
     (navigation as any).navigate('BhagavadGitaComplete');
   };
 
-  const askKrishnaAboutThis = () => {
-    setShowMenu(false);
+  const openKrishnaSheet = () => {
     // Context already set by onViewableItemsChanged for verse pages; ensure chapter context otherwise
     const page = pages[activeIndex];
     if (page.kind !== 'verse' && 'chapter' in page && page.chapter >= 1) {
       krishnaContext.setCurrentContent({ type: 'chapter', chapter: page.chapter, title: chapterName(page.chapter) });
     }
-    (navigation as any).navigate('MainTabs', { screen: 'Ask Krishna' });
+    capture('ask_krishna_opened', { source: 'fab' });
+    setShowKrishnaSheet(true);
   };
 
   // --- Header info for the active page ----------------------------------
@@ -627,24 +648,37 @@ const GitaVersePlayerScreen: React.FC = () => {
         </TouchableOpacity>
       </View>
 
-      {ready && (
-        <FlatList
-          ref={listRef}
-          data={pages}
-          extraData={activeIndex}
-          keyExtractor={(_, i) => `p-${i}`}
-          renderItem={renderItem}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onViewableItemsChanged={onViewableItemsChanged}
-          viewabilityConfig={viewabilityConfig}
-          getItemLayout={(_, index) => ({ length: width, offset: width * index, index })}
-          initialScrollIndex={initialIndex}
-          windowSize={5}
-          maxToRenderPerBatch={3}
-        />
-      )}
+      {/* flex:1 wrapper anchors the FAB above the (conditional) playback bar */}
+      <View style={{ flex: 1 }}>
+        {ready && (
+          <FlatList
+            ref={listRef}
+            data={pages}
+            extraData={activeIndex}
+            keyExtractor={(_, i) => `p-${i}`}
+            renderItem={renderItem}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScrollBeginDrag={() => {
+              Animated.timing(fabOpacity, { toValue: 0.6, duration: 120, useNativeDriver: true }).start();
+            }}
+            onMomentumScrollEnd={() => {
+              Animated.timing(fabOpacity, { toValue: 1, duration: 120, useNativeDriver: true }).start();
+            }}
+            onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={viewabilityConfig}
+            getItemLayout={(_, index) => ({ length: width, offset: width * index, index })}
+            initialScrollIndex={initialIndex}
+            windowSize={5}
+            maxToRenderPerBatch={3}
+          />
+        )}
+        {/* Not on covers (collides with Begin) or celebrations */}
+        {ready && activePage.kind !== 'cover' && activePage.kind !== 'celebration' && (
+          <KrishnaFab onPress={openKrishnaSheet} opacity={fabOpacity} />
+        )}
+      </View>
 
       {/* Playback bar */}
       {showPlaybackBar && (
@@ -713,10 +747,6 @@ const GitaVersePlayerScreen: React.FC = () => {
       <Modal visible={showMenu} transparent animationType="fade" onRequestClose={() => setShowMenu(false)}>
         <TouchableOpacity style={styles.menuBackdrop} activeOpacity={1} onPress={() => setShowMenu(false)}>
           <View style={styles.menuSheet}>
-            <TouchableOpacity style={styles.menuItem} onPress={askKrishnaAboutThis}>
-              <Ionicons name="chatbubble-ellipses-outline" size={22} color={DharmaDesignSystem.colors.neutrals.charcoalBlack} />
-              <Text style={styles.menuItemText}>Ask Krishna about this</Text>
-            </TouchableOpacity>
             <TouchableOpacity style={styles.menuItem} onPress={() => { setShowMenu(false); setShowChapters(true); }}>
               <Ionicons name="list" size={22} color={DharmaDesignSystem.colors.neutrals.charcoalBlack} />
               <Text style={styles.menuItemText}>Chapters</Text>
@@ -728,6 +758,12 @@ const GitaVersePlayerScreen: React.FC = () => {
           </View>
         </TouchableOpacity>
       </Modal>
+
+      <KrishnaChatSheet
+        visible={showKrishnaSheet}
+        onClose={() => setShowKrishnaSheet(false)}
+        contextLabel={`${headerInfo.title} · ${headerInfo.sub}`}
+      />
 
       {/* Chapter list */}
       <Modal visible={showChapters} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setShowChapters(false)}>

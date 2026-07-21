@@ -6,9 +6,10 @@
 // The public surface of this service is frozen: AskKrishnaScreen, checkService,
 // krishnaContextService, CheckPage and ChapterReflection all call it exactly as
 // they did when it wrapped the Google SDK directly.
-import { GEMINI_CONFIG as CONFIG, KRISHNA_PERSONA } from '../config/geminiConfig';
-import { supabase, supabaseEnabled, ensureSignedIn } from './supabaseClient';
+import { GEMINI_CONFIG as CONFIG, CHAT_GENERATION_CONFIG, KRISHNA_PERSONA } from '../config/geminiConfig';
+import { supabase, supabaseEnabled, ensureSignedIn, SUPABASE_URL, SUPABASE_ANON_KEY } from './supabaseClient';
 import { capture } from './telemetryService';
+import chatQuotaService, { ChatLimitError } from './chatQuotaService';
 
 export interface GeminiMessage {
   id: string;
@@ -98,6 +99,117 @@ class GeminiService {
     return text;
   }
 
+  // Fire-and-forget container warm-up: wakes a cold edge instance so the real
+  // send lands on a warm one. Costs nothing upstream (the proxy returns before
+  // calling Gemini). Safe to call on chat open; failures are ignored.
+  warmProxy(): void {
+    if (!supabase) return;
+    supabase.functions.invoke('gemini-proxy', { body: { warm: true } }).catch(() => {});
+  }
+
+  // Streaming path to the proxy. supabase-js buffers the whole response, and
+  // React Native's fetch can't expose a readable body, so we use XMLHttpRequest
+  // — its responseText accumulates and is readable while the request is still
+  // open. The proxy pipes Gemini's SSE straight through; we parse each
+  // `data: {json}` line and surface the growing text via onToken. Returns the
+  // full text; throws on non-2xx or an empty/blocked stream, matching
+  // invokeProxy's error shapes so callers' handling is unchanged.
+  private invokeProxyStream(
+    contents: GeminiContent[],
+    generationConfig: Record<string, unknown>,
+    onToken: (fullText: string) => void
+  ): Promise<string> {
+    return new Promise((resolve, reject) => {
+      (async () => {
+        if (!supabase || !SUPABASE_URL) {
+          reject(new Error('AI proxy is not configured'));
+          return;
+        }
+        const { data } = await supabase.auth.getSession();
+        const accessToken = data.session?.access_token ?? SUPABASE_ANON_KEY;
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `${SUPABASE_URL}/functions/v1/gemini-proxy`);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+        xhr.setRequestHeader('apikey', SUPABASE_ANON_KEY);
+
+        let processed = 0; // chars of responseText already parsed
+        let assembled = '';
+        let finishReason = '';
+        let settled = false;
+
+        // Parse any complete `data:` SSE lines that have arrived since last time,
+        // leaving an incomplete trailing line in the buffer for the next event.
+        // On flush (stream closed) consume everything, including a final line
+        // that may lack a trailing newline.
+        const drain = (flush = false) => {
+          const text = xhr.responseText;
+          const end = flush ? text.length : text.lastIndexOf('\n') + 1;
+          if (end <= processed) return;
+          const chunk = text.slice(processed, end);
+          processed = end;
+          for (const line of chunk.split('\n')) {
+            const trimmed = line.trim();
+            if (!trimmed.startsWith('data:')) continue;
+            const payload = trimmed.slice(5).trim();
+            if (!payload || payload === '[DONE]') continue;
+            try {
+              const parsed = JSON.parse(payload);
+              const cand = parsed?.candidates?.[0];
+              const delta: string = (cand?.content?.parts ?? [])
+                .map((p: { text?: string }) => p.text ?? '')
+                .join('');
+              if (delta) {
+                assembled += delta;
+                onToken(assembled);
+              }
+              if (cand?.finishReason) finishReason = cand.finishReason;
+            } catch {
+              // Incomplete/again-partial JSON — ignore; the full stream is
+              // re-read at readyState 4 as a fallback.
+            }
+          }
+        };
+
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState === 3) {
+            drain();
+          } else if (xhr.readyState === 4) {
+            if (settled) return;
+            settled = true;
+            if (xhr.status === 429) {
+              reject(new Error('429 rate limited: please slow down for a moment'));
+              return;
+            }
+            if (xhr.status < 200 || xhr.status >= 300) {
+              reject(new Error(`Proxy error ${xhr.status}: stream failed`));
+              return;
+            }
+            drain(true); // flush any final buffered lines
+            if (!assembled) {
+              reject(new Error(finishReason ? `No content (${finishReason})` : 'Empty response from AI proxy'));
+              return;
+            }
+            resolve(assembled);
+          }
+        };
+        xhr.onerror = () => {
+          if (settled) return;
+          settled = true;
+          reject(new Error('Network error contacting AI proxy'));
+        };
+
+        xhr.send(JSON.stringify({
+          contents,
+          generationConfig,
+          safetySettings: CONFIG.safetySettings,
+          stream: true,
+        }));
+      })().catch(reject);
+    });
+  }
+
   // Start a new chat session with Krishna persona. Optionally seed it with a
   // compact context block about the person and what they're currently reading.
   startKrishnaChat(contextBlock?: string): void {
@@ -130,14 +242,27 @@ class GeminiService {
     console.log('Krishna chat session started with updated persona');
   }
 
-  // Send a message to Krishna
-  async sendMessage(message: string): Promise<GeminiMessage> {
+  // Send a message to Krishna. When onToken is supplied the reply streams: a
+  // placeholder Krishna message is appended and its text grows as tokens arrive
+  // (onToken fires after each update so the caller can re-render). Without it,
+  // the buffered path is used. The chat path uses CHAT_GENERATION_CONFIG
+  // (thinking off, short cap) — grading/reflection keep the shared config.
+  async sendMessage(message: string, onToken?: () => void): Promise<GeminiMessage> {
     if (!this.isInitialized || !this.chatHistory) {
       throw new Error('Chat session not started');
     }
 
     if (!message || message.trim() === '') {
       throw new Error('Message cannot be empty');
+    }
+
+    // Free-tier gate: 5 conversational sends per device-local day, checked
+    // BEFORE any history mutation so a blocked send leaves no phantom user
+    // bubble and needs no rollback. One-off paths (reflections, summaries)
+    // bypass this by design. The server ai_usage RPC (10/min, 60/day) stays
+    // the hard backstop behind it.
+    if ((await chatQuotaService.getRemainingToday()) <= 0) {
+      throw new ChatLimitError();
     }
 
     // Counts only — chat content never leaves the Gemini pipeline
@@ -154,6 +279,11 @@ class GeminiService {
     this.currentSession.messages.push(userMessage);
     this.currentSession.isTyping = true;
 
+    // A holder (not a bare let) so it survives assignment inside the streaming
+    // closure without TypeScript narrowing it to null — and so the catch can
+    // drop a partially-streamed bubble on error.
+    const streamed: { msg: GeminiMessage | null } = { msg: null };
+
     try {
       this.chatHistory.push({ role: 'user', parts: [{ text: message }] });
 
@@ -161,25 +291,69 @@ class GeminiService {
       const [systemTurn, welcomeTurn, ...rest] = this.chatHistory;
       const contents = [systemTurn, welcomeTurn, ...rest.slice(-MAX_HISTORY_TURNS)];
 
-      const responseText = await this.invokeProxy(contents);
+      let responseText: string;
+
+      if (onToken) {
+        // Streaming: the placeholder appears on the first token (until then the
+        // "reflecting…" indicator shows), and grows in place as text arrives.
+        const handleToken = (fullText: string) => {
+          if (!streamed.msg) {
+            streamed.msg = {
+              id: `krishna-${Date.now()}`,
+              text: fullText,
+              isUser: false,
+              timestamp: new Date(),
+            };
+            this.currentSession.messages.push(streamed.msg);
+            this.currentSession.isTyping = false;
+          } else {
+            streamed.msg.text = fullText;
+          }
+          onToken();
+        };
+        responseText = await this.invokeProxyStream(contents, CHAT_GENERATION_CONFIG, handleToken);
+      } else {
+        responseText = await this.invokeProxy(contents, CHAT_GENERATION_CONFIG);
+      }
+
+      // Spend quota on success only — offline failures, proxy errors, and
+      // server 429s never burn one of the day's five. Awaited (not fire-and-
+      // forget) so the caller's very next quota read reflects this send; a
+      // storage failure is still swallowed locally so it can't cost Krishna's
+      // reply.
+      try {
+        await chatQuotaService.consume();
+      } catch {
+        // best-effort — never blocks the reply
+      }
       this.chatHistory.push({ role: 'model', parts: [{ text: responseText }] });
 
-      // Add Krishna's response to session
-      const krishnaMessage: GeminiMessage = {
-        id: `krishna-${Date.now()}`,
-        text: responseText,
-        isUser: false,
-        timestamp: new Date(),
-      };
-
-      this.currentSession.messages.push(krishnaMessage);
+      // Finalize the reply. In the streaming path the placeholder already
+      // exists (handleToken fires at least once at stream close); reconcile its
+      // text to the authoritative full response. Otherwise create it now.
+      if (streamed.msg) {
+        streamed.msg.text = responseText;
+      } else {
+        streamed.msg = {
+          id: `krishna-${Date.now()}`,
+          text: responseText,
+          isUser: false,
+          timestamp: new Date(),
+        };
+        this.currentSession.messages.push(streamed.msg);
+      }
       this.currentSession.isTyping = false;
 
-      return krishnaMessage;
+      return streamed.msg;
     } catch (error) {
       // The failed user turn stays visible in the UI session but must not stay
       // in the model history, or a retry would double it.
       this.chatHistory.pop();
+      // Drop a half-streamed Krishna bubble so the caller's error message isn't
+      // left sitting beside a truncated reply.
+      if (streamed.msg) {
+        this.currentSession.messages = this.currentSession.messages.filter(m => m !== streamed.msg);
+      }
       this.currentSession.isTyping = false;
       console.error('Error sending message to Krishna:', error);
       throw error;

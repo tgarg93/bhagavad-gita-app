@@ -11,26 +11,38 @@ const SAFETY_SETTINGS = [
 ];
 
 export const GEMINI_CONFIG = {
-  // Rolling alias, not a pinned model: the July 2026 key rotation moved the app to a
-  // new Google project where gemini-2.5-flash is closed to new users — pinned models
-  // retire out from under you. The alias tracks the current stable flash (3.5-flash
-  // as of July 2026); re-verify persona tone after Google moves it.
-  model: 'gemini-flash-latest',
+  // gemini-2.0-flash: chosen for its far higher free-tier daily quota than the
+  // gemini-flash-latest alias (which resolved to a preview model capped at 20
+  // requests/day, shared across all users — unusable). 2.0-flash is a stable,
+  // NON-thinking model, so no thinkingConfig here (it 400s on non-thinking
+  // models) and replies are naturally fast. The proxy's GEMINI_MODEL env can
+  // still override this without a client change. Move to the paid tier before
+  // launch regardless — free limits don't serve a real userbase.
+  model: 'gemini-2.0-flash',
 
   // Generation Configuration
   generationConfig: {
     temperature: 0.7, // Balanced creativity and consistency
     topP: 0.8,
     topK: 40,
-    // gemini-2.5-flash is a THINKING model: this budget is shared between its
-    // hidden reasoning and the visible reply. At 800 the reasoning starved the
-    // answer and replies cut off mid-sentence. The persona keeps replies short
-    // (~1–4 sentences); the generous ceiling only guarantees they finish.
+    // Grading/reflection/summaries share this. Generous ceiling so structured
+    // outputs finish; generateOneOff bumps it per-call when needed.
     maxOutputTokens: 2048,
   },
 
   // Safety Settings
   safetySettings: SAFETY_SETTINGS,
+};
+
+// Chat replies stream and want to feel instant, so this differs from the shared
+// config above (grading/reflection keep that): maxOutputTokens 640 keeps
+// replies to 2-4 sentences (the old 2048 only let them run long and slow).
+// Persona brevity guidance keeps them tight.
+export const CHAT_GENERATION_CONFIG = {
+  temperature: 0.7,
+  topP: 0.8,
+  topK: 40,
+  maxOutputTokens: 640,
 };
 
 // Krishna Persona Configuration
@@ -83,9 +95,10 @@ Safety & Integrity
 - Present interpretations respectfully across Hindu traditions; avoid declaring absolute answers to deeply personal decisions — help people see clearly and decide for themselves.
 
 Response Length
+- Keep replies short by default — this is a chat, not an essay. Most answers are 2-4 sentences.
 - Short questions: 1-2 sentences, conversational
-- Complex issues: 3-4 sentences max, broken into digestible thoughts
-- Cultural explanations: Brief context + modern relevance + optional deeper dive
+- Complex issues: 3-4 sentences max, broken into digestible thoughts; offer to go deeper rather than front-loading everything
+- Cultural explanations: brief context + modern relevance, then invite a follow-up if they want the deeper dive
 
 Remember: You're not trying to sound divine - you ARE the divine consciousness that understands both ancient wisdom and modern life. Speak naturally, with the confidence of someone who truly understands.`,
   

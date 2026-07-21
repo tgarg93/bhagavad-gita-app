@@ -13,86 +13,53 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useIsFocused } from '@react-navigation/native';
 import { DharmaColors } from '../constants/colors';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import DharmaHeader from '../components/ui/DharmaHeader';
 import DharmaHeaderAction from '../components/ui/DharmaHeaderAction';
 import { Bubble } from '../components/ChapterReflection';
-import { geminiService, isAuthError, GeminiMessage, GeminiChatSession } from '../services/geminiService';
-import { KRISHNA_PERSONA, ERROR_MESSAGES, RATE_LIMITS } from '../config/geminiConfig';
-import { useFocusEffect } from '@react-navigation/native';
-import krishnaContext, { CurrentContent } from '../services/krishnaContextService';
+import { geminiService, GeminiMessage } from '../services/geminiService';
+import { RATE_LIMITS, ERROR_MESSAGES } from '../config/geminiConfig';
 import { getDailyAtom } from '../data/dailyAtoms';
+import { useKrishnaChat, buildSuggestedChips, DAILY_CHAT_LIMIT } from '../hooks/useKrishnaChat';
+import { capture } from '../services/telemetryService';
 
 const AskKrishnaScreen: React.FC = () => {
   // Today's chai question leads the suggestions — the brief's hand-off
   const todaysPrompt = React.useRef(getDailyAtom().krishnaPrompt).current;
-  const [chatSession, setChatSession] = useState<GeminiChatSession>({
-    messages: [],
-    isActive: false,
-    isTyping: false,
-  });
-  const [inputText, setInputText] = useState('');
-  const [isInitialized, setIsInitialized] = useState(false);
+  const isFocused = useIsFocused();
   const [apiKey, setApiKey] = useState('');
   const [showApiKeyInput, setShowApiKeyInput] = useState(false);
-  const [initErrorIsAuth, setInitErrorIsAuth] = useState(false);
-  const [initErrorDetail, setInitErrorDetail] = useState<string | null>(null);
-  const [discussing, setDiscussing] = useState<CurrentContent>({ type: 'none' });
-  const seededContentRef = useRef<string>('');
   const scrollViewRef = useRef<ScrollView>(null);
 
-  const suggestedQuestions = [todaysPrompt, ...KRISHNA_PERSONA.conversationStarters];
+  const chat = useKrishnaChat({
+    active: isFocused,
+    onNotReady: () => {
+      Alert.alert('Error', ERROR_MESSAGES.API_KEY_MISSING);
+      setShowApiKeyInput(true);
+    },
+  });
+
+  // The chat core surfaces init failures; this screen owns the recovery UI
+  useEffect(() => {
+    setShowApiKeyInput(chat.initError !== null);
+  }, [chat.initError]);
 
   useEffect(() => {
-    initializeChat();
-  }, []);
+    if (isFocused) capture('ask_krishna_opened', { source: 'tab' });
+  }, [isFocused]);
 
-  // When the user arrives via "Ask Krishna about this", restart the chat
-  // seeded with the new content context so Krishna knows what they're reading
-  useFocusEffect(
-    React.useCallback(() => {
-      const current = krishnaContext.getCurrentContent();
-      const key = JSON.stringify(current);
-      if (isInitialized && current.type !== 'none' && key !== seededContentRef.current) {
-        initializeChat();
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isInitialized])
-  );
-
-
+  // Follow both new messages AND the last bubble growing as a reply streams in.
+  const lastMessageLength =
+    chat.displayMessages[chat.displayMessages.length - 1]?.text.length ?? 0;
   useEffect(() => {
-    // Auto-scroll to bottom when new messages arrive
-    if (chatSession.messages.length > 0) {
+    if (chat.displayMessages.length > 0) {
       setTimeout(() => {
         scrollViewRef.current?.scrollToEnd({ animated: true });
       }, 100);
     }
-  }, [chatSession.messages.length]);
-
-  const initializeChat = async () => {
-    try {
-      await geminiService.autoInitialize();
-      const contextBlock = await krishnaContext.buildContextBlock();
-      const current = krishnaContext.getCurrentContent();
-      seededContentRef.current = JSON.stringify(current);
-      setDiscussing(current);
-      geminiService.startKrishnaChat(contextBlock);
-      krishnaContext.maybeRefreshSummary();
-      setChatSession(geminiService.getCurrentSession());
-      setIsInitialized(true);
-      setShowApiKeyInput(false);
-      setInitErrorDetail(null);
-    } catch (error) {
-      console.error('Failed to initialize chat:', error);
-      // Only offer the API-key form for auth problems; otherwise show what
-      // actually failed (model/network) with a retry
-      setInitErrorIsAuth(isAuthError(error));
-      setInitErrorDetail(error instanceof Error ? error.message : String(error));
-      setShowApiKeyInput(true);
-    }
-  };
+  }, [chat.displayMessages.length, lastMessageLength]);
 
   const setupGeminiAPI = async () => {
     if (!apiKey.trim()) {
@@ -103,69 +70,13 @@ const AskKrishnaScreen: React.FC = () => {
     try {
       await geminiService.initialize(apiKey.trim());
       geminiService.startKrishnaChat();
-      setChatSession(geminiService.getCurrentSession());
-      setIsInitialized(true);
+      await chat.refresh();
       setShowApiKeyInput(false);
       Alert.alert('Success', 'Connected to Krishna! You can now start chatting.');
     } catch (error) {
       console.error('Failed to initialize Gemini:', error);
       Alert.alert('Error', 'Failed to connect. Please check your API key and try again.');
     }
-  };
-
-  const sendMessage = async (text?: string) => {
-    const messageText = (typeof text === 'string' ? text : inputText).trim();
-    if (!messageText) return;
-
-    if (!isInitialized || !geminiService.isReady()) {
-      Alert.alert('Error', ERROR_MESSAGES.API_KEY_MISSING);
-      setShowApiKeyInput(true);
-      return;
-    }
-
-    if (messageText.length > RATE_LIMITS.maxMessageLength) {
-      Alert.alert('Error', ERROR_MESSAGES.MESSAGE_TOO_LONG);
-      return;
-    }
-
-    setInputText('');
-
-    try {
-      // Update UI to show user message and typing indicator
-      setChatSession(prev => ({
-        ...prev,
-        isTyping: true,
-      }));
-
-      // Send message to Gemini
-      await geminiService.sendMessage(messageText);
-      
-      // Update UI with latest session
-      setChatSession(geminiService.getCurrentSession());
-    } catch (error) {
-      console.error('Error sending message:', error);
-      setChatSession(prev => ({
-        ...prev,
-        isTyping: false,
-      }));
-      
-      // Add error message to chat
-      const errorMessage: GeminiMessage = {
-        id: `error-${Date.now()}`,
-        text: 'I apologize, but I am having trouble responding right now. Please try again in a moment.',
-        isUser: false,
-        timestamp: new Date(),
-      };
-      
-      setChatSession(prev => ({
-        ...prev,
-        messages: [...prev.messages, errorMessage],
-      }));
-    }
-  };
-
-  const askSuggestedQuestion = (question: string) => {
-    setInputText(question);
   };
 
   const clearChat = () => {
@@ -179,10 +90,9 @@ const AskKrishnaScreen: React.FC = () => {
           style: 'destructive',
           onPress: () => {
             geminiService.clearChat();
-            if (geminiService.isReady()) {
-              geminiService.startKrishnaChat();
-              setChatSession(geminiService.getCurrentSession());
-            }
+            // Rebuilds the context block and restarts the thread. The daily
+            // quota is untouched — it's per-day, not per-thread.
+            chat.reinitialize();
           }
         }
       ]
@@ -202,19 +112,19 @@ const AskKrishnaScreen: React.FC = () => {
         <View style={styles.setupContainer}>
           <Text style={styles.setupTitle}>Connection Issue</Text>
           <Text style={styles.setupDescription}>
-            {initErrorIsAuth
+            {chat.initError?.isAuth
               ? 'Krishna needs a valid Gemini API key. Add one below, or set EXPO_PUBLIC_GEMINI_API_KEY in the app configuration.'
               : 'Unable to connect to Krishna. Please check your internet connection and try again.'}
           </Text>
-          {initErrorDetail && !initErrorIsAuth && (
-            <Text style={styles.setupErrorDetail} numberOfLines={3}>{initErrorDetail}</Text>
+          {chat.initError?.detail && !chat.initError.isAuth && (
+            <Text style={styles.setupErrorDetail} numberOfLines={3}>{chat.initError.detail}</Text>
           )}
 
-          <TouchableOpacity style={styles.setupButton} onPress={initializeChat}>
+          <TouchableOpacity style={styles.setupButton} onPress={chat.reinitialize}>
             <Text style={styles.setupButtonText}>Retry Connection</Text>
           </TouchableOpacity>
 
-          {initErrorIsAuth && (
+          {chat.initError?.isAuth && (
             <>
               <Text style={styles.dividerText}>or</Text>
 
@@ -262,43 +172,40 @@ const AskKrishnaScreen: React.FC = () => {
         }
       />
 
-      {discussing.type === 'verse' && discussing.chapter && (
+      {chat.discussing.type === 'verse' && chat.discussing.chapter && (
         <View style={styles.discussingChip}>
           <Ionicons name="book-outline" size={14} color={DharmaDesignSystem.colors.primary.peacockTeal} />
           <Text style={styles.discussingText}>
-            Discussing: Chapter {discussing.chapter}
-            {discussing.verse ? ` · Verse ${discussing.verse}` : ''}
+            Discussing: Chapter {chat.discussing.chapter}
+            {chat.discussing.verse ? ` · Verse ${chat.discussing.verse}` : ''}
           </Text>
         </View>
       )}
 
       <View style={styles.contentSpacer} />
-      <ScrollView 
+      <ScrollView
         ref={scrollViewRef}
-        style={styles.messagesContainer} 
+        style={styles.messagesContainer}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.messagesContent}
       >
-        {chatSession.messages.map(renderMessage)}
-        
-        {chatSession.isTyping && (
+        {chat.displayMessages.map(renderMessage)}
+
+        {chat.session.isTyping && (
           <View style={styles.typingRow}>
             <ActivityIndicator size="small" color={DharmaDesignSystem.colors.primary.deepSaffron} />
             <Text style={styles.typingText}>Krishna is reflecting…</Text>
           </View>
         )}
-        
-        {chatSession.messages.length === 1 && !chatSession.isTyping && (
+
+        {chat.session.messages.length === 1 && !chat.session.isTyping && !chat.quotaExhausted && (
           <View style={styles.suggestionsContainer}>
             <Text style={styles.suggestionsTitle}>Ask Krishna about:</Text>
-            {(discussing.type === 'verse'
-              ? ['Explain this verse to me', 'How does this apply to my life right now?', 'What should I take away from this chapter?']
-              : suggestedQuestions
-            ).map((question, index) => (
+            {buildSuggestedChips(chat.discussing, todaysPrompt, 'tab').map((question, index) => (
               <TouchableOpacity
                 key={index}
                 style={styles.suggestionButton}
-                onPress={() => askSuggestedQuestion(question)}
+                onPress={() => chat.fillInput(question)}
               >
                 <Text style={styles.suggestionText}>{question}</Text>
               </TouchableOpacity>
@@ -311,25 +218,33 @@ const AskKrishnaScreen: React.FC = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.inputContainer}
       >
+        {chat.remainingToday !== null && (
+          <Text style={styles.quotaCaption}>
+            {chat.quotaExhausted
+              ? `0 of ${DAILY_CHAT_LIMIT} questions left · resets at midnight`
+              : `${chat.remainingToday} of ${DAILY_CHAT_LIMIT} questions left today`}
+          </Text>
+        )}
         <View style={styles.inputRow}>
           <TextInput
             style={styles.textInput}
-            value={inputText}
-            onChangeText={setInputText}
-            placeholder="Ask Krishna anything..."
+            value={chat.inputText}
+            onChangeText={chat.setInputText}
+            placeholder={chat.quotaExhausted ? 'Krishna returns tomorrow' : 'Ask Krishna anything...'}
             placeholderTextColor={DharmaColors.text.tertiary}
             multiline
             maxLength={RATE_LIMITS.maxMessageLength}
+            editable={!chat.quotaExhausted}
           />
           <TouchableOpacity
-            style={[styles.sendButton, !inputText.trim() && styles.sendButtonDisabled]}
-            onPress={() => sendMessage()}
-            disabled={!inputText.trim() || chatSession.isTyping}
+            style={[styles.sendButton, (!chat.inputText.trim() || chat.quotaExhausted) && styles.sendButtonDisabled]}
+            onPress={() => chat.send()}
+            disabled={!chat.inputText.trim() || chat.session.isTyping || chat.quotaExhausted}
           >
-            <Ionicons 
-              name="send" 
-              size={20} 
-              color={inputText.trim() ? DharmaColors.text.inverse : DharmaColors.text.tertiary} 
+            <Ionicons
+              name="send"
+              size={20}
+              color={chat.inputText.trim() && !chat.quotaExhausted ? DharmaColors.text.inverse : DharmaColors.text.tertiary}
             />
           </TouchableOpacity>
         </View>
@@ -398,6 +313,12 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: DharmaColors.background.tertiary,
     padding: 20,
+  },
+  quotaCaption: {
+    fontSize: 11,
+    color: DharmaDesignSystem.colors.neutrals.softAsh,
+    textAlign: 'center',
+    marginBottom: 8,
   },
   inputRow: {
     flexDirection: 'row',

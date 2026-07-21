@@ -34,12 +34,16 @@ Manual smoke tests until automated coverage lands (Wave 2). Run the **Simulator 
 **Readers:**
 - [ ] Content reader: cover → sections with footnote citations → last text page ends with Sources card → reflections (skippable) → celebration
 - [ ] Gita player: cover art for ch 1–3; transport prev/next moves voice AND page; ±10s works
-- [ ] "Ask Krishna about this" (⋮ menu) → chat opens seeded with the content
+- [ ] Krishna FAB floats bottom-right above the playback bar in all three players (content / Gita / prayer); dims during a swipe; doesn't collide with the cover's Begin button
+- [ ] Tap FAB → chat sheet rises with the correct context chip and a page-aware first suggestion; **keyboard opens without the input row jumping or hiding** (KAV-in-Modal); dismiss via grip, backdrop, X, and (Android) back
+- [ ] Thread continuity: send a message in the sheet → open the Ask Krishna tab → same conversation
 
 **Ask Krishna:**
 - [ ] Greeting renders in reflection-style bubbles (avatar outside)
 - [ ] First suggested prompt = today's chai question
-- [ ] A reply arrives (Gemini key valid, quota OK)
+- [ ] A reply arrives (Gemini key valid, quota OK) and **streams in word-by-word** (not one big delayed block); first words appear within ~1-2s
+- [ ] Daily limit: counter reads "N of 5 questions left today" on tab AND sheet; after the 5th send both surfaces show Krishna's closing bubble and disable the input (chips hidden); reflections still work after exhaustion
+- [ ] `gemini-proxy` deployed (`npx supabase functions deploy gemini-proxy --use-api`) before shipping — streaming/warm live server-side, not in the JS bundle
 
 **Profile:**
 - [ ] Level card matches Home status row; photo upload works and updates the tab icon

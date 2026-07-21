@@ -190,7 +190,8 @@ const AppIntro: React.FC = () => {
         You have probably been asked.{'\n'}You may have guessed.
       </Animated.Text>
       <Animated.Text style={[styles.introPromise, riseStyle(promise)]}>
-        Dharma is where you stop guessing — and become the one who knows.
+        Dharma is where you stop guessing — and become{' '}
+        <Text style={styles.introPromiseAccent}>the one who knows.</Text>
       </Animated.Text>
     </View>
   );
@@ -690,34 +691,38 @@ const styles = StyleSheet.create({
   },
   introQuestions: {
     marginTop: spacing.xl,
-    gap: spacing.md,
+    gap: spacing.sm,
     alignSelf: 'stretch',
   },
+  // The questions are the setup, not the point — muted and small so the promise
+  // below carries the weight (see introPromise).
   introQuestion: {
-    fontSize: 21,
-    lineHeight: 29,
-    fontWeight: '700',
-    color: colors.neutrals.charcoalBlack,
+    fontSize: 15,
+    lineHeight: 21,
+    fontWeight: '600',
+    color: colors.neutrals.softAsh,
     textAlign: 'center',
   },
   introBody: {
-    fontSize: 16,
-    lineHeight: 25,
+    fontSize: 14,
+    lineHeight: 20,
     color: colors.neutrals.softAsh,
     textAlign: 'center',
-    marginTop: spacing.xl,
-  },
-  introPromise: {
-    fontSize: 18,
-    lineHeight: 27,
-    fontWeight: '700',
-    color: colors.primary.deepSaffron,
-    textAlign: 'center',
     marginTop: spacing.lg,
-    paddingTop: spacing.lg,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'rgba(0,0,0,0.14)',
+  },
+  // The payoff, and the visual hero of the screen: the largest, darkest element.
+  // No divider — breathing room above it does the separating instead.
+  introPromise: {
+    fontSize: 26,
+    lineHeight: 34,
+    fontWeight: '700',
+    color: colors.neutrals.charcoalBlack,
+    textAlign: 'center',
+    marginTop: spacing.xl,
     alignSelf: 'stretch',
+  },
+  introPromiseAccent: {
+    color: colors.primary.deepSaffron,
   },
   nameInput: {
     ...typography.sizes.bodyLG,

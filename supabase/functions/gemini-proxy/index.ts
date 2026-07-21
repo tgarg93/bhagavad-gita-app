@@ -6,8 +6,10 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY") ?? "";
-// Rolling alias on purpose — pinned models retire out from under new projects
-const GEMINI_MODEL = Deno.env.get("GEMINI_MODEL") ?? "gemini-flash-latest";
+// gemini-2.0-flash: stable, non-thinking, with a far higher free-tier daily
+// quota than the gemini-flash-latest alias (capped at 20 req/day). Override via
+// the GEMINI_MODEL secret without a redeploy.
+const GEMINI_MODEL = Deno.env.get("GEMINI_MODEL") ?? "gemini-2.0-flash";
 const MINUTE_LIMIT = Number(Deno.env.get("AI_MINUTE_LIMIT") ?? "10");
 const DAY_LIMIT = Number(Deno.env.get("AI_DAY_LIMIT") ?? "60");
 const MAX_BODY_BYTES = 64_000;
@@ -43,12 +45,19 @@ Deno.serve(async (req) => {
     contents?: unknown;
     generationConfig?: unknown;
     safetySettings?: unknown;
+    stream?: boolean;
+    warm?: boolean;
   };
   try {
     body = JSON.parse(raw);
   } catch {
     return json({ error: "bad_request" }, 400);
   }
+
+  // Container warm-up: the caller just wants a live instance. Returns before
+  // the rate-limit RPC and Gemini so it costs nothing but a cold start.
+  if (body.warm === true) return json({ ok: true });
+
   if (!body.contents) return json({ error: "bad_request" }, 400);
 
   const { data: allowed, error: rpcError } = await admin.rpc(
@@ -61,6 +70,42 @@ Deno.serve(async (req) => {
   }
   if (!allowed) return json({ error: "rate_limited" }, 429);
 
+  const geminiBody = JSON.stringify({
+    contents: body.contents,
+    ...(body.generationConfig ? { generationConfig: body.generationConfig } : {}),
+    ...(body.safetySettings ? { safetySettings: body.safetySettings } : {}),
+  });
+
+  // Streaming path: pipe Gemini's SSE straight through so the client can render
+  // tokens as they arrive. The chat surfaces opt in with { stream: true }; all
+  // other callers (reflections, grading, summaries) fall through to the
+  // buffered { text } path below, unchanged.
+  if (body.stream === true) {
+    const stream = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:streamGenerateContent?alt=sse`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": GEMINI_API_KEY,
+        },
+        body: geminiBody,
+      },
+    );
+    if (!stream.ok || !stream.body) {
+      const detail = await stream.text().catch(() => "");
+      console.error("gemini stream error", stream.status, detail.slice(0, 500));
+      return json({ error: "upstream_error", status: stream.status }, 502);
+    }
+    return new Response(stream.body, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+      },
+    });
+  }
+
   const upstream = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`,
     {
@@ -69,11 +114,7 @@ Deno.serve(async (req) => {
         "Content-Type": "application/json",
         "x-goog-api-key": GEMINI_API_KEY,
       },
-      body: JSON.stringify({
-        contents: body.contents,
-        ...(body.generationConfig ? { generationConfig: body.generationConfig } : {}),
-        ...(body.safetySettings ? { safetySettings: body.safetySettings } : {}),
-      }),
+      body: geminiBody,
     },
   );
 

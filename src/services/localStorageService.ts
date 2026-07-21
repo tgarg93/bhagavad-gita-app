@@ -127,6 +127,13 @@ export const DEFAULT_CALENDAR_SYNC_STATE: CalendarSyncState = {
   syncedEvents: {},
 };
 
+// Daily Krishna-chat allowance (chatQuotaService). Local-only by design — a
+// device-level free-tier counter, deliberately NOT in SYNC_KEYS.
+export interface KrishnaChatQuota {
+  date: string; // local YYYY-MM-DD (journeyService's todayKey convention)
+  count: number;
+}
+
 // One turn in an ongoing reflection conversation (beyond the first exchange)
 export interface ReflectionTurn {
   role: 'user' | 'krishna';
@@ -222,6 +229,7 @@ class LocalStorageService {
     JOURNEY_ACTIVITY: 'journey_activity',
     NOTIFICATION_SETTINGS: 'notification_settings',
     CALENDAR_SYNC_STATE: 'calendar_sync_state',
+    KRISHNA_CHAT_QUOTA: 'krishna_chat_quota',
     CHAI_LAST_OPENED: 'daily_chai_last_opened',
     LEVEL_LAST_CELEBRATED: 'level_last_celebrated',
     PRAYER_RECITATIONS: 'prayer_recitations',
@@ -634,6 +642,29 @@ class LocalStorageService {
       await AsyncStorage.setItem(this.KEYS.CALENDAR_SYNC_STATE, JSON.stringify(state));
     } catch (error) {
       console.error('Error saving calendar sync state:', error);
+    }
+  }
+
+  // ——— Krishna chat daily quota (local-only, never synced) ———
+
+  static async getKrishnaChatQuota(): Promise<KrishnaChatQuota | null> {
+    try {
+      const json = await AsyncStorage.getItem(this.KEYS.KRISHNA_CHAT_QUOTA);
+      if (json) {
+        const parsed = JSON.parse(json);
+        if (typeof parsed?.date === 'string' && typeof parsed?.count === 'number') return parsed;
+      }
+    } catch (error) {
+      console.error('Error getting Krishna chat quota:', error);
+    }
+    return null;
+  }
+
+  static async saveKrishnaChatQuota(quota: KrishnaChatQuota) {
+    try {
+      await AsyncStorage.setItem(this.KEYS.KRISHNA_CHAT_QUOTA, JSON.stringify(quota));
+    } catch (error) {
+      console.error('Error saving Krishna chat quota:', error);
     }
   }
 

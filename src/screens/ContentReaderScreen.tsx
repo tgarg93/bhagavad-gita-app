@@ -14,8 +14,9 @@ import {
   Modal,
   KeyboardAvoidingView,
   Platform,
+  Animated,
 } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
@@ -38,6 +39,8 @@ import TermCard from '../components/TermCard';
 import WaypointCard from '../components/WaypointCard';
 import CheckPage from '../components/CheckPage';
 import CapstonePage from '../components/CapstonePage';
+import KrishnaFab from '../components/KrishnaFab';
+import KrishnaChatSheet from '../components/KrishnaChatSheet';
 import journeyService from '../services/journeyService';
 import { foundationsService } from '../services/foundationsService';
 import { navigateToJourneyItem, navigateToContentRef } from '../data/journeyPath';
@@ -175,6 +178,10 @@ const ContentReaderScreen: React.FC = () => {
   const [initialIndex, setInitialIndex] = useState(0);
   const [fontSize, setFontSize] = useState<'small' | 'medium' | 'large'>('medium');
   const [showMenu, setShowMenu] = useState(false);
+  const [showKrishnaSheet, setShowKrishnaSheet] = useState(false);
+  // The FAB dims to ~60% while a page swipe is in motion (native driver, no
+  // re-render — same reason userSwipeRef is a ref).
+  const fabOpacity = useRef(new Animated.Value(1)).current;
 
   // Playback
   const audioService = useRef(AudioNarrationService.getInstance()).current;
@@ -290,6 +297,21 @@ const ContentReaderScreen: React.FC = () => {
     // the resume logic would keep the previous item's position.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [positionKey]);
+
+  // Stop-on-blur: narration is a shared singleton and "Go Deeper" / citation
+  // links push a new reader without unmounting this one, so the unmount cleanup
+  // (keyed on positionKey) won't fire. Stop here on focus loss so the previous
+  // page's audio can't keep playing under the new screen.
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        audioService.stopNarration();
+        setIsPlaying(false);
+        setIsPaused(false);
+        setHighlightedSegmentId(null);
+      };
+    }, [audioService])
+  );
 
   const pagesRef = useRef(pages);
   pagesRef.current = pages;
@@ -535,14 +557,17 @@ const ContentReaderScreen: React.FC = () => {
     }
   }, [narrationActive, prerecordedClips, audioService, activeSegments, scrollToIndex, pageIndexForSection]);
 
-  const askKrishnaAboutThis = () => {
-    setShowMenu(false);
+  const openKrishnaSheet = () => {
     if (!content) return;
     const page = pages[activeIndex];
+    // Section pages already seed context (with snippet) in
+    // onViewableItemsChanged; covers/checks/reflections seed coarsely here so
+    // the sheet can never open on another screen's stale context.
     if (page?.kind !== 'section') {
       krishnaContext.setCurrentContent({ type: contentType, title: content.title });
     }
-    (navigation as any).navigate('MainTabs', { screen: 'Ask Krishna' });
+    capture('ask_krishna_opened', { source: 'fab' });
+    setShowKrishnaSheet(true);
   };
 
   const openDetails = () => {
@@ -844,38 +869,59 @@ const ContentReaderScreen: React.FC = () => {
         <TouchableOpacity onPress={adjustFontSize} style={styles.headerBtn}>
           <Ionicons name="text" size={22} color={DharmaDesignSystem.colors.primary.deepSaffron} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setShowMenu(true)} style={styles.headerBtn}>
-          <Ionicons name="ellipsis-vertical" size={22} color={DharmaDesignSystem.colors.primary.deepSaffron} />
-        </TouchableOpacity>
+        {/* Ask Krishna moved to the floating avatar; with it gone the menu
+            only ever holds "Details & practices", so the ⋮ hides when there is
+            nothing in it (placeholder keeps the title centered). */}
+        {content.detailRoute ? (
+          <TouchableOpacity onPress={() => setShowMenu(true)} style={styles.headerBtn}>
+            <Ionicons name="ellipsis-vertical" size={22} color={DharmaDesignSystem.colors.primary.deepSaffron} />
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.headerBtn} />
+        )}
       </View>
 
-      {ready && (
-        <FlatList
-          ref={listRef}
-          data={pages}
-          extraData={activeIndex}
-          keyExtractor={(_, i) => `p-${i}`}
-          renderItem={renderItem}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onScrollBeginDrag={() => { userSwipeRef.current = true; }}
-          onMomentumScrollEnd={(e) => {
-            // Only a real finger-drag moves the voice; the audio's own
-            // scrollToIndex never sets userSwipeRef, so it no-ops here.
-            if (!userSwipeRef.current) return;
-            userSwipeRef.current = false;
-            const idx = Math.round(e.nativeEvent.contentOffset.x / width);
-            syncAudioToPage(idx);
-          }}
-          onViewableItemsChanged={onViewableItemsChanged}
-          viewabilityConfig={viewabilityConfig}
-          getItemLayout={(_, index) => ({ length: width, offset: width * index, index })}
-          initialScrollIndex={initialIndex}
-          windowSize={5}
-          maxToRenderPerBatch={3}
-        />
-      )}
+      {/* flex:1 wrapper so the FAB anchors above the playback bar for free —
+          the bar is a normal-flow sibling below this view, so no height math
+          and no reaction to the bar's conditional rendering. */}
+      <View style={{ flex: 1 }}>
+        {ready && (
+          <FlatList
+            ref={listRef}
+            data={pages}
+            extraData={activeIndex}
+            keyExtractor={(_, i) => `p-${i}`}
+            renderItem={renderItem}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScrollBeginDrag={() => {
+              userSwipeRef.current = true;
+              Animated.timing(fabOpacity, { toValue: 0.6, duration: 120, useNativeDriver: true }).start();
+            }}
+            onMomentumScrollEnd={(e) => {
+              Animated.timing(fabOpacity, { toValue: 1, duration: 120, useNativeDriver: true }).start();
+              // Only a real finger-drag moves the voice; the audio's own
+              // scrollToIndex never sets userSwipeRef, so it no-ops here.
+              if (!userSwipeRef.current) return;
+              userSwipeRef.current = false;
+              const idx = Math.round(e.nativeEvent.contentOffset.x / width);
+              syncAudioToPage(idx);
+            }}
+            onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={viewabilityConfig}
+            getItemLayout={(_, index) => ({ length: width, offset: width * index, index })}
+            initialScrollIndex={initialIndex}
+            windowSize={5}
+            maxToRenderPerBatch={3}
+          />
+        )}
+        {/* Not on covers (collides with Begin) or celebrations (Krishna is
+            already on that card) — questions arise inside the content. */}
+        {ready && activePage?.kind !== 'cover' && activePage?.kind !== 'celebration' && (
+          <KrishnaFab onPress={openKrishnaSheet} opacity={fabOpacity} />
+        )}
+      </View>
 
       {/* Playback bar — transport lives inside the content only. Waypoints are
           checkpoints, not content: no transport (the voice parks there, like a
@@ -926,23 +972,25 @@ const ContentReaderScreen: React.FC = () => {
       </View>
       )}
 
-      {/* 3-dot menu */}
-      <Modal visible={showMenu} transparent animationType="fade" onRequestClose={() => setShowMenu(false)}>
-        <TouchableOpacity style={styles.menuBackdrop} activeOpacity={1} onPress={() => setShowMenu(false)}>
-          <View style={styles.menuSheet}>
-            <TouchableOpacity style={styles.menuItem} onPress={askKrishnaAboutThis}>
-              <Ionicons name="chatbubble-ellipses-outline" size={22} color={DharmaDesignSystem.colors.neutrals.charcoalBlack} />
-              <Text style={styles.menuItemText}>Ask Krishna about this</Text>
-            </TouchableOpacity>
-            {content.detailRoute && (
+      {/* 3-dot menu — only rendered when it has something to hold */}
+      {content.detailRoute && (
+        <Modal visible={showMenu} transparent animationType="fade" onRequestClose={() => setShowMenu(false)}>
+          <TouchableOpacity style={styles.menuBackdrop} activeOpacity={1} onPress={() => setShowMenu(false)}>
+            <View style={styles.menuSheet}>
               <TouchableOpacity style={styles.menuItem} onPress={openDetails}>
                 <Ionicons name="information-circle-outline" size={22} color={DharmaDesignSystem.colors.neutrals.charcoalBlack} />
                 <Text style={styles.menuItemText}>Details & practices</Text>
               </TouchableOpacity>
-            )}
-          </View>
-        </TouchableOpacity>
-      </Modal>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+      )}
+
+      <KrishnaChatSheet
+        visible={showKrishnaSheet}
+        onClose={() => setShowKrishnaSheet(false)}
+        contextLabel={`${content.title} · ${headerInfo.sub}`}
+      />
     </SafeAreaView>
   );
 };
@@ -977,7 +1025,9 @@ const styles = StyleSheet.create({
   progressFill: { height: '100%', borderRadius: 3, backgroundColor: colors.primary.deepSaffron },
   // Pages
   page: { width, flex: 1 },
-  pageScroll: { paddingTop: spacing.lg, paddingBottom: spacing.xxl },
+  // Bottom padding clears the Krishna FAB (52pt + 16 inset) so the last lines
+  // can always scroll out from under it.
+  pageScroll: { paddingTop: spacing.lg, paddingBottom: spacing.xxl + 40 },
   // flexGrow (not flex) so a short celebration still centers, while a long one
   // — a Foundations act, with its banked takeaways and handoff — can scroll.
   celebrationScroll: { flexGrow: 1, justifyContent: 'center', paddingVertical: spacing.lg },

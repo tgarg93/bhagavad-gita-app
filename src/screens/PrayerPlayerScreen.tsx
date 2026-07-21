@@ -11,6 +11,7 @@ import {
   ViewToken,
   Image,
   ImageStyle,
+  Animated,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
@@ -22,6 +23,9 @@ import journeyService from '../services/journeyService';
 import krishnaContext from '../services/krishnaContextService';
 import { AudioNarrationService } from '../services/audioNarrationService';
 import { navigateToContentRef } from '../data/journeyPath';
+import KrishnaFab from '../components/KrishnaFab';
+import KrishnaChatSheet from '../components/KrishnaChatSheet';
+import { capture } from '../services/telemetryService';
 
 const { width } = Dimensions.get('window');
 
@@ -72,6 +76,9 @@ const PrayerPlayerScreen: React.FC = () => {
   const [script, setScript] = useState<ScriptEmphasis>('roman');
   const [loopStep, setLoopStep] = useState(0);
   const [playingVerse, setPlayingVerse] = useState<number | null>(null);
+  const [showKrishnaSheet, setShowKrishnaSheet] = useState(false);
+  // FAB dims during page swipes (native driver, no re-render)
+  const fabOpacity = useRef(new Animated.Value(1)).current;
   const [timesRecited, setTimesRecited] = useState(0);
 
   const audioService = useRef(AudioNarrationService.getInstance()).current;
@@ -214,11 +221,15 @@ const PrayerPlayerScreen: React.FC = () => {
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
-  const askKrishna = () => {
-    if (prayer) {
+  const openKrishnaSheet = () => {
+    // Verse pages self-seed (with snippet) in onViewableItemsChanged; other
+    // pages seed coarsely here.
+    const page = pages[activeIndex];
+    if (prayer && page?.kind !== 'verse') {
       krishnaContext.setCurrentContent({ type: 'prayer', title: prayer.title });
     }
-    (navigation as any).navigate('MainTabs', { screen: 'Ask Krishna' });
+    capture('ask_krishna_opened', { source: 'fab' });
+    setShowKrishnaSheet(true);
   };
 
   if (!prayer) {
@@ -410,33 +421,39 @@ const PrayerPlayerScreen: React.FC = () => {
         >
           <Text style={styles.scriptToggle}>{script === 'roman' ? 'अ' : 'Aa'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={askKrishna} style={styles.headerBtn}>
-          <Ionicons
-            name="chatbubble-ellipses-outline"
-            size={22}
-            color={DharmaDesignSystem.colors.primary.deepSaffron}
-          />
-        </TouchableOpacity>
       </View>
 
-      {ready && (
-        <FlatList
-          ref={listRef}
-          data={pages}
-          extraData={[activeIndex, script, playingVerse]}
-          keyExtractor={(_, i) => `p-${i}`}
-          renderItem={renderItem}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onViewableItemsChanged={onViewableItemsChanged}
-          viewabilityConfig={viewabilityConfig}
-          getItemLayout={(_, index) => ({ length: width, offset: width * index, index })}
-          initialScrollIndex={initialIndex}
-          windowSize={5}
-          maxToRenderPerBatch={3}
-        />
-      )}
+      {/* flex:1 wrapper anchors the FAB above the (conditional) recitation bar */}
+      <View style={{ flex: 1 }}>
+        {ready && (
+          <FlatList
+            ref={listRef}
+            data={pages}
+            extraData={[activeIndex, script, playingVerse]}
+            keyExtractor={(_, i) => `p-${i}`}
+            renderItem={renderItem}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScrollBeginDrag={() => {
+              Animated.timing(fabOpacity, { toValue: 0.6, duration: 120, useNativeDriver: true }).start();
+            }}
+            onMomentumScrollEnd={() => {
+              Animated.timing(fabOpacity, { toValue: 1, duration: 120, useNativeDriver: true }).start();
+            }}
+            onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={viewabilityConfig}
+            getItemLayout={(_, index) => ({ length: width, offset: width * index, index })}
+            initialScrollIndex={initialIndex}
+            windowSize={5}
+            maxToRenderPerBatch={3}
+          />
+        )}
+        {/* Not on covers (collides with Begin) or celebrations */}
+        {ready && activePage?.kind !== 'cover' && activePage?.kind !== 'celebration' && (
+          <KrishnaFab onPress={openKrishnaSheet} opacity={fabOpacity} />
+        )}
+      </View>
 
       {/* Recitation bar — only on verse pages */}
       {onVersePage && (
@@ -484,6 +501,12 @@ const PrayerPlayerScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
       )}
+
+      <KrishnaChatSheet
+        visible={showKrishnaSheet}
+        onClose={() => setShowKrishnaSheet(false)}
+        contextLabel={`${prayer.title} · ${headerInfo.sub}`}
+      />
     </SafeAreaView>
   );
 };
