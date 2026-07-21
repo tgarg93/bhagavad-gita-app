@@ -58,7 +58,7 @@ const UPANISHAD_STORIES: Story[] = [
         id: 'the-sacrifice',
         title: 'A sacrifice that gave away nothing',
         storyText:
-          'Vajashravasa performed the great sacrifice in which everything is given away — and gave away cows too old to graze, too dry to milk. His young son Nachiketa watched the priests lead the worthless gifts off and felt the wrongness of it in his chest. A giver who gives what costs him nothing, the boy understood, earns a joyless world. So he pressed his father with an unbearable question: “And me — to whom will you give me?” Once, twice, three times he asked, until his father snapped: “To Death I give you.”',
+          'Nachiketa was a young boy whose father, a man named Vajashravasa, was performing a great religious ceremony — the kind where, to earn merit and a better afterlife, a person gives away all his wealth to the priests. But young Nachiketa noticed his father cheating: the cows he was giving away were old and worthless, too weak to graze and too dry to give any milk. A person who gives away only what costs him nothing, the boy sensed, earns only a joyless reward. So he pressed his father with an unbearable question: “And me — to whom will you give me?” Once, twice, three times he asked, until his father snapped: “To Death I give you.”',
         citation: 'Katha Upanishad 1.1.1–4',
       },
       {
@@ -72,7 +72,7 @@ const UPANISHAD_STORIES: Story[] = [
         id: 'two-easy-boons',
         title: 'Two boons Death was glad to grant',
         storyText:
-          'The first wish was a son’s: let my father’s anger pass; let him greet me with peace when I return. Granted. The second was a seeker’s: teach me the fire ritual that leads to heaven. Yama taught it gladly, and — delighted with the boy — named the fire after him. Two boons spent, and Death waited comfortably for the third. Then Nachiketa asked it: “When a person dies, some say he exists and some say he does not. Teach me the truth of it.”',
+          'The first wish was a son’s: let my father’s anger pass; let him greet me with peace when I return. Granted. The second was a seeker’s: teach me the sacred fire ritual — an offering poured into the flames — that leads to heaven. Yama taught it gladly, and — delighted with the boy — named the fire after him. Two boons spent, and Death waited comfortably for the third. Then Nachiketa asked it: “When a person dies, some say he exists and some say he does not. Teach me the truth of it.”',
         citation: 'Katha Upanishad 1.1.10–20',
       },
       {

@@ -877,7 +877,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         subtitle: 'One wall holds up the whole house',
         takeaway:
           "Hinduism's center is one claim: Brahman, the one reality, and atman, the Self you call 'I,' are the same.",
-        storyText: 'Every tradition has a center of gravity. Buddhism has dependent origination; the Abrahamic faiths have the covenant between God and humanity. Hinduism\'s center is an identity claim.\n\n**Brahman** — the one reality the Rig Veda said the wise call by many names — and **Atman** — the Self you refer to every time you say "I" — are **the same**. Not similar. Not connected. The same, the way the space in a jar and the space in the room were never actually two spaces.\n\nTake this wall out and the house falls: karma becomes bookkeeping, moksha becomes a destination, the gods become a committee. Put it in and everything else in the tradition becomes either a consequence of the claim or a method for verifying it.',
+        storyText: 'Every tradition has a center of gravity. Buddhism centres on the idea that everything arises from causes and then passes away; the Abrahamic faiths (Judaism, Christianity, and Islam) centre on a covenant, a sacred promise between God and humanity. Hinduism\'s center is an identity claim.\n\n**Brahman** — the one reality that the Rig Veda (the oldest sacred hymns of Hinduism) said the wise call by many names — and **Atman** — the Self you refer to every time you say "I" — are **the same**. Not similar. Not connected. The same, the way the space in a jar and the space in the room were never actually two spaces.\n\nTake this wall out and the house falls: karma becomes bookkeeping, moksha becomes a destination, the gods become a committee. Put it in and everything else in the tradition becomes either a consequence of the claim or a method for verifying it.',
         teachingText: 'Notice what kind of claim it is: not ethical advice, not a story, but a statement about what you are — **checkable, the Upanishads insist, from the inside**.\n\nThe rest of this course is the tradition\'s three great verification methods: an experiment, a negation, and four sentences.',
         citation: 'Brahman/Atman identity: the central thesis of the principal Upanishads (Chandogya 6, Brihadaranyaka 1.4, Mandukya)',
       },
@@ -933,7 +933,7 @@ export const philosophyData: PhilosophicalConcept[] = [
       {
         id: 'ba-neti',
         title: 'Not This, Not This',
-        subtitle: 'The via negativa of the Upanishads',
+        subtitle: 'Finding the Self by removing what it is not',
         takeaway:
           'Neti neti — not this, not this. You are not anything you can observe; you are what does the observing.',
         storyText: 'The Brihadaranyaka Upanishad offers the second method, two words long: **neti neti** — not this, not this. Whatever you can observe, you are not.\n\nThe body? You watch it age — observable, so not this. Emotions? They arrive and leave while you remain to report them — not this. Thoughts? You just watched one — not this. Even the sense of being "me," the ego itself, can be caught in the act and examined — not this.\n\nThe method never says what the Self is; it strips away everything the Self is mistaken for, **the way a sculptor finds the figure by removing stone**.',
@@ -1453,7 +1453,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         takeaway:
           'Dharma begins where Arjuna froze: a real choice between two duties, with no easy rule to settle it.',
         storyText:
-          'In the opening moments of the Bhagavad Gita, **Arjuna** stands paralyzed on the battlefield of **Kurukshetra**, his bow slipping from trembling hands.\n\nBefore him are his beloved teachers, cousins, and friends \u2014 all armed and ready for war. His duty as a warrior demands he fight. His heart rebels against harming those he loves.\n\nThis moment of moral crisis births one of humanity\u2019s greatest conversations about **dharma**.',
+          'The most famous conversation about doing the right thing in Hinduism opens on a battlefield. Two armies face each other at a place called **Kurukshetra**, about to begin a terrible civil war. Between them, a warrior-prince named **Arjuna** stands frozen, his bow slipping from his trembling hands. He is about to hear the **Bhagavad Gita**, one of the best-loved scriptures in Hinduism.\n\nBefore him are his beloved teachers, cousins, and friends \u2014 all armed and ready for war. His duty as a warrior demands he fight. His heart rebels against harming those he loves.\n\nThis moment of moral crisis births one of humanity\u2019s greatest conversations about **dharma**.',
         citationLink: 'gita:1',
         citation: 'Bhagavad Gita, Chapter 1 (Arjuna\u2019s crisis)',
       },
@@ -1811,7 +1811,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         subtitle: 'An Arrow Leaving the Bow',
         takeaway:
           'Karma starts with a plain fact. You are always acting, and every action leaves something behind.',
-        storyText: 'When Arjuna collapsed on the battlefield, unable to act, Krishna did not begin with metaphysics or heaven. He began with action.\n\nBefore speaking of the soul\'s immortality or the paths of devotion, he addressed the thing Arjuna could not escape: a choice had to be made, and even refusing to choose would itself be a choice.\n\nThis is where the teaching of **karma** begins — not as a cosmic scoreboard of rewards and punishments, but as the simple, unavoidable truth that **you are always acting**, and every action leaves something behind. An arrow, once released, cannot be called back. But the archer chooses where to aim.'
+        storyText: 'The most famous teaching on action in Hinduism comes from a story. On the eve of a great war, a warrior-prince named Arjuna froze. His own cousins and teachers were standing in the enemy army, and he could not bear to fight them. His chariot-driver that day was Krishna — who, unknown to most on the field, was God himself in human form. Faced with his paralysed friend, Krishna did not begin with grand talk of the soul or of heaven. He began with action.\n\nThe one thing Arjuna could not escape, Krishna pointed out, was that a choice still had to be made, and even refusing to choose would itself be a choice.\n\nThis is where the teaching of **karma** begins — not as a cosmic scoreboard of rewards and punishments, but as the simple, unavoidable truth that **you are always acting**, and every action leaves something behind. An arrow, once released, cannot be called back. But the archer chooses where to aim.'
       },
       {
         id: 'karma-meaning',
