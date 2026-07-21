@@ -24,6 +24,7 @@ import { RATE_LIMITS, ERROR_MESSAGES } from '../config/geminiConfig';
 import { getDailyAtom } from '../data/dailyAtoms';
 import { useKrishnaChat, buildSuggestedChips, DAILY_CHAT_LIMIT } from '../hooks/useKrishnaChat';
 import { capture } from '../services/telemetryService';
+import AiDisclaimer from '../components/AiDisclaimer';
 
 const AskKrishnaScreen: React.FC = () => {
   // Today's chai question leads the suggestions — the brief's hand-off
@@ -248,6 +249,7 @@ const AskKrishnaScreen: React.FC = () => {
             />
           </TouchableOpacity>
         </View>
+        <AiDisclaimer />
       </KeyboardAvoidingView>
 
     </SafeAreaView>

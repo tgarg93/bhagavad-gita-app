@@ -31,6 +31,7 @@ import { GeminiMessage } from '../services/geminiService';
 import { RATE_LIMITS } from '../config/geminiConfig';
 import { getDailyAtom } from '../data/dailyAtoms';
 import { useKrishnaChat, buildSuggestedChips, DAILY_CHAT_LIMIT } from '../hooks/useKrishnaChat';
+import AiDisclaimer from './AiDisclaimer';
 
 const C = DharmaDesignSystem.colors;
 const AVATAR = 30;
@@ -178,6 +179,7 @@ const KrishnaChatSheet: React.FC<{
                     />
                   </TouchableOpacity>
                 </View>
+                <AiDisclaimer />
               </>
             )}
           </View>
