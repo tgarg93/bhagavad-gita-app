@@ -153,7 +153,7 @@ const UPANISHAD_STORIES: Story[] = [
         id: 'the-proud-return',
         title: 'The student who came home proud',
         storyText:
-          'Svetaketu left home at twelve and returned at twenty-four, having mastered all the **Vedas** (Hinduism's oldest and most sacred scriptures) — and it showed. His father Uddalaka watched the young scholar carry himself through the door and asked one quiet question: “Since you are so learned, dear boy, did you ask for that teaching by which the unheard becomes heard, the unthought becomes thought, the unknown becomes known?” Svetaketu had no idea what his father meant. “How can there be such a teaching?” There was. His whole education had missed it.',
+          'Svetaketu left home at twelve and returned at twenty-four, having mastered all the **Vedas** (the oldest and most sacred scriptures of Hinduism) — and it showed. His father Uddalaka watched the young scholar carry himself through the door and asked one quiet question: “Since you are so learned, dear boy, did you ask for that teaching by which the unheard becomes heard, the unthought becomes thought, the unknown becomes known?” Svetaketu had no idea what his father meant. “How can there be such a teaching?” There was. His whole education had missed it.',
         citation: 'Chandogya Upanishad 6.1.1–7',
       },
       {
