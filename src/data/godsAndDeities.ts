@@ -2053,37 +2053,138 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/parvati-icon.jpg',
       galleryImages: []
     },
+    kicker: "The gentle Mother-Goddess — Shiva's wife and Ganesha's mother — who proves that an ordinary family home can be the highest spiritual path.",
+    learnItems: [
+      "Parvati is the gentle Mother-Goddess, Shiva's wife and Ganesha's mother",
+      'Real love is a discipline, not a mood',
+      'God is half male and half female; neither half is complete alone',
+      'Feeding people is real spiritual work, not a distraction from it',
+      'She made an ordinary family home into a full path to God',
+    ],
+    handoff:
+      "You've now met the great gods — Krishna, Rama, Shiva, Ganesha, Hanuman, Durga, and Parvati. So who are 'the gods,' really? Are they many separate beings, or one reality wearing many faces? That question is waiting for you next, to answer in your own words.",
     sections: [
+      {
+        id: 'parvati-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Parvati is the gentle Mother-Goddess: the wife of Shiva, the mother of Ganesha, and the warm, family-loving face of the same Goddess you just met as fierce Durga.\n\nOver the next few pages you'll meet her, and her quietly revolutionary claim — that an ordinary home, full of cooking and caring and patience, can be the deepest spiritual practice of all.",
+      },
+      {
+        id: 'parvati-who',
+        title: 'Who Parvati Is',
+        subtitle: 'The gentle half of the Divine Mother',
+        takeaway:
+          'Parvati is the gentle Mother-Goddess — the wife of Shiva and the mother of Ganesha. She is the same divine power as fierce Durga, in her warm, family-loving form.',
+        storyText:
+          "You've just met **Durga**, the Goddess with her sword drawn. **Parvati** is that same Divine Mother wearing her gentlest face. She is the wife of the great god **Shiva** and the mother of **Ganesha** — the very family whose mountain home you glimpsed a few gods ago.\n\nHindus call her **Shakti**, a word that means 'power' or 'energy.' The idea is striking: Shiva may be the silent, still source of everything, but Parvati is the living power that actually makes things happen. The tradition puts it bluntly in a pun — without his Shakti, Shiva is just a *shava*, a corpse.\n\nAnd here is what makes Parvati quietly revolutionary. Of all the arenas she could have chosen, she chose marriage, motherhood, and the running of a household. And by choosing them, she declared that ordinary family life is not a lesser path to God. Done with her intensity, it is the highest one.",
+        teachingText:
+          "That is Parvati's whole claim, and it is a comforting one for most of us. You do not have to leave your job and family and climb a mountain to live a deep spiritual life. The packed lunches, the patience, the love sustained through hard winters — that, she insists, is the mountain.",
+        citation: 'Parvati as Shakti and the gentle form of the Goddess: Shiva Purana, Shakta tradition.'
+      },
       {
         id: 'parvati-love-as-discipline',
         title: 'Love as a Discipline',
         subtitle: 'What do you do when beauty fails?',
+        takeaway:
+          "Parvati couldn't win the great hermit Shiva with beauty, so she met him in his own arena: years of fierce self-discipline in the mountains. She won him by proving her love was a discipline, not a passing mood.",
         storyText: 'The story begins with a strategy that fails.\n\nParvati, advised by the gods, first approaches Shiva the conventional way: presence, charm, flowers in season, the love-god Kama enlisted to loose his arrow at the meditating ascetic. **Shiva opens his third eye and burns Kama to ash without rising.**\n\nThe lesson lands on Parvati like a door closing — and she makes the decision that defines her: if the ascetic cannot be moved by beauty, **she will meet him in his own arena**. She walks into the mountains and begins austerities that shame the professionals: fire in summer, ice-water in winter, then not even leaves for food.',
         sectionHeader: 'The proposal that was a test',
         teachingText: 'When Shiva finally comes to her, disguised, he tries one last door: he insults himself, listing every reason a princess should not marry a graveyard ascetic. Parvati turns to leave rather than hear it — loyalty even against apparent self-interest — and the disguise falls.\n\nThe tradition is precise about what won him: not the fasting itself but what the fasting proved — that **her love was a discipline and not a mood**. It is the least sentimental great love story ever told, and the most useful.',
-        citation: 'Shiva Purana, Rudra Samhita (Parvati Khanda); Kalidasa, Kumarasambhava, Cantos 3–5'
+        citation: 'Shiva Purana, Rudra Samhita (Parvati Khanda); Kalidasa, Kumarasambhava, Cantos 3–5',
+        checks: [
+          {
+            id: 'chk:deity:parvati:discipline',
+            kind: 'mcq',
+            prompt: 'Parvati could not win Shiva, the great hermit, with beauty. How did she finally win him?',
+            options: [
+              {
+                text: 'She met him in his own arena — years of fierce self-discipline in the mountains — proving her love was a discipline, not a passing mood',
+                correct: true,
+              },
+              { text: 'She gave up and married someone else instead' },
+              { text: 'She tricked him into it with a magic spell' },
+            ],
+            why: 'What won him was not the fasting itself but what it proved: that her love was steady practice, not a fleeting feeling. It is the least sentimental great love story ever told.',
+          },
+        ],
+      },
+      {
+        id: 'parvati-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          'She won him by discipline, not display. The next image shows just how complete their union became: a single body, half him and half her.',
       },
       {
         id: 'parvati-half-of-shiva',
         title: 'Half of God\'s Own Body',
         subtitle: 'Ardhanarishvara — the argument in one image',
+        takeaway:
+          'In one striking image, Shiva and Parvati are a single body split down the middle, half him and half her. It says that stillness and action, male and female, are two halves of one whole, and neither is complete alone.',
         storyText: 'In one of the tradition\'s boldest images, Shiva and Parvati are shown as **a single standing figure split down the middle**: his half ash-white, matted-locked, still; her half golden, silk-clad, ornamented.\n\n**Ardhanarishvara** — the Lord who is half woman. The image is a theological argument: consciousness and energy, stillness and manifestation, the ascetic and the world are not rivals but halves of one body, and neither is complete alone.\n\nThe tradition says it in a proverb sharp enough to sting: **Shiva without Shakti is shava — a corpse.**',
         teachingText: 'Whatever your own polarity — the contemplative half that wants the cave and the engaged half that loves the world — Ardhanarishvara refuses the choice.\n\nThe complete life is not won by amputating either half but by **letting them share a spine**. Every householder who meditates and every meditator who shows up for family dinner is practicing this image.',
-        citation: 'Ardhanarishvara iconography: Puranic and Agamic tradition; the Shiva/shava wordplay is proverbial in Shakta texts (cf. Saundarya Lahari 1)'
+        citation: 'Ardhanarishvara iconography: Puranic and Agamic tradition; the Shiva/shava wordplay is proverbial in Shakta texts (cf. Saundarya Lahari 1)',
+        checks: [
+          {
+            id: 'chk:deity:parvati:half',
+            kind: 'mcq',
+            prompt: 'Shiva and Parvati are sometimes shown as one body split down the middle — half him, half her (Ardhanarishvara). What is that image arguing?',
+            options: [
+              {
+                text: 'That stillness and energy, male and female, the hermit and the world are two halves of one whole — neither is complete alone',
+                correct: true,
+              },
+              { text: 'That Shiva and Parvati are rivals fighting over a single body' },
+              { text: 'That women are only half as important as men' },
+            ],
+            why: 'The proverb is blunt: without his Shakti (Parvati), Shiva is just a corpse. Consciousness needs energy; the cave needs the world. A complete life lets both halves share one spine.',
+          },
+        ],
       },
       {
         id: 'parvati-annapurna-section',
         title: 'The Goddess of the Full Plate',
         subtitle: 'When the renouncer held out a bowl',
-        storyText: 'The Annapurna story is Parvati\'s wit at its sharpest.\n\nShiva, in ascetic mood, dismisses the material world as illusion — food included. Parvati does not argue; **she withdraws.** And with the goddess of manifestation gone, food itself goes.\n\nThe world hungers, and eventually the great transcender of maya walks to Kashi with a begging bowl, to the kitchen his wife has opened there, and holds it out. **She serves him with a smile that has lasted three thousand years.** In Varanasi her temple stands to this day: Annapurna, she who is full of food.',
+        takeaway:
+          'When Shiva dismissed the physical world as a mere illusion, Parvati simply vanished — and all the food in the world vanished with her. She let the great hermit go hungry until he understood: feeding people is real spiritual work.',
+        storyText: "The story of Annapurna is Parvati's wit at its sharpest.\n\nIn an ascetic mood, Shiva once dismissed the whole physical world as **maya** — a passing illusion — and food along with it. Parvati did not argue. She simply withdrew from the world. And with the goddess of the physical world gone, all food quietly vanished too.\n\nThe world went hungry. Eventually the great renouncer of illusion had to pick up a begging bowl and walk to the holy city of **Kashi** (today's Varanasi), to a free kitchen his wife had opened there, and hold it out. She filled it, smiling. Her temple still stands in Varanasi to this day, to **Annapurna** — 'she who is full of food.'",
         sectionHeader: 'The holiness of the ordinary',
         teachingText: 'This is the tradition auditing its own excesses. Wherever spirituality drifts toward contempt for the body, the meal, the household — Annapurna is the correction: **try transcending without lunch.**\n\nFeeding people is not the errand you run so that someone else can do the real spiritual work. It is the real spiritual work, done in its most honest form.',
-        citation: 'Annapurna of Kashi: Skanda Purana (Kashi Khanda) and living Varanasi tradition'
+        citation: 'Annapurna of Kashi: Skanda Purana (Kashi Khanda) and living Varanasi tradition',
+        checks: [
+          {
+            id: 'chk:deity:parvati:annapurna',
+            kind: 'mcq',
+            prompt: 'Shiva declared the physical world (food included) a mere illusion. How did Parvati answer him?',
+            options: [
+              {
+                text: 'She withdrew, and all food vanished with her — letting the great hermit go hungry until he saw that feeding people is real spiritual work',
+                correct: true,
+              },
+              { text: 'She agreed with him and stopped cooking forever' },
+              { text: 'She argued with him for years until he gave in' },
+            ],
+            why: 'It is the tradition correcting its own excess. Wherever spirituality drifts into contempt for the body and the meal, Annapurna is the reply: try transcending without lunch.',
+          },
+        ],
+      },
+      {
+        id: 'parvati-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          'Love as discipline, God as two halves, the holiness of a full plate. One idea remains, and it is the one she is loved for most: the home she built.',
       },
       {
         id: 'parvati-mother',
         title: 'The Mother of New Beginnings',
         subtitle: 'A household on a mountaintop',
+        takeaway:
+          'Parvati took the ultimate hermit and made him a father, turning a frozen mountaintop into the most beloved family in Hinduism. She is the patron of everyone building a whole family out of unlikely materials.',
         storyText: 'Kailash, as the Puranas paint it, is **the strangest household in literature**: the ascetic father with snakes for ornaments, the mountain-princess mother, one son with an elephant\'s head shaped by her own hands from turmeric paste, another born to command the armies of heaven, a lion, a bull, a mouse, and a peacock in the yard.\n\nIt should not work, and it is the most beloved family in the tradition.\n\n**Parvati is its center of gravity** — the one who turned the great renouncer into a father, absolute stillness into a home.',
         teachingText: 'The tradition could have left divinity solitary and abstract. Instead its most worshiped god is half of a marriage, and the goddess who arranged that is the patron of everyone who has ever **built a family out of unlikely materials**.\n\nAsk her blessing not for a perfect household but for a whole one — held together, like hers, by a love that outlasted every winter it stood in.',
         citationLink: 'deity:ganesha',
@@ -2106,7 +2207,9 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Parvati won Shiva through quiet, steady effort. What goal of yours needs steady practice more than attention?'
+      'Parvati won Shiva through quiet, steady effort. What goal of yours needs steady practice more than attention?',
+      "Parvati insists ordinary home life is a real spiritual path. What everyday act of care in your week could you treat as practice rather than chore?",
+      'Where in your life are you trying to be all "still hermit" or all "busy doer," when Ardhanarishvara says you need both halves?',
     ]
   },
   {
