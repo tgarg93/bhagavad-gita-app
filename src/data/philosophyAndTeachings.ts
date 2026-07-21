@@ -33,6 +33,19 @@ export interface PhilosophicalConcept {
   sources?: SourceNote[];
   // Chapter-style reflection questions (exactly 3, Gita pattern)
   reflectionQuestions?: string[];
+  // ——— Jigyasu interstitials (optional; render on presence, see readerContent) ———
+  // The thesis line shown on the cover in place of the bare subtitle.
+  kicker?: string;
+  // The "what you'll learn" checklist: rendered by the kind:'intro' page, ticked
+  // by kind:'waypoint' pages (via learnIndex), and replayed checked on the
+  // celebration. Sections with kind:'intro'/'waypoint' need this to render.
+  learnItems?: string[];
+  // Optional short one-clause recaps for the celebration (falls back to
+  // learnItems when absent). Distinct from learnItems only when the recap
+  // wording should differ from the promise wording.
+  bankedTakeaways?: string[];
+  // The "what's next" teaser shown above the next-step button on the celebration.
+  handoff?: string;
 }
 
 // The shared narrative shape now lives in narrativeTypes.ts (reused by
@@ -1400,27 +1413,81 @@ export const philosophyData: PhilosophicalConcept[] = [
       iconImage: '/images/philosophy/karma-icon.jpg'
     },
     difficulty: 'beginner',
+    kicker: 'You already use this word. You have probably been using it backwards.',
+    learnItems: [
+      'Karma means action, not fate',
+      'Effort is yours; the outcome is not',
+      'There is no opting out',
+      'Skill in action is evenness',
+      "Action as offering doesn't bind",
+      'No sincere effort is ever wasted',
+    ],
+    handoff:
+      'Your actions steer the wheel of life. But what is that wheel, and where does it carry you when a life ends? The tradition has a name for it: samsara.',
     // Verse translations follow Swami Sivananda's public-domain rendering
     // (bundled in gitaVerses.json), lightly trimmed for reading flow.
     sections: [
       {
+        id: 'karma-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          'You already use the word karma. You hear it when something bad circles back to someone who had it coming. That is not what it meant first, and the older meaning is far more useful.\n\nOver the next few pages, karma turns from a cosmic scoreboard into a plain account of how your own actions shape the life you are living.',
+      },
+      {
         id: 'karma-opening',
         title: 'The Weight of Every Action',
         subtitle: 'An Arrow Leaving the Bow',
+        takeaway:
+          'Karma starts with a plain fact. You are always acting, and every action leaves something behind.',
         storyText: 'When Arjuna collapsed on the battlefield, unable to act, Krishna did not begin with metaphysics or heaven. He began with action.\n\nBefore speaking of the soul\'s immortality or the paths of devotion, he addressed the thing Arjuna could not escape: a choice had to be made, and even refusing to choose would itself be a choice.\n\nThis is where the teaching of **karma** begins — not as a cosmic scoreboard of rewards and punishments, but as the simple, unavoidable truth that **you are always acting**, and every action leaves something behind. An arrow, once released, cannot be called back. But the archer chooses where to aim.'
       },
       {
         id: 'karma-meaning',
         title: 'What Karma Really Means',
         subtitle: 'A Seed Becoming a Tree',
+        takeaway: 'Karma just means action. Not fate, not luck, not punishment.',
         storyText: '**Karma** comes from the Sanskrit root **kri** — to do, to act. It simply means action. Yet centuries of use have buried it under misreadings: fate, luck, punishment, "what goes around comes around."\n\nThe oldest teaching is more precise and more empowering. The Brihadaranyaka Upanishad says of a person: "As is his desire, so is his will; and as is his will, so is his deed; and whatever deed he does, that he will reap."\n\n**Desire shapes intention, intention shapes action, and action shapes who you become.** Karma is not something that happens TO you. It is the trail you are laying down, one choice at a time, in the direction your attention is already pointing.',
         teachingText: 'Notice the chain begins with **desire**, not deed. This is why Hindu thought insists that intention matters as much as action: two people can perform the identical act — one from love, one from calculation — and plant entirely different seeds.\n\nIf you want to know your future, the Upanishad suggests, do not consult the stars. Watch what you are doing, and wanting, today.',
         citation: 'Brihadaranyaka Upanishad 4.4.5 (tr. Max Müller).'
       },
       {
+        id: 'karma-term-karma',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'कर्म',
+          transliteration: 'karma',
+          meaning: 'action — the deed itself',
+        },
+        storyText:
+          'People misread this word in two ways. Karma is not fate, because fate is what you cannot change, and karma is what you do. And karma is not cosmic revenge, because nobody is punishing you. Consequences are simply growing from seeds you planted.\n\n**Karma is the verb of your life.**',
+        reappears:
+          'In the four paths, one is karma yoga: action itself, turned into a way to the divine.',
+        checks: [
+          {
+            id: 'chk:concept:karma:not-fate',
+            kind: 'mcq',
+            prompt:
+              'A friend shrugs: "It\'s my karma. Nothing I can do." What has he gotten backwards?',
+            options: [
+              {
+                text: 'Karma means his own action, so it is the one thing he can always change',
+                correct: true,
+              },
+              { text: 'Nothing. That is roughly what karma means.' },
+              { text: 'Karma is fixed at birth and cannot be altered' },
+            ],
+            why: 'Karma is the verb of your life, not a sentence passed on it. Read as fate, the tradition\'s biggest idea about your own power becomes an excuse. Karma is what you do, and what you do is always yours to change.',
+          },
+        ],
+      },
+      {
         id: 'karma-right-to-action',
         title: 'Your Right Is to the Action Alone',
         subtitle: 'Hands Working, Palms Open',
+        takeaway:
+          'Your right is to the work, never to its fruits. Effort is yours; the outcome is not.',
         keyVerse: {
           sanskrit: 'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥',
           transliteration: 'karmaṇy evādhikāras te mā phaleṣhu kadāchana, mā karma-phala-hetur bhūr mā te saṅgo \'stv akarmaṇi',
@@ -1428,12 +1495,30 @@ export const philosophyData: PhilosophicalConcept[] = [
           source: 'Bhagavad Gita 2.47 (tr. Swami Sivananda)'
         },
         storyText: 'This is the most quoted verse in the Gita, and the most misunderstood. Krishna is not telling Arjuna to stop caring about results — a general who doesn\'t care about victory should leave the field.\n\nHe is making a surgical distinction: **effort is yours; outcome is not.** A thousand factors you cannot see — other people\'s choices, timing, chance, history — stand between your action and its fruit.\n\nWhen you stake your peace on the part you cannot control, anxiety is the only possible harvest.',
-        teachingText: 'Think of something you\'re working toward right now — a promotion, a child\'s happiness, a body healed. The verse asks: can you pour yourself into the work itself, wholly, and hold the outcome with open palms?\n\nThis is not lowering the bar. People who work this way usually work better — steadier under pressure, more honest about feedback, less crushed by setbacks — because their fuel is the work, not the scoreboard.'
+        teachingText: 'Think of something you\'re working toward right now — a promotion, a child\'s happiness, a body healed. The verse asks: can you pour yourself into the work itself, wholly, and hold the outcome with open palms?\n\nThis is not lowering the bar. People who work this way usually work better — steadier under pressure, more honest about feedback, less crushed by setbacks — because their fuel is the work, not the scoreboard.',
+        checks: [
+          {
+            id: 'chk:concept:karma:fruits',
+            kind: 'mcq',
+            prompt:
+              '"Your right is to the action, never to its fruits" (Gita 2.47). What is Krishna actually asking of you?',
+            options: [
+              {
+                text: 'Pour yourself fully into the work, and hold the outcome with open palms',
+                correct: true,
+              },
+              { text: 'Stop caring whether you succeed or fail' },
+              { text: 'Only act when the result is guaranteed' },
+            ],
+            why: 'The verse is a surgical distinction, not a shrug. Effort is yours; the outcome depends on a thousand things you do not control. Caring about the work is the point. Staking your peace on the result you cannot control is what breeds anxiety.',
+          },
+        ],
       },
       {
         id: 'karma-no-inaction',
         title: 'The Myth of Doing Nothing',
         subtitle: 'A River That Cannot Stop Flowing',
+        takeaway: 'There is no opting out. Even doing nothing is something you did.',
         keyVerse: {
           sanskrit: 'न हि कश्चित्क्षणमपि जातु तिष्ठत्यकर्मकृत्। कार्यते ह्यवशः कर्म सर्वः प्रकृतिजैर्गुणैः॥',
           transliteration: 'na hi kaśhchit kṣhaṇam api jātu tiṣhṭhaty akarma-kṛit, kāryate hy avaśhaḥ karma sarvaḥ prakṛiti-jair guṇaiḥ',
@@ -1449,9 +1534,19 @@ export const philosophyData: PhilosophicalConcept[] = [
         teachingText: 'This teaching is bracing because it removes the comfortable illusion of the sidelines. Where in your life are you telling yourself "I\'m not doing anything" — about a strained relationship, an injustice at work, a habit quietly growing?\n\nThe Gita\'s point is not to induce guilt but clarity: since you are acting either way, **act consciously**. A deliberate choice, even a hard one, plants better seeds than a drift.'
       },
       {
+        id: 'karma-way-1',
+        kind: 'waypoint',
+        title: '3 of 6 banked',
+        learnIndex: 3,
+        storyText:
+          'That is the ground floor: you are always acting, and your action is always yours. The rest of this is about how to act, so that action frees you instead of trapping you.',
+      },
+      {
         id: 'karma-skill',
         title: 'Yoga Is Skill in Action',
         subtitle: 'A Potter\'s Steady Hands at the Wheel',
+        takeaway:
+          'Yoga is skill in action, and the skill is evenness: fully engaged, and strangely unhurried.',
         keyVerse: {
           sanskrit: 'बुद्धियुक्तो जहातीह उभे सुकृतदुष्कृते। तस्माद्योगाय युज्यस्व योगः कर्मसु कौशलम्॥',
           transliteration: 'buddhi-yukto jahātīha ubhe sukṛita-duṣhkṛite, tasmād yogāya yujyasva yogaḥ karmasu kauśhalam',
@@ -1467,6 +1562,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'karma-offering',
         title: 'Action as Offering',
         subtitle: 'A Lotus Leaf Untouched by Water',
+        takeaway:
+          'Done as an offering, the same action stops binding you. A lotus leaf lives in the pond and is never soaked.',
         openingVerse: {
           sanskrit: 'यज्ञार्थात्कर्मणोऽन्यत्र लोकोऽयं कर्मबन्धनः। तदर्थं कर्म कौन्तेय मुक्तसंगः समाचर॥',
           transliteration: 'yajñārthāt karmaṇo \'nyatra loko \'yaṁ karma-bandhanaḥ, tad-arthaṁ karma kaunteya mukta-saṅgaḥ samāchara',
@@ -1479,9 +1576,50 @@ export const philosophyData: PhilosophicalConcept[] = [
         citation: 'Lotus-leaf image: Bhagavad Gita 5.10 (tr. Swami Sivananda).'
       },
       {
+        id: 'karma-term-yajna',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'यज्ञ',
+          transliteration: 'yajña',
+          meaning: 'offering — action done for something larger than yourself',
+        },
+        storyText:
+          'A yajna was once a fire ritual, an offering poured into the flames. The Gita widens the word. Any action becomes a yajna when you do it for something larger than your own gain.\n\nThe cook feeding her family, the engineer building for people he will never meet, the volunteer who asks for nothing: all of them are offering.\n\n**Yajna is not where you act. It is why you act.**',
+        reappears:
+          'Offering is the hinge of karma yoga, the path of action you will meet among the four ways.',
+        checks: [
+          {
+            id: 'chk:concept:karma:offering',
+            kind: 'mcq',
+            prompt:
+              'Why does the Gita say action done as an offering does not bind you?',
+            options: [
+              {
+                text: 'It is done for something larger than the small self, so it leaves no residue',
+                correct: true,
+              },
+              { text: 'Because offerings only happen in temples, not in daily work' },
+              { text: 'Because the person stops acting altogether' },
+            ],
+            why: 'Action binds when it feeds the small self, my gain and my credit. The same act performed as offering leaves no residue, as a lotus leaf is not tainted by water. The leaf lives in the pond; it simply is not soaked by it.',
+          },
+        ],
+      },
+      {
+        id: 'karma-way-2',
+        kind: 'waypoint',
+        title: '5 of 6 banked',
+        learnIndex: 5,
+        storyText:
+          'Karma binds you, or it frees you, depending on why you act. One idea is left, the quiet promise that holds all of this up.',
+      },
+      {
         id: 'karma-mystery',
         title: 'The Deep Mystery of Action',
         subtitle: 'Paths Crossing in a Dense Forest',
+        takeaway:
+          'The way of action is deep. No rulebook fits it, so judge an act by three lamps.',
         openingVerse: {
           sanskrit: 'कर्मणो ह्यपि बोद्धव्यं बोद्धव्यं च विकर्मणः। अकर्मणश्च बोद्धव्यं गहना कर्मणो गतिः॥',
           transliteration: 'karmaṇo hy api boddhavyaṁ boddhavyaṁ cha vikarmaṇaḥ, akarmaṇaśh cha boddhavyaṁ gahanā karmaṇo gatiḥ',
@@ -1494,12 +1632,31 @@ export const philosophyData: PhilosophicalConcept[] = [
           'Does it serve **more than myself**?',
           'Would I act this way if **no one ever knew**?'
         ],
-        teachingText: 'The teaching asks for something harder than compliance: **discernment**. None of the lamps guarantees a perfect outcome; the way of action stays deep.\n\nBut a person who keeps asking becomes, over years, someone whose actions can be trusted — including by themselves.'
+        teachingText: 'The teaching asks for something harder than compliance: **discernment**. None of the lamps guarantees a perfect outcome; the way of action stays deep.\n\nBut a person who keeps asking becomes, over years, someone whose actions can be trusted — including by themselves.',
+        checks: [
+          {
+            id: 'chk:concept:karma:three-lamps',
+            kind: 'mcq',
+            prompt:
+              'The way of action is deep, and no single rule fits every case. What does the tradition offer instead of a rulebook?',
+            options: [
+              {
+                text: 'Three lamps to examine an act by: clean intention, service beyond yourself, and whether you would do it unseen',
+                correct: true,
+              },
+              { text: 'A fixed list of forbidden actions to memorise' },
+              { text: 'A priest who decides each case for you' },
+            ],
+            why: 'Karma asks for discernment, not compliance. The three lamps ask three questions: is my intention clean, does it serve more than myself, and would I act this way if no one ever knew. They do not guarantee outcomes, but a person who keeps asking becomes, over years, someone whose actions can be trusted, including by themselves.',
+          },
+        ],
       },
       {
         id: 'karma-no-effort-lost',
         title: 'No Sincere Effort Is Ever Lost',
         subtitle: 'Rain Disappearing into Soil, Green Shoots Later',
+        takeaway:
+          'On this path, nothing sincere is wasted. Even a little protects from great fear.',
         keyVerse: {
           sanskrit: 'नेहाभिक्रमनाशोऽस्ति प्रत्यवायो न विद्यते। स्वल्पमप्यस्य धर्मस्य त्रायते महतो भयात्॥',
           transliteration: 'nehābhikrama-nāśho \'sti pratyavāyo na vidyate, svalpam apy asya dharmasya trāyate mahato bhayāt',
@@ -1513,6 +1670,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'karma-worship',
         title: 'Your Work as Worship',
         subtitle: 'Ordinary Tools on an Altar',
+        takeaway:
+          'Your own ordinary work, done as offering, is worship. The wheel turns either way, and the teaching hands you the wheel.',
         keyVerse: {
           sanskrit: 'यतः प्रवृत्तिर्भूतानां येन सर्वमिदं ततम्। स्वकर्मणा तमभ्यर्च्य सिद्धिं विन्दति मानवः॥',
           transliteration: 'yataḥ pravṛittir bhūtānāṁ yena sarvam idaṁ tatam, sva-karmaṇā tam abhyarchya siddhiṁ vindati mānavaḥ',
@@ -1540,7 +1699,9 @@ export const philosophyData: PhilosophicalConcept[] = [
       },
     ],
     reflectionQuestions: [
-      'Where are you working hard but gripping the result so tightly it hurts?'
+      'Where are you working hard but gripping the result so tightly it hurts?',
+      "Where in your life are you telling yourself 'I am not doing anything', when the silence is itself a choice?",
+      'Pick one ordinary task tomorrow. Could you do it as an offering, for the people it serves rather than for the credit?',
     ]
   },
   {

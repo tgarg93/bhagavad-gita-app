@@ -96,6 +96,13 @@ export function getReaderContent(
       sources: concept.sources ?? [],
       detailRoute: { name: 'PhilosophyDetail', params: { conceptId: concept.id } },
       readerLabel: 'Philosophy',
+      // Interstitials (the Jigyasu framing pages) light up on data presence, not
+      // contentType — a concept that sets these gets the intro checklist, the
+      // waypoint progress, the cover kicker, and the celebration recap + handoff.
+      kicker: concept.kicker,
+      learnItems: concept.learnItems,
+      bankedTakeaways: concept.bankedTakeaways,
+      handoff: concept.handoff,
     };
   }
 
