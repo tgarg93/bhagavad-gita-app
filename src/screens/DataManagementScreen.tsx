@@ -6,6 +6,8 @@ import {
   SafeAreaView,
   Alert,
   ScrollView,
+  Linking,
+  TouchableOpacity,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import DataExportService from '../services/dataExportService';
@@ -14,6 +16,8 @@ import LocalStorageService from '../services/localStorageService';
 import { deleteAccount } from '../services/supabaseClient';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+
+const PRIVACY_POLICY_URL = 'https://tgarg93.github.io/bhagavad-gita-app/privacy-policy.html';
 
 const DataManagementScreen: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -138,6 +142,9 @@ const DataManagementScreen: React.FC = () => {
             sell your data or show ads. You can export a backup or delete everything
             below.
           </Text>
+          <TouchableOpacity onPress={() => Linking.openURL(PRIVACY_POLICY_URL)}>
+            <Text style={styles.privacyLink}>Read the full Privacy Policy →</Text>
+          </TouchableOpacity>
         </Card>
 
         {/* Export Options */}
@@ -298,6 +305,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#166534',
     lineHeight: 20,
+  },
+  privacyLink: {
+    fontSize: 14,
+    color: '#166534',
+    fontWeight: '700',
+    marginTop: 10,
   },
   sectionCard: {
     marginHorizontal: 20,
