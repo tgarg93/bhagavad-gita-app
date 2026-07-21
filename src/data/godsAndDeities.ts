@@ -1016,47 +1016,149 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/shiva-icon.jpg',
       galleryImages: []
     },
+    kicker: "The god of endings, ash-smeared and utterly still on his mountain — who drinks the world's poison so no one else has to.",
+    learnItems: [
+      'Shiva is the great destroyer, and his centre is perfect stillness',
+      'Greatness is what you can absorb, not what you acquire',
+      'Someone must break the fall so grace blesses instead of shatters',
+      "Depth doesn't require leaving — the hermit is also a family man",
+      'He is the easily-pleased god: sincerity matters, not show',
+    ],
+    handoff:
+      "Shiva sits at the still centre of a family. The best-loved member of that family is his son — the cheerful, elephant-headed god that Hindus turn to before they begin anything at all: Ganesha.",
     sections: [
       {
+        id: 'shiva-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Shiva is one of Hinduism's three great gods, and the one people find strangest at first: the god of destruction, who turns out to be the god of stillness, of endings that clear the way for new beginnings.\n\nOver the next few pages you'll meet him — the ash-smeared hermit on his mountain who is also a loving husband and father, and who quietly drinks the world's poison so the rest of us don't have to.",
+      },
+      {
         id: 'shiva-stillness',
-        title: 'The God Who Sits Still',
-        subtitle: 'A Snow Peak, a Closed Eye, the World Below',
-        storyText: 'Every other god is busy. Vishnu preserves, Brahma creates, Indra storms, Lakshmi bestows. **Shiva sits.**\n\nOn the frozen summit of Kailasa, eyes half-closed, ash-smeared, unmoving — the tradition\'s boldest claim rendered as a posture: that beneath all doing there is a being, and the one who touches it holds more power in stillness than the busy hold in motion.\n\nHe is called **Mahadeva**, the great god, yet owns nothing but a tiger skin, a trident, and a drum. When the demons and devas need someone to drink the world\'s poison, they do not go to the palaces. **They climb to the silent one.**',
-        teachingText: 'Your life likely resembles the busy gods\' — preserving, creating, storming. Shiva asks a subversive question: **when did you last sit with nothing to do and nothing to become?**\n\nFive minutes of genuine stillness — not rest-as-recovery-for-more-work, but stillness for its own sake — is his practice. Everything else in his story flows from that seat.'
+        title: 'Who Shiva Is',
+        subtitle: 'The still god of endings',
+        takeaway:
+          'Shiva is the great destroyer — the god who dissolves the old world so a new one can be born. And his deepest power is not action, but perfect stillness.',
+        storyText:
+          "Hindus often picture God's work as having three parts, shared by three great gods: **Brahma** creates the world, **Vishnu** protects it, and **Shiva** dissolves it, so it can be born fresh again. Shiva is the destroyer, but not out of cruelty. He is the god of the endings that make room for beginnings: the winter before the spring, the death before the rebirth, the letting-go before the new thing.\n\nAnd here is the surprise. The god in charge of all that cosmic destruction is, in every image, completely **still**. He sits high on the frozen mountain of **Kailasa**, his body smeared with ash, his eyes half-closed, owning almost nothing: a tiger skin, a three-pronged spear, and a small drum.\n\nThe tradition is making a bold claim through that pose: that underneath all our doing there is simply **being**, and the one who has touched it holds more real power sitting still than the busy gods hold in all their motion.",
+        teachingText:
+          "Your own life probably looks like the busy gods': always protecting, creating, putting out fires. Shiva asks a quietly subversive question: when did you last sit with nothing to do and nothing to become? Five minutes of genuine stillness — not rest so that you can work more, but stillness for its own sake — is his practice. Everything else in his story flows from that seat.",
+        citation: 'The three gods (Brahma, Vishnu, Shiva) and Shiva as Mahadeva: pan-Hindu tradition.'
       },
       {
         id: 'shiva-poison',
         title: 'Drinking the Poison',
-        subtitle: 'A Blue Throat Above a Saved World',
-        storyText: 'The churning of the ocean is the tradition\'s great parable of ambition: gods and demons together, straining for the nectar of immortality. And the first yield of all that striving was **poison** — halahala, enough to burn the three worlds.\n\nIt is an honest story about effort: churn anything hard enough — a career, a family, a country — and **the poison surfaces before the nectar**.\n\nEveryone fled it. Shiva, who had not churned and wanted no nectar, drank it, and Parvati held his throat so it would lodge there and go no further. The worlds resumed their churning. He kept only the blue stain.',
-        teachingText: 'Every family, team, and community produces halahala — resentment, grief, blame — before it produces nectar. **Someone must metabolize it without passing it on.** Notice who does that where you live and work; notice when it is you.\n\nThe teaching is exacting: hold it in the throat. Neither swallow it into your depths, nor spray it onward. That narrow place between suppression and transmission is where Shiva lives.',
-        citation: 'Samudra manthan: Bhagavata Purana, Canto 8, Chapters 6–7.'
+        subtitle: 'A blue throat above a saved world',
+        takeaway:
+          'When gods and demons churned the ocean, the first thing to surface was poison, not treasure. Shiva drank it to save everyone and held it in his throat — the rarest strength: to absorb pain without passing it on.',
+        storyText:
+          "There is a famous story called the churning of the ocean. The gods and the demons work together, churning the cosmic sea like butter, to draw out **amrita**, the nectar that makes you immortal. But the very first thing to rise from all that effort is not nectar. It is **halahala**, a poison strong enough to burn up the whole world.\n\nIt is an honest picture of effort. Churn anything hard enough — a career, a family, a country — and the poison tends to surface before the reward does.\n\nEveryone else fled. Shiva, who had not even taken part and wanted no nectar for himself, simply walked up and drank the poison down. His wife **Parvati** pressed his throat so the poison would lodge there and go no further, harming no one. The worlds went back to their churning. Shiva kept only a blue stain on his neck, and a new name: **Neelakantha**, 'the blue-throated one.'",
+        teachingText:
+          "Every family, team, and community makes its own poison — resentment, grief, blame — long before it makes anything sweet. Someone has to take that in and neutralise it, instead of passing it along. Notice who does that where you live and work, and notice when it is you. The teaching is exact: hold it in the throat. Do not swallow it down into yourself, and do not spray it onto others. That narrow place, between bottling it up and passing it on, is where Shiva lives.",
+        citation: 'Samudra manthan (churning of the ocean): Bhagavata Purana, Canto 8, Chapters 6–7.',
+        checks: [
+          {
+            id: 'chk:deity:shiva:poison',
+            kind: 'mcq',
+            prompt: 'When the churned ocean gave up a world-burning poison and everyone else fled, what did Shiva do, and what does it teach?',
+            options: [
+              {
+                text: 'He drank the poison to save everyone and held it in his throat — greatness is what you can absorb without passing it on, not what you acquire',
+                correct: true,
+              },
+              { text: 'He used the poison as a weapon against the demons' },
+              { text: 'He refused to help, since he had not done any of the churning' },
+            ],
+            why: 'Shiva wanted no nectar and had not churned, yet he took in the harm so no one else would suffer it. To hold pain in the throat, neither swallowing it nor spraying it onward, is the rarest strength.',
+          },
+        ],
+      },
+      {
+        id: 'shiva-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          "Still at his centre, and willing to take in the world's poison. The next story shows the same strength turned toward a river that would have shattered the earth.",
       },
       {
         id: 'shiva-ganga-bearer',
         title: 'The One Who Breaks the Fall',
-        subtitle: 'A River Landing in Matted Hair',
-        storyText: 'Bhagiratha\'s ancestors could only be liberated by the Ganga\'s waters, and his penance finally persuaded her to descend. But **grace at full force is indistinguishable from catastrophe**: the river\'s fall from heaven would have split the earth.\n\nSo Shiva stood beneath the descent, took the impact on his head, and let the torrent wander through his hair until it emerged as a river the earth could bear.\n\nThe Ganga that blesses the plains is **the Ganga after Shiva** — the same power, made survivable.',
-        teachingText: 'Think of what has descended on your family line — money or its absence, expectations, old grief. Someone in every lineage stands where Shiva stood and **breaks the fall**, so what reaches the next generation blesses instead of shatters.\n\nNaming who did that for you is gratitude; choosing to do it for those after you is dharma.',
-        citation: 'Valmiki Ramayana, Bala Kanda, sargas 42–44.'
+        subtitle: 'A river landing in matted hair',
+        takeaway:
+          'The sacred river Ganga would have shattered the earth if it fell straight from heaven. Shiva stood under it and took the blow on his own head, so the world received only the blessing.',
+        storyText:
+          "There is a river Hindus hold sacred above all others: the **Ganga** (the Ganges). The old story says she once flowed only in heaven, and a king named **Bhagiratha** prayed for lifetimes to bring her down to earth, so her waters could free the trapped souls of his ancestors.\n\nBut there was a problem no one could solve. Falling from heaven at full force, the river would smash the earth to pieces. Grace at full strength can look exactly like catastrophe.\n\nOnly one being could take that blow. Shiva stood beneath the plunging river and caught its entire force on his head, letting the water wind slowly through his thick, matted hair until it came out the other side as a calm river the earth could safely hold. The gentle Ganga that blesses the plains today is the Ganga after Shiva broke her fall: the same power, made survivable.",
+        teachingText:
+          'Think of what has come down on your own family line: money or the lack of it, heavy expectations, old grief. In almost every family, someone stands where Shiva stood and breaks the fall, so that what reaches the next generation arrives as a blessing instead of a blow. Naming who did that for you is gratitude. Choosing to do it for those who come after you is dharma.',
+        citation: 'Descent of the Ganga: Valmiki Ramayana, Bala Kanda, sargas 42–44.',
+        checks: [
+          {
+            id: 'chk:deity:shiva:ganga',
+            kind: 'mcq',
+            prompt: 'The sacred river Ganga would have shattered the earth falling straight from heaven. What did Shiva do, and what does it model?',
+            options: [
+              {
+                text: "He took the river's full force on his own head so the world received only the gentle blessing — someone must break the fall for others",
+                correct: true,
+              },
+              { text: 'He turned the river away so it never reached the earth at all' },
+              { text: 'He drank the whole river, the way he drank the poison' },
+            ],
+            why: "Grace at full force can look like catastrophe. Whoever absorbs the shock so that others receive only the blessing — a parent, a leader, a friend — is doing Shiva's work with the Ganga.",
+          },
+        ],
       },
       {
         id: 'shiva-householder',
         title: 'The Ascetic Who Married',
-        subtitle: 'Kailasa as a Family Home',
-        storyText: 'The wild, ash-smeared renunciant is also the tradition\'s most beloved family man.\n\nParvati won him not by beauty — he burned Kama, desire itself, to ash with his third eye when desire was aimed at him — but by **tapasya**, matching his austerity with her own until he recognized an equal.\n\nTheir marriage joins what the world calls opposites: the hermit and the queen\'s daughter, stillness and devotion. Their household on Kailasa — Parvati, Ganesha, Kartikeya, the bull Nandi at the door — became the model of **a family built around a meditative center** rather than around busyness.',
-        teachingText: 'Shiva refutes the idea that depth requires leaving. He is fully ascetic and fully married; the meditation does not end when the family begins.\n\nWhat would it mean for your household to have a still center — one practice, one hour, one corner of the home where the churning stops? The tradition\'s answer to work-life balance is not balance but **a center**.',
+        subtitle: 'A mountain home with a still centre',
+        takeaway:
+          "Shiva is a wild hermit who owns nothing — and also a devoted husband and father. He shows that spiritual depth doesn't require leaving your family, but building the family around a still centre.",
+        storyText:
+          "Here is the twist that makes Shiva so loved. The wild, ash-smeared **ascetic** (someone who gives up comfort and pleasure to seek God) is also Hinduism's most beloved family man.\n\nHis wife **Parvati** did not win him with beauty. When desire itself, in the form of the love-god **Kama**, fired an arrow to make Shiva fall for her, Shiva burned Kama to ash with a glance of his third eye. Parvati won him instead through **tapasya** — years of the same fierce self-discipline that he practised — until he recognised her as a true equal.\n\nTheir marriage joins what the world treats as opposites: the hermit and the mountain-king's daughter, deep stillness and warm devotion. Their home on Mount Kailasa — Parvati, their sons Ganesha and Kartikeya, and Nandi the bull waiting at the door — became the model of a family built around a quiet, meditative centre rather than around constant busyness.",
+        teachingText:
+          "Shiva overturns the idea that spiritual depth means leaving ordinary life behind. He is fully a hermit and fully a husband, and his meditation does not stop when the family starts. What would it mean for your own home to have a still centre — one practice, one hour, one corner where the churning stops? The tradition's answer to work-life balance is not really balance. It is a centre.",
         citationLink: 'deity:parvati',
         citation: 'Shiva Purana, Rudra Samhita (Parvati Khanda); Kalidasa, Kumarasambhava.'
       },
       {
+        id: 'shiva-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          'Destroyer, poison-drinker, fall-breaker, and family man. One idea is left, and it is the gentlest: how little Shiva actually asks of you.',
+      },
+      {
         id: 'shiva-simple-offering',
         title: 'The Easily-Pleased Lord',
-        subtitle: 'One Bilva Leaf and a Handful of Water',
-        storyText: 'Of all the great gods, Shiva is **Bholenath** — the innocent, the easily pleased.\n\nHis worship requires no priest, no wealth, no elaborate rite: a bilva leaf, water poured over a stone linga, his name said with attention. The tradition delights in stories of accidental worship — a hunter who unknowingly dropped bilva leaves on a linga through a night of fear and was liberated by dawn.\n\nThe theological point is serious: **the divine measures sincerity, not production value.** The god who owns nothing cannot be impressed by what you own.',
-        teachingText: 'Whatever your practice is becoming, Shiva keeps it honest: **could you do it with one leaf and a palmful of water?**\n\nIf your spiritual life has grown elaborate — apps, courses, gear — strip it once a week to the bare act: sit, pour, say the name, mean it. Bholenath asks for nothing else, which is exactly what makes the offering complete.',
+        subtitle: 'One leaf and a handful of water',
+        takeaway:
+          'Shiva is the easily-pleased god. He needs no priest, no wealth, no grand ritual — just a leaf, some water, and a sincere heart. He measures your sincerity, never your show.',
+        storyText:
+          "Of all the great gods, Shiva is **Bholenath**, which means 'the innocent one,' the simple lord who is easily pleased.\n\nWorshipping him takes no priest, no money, and no elaborate ceremony: a single **bilva** leaf (from a tree sacred to him), some water poured over a **linga** (the smooth, rounded stone that stands for Shiva), and his name said with attention. The tradition loves stories of people who worship him by accident — like a frightened hunter who spent a night up a tree, dropping bilva leaves without knowing it onto a linga below, and was set free by morning.\n\nThe point underneath is serious: God measures your sincerity, not your production values. The god who owns nothing cannot be impressed by what you own.",
+        teachingText:
+          'Whatever your own practice is turning into, Shiva keeps it honest with one question: could you still do it with a single leaf and a palmful of water? If your spiritual life has grown elaborate, full of apps and courses and gear, strip it back once a week to the bare act. Sit, pour the water, say the name, and mean it. Bholenath asks for nothing more, and that is exactly what makes the offering complete.',
         citationLink: 'festival:maha-shivratri-2025',
-        citation: 'The hunter\'s night of bilva leaves: Shiva Purana (Shivratri mahatmya tellings).'
+        citation: 'The hunter\'s night of bilva leaves: Shiva Purana (Shivratri mahatmya tellings).',
+        checks: [
+          {
+            id: 'chk:deity:shiva:simple',
+            kind: 'mcq',
+            prompt: 'Shiva is called Bholenath, the easily-pleased. What does his simple worship — a leaf, some water, his name — teach?',
+            options: [
+              {
+                text: 'God measures your sincerity, not your show — the god who owns nothing cannot be impressed by what you own',
+                correct: true,
+              },
+              { text: 'That only the poor are allowed to worship Shiva' },
+              { text: 'That worship must always be elaborate and expensive to count' },
+            ],
+            why: 'His worship needs no priest, wealth, or grand ritual. The tradition even tells of people who please him by accident, because what he asks for is a sincere heart, not an impressive offering.',
+          },
+        ],
       }
     ],
     sources: [
@@ -1084,7 +1186,9 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Shiva absorbed poison without passing it on. When you\'re stressed, how could you avoid passing it to the people around you?'
+      'Shiva absorbed poison without passing it on. When you\'re stressed, how could you avoid passing it to the people around you?',
+      'Shiva\'s real power is stillness. When did you last sit with nothing to do and nothing to become, and what keeps you from five minutes of it?',
+      "Every family has someone who 'breaks the fall,' so grief or pressure reaches the next generation softened. Who did that for you? Could you do it for someone?",
     ]
   },
   {
