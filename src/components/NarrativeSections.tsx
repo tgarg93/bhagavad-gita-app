@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     ...DharmaDesignSystem.typography.sizes.headingLG,
     color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
-    marginBottom: DharmaDesignSystem.spacing.xs,
+    marginBottom: DharmaDesignSystem.spacing.md,
     fontWeight: '600',
   },
   // Matches the Gita reader's chapterSubtitle so every subtitle in the app
