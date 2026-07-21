@@ -141,12 +141,19 @@ const UPANISHAD_STORIES: Story[] = [
     subtitle: 'The father who dissolved his son’s pride — and the self — in water',
     collection: 'upanishad',
     coverImage: MOKSHA_COVER,
+    kicker: "A proud young scholar comes home knowing everything — until his father dissolves salt in water and shows him the one thing his whole education missed.",
     sections: [
+      {
+        id: 'svetaketu-intro',
+        title: 'Before the story',
+        storyText:
+          "This is one of the most famous teaching-stories in Hinduism, from an old scripture called the **Chandogya Upanishad**. It gives us three of the most important words in the whole tradition: **tat tvam asi**, which means 'you are That.'\n\nIt is a simple scene — a father, his newly-graduated son, and a bowl of salt water — but the idea it delivers is enormous. Watch for it.",
+      },
       {
         id: 'the-proud-return',
         title: 'The student who came home proud',
         storyText:
-          'Svetaketu left home at twelve and returned at twenty-four, having mastered all the Vedas — and it showed. His father Uddalaka watched the young scholar carry himself through the door and asked one quiet question: “Since you are so learned, dear boy, did you ask for that teaching by which the unheard becomes heard, the unthought becomes thought, the unknown becomes known?” Svetaketu had no idea what his father meant. “How can there be such a teaching?” There was. His whole education had missed it.',
+          'Svetaketu left home at twelve and returned at twenty-four, having mastered all the **Vedas** (Hinduism's oldest and most sacred scriptures) — and it showed. His father Uddalaka watched the young scholar carry himself through the door and asked one quiet question: “Since you are so learned, dear boy, did you ask for that teaching by which the unheard becomes heard, the unthought becomes thought, the unknown becomes known?” Svetaketu had no idea what his father meant. “How can there be such a teaching?” There was. His whole education had missed it.',
         citation: 'Chandogya Upanishad 6.1.1–7',
       },
       {
@@ -163,6 +170,22 @@ const UPANISHAD_STORIES: Story[] = [
           '“Put this salt in water and come to me in the morning.” Svetaketu did. “Bring me the salt.” He reached into the bowl — nothing to grasp; it had dissolved. “Sip from this side. How is it?” “Salty.” “From the middle?” “Salty.” “From that side?” “Salty.” “Throw it out and come to me.” The salt was everywhere in the water and visible nowhere. “In just that way, dear boy, you do not perceive Being here — but it is here all the same. That subtle essence is the self of all this. That is truth. That is the self. Tat tvam asi — you are That.”',
         citation: 'Chandogya Upanishad 6.13.1–3',
         citationLink: 'concept:brahman-atman',
+        checks: [
+          {
+            id: 'chk:story:svetaketu:salt',
+            kind: 'mcq',
+            prompt: 'Uddalaka dissolved salt in water, then had his son taste it from every side. What was he showing Svetaketu?',
+            options: [
+              {
+                text: 'That an invisible essence can fill everything while being impossible to point to — and that same essence, the Self, is what you are',
+                correct: true,
+              },
+              { text: 'That salt water is bad to drink' },
+              { text: 'That his son needed to study the Vedas even harder' },
+            ],
+            why: "The salt was everywhere in the water and visible nowhere. In just that way, the tradition says, Being is present in you and in all things: tat tvam asi, 'you are That.'",
+          },
+        ],
       },
       {
         id: 'nine-times',
@@ -173,10 +196,28 @@ const UPANISHAD_STORIES: Story[] = [
         teachingText:
           'The most radical claim in the Upanishads is delivered not from a mountaintop but across a kitchen bowl of salt water, from a father to a son whose education had made him proud without making him wise. The divine you search for is not produced by learning; it is what was dissolved in you all along — everywhere present, nowhere graspable.',
         citation: 'Chandogya Upanishad 6.8–6.16 (the nine tat-tvam-asi teachings)',
+        checks: [
+          {
+            id: 'chk:story:svetaketu:are',
+            kind: 'mcq',
+            prompt: 'The father repeats "tat tvam asi — you are That" nine times. What makes the claim so radical?',
+            options: [
+              {
+                text: "It doesn't say you contain the divine, or will someday earn it — it says you already ARE it",
+                correct: true,
+              },
+              { text: 'That you must study for many more years to reach it' },
+              { text: 'That only priests can ever understand it' },
+            ],
+            why: 'The divine you search for is not produced by learning. It is what was dissolved in you all along: everywhere present, nowhere graspable.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
       'Uddalaka asked whether Svetaketu had learned “that by which the unknown becomes known.” What has all your education so far left untouched?',
+      'Svetaketu was full of knowledge but not yet wisdom. Where do you know a great deal about something, without having truly grasped it?',
+      "The teaching says the sacred is nowhere graspable but everywhere present, like salt in water. When have you sensed something real that you couldn't quite point to?",
     ],
     sources: [
       { text: 'Chandogya Upanishad', locator: 'Chapter 6 (Uddalaka and Svetaketu)' },
@@ -330,7 +371,14 @@ const UPANISHAD_STORIES: Story[] = [
     subtitle: 'Two students, one teaching — and why only one understood it',
     collection: 'upanishad',
     coverImage: GENERIC_COVER,
+    kicker: 'Two students — a god and a demon — hear the exact same teaching about the true Self. Only one of them actually understands it.',
     sections: [
+      {
+        id: 'indra-virochana-intro',
+        title: 'Before the story',
+        storyText:
+          "This story, from the **Chandogya Upanishad**, is a sly little lesson about how easy it is to stop at a comfortable half-truth. Two powerful students — **Indra**, the king of the gods, and **Virochana**, the king of the **asuras** (the demons, who are the gods' rivals) — go to the same teacher to learn the secret of the true Self.\n\nThey hear identical words. Watch how differently the two of them listen.",
+      },
       {
         id: 'the-announcement',
         title: 'The Self worth seeking',
@@ -344,6 +392,22 @@ const UPANISHAD_STORIES: Story[] = [
         storyText:
           'After thirty-two years, Prajapati gave his first teaching: “Look at yourselves in a pan of water. What you see — that is the Self.” They looked: two well-dressed, well-groomed reflections looked back. Both left satisfied. Virochana carried the lesson home to the asuras and it became their gospel: the body is the self; adorn it, feed it, serve it — that is everything. The Upanishad remarks, dryly, that this is still the doctrine of those who give no gifts and live for themselves.',
         citation: 'Chandogya Upanishad 8.8.1–5',
+        checks: [
+          {
+            id: 'chk:story:indra:mirror',
+            kind: 'mcq',
+            prompt: 'Told "what you see in the water is the Self," Virochana saw his well-groomed reflection and went home happy. What did he conclude?',
+            options: [
+              {
+                text: 'That the body is the self — so adorn it, feed it, and serve it; that is everything',
+                correct: true,
+              },
+              { text: 'That mirrors are sacred objects to be worshipped' },
+              { text: 'That the Self cannot be known at all' },
+            ],
+            why: 'He stopped at the first, flattering answer. The Upanishad notes, dryly, that this is still the creed of those who live only for themselves.',
+          },
+        ],
       },
       {
         id: 'indra-returns',
@@ -361,10 +425,28 @@ const UPANISHAD_STORIES: Story[] = [
         teachingText:
           'Both students heard the same words from the same teacher. The only difference was that Indra kept interrogating his satisfaction — three times he walked back with the answer everyone else would have kept. The Upanishad’s quiet joke is that the first, flattering answer is the one whole civilizations settle for. The self you see in the mirror is the beginning of the search, not its end.',
         citation: 'Chandogya Upanishad 8.12.1–3',
+        checks: [
+          {
+            id: 'chk:story:indra:self',
+            kind: 'mcq',
+            prompt: 'Indra kept walking back to question his answer for a hundred years. What was the real teaching he finally received?',
+            options: [
+              {
+                text: 'The body is mortal, but it is the standing-place of a deathless Self — the reflection is the beginning of the search, not its end',
+                correct: true,
+              },
+              { text: 'That the body and the self die together' },
+              { text: 'That the first answer was right all along' },
+            ],
+            why: 'Both students heard the same words from the same teacher. The difference was that Indra refused to keep the flattering answer everyone else settles for.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
       'Virochana left satisfied with the first answer; Indra kept walking back. Where in your life have you accepted a first, flattering answer that deserves a second look?',
+      "Virochana's lesson — the body is the self, so adorn and serve it — is still a whole way of living. Where do you catch yourself living as if you were only your body?",
+      'Indra spent a hundred years asking the same question better. What question in your life is worth staying with, even unanswered, for a long time?',
     ],
     sources: [
       { text: 'Chandogya Upanishad', locator: 'Chapter 8, sections 7–12 (Prajapati’s teaching)' },
