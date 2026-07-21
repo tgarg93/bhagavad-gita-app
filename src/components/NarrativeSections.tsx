@@ -7,6 +7,7 @@ import RichText from './RichText';
 import { TextSegment } from '../services/audioNarrationService';
 import { NarrativeSection, NarrativeVerse } from '../data/narrativeTypes';
 import { navigateToContentRef } from '../data/journeyPath';
+import { hasStoryBeats, parseStoryBeats, DIALOGUE_BLOCK_BASE } from '../data/storyBeats';
 
 // The shared immersive-reading renderer, extracted from PhilosophyDetailScreen:
 // title → openingVerse → storyText → sectionHeader → keyVerse → teachingText.
@@ -120,13 +121,42 @@ const NarrativeSections: React.FC<NarrativeSectionsProps> = ({
               <Verse verse={section.openingVerse} blockId={bid('block-0')} />
             )}
 
-            {section.storyText && (
-              <Prose
-                text={section.storyText}
-                blockId={bid('block-1')}
-                style={getTextStyle(styles.storyText)}
-              />
-            )}
+            {/* Dialogue stories render storyText as set-apart beats: narration
+                paragraphs + spoken lines (saffron tick + speaker label). Each
+                beat is its own narration block (block-6, 7, 8…) so read-along
+                highlights line up 1:1 with sectionsToNarrationContent. Plain
+                storyText keeps the single block-1 render (paragraph breaks in
+                the string just work). */}
+            {section.storyText && hasStoryBeats(section.storyText)
+              ? parseStoryBeats(section.storyText).map((beat, bi) => {
+                  const beatBid = bid(`block-${DIALOGUE_BLOCK_BASE + bi}`);
+                  if (beat.kind === 'speech') {
+                    return (
+                      <View key={bi} style={styles.speechBlock}>
+                        {beat.speaker && (
+                          <Text style={styles.speechSpeaker}>{beat.speaker}</Text>
+                        )}
+                        <Prose
+                          text={beat.text}
+                          blockId={beatBid}
+                          style={getTextStyle(styles.speechLine)}
+                        />
+                      </View>
+                    );
+                  }
+                  return (
+                    <View key={bi} style={styles.beatNarration}>
+                      <Prose text={beat.text} blockId={beatBid} style={getTextStyle(styles.storyText)} />
+                    </View>
+                  );
+                })
+              : section.storyText && (
+                  <Prose
+                    text={section.storyText}
+                    blockId={bid('block-1')}
+                    style={getTextStyle(styles.storyText)}
+                  />
+                )}
 
             {section.bullets && section.bullets.length > 0 && (
               <View style={styles.bulletList}>
@@ -241,7 +271,37 @@ const styles = StyleSheet.create({
     color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
     lineHeight: 30,
     marginBottom: DharmaDesignSystem.spacing.lg,
-    textAlign: 'justify',
+    // Left-aligned (was 'justify'): justified body forced even edges and dense
+    // rivers of space that read as a wall — the core story-readability fix.
+  },
+  // A single narration paragraph inside a dialogue-beat story. Owns its own
+  // bottom gap (storyText's marginBottom would double up otherwise).
+  beatNarration: {
+    marginBottom: DharmaDesignSystem.spacing.md,
+  },
+  // A spoken line, lifted out of the narration: saffron tick + speaker label +
+  // italic line. Border/label styles are written inline (no typography spread)
+  // to stay clear of the style-union tsc trap.
+  speechBlock: {
+    paddingLeft: 14,
+    borderLeftWidth: 2,
+    borderLeftColor: DharmaDesignSystem.colors.primary.deepSaffron,
+    marginBottom: DharmaDesignSystem.spacing.md,
+  },
+  speechSpeaker: {
+    fontSize: 11,
+    lineHeight: 15,
+    letterSpacing: 1.3,
+    textTransform: 'uppercase',
+    fontWeight: '700',
+    color: DharmaDesignSystem.colors.primary.peacockTeal,
+    marginBottom: 4,
+  },
+  speechLine: {
+    fontSize: 17,
+    lineHeight: 28,
+    fontStyle: 'italic',
+    color: DharmaDesignSystem.colors.neutrals.charcoalBlack,
   },
   bulletList: {
     marginBottom: DharmaDesignSystem.spacing.lg,

@@ -58,28 +58,28 @@ const UPANISHAD_STORIES: Story[] = [
         id: 'the-sacrifice',
         title: 'A sacrifice that gave away nothing',
         storyText:
-          'Nachiketa was a young boy whose father, a man named Vajashravasa, was performing a great religious ceremony — the kind where, to earn merit and a better afterlife, a person gives away all his wealth to the priests. But young Nachiketa noticed his father cheating: the cows he was giving away were old and worthless, too weak to graze and too dry to give any milk. A person who gives away only what costs him nothing, the boy sensed, earns only a joyless reward. So he pressed his father with an unbearable question: “And me — to whom will you give me?” Once, twice, three times he asked, until his father snapped: “To Death I give you.”',
+          'Nachiketa was a young boy whose father, a man named Vajashravasa, was performing a great religious ceremony — the kind where, to earn merit and a better afterlife, a person gives away all his wealth to the priests.\n\nBut young Nachiketa noticed his father cheating: the cows he was giving away were old and worthless, too weak to graze and too dry to give any milk. A person who gives away only what costs him nothing, the boy sensed, earns only a joyless reward.\n\nSo he pressed his father with an unbearable question — once, twice, three times:\n\n» Nachiketa: And me? To whom will you give me?\n\nUntil his father snapped:\n\n» His father: To Death I give you.',
         citation: 'Katha Upanishad 1.1.1–4',
       },
       {
         id: 'three-nights',
         title: 'Three nights at Death’s door',
         storyText:
-          'A word spoken in anger is still a word, and Nachiketa took his father at it. He walked to the house of Yama, lord of death — and found the lord away. For three nights the boy waited at the door, unfed and unwelcomed: a holy guest left hungry, the texts say, is like a fire left smouldering in the house. When Yama returned, he was ashamed. “Choose three boons,” Death said, “one for each night I kept you waiting.”',
+          'A word spoken in anger is still a word, and Nachiketa took his father at it. He walked to the house of Yama, the lord of death — and found the lord away.\n\nFor three nights the boy waited at the door, unfed and unwelcomed. A holy guest left hungry, the texts say, is like a fire left smouldering in the house.\n\nWhen Yama returned, he was ashamed:\n\n» Yama: Choose three boons — one for each night I kept you waiting.',
         citation: 'Katha Upanishad 1.1.7–9',
       },
       {
         id: 'two-easy-boons',
         title: 'Two boons Death was glad to grant',
         storyText:
-          'The first wish was a son’s: let my father’s anger pass; let him greet me with peace when I return. Granted. The second was a seeker’s: teach me the sacred fire ritual — an offering poured into the flames — that leads to heaven. Yama taught it gladly, and — delighted with the boy — named the fire after him. Two boons spent, and Death waited comfortably for the third. Then Nachiketa asked it: “When a person dies, some say he exists and some say he does not. Teach me the truth of it.”',
+          'The first wish was a son’s: let my father’s anger pass, and let him greet me with peace when I return. Granted.\n\nThe second was a seeker’s: teach me the sacred fire ritual — the offering poured into the flames — that leads to heaven. Yama taught it gladly, and, delighted with the boy, named the fire after him.\n\nTwo boons spent, Death waited comfortably for the third. Then Nachiketa asked it:\n\n» Nachiketa: When a person dies, some say he still exists and some say he does not. Teach me the truth of it.',
         citation: 'Katha Upanishad 1.1.10–20',
       },
       {
         id: 'the-bribe',
         title: 'The question Death tried to buy back',
         storyText:
-          'Yama flinched. “Even the gods puzzled over this. Ask anything else — sons and grandsons who live a hundred years, cattle, elephants, gold, horses, land, life as long as you wish. Beautiful attendants such as mortals never win. But do not ask me about dying.” The boy’s reply is one of the tradition’s great moments: “These things wear out, O Death. They spend the very vigor of the senses. Even the longest life is short. Keep your chariots, your dance and song. Nachiketa asks nothing else.”',
+          'Yama flinched.\n\n» Yama: Even the gods puzzled over this. Ask anything else — sons and grandsons who live a hundred years; cattle, elephants, gold, horses, land; life as long as you wish, and beautiful attendants such as mortals never win. But do not ask me about dying.\n\nThe boy’s reply is one of the tradition’s great moments:\n\n» Nachiketa: These things wear out, O Death. They spend the very vigor of the senses, and even the longest life is short. Keep your chariots, your dance and song. Nachiketa asks nothing else.',
         citation: 'Katha Upanishad 1.1.23–29',
         checks: [
           {
@@ -102,7 +102,7 @@ const UPANISHAD_STORIES: Story[] = [
         id: 'the-teaching',
         title: 'What Death taught',
         storyText:
-          'Only then did Yama begin — because only someone who has refused every substitute is ready. There are two paths, he said: shreya, the good, and preya, the pleasant, and the wise learn to tell them apart. As for the self: it is not born and does not die; it did not come from anywhere and never becomes anyone. “Weapons do not cut it, fire does not burn it.” The body is a chariot, the self its rider — and the one who learns to hold the reins reaches the end of the road that has no end.',
+          'Only then did Yama begin, because only someone who has refused every substitute is ready to hear it.\n\nThere are two paths, he said: shreya, the good, and preya, the pleasant — and the wise learn to tell them apart. As for the self, the “you” underneath the body: it is not born and does not die; it did not come from anywhere and never becomes anyone. Weapons do not cut it; fire does not burn it.\n\nThe body is a chariot, he taught, and the self its rider. The one who learns to hold the reins reaches the end of the road that has no end.',
         sectionHeader: 'What this teaches',
         teachingText:
           'The Katha Upanishad stages its lesson in its frame: the truth about death is not hidden — it simply cannot be heard by someone still bargaining. Nachiketa’s qualification was not brilliance but refusal: he would not accept a smaller answer. The boons you settle for decide the teaching you receive.',
@@ -153,21 +153,21 @@ const UPANISHAD_STORIES: Story[] = [
         id: 'the-proud-return',
         title: 'The student who came home proud',
         storyText:
-          'Svetaketu left home at twelve and returned at twenty-four, having mastered all the **Vedas** (the oldest and most sacred scriptures of Hinduism) — and it showed. His father Uddalaka watched the young scholar carry himself through the door and asked one quiet question: “Since you are so learned, dear boy, did you ask for that teaching by which the unheard becomes heard, the unthought becomes thought, the unknown becomes known?” Svetaketu had no idea what his father meant. “How can there be such a teaching?” There was. His whole education had missed it.',
+          'Svetaketu left home at twelve and returned at twenty-four, having mastered all the **Vedas** (the oldest and most sacred scriptures of Hinduism) — and it showed. His father, Uddalaka, watched the young scholar carry himself through the door and asked one quiet question:\n\n» Uddalaka: Since you are so learned, dear boy — did you ask for that teaching by which the unheard becomes heard, the unthought becomes thought, and the unknown becomes known?\n\nSvetaketu had no idea what his father meant.\n\n» Svetaketu: How can there be such a teaching?\n\nThere was. His whole education had missed it.',
         citation: 'Chandogya Upanishad 6.1.1–7',
       },
       {
         id: 'clay-and-gold',
         title: 'One clay, many pots',
         storyText:
-          'Uddalaka began with the world’s most ordinary things. By one lump of clay, he said, everything made of clay is known — the shapes are names, ways of speaking; the reality is clay. By one nugget of gold, all things golden. By one piece of iron, all things iron. He was handing his son a new habit of seeing: beneath the endless catalogue of forms the Vedas had taught him, look for the single substance wearing them all. Then he turned the lens around — onto existence itself, and onto the boy.',
+          'Uddalaka began with the world’s most ordinary things. By one lump of clay, he said, everything made of clay is known — the shapes are only names, ways of speaking; the reality is clay. By one nugget of gold, all things golden. By one piece of iron, all things iron.\n\nHe was handing his son a new habit of seeing: beneath the endless catalogue of forms the Vedas had taught him, look for the single substance wearing them all. Then he turned the lens around — onto existence itself, and onto the boy.',
         citation: 'Chandogya Upanishad 6.1.4–6',
       },
       {
         id: 'the-salt',
         title: 'The salt in the water',
         storyText:
-          '“Put this salt in water and come to me in the morning.” Svetaketu did. “Bring me the salt.” He reached into the bowl — nothing to grasp; it had dissolved. “Sip from this side. How is it?” “Salty.” “From the middle?” “Salty.” “From that side?” “Salty.” “Throw it out and come to me.” The salt was everywhere in the water and visible nowhere. “In just that way, dear boy, you do not perceive Being here — but it is here all the same. That subtle essence is the self of all this. That is truth. That is the self. Tat tvam asi — you are That.”',
+          '» Uddalaka: Put this salt in water, and come to me in the morning.\n\nSvetaketu did.\n\n» Uddalaka: Now bring me the salt.\n\nHe reached into the bowl — nothing to grasp. It had dissolved.\n\n» Uddalaka: Sip from this side. How is it?\n\n» Salty.\n\n» Uddalaka: And from the middle?\n\n» Salty.\n\n» Uddalaka: From that side?\n\n» Salty.\n\n» Uddalaka: Throw it out, and come to me.\n\nThe salt was everywhere in the water and visible nowhere.\n\n» Uddalaka: In just that way, dear boy, you do not perceive Being here — yet it is here all the same. That subtle essence is the self of all this. That is truth. That is the self. Tat tvam asi — you are That.',
         citation: 'Chandogya Upanishad 6.13.1–3',
         citationLink: 'concept:brahman-atman',
         checks: [
@@ -191,7 +191,7 @@ const UPANISHAD_STORIES: Story[] = [
         id: 'nine-times',
         title: 'Nine times, patiently',
         storyText:
-          'The Chandogya repeats the refrain nine times — nine images, nine rounds, the same closing words. Rivers flowing east and west lose their names in one sea; a tree struck at the root bleeds sap but lives by what pervades it; a seed of the banyan, split open, holds a nothing from which a great tree stands. After each, the father says it again: you are That. Not “you contain it” or “you may someday earn it.” Are.',
+          'The Chandogya repeats the refrain nine times — nine images, nine rounds, the same closing words. Rivers flowing east and west lose their names in one sea. A tree struck at the root bleeds sap but lives by what pervades it. A seed of the banyan, split open, holds a nothing from which a whole tree stands.\n\nAfter each, the father says it again: you are That. Not “you contain it,” or “you may someday earn it.” You are.',
         sectionHeader: 'What this teaches',
         teachingText:
           'The most radical claim in the Upanishads is delivered not from a mountaintop but across a kitchen bowl of salt water, from a father to a son whose education had made him proud without making him wise. The divine you search for is not produced by learning; it is what was dissolved in you all along — everywhere present, nowhere graspable.',
@@ -383,14 +383,14 @@ const UPANISHAD_STORIES: Story[] = [
         id: 'the-announcement',
         title: 'The Self worth seeking',
         storyText:
-          'Prajapati, the creator, made an announcement that carried to both heaven and the netherworld: there is a Self free from old age, death, and sorrow — and the one who finds it obtains all worlds. Both camps sent their best. The gods chose Indra, their king; the asuras chose Virochana, theirs. The two rivals arrived at the same door with firewood in hand, and lived as ordinary students for thirty-two years — kings, side by side, hauling water.',
+          'Prajapati, the creator, made an announcement that carried to both heaven and the netherworld: there is a Self free from old age, death, and sorrow — and the one who finds it obtains all worlds.\n\nBoth camps sent their best. The gods chose Indra, their king; the asuras chose Virochana, theirs. The two rivals arrived at the same door with firewood in hand, and lived as ordinary students for thirty-two years — kings, side by side, hauling water.',
         citation: 'Chandogya Upanishad 8.7.1–3',
       },
       {
         id: 'the-mirror',
         title: 'The answer in the mirror',
         storyText:
-          'After thirty-two years, Prajapati gave his first teaching: “Look at yourselves in a pan of water. What you see — that is the Self.” They looked: two well-dressed, well-groomed reflections looked back. Both left satisfied. Virochana carried the lesson home to the asuras and it became their gospel: the body is the self; adorn it, feed it, serve it — that is everything. The Upanishad remarks, dryly, that this is still the doctrine of those who give no gifts and live for themselves.',
+          'After thirty-two years, Prajapati gave his first teaching:\n\n» Prajapati: Look at yourselves in a pan of water. Whatever you see there — that is the Self.\n\nThey looked, and two well-dressed, well-groomed reflections looked back. Both left satisfied.\n\nVirochana carried the lesson home to the asuras, and it became their gospel: the body is the self; adorn it, feed it, serve it — that is everything. The Upanishad remarks, dryly, that this is still the doctrine of those who give no gifts and live only for themselves.',
         citation: 'Chandogya Upanishad 8.8.1–5',
         checks: [
           {
@@ -413,14 +413,14 @@ const UPANISHAD_STORIES: Story[] = [
         id: 'indra-returns',
         title: 'The doubt that walked back',
         storyText:
-          'Indra got halfway home and stopped. If the self is the reflection, then when the body is blind, the self is blind; when the body perishes, the self perishes with it. “I see no good in this.” He turned around — and paid for the question with thirty-two more years. The dream self? But the dreamer can weep in a dream. Thirty-two more. The dreamless sleeper? But that one knows nothing at all — “he has gone to annihilation.” Five more. A hundred and one years of asking the same question better.',
+          'Indra got halfway home and stopped. If the self is only the reflection, then when the body goes blind, the self goes blind; when the body perishes, the self perishes with it.\n\n» Indra: I see no good in this.\n\nHe turned around — and paid for the question with thirty-two more years. Was the self the one we become in dreams? But the dreamer can weep in a dream. Thirty-two more years. The self of dreamless sleep, then? But that one knows nothing at all; it has gone as good as to nothing. Five more.\n\nA hundred and one years, all told, spent asking the same question better.',
         citation: 'Chandogya Upanishad 8.9–8.11',
       },
       {
         id: 'the-teaching',
         title: 'The body is the mount, not the rider',
         storyText:
-          'At last Prajapati gave the real teaching: this body is mortal, always held by death — but it is the standing-place of the deathless, bodiless Self. Wind has no body; cloud, lightning, thunder have no body. As they rise from space and appear in their own form, so the serene one rises from this body and appears in its own form. That — not the reflection — is the Self.',
+          'At last Prajapati gave the real teaching: this body is mortal, always in the grip of death — but it is the dwelling-place of the deathless, bodiless Self.\n\nWind has no body; cloud, lightning, and thunder have no body. As they rise from the space above and appear each in its own form, so the serene Self rises out of this body and appears in its own form. That — not the reflection in the water — is the Self.',
         sectionHeader: 'What this teaches',
         teachingText:
           'Both students heard the same words from the same teacher. The only difference was that Indra kept interrogating his satisfaction — three times he walked back with the answer everyone else would have kept. The Upanishad’s quiet joke is that the first, flattering answer is the one whole civilizations settle for. The self you see in the mirror is the beginning of the search, not its end.',
