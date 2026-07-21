@@ -11,6 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import DataExportService from '../services/dataExportService';
 import AnalyticsService from '../services/analyticsService';
 import LocalStorageService from '../services/localStorageService';
+import { deleteAccount } from '../services/supabaseClient';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 
@@ -84,22 +85,29 @@ const DataManagementScreen: React.FC = () => {
     }
   };
 
-  const handleClearAllData = () => {
+  const handleDeleteAccount = () => {
     Alert.alert(
-      'Clear All Data',
-      'This will permanently delete all your progress, notes, and preferences. This cannot be undone!',
+      'Delete Account & All Data',
+      'This permanently erases your progress, reflections, and notes from this device AND from our servers. This cannot be undone.',
       [
         { text: 'Cancel', style: 'cancel' },
         {
-          text: 'Delete All',
+          text: 'Delete Everything',
           style: 'destructive',
           onPress: async () => {
+            setLoading(true);
             try {
+              // Server first: wipe the account + synced rows. Local wipe follows
+              // regardless — a returning user must never see stale local data
+              // after asking to be deleted. (deleteAccount never throws.)
+              await deleteAccount();
               await LocalStorageService.clearAllData();
               await AnalyticsService.clearAnalyticsData();
-              Alert.alert('Success', 'All data has been cleared. Please restart the app.');
+              Alert.alert('Deleted', 'Your account and all data have been erased. Please restart the app.');
             } catch (error: any) {
-              Alert.alert('Error', 'Failed to clear data');
+              Alert.alert('Error', 'Failed to delete account. Please try again.');
+            } finally {
+              setLoading(false);
             }
           }
         }
@@ -113,7 +121,7 @@ const DataManagementScreen: React.FC = () => {
         <View style={styles.header}>
           <Text style={styles.headerTitle}>💾 Data Management</Text>
           <Text style={styles.headerSubtitle}>
-            Your data is stored locally and private
+            Back up, export, or permanently delete your data
           </Text>
         </View>
 
@@ -121,11 +129,14 @@ const DataManagementScreen: React.FC = () => {
         <Card style={styles.privacyCard}>
           <View style={styles.privacyHeader}>
             <Ionicons name="shield-checkmark" size={24} color="#10b981" />
-            <Text style={styles.privacyTitle}>🏠 Local-First Privacy</Text>
+            <Text style={styles.privacyTitle}>🔒 Your Data</Text>
           </View>
           <Text style={styles.privacyText}>
-            All your data is stored only on this device. We cannot see your progress, 
-            notes, or any personal information. Export regularly to keep backups!
+            Your progress and reflections stay on this device and are backed up to
+            a private, encrypted account so you don't lose them. Messages you send
+            to Krishna are processed by Google Gemini to generate replies. We never
+            sell your data or show ads. You can export a backup or delete everything
+            below.
           </Text>
         </Card>
 
@@ -227,11 +238,12 @@ const DataManagementScreen: React.FC = () => {
         <Card style={styles.dangerCard}>
           <Text style={styles.dangerTitle}>⚠️ Danger Zone</Text>
           <Text style={styles.dangerDescription}>
-            Permanently delete all your data from this device
+            Permanently erase your account and all data — on this device and on
+            our servers. This cannot be undone.
           </Text>
           <Button
-            title="Clear All Data"
-            onPress={handleClearAllData}
+            title="Delete Account & All Data"
+            onPress={handleDeleteAccount}
             disabled={loading}
             variant="outline"
             style={styles.dangerButton}

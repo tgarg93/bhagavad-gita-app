@@ -68,3 +68,26 @@ export function initSupabaseAuth(): void {
     if (state === 'active') ensureSignedIn();
   });
 }
+
+// Hard-delete the current user's server account + all synced rows (App Store
+// 5.1.1(v)). Server-side cascade wipes user_data/ai_usage; here we also sign
+// out so the local session is cleared. Returns false (rather than throwing) if
+// there is nothing to delete or the call fails — the caller still wipes local
+// data either way. A fresh anonymous user is created on the next foreground.
+export async function deleteAccount(): Promise<boolean> {
+  if (!supabase) return false;
+  try {
+    const { data } = await supabase.auth.getSession();
+    if (!data.session) return false; // never signed in — nothing on the server
+    const { error } = await supabase.functions.invoke('delete-account', { body: {} });
+    if (error) {
+      console.log('[supabase] account deletion failed:', error.message);
+      return false;
+    }
+    await supabase.auth.signOut();
+    return true;
+  } catch (e) {
+    console.log('[supabase] account deletion error:', e);
+    return false;
+  }
+}

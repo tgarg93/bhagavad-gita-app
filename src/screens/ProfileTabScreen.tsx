@@ -496,6 +496,17 @@ const ProfileTabScreen: React.FC = () => {
             </View>
           )}
 
+          <TouchableOpacity
+            style={styles.manageRow}
+            onPress={() => (navigation as any).navigate('DataManagement')}
+          >
+            <View style={styles.reminderText}>
+              <Text style={styles.manageLabel}>Account &amp; data</Text>
+              <Text style={styles.reminderSub}>Back up, export, or delete your account</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={18} color={colors.neutrals.softAsh} />
+          </TouchableOpacity>
+
           {__DEV__ && (
             <View style={styles.devSection}>
               <Text style={styles.devTitle}>Dev Tools</Text>
@@ -950,6 +961,22 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     borderLeftWidth: 2,
     borderLeftColor: colors.primary.deepSaffron,
+  },
+  manageRow: {
+    marginTop: spacing.lg,
+    backgroundColor: colors.neutrals.warmIvory,
+    borderRadius: borderRadius.medium,
+    padding: spacing.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: spacing.md,
+  },
+  manageLabel: {
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '600',
+    color: colors.neutrals.charcoalBlack,
   },
   remindersHint: {
     ...typography.sizes.bodySM,
