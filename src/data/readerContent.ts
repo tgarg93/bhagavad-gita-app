@@ -116,11 +116,18 @@ export function getReaderContent(
       sanskritTitle: deity.sanskritName,
       subtitle: deity.description,
       coverImage: asCover(deity.images.heroImage),
+      // Teaching sections first, then the deity's tales as a narrative coda.
       sections: [...deity.sections, ...deity.stories.map(storyToSection)],
       reflectionQuestions: deity.reflectionQuestions ?? [],
       sources: deity.sources ?? [],
       detailRoute: { name: 'DeityDetail', params: { deityId: deity.id } },
       readerLabel: 'Deity',
+      // Interstitials scope to the teaching sections; the celebration recaps
+      // learnItems. The appended tales carry no takeaway, so they never bank.
+      kicker: deity.kicker,
+      learnItems: deity.learnItems,
+      bankedTakeaways: deity.bankedTakeaways,
+      handoff: deity.handoff,
     };
   }
 
