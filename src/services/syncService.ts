@@ -50,9 +50,30 @@ class SyncService {
     if (!supabase) return;
     this.loaded = this.loadState();
     AppState.addEventListener('change', state => {
-      if (state === 'active') this.schedulePush();
+      if (state === 'active') {
+        this.schedulePush();
+      } else {
+        // Leaving the foreground ('inactive' / 'background'): flush NOW, not on
+        // the 3s debounce. iOS freezes JS timers on suspend, so a pending
+        // schedulePush() setTimeout would never fire — a short first session
+        // (onboard -> immediately background) would otherwise drop its push
+        // until the user reopened. Fire-and-forget; the OS gives the JS thread
+        // a brief window before suspension, and anything unfinished stays in
+        // the persisted dirty set for the next foreground.
+        this.flushNow();
+      }
     });
     this.schedulePush();
+  }
+
+  // Immediate, non-debounced push (background flush + anywhere a write must not
+  // wait for the debounce).
+  private flushNow(): void {
+    if (this.pushTimer) {
+      clearTimeout(this.pushTimer);
+      this.pushTimer = null;
+    }
+    this.pushDirty();
   }
 
   private async loadState(): Promise<void> {
