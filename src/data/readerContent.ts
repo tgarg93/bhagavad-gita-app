@@ -146,6 +146,10 @@ export function getReaderContent(
       sources: story.sources ?? [],
       // No detail screen for stories — the reader is the whole experience
       readerLabel: story.collection === 'upanishad' ? 'Upanishad Story' : 'Story',
+      kicker: story.kicker,
+      learnItems: story.learnItems,
+      bankedTakeaways: story.bankedTakeaways,
+      handoff: story.handoff,
     };
   }
 
@@ -165,6 +169,10 @@ export function getReaderContent(
       sources: part.sources ?? [],
       // No detail screen — the reader is the whole experience
       readerLabel: collection?.title ?? 'Scripture',
+      kicker: part.kicker,
+      learnItems: part.learnItems,
+      bankedTakeaways: part.bankedTakeaways,
+      handoff: part.handoff,
     };
   }
 

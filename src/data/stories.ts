@@ -21,6 +21,11 @@ export interface Story {
   sections: NarrativeSection[];
   reflectionQuestions: string[];
   sources: SourceNote[];
+  // Jigyasu interstitials (optional; render on presence — see readerContent).
+  kicker?: string;
+  learnItems?: string[];
+  bankedTakeaways?: string[];
+  handoff?: string;
 }
 
 const GENERIC_COVER = require('../../assets/images/covers/generic-cover.jpg');
@@ -41,7 +46,14 @@ const UPANISHAD_STORIES: Story[] = [
     subtitle: 'The boy who asked Death himself what dying means',
     collection: 'upanishad',
     coverImage: SAMSARA_COVER,
+    kicker: "One of Hinduism's oldest stories: a fearless boy walks up to Death himself and asks the one question we all eventually face.",
     sections: [
+      {
+        id: 'nachiketa-intro',
+        title: 'Before the story',
+        storyText:
+          "This is one of the oldest and most loved stories in all of Hinduism, from an ancient scripture called the **Katha Upanishad**. It is a conversation between a fearless young boy named **Nachiketa** and **Yama**, the god of death himself.\n\nThe question at its heart is the one we all eventually face: what really happens when a person dies? Watch how the boy has to *earn* his answer.",
+      },
       {
         id: 'the-sacrifice',
         title: 'A sacrifice that gave away nothing',
@@ -53,7 +65,7 @@ const UPANISHAD_STORIES: Story[] = [
         id: 'three-nights',
         title: 'Three nights at Death’s door',
         storyText:
-          'A word spoken in anger is still a word, and Nachiketa took his father at it. He walked to the house of Yama, lord of death — and found the lord away. For three nights the boy waited at the door, unfed and unwelcomed: a brahmana guest left hungry, the texts say, is a fire smoldering in the house. When Yama returned, he was ashamed. “Choose three boons,” Death said, “one for each night I kept you waiting.”',
+          'A word spoken in anger is still a word, and Nachiketa took his father at it. He walked to the house of Yama, lord of death — and found the lord away. For three nights the boy waited at the door, unfed and unwelcomed: a holy guest left hungry, the texts say, is like a fire left smouldering in the house. When Yama returned, he was ashamed. “Choose three boons,” Death said, “one for each night I kept you waiting.”',
         citation: 'Katha Upanishad 1.1.7–9',
       },
       {
@@ -69,6 +81,22 @@ const UPANISHAD_STORIES: Story[] = [
         storyText:
           'Yama flinched. “Even the gods puzzled over this. Ask anything else — sons and grandsons who live a hundred years, cattle, elephants, gold, horses, land, life as long as you wish. Beautiful attendants such as mortals never win. But do not ask me about dying.” The boy’s reply is one of the tradition’s great moments: “These things wear out, O Death. They spend the very vigor of the senses. Even the longest life is short. Keep your chariots, your dance and song. Nachiketa asks nothing else.”',
         citation: 'Katha Upanishad 1.1.23–29',
+        checks: [
+          {
+            id: 'chk:story:nachiketa:refusal',
+            kind: 'mcq',
+            prompt: 'Death offered Nachiketa endless wealth, long life, and every pleasure — if only he would drop his question about dying. What did the boy say?',
+            options: [
+              {
+                text: 'He refused it all: these things wear out, and even the longest life is short — he would take no substitute for the real answer',
+                correct: true,
+              },
+              { text: 'He happily took the gold and forgot all about his question' },
+              { text: 'He asked Death for even more than was offered' },
+            ],
+            why: "The good and the pleasant look alike, but the wise learn to tell them apart. Nachiketa's greatness was his refusal — he would not settle for a smaller answer.",
+          },
+        ],
       },
       {
         id: 'the-teaching',
@@ -79,10 +107,28 @@ const UPANISHAD_STORIES: Story[] = [
         teachingText:
           'The Katha Upanishad stages its lesson in its frame: the truth about death is not hidden — it simply cannot be heard by someone still bargaining. Nachiketa’s qualification was not brilliance but refusal: he would not accept a smaller answer. The boons you settle for decide the teaching you receive.',
         citation: 'Katha Upanishad 1.2.1–2, 1.2.18–23, 1.3.3',
+        checks: [
+          {
+            id: 'chk:story:nachiketa:self',
+            kind: 'mcq',
+            prompt: 'When Yama finally taught him, what did he reveal about the self — the "you" underneath the body?',
+            options: [
+              {
+                text: 'It is not born and does not die; weapons cannot cut it and fire cannot burn it — the body is a chariot, and the self is its rider',
+                correct: true,
+              },
+              { text: 'It dies together with the body and is gone forever' },
+              { text: 'It is simply another word for the body itself' },
+            ],
+            why: 'The truth about death was not hidden; it just could not be heard by someone still bargaining. Nachiketa qualified not by cleverness but by refusing every comfortable substitute.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
       'Yama offered Nachiketa everything pleasant to avoid one hard question. What comfortable substitute are you currently accepting in place of a question you actually want answered?',
+      "Nachiketa's father gave away only what cost him nothing. Where in your own life are you 'giving' only what you won't really miss?",
+      'The story separates what is truly good for you from what is merely pleasant. Name one place those two are pulling you in different directions right now.',
     ],
     sources: [
       { text: 'Katha Upanishad', locator: 'Valli 1–3 (the Nachiketa dialogue)' },
