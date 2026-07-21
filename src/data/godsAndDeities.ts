@@ -39,6 +39,13 @@ export interface Deity {
   // Reflection questions: one plain, concrete question (two only when the
   // content genuinely has two distinct hooks) — answerable from daily life
   reflectionQuestions?: string[];
+  // ——— Jigyasu interstitials (optional; render on presence — see readerContent).
+  // learnItems + kind:'intro'/'waypoint' sections light the framing pages; the
+  // deity's `stories` stay a narrative coda after the teaching sections. ———
+  kicker?: string;
+  learnItems?: string[];
+  bankedTakeaways?: string[];
+  handoff?: string;
 }
 
 export interface Mantra {
@@ -201,15 +208,15 @@ export const deitiesData: Deity[] = [
       {
         id: 'govardhan-lift',
         title: 'Lifting Govardhan Hill',
-        content: 'When the villagers of Vrindavan, at young Krishna\'s urging, redirected their annual offering from Indra, the storm-king, to Govardhan hill itself — the land that actually fed their cows — Indra answered with seven days of annihilating rain. Krishna lifted the entire hill on the little finger of his left hand and held it, a stone umbrella over every villager, calf, and bird of Vrindavan, until Indra\'s pride broke before his clouds did. The proud god descended and begged forgiveness of the boy.',
-        moralLesson: 'Honor what actually sustains you rather than what merely demands tribute — and true protection shelters everyone under one roof, without asking who deserves it.',
+        content: 'For as long as anyone could remember, the village of Vrindavan had sent its harvest up to Indra, the god who rules the sky and sends the rains, hoping he would send the monsoon gently. Then a cowherd boy asked a dangerous question: why thank the far-off sky-god, when it is Govardhan, the local hill, whose grass feeds the cows and whose springs fill the water-pots? So the village turned its offering to the hill instead.\n\nIndra\'s answer was fury. He loosed the clouds of the world\'s end: seven days of rain like thrown spears, rivers climbing the doorsteps, the sky gone black at noon. Cattle bawled in the rising flood, and the whole village ran to the boy who had started it.\n\nKrishna walked out to Govardhan, crouched, and lifted the entire hill on the little finger of his left hand. And there it hung — a roof of dripping stone over every man, woman, calf, and bird of Vrindavan, while the deluge shattered against its far side and ran away harmless. Seven days he held it up, and did not tire. On the seventh, Indra\'s thunder ran out before the boy\'s patience did, and the king of the gods came down through his own spent clouds to bow before a child.',
+        moralLesson: 'Honour what actually sustains you, not what merely demands tribute. And real shelter covers everyone under one roof, without first asking who deserves it.',
         category: 'miracle',
         relatedScripture: 'Bhagavata Purana, Canto 10, Chapters 24–25'
       },
       {
         id: 'krishna-mouthful-of-universe',
         title: 'The Universe in His Mouth',
-        content: 'The village boys came complaining to Yashoda: your son has been eating dirt. Krishna denied it with a toddler\'s wounded innocence, and Yashoda, unconvinced, commanded him: open your mouth. He did. And inside the small muddy mouth she saw the whole of it — the wheeling galaxies, the oceans, the mountains, time itself, Vrindavan, herself standing there looking into the mouth of her son who contained her. For one unbearable moment the cowherd mother saw everything. Then Krishna, out of kindness, spread his maya of mother-love over her again, and she forgot — and picked him up, and worried only whether he was hungry.',
+        content: 'One day the village boys came running to Yashoda, the woman raising Krishna as her own, with a complaint: your son has been eating dirt again. Caught, Krishna denied it with a toddler\'s wounded innocence — but his mother was not fooled. "Open your mouth," she said. And he did.\n\nInside that small, muddy mouth she saw it all: the wheeling galaxies and the dark between them, the oceans and the mountains, the turning of the seasons and of time itself — and Vrindavan, and the very house she was standing in, and herself standing in it, looking into the mouth of her son who somehow held her too. For one unbearable moment the cowherd mother beheld the whole of everything.\n\nThen Krishna, out of nothing but kindness, drew his veil of mother-love back across her eyes, and she forgot. She blinked, lifted her boy onto her hip, and worried only whether he had eaten enough.',
         moralLesson: 'The infinite hides inside the ordinary things we scold and feed and put to bed. And forgetting can be a mercy: love needs someone to hold, not everything to comprehend.',
         category: 'miracle',
         relatedScripture: 'Bhagavata Purana, Canto 10, Chapter 8'
@@ -217,7 +224,7 @@ export const deitiesData: Deity[] = [
       {
         id: 'krishna-kaliya',
         title: 'Dancing on the Serpent',
-        content: 'The serpent Kaliya had poisoned the Yamuna\'s deepest pool; trees on its banks died, birds fell from the air above it. Krishna dove in. Dragged under, wrapped in coils, the boy expanded until the serpent\'s grip broke — and then, rather than kill him, Krishna rose onto Kaliya\'s many hoods and danced. Each time a hood rose in defiance, his foot found it in rhythm, until the serpent, exhausted, understood, and his wives rose from the water to sing to the dancer. Krishna spared him, and sent him where his poison could harm no one.',
+        content: 'A monstrous serpent named Kaliya had made his home in the deepest pool of the river Yamuna, and his venom had turned the water black. The trees along the bank stood leafless and dead; birds that flew too low over it dropped out of the air. The whole village had learned to keep away.\n\nKrishna climbed a tree on the bank, and dived straight in.\n\nKaliya came for him in a storm of coils, wound the boy tight, and dragged him under. At the water\'s edge the villagers wept, certain he was lost. Then the coils began to strain — the boy was swelling, growing, until the grip that should have crushed him simply broke apart. Krishna rose to the surface, stepped up onto the serpent\'s crowd of hoods, and began to dance. Each time a head reared in defiance his foot came down on it in rhythm, and one by one the hoods sank, until Kaliya — beaten, and understanding at last — bowed. From the black water his serpent-wives rose with folded hands to sing for the dancer. Krishna spared him, and sent him far off, to waters where his poison could reach no one.',
         moralLesson: 'What poisons your waters must be confronted — but the goal is the poison\'s end, not the poisoner\'s destruction. Grace defeats venom by dancing on it, not by becoming it.',
         category: 'adventure',
         relatedScripture: 'Bhagavata Purana, Canto 10, Chapter 16'
@@ -279,52 +286,160 @@ export const deitiesData: Deity[] = [
         '/images/deities/krishna-gita.jpg'
       ]
     },
+    kicker: "The playful cowherd boy who grows up to become God's own voice in the Bhagavad Gita.",
+    learnItems: [
+      'Krishna is God in human form — and somehow all of God at once',
+      'God chose an ordinary, barefoot childhood',
+      'God wants your love, not your offerings',
+      'An empty reed makes the music — and so can an emptied life',
+      'God takes the reins, but the fight stays yours',
+    ],
+    handoff:
+      'Krishna is the divine at play, holding nothing back. The next avatar holds everything to a single line he will not cross, whatever it costs him. That is Rama.',
     sections: [
       {
+        id: 'krishna-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Krishna is one of the most loved gods in Hinduism, and one of the hardest to sum up. He is a mischievous child, a young cowherd, a friend, a lover — and, grown up, the guide who speaks Hinduism's most famous scripture on a battlefield.\n\nOver the next few pages you'll meet him from the very beginning, and see why so many people feel God is easiest to love in his form.",
+      },
+      {
         id: 'krishna-whole-divine',
-        title: 'The God Who Is Everything at Once',
-        subtitle: 'A Flute, a Chariot, a Mountain, a Mouthful of Stars',
-        storyText: 'Every deity in the tradition carries an aspect of the divine; Krishna\'s devotees make a bolder claim — that in him **the whole of it came at once**.\n\nHe is the butter thief and the speaker of the Gita, the flute player of Vrindavan and the strategist of Kurukshetra, the child in Yashoda\'s lap and — when she looked into his mouth — the container of Yashoda, Vrindavan, and every galaxy.\n\nThe **Bhagavata Purana**\'s tenth canto, the most beloved book in devotional Hinduism, insists on holding all of these together: the point of Krishna is that **the absolute is also adorable, and the adorable is also absolute**.',
-        teachingText: 'Krishna\'s completeness is a teaching about your own life: the sacred does not wait for your solemn moments.\n\nIt is as present in play, mischief, music, and love as in scripture and battle-duty. A spirituality with room for the flute as well as the sermon is the one this god embodies.',
-        citation: 'Bhagavata Purana, Canto 10 (the vision in the child\'s mouth: Chapter 8).'
+        title: 'Who Krishna Is',
+        subtitle: 'God, born as a cowherd boy',
+        takeaway:
+          'Krishna is Vishnu — the god who protects the world — born as a human being. And unlike most gods, who stand for one thing, he somehow seems to be all of God at once.',
+        storyText:
+          "Hindus picture God as having three great jobs: making the world, protecting it, and dissolving it so it can begin again. The protector is called **Vishnu**. When the world is in trouble, Hindus believe Vishnu comes down and is born as a living being, usually a human. Such a birth is called an **avatar**, which simply means 'a coming-down.' There have been several, and Krishna is considered the fullest and most complete of them all.\n\nWhat makes Krishna special is how much he holds at once. Most gods stand for a single quality, like power, or wisdom, or destruction. Krishna is the giggling baby stealing butter **and** the vast power behind the whole universe. He is the flute-playing village boy everyone adores **and** the calm teacher on a battlefield.\n\nSo you never have to choose between a God who is close and lovable and a God who is awesome and infinite. Krishna is both, in one person.",
+        teachingText:
+          'That is the heart of why people love him. In Krishna, God is not saved up for solemn, serious moments. He turns up in play, in mischief, in music, and in ordinary love, just as much as in prayer or scripture.',
+        citation: 'Krishna as the most complete avatar of Vishnu: Bhagavata Purana, Canto 10.',
+        checks: [
+          {
+            id: 'chk:deity:krishna:whole-divine',
+            kind: 'mcq',
+            prompt: 'What do Krishna\'s devotees find special about him among the many Hindu gods?',
+            options: [
+              {
+                text: 'He seems to hold all of God at once — the lovable child and the cosmic power, in one person',
+                correct: true,
+              },
+              { text: 'That he is the only real god and all the others are false' },
+              { text: 'That he never actually took a human form' },
+            ],
+            why: 'Most gods stand for a single quality. Krishna is the butter-stealing baby and the force behind the universe at the same time, which is why people say you never have to choose between a God who is near and one who is vast.',
+          },
+        ],
       },
       {
         id: 'krishna-prison-to-pasture',
         title: 'Born in a Prison, Raised in a Pasture',
         subtitle: 'A Basket Crossing the Yamuna at Midnight',
-        storyText: 'His story begins where Janmashtami\'s does: the tyrant Kamsa, the prophecy, the prison birth at midnight, the locks opening, and Vasudeva carrying the child across the flooding Yamuna to safety in Gokul.\n\nWhat the tradition savors is the sequel: the rescued god grew up not in a palace preparing his revenge, but in a cowherd village — **barefoot, butter-smeared, beloved**.\n\nThe divine chose ordinary rural childhood: churning, herding, flooding rivers, village festivals. Every dusty detail of common life was good enough for God to live in.',
-        teachingText: 'Krishna\'s pastoral years dignify every unglamorous stretch of a life.\n\nIf the divine spent years herding cows and stealing butter before speaking the Gita, then your own ordinary seasons — the commutes, the childcare, the unremarkable years — are not the waiting room of your real life. **They may be the part heaven remembers most fondly.**',
+        takeaway:
+          'God could have been born a prince. Instead he grew up barefoot among cowherds — which means your own ordinary life is good enough for the divine.',
+        storyText:
+          "Before Krishna was even born, a cruel king named **Kamsa** was warned by a prophecy that his sister's eighth son would one day kill him. So he threw his sister and her husband in prison and killed each baby they had. But when the eighth child, Krishna, was born at midnight, something impossible happened: the prison locks fell open on their own, the guards dropped into a deep sleep, and his father slipped out and carried him across a flooding river to safety.\n\nHe was hidden away in **Gokul**, and later **Vrindavan** — small villages of **cowherds** (families who raise and herd cattle) on the banks of the river Yamuna. And there the rescued god simply grew up. Not in a palace plotting his revenge, but barefoot and butter-smeared: herding cows, playing in the fields, adored by everyone around him.",
+        teachingText:
+          'It is a quiet but radical idea. If God himself spent years herding cattle and stealing butter before he ever spoke a word of scripture, then your own unglamorous stretches, like the commute, the childcare, the forgettable years, are not just the waiting room before your real life begins. They may be the part heaven loves most.',
         citationLink: 'festival:janmashtami-2025',
         citation: 'Bhagavata Purana, Canto 10, Chapters 1–4 (the birth), 5–10 (Gokul).'
+      },
+      {
+        id: 'krishna-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          'The whole of the divine, and it chose a cowherd village to grow up in. Next, the tradition\'s most cherished paradox: the Lord of the universe, sneaking butter.',
       },
       {
         id: 'krishna-butter-and-love',
         title: 'The Thief Who Steals Only from Those Who Love Him',
         subtitle: 'A Toppled Pot, White Footprints Leading Away',
-        storyText: 'The butter theft is the tradition\'s most cherished paradox: **the Lord of the universe, sneaking**.\n\nThe gopis of Vrindavan hung their butter pots higher, and he built pyramids of friends; they locked the doors, and he was inside anyway; they marched to Yashoda to complain, and stood there hoping he\'d raid their kitchens next.\n\nThe Bhagavata\'s poets understood exactly what they were doing: **butter is the heart\'s sweetness**, churned from a whole life, and Krishna steals only what is already his — and only from homes that love him. Where there is no love, he does not even trespass.',
-        teachingText: 'The butter thief inverts the whole economy of worship: the divine is not fed by your offerings — it is hungry for **your love specifically**, and delights in taking it playfully rather than receiving it formally.\n\nPrayer, in Vrindavan\'s dialect, is leaving the window unlatched.',
-        citation: 'Butter-thief episodes: Bhagavata Purana, Canto 10, Chapters 8–9.'
+        takeaway:
+          "God isn't won over by grand offerings — he is hungry for your love, and he'd rather take it playfully. Here, prayer is just leaving a door open for him.",
+        storyText:
+          "As a boy, Krishna was a shameless butter thief. The **gopis** — the cowherd women and girls of the village — would hang their butter pots high from the ceiling to keep them safe, and he would build a wobbling tower of friends to reach them. They would lock their doors, and somehow he was inside anyway. They would march to his mother to complain about him, and then secretly hope he would come raid **their** kitchen next.\n\nThe poets who told these stories knew exactly what they meant by them. Butter is churned slowly out of milk, the sweetness drawn from a whole day's patient work, not unlike the love that gathers in a person's heart. And Krishna steals butter only from the homes that love him. Where there is no love, he does not so much as step inside.",
+        teachingText:
+          'It turns the usual idea of worship on its head. God is not fed by your gifts and rituals; he is after your love, and he would rather snatch it playfully than be handed it in a formal ceremony. In these villages, prayer was not grand ritual. It was leaving the window unlatched.',
+        citation: 'Butter-thief episodes: Bhagavata Purana, Canto 10, Chapters 8–9.',
+        checks: [
+          {
+            id: 'chk:deity:krishna:butter',
+            kind: 'mcq',
+            prompt: 'Krishna steals butter only from homes that love him, and will not enter where there is none. What does this turn upside down?',
+            options: [
+              {
+                text: "The usual idea of worship — God isn't won by your offerings, he is hungry for your love, and takes it playfully",
+                correct: true,
+              },
+              { text: 'That stealing is fine as long as you are a god' },
+              { text: 'That the gods need constant formal worship to stay happy' },
+            ],
+            why: 'Butter is churned slowly from a whole day of work, a little like the love in a heart. Krishna takes it only where there is love. In these villages, prayer was not ceremony; it was leaving the window unlatched.',
+          },
+        ],
       },
       {
         id: 'krishna-flute',
         title: 'The Sound That Calls Everyone Home',
         subtitle: 'A Bamboo Flute at Dusk, Cows Turning Their Heads',
-        storyText: 'Of all Krishna\'s emblems, the tradition loves the **flute** most.\n\nAt dusk in Vrindavan he would play, and the Bhagavata describes the whole world leaning toward the sound — cows lifting their heads, rivers slowing, the gopis leaving whatever was in their hands.\n\nThe saints read the symbol lovingly: **a flute is a reed emptied of itself** — hollowed, holed, and only therefore musical. Whoever becomes empty enough, the divine breath plays through.',
-        teachingText: 'The flute asks the question all contemplatives eventually face: **what fills you that the music cannot pass through?**\n\nThe ego\'s knots are the reed\'s blockages. The practices — reflection, offering, remembrance — are the slow hollowing. And the promise is Vrindavan\'s: emptied, a life doesn\'t become vacant. It becomes the instrument.',
+        takeaway:
+          "A flute only makes music because it's hollow. Empty yourself the same way, and something greater can play through you.",
+        storyText:
+          "Of all the images of Krishna, the tradition loves the **flute** the most. At dusk he would stand and play, and the old stories say the whole world leaned in to listen: the cows lifting their heads, the river slowing, people setting down whatever was in their hands.\n\nThe saints found a lesson in the instrument itself. A flute is nothing but a length of bamboo that has been **hollowed out**, emptied, and pierced with a few holes. It makes music only because it is empty. Whoever empties themselves in the same way, they said, lets the breath of God play through them.",
+        teachingText:
+          'So it asks an honest question: what is clogging you, so the music cannot get through? Pride, grasping, and fear are the blockages in the reed. The practices in this app, like reflecting, letting go, and remembering, are the slow hollowing-out. And the promise is that an emptied life does not end up empty. It becomes an instrument.',
         citation: 'Bhagavata Purana, Canto 10, Chapter 21 (the Venu Gita).'
+      },
+      {
+        id: 'krishna-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          'The child, the beloved, the hollow reed. One image remains, and it is the one you will reach for when your own war comes.',
       },
       {
         id: 'krishna-charioteer',
         title: 'The God Who Took the Reins',
         subtitle: 'Two Armies Waiting, a Conversation Beginning',
+        takeaway:
+          "When your hardest battle comes, God won't fight it for you — but he'll sit beside you, hold the reins, and tell you the truth.",
         keyVerse: {
           sanskrit: 'ईश्वरः सर्वभूतानां हृद्देशेऽर्जुन तिष्ठति। भ्रामयन्सर्वभूतानि यन्त्रारूढानि मायया॥',
           transliteration: 'īśhvaraḥ sarva-bhūtānāṁ hṛid-deśhe \'rjuna tiṣhṭhati, bhrāmayan sarva-bhūtāni yantrārūḍhāni māyayā',
           meaning: 'The Lord dwells in the hearts of all beings, O Arjuna, causing all beings to revolve by His power, as if mounted on a machine.',
           source: 'Bhagavad Gita 18.61 (tr. Swami Sivananda)'
         },
-        storyText: 'When the great war came, Krishna made a choice that defines him: offered the pick between his armies and himself unarmed, the wise took the unarmed god.\n\nHe drove Arjuna\'s chariot — held the reins, took no weapon, and in the field between two armies delivered the **Bhagavad Gita**.\n\nThe arrangement is the theology: the divine does not fight your battle for you, and does not abandon you to it. It sits at the front of your chariot, holding the horses, speaking truth exactly when despair strikes — and near the end tells you where it has been all along: **in the heart, of everyone, always**.',
-        teachingText: 'Whatever battlefield you are facing, Krishna\'s position is the promise: not a substitute who fights instead of you, not a spectator — **a charioteer**. Guidance at the reins, the fighting still yours.\n\nThe Gita is what the charioteer says. This whole app, in a sense, is an attempt to keep that voice within reach of your chariot.'
+        storyText:
+          "When Krishna grew up, a great war came. On one side stood a warrior named **Arjuna**, sick at heart because the enemy army was full of his own cousins, teachers, and friends. Offered a choice between Krishna's entire army or Krishna alone and unarmed, Arjuna chose the unarmed Krishna.\n\nAnd Krishna became his **charioteer**, the driver of his war-chariot. He picked up no weapon. He held the horses steady, and there in the no-man's-land between the two armies, as Arjuna froze in despair, Krishna turned and spoke to him. That conversation is the **Bhagavad Gita**, Hinduism's best-loved scripture. Near its end, Krishna tells Arjuna where he has secretly been the whole time: in the heart of every living being.",
+        teachingText:
+          'That picture is the promise. God does not fight your battles for you, and does not leave you to fight them alone. He sits at the front of your chariot, holding the reins, steadying you, and telling you the truth exactly when you are ready to give up. The fighting is still yours. But you are not driving alone.',
+        checks: [
+          {
+            id: 'chk:deity:krishna:charioteer',
+            kind: 'mcq',
+            prompt: "Krishna drove Arjuna's chariot but picked up no weapon of his own. What is the promise in Krishna as a charioteer?",
+            options: [
+              {
+                text: 'God will not fight your battle for you, and will not leave you alone in it — he steadies you and tells you the truth, but the fighting is still yours',
+                correct: true,
+              },
+              { text: 'That God will win every battle for you if you just ask' },
+              { text: 'That you should avoid every conflict in life' },
+            ],
+            why: 'A charioteer holds the reins and steadies the fighter, but does not fight in his place. Krishna guides Arjuna and, near the end, tells him he has been in his heart all along.',
+          },
+        ],
+      },
+      {
+        id: 'krishna-tales-intro',
+        title: 'Three Tales of Krishna',
+        subtitle: 'The teachings, now in motion',
+        storyText:
+          "You've met the teachings. Now meet Krishna in action.\n\nWhat follow are three of the best-loved stories ever told about him: a hill lifted on one finger, a mother who saw the whole universe inside her child's mouth, and a boy who danced on a deadly serpent. Each one brings a teaching you've just met to life.",
       }
     ],
     sources: [
@@ -342,7 +457,9 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Krishna spent years on ordinary village chores before speaking the Gita. What ordinary part of your day deserves more care?'
+      'Krishna spent years on ordinary village chores before speaking the Gita. What ordinary part of your day deserves more care?',
+      'Krishna takes love playfully, not formally. Where could you leave a window unlatched — offer your care to someone without ceremony?',
+      'In your own hardest battle, would you rather a god who fights it for you, or one who takes the reins and stays beside you — and why?',
     ]
   },
   {
@@ -413,7 +530,7 @@ export const deitiesData: Deity[] = [
       {
         id: 'rama-shabari',
         title: 'Shabari\'s Tasted Berries',
-        content: 'Searching for the abducted Sita, grief-worn and far from every comfort, Rama came to the ashram of Shabari — an old tribal woman who had waited decades for this visit, told by her departed guru that Rama himself would one day come. She had nothing to offer but wild berries, and she offered them in the only way her love knew: tasting each one first, keeping only the sweet ones for him. By every rule of ritual purity, half-eaten food from a forest woman was unofferable. Rama ate them as the finest meal of his exile, and the tradition never tired of the scene: the prince of dharma, schooled in every scripture, honoring a devotion that broke the rules because it kept the only rule that matters.',
+        content: 'Searching for the abducted Sita, grief-worn and far from every comfort, Rama came to the forest hut, or ashram, of Shabari — an old tribal woman who had waited decades for this visit, told by her departed guru that Rama himself would one day come. She had nothing to offer but wild berries, and she offered them in the only way her love knew: tasting each one first, keeping only the sweet ones for him. By every rule of ritual purity, half-eaten food from a forest woman was unofferable. Rama ate them as the finest meal of his exile, and the tradition never tired of the scene: the prince of dharma, schooled in every scripture, honoring a devotion that broke the rules because it kept the only rule that matters.',
         moralLesson: 'Love\'s etiquette outranks ritual\'s etiquette. What is offered with a whole heart is pure by definition — and the truly great receive it that way.',
         category: 'teaching',
         relatedScripture: 'Valmiki Ramayana, Aranya Kanda, sarga 74 (and the beloved retellings)'
@@ -449,45 +566,144 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/rama-icon.jpg',
       galleryImages: ['/images/deities/rama-sita.jpg', '/images/deities/rama-court.jpg']
     },
+    kicker: 'Another human form of Vishnu — the prince who keeps his word even when it costs him his crown, his home, and fourteen years.',
+    learnItems: [
+      'Rama is a human form of Vishnu, whose whole life turns on keeping his word',
+      "A promise doesn't expire just because keeping it got expensive",
+      'His years of exile in the forest were the making of him, not an interruption',
+      "Every contribution counts — even a squirrel's grains of sand",
+      'His greatest gift was the smallest: a name to repeat',
+    ],
+    handoff:
+      'Krishna and Rama are both Vishnu, the protector, walking the earth as humans. But the Hindu God wears other faces too. The next is the strangest and most powerful: the god who destroys the old world so a new one can begin — Shiva.',
     sections: [
       {
+        id: 'rama-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Rama is one of Hinduism's most beloved gods, and the hero of a vast, thrilling epic called the **Ramayana** — a story of exile, a kidnapped wife, a war, and a monkey army. But at its centre is a simple idea: a good man who keeps his word no matter what it costs him.\n\nOver the next few pages you'll meet him, and the moments that made him India's model for how to live.",
+      },
+      {
         id: 'rama-ideal',
-        title: 'The Man Who Never Broke',
-        subtitle: 'A Straight Line Drawn Through a Crooked World',
-        storyText: 'Rama\'s title is unique among the gods: **Maryada Purushottama** — the supreme man of boundaries, the one who never once crossed the line of dharma.\n\nWhere Krishna bends rules with a smile, Rama holds them with his life. The Valmiki Ramayana presents him not as a god acting a part but as **a man** — tempted, bereaved, furious, heartbroken — who at every fork chooses the harder right over the easier wrong.\n\nThat is precisely why India gave him its highest reverence: anyone can admire a god\'s perfection; Rama\'s perfection is the kind a human being could bleed for and still choose.',
-        teachingText: 'Rama\'s question for your life is the boundary question: **what line would you not cross at any price** — not when it costs a kingdom, not when it costs fourteen years?\n\nA person who has answered it walks differently. The Ramayana is one long demonstration of that walk.',
+        title: 'Who Rama Is',
+        subtitle: 'The prince who would not cross a line',
+        takeaway:
+          'Rama is another human form of Vishnu — a prince whose whole life turns on keeping his word and doing the right thing, even when it costs him everything.',
+        storyText:
+          "Like Krishna, Rama is an **avatar** of **Vishnu**, the god who protects the world — in fact the incarnation just before Krishna. But where Krishna is playful and bends the rules with a smile, Rama is his opposite: the man who never crosses a line.\n\nRama was a prince of **Ayodhya**, a north-Indian kingdom, and his life is told in the **Ramayana**, one of Hinduism's two great epic poems. It is the story of a thoroughly good man who loses almost everything — his crown, his home, and eventually his wife **Sita** — because he refuses, again and again, to take the easy wrong path.\n\nHis title says it all: **Maryada Purushottama**, which means 'the perfect man of right conduct' — the one who never once stepped over the line of what was right, whatever it cost him.",
+        teachingText:
+          "That is why Hindus give Rama such deep reverence. Anyone can admire a god's flawless perfection from a safe distance. Rama's kind of goodness is different: it is the sort an ordinary person could actually bleed for and still choose. His whole story asks you one question — what line would you refuse to cross, even if crossing it would win you a kingdom?",
         citation: 'Valmiki Ramayana (throughout); Maryada Purushottama: traditional epithet.'
       },
       {
         id: 'rama-word',
         title: 'A Father\'s Word, Kept by the Son',
-        subtitle: 'Royal Ornaments Set Down Without a Tremor',
-        storyText: 'The exile turns on a single principle: **a promise does not expire because keeping it became expensive.**\n\nDasharatha\'s old boon to Kaikeyi was legally his to break and emotionally everyone\'s to excuse — the whole city begged Rama to ignore it. He would not, because the word of the house of Raghu was the house of Raghu: **"Rama does not speak two ways."**\n\nHe kept a promise he never made, at a price he did not owe, to preserve a thing no one could see — and the tradition judged that invisible thing worth more than the visible throne.',
-        teachingText: 'Every family and institution runs on invisible collateral: the confidence that its word means something. Each kept promise deposits; each clever escape withdraws.\n\nRama\'s extreme is a compass, not a demand — but ask what your own word is currently worth to the people who hold it, and what one expensive kept promise would do to that account.',
-        citation: 'Valmiki Ramayana, Ayodhya Kanda.'
+        subtitle: 'A crown set down without a tremor',
+        takeaway:
+          "A promise doesn't expire just because keeping it turned expensive. Rama gave up his crown to honour a word that wasn't even his own.",
+        storyText:
+          "Rama's exile turns on one idea: a promise does not stop being binding just because keeping it has become painful.\n\nYears earlier, Rama's father, King **Dasharatha**, had granted his queen **Kaikeyi** two wishes, whenever she chose to claim them. Now, on the very eve of Rama's coronation, she claimed them: send Rama away to the forest for fourteen years, and crown her own son **Bharata** (Rama's younger half-brother) instead. The promise was old, the king was collapsing with grief, and the whole city begged Rama to just ignore it. He would not. His family's given word, he believed, was the family's honour itself, and he would not let it die.\n\nSo he set down a crown that was rightfully his, to keep a promise he had never personally made, at a price he did not owe — because both he and the tradition judged that invisible thing, a word kept, to be worth more than the visible throne.",
+        teachingText:
+          'Every family and every institution runs on invisible trust: the quiet confidence that its word means something. Each promise kept adds to that account; each clever escape drains it.\n\nRama\'s extreme is a compass, not a demand. But it is worth asking what your own word is currently worth to the people who rely on it, and what one expensive kept promise would do for that trust.',
+        citation: 'Valmiki Ramayana, Ayodhya Kanda.',
+        checks: [
+          {
+            id: 'chk:deity:rama:word',
+            kind: 'mcq',
+            prompt: "Rama could have legally broken his late father's promise, and the whole city urged him to. Why did he keep it and accept exile instead?",
+            options: [
+              {
+                text: "Because a promise doesn't stop being binding just because keeping it became painful — his family's word was its honour",
+                correct: true,
+              },
+              { text: 'Because he was afraid of his stepmother, Kaikeyi' },
+              { text: 'Because he did not really want to be king anyway' },
+            ],
+            why: 'Rama gave up a throne that was rightfully his to keep a word he had never even made himself. The tradition judged that invisible thing, a promise kept, to be worth more than the visible crown.',
+          },
+        ],
+      },
+      {
+        id: 'rama-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          'You have met Rama and the promise that cost him his crown. Now the forest, where losing everything quietly turned him into the king he would become.',
       },
       {
         id: 'rama-exile-years',
         title: 'Fourteen Years of Forest',
-        subtitle: 'A Palace Prince Learning the Names of Trees',
-        storyText: 'The exile was not an interlude; **it was the making.**\n\nIn the forest, the prince became something Ayodhya could never have taught him: a man acquainted with hardship, with hermits and tribal chiefs, with hunger, with the grief of losing Sita to Ravana\'s deceit.\n\nHis alliances there — **Guha** the boatman, the vulture **Jatayu** who died defending Sita, **Shabari** with her berries, **Hanuman** and the vanaras — were friendships of the excluded, and they, not Ayodhya\'s armies, won the war. When he returned to rule, he ruled as a king who had slept on the ground of his own kingdom.',
-        teachingText: 'The forest years reframe every derailment: the demotion, the illness, the season everything was taken away.\n\nRama\'s exile suggests the wilderness is where your future allies are met and your real education happens — and that the ones who return from it rule differently. **What did (or does) your forest teach that the palace never could?**',
-        citation: 'Valmiki Ramayana, Aranya Kanda.'
+        subtitle: 'A palace prince learning the names of trees',
+        takeaway:
+          "Rama's fourteen years of exile weren't an interruption — they were the making of him. The hardest stretch is often where your real education, and your real allies, are found.",
+        storyText:
+          "Rama's exile was not a sad gap in his life. It was the making of him.\n\nIn the forest, the pampered prince became something the palace could never have taught him: a man who knew hardship and hunger, who lived among hermits and forest tribes, and who suffered the worst grief of his life when **Ravana**, the demon-king of the faraway island of **Lanka**, kidnapped his wife Sita.\n\nAnd the friends he made in that hard place — a humble boatman, a dying vulture who tried to save Sita, an old forest woman who fed him berries, and above all **Hanuman**, the mighty monkey-warrior, with his army of **vanaras** (a race of noble, intelligent monkey-people) — were the friendships of the overlooked. It was they, not the armies of his kingdom, who finally won his war. When Rama at last returned to rule, he ruled as a king who had slept on the bare ground of his own land.",
+        teachingText:
+          "The forest years reframe every setback: the demotion, the illness, the season when everything was taken. Rama's exile suggests the wilderness is exactly where your real education happens and your future allies are met, and that people who come back from it lead differently. What did your own 'forest' teach you that no comfortable stretch ever could?",
+        citation: 'Valmiki Ramayana, Aranya Kanda.',
+        checks: [
+          {
+            id: 'chk:deity:rama:exile',
+            kind: 'mcq',
+            prompt: "The tradition insists Rama's fourteen years of forest exile were not a sad interruption. What were they?",
+            options: [
+              {
+                text: 'The making of him — where he learned hardship and won the friends of the overlooked who would later win his war',
+                correct: true,
+              },
+              { text: 'A punishment he secretly deserved for a past mistake' },
+              { text: 'Wasted years that he spent the rest of his life regretting' },
+            ],
+            why: "The forest taught the pampered prince what the palace never could, and his allies there — not his kingdom's armies — won the war. He came back a king who had slept on the bare ground of his own land.",
+          },
+        ],
       },
       {
         id: 'rama-bridge',
         title: 'The Bridge and the Squirrel',
-        subtitle: 'An Ocean Crossed Stone by Floating Stone',
-        storyText: 'To reach Lanka and Sita, an ocean had to be crossed. The army of monkeys and bears built a **bridge of floating stones** — and the tradition\'s favorite worker on it is the smallest: a squirrel, rolling in sand and shaking it between the stones.\n\nWhen the great monkeys laughed, Rama picked the squirrel up and stroked its back — the stripes squirrels carry to this day, says the beloved tale.\n\nThe bridge held. The war was won by an alliance in which **every contribution, from Hanuman\'s mountain-carrying to the squirrel\'s sand, counted as sacred**.',
+        subtitle: 'An ocean crossed stone by floating stone',
+        takeaway:
+          'In the war to rescue Sita, even a squirrel carrying grains of sand mattered. A great leader makes the smallest helper feel honoured, not laughed at.',
+        storyText: 'To reach Lanka and rescue Sita, Rama\'s army had to cross the ocean. The army of monkeys and bears built a **bridge of floating stones** — and the tradition\'s favorite worker on it is the smallest: a squirrel, rolling in sand and shaking it between the stones.\n\nWhen the great monkeys laughed, Rama picked the squirrel up and stroked its back — the stripes squirrels carry to this day, says the beloved tale.\n\nThe bridge held. The war was won by an alliance in which **every contribution, from Hanuman\'s mountain-carrying to the squirrel\'s sand, counted as sacred**.',
         teachingText: 'Every great work is a bridge of odd stones — and its Rama is the one who makes the smallest contributor feel stroked on the back, not laughed at.\n\nIn whatever you are building, notice who is carrying sand. **The leader\'s hand on the squirrel is why the army stays an army.**',
-        citation: 'Valmiki Ramayana, Yuddha Kanda (the bridge); the squirrel: later devotional tellings (not Valmiki).'
+        citation: 'Valmiki Ramayana, Yuddha Kanda (the bridge); the squirrel: later devotional tellings (not Valmiki).',
+        checks: [
+          {
+            id: 'chk:deity:rama:squirrel',
+            kind: 'mcq',
+            prompt: 'As the great monkeys built the bridge to Lanka, a tiny squirrel rolled in sand to help fill the gaps — and they laughed at it. What did Rama do?',
+            options: [
+              {
+                text: 'He picked the squirrel up and stroked its back, honouring the smallest helper as much as the strongest',
+                correct: true,
+              },
+              { text: 'He agreed the squirrel was useless and sent it away' },
+              { text: 'He ignored it and kept directing the monkeys' },
+            ],
+            why: 'The war was won by an alliance in which every contribution counted, from Hanuman carrying whole mountains to the squirrel carrying sand. A leader who honours the smallest helper is the reason the army stays an army.',
+          },
+        ],
+      },
+      {
+        id: 'rama-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          'Rama kept his word, grew in the forest, and honoured every helper. One gift of his remains, the smallest and most lasting of all: his name.',
       },
       {
         id: 'rama-name',
         title: 'The Name That Outlived the Man',
-        subtitle: 'Two Syllables Carried Across Centuries',
-        storyText: 'Rama\'s final gift to India is the smallest: **his name.**\n\n"Ram-nam" became the tradition\'s most portable practice — the greeting of villages, the chant of Kabir\'s weavers and Tulsidas\'s verses, the word Gandhi carried, the sound accompanying millions to the funeral ground: **"Ramanama satya hai."**\n\nThe tradition even claims the name outweighs the man — the stones of the bridge floated, one telling goes, because his name was written on them, while stones Rama threw himself sank. Whatever else is beyond reach on a given day — scripture, temple, teacher — two syllables are not.',
-        teachingText: 'The practice is as simple as it sounds and older than any app: **a name, said with attention, as often as remembered** — walking, waiting, worrying.\n\nPick your name for the divine (Rama\'s or another) and let it run under a single ordinary day. That thread, the tradition promises, is strong enough to hold everything else.',
+        subtitle: 'Two syllables carried across centuries',
+        takeaway:
+          "Rama's greatest gift was also his smallest: his name. Repeating a name of God, with attention, through an ordinary day is a practice anyone can carry anywhere.",
+        storyText:
+          "Rama's final gift to India is his smallest: his name.\n\nSimply repeating **'Ram, Ram'** became one of Hinduism's most portable practices — a village greeting, the chant of poet-saints like **Kabir** and **Tulsidas** centuries ago, the word Mahatma Gandhi kept on his lips, and the line spoken as people carry the dead to be cremated: **Ramanama satya hai**, 'the name of Rama is truth.'\n\nThere is even a saying that the name is greater than the man. The stones of the bridge to Lanka floated, one story goes, because Rama's name was written on them, while a stone Rama himself threw in sank. Whatever else is out of reach on a hard day — a temple, a teacher, a holy book — a name is not.",
+        teachingText:
+          "The practice is exactly as simple as it sounds, and older than any app: a name, said with attention, as often as you remember it, while walking, waiting, or worrying. Pick a name for the divine, Rama's or any other, and let it run quietly under a single ordinary day. That thin thread, the tradition promises, is strong enough to hold everything else.",
         citation: 'Ram-nam: living tradition (Kabir, Tulsidas, Gandhi); the floating-stones telling: devotional tradition.'
       }
     ],
@@ -504,7 +720,9 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Rama had one line he would never cross. What is one line you won\'t cross, no matter what?'
+      'Rama had one line he would never cross. What is one line you won\'t cross, no matter what?',
+      'Think of a promise you made that has become inconvenient to keep. What would keeping it anyway do to the trust others place in you?',
+      "Recall your own 'forest' — a hard stretch you didn't choose. What did it teach you, or who did it bring into your life, that comfort never would have?",
     ]
   },
   {
@@ -614,29 +832,79 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/ganesha-icon.jpg',
       galleryImages: []
     },
+    kicker: "The cheerful, elephant-headed son of Shiva — the remover of obstacles, whose name Hindus speak first before starting anything new.",
+    learnItems: [
+      "Ganesha is the elephant-headed remover of obstacles, worshipped first before any beginning",
+      'Even a terrible rupture can end in a bigger belonging',
+      'His very form is a lesson you can read',
+      'Understanding outruns speed — grasp what matters and you finish first',
+      'His way of learning: never stop the flow, never outrun your own understanding',
+    ],
+    handoff:
+      "Ganesha clears the path before you begin. The next god shows what to do once you're on it — the mighty monkey-warrior whose real strength turns out to be the strength of pure devotion: Hanuman.",
     sections: [
       {
+        id: 'ganesha-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Ganesha is the cheerful, elephant-headed god, and probably the most instantly loved figure in all of Hinduism. He is the one Hindus call on first, before starting anything new at all.\n\nOver the next few pages you'll meet him, hear the startling story of how he got his elephant head, and learn to read the meaning hidden in his unusual form.",
+      },
+      {
         id: 'ganesha-threshold',
-        title: 'The God of Thresholds',
-        subtitle: 'A Doorway Garlanded with Marigolds',
-        storyText: 'Before a Hindu wedding begins, before a shop opens its first ledger, before a child writes the first letter of the alphabet, one name is spoken: **Ganesha**.\n\nHe is **Vighnaharta**, the remover of obstacles, and every threshold belongs to him — doorways, journeys, new ventures, first pages. This custom traces straight back to his origin story, where Shiva decreed that the boy he had wounded and restored would be **worshiped first among all the gods**.\n\nThe teaching hidden in the custom is quietly profound: every beginning carries fear, and the tradition answers fear not with a pep talk but with a companion.',
-        teachingText: 'Notice what you do at your own thresholds. Do you rush through beginnings — new jobs, new relationships, new years — or do you pause and consecrate them?\n\nBeginning with prayer, or even a deliberate breath of intention, changes the spirit of everything that follows. That is Ganesha\'s first lesson, and you don\'t need an elephant\'s head to practice it.',
+        title: 'Who Ganesha Is',
+        subtitle: 'The god you call on first',
+        takeaway:
+          "Ganesha is the elephant-headed son of Shiva and Parvati, the beloved 'remover of obstacles' whose name Hindus speak first before beginning anything new.",
+        storyText:
+          "Ganesha is the cheerful, **elephant-headed** god — the son of **Shiva** and his wife **Parvati**. He is **Vighnaharta**, which means 'the remover of obstacles,' and by long custom his is the first name Hindus speak before starting anything new.\n\nBefore a wedding begins, before a shop opens its first account book, before a child writes the very first letter of the alphabet, people call on Ganesha. Every doorway, journey, new venture, and first page belongs to him. (This goes back to his origin story, where Shiva declared this boy would be honoured first among all the gods — a story you'll hear in a moment.)\n\nThe idea hidden in the custom is quietly wise: every beginning carries a little fear, and the tradition answers that fear not with a pep talk, but with a friendly companion waiting at the door.",
+        teachingText:
+          "Notice what you do at your own thresholds. Do you rush through your beginnings — new jobs, new relationships, new years — or do you pause and mark them? Beginning with a prayer, or even one deliberate breath of intention, quietly changes the spirit of everything that follows. That is Ganesha's first lesson, and you don't need an elephant's head to practise it.",
         citation: 'The first-worship decree: Shiva Purana, Rudra Samhita (Kumara Khanda).'
       },
       {
         id: 'ganesha-born-of-devotion',
         title: 'Born at a Door, Remade by Grace',
-        subtitle: 'Parvati Shaping a Boy from Turmeric',
-        storyText: 'The Shiva Purana tells Ganesha\'s birth without softening it.\n\nParvati creates a son from the turmeric paste of her own body and posts him at her door; Shiva, unrecognized and enraged, beheads the boy; Parvati\'s grief threatens the cosmos; and the child is restored with an elephant\'s head, then **raised higher than he stood before** — first among the ganas, first in every prayer.\n\nIt is a family story of terrible misunderstanding and greater repair, and Hindu tradition placed it at the very front of all worship.',
+        subtitle: 'A boy shaped from turmeric paste',
+        takeaway:
+          "Ganesha's birth was violent — his own father beheaded him, then restored him with an elephant's head and raised him higher than before. Even a terrible rupture can end in a bigger belonging.",
+        storyText:
+          "The Shiva Purana tells the story of Ganesha's birth without softening any of it.\n\nParvati shapes a son out of the turmeric paste from her own skin, and sets him to guard her door. Shiva comes home, does not recognise the boy, and in a rage cuts off his head. Parvati's grief threatens to destroy the whole world. So the boy is brought back to life with an elephant's head, and then raised even higher than he had been before: made the leader of Shiva's **ganas** (his band of divine attendants — which is exactly where the name Gana-esha, 'lord of the ganas,' comes from), and made first in every prayer.\n\nIt is a raw family story of a terrible misunderstanding and an even greater repair, and Hindus placed it right at the very front of all their worship.",
         teachingText: 'Every family carries a version of this story — the clash that came from not recognizing each other, the wound that seemed unforgivable.\n\nThe Purana\'s answer is not that the wound didn\'t matter, but that **repair can be so complete it transforms the wounded one\'s place in the family**. Where in your life is a beheaded relationship waiting for an elephant\'s head — an imperfect, unlikely, generous repair that restores more than was lost?',
         citationLink: 'festival:ganesh-chaturthi-2025',
-        citation: 'Shiva Purana, Rudra Samhita (Kumara Khanda).'
+        citation: 'Shiva Purana, Rudra Samhita (Kumara Khanda).',
+        checks: [
+          {
+            id: 'chk:deity:ganesha:birth',
+            kind: 'mcq',
+            prompt: "Shiva beheaded the boy guarding Parvati's door, then restored him with an elephant's head. How did the story end for the boy?",
+            options: [
+              {
+                text: "He was raised higher than before — adopted fully, made leader of Shiva's attendants, and honoured first in every prayer",
+                correct: true,
+              },
+              { text: 'He was sent away from the family in disgrace' },
+              { text: 'He was left only half-alive, as a permanent warning' },
+            ],
+            why: 'What began in fury ended with the wounded one honoured first of all. Even a terrible rupture can end in a larger belonging.',
+          },
+        ],
+      },
+      {
+        id: 'ganesha-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          'You know who he is and where he came from. Now his elephant-headed form itself, which the tradition reads like a set of lessons.',
       },
       {
         id: 'ganesha-iconography',
         title: 'Reading the Elephant-Headed Form',
-        subtitle: 'Large Ears, Small Eyes, One Tusk',
-        storyText: 'Ganesha\'s form is a teaching you can read:',
+        subtitle: 'Large ears, small eyes, one tusk',
+        takeaway:
+          'Ganesha\'s whole body is a lesson you can read: big ears to listen more, small eyes to focus, one tusk to keep only what serves, and a trunk strong enough to uproot a tree yet gentle enough to lift a blade of grass.',
+        storyText: 'Every part of Ganesha\'s form carries a meaning:',
         bullets: [
           '**The elephant head** — wisdom, memory, and gentleness joined to strength.',
           '**The large ears** — listen more.',
@@ -644,27 +912,73 @@ export const deitiesData: Deity[] = [
           '**The trunk** — strong enough to uproot a tree, delicate enough to lift a blade of grass; true skill bends to the task.',
           '**The single tusk** — keep what serves, sacrifice what must be given (he is Ekadanta, the one-tusked).',
           '**The large belly** — digest all of life, sweet and bitter alike.',
-          '**The modak in his hand** — the sweetness of the inner life, earned by practice.',
+          '**The modak in his hand** (a sweet dumpling) — the sweetness of the inner life, earned by practice.',
           '**The mouse beneath him** — even the restless, scurrying mind can carry wisdom, once wisdom is seated firmly upon it.'
         ],
-        teachingText: 'Pick one feature and live it for a week. Listen like the ears. Focus like the eyes. Adapt like the trunk.\n\n**The murti is not a portrait; it is a curriculum.**',
+        teachingText: 'Pick one feature and live it for a week. Listen like the ears. Focus like the eyes. Adapt like the trunk. The statue is not a portrait to admire; it is a lesson to practise.',
         citation: 'Standard Puranic iconography; Ekadanta epithet: Ganesha tradition.'
       },
       {
         id: 'ganesha-wisdom-over-speed',
         title: 'Wisdom Outruns the World',
-        subtitle: 'A Boy on a Mouse Beating a Peacock',
-        storyText: 'In the contest with his brother Kartikeya — who circled the actual globe on a peacock — Ganesha won by **walking around his parents and calling them his world**.\n\nThe story is beloved by children, but its edge is for adults: we spend years racing peacocks, circling the world for validation, while the thing that actually completes us sits quietly at home.\n\nGanesha\'s prize was marriage to **Siddhi and Buddhi** — attainment and wisdom — the Purana\'s way of saying what insight weds you to.',
+        subtitle: 'A boy on a mouse beating a peacock',
+        takeaway:
+          "Racing his brother around the world, Ganesha simply walked around his parents and said 'you are my whole world' — and won. Understanding outruns speed.",
+        storyText: "Ganesha's brother **Kartikeya** once challenged him to a race: whoever circled the whole world first would win. Kartikeya sped off across oceans and mountains on his peacock. Ganesha, who rode a tiny mouse, could never win a race like that, so he did not run it.\n\nInstead, he walked slowly around his seated parents, Shiva and Parvati, folded his hands, and said his lap around the world was complete: 'My parents are the whole world to me.' The wisdom was undeniable, and he was declared the winner.\n\nThe story is loved by children, but its point is for adults: we spend years racing peacocks, circling the world chasing approval, while the thing that would actually complete us sits quietly at home. Ganesha's prize was marriage to **Siddhi and Buddhi** — 'success' and 'wisdom' — which is the tradition's way of saying what real insight weds you to.",
         teachingText: 'What race are you running right now, and who set its course?\n\nSometimes the dharmic move is not to run faster but to **redefine the circuit** — to walk around what you love and call it enough. Ask yourself Ganesha\'s question before your next sprint: is the finish line I\'m chasing actually the world, or is my world somewhere I stopped looking?',
-        citation: 'The contest: Shiva Purana and Ganesha Purana tellings.'
+        citation: 'The contest: Shiva Purana and Ganesha Purana tellings.',
+        checks: [
+          {
+            id: 'chk:deity:ganesha:race',
+            kind: 'mcq',
+            prompt: 'In a race to circle the world, Ganesha\'s brother sped off on a peacock. Ganesha, on a tiny mouse, could not win by running. What did he do?',
+            options: [
+              {
+                text: "He walked slowly around his parents and said 'you are my whole world' — and won, because understanding outruns speed",
+                correct: true,
+              },
+              { text: 'He gave up and simply let his brother win the race' },
+              { text: 'He took a secret shortcut and cheated' },
+            ],
+            why: 'The one who grasps what truly matters finishes first without hurrying. We spend years racing for approval while the thing that completes us sits quietly at home.',
+          },
+        ],
+      },
+      {
+        id: 'ganesha-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          'His form, and his wit. One idea remains: why students and writers everywhere still call on him before they begin.',
       },
       {
         id: 'ganesha-patron-of-learning',
         title: 'Patron of the First Page',
-        subtitle: 'A Broken Tusk Held Like a Pen',
-        storyText: 'It is fitting that the Mahabharata — the epic that contains the Bhagavad Gita — begins with **Ganesha holding the pen**.\n\nHis two conditions with Vyasa carry his whole philosophy of learning: **never stop the flow**, and **never write faster than you understand**.\n\nStudents across India still invoke him before study, and writers before a blank page, because both know the twin dangers he guards against — abandoning the work, and doing it mindlessly.',
-        teachingText: 'Bring his two conditions to whatever you are learning now. Flow: touch the work daily, even briefly, without breaking the chain. Understanding: never let your output — notes, opinions, replies — outrun your comprehension.\n\nAnd when your instrument fails mid-verse, remember the tusk: **the tools are replaceable; the commitment is not.**',
-        citation: 'The scribe tradition: Mahabharata, Adi Parva (in some recensions).'
+        subtitle: 'A broken tusk held like a pen',
+        takeaway:
+          "Ganesha was the scribe who wrote down the Mahabharata, on two conditions: the flow must never stop, and he'd never write a line faster than he understood it. That is his whole philosophy of learning.",
+        storyText:
+          "It is fitting that the **Mahabharata** — the giant epic that contains the Bhagavad Gita — was, by tradition, written down by Ganesha's own hand. When the sage **Vyasa** set out to compose the poem, Ganesha agreed to be his scribe on one condition: Vyasa must never once pause in his dictation. Vyasa agreed, but added a condition of his own: Ganesha must fully understand every verse before writing it down.\n\nThose two conditions together are Ganesha's whole philosophy of learning: never stop the flow, and never write faster than you understand.\n\nStudents across India still call on him before they study, and writers before a blank page, because both know the twin dangers he guards against: giving up on the work, and doing it mindlessly.",
+        teachingText:
+          "Bring his two conditions to whatever you are learning now. Flow: touch the work daily, even briefly, without breaking the chain. Understanding: never let your output — your notes, opinions, replies — outrun what you actually grasp. And when your pen fails mid-thought, remember that Ganesha snapped off his own tusk to keep writing rather than break his word: the tools are replaceable, but the commitment is not.",
+        citation: 'The scribe tradition: Mahabharata, Adi Parva (in some recensions).',
+        checks: [
+          {
+            id: 'chk:deity:ganesha:scribe',
+            kind: 'mcq',
+            prompt: 'Ganesha agreed to write down the Mahabharata on two conditions, taken together. What were they?',
+            options: [
+              {
+                text: 'The dictation must never pause (keep the flow), and he must fully understand each verse before writing it (never outrun your understanding)',
+                correct: true,
+              },
+              { text: 'He must be paid in sweets, and finish within a single year' },
+              { text: 'He was free to change the story wherever he wished' },
+            ],
+            why: "Between unbroken flow and complete understanding, the world's longest poem was written. Never write, speak, or act faster than you understand.",
+          },
+        ],
       }
     ],
     sources: [
@@ -686,7 +1000,9 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'What are you starting right now, and what would a good, unhurried beginning look like?'
+      'What are you starting right now, and what would a good, unhurried beginning look like?',
+      "Ganesha won the race by walking around his parents. What are you racing for that might already be sitting quietly at home?",
+      'Where is your output — your opinions, replies, plans — running ahead of what you actually understand?',
     ]
   },
   {
@@ -798,47 +1114,149 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/shiva-icon.jpg',
       galleryImages: []
     },
+    kicker: "The god of endings, ash-smeared and utterly still on his mountain — who drinks the world's poison so no one else has to.",
+    learnItems: [
+      'Shiva is the great destroyer, and his centre is perfect stillness',
+      'Greatness is what you can absorb, not what you acquire',
+      'Someone must break the fall so grace blesses instead of shatters',
+      "Depth doesn't require leaving — the hermit is also a family man",
+      'He is the easily-pleased god: sincerity matters, not show',
+    ],
+    handoff:
+      "Shiva sits at the still centre of a family. The best-loved member of that family is his son — the cheerful, elephant-headed god that Hindus turn to before they begin anything at all: Ganesha.",
     sections: [
       {
+        id: 'shiva-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Shiva is one of Hinduism's three great gods, and the one people find strangest at first: the god of destruction, who turns out to be the god of stillness, of endings that clear the way for new beginnings.\n\nOver the next few pages you'll meet him — the ash-smeared hermit on his mountain who is also a loving husband and father, and who quietly drinks the world's poison so the rest of us don't have to.",
+      },
+      {
         id: 'shiva-stillness',
-        title: 'The God Who Sits Still',
-        subtitle: 'A Snow Peak, a Closed Eye, the World Below',
-        storyText: 'Every other god is busy. Vishnu preserves, Brahma creates, Indra storms, Lakshmi bestows. **Shiva sits.**\n\nOn the frozen summit of Kailasa, eyes half-closed, ash-smeared, unmoving — the tradition\'s boldest claim rendered as a posture: that beneath all doing there is a being, and the one who touches it holds more power in stillness than the busy hold in motion.\n\nHe is called **Mahadeva**, the great god, yet owns nothing but a tiger skin, a trident, and a drum. When the demons and devas need someone to drink the world\'s poison, they do not go to the palaces. **They climb to the silent one.**',
-        teachingText: 'Your life likely resembles the busy gods\' — preserving, creating, storming. Shiva asks a subversive question: **when did you last sit with nothing to do and nothing to become?**\n\nFive minutes of genuine stillness — not rest-as-recovery-for-more-work, but stillness for its own sake — is his practice. Everything else in his story flows from that seat.'
+        title: 'Who Shiva Is',
+        subtitle: 'The still god of endings',
+        takeaway:
+          'Shiva is the great destroyer — the god who dissolves the old world so a new one can be born. And his deepest power is not action, but perfect stillness.',
+        storyText:
+          "Hindus often picture God's work as having three parts, shared by three great gods: **Brahma** creates the world, **Vishnu** protects it, and **Shiva** dissolves it, so it can be born fresh again. Shiva is the destroyer, but not out of cruelty. He is the god of the endings that make room for beginnings: the winter before the spring, the death before the rebirth, the letting-go before the new thing.\n\nAnd here is the surprise. The god in charge of all that cosmic destruction is, in every image, completely **still**. He sits high on the frozen mountain of **Kailasa**, his body smeared with ash, his eyes half-closed, owning almost nothing: a tiger skin, a three-pronged spear, and a small drum.\n\nThe tradition is making a bold claim through that pose: that underneath all our doing there is simply **being**, and the one who has touched it holds more real power sitting still than the busy gods hold in all their motion.",
+        teachingText:
+          "Your own life probably looks like the busy gods': always protecting, creating, putting out fires. Shiva asks a quietly subversive question: when did you last sit with nothing to do and nothing to become? Five minutes of genuine stillness — not rest so that you can work more, but stillness for its own sake — is his practice. Everything else in his story flows from that seat.",
+        citation: 'The three gods (Brahma, Vishnu, Shiva) and Shiva as Mahadeva: pan-Hindu tradition.'
       },
       {
         id: 'shiva-poison',
         title: 'Drinking the Poison',
-        subtitle: 'A Blue Throat Above a Saved World',
-        storyText: 'The churning of the ocean is the tradition\'s great parable of ambition: gods and demons together, straining for the nectar of immortality. And the first yield of all that striving was **poison** — halahala, enough to burn the three worlds.\n\nIt is an honest story about effort: churn anything hard enough — a career, a family, a country — and **the poison surfaces before the nectar**.\n\nEveryone fled it. Shiva, who had not churned and wanted no nectar, drank it, and Parvati held his throat so it would lodge there and go no further. The worlds resumed their churning. He kept only the blue stain.',
-        teachingText: 'Every family, team, and community produces halahala — resentment, grief, blame — before it produces nectar. **Someone must metabolize it without passing it on.** Notice who does that where you live and work; notice when it is you.\n\nThe teaching is exacting: hold it in the throat. Neither swallow it into your depths, nor spray it onward. That narrow place between suppression and transmission is where Shiva lives.',
-        citation: 'Samudra manthan: Bhagavata Purana, Canto 8, Chapters 6–7.'
+        subtitle: 'A blue throat above a saved world',
+        takeaway:
+          'When gods and demons churned the ocean, the first thing to surface was poison, not treasure. Shiva drank it to save everyone and held it in his throat — the rarest strength: to absorb pain without passing it on.',
+        storyText:
+          "There is a famous story called the churning of the ocean. The gods and the demons work together, churning the cosmic sea like butter, to draw out **amrita**, the nectar that makes you immortal. But the very first thing to rise from all that effort is not nectar. It is **halahala**, a poison strong enough to burn up the whole world.\n\nIt is an honest picture of effort. Churn anything hard enough — a career, a family, a country — and the poison tends to surface before the reward does.\n\nEveryone else fled. Shiva, who had not even taken part and wanted no nectar for himself, simply walked up and drank the poison down. His wife **Parvati** pressed his throat so the poison would lodge there and go no further, harming no one. The worlds went back to their churning. Shiva kept only a blue stain on his neck, and a new name: **Neelakantha**, 'the blue-throated one.'",
+        teachingText:
+          "Every family, team, and community makes its own poison — resentment, grief, blame — long before it makes anything sweet. Someone has to take that in and neutralise it, instead of passing it along. Notice who does that where you live and work, and notice when it is you. The teaching is exact: hold it in the throat. Do not swallow it down into yourself, and do not spray it onto others. That narrow place, between bottling it up and passing it on, is where Shiva lives.",
+        citation: 'Samudra manthan (churning of the ocean): Bhagavata Purana, Canto 8, Chapters 6–7.',
+        checks: [
+          {
+            id: 'chk:deity:shiva:poison',
+            kind: 'mcq',
+            prompt: 'When the churned ocean gave up a world-burning poison and everyone else fled, what did Shiva do, and what does it teach?',
+            options: [
+              {
+                text: 'He drank the poison to save everyone and held it in his throat — greatness is what you can absorb without passing it on, not what you acquire',
+                correct: true,
+              },
+              { text: 'He used the poison as a weapon against the demons' },
+              { text: 'He refused to help, since he had not done any of the churning' },
+            ],
+            why: 'Shiva wanted no nectar and had not churned, yet he took in the harm so no one else would suffer it. To hold pain in the throat, neither swallowing it nor spraying it onward, is the rarest strength.',
+          },
+        ],
+      },
+      {
+        id: 'shiva-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          "Still at his centre, and willing to take in the world's poison. The next story shows the same strength turned toward a river that would have shattered the earth.",
       },
       {
         id: 'shiva-ganga-bearer',
         title: 'The One Who Breaks the Fall',
-        subtitle: 'A River Landing in Matted Hair',
-        storyText: 'Bhagiratha\'s ancestors could only be liberated by the Ganga\'s waters, and his penance finally persuaded her to descend. But **grace at full force is indistinguishable from catastrophe**: the river\'s fall from heaven would have split the earth.\n\nSo Shiva stood beneath the descent, took the impact on his head, and let the torrent wander through his hair until it emerged as a river the earth could bear.\n\nThe Ganga that blesses the plains is **the Ganga after Shiva** — the same power, made survivable.',
-        teachingText: 'Think of what has descended on your family line — money or its absence, expectations, old grief. Someone in every lineage stands where Shiva stood and **breaks the fall**, so what reaches the next generation blesses instead of shatters.\n\nNaming who did that for you is gratitude; choosing to do it for those after you is dharma.',
-        citation: 'Valmiki Ramayana, Bala Kanda, sargas 42–44.'
+        subtitle: 'A river landing in matted hair',
+        takeaway:
+          'The sacred river Ganga would have shattered the earth if it fell straight from heaven. Shiva stood under it and took the blow on his own head, so the world received only the blessing.',
+        storyText:
+          "There is a river Hindus hold sacred above all others: the **Ganga** (the Ganges). The old story says she once flowed only in heaven, and a king named **Bhagiratha** prayed for lifetimes to bring her down to earth, so her waters could free the trapped souls of his ancestors.\n\nBut there was a problem no one could solve. Falling from heaven at full force, the river would smash the earth to pieces. Grace at full strength can look exactly like catastrophe.\n\nOnly one being could take that blow. Shiva stood beneath the plunging river and caught its entire force on his head, letting the water wind slowly through his thick, matted hair until it came out the other side as a calm river the earth could safely hold. The gentle Ganga that blesses the plains today is the Ganga after Shiva broke her fall: the same power, made survivable.",
+        teachingText:
+          'Think of what has come down on your own family line: money or the lack of it, heavy expectations, old grief. In almost every family, someone stands where Shiva stood and breaks the fall, so that what reaches the next generation arrives as a blessing instead of a blow. Naming who did that for you is gratitude. Choosing to do it for those who come after you is dharma.',
+        citation: 'Descent of the Ganga: Valmiki Ramayana, Bala Kanda, sargas 42–44.',
+        checks: [
+          {
+            id: 'chk:deity:shiva:ganga',
+            kind: 'mcq',
+            prompt: 'The sacred river Ganga would have shattered the earth falling straight from heaven. What did Shiva do, and what does it model?',
+            options: [
+              {
+                text: "He took the river's full force on his own head so the world received only the gentle blessing — someone must break the fall for others",
+                correct: true,
+              },
+              { text: 'He turned the river away so it never reached the earth at all' },
+              { text: 'He drank the whole river, the way he drank the poison' },
+            ],
+            why: "Grace at full force can look like catastrophe. Whoever absorbs the shock so that others receive only the blessing — a parent, a leader, a friend — is doing Shiva's work with the Ganga.",
+          },
+        ],
       },
       {
         id: 'shiva-householder',
         title: 'The Ascetic Who Married',
-        subtitle: 'Kailasa as a Family Home',
-        storyText: 'The wild, ash-smeared renunciant is also the tradition\'s most beloved family man.\n\nParvati won him not by beauty — he burned Kama, desire itself, to ash with his third eye when desire was aimed at him — but by **tapasya**, matching his austerity with her own until he recognized an equal.\n\nTheir marriage joins what the world calls opposites: the hermit and the queen\'s daughter, stillness and devotion. Their household on Kailasa — Parvati, Ganesha, Kartikeya, the bull Nandi at the door — became the model of **a family built around a meditative center** rather than around busyness.',
-        teachingText: 'Shiva refutes the idea that depth requires leaving. He is fully ascetic and fully married; the meditation does not end when the family begins.\n\nWhat would it mean for your household to have a still center — one practice, one hour, one corner of the home where the churning stops? The tradition\'s answer to work-life balance is not balance but **a center**.',
+        subtitle: 'A mountain home with a still centre',
+        takeaway:
+          "Shiva is a wild hermit who owns nothing — and also a devoted husband and father. He shows that spiritual depth doesn't require leaving your family, but building the family around a still centre.",
+        storyText:
+          "Here is the twist that makes Shiva so loved. The wild, ash-smeared **ascetic** (someone who gives up comfort and pleasure to seek God) is also Hinduism's most beloved family man.\n\nHis wife **Parvati** did not win him with beauty. When desire itself, in the form of the love-god **Kama**, fired an arrow to make Shiva fall for her, Shiva burned Kama to ash with a glance of his third eye. Parvati won him instead through **tapasya** — years of the same fierce self-discipline that he practised — until he recognised her as a true equal.\n\nTheir marriage joins what the world treats as opposites: the hermit and the mountain-king's daughter, deep stillness and warm devotion. Their home on Mount Kailasa — Parvati, their sons Ganesha and Kartikeya, and Nandi the bull waiting at the door — became the model of a family built around a quiet, meditative centre rather than around constant busyness.",
+        teachingText:
+          "Shiva overturns the idea that spiritual depth means leaving ordinary life behind. He is fully a hermit and fully a husband, and his meditation does not stop when the family starts. What would it mean for your own home to have a still centre — one practice, one hour, one corner where the churning stops? The tradition's answer to work-life balance is not really balance. It is a centre.",
         citationLink: 'deity:parvati',
         citation: 'Shiva Purana, Rudra Samhita (Parvati Khanda); Kalidasa, Kumarasambhava.'
       },
       {
+        id: 'shiva-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          'Destroyer, poison-drinker, fall-breaker, and family man. One idea is left, and it is the gentlest: how little Shiva actually asks of you.',
+      },
+      {
         id: 'shiva-simple-offering',
         title: 'The Easily-Pleased Lord',
-        subtitle: 'One Bilva Leaf and a Handful of Water',
-        storyText: 'Of all the great gods, Shiva is **Bholenath** — the innocent, the easily pleased.\n\nHis worship requires no priest, no wealth, no elaborate rite: a bilva leaf, water poured over a stone linga, his name said with attention. The tradition delights in stories of accidental worship — a hunter who unknowingly dropped bilva leaves on a linga through a night of fear and was liberated by dawn.\n\nThe theological point is serious: **the divine measures sincerity, not production value.** The god who owns nothing cannot be impressed by what you own.',
-        teachingText: 'Whatever your practice is becoming, Shiva keeps it honest: **could you do it with one leaf and a palmful of water?**\n\nIf your spiritual life has grown elaborate — apps, courses, gear — strip it once a week to the bare act: sit, pour, say the name, mean it. Bholenath asks for nothing else, which is exactly what makes the offering complete.',
+        subtitle: 'One leaf and a handful of water',
+        takeaway:
+          'Shiva is the easily-pleased god. He needs no priest, no wealth, no grand ritual — just a leaf, some water, and a sincere heart. He measures your sincerity, never your show.',
+        storyText:
+          "Of all the great gods, Shiva is **Bholenath**, which means 'the innocent one,' the simple lord who is easily pleased.\n\nWorshipping him takes no priest, no money, and no elaborate ceremony: a single **bilva** leaf (from a tree sacred to him), some water poured over a **linga** (the smooth, rounded stone that stands for Shiva), and his name said with attention. The tradition loves stories of people who worship him by accident — like a frightened hunter who spent a night up a tree, dropping bilva leaves without knowing it onto a linga below, and was set free by morning.\n\nThe point underneath is serious: God measures your sincerity, not your production values. The god who owns nothing cannot be impressed by what you own.",
+        teachingText:
+          'Whatever your own practice is turning into, Shiva keeps it honest with one question: could you still do it with a single leaf and a palmful of water? If your spiritual life has grown elaborate, full of apps and courses and gear, strip it back once a week to the bare act. Sit, pour the water, say the name, and mean it. Bholenath asks for nothing more, and that is exactly what makes the offering complete.',
         citationLink: 'festival:maha-shivratri-2025',
-        citation: 'The hunter\'s night of bilva leaves: Shiva Purana (Shivratri mahatmya tellings).'
+        citation: 'The hunter\'s night of bilva leaves: Shiva Purana (Shivratri mahatmya tellings).',
+        checks: [
+          {
+            id: 'chk:deity:shiva:simple',
+            kind: 'mcq',
+            prompt: 'Shiva is called Bholenath, the easily-pleased. What does his simple worship — a leaf, some water, his name — teach?',
+            options: [
+              {
+                text: 'God measures your sincerity, not your show — the god who owns nothing cannot be impressed by what you own',
+                correct: true,
+              },
+              { text: 'That only the poor are allowed to worship Shiva' },
+              { text: 'That worship must always be elaborate and expensive to count' },
+            ],
+            why: 'His worship needs no priest, wealth, or grand ritual. The tradition even tells of people who please him by accident, because what he asks for is a sincere heart, not an impressive offering.',
+          },
+        ],
       }
     ],
     sources: [
@@ -866,7 +1284,9 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Shiva absorbed poison without passing it on. When you\'re stressed, how could you avoid passing it to the people around you?'
+      'Shiva absorbed poison without passing it on. When you\'re stressed, how could you avoid passing it to the people around you?',
+      'Shiva\'s real power is stillness. When did you last sit with nothing to do and nothing to become, and what keeps you from five minutes of it?',
+      "Every family has someone who 'breaks the fall,' so grief or pressure reaches the next generation softened. Who did that for you? Could you do it for someone?",
     ]
   },
   {
@@ -971,38 +1391,145 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/hanuman-icon.jpg',
       galleryImages: []
     },
+    kicker: 'The mighty monkey-god who can leap oceans and lift mountains — and pours every bit of that power into loving service, keeping none for himself.',
+    learnItems: [
+      'Hanuman is the mighty monkey-god and the greatest devotee of Rama',
+      'Most of what we call inability is really just forgetting',
+      'Strength given to service has no ego, and no drag',
+      'Power gets you there; gentleness accomplishes the mission',
+      "Devotion is measured by what's truly in your heart",
+    ],
+    handoff:
+      "Hanuman's power is devotion turned outward. The next face of God is power itself, fierce and protective — the warrior goddess who rides a lion into battle against the demons no one else can defeat: Durga.",
     sections: [
+      {
+        id: 'hanuman-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Hanuman is the beloved monkey-god — immensely strong, able to fly, and the most famous devotee in all of Hinduism. If you have ever seen a small orange shrine by an Indian roadside, it is very often his.\n\nOver the next few pages you'll meet him, and discover why a being who can leap across an ocean is worshipped above all for his humility and his heart.",
+      },
+      {
+        id: 'hanuman-who',
+        title: 'Who Hanuman Is',
+        subtitle: 'The monkey-god of pure devotion',
+        takeaway:
+          'Hanuman is the mighty monkey-god and the greatest devotee in all of Hinduism — a being of limitless strength who uses every bit of it not for himself, but in loving service to Rama.',
+        storyText:
+          "Hanuman is the **monkey-god**: immensely strong, able to fly and to change his size, and the most famous devotee in all of Hinduism. He is the son of **Vayu**, the wind-god, which is why he moves like the wind itself.\n\nHis whole story sits inside the **Ramayana**, the epic of Rama you met a few gods ago. When Rama's wife Sita is kidnapped and carried across the sea to the island of Lanka, it is Hanuman who leaps the ocean, finds her, and helps win the war to bring her home.\n\nBut here is what truly makes him special: Hanuman can do almost anything, and he wants nothing for himself. Every ounce of his enormous power is poured into serving the one he loves. He is what the tradition prizes most of all — total strength, wholly given away.",
+        teachingText:
+          "That combination — great power and zero ego — is far rarer than either one alone. Most powerful people spend much of their strength protecting their own image. Hanuman spends none. It is worth asking, of your own strengths: how much goes into the work itself, and how much goes into looking good while you do it?",
+        citation: 'Hanuman throughout the Valmiki Ramayana; son of Vayu, the wind: traditional.'
+      },
       {
         id: 'hanuman-forgotten-strength',
         title: 'The Strength You Forgot You Had',
-        subtitle: 'An Old Bear Speaking to a Silent Monkey',
-        storyText: 'The Ramayana\'s most quietly devastating scene is not a battle.\n\nThe vanaras sit defeated at the ocean\'s edge — the strongest among them can leap ninety yojanas, and Lanka lies at a hundred. Hanuman sits apart, saying nothing. He does not volunteer because **it does not occur to him that he can do it**: a childhood curse made him forget his own powers until reminded.\n\nThen **Jambavan**, the ancient bear, walks over and does the only heroic thing left to old age — **he remembers on another\'s behalf**. Son of the wind. The infant who leapt for the sun. The one for whom this ocean is a puddle. And Hanuman grows with every sentence, because the words are not flattery; they are facts he had misplaced.',
-        teachingText: 'The curse of forgotten strength is not mythology — it is Monday morning. Capability you demonstrated for years disappears from your self-image after one season of defeat.\n\nHanuman\'s teaching here is double: **seek your Jambavans**, the ones who state your powers as facts; and **be one**, because reminding someone of their strength is not encouragement, it is testimony.',
-        citation: 'Valmiki Ramayana, Kishkindha Kanda, sargas 65–67.'
+        subtitle: 'An old bear speaking to a silent monkey',
+        takeaway:
+          "Hanuman sat silent at the ocean's edge, having literally forgotten he was strong enough to leap it. An old friend simply reminded him who he was — and he grew with every word.",
+        storyText:
+          "The Ramayana's most quietly moving scene is not a battle. Rama's search party of monkey-warriors sits defeated at the edge of the ocean. Somewhere far across that sea is Lanka, where Sita is held prisoner, and it is simply too wide to jump. The strongest among them try in their minds and fall short.\n\nHanuman sits apart, saying nothing. He does not offer to try, because it genuinely does not occur to him that he can: as a child he was cursed to forget his own powers until someone reminded him of them.\n\nThen **Jambavan**, an ancient and wise bear, walks over and does the one heroic thing still left to the old — he remembers on Hanuman's behalf. You are the son of the wind, he says. You are the child who once leapt for the sun. For you, this whole ocean is a puddle. And with every sentence, Hanuman literally grows larger, because the words are not flattery. They are facts about himself that he had simply misplaced.",
+        teachingText:
+          "This curse of forgotten strength is not just a myth; it is Monday morning. Abilities you showed for years can vanish from your own self-image after a single season of failure. Hanuman's lesson here runs both ways: seek out your 'Jambavans,' the people who will state your strengths back to you as plain facts. And be one for others, because reminding someone of their own power is not merely encouragement. It is testimony.",
+        citation: 'Valmiki Ramayana, Kishkindha Kanda, sargas 65–67.',
+        checks: [
+          {
+            id: 'chk:deity:hanuman:strength',
+            kind: 'mcq',
+            prompt: 'Hanuman sat silent while the others despaired at the ocean, even though he alone could cross it. Why?',
+            options: [
+              {
+                text: 'A childhood curse had made him forget his own powers — he needed a friend to remind him who he was',
+                correct: true,
+              },
+              { text: 'He was too proud to help the other monkeys' },
+              { text: 'He was genuinely too weak to make the leap' },
+            ],
+            why: 'Most of what we call inability is really forgetting. Everyone needs a Jambavan to remind them of powers they have stopped believing in — and everyone must sometimes be one.',
+          },
+        ],
+      },
+      {
+        id: 'hanuman-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          'His strength came back the moment he remembered whose it was for. That is the real secret of his power, and the next card names it.',
       },
       {
         id: 'hanuman-whose-work',
         title: 'Strength That Serves',
-        subtitle: 'A Mace Laid at Two Pairs of Feet',
-        storyText: 'Everything Hanuman does is enormous — oceans leapt, cities burned, mountains carried — and **none of it is for himself**.\n\nThis is the engineering secret of his character: **strength without ego has no drag.** The mighty in the epics who serve themselves — Ravana above all, with his ten heads of self-regard — spend most of their power maintaining their own image. Hanuman spends nothing on himself.\n\nAsked how he crossed the impossible ocean, his answer is always the same: by Rama\'s name and Rama\'s work. The strength is real, but the frictionlessness comes from the devotion.',
-        teachingText: 'Watch what happens to your own capability when the work is genuinely for something beyond you — the meeting where you stop defending your idea and start serving the problem. **Ego is drag.**\n\nHanuman\'s question for any undertaking: whose work is this? When the honest answer is "something larger than me," you will find, like him, that you are suddenly bigger than the obstacle.',
-        citation: 'Valmiki Ramayana, Sundara Kanda (the crossing).'
+        subtitle: 'Power with nothing left over for the self',
+        takeaway:
+          "Everything Hanuman does is enormous, and none of it is for himself. Strength without ego has no drag: because he serves something larger, he ends up bigger than any obstacle.",
+        storyText:
+          "Everything Hanuman does is enormous — oceans leapt, cities burned, mountains carried — and none of it is for himself.\n\nThis is the secret engine of his character: strength without ego has no drag. The mighty figures in the epics who serve only themselves — like **Ravana**, the ten-headed demon-king who kidnapped Sita — burn most of their power simply defending their own image. Hanuman spends nothing on himself.\n\nAsked how he crossed the impossible ocean, his answer is always the same: by Rama's name, and for Rama's sake. The strength is real, but its effortlessness comes from the devotion.",
+        teachingText:
+          "Watch what happens to your own ability when the work is genuinely for something beyond you — the meeting where you stop defending your idea and start serving the actual problem. Ego is drag. Hanuman's question for any task is simple: whose work is this? When the honest answer is 'something larger than me,' you may find, as he did, that you have suddenly become bigger than the obstacle.",
+        citation: 'Valmiki Ramayana, Sundara Kanda (the crossing).',
+        checks: [
+          {
+            id: 'chk:deity:hanuman:service',
+            kind: 'mcq',
+            prompt: 'Hanuman does enormous things but keeps nothing for himself. What does the tradition say makes his strength so effortless?',
+            options: [
+              {
+                text: 'It is given entirely to service — strength without ego has no drag, so he ends up bigger than any obstacle',
+                correct: true,
+              },
+              { text: 'He is simply the strongest being in the universe by nature' },
+              { text: 'He uses secret magic weapons the others do not have' },
+            ],
+            why: 'Those who serve only themselves spend most of their power protecting their own image. Hanuman spends none, so all of it reaches the work. Ego is drag.',
+          },
+        ],
       },
       {
         id: 'hanuman-in-lanka',
         title: 'Alone in the Enemy City',
-        subtitle: 'A Small Monkey in Golden Lanka at Night',
-        storyText: 'Having crossed the ocean as a giant, Hanuman enters Lanka the opposite way — **shrunk to the size of a cat**, slipping through the golden city by night.\n\nThe Sundara Kanda lingers on his searching: palace by palace, room by room, through Ravana\'s sleeping splendor, discipline holding against despair as Sita is nowhere.\n\nWhen he finally finds her under the ashoka tree — guarded, grieving, refusing Ravana — he faces a subtle problem: how does a monkey appear before a captive queen without terrifying her? **He begins softly, from the branches, singing Rama\'s story** — her own story — until hope arrives before he does. Then he presents the ring.',
-        teachingText: 'Power got him to Lanka; **gentleness accomplished the mission**.\n\nApproaching someone in despair takes Hanuman\'s branch-singing: not bursting in with solutions, but letting the familiar story of what they love reach them first. The Sundara Kanda is recited in Indian homes precisely in seasons of crisis — a manual for carrying hope into dark places without breaking anything.',
+        subtitle: 'A small monkey in golden Lanka at night',
+        takeaway:
+          "Hanuman crossed the ocean by force, but rescued hope by gentleness. Finding the grieving Sita, he didn't burst in — he softly sang her husband's story from the branches until hope reached her first.",
+        storyText:
+          "Having crossed the ocean as a giant, Hanuman enters Lanka the opposite way — shrinking himself to the size of a cat, and slipping through the glittering city by night.\n\nThe epic lingers on his search: palace by palace, room by room, through the sleeping splendour of Ravana's city, his discipline holding against despair as Sita is nowhere to be found.\n\nWhen he finally spots her, held in a grove of **ashoka** trees, guarded and grieving but still refusing Ravana, he faces a delicate problem: how does a strange monkey appear before a captive, frightened queen without terrifying her? So he doesn't. He begins softly, hidden in the branches above her, singing the story of Rama — her own story — until hope reaches her before he does. Only then does he show himself, and give her a ring that Rama had sent as proof.",
+        teachingText:
+          "Power got him to Lanka; gentleness accomplished the actual mission. Reaching someone in despair takes Hanuman's branch-singing: not bursting in with solutions, but letting the familiar story of what they love reach them first. This part of the epic is recited in Indian homes precisely in times of crisis, as a kind of manual for carrying hope into dark places without breaking anything.",
         citation: 'Valmiki Ramayana, Sundara Kanda.'
+      },
+      {
+        id: 'hanuman-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          "Strength, service, and gentleness. One image of Hanuman remains, and it is the one carved deepest into the tradition's heart.",
       },
       {
         id: 'hanuman-chest',
         title: 'What Lives in the Chest',
-        subtitle: 'Pearls Torn, a Chest Opened',
-        storyText: 'At Rama\'s coronation, gifts flowed. Sita gave Hanuman a necklace of pearls beyond price.\n\nHe held it to his ear, bit a pearl open, frowned, bit another, discarding each — searching. Asked what he was doing, he said: **I keep nothing that does not contain Rama.** The court laughed at the simple monkey.\n\nAnd Hanuman, in the telling beloved of the later tradition, **tore open his own chest** — and there, seated in his heart, were Rama and Sita. The court stopped laughing. Whatever one makes of the image, its claim is exact: the measure of devotion is not what you wear or say, but what an honest opening of your chest would reveal.',
+        subtitle: 'A necklace bitten open, a chest torn wide',
+        takeaway:
+          "Given a priceless pearl necklace, Hanuman tore each pearl open looking for Rama inside — then tore open his own chest, and there sat Rama in his heart. Devotion is measured by what's really inside you, not what you wear or say.",
+        storyText: "At Rama's coronation, gifts flowed, and Sita gave Hanuman a necklace of priceless pearls.\n\nHe held it to his ear, bit one pearl open, frowned, bit another, and threw each aside — searching for something. Asked what on earth he was doing, he answered: I keep nothing that does not contain Rama. The court laughed at the simple-minded monkey.\n\nAnd then Hanuman, in the version the later tradition loves most, tore open his own chest with his hands — and there, seated inside his heart, were Rama and Sita. The court stopped laughing. Whatever you make of the image, its claim is exact: the true measure of devotion is not what you wear or say, but what an honest look inside your chest would reveal.",
         teachingText: 'This story is later tradition rather than Valmiki, and the tradition kept it because it asks the only question that matters: **if your chest were opened** — your calendar, your accounts, your browser history, your 3 a.m. thoughts — **what would be found enthroned there?**\n\nHanuman\'s answer had the advantage of being true. The practice is to make yours true too, one relocation of the heart at a time.',
-        citation: 'The opened chest: later devotional tradition (not Valmiki), widely told.'
+        citation: 'The opened chest: later devotional tradition (not Valmiki), widely told.',
+        checks: [
+          {
+            id: 'chk:deity:hanuman:chest',
+            kind: 'mcq',
+            prompt: 'Given a priceless pearl necklace, Hanuman bit each pearl open, then tore open his own chest. Why?',
+            options: [
+              {
+                text: 'He kept nothing that did not contain Rama — and inside his own heart sat Rama himself; devotion is what an honest look inside would reveal',
+                correct: true,
+              },
+              { text: 'He was only checking whether the pearls were real' },
+              { text: 'He wanted to prove he was stronger than the whole court' },
+            ],
+            why: 'The measure of devotion is not what you wear or say, but what would be found enthroned in your heart if it were opened. Hanuman\'s answer had the advantage of being true.',
+          },
+        ],
       }
     ],
     sources: [
@@ -1023,7 +1550,9 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Hanuman forgot his own strength until a friend reminded him. What are you good at that you tend to forget?'
+      'Hanuman forgot his own strength until a friend reminded him. What are you good at that you tend to forget?',
+      "Whose 'Jambavan' could you be this week — reminding someone of a strength they've stopped believing they have?",
+      'Think of a task that feels too big. How would it change if you asked Hanuman\'s question: whose work is this, really?',
     ]
   },
   {
@@ -1141,39 +1670,141 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/durga-icon.jpg',
       galleryImages: []
     },
+    kicker: "The warrior-goddess born from the combined fire of all the gods — a serene mother's face above ten arms full of weapons, riding a lion into battle.",
+    learnItems: [
+      'Durga is the fierce, protective face of the Divine Mother',
+      'What no god could do alone, the gods did by combining their power',
+      'She is a fierce mother: total protection, zero hatred',
+      'Evil survives by shape-shifting; the answer is steady clarity',
+      "The Goddess lives in every being — reverence isn't only for temples",
+    ],
+    handoff:
+      "Durga is the Goddess with her sword drawn. But the same Goddess has a gentler face — the patient mountain-daughter who won Shiva's heart and became the mother of his family: Parvati. She is the last of the gods we'll meet together.",
     sections: [
+      {
+        id: 'durga-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Most of the gods so far have been male, but in Hinduism God is very much a She as well. Durga is one of her most thrilling forms: a warrior-goddess who rides a lion, carries a weapon in each of her many hands, and yet wears the calm face of a loving mother.\n\nOver the next few pages you'll meet her, and the surprising idea at her heart — that fierceness and tenderness can be the very same thing.",
+      },
+      {
+        id: 'durga-who',
+        title: 'Who Durga Is',
+        subtitle: 'The warrior form of the Divine Mother',
+        takeaway:
+          'Durga is the great warrior-goddess — the fierce, protective face of the Divine Mother, who rides a lion into battle against the evils no one else can defeat.',
+        storyText:
+          "In Hinduism, God is not only pictured as male. Many Hindus worship the **Divine Mother** — the Goddess, called simply **Devi** — as the supreme power behind the whole universe.\n\n**Durga** is her warrior form. She is usually shown as a calm, beautiful woman with many arms, each hand holding a different weapon, riding a lion into the middle of a battle. She was created, the stories say, to destroy a monster that all the male gods together could not defeat.\n\nAnd here is the twist that Hindus love: this fierce warrior is also a **mother**. She fights so hard precisely because she is protecting her children. Her fierceness is not the opposite of her tenderness. It *is* her tenderness, turned toward whatever threatens the ones she loves.",
+        teachingText:
+          "Durga answers a question many of us live with: can you be gentle and unyielding at the same time? Most of us split the two — soft until we snap into anger we later regret, or so calm that we fail to protect what needs us. Durga holds both at once, and the next few pages show exactly how.",
+        citation: 'Durga as the warrior form of Devi (the Goddess): Devi Mahatmya tradition.'
+      },
       {
         id: 'durga-when-gods-pool',
         title: 'When the Gods Stopped Competing',
-        subtitle: 'Streams of Light Fusing into a Woman on a Lion',
-        storyText: 'The Devi Mahatmya opens with the divine order defeated. Mahishasura\'s boon — invulnerable to man and god — had found the loophole in heaven\'s power, and the gods, individually magnificent, were individually useless.\n\nWhat saved the worlds was not a bigger god but **a different geometry: they combined.** Radiance poured from every divine body, fused, and took the form of a woman.\n\nAnd then came the detail the text lingers on: **each god handed her his signature weapon.** Shiva gave the trident. Vishnu gave the discus. Not copies — their own. Durga rides out armed with everything heaven owns, freely given.',
+        subtitle: 'Streams of light fusing into a woman on a lion',
+        takeaway:
+          'No single god could defeat the demon Mahishasura, so they combined: their light fused into Durga, and each god handed her his own weapon. Pooled power does what separate power cannot.',
+        storyText:
+          "The **Devi Mahatmya** — the great scripture of the Goddess — opens with heaven defeated. A buffalo-shaped demon named **Mahishasura** had won a magic promise that no man and no god could ever kill him, and with that loophole he had thrown the gods out of heaven. Each god, magnificent on his own, was useless alone.\n\nWhat saved the world was not a bigger god, but a different idea: they combined. Blazing light poured out of every god's body, fused into a single blaze, and took the shape of a woman.\n\nThen comes the detail the text lingers on: each god handed her his own signature weapon. Shiva gave his trident, Vishnu his spinning discus — not copies, but their very own. Durga rode out armed with everything heaven owned, all of it freely given. The demon's loophole had missed her completely: she was no man, and no ordinary god.",
         teachingText: 'Notice what the story requires before the rescue: every powerful being had to admit his individual power was not enough, and hand his best weapon to another.\n\nWhere in your family or work is the crisis persisting because everyone fights it separately, each guarding their own trident? **Durga is born wherever that surrender into combination happens.**',
-        citation: 'Devi Mahatmya (Markandeya Purana), Chapters 2–3.'
+        citation: 'Devi Mahatmya (Markandeya Purana), Chapters 2–3.',
+        checks: [
+          {
+            id: 'chk:deity:durga:combined',
+            kind: 'mcq',
+            prompt: 'A demon had a magic promise that no god could kill him, and he threw the gods out of heaven. How was he finally defeated?',
+            options: [
+              {
+                text: 'The gods combined their power and weapons into a new being, Durga — pooled power did what no single god could',
+                correct: true,
+              },
+              { text: 'One god finally grew strong enough to beat him alone' },
+              { text: 'They simply paid the demon to leave heaven in peace' },
+            ],
+            why: 'The promise protected him from every individual god. Durga was something new, born of all of them at once, so the loophole missed her. What no power can do alone, pooled power does easily.',
+          },
+        ],
+      },
+      {
+        id: 'durga-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          'Born of every god at once, and armed with all their weapons. Now the strangest thing about her: the calm mother\'s face she wears in the middle of the fight.',
       },
       {
         id: 'durga-fierce-mother',
         title: 'The Mother Who Carries Weapons',
-        subtitle: 'A Serene Face Above Ten Armed Hands',
-        storyText: 'Durga\'s iconography holds a deliberate contradiction: **the face of a serene mother above arms full of weapons mid-battle.**\n\nIndia has never seen a conflict between the two. Ask anyone raised on her images — she fights like that because she is a mother; the fierceness is the tenderness, pointed at what threatens the child.\n\nThe texts underline it: she battles Mahishasura with a calm face, even laughing, because rage is absent — protection is total but hatred never arrives. This is what the tradition means by **fierce compassion**: love with a sword, wielded without cruelty.',
+        subtitle: 'A serene face above ten armed hands',
+        takeaway:
+          "Durga fights with a calm mother's face above arms full of weapons. She is fierce because she is a mother: total protection for the vulnerable, with no hatred for the attacker. That is fierce compassion.",
+        storyText: "Durga's images hold a deliberate contradiction: the face of a serene mother, resting above ten arms full of weapons in the middle of battle.\n\nIndia has never seen those two things as a conflict. Ask anyone raised on her pictures, and they will tell you: she fights like that *because* she is a mother. The fierceness is the tenderness, pointed at whatever threatens the child.\n\nThe texts underline it: she battles Mahishasura with a calm face, even laughing, because rage is simply absent. Her protection is total, but hatred never arrives. This is what the tradition means by **fierce compassion**: love holding a sword, and wielding it without cruelty.",
         teachingText: 'Most of us split these energies — gentle until pushed into rage that we later regret, or so calm we fail to protect what needs us. Durga is the integration: **total ferocity in defense of the vulnerable, zero hatred toward the attacker.**\n\nNext time you must confront someone, try her posture — the serene face above the armed hands. Firm action, quiet eyes.',
-        citation: 'Devi Mahatmya, Chapter 3.'
+        citation: 'Devi Mahatmya, Chapter 3.',
+        checks: [
+          {
+            id: 'chk:deity:durga:fierce',
+            kind: 'mcq',
+            prompt: 'Durga fights the demon with a calm, even smiling face. What is the tradition showing with that serene look above her weapons?',
+            options: [
+              {
+                text: 'Fierce compassion — total protection for the vulnerable, with no hatred toward the attacker; the fierceness is the tenderness',
+                correct: true,
+              },
+              { text: 'That she is not really trying very hard in the fight' },
+              { text: 'That she enjoys the violence for its own sake' },
+            ],
+            why: 'She battles so hard because she is a mother protecting her children, yet rage never arrives. It is love with a sword, wielded without cruelty.',
+          },
+        ],
       },
       {
         id: 'durga-shapeshifter',
         title: 'Fighting the Shape-Shifter',
-        subtitle: 'A Buffalo Becoming a Lion Becoming a Man',
+        subtitle: 'A buffalo becoming a lion becoming a man',
+        takeaway:
+          "The demon kept changing shape the instant he was losing, so the fight could never end. Durga didn't chase his disguises — she stayed calm and steady, and struck when he was caught between forms.",
         storyText: 'Mahishasura never fought fair — that was the point of him. Buffalo, lion, swordsman, elephant, buffalo again: each form abandoned at the moment of losing, so **the fight could never end**.\n\nDurga\'s response was not to match his changes but to **refuse their premise**. She held her ground, stayed serene, and let each disguise exhaust itself — striking finally when he was caught halfway between forms, neither buffalo nor man, the deception itself exposed.\n\nThe Devi Mahatmya was composed by people who understood that evil\'s chief weapon is not strength but **redefinition**.',
         teachingText: 'Everything destructive in a life shape-shifts when confronted: the addiction becomes "just relaxing," the cruel relationship becomes "passionate," the compromise becomes "pragmatism." Chasing each new form is exhausting by design.\n\nDurga\'s method: **name the thing once, clearly, and hold that clarity while the disguises cycle.** The moment of half-transformation — when the old excuse is dying and the new one isn\'t ready — is when truth can pin it.',
         citation: 'Devi Mahatmya, Chapter 3 (the slaying of Mahishasura).'
       },
       {
+        id: 'durga-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          'Born of all the gods, fierce yet loving, steady against every disguise. One idea remains, and it is the widest: where the Goddess actually lives.',
+      },
+      {
         id: 'durga-nine-nights',
         title: 'Nine Nights of the Mother',
-        subtitle: 'A Lamp Lit Beside a Sprouting Pot of Grain',
-        storyText: 'Twice a year, at the great turning of the seasons, India gives Durga nine nights — **Navratri**.\n\nA pot of grain is sprouted, a lamp kept burning, and night by night the Goddess is honored in her forms: fierce **Durga**, wealth-giving **Lakshmi**, wisdom-bestowing **Saraswati** — by one beloved arrangement, three nights each. On Ashtami, young girls are worshiped as her living embodiment — the theology of "the Goddess abides in all beings" made into a household act.\n\nThe festival ends in **Vijayadashami**, the day of victory, when Mahishasura falls and, in the north, Ravana burns: all the traditions agreeing that after nine nights of honoring the sacred feminine, the tenth day belongs to triumph.',
+        subtitle: 'A lamp lit beside a sprouting pot of grain',
+        takeaway:
+          'Twice a year, Hindus honour the Goddess for nine nights — the festival of Navratri. The order of the nights is itself a lesson: protection first, then abundance, then wisdom.',
+        storyText: 'Twice a year, at the great turning of the seasons, India gives the Goddess nine nights of celebration — the festival of **Navratri** (the word simply means "nine nights").\n\nA pot of grain is sprouted, a lamp is kept burning, and night by night the Goddess is honoured in three of her forms: fierce **Durga** the protector, **Lakshmi** the giver of wealth, and **Saraswati** the giver of wisdom, three nights each by one beloved arrangement. On the eighth night, families worship young girls as the living Goddess herself — turning the idea that "the Goddess lives in all beings" into a simple household act.\n\nThe festival ends on the tenth day, **Vijayadashami** ("the victory tenth"), when Durga slays the demon and, in the north of India, giant effigies of the demon-king Ravana are burned. All the traditions agree: after nine nights of honouring the sacred feminine, the tenth day belongs to triumph.',
         teachingText: 'Navratri\'s structure is itself the teaching: **protection first (Durga), then abundance (Lakshmi), then wisdom (Saraswati)** — in that order, because abundance without protection is looted and wisdom without abundance starves.\n\nAudit your own life in her sequence. And the kanya puja asks the sharpest question: do you actually treat the ordinary beings around you as places where the Goddess lives?',
         citationLink: 'festival:navratri-2025',
-        citation: 'Navratri: living tradition; the three-by-three arrangement and kanya puja: widespread devotional practice.'
+        citation: 'Navratri: living tradition; the three-by-three arrangement and kanya puja: widespread devotional practice.',
+        checks: [
+          {
+            id: 'chk:deity:durga:navratri',
+            kind: 'mcq',
+            prompt: 'During Navratri the Goddess is honoured in a set order — Durga, then Lakshmi, then Saraswati. What does that order teach?',
+            options: [
+              {
+                text: 'Protection first, then abundance, then wisdom — because abundance without protection is looted, and wisdom without abundance starves',
+                correct: true,
+              },
+              { text: 'That Durga is simply more important than the other goddesses' },
+              { text: 'That the order is random and carries no meaning' },
+            ],
+            why: 'The sequence itself is the teaching: first make things safe, then let them grow, then understand them. It is a pattern you can audit your own life against.',
+          },
+        ],
       }
     ],
     sources: [
@@ -1189,7 +1820,9 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Durga is fierce without hatred. When did you last have to stand firm — and did you manage it without anger?'
+      'Durga is fierce without hatred. When did you last have to stand firm — and did you manage it without anger?',
+      'What problem in your life keeps changing shape whenever you nearly pin it down? What would naming it once, clearly, and holding steady look like?',
+      "Durga's order is protection, then abundance, then wisdom. Which of the three is your life short on right now?",
     ]
   },
   {
@@ -1420,37 +2053,138 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/parvati-icon.jpg',
       galleryImages: []
     },
+    kicker: "The gentle Mother-Goddess — Shiva's wife and Ganesha's mother — who proves that an ordinary family home can be the highest spiritual path.",
+    learnItems: [
+      "Parvati is the gentle Mother-Goddess, Shiva's wife and Ganesha's mother",
+      'Real love is a discipline, not a mood',
+      'God is half male and half female; neither half is complete alone',
+      'Feeding people is real spiritual work, not a distraction from it',
+      'She made an ordinary family home into a full path to God',
+    ],
+    handoff:
+      "You've now met the great gods — Krishna, Rama, Shiva, Ganesha, Hanuman, Durga, and Parvati. So who are 'the gods,' really? Are they many separate beings, or one reality wearing many faces? That question is waiting for you next, to answer in your own words.",
     sections: [
+      {
+        id: 'parvati-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Parvati is the gentle Mother-Goddess: the wife of Shiva, the mother of Ganesha, and the warm, family-loving face of the same Goddess you just met as fierce Durga.\n\nOver the next few pages you'll meet her, and her quietly revolutionary claim — that an ordinary home, full of cooking and caring and patience, can be the deepest spiritual practice of all.",
+      },
+      {
+        id: 'parvati-who',
+        title: 'Who Parvati Is',
+        subtitle: 'The gentle half of the Divine Mother',
+        takeaway:
+          'Parvati is the gentle Mother-Goddess — the wife of Shiva and the mother of Ganesha. She is the same divine power as fierce Durga, in her warm, family-loving form.',
+        storyText:
+          "You've just met **Durga**, the Goddess with her sword drawn. **Parvati** is that same Divine Mother wearing her gentlest face. She is the wife of the great god **Shiva** and the mother of **Ganesha** — the very family whose mountain home you glimpsed a few gods ago.\n\nHindus call her **Shakti**, a word that means 'power' or 'energy.' The idea is striking: Shiva may be the silent, still source of everything, but Parvati is the living power that actually makes things happen. The tradition puts it bluntly in a pun — without his Shakti, Shiva is just a *shava*, a corpse.\n\nAnd here is what makes Parvati quietly revolutionary. Of all the arenas she could have chosen, she chose marriage, motherhood, and the running of a household. And by choosing them, she declared that ordinary family life is not a lesser path to God. Done with her intensity, it is the highest one.",
+        teachingText:
+          "That is Parvati's whole claim, and it is a comforting one for most of us. You do not have to leave your job and family and climb a mountain to live a deep spiritual life. The packed lunches, the patience, the love sustained through hard winters — that, she insists, is the mountain.",
+        citation: 'Parvati as Shakti and the gentle form of the Goddess: Shiva Purana, Shakta tradition.'
+      },
       {
         id: 'parvati-love-as-discipline',
         title: 'Love as a Discipline',
         subtitle: 'What do you do when beauty fails?',
+        takeaway:
+          "Parvati couldn't win the great hermit Shiva with beauty, so she met him in his own arena: years of fierce self-discipline in the mountains. She won him by proving her love was a discipline, not a passing mood.",
         storyText: 'The story begins with a strategy that fails.\n\nParvati, advised by the gods, first approaches Shiva the conventional way: presence, charm, flowers in season, the love-god Kama enlisted to loose his arrow at the meditating ascetic. **Shiva opens his third eye and burns Kama to ash without rising.**\n\nThe lesson lands on Parvati like a door closing — and she makes the decision that defines her: if the ascetic cannot be moved by beauty, **she will meet him in his own arena**. She walks into the mountains and begins austerities that shame the professionals: fire in summer, ice-water in winter, then not even leaves for food.',
         sectionHeader: 'The proposal that was a test',
         teachingText: 'When Shiva finally comes to her, disguised, he tries one last door: he insults himself, listing every reason a princess should not marry a graveyard ascetic. Parvati turns to leave rather than hear it — loyalty even against apparent self-interest — and the disguise falls.\n\nThe tradition is precise about what won him: not the fasting itself but what the fasting proved — that **her love was a discipline and not a mood**. It is the least sentimental great love story ever told, and the most useful.',
-        citation: 'Shiva Purana, Rudra Samhita (Parvati Khanda); Kalidasa, Kumarasambhava, Cantos 3–5'
+        citation: 'Shiva Purana, Rudra Samhita (Parvati Khanda); Kalidasa, Kumarasambhava, Cantos 3–5',
+        checks: [
+          {
+            id: 'chk:deity:parvati:discipline',
+            kind: 'mcq',
+            prompt: 'Parvati could not win Shiva, the great hermit, with beauty. How did she finally win him?',
+            options: [
+              {
+                text: 'She met him in his own arena — years of fierce self-discipline in the mountains — proving her love was a discipline, not a passing mood',
+                correct: true,
+              },
+              { text: 'She gave up and married someone else instead' },
+              { text: 'She tricked him into it with a magic spell' },
+            ],
+            why: 'What won him was not the fasting itself but what it proved: that her love was steady practice, not a fleeting feeling. It is the least sentimental great love story ever told.',
+          },
+        ],
+      },
+      {
+        id: 'parvati-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          'She won him by discipline, not display. The next image shows just how complete their union became: a single body, half him and half her.',
       },
       {
         id: 'parvati-half-of-shiva',
         title: 'Half of God\'s Own Body',
         subtitle: 'Ardhanarishvara — the argument in one image',
+        takeaway:
+          'In one striking image, Shiva and Parvati are a single body split down the middle, half him and half her. It says that stillness and action, male and female, are two halves of one whole, and neither is complete alone.',
         storyText: 'In one of the tradition\'s boldest images, Shiva and Parvati are shown as **a single standing figure split down the middle**: his half ash-white, matted-locked, still; her half golden, silk-clad, ornamented.\n\n**Ardhanarishvara** — the Lord who is half woman. The image is a theological argument: consciousness and energy, stillness and manifestation, the ascetic and the world are not rivals but halves of one body, and neither is complete alone.\n\nThe tradition says it in a proverb sharp enough to sting: **Shiva without Shakti is shava — a corpse.**',
         teachingText: 'Whatever your own polarity — the contemplative half that wants the cave and the engaged half that loves the world — Ardhanarishvara refuses the choice.\n\nThe complete life is not won by amputating either half but by **letting them share a spine**. Every householder who meditates and every meditator who shows up for family dinner is practicing this image.',
-        citation: 'Ardhanarishvara iconography: Puranic and Agamic tradition; the Shiva/shava wordplay is proverbial in Shakta texts (cf. Saundarya Lahari 1)'
+        citation: 'Ardhanarishvara iconography: Puranic and Agamic tradition; the Shiva/shava wordplay is proverbial in Shakta texts (cf. Saundarya Lahari 1)',
+        checks: [
+          {
+            id: 'chk:deity:parvati:half',
+            kind: 'mcq',
+            prompt: 'Shiva and Parvati are sometimes shown as one body split down the middle — half him, half her (Ardhanarishvara). What is that image arguing?',
+            options: [
+              {
+                text: 'That stillness and energy, male and female, the hermit and the world are two halves of one whole — neither is complete alone',
+                correct: true,
+              },
+              { text: 'That Shiva and Parvati are rivals fighting over a single body' },
+              { text: 'That women are only half as important as men' },
+            ],
+            why: 'The proverb is blunt: without his Shakti (Parvati), Shiva is just a corpse. Consciousness needs energy; the cave needs the world. A complete life lets both halves share one spine.',
+          },
+        ],
       },
       {
         id: 'parvati-annapurna-section',
         title: 'The Goddess of the Full Plate',
         subtitle: 'When the renouncer held out a bowl',
-        storyText: 'The Annapurna story is Parvati\'s wit at its sharpest.\n\nShiva, in ascetic mood, dismisses the material world as illusion — food included. Parvati does not argue; **she withdraws.** And with the goddess of manifestation gone, food itself goes.\n\nThe world hungers, and eventually the great transcender of maya walks to Kashi with a begging bowl, to the kitchen his wife has opened there, and holds it out. **She serves him with a smile that has lasted three thousand years.** In Varanasi her temple stands to this day: Annapurna, she who is full of food.',
+        takeaway:
+          'When Shiva dismissed the physical world as a mere illusion, Parvati simply vanished — and all the food in the world vanished with her. She let the great hermit go hungry until he understood: feeding people is real spiritual work.',
+        storyText: "The story of Annapurna is Parvati's wit at its sharpest.\n\nIn an ascetic mood, Shiva once dismissed the whole physical world as **maya** — a passing illusion — and food along with it. Parvati did not argue. She simply withdrew from the world. And with the goddess of the physical world gone, all food quietly vanished too.\n\nThe world went hungry. Eventually the great renouncer of illusion had to pick up a begging bowl and walk to the holy city of **Kashi** (today's Varanasi), to a free kitchen his wife had opened there, and hold it out. She filled it, smiling. Her temple still stands in Varanasi to this day, to **Annapurna** — 'she who is full of food.'",
         sectionHeader: 'The holiness of the ordinary',
         teachingText: 'This is the tradition auditing its own excesses. Wherever spirituality drifts toward contempt for the body, the meal, the household — Annapurna is the correction: **try transcending without lunch.**\n\nFeeding people is not the errand you run so that someone else can do the real spiritual work. It is the real spiritual work, done in its most honest form.',
-        citation: 'Annapurna of Kashi: Skanda Purana (Kashi Khanda) and living Varanasi tradition'
+        citation: 'Annapurna of Kashi: Skanda Purana (Kashi Khanda) and living Varanasi tradition',
+        checks: [
+          {
+            id: 'chk:deity:parvati:annapurna',
+            kind: 'mcq',
+            prompt: 'Shiva declared the physical world (food included) a mere illusion. How did Parvati answer him?',
+            options: [
+              {
+                text: 'She withdrew, and all food vanished with her — letting the great hermit go hungry until he saw that feeding people is real spiritual work',
+                correct: true,
+              },
+              { text: 'She agreed with him and stopped cooking forever' },
+              { text: 'She argued with him for years until he gave in' },
+            ],
+            why: 'It is the tradition correcting its own excess. Wherever spirituality drifts into contempt for the body and the meal, Annapurna is the reply: try transcending without lunch.',
+          },
+        ],
+      },
+      {
+        id: 'parvati-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          'Love as discipline, God as two halves, the holiness of a full plate. One idea remains, and it is the one she is loved for most: the home she built.',
       },
       {
         id: 'parvati-mother',
         title: 'The Mother of New Beginnings',
         subtitle: 'A household on a mountaintop',
+        takeaway:
+          'Parvati took the ultimate hermit and made him a father, turning a frozen mountaintop into the most beloved family in Hinduism. She is the patron of everyone building a whole family out of unlikely materials.',
         storyText: 'Kailash, as the Puranas paint it, is **the strangest household in literature**: the ascetic father with snakes for ornaments, the mountain-princess mother, one son with an elephant\'s head shaped by her own hands from turmeric paste, another born to command the armies of heaven, a lion, a bull, a mouse, and a peacock in the yard.\n\nIt should not work, and it is the most beloved family in the tradition.\n\n**Parvati is its center of gravity** — the one who turned the great renouncer into a father, absolute stillness into a home.',
         teachingText: 'The tradition could have left divinity solitary and abstract. Instead its most worshiped god is half of a marriage, and the goddess who arranged that is the patron of everyone who has ever **built a family out of unlikely materials**.\n\nAsk her blessing not for a perfect household but for a whole one — held together, like hers, by a love that outlasted every winter it stood in.',
         citationLink: 'deity:ganesha',
@@ -1473,7 +2207,9 @@ export const deitiesData: Deity[] = [
       },
     ],
     reflectionQuestions: [
-      'Parvati won Shiva through quiet, steady effort. What goal of yours needs steady practice more than attention?'
+      'Parvati won Shiva through quiet, steady effort. What goal of yours needs steady practice more than attention?',
+      "Parvati insists ordinary home life is a real spiritual path. What everyday act of care in your week could you treat as practice rather than chore?",
+      'Where in your life are you trying to be all "still hermit" or all "busy doer," when Ardhanarishvara says you need both halves?',
     ]
   },
   {

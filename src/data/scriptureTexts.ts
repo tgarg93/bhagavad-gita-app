@@ -24,6 +24,11 @@ export interface ScripturePart {
   sections: NarrativeSection[];
   reflectionQuestions: string[];
   sources: SourceNote[];
+  // Jigyasu interstitials (optional; render on presence — see readerContent).
+  kicker?: string;
+  learnItems?: string[];
+  bankedTakeaways?: string[];
+  handoff?: string;
 }
 
 export interface ScriptureCollection {

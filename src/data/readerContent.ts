@@ -9,6 +9,7 @@ import { getStoryById } from './stories';
 import { getPartById, getCollection } from './scriptureTexts';
 import { getFoundationsAct, takeawaysForAct, FOUNDATIONS_ACTS } from './foundations';
 import { getStageCapstone } from './stageCapstones';
+import { hasStoryBeats, parseStoryBeats, DIALOGUE_BLOCK_BASE } from './storyBeats';
 
 export type ReaderContentType =
   | 'concept'
@@ -96,6 +97,13 @@ export function getReaderContent(
       sources: concept.sources ?? [],
       detailRoute: { name: 'PhilosophyDetail', params: { conceptId: concept.id } },
       readerLabel: 'Philosophy',
+      // Interstitials (the Jigyasu framing pages) light up on data presence, not
+      // contentType — a concept that sets these gets the intro checklist, the
+      // waypoint progress, the cover kicker, and the celebration recap + handoff.
+      kicker: concept.kicker,
+      learnItems: concept.learnItems,
+      bankedTakeaways: concept.bankedTakeaways,
+      handoff: concept.handoff,
     };
   }
 
@@ -109,11 +117,18 @@ export function getReaderContent(
       sanskritTitle: deity.sanskritName,
       subtitle: deity.description,
       coverImage: asCover(deity.images.heroImage),
+      // Teaching sections first, then the deity's tales as a narrative coda.
       sections: [...deity.sections, ...deity.stories.map(storyToSection)],
       reflectionQuestions: deity.reflectionQuestions ?? [],
       sources: deity.sources ?? [],
       detailRoute: { name: 'DeityDetail', params: { deityId: deity.id } },
       readerLabel: 'Deity',
+      // Interstitials scope to the teaching sections; the celebration recaps
+      // learnItems. The appended tales carry no takeaway, so they never bank.
+      kicker: deity.kicker,
+      learnItems: deity.learnItems,
+      bankedTakeaways: deity.bankedTakeaways,
+      handoff: deity.handoff,
     };
   }
 
@@ -132,6 +147,10 @@ export function getReaderContent(
       sources: story.sources ?? [],
       // No detail screen for stories — the reader is the whole experience
       readerLabel: story.collection === 'upanishad' ? 'Upanishad Story' : 'Story',
+      kicker: story.kicker,
+      learnItems: story.learnItems,
+      bankedTakeaways: story.bankedTakeaways,
+      handoff: story.handoff,
     };
   }
 
@@ -151,6 +170,10 @@ export function getReaderContent(
       sources: part.sources ?? [],
       // No detail screen — the reader is the whole experience
       readerLabel: collection?.title ?? 'Scripture',
+      kicker: part.kicker,
+      learnItems: part.learnItems,
+      bankedTakeaways: part.bankedTakeaways,
+      handoff: part.handoff,
     };
   }
 
@@ -233,32 +256,45 @@ const stripMarkup = (text: string): string => text.replace(/\*\*/g, '');
 // This order is a CONVENTION shared with NarrativeSections' bid() mapping —
 // change both together or audio highlighting drifts.
 export function sectionsToNarrationContent(sections: NarrativeSection[]) {
-  return sections.map(section => ({
-    title: section.title,
-    // Waypoints are quiet checkpoints — the voice parks on them and never reads
-    // them (ContentReaderScreen pauses there, like a check page). An empty
-    // block list yields no segments while keeping section indices stable.
-    blocks: section.kind === 'waypoint' ? [] : [
-      {
-        type: 'verse',
-        verse: {
-          sanskrit: section.openingVerse?.sanskrit ?? '',
-          transliteration: '', // not narrated (matches Gita player behavior)
-          meaning: stripMarkup(section.openingVerse?.meaning ?? ''),
+  return sections.map(section => {
+    // Dialogue stories split storyText into per-beat prose blocks appended AFTER
+    // the six fixed blocks (indices >= DIALOGUE_BLOCK_BASE). The storyText block
+    // (index 1) then goes empty so it emits no segments, and the beat blocks line
+    // up 1:1 with what NarrativeSections renders — read-along stays in lockstep.
+    const beats = hasStoryBeats(section.storyText) ? parseStoryBeats(section.storyText!) : null;
+    const beatBlocks = beats ? beats.map(b => ({ type: 'prose' as const, text: stripMarkup(b.text) })) : [];
+
+    return {
+      title: section.title,
+      // Waypoints are quiet checkpoints — the voice parks on them and never reads
+      // them (ContentReaderScreen pauses there, like a check page). An empty
+      // block list yields no segments while keeping section indices stable.
+      blocks: section.kind === 'waypoint' ? [] : [
+        {
+          type: 'verse',
+          verse: {
+            sanskrit: section.openingVerse?.sanskrit ?? '',
+            transliteration: '', // not narrated (matches Gita player behavior)
+            meaning: stripMarkup(section.openingVerse?.meaning ?? ''),
+          },
         },
-      },
-      { type: 'prose', text: stripMarkup(section.storyText ?? '') },
-      { type: 'prose', text: stripMarkup((section.bullets ?? []).join('. ')) },
-      { type: 'header', text: stripMarkup(section.sectionHeader ?? '') },
-      {
-        type: 'verse',
-        verse: {
-          sanskrit: section.keyVerse?.sanskrit ?? '',
-          transliteration: '',
-          meaning: stripMarkup(section.keyVerse?.meaning ?? ''),
+        // Index 1: whole-storyText prose, OR empty when the story is dialogue-beat
+        // formatted (its lines live in the appended beat blocks below instead).
+        { type: 'prose', text: beats ? '' : stripMarkup(section.storyText ?? '') },
+        { type: 'prose', text: stripMarkup((section.bullets ?? []).join('. ')) },
+        { type: 'header', text: stripMarkup(section.sectionHeader ?? '') },
+        {
+          type: 'verse',
+          verse: {
+            sanskrit: section.keyVerse?.sanskrit ?? '',
+            transliteration: '',
+            meaning: stripMarkup(section.keyVerse?.meaning ?? ''),
+          },
         },
-      },
-      { type: 'teaching', text: stripMarkup(section.teachingText ?? '') },
-    ],
-  }));
+        { type: 'teaching', text: stripMarkup(section.teachingText ?? '') },
+        // Beat blocks occupy indices DIALOGUE_BLOCK_BASE (6), 7, 8… — see storyBeats.ts.
+        ...beatBlocks,
+      ],
+    };
+  });
 }

@@ -458,6 +458,7 @@ export class AudioNarrationService {
     };
 
     const pushSentences = (blockId: string, text: string, type: TextSegment['type']) => {
+      if (!text || !text.trim()) return; // skip empty prose (e.g. dialogue-beat storyText, index 1)
       const sentences = this.splitIntoSentences(text);
       let cursor = 0;
       sentences.forEach((sentence, sentenceIndex) => {

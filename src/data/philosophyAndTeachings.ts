@@ -33,6 +33,19 @@ export interface PhilosophicalConcept {
   sources?: SourceNote[];
   // Chapter-style reflection questions (exactly 3, Gita pattern)
   reflectionQuestions?: string[];
+  // ——— Jigyasu interstitials (optional; render on presence, see readerContent) ———
+  // The thesis line shown on the cover in place of the bare subtitle.
+  kicker?: string;
+  // The "what you'll learn" checklist: rendered by the kind:'intro' page, ticked
+  // by kind:'waypoint' pages (via learnIndex), and replayed checked on the
+  // celebration. Sections with kind:'intro'/'waypoint' need this to render.
+  learnItems?: string[];
+  // Optional short one-clause recaps for the celebration (falls back to
+  // learnItems when absent). Distinct from learnItems only when the recap
+  // wording should differ from the promise wording.
+  bankedTakeaways?: string[];
+  // The "what's next" teaser shown above the next-step button on the celebration.
+  handoff?: string;
 }
 
 // The shared narrative shape now lives in narrativeTypes.ts (reused by
@@ -593,28 +606,104 @@ export const philosophyData: PhilosophicalConcept[] = [
       iconImage: '/images/philosophy/maya-icon.jpg',
     },
     difficulty: 'intermediate',
+    kicker: "Not 'the world is an illusion.' A real world, misread — and someone is profiting from keeping you at dusk.",
+    learnItems: [
+      'Maya is not a fake world, but a real one misread',
+      'The costliest misreading: that you end at your skin',
+      'The veil is divine, and genuinely hard to cross',
+      'We have industrialized the dusk that breeds misreadings',
+    ],
+    handoff:
+      'Maya runs on your own moods and energies — the Gita calls it guna-mayi, woven of three strands. What are those strands, and how do they colour everything you see? That is the three gunas.',
     sections: [
+      {
+        id: 'maya-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          'You have probably heard that Hinduism teaches "the world is an illusion." That is the most damaging mistranslation in the tradition, and maya is the word behind it.\n\nOver the next few pages, maya turns from a mystical shrug into a sharp diagnostic tool — one that is uncomfortably relevant to the feeds and screens of ordinary modern life.',
+      },
       {
         id: 'maya-misquote',
         title: 'The Most Misquoted Idea in Hinduism',
         subtitle: 'What maya does not mean',
-        storyText: 'Somewhere along the way, "maya" got translated as "the world is an illusion" and a caricature was born: Hindus supposedly believe nothing is real, so nothing matters. The tradition claims almost the opposite.\n\n**Maya does not say the world is absent; it says the world is misread.**\n\nThe classic image, sharpened by Shankara\'s school, is exact: a traveler at dusk leaps back from a **snake** on the path. A lamp is brought — it is a **rope**. The rope was there all along, fully real. The snake was never there at all. And yet the traveler\'s terror was real, the racing heart was real, the leap was real.\n\nIllusion, in this tradition, means **real experience built on a misreading of something real**.',
+        takeaway:
+          "Maya does not say the world is absent; it says the world is misread. Ask not 'is this real?' but 'is this the rope, or my snake?'",
+        storyText: 'Somewhere along the way, "maya" got translated as "the world is an illusion" and a caricature was born: Hindus supposedly believe nothing is real, so nothing matters. The tradition claims almost the opposite.\n\n**Maya does not say the world is absent; it says the world is misread.**\n\nThe classic image, sharpened by the great philosopher Shankara and his followers, is exact: a traveler at dusk leaps back from a **snake** on the path. A lamp is brought — it is a **rope**. The rope was there all along, fully real. The snake was never there at all. And yet the traveler\'s terror was real, the racing heart was real, the leap was real.\n\nIllusion, in this tradition, means **real experience built on a misreading of something real**.',
         teachingText: 'Get this distinction and maya stops being mystical and becomes diagnostic.\n\nThe question it teaches you to ask — of your fears, your feeds, your certainties about other people — is not "is this real?" but **"is this the rope, or my snake?"** The two feel identical from inside. That is the whole problem, and the beginning of its solution.',
         citation: 'Rope-snake analysis: Advaita tradition (Vivekachudamani, attrib. Shankara; Shankara\'s Brahmasutra commentary)',
+      },
+      {
+        id: 'maya-term-maya',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'माया',
+          transliteration: 'māyā',
+          meaning: 'the misreading of the real — not the absence of the real',
+        },
+        storyText:
+          'The root is *ma*, to measure. Maya is the measuring-out of the immeasurable, the drawing of boundaries on the boundless.\n\nThe boundaries are useful — you cannot pour tea without a cup. The trouble is forgetting they are drawn, and then defending them with your life.',
+        reappears:
+          'Maya is the reason oneness can be true and still not feel true, all the way to moksha.',
+        checks: [
+          {
+            id: 'chk:concept:maya:claim',
+            kind: 'mcq',
+            prompt: 'What does maya actually claim?',
+            options: [
+              {
+                text: 'Real experience built on a misreading of something real — the rope mistaken for a snake — not that the world is fake',
+                correct: true,
+              },
+              { text: 'That nothing exists and nothing matters' },
+              { text: 'That the world is a punishment for past sins' },
+            ],
+            why: 'The rope was there all along; the snake never was. Yet the terror, the racing heart, and the leap were all real. Illusion here means a real reaction to a misread real.',
+          },
+        ],
       },
       {
         id: 'maya-conceals',
         title: 'What the Misreading Conceals',
         subtitle: 'One appearing as many',
+        takeaway:
+          'The misreading conceals oneness. The costliest boundary is the one that says you end at your skin, and everyone else begins as a rival.',
         storyText: 'If maya is a misreading, what is the rope — the reality being misread? The Upanishads\' answer: **oneness**.\n\nThere is one reality, Brahman, and maya is the power by which it appears as many separate things — and, most consequentially, as many separate selves.\n\nThe word\'s own root says it: **ma, to measure**. Maya is the measuring-out of the immeasurable, the drawing of boundaries on the boundless. The boundaries are useful — you cannot pour tea without a cup — but the tradition\'s claim is that we forget they are drawn, and then defend them with our lives.',
         sectionHeader: 'The costliest boundary',
         teachingText: 'The misreading that costs the most is the one at the center: the absolute conviction that **you end at your skin**, and everyone else begins as a rival. Every scarcity panic, every envy, every "us and them" runs on that reading.\n\nThe tradition does not ask you to erase the boundary — it asks you to remember, at least sometimes, who drew it.',
         citation: 'Root "ma" (to measure): standard etymology; one-appearing-as-many: Chandogya Upanishad 6 (the "one clay, many pots" teaching)',
+        checks: [
+          {
+            id: 'chk:concept:maya:boundary',
+            kind: 'mcq',
+            prompt: 'Which misreading does the tradition say costs the most?',
+            options: [
+              {
+                text: 'The conviction that you end at your skin — the boundary that turns every scarcity, envy, and "us and them" into a fight',
+                correct: true,
+              },
+              { text: 'Believing that the physical world exists at all' },
+              { text: 'Trusting your senses to tell you when it is night' },
+            ],
+            why: 'Maya draws useful boundaries — you cannot pour tea without a cup — but we forget they are drawn and then defend them with our lives.',
+          },
+        ],
+      },
+      {
+        id: 'maya-way-1',
+        kind: 'waypoint',
+        title: '2 of 4 banked',
+        learnIndex: 2,
+        storyText:
+          'Maya is a real world misread, and the deepest misreading is separateness. Next: whose power this veiling is, and why crossing it is genuinely hard.',
       },
       {
         id: 'maya-divine',
         title: 'Hard to Cross — and Whose It Is',
         subtitle: 'Gita 7.14, read slowly',
+        takeaway:
+          'Maya is divine, woven of the gunas, and genuinely hard to cross. You do not think your way out of a misreading with the mind that is doing the misreading.',
         openingVerse: {
           sanskrit: 'दैवी ह्येषा गुणमयी मम माया दुरत्यया',
           transliteration: 'daivī hy eṣā guṇa-mayī mama māyā duratyayā',
@@ -632,13 +721,39 @@ export const philosophyData: PhilosophicalConcept[] = [
         citation: 'Bhagavad Gita 7.14, tr. Sivananda (public domain)',
       },
       {
+        id: 'maya-way-2',
+        kind: 'waypoint',
+        title: '3 of 4 banked',
+        learnIndex: 3,
+        storyText:
+          'The veil is part of the design, and crossing it needs a lamp from outside. One idea remains, and it is uncomfortably current.',
+      },
+      {
         id: 'maya-modern',
         title: 'The Engineered Dusk',
         subtitle: 'Maya with a business model',
+        takeaway:
+          'We have industrialized the dusk. Every doomscroll is a walk down a path of ropes, at engineered dusk, with someone profiting from each leap.',
         storyText: 'The rope-and-snake needed dim light; the misreading happens at dusk, not noon.\n\nNow consider that some of the brightest engineering talent of our age works on **keeping you at dusk**: feeds that surface the most snake-like reading of every stranger, filters that make ordinary faces look inadequate, urgency signals attached to the trivial.\n\nThe tradition analyzed maya as a cosmic condition; we have industrialized it. Every doomscroll is a walk down a path of ropes, at engineered dusk, with someone profiting from each leap.',
         sectionHeader: 'The counter-practice',
         teachingText: 'Which makes the old counter-practices strangely current.\n\n**Bring the lamp**: verify before reacting. **Notice the light**: tired, hungry, anxious minds breed snakes. And **guard the dusk hours** — the tradition\'s instinct that dawn and dusk are for practice, not consumption, reads today like operational security for the mind.',
         citation: 'Application of the classical rope-snake frame; the underlying analysis as cited above',
+        checks: [
+          {
+            id: 'chk:concept:maya:cross',
+            kind: 'mcq',
+            prompt: 'How does the tradition say you cross maya?',
+            options: [
+              {
+                text: 'With a lamp from outside the dusk — a teacher, a practice, a grace — not by thinking harder with the same misreading mind',
+                correct: true,
+              },
+              { text: 'By working out the truth alone, through sheer reasoning' },
+              { text: 'By withdrawing from the world entirely' },
+            ],
+            why: 'You do not out-think a misreading with the mind that is doing it. The humility to reach for a lamp is the first step across.',
+          },
+        ],
       },
     ],
     sources: [
@@ -661,6 +776,8 @@ export const philosophyData: PhilosophicalConcept[] = [
     ],
     reflectionQuestions: [
       'When did a fear of yours last vanish once you saw the full picture?',
+      'Where in your day is someone profiting from keeping you at dusk — anxious, comparing, reactive?',
+      'Name one "snake" you reacted to this week that turned out to be a rope.',
     ],
   },
   {
@@ -737,12 +854,30 @@ export const philosophyData: PhilosophicalConcept[] = [
       iconImage: '/images/philosophy/brahman-atman-icon.jpg',
     },
     difficulty: 'advanced',
+    kicker: "The one claim the whole tradition rests on: what you call 'I' and what holds up the universe are the same thing.",
+    learnItems: [
+      'Brahman and atman are the same reality',
+      "You can't find the Self as an object — you are what does the finding",
+      'Neti neti: you are not anything you can observe',
+      'The four great sayings turn the claim from heard to lived',
+    ],
+    handoff:
+      'If all of this is one, and you are That, then the obvious question arrives: why on earth does it not feel that way? The tradition has a precise answer, and a precise word: maya.',
     sections: [
+      {
+        id: 'ba-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Every tradition has a center of gravity. Hinduism's is not a rule or a story but a claim about what you are — and, the Upanishads insist, one you can check from the inside.\n\nOver the next few pages you'll meet the claim, and the three great methods the tradition built to test it: an experiment, a negation, and four sentences.",
+      },
       {
         id: 'ba-claim',
         title: 'The Claim at the Center',
         subtitle: 'One wall holds up the whole house',
-        storyText: 'Every tradition has a center of gravity. Buddhism has dependent origination; the Abrahamic faiths have the covenant between God and humanity. Hinduism\'s center is an identity claim.\n\n**Brahman** — the one reality the Rig Veda said the wise call by many names — and **Atman** — the Self you refer to every time you say "I" — are **the same**. Not similar. Not connected. The same, the way the space in a jar and the space in the room were never actually two spaces.\n\nTake this wall out and the house falls: karma becomes bookkeeping, moksha becomes a destination, the gods become a committee. Put it in and everything else in the tradition becomes either a consequence of the claim or a method for verifying it.',
+        takeaway:
+          "Hinduism's center is one claim: Brahman, the one reality, and atman, the Self you call 'I,' are the same.",
+        storyText: 'Every tradition has a center of gravity. Buddhism centres on the idea that everything arises from causes and then passes away; the Abrahamic faiths (Judaism, Christianity, and Islam) centre on a covenant, a sacred promise between God and humanity. Hinduism\'s center is an identity claim.\n\n**Brahman** — the one reality that the Rig Veda (the oldest sacred hymns of Hinduism) said the wise call by many names — and **Atman** — the Self you refer to every time you say "I" — are **the same**. Not similar. Not connected. The same, the way the space in a jar and the space in the room were never actually two spaces.\n\nTake this wall out and the house falls: karma becomes bookkeeping, moksha becomes a destination, the gods become a committee. Put it in and everything else in the tradition becomes either a consequence of the claim or a method for verifying it.',
         teachingText: 'Notice what kind of claim it is: not ethical advice, not a story, but a statement about what you are — **checkable, the Upanishads insist, from the inside**.\n\nThe rest of this course is the tradition\'s three great verification methods: an experiment, a negation, and four sentences.',
         citation: 'Brahman/Atman identity: the central thesis of the principal Upanishads (Chandogya 6, Brihadaranyaka 1.4, Mandukya)',
       },
@@ -750,23 +885,105 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'ba-salt',
         title: 'The Salt Experiment',
         subtitle: 'A father teaches through the tongue',
+        takeaway:
+          'You cannot find the Self as an object, any more than you can pull dissolved salt back out of the water. You are how the water tastes.',
         storyText: 'Uddalaka\'s son Svetaketu came home from twelve years of Vedic study visibly proud. His father asked whether he had learned "that by which the unheard becomes heard, the unthought thought." He had not.\n\nSo Uddalaka ran the most famous experiment in the Upanishads: put this lump of salt in water tonight. In the morning: bring me the salt. Svetaketu reaches into the water — nothing to grasp. The salt is gone.\n\nTaste from the top, says the father. Salt. From the middle. Salt. From the bottom. Salt. **The salt was not gone; it had become invisible by becoming pervasive.**\n\nJust so, says Uddalaka, that subtle essence pervades everything — and **tat tvam asi**, that is what you are.',
         sectionHeader: 'Why you cannot find your Self',
         teachingText: 'The experiment answers the modern seeker\'s complaint precisely: "I looked within and found no Self — just thoughts and sensations." Of course. Svetaketu\'s hand found no salt either.\n\nWhat pervades cannot be grasped as one object among others; it is found by a different faculty — taste, not sight; being, not introspection. You will never find the Self the way you find your keys. **You are how the water tastes.**',
         citation: 'Chandogya Upanishad 6.12–13, tr. Müller (public domain)',
       },
       {
+        id: 'ba-term-tat-tvam-asi',
+        kind: 'term',
+        title: 'Key saying',
+        keyVerse: {
+          sanskrit: 'तत्त्वमसि',
+          transliteration: 'tat tvam asi',
+          meaning: 'you are That',
+        },
+        storyText:
+          'Three words from a father to his son: **tat** (that, the one reality) · **tvam** (you) · **asi** (are — not "are near," not "contain," but *are*).\n\nThe subtle essence that pervades everything is not something you have. It is what you are.',
+        reappears:
+          'Tat tvam asi is one of the four great sayings, coming up next.',
+        checks: [
+          {
+            id: 'chk:concept:brahman-atman:salt',
+            kind: 'mcq',
+            prompt: '"I looked within and found no Self — just thoughts and sensations." What did the salt experiment show?',
+            options: [
+              {
+                text: "What pervades everything can't be grasped as one object among others — Svetaketu's hand found no salt either; it is found by tasting, not looking",
+                correct: true,
+              },
+              { text: 'That there is, in fact, no Self to find' },
+              { text: 'That the Self is a thought like any other' },
+            ],
+            why: 'You will never find the Self the way you find your keys, because it is what does the finding. The salt was not gone; it had become invisible by becoming everything. You are how the water tastes.',
+          },
+        ],
+      },
+      {
+        id: 'ba-way-1',
+        kind: 'waypoint',
+        title: '2 of 4 banked',
+        learnIndex: 2,
+        storyText:
+          "Brahman and atman are one, and the Self isn't a thing you can hold. Next comes a method for meeting it, and it works by subtraction.",
+      },
+      {
         id: 'ba-neti',
         title: 'Not This, Not This',
-        subtitle: 'The via negativa of the Upanishads',
+        subtitle: 'Finding the Self by removing what it is not',
+        takeaway:
+          'Neti neti — not this, not this. You are not anything you can observe; you are what does the observing.',
         storyText: 'The Brihadaranyaka Upanishad offers the second method, two words long: **neti neti** — not this, not this. Whatever you can observe, you are not.\n\nThe body? You watch it age — observable, so not this. Emotions? They arrive and leave while you remain to report them — not this. Thoughts? You just watched one — not this. Even the sense of being "me," the ego itself, can be caught in the act and examined — not this.\n\nThe method never says what the Self is; it strips away everything the Self is mistaken for, **the way a sculptor finds the figure by removing stone**.',
         teachingText: 'Run it on the inner critic and feel its practical teeth: the voice narrating your inadequacy is audible to you — an object in your awareness, like traffic noise. **Whatever hears it is what you are.**\n\nThe tradition\'s boldest move is to claim this remainder — the unwatchable watcher — is Brahman itself. But even before that claim, the method alone is liberating: you are not anything you can observe, and you can observe almost everything you currently call "me."',
         citation: 'Brihadaranyaka Upanishad 2.3.6 and 4.5.15 ("neti neti"), tr. Müller (public domain)',
+        checks: [
+          {
+            id: 'chk:concept:brahman-atman:neti',
+            kind: 'mcq',
+            prompt: 'What is the neti-neti ("not this, not this") method?',
+            options: [
+              {
+                text: 'Strip away everything you can observe — body, emotions, thoughts, even the ego — because whatever hears the inner critic is what you are',
+                correct: true,
+              },
+              { text: 'Deny that anything exists at all' },
+              { text: 'List the qualities that describe the Self' },
+            ],
+            why: 'The method never says what the Self is; it removes everything the Self is mistaken for, the way a sculptor finds the figure by removing stone. The unwatchable watcher is what remains.',
+          },
+        ],
+      },
+      {
+        id: 'ba-term-neti',
+        kind: 'term',
+        title: 'Key saying',
+        keyVerse: {
+          sanskrit: 'नेति नेति',
+          transliteration: 'neti neti',
+          meaning: 'not this, not this',
+        },
+        storyText:
+          'Two words, used as a tool. Point them at anything you can observe — the body, a feeling, a thought, the ego itself — and say: not this, not this.\n\nWhat is left, when nothing observable remains, is the one doing the observing. **That you cannot set aside, because it is you.**',
+        reappears:
+          'Neti neti is the negative path; the four great sayings, next, are the positive one.',
+      },
+      {
+        id: 'ba-way-2',
+        kind: 'waypoint',
+        title: '3 of 4 banked',
+        learnIndex: 3,
+        storyText:
+          'You are not anything you can observe. One step remains: the claim, said four ways, and what changes if it is true.',
       },
       {
         id: 'ba-mahavakyas',
         title: 'One Sentence, Said Four Ways',
         subtitle: 'The mahavakyas',
+        takeaway:
+          'Four great sayings say one thing with the pronoun rotated: consciousness is Brahman, you are That, I am Brahman, this Self is Brahman.',
         storyText: 'The tradition distilled the claim into four "great sayings," one from each Veda — and it is worth seeing that they are one sentence with the pronoun rotated, a curriculum in four lines: what is stated impersonally must be told to you, then found by you, then lived.',
         bullets: [
           '**Prajnanam Brahma** — consciousness is Brahman (the impersonal statement).',
@@ -777,6 +994,22 @@ export const philosophyData: PhilosophicalConcept[] = [
         sectionHeader: 'What changes if it is true',
         teachingText: 'Suppose it, for one day, as a working hypothesis.\n\nThen the stranger who cuts you off in traffic is the salt in the same water. Then your death is a wave subsiding, not the ocean drying. Then compassion is not a virtue you strain toward but **simple accuracy**.\n\nThe Upanishads do not ask for belief. They ask for the experiment — twelve years, or fifteen minutes tonight: what, when everything observable has been set aside, remains doing the observing?',
         citation: 'The four mahavakyas: Aitareya 3.3, Chandogya 6.8.7, Brihadaranyaka 1.4.10, Mandukya 2 — classical Vedanta enumeration',
+        checks: [
+          {
+            id: 'chk:concept:brahman-atman:accuracy',
+            kind: 'mcq',
+            prompt: 'If tat tvam asi — "you are That" — is true, what does compassion become?',
+            options: [
+              {
+                text: 'Simple accuracy — the stranger who cuts you off is the salt in the same water; your death a wave subsiding, not the ocean drying',
+                correct: true,
+              },
+              { text: 'A virtue you must strain toward against your nature' },
+              { text: 'Unnecessary, since nothing is really real' },
+            ],
+            why: 'The Upanishads do not ask for belief but for the experiment: when everything observable is set aside, what remains doing the observing? If the answer is one, compassion is not effort but arithmetic.',
+          },
+        ],
       },
     ],
     sources: [
@@ -798,6 +1031,8 @@ export const philosophyData: PhilosophicalConcept[] = [
     ],
     reflectionQuestions: [
       'When did you last feel part of something much bigger than yourself?',
+      'Try neti neti now: name three things you can observe about yourself right now. Who is doing the observing?',
+      'Think of one difficult person. What changes if they are the same Self, looking out of different eyes?',
     ],
   },
   {
@@ -1192,13 +1427,33 @@ export const philosophyData: PhilosophicalConcept[] = [
       infographics: ['/images/philosophy/dharma-types.jpg', '/images/philosophy/dharma-decision-tree.jpg']
     },
     difficulty: 'intermediate',
+    kicker: 'Not one rule for everyone. The right thing depends on who you are, and where you stand.',
+    learnItems: [
+      'Dharma means what upholds — the right thing, for you, here',
+      'Your dharma is personal (svadharma), not a rule copied from a book',
+      'What is right changes with your stage and role',
+      "Better your own dharma imperfectly than another's perfectly",
+      "You don't have to be perfect to be dharmic",
+      'The highest dharma is love',
+    ],
+    handoff:
+      'You know now what is yours to do. But every choice you make sends something out ahead of you, and one day it comes back. The tradition has a name for that returning force: karma.',
     sections: [
+      {
+        id: 'dharma-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          'You already carry a sense of duty. What Hinduism adds is a surprising twist: there is no single rulebook that fits everyone. What is right depends on who you are, where you stand, and who is leaning on you.\n\nOver the next few pages, dharma turns from a vague word for "being good" into a working question you can ask on any ordinary day.',
+      },
       {
         id: 'dharma-opening',
         title: 'The Art of Righteous Living',
         subtitle: 'A warrior frozen between two duties',
+        takeaway:
+          'Dharma begins where Arjuna froze: a real choice between two duties, with no easy rule to settle it.',
         storyText:
-          'In the opening moments of the Bhagavad Gita, **Arjuna** stands paralyzed on the battlefield of **Kurukshetra**, his bow slipping from trembling hands.\n\nBefore him are his beloved teachers, cousins, and friends \u2014 all armed and ready for war. His duty as a warrior demands he fight. His heart rebels against harming those he loves.\n\nThis moment of moral crisis births one of humanity\u2019s greatest conversations about **dharma**.',
+          'The most famous conversation about doing the right thing in Hinduism opens on a battlefield. Two armies face each other at a place called **Kurukshetra**, about to begin a terrible civil war. Between them, a warrior-prince named **Arjuna** stands frozen, his bow slipping from his trembling hands. He is about to hear the **Bhagavad Gita**, one of the best-loved scriptures in Hinduism.\n\nBefore him are his beloved teachers, cousins, and friends \u2014 all armed and ready for war. His duty as a warrior demands he fight. His heart rebels against harming those he loves.\n\nThis moment of moral crisis births one of humanity\u2019s greatest conversations about **dharma**.',
         citationLink: 'gita:1',
         citation: 'Bhagavad Gita, Chapter 1 (Arjuna\u2019s crisis)',
       },
@@ -1206,6 +1461,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'dharma-meaning',
         title: 'What Dharma Really Means',
         subtitle: 'Bigger than "duty"',
+        takeaway:
+          'Dharma means what upholds. It is the order that holds the world together, and your own right place within it.',
         openingVerse: {
           sanskrit: '\u0927\u0930\u094d\u092e \u090f\u0935 \u0939\u0924\u094b \u0939\u0928\u094d\u0924\u093f \u0927\u0930\u094d\u092e\u094b \u0930\u0915\u094d\u0937\u0924\u093f \u0930\u0915\u094d\u0937\u093f\u0924\u0903',
           transliteration: 'dharma eva hato hanti dharmo rak\u1e63ati rak\u1e63ita\u1e25',
@@ -1216,9 +1473,41 @@ export const philosophyData: PhilosophicalConcept[] = [
         citation: 'Manusmriti 8.15 (dharma protects its protectors); root "dhr": standard etymology',
       },
       {
+        id: 'dharma-term-dharma',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'धर्म',
+          transliteration: 'dharma',
+          meaning: 'what upholds — the right thing, for you, here',
+        },
+        storyText:
+          'The root of the word means *to uphold*. Your dharma is whatever upholds the people and the world that rest on you, and that is why it shifts when your role shifts.\n\nThe easiest way to use it is as a question. **What is mine to do?**',
+        reappears:
+          'Dharma is also the first of the four aims of life, and the word the Gita spends eighteen chapters on.',
+        checks: [
+          {
+            id: 'chk:concept:dharma:meaning',
+            kind: 'mcq',
+            prompt: 'Dharma is often translated simply as "duty." Why is that translation too small?',
+            options: [
+              {
+                text: 'Dharma is what upholds — the natural and moral order, and your particular place within it — of which a duty is only the smallest corner',
+                correct: true,
+              },
+              { text: 'Because dharma actually means "religion," not duty' },
+              { text: 'Because dharma applies only to priests, not ordinary people' },
+            ],
+            why: 'The root dhṛ means to hold. Dharma is what holds a life, a family, and a world together. "Duty" catches only one small corner of that.',
+          },
+        ],
+      },
+      {
         id: 'dharma-personal',
         title: 'Your Personal Dharma',
         subtitle: 'The universal becomes intimate',
+        takeaway:
+          'Your dharma is personal. It is your particular way of holding up the world, not a rule copied from someone else.',
         keyVerse: {
           sanskrit: '\u0927\u0930\u094d\u092e\u094b \u0939\u093f \u0938\u0930\u094d\u0935\u092d\u0942\u0924\u093e\u0928\u093e\u0902 \u0936\u094d\u0930\u0947\u092f\u094b \u092f\u094b \u0927\u093e\u0930\u092f\u0947\u0924\u094d',
           transliteration: 'dharmo hi sarvabh\u016bt\u0101n\u0101\u1e43 \u015breyo yo dh\u0101rayet',
@@ -1232,6 +1521,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'dharma-stages',
         title: 'Dharma Through Life\u2019s Stages',
         subtitle: 'What is right changes as you grow',
+        takeaway:
+          'What is right changes as you grow. Ask not only what is right, but what is right for where you now stand.',
         storyText:
           'Your relationship with dharma evolves as you mature.\n\nIn youth, dharma often feels externally imposed \u2014 parents\u2019 guidance, teachers\u2019 rules, society\u2019s expectations. The young **Rama** dutifully obeys his father\u2019s command to live in exile, even though it upends his coronation.\n\nAs a householder, dharma grows complex and personal: your needs balanced against partner, children, parents, career, community. The Ramayana shows this too \u2014 Rama\u2019s hardest choices come not in the forest but **on the throne**.',
         teachingText:
@@ -1242,6 +1533,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'dharma-differences',
         title: 'When Your Dharma Differs From Others\u2019',
         subtitle: 'Svadharma \u2014 your own path',
+        takeaway:
+          "Better to do your own dharma imperfectly than another's perfectly. Two people can owe the world genuinely different things.",
         keyVerse: {
           sanskrit: '\u0936\u094d\u0930\u0947\u092f\u093e\u0928\u094d\u0938\u094d\u0935\u0927\u0930\u094d\u092e\u094b \u0935\u093f\u0917\u0941\u0923\u0903 \u092a\u0930\u0927\u0930\u094d\u092e\u093e\u0924\u094d\u0938\u094d\u0935\u0928\u0941\u0937\u094d\u0920\u093f\u0924\u093e\u0924\u094d',
           transliteration: '\u015brey\u0101n sva-dharmo vigu\u1e47a\u1e25 para-dharm\u0101t sv-anu\u1e63\u1e6dhit\u0101t',
@@ -1253,9 +1546,50 @@ export const philosophyData: PhilosophicalConcept[] = [
         citation: 'Bhagavad Gita 3.35, tr. Sivananda (public domain)',
       },
       {
+        id: 'dharma-term-svadharma',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'स्वधर्म',
+          transliteration: 'svadharma',
+          meaning: 'your own dharma — the duty of your nature and role',
+        },
+        storyText:
+          "Sva means *one's own*. Your svadharma is the right thing for your particular nature and role, which is why it can differ from your neighbor's and both be right.\n\nKrishna fights; Krishna's charioteer guides. **Same field, two right paths.**",
+        reappears:
+          "Svadharma is why the Gita tells Arjuna to fight rather than flee: his path is the warrior's, not the monk's.",
+        checks: [
+          {
+            id: 'chk:concept:dharma:svadharma',
+            kind: 'mcq',
+            prompt:
+              'Krishna urges Arjuna to fight, yet Krishna himself only drives the chariot. How can both be right?',
+            options: [
+              {
+                text: "Each acts from his own svadharma — the duty of his nature and role — and dharma is measured against that, not one rule for all",
+                correct: true,
+              },
+              { text: 'Krishna is exempt from dharma because he is divine' },
+              { text: 'One of them must be wrong; dharma is the same for everyone' },
+            ],
+            why: "The right thing is role-shaped. A soldier's dharma and a guide's dharma genuinely differ, and each is judged by his own, not the other's.",
+          },
+        ],
+      },
+      {
+        id: 'dharma-way-1',
+        kind: 'waypoint',
+        title: '4 of 6 banked',
+        learnIndex: 4,
+        storyText:
+          'So dharma is what upholds, it is yours in particular, and it shifts as you do. Next: what to do when your dharma pulls hard against what you want.',
+      },
+      {
         id: 'dharma-desire',
         title: 'When Dharma Conflicts With Desire',
         subtitle: 'Karna at the crossroads',
+        takeaway:
+          'Dharma often cuts against desire. Doing the right thing sometimes costs you the very thing you wanted.',
         keyVerse: {
           sanskrit: '\u0915\u0930\u094d\u092e\u0923\u094d\u092f\u0947\u0935\u093e\u0927\u093f\u0915\u093e\u0930\u0938\u094d\u0924\u0947 \u092e\u093e \u092b\u0932\u0947\u0937\u0941 \u0915\u0926\u093e\u091a\u0928',
           transliteration: 'karma\u1e47y ev\u0101dhik\u0101ras te m\u0101 phale\u1e63u kad\u0101cana',
@@ -1272,6 +1606,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'dharma-authenticity',
         title: 'The Dharma of Authentic Self-Expression',
         subtitle: 'Hanuman\u2019s strength in service',
+        takeaway:
+          "Your dharma is your fullest self in service of something larger, not someone else's idea of success.",
         storyText:
           'Perhaps the most radical aspect of dharmic living is its call to **authenticity**. Your dharma isn\u2019t about becoming someone else\u2019s version of success \u2014 it\u2019s about becoming the fullest expression of your authentic self **in service to something larger**.\n\n**Hanuman** exemplifies this beautifully. He could have used his immense powers for personal glory. Instead, his dharma was devotional service to Rama \u2014 and his strength became meaningful precisely because it was dedicated to protecting righteousness.',
         citation: 'Hanuman\u2019s service: Valmiki Ramayana, Sundara Kanda',
@@ -1280,6 +1616,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'dharma-relationships',
         title: 'Living Dharma in Relationship',
         subtitle: 'Sita\u2019s inner light in Lanka',
+        takeaway:
+          'Dharma is lived between people. Your choices quietly give others permission for theirs.',
         storyText:
           'Dharma isn\u2019t a solitary pursuit. The Ramayana and Mahabharata are fundamentally stories about **relationships** \u2014 siblings, spouses, friends, teachers and students, rulers and subjects.\n\nConsider **Sita\u2019s** dharma during her captivity in Lanka. She maintains her dignity and devotion despite Ravana\u2019s threats and promises \u2014 not because she is passive, but because her inner steadfastness serves a larger purpose. It ultimately leads to Ravana\u2019s downfall and dharma\u2019s restoration.',
         teachingText:
@@ -1290,11 +1628,13 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'dharma-imperfection',
         title: 'The Wisdom of Imperfection',
         subtitle: 'Even the great ones stumble',
+        takeaway:
+          'You do not have to be perfect to be dharmic. Even the great ones stumble, and return.',
         storyText:
           'One of dharma\u2019s most compassionate teachings: **you don\u2019t have to be perfect to be dharmic.** Even the greatest figures in the epics make real mistakes:',
         bullets: [
           '**Rama** banishes Sita based on public opinion rather than his own judgment',
-          '**Yudhishthira\u2019s** gambling addiction leads to his family\u2019s exile',
+          '**Yudhishthira**, the eldest and most honest of the five royal Pandava brothers (the heroes of the Mahabharata), gambles his family into exile',
           '**Arjuna** initially refuses to fight, paralyzed by attachment',
         ],
         teachingText:
@@ -1303,9 +1643,19 @@ export const philosophyData: PhilosophicalConcept[] = [
         citation: 'Episodes: Valmiki Ramayana (Uttara tradition); Mahabharata, Sabha Parva; Bhagavad Gita ch. 1',
       },
       {
+        id: 'dharma-way-2',
+        kind: 'waypoint',
+        title: '5 of 6 banked',
+        learnIndex: 5,
+        storyText:
+          'Dharma is not a spotless record; it is a direction you keep returning to. One idea remains, and it is the one that holds all the others.',
+      },
+      {
         id: 'dharma-ultimate',
         title: 'The Ultimate Dharma',
         subtitle: 'Love as the highest duty',
+        takeaway:
+          'The highest dharma is love. When you act from it, you act rightly without keeping score.',
         keyVerse: {
           sanskrit: '\u0938\u0930\u094d\u0935\u0927\u0930\u094d\u092e\u093e\u0928\u094d\u092a\u0930\u093f\u0924\u094d\u092f\u091c\u094d\u092f \u092e\u093e\u092e\u0947\u0915\u0902 \u0936\u0930\u0923\u0902 \u0935\u094d\u0930\u091c',
           transliteration: 'sarva-dharm\u0101n parityajya m\u0101m eka\u1e43 \u015bara\u1e47a\u1e43 vraja',
@@ -1317,8 +1667,42 @@ export const philosophyData: PhilosophicalConcept[] = [
           'This surrendered dharma appears in the moments when you act from pure compassion without counting the cost \u2014 when you tell the truth knowing it will complicate your life, when you choose **love over fear**. Your life becomes both uniquely yours and part of something infinitely larger.',
         citationLink: 'gita:18',
         citation: 'Bhagavad Gita 18.66, tr. Sivananda (public domain)',
+        checks: [
+          {
+            id: 'chk:concept:dharma:ultimate',
+            kind: 'mcq',
+            prompt: '"Abandon all dharmas and surrender to Me." Is Krishna rejecting dharma?',
+            options: [
+              {
+                text: "No — it is dharma's deepest fulfilment: act from love, and right action follows without anxious calculation",
+                correct: true,
+              },
+              { text: 'Yes — the Gita ends by throwing duty out altogether' },
+              { text: 'Only warriors are allowed to set dharma aside' },
+            ],
+            why: 'When action flows from compassion and dedication to the whole, you act rightly without constantly weighing right and wrong. Love is not the abandonment of duty; it is duty, unclenched.',
+          },
+        ],
       },
-    ]
+    ],
+    sources: [
+      {
+        text: 'Bhagavad Gita',
+        appLink: 'gita:2',
+        locator: 'Chapters 2–3 and 18 (verses 2.47, 3.35, 18.66)',
+        translation: 'Swami Sivananda (public domain)',
+      },
+      {
+        text: 'Valmiki Ramayana & Mahabharata',
+        locator: "Ayodhya Kanda (Rama's exile); Sundara Kanda (Hanuman, Sita); Udyoga Parva (Karna)",
+        translation: 'episodes as cited per section',
+      },
+    ],
+    reflectionQuestions: [
+      "Where are you living someone else's dharma — a version of success that was never really yours?",
+      'Think of a duty that pulls against what you want right now. What would acting from dharma, not desire, look like?',
+      'Whose life are you quietly holding up? What does that person need from you this week?',
+    ],
   },
   {
     id: 'karma',
@@ -1400,27 +1784,81 @@ export const philosophyData: PhilosophicalConcept[] = [
       iconImage: '/images/philosophy/karma-icon.jpg'
     },
     difficulty: 'beginner',
+    kicker: 'You already use this word. You have probably been using it backwards.',
+    learnItems: [
+      'Karma means action, not fate',
+      'Effort is yours; the outcome is not',
+      'There is no opting out',
+      'Skill in action is evenness',
+      "Action as offering doesn't bind",
+      'No sincere effort is ever wasted',
+    ],
+    handoff:
+      'Your actions steer the wheel of life. But what is that wheel, and where does it carry you when a life ends? The tradition has a name for it: samsara.',
     // Verse translations follow Swami Sivananda's public-domain rendering
     // (bundled in gitaVerses.json), lightly trimmed for reading flow.
     sections: [
       {
+        id: 'karma-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          'You already use the word karma. You hear it when something bad circles back to someone who had it coming. That is not what it meant first, and the older meaning is far more useful.\n\nOver the next few pages, karma turns from a cosmic scoreboard into a plain account of how your own actions shape the life you are living.',
+      },
+      {
         id: 'karma-opening',
         title: 'The Weight of Every Action',
         subtitle: 'An Arrow Leaving the Bow',
-        storyText: 'When Arjuna collapsed on the battlefield, unable to act, Krishna did not begin with metaphysics or heaven. He began with action.\n\nBefore speaking of the soul\'s immortality or the paths of devotion, he addressed the thing Arjuna could not escape: a choice had to be made, and even refusing to choose would itself be a choice.\n\nThis is where the teaching of **karma** begins — not as a cosmic scoreboard of rewards and punishments, but as the simple, unavoidable truth that **you are always acting**, and every action leaves something behind. An arrow, once released, cannot be called back. But the archer chooses where to aim.'
+        takeaway:
+          'Karma starts with a plain fact. You are always acting, and every action leaves something behind.',
+        storyText: 'The most famous teaching on action in Hinduism comes from a story. On the eve of a great war, a warrior-prince named Arjuna froze. His own cousins and teachers were standing in the enemy army, and he could not bear to fight them. His chariot-driver that day was Krishna — who, unknown to most on the field, was God himself in human form. Faced with his paralysed friend, Krishna did not begin with grand talk of the soul or of heaven. He began with action.\n\nThe one thing Arjuna could not escape, Krishna pointed out, was that a choice still had to be made, and even refusing to choose would itself be a choice.\n\nThis is where the teaching of **karma** begins — not as a cosmic scoreboard of rewards and punishments, but as the simple, unavoidable truth that **you are always acting**, and every action leaves something behind. An arrow, once released, cannot be called back. But the archer chooses where to aim.'
       },
       {
         id: 'karma-meaning',
         title: 'What Karma Really Means',
         subtitle: 'A Seed Becoming a Tree',
+        takeaway: 'Karma just means action. Not fate, not luck, not punishment.',
         storyText: '**Karma** comes from the Sanskrit root **kri** — to do, to act. It simply means action. Yet centuries of use have buried it under misreadings: fate, luck, punishment, "what goes around comes around."\n\nThe oldest teaching is more precise and more empowering. The Brihadaranyaka Upanishad says of a person: "As is his desire, so is his will; and as is his will, so is his deed; and whatever deed he does, that he will reap."\n\n**Desire shapes intention, intention shapes action, and action shapes who you become.** Karma is not something that happens TO you. It is the trail you are laying down, one choice at a time, in the direction your attention is already pointing.',
         teachingText: 'Notice the chain begins with **desire**, not deed. This is why Hindu thought insists that intention matters as much as action: two people can perform the identical act — one from love, one from calculation — and plant entirely different seeds.\n\nIf you want to know your future, the Upanishad suggests, do not consult the stars. Watch what you are doing, and wanting, today.',
         citation: 'Brihadaranyaka Upanishad 4.4.5 (tr. Max Müller).'
       },
       {
+        id: 'karma-term-karma',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'कर्म',
+          transliteration: 'karma',
+          meaning: 'action — the deed itself',
+        },
+        storyText:
+          'People misread this word in two ways. Karma is not fate, because fate is what you cannot change, and karma is what you do. And karma is not cosmic revenge, because nobody is punishing you. Consequences are simply growing from seeds you planted.\n\n**Karma is the verb of your life.**',
+        reappears:
+          'In the four paths, one is karma yoga: action itself, turned into a way to the divine.',
+        checks: [
+          {
+            id: 'chk:concept:karma:not-fate',
+            kind: 'mcq',
+            prompt:
+              'A friend shrugs: "It\'s my karma. Nothing I can do." What has he gotten backwards?',
+            options: [
+              {
+                text: 'Karma means his own action, so it is the one thing he can always change',
+                correct: true,
+              },
+              { text: 'Nothing. That is roughly what karma means.' },
+              { text: 'Karma is fixed at birth and cannot be altered' },
+            ],
+            why: 'Karma is the verb of your life, not a sentence passed on it. Read as fate, the tradition\'s biggest idea about your own power becomes an excuse. Karma is what you do, and what you do is always yours to change.',
+          },
+        ],
+      },
+      {
         id: 'karma-right-to-action',
         title: 'Your Right Is to the Action Alone',
         subtitle: 'Hands Working, Palms Open',
+        takeaway:
+          'Your right is to the work, never to its fruits. Effort is yours; the outcome is not.',
         keyVerse: {
           sanskrit: 'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥',
           transliteration: 'karmaṇy evādhikāras te mā phaleṣhu kadāchana, mā karma-phala-hetur bhūr mā te saṅgo \'stv akarmaṇi',
@@ -1428,12 +1866,30 @@ export const philosophyData: PhilosophicalConcept[] = [
           source: 'Bhagavad Gita 2.47 (tr. Swami Sivananda)'
         },
         storyText: 'This is the most quoted verse in the Gita, and the most misunderstood. Krishna is not telling Arjuna to stop caring about results — a general who doesn\'t care about victory should leave the field.\n\nHe is making a surgical distinction: **effort is yours; outcome is not.** A thousand factors you cannot see — other people\'s choices, timing, chance, history — stand between your action and its fruit.\n\nWhen you stake your peace on the part you cannot control, anxiety is the only possible harvest.',
-        teachingText: 'Think of something you\'re working toward right now — a promotion, a child\'s happiness, a body healed. The verse asks: can you pour yourself into the work itself, wholly, and hold the outcome with open palms?\n\nThis is not lowering the bar. People who work this way usually work better — steadier under pressure, more honest about feedback, less crushed by setbacks — because their fuel is the work, not the scoreboard.'
+        teachingText: 'Think of something you\'re working toward right now — a promotion, a child\'s happiness, a body healed. The verse asks: can you pour yourself into the work itself, wholly, and hold the outcome with open palms?\n\nThis is not lowering the bar. People who work this way usually work better — steadier under pressure, more honest about feedback, less crushed by setbacks — because their fuel is the work, not the scoreboard.',
+        checks: [
+          {
+            id: 'chk:concept:karma:fruits',
+            kind: 'mcq',
+            prompt:
+              '"Your right is to the action, never to its fruits" (Gita 2.47). What is Krishna actually asking of you?',
+            options: [
+              {
+                text: 'Pour yourself fully into the work, and hold the outcome with open palms',
+                correct: true,
+              },
+              { text: 'Stop caring whether you succeed or fail' },
+              { text: 'Only act when the result is guaranteed' },
+            ],
+            why: 'The verse is a surgical distinction, not a shrug. Effort is yours; the outcome depends on a thousand things you do not control. Caring about the work is the point. Staking your peace on the result you cannot control is what breeds anxiety.',
+          },
+        ],
       },
       {
         id: 'karma-no-inaction',
         title: 'The Myth of Doing Nothing',
         subtitle: 'A River That Cannot Stop Flowing',
+        takeaway: 'There is no opting out. Even doing nothing is something you did.',
         keyVerse: {
           sanskrit: 'न हि कश्चित्क्षणमपि जातु तिष्ठत्यकर्मकृत्। कार्यते ह्यवशः कर्म सर्वः प्रकृतिजैर्गुणैः॥',
           transliteration: 'na hi kaśhchit kṣhaṇam api jātu tiṣhṭhaty akarma-kṛit, kāryate hy avaśhaḥ karma sarvaḥ prakṛiti-jair guṇaiḥ',
@@ -1449,9 +1905,19 @@ export const philosophyData: PhilosophicalConcept[] = [
         teachingText: 'This teaching is bracing because it removes the comfortable illusion of the sidelines. Where in your life are you telling yourself "I\'m not doing anything" — about a strained relationship, an injustice at work, a habit quietly growing?\n\nThe Gita\'s point is not to induce guilt but clarity: since you are acting either way, **act consciously**. A deliberate choice, even a hard one, plants better seeds than a drift.'
       },
       {
+        id: 'karma-way-1',
+        kind: 'waypoint',
+        title: '3 of 6 banked',
+        learnIndex: 3,
+        storyText:
+          'That is the ground floor: you are always acting, and your action is always yours. The rest of this is about how to act, so that action frees you instead of trapping you.',
+      },
+      {
         id: 'karma-skill',
         title: 'Yoga Is Skill in Action',
         subtitle: 'A Potter\'s Steady Hands at the Wheel',
+        takeaway:
+          'Yoga is skill in action, and the skill is evenness: fully engaged, and strangely unhurried.',
         keyVerse: {
           sanskrit: 'बुद्धियुक्तो जहातीह उभे सुकृतदुष्कृते। तस्माद्योगाय युज्यस्व योगः कर्मसु कौशलम्॥',
           transliteration: 'buddhi-yukto jahātīha ubhe sukṛita-duṣhkṛite, tasmād yogāya yujyasva yogaḥ karmasu kauśhalam',
@@ -1467,6 +1933,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'karma-offering',
         title: 'Action as Offering',
         subtitle: 'A Lotus Leaf Untouched by Water',
+        takeaway:
+          'Done as an offering, the same action stops binding you. A lotus leaf lives in the pond and is never soaked.',
         openingVerse: {
           sanskrit: 'यज्ञार्थात्कर्मणोऽन्यत्र लोकोऽयं कर्मबन्धनः। तदर्थं कर्म कौन्तेय मुक्तसंगः समाचर॥',
           transliteration: 'yajñārthāt karmaṇo \'nyatra loko \'yaṁ karma-bandhanaḥ, tad-arthaṁ karma kaunteya mukta-saṅgaḥ samāchara',
@@ -1479,27 +1947,87 @@ export const philosophyData: PhilosophicalConcept[] = [
         citation: 'Lotus-leaf image: Bhagavad Gita 5.10 (tr. Swami Sivananda).'
       },
       {
+        id: 'karma-term-yajna',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'यज्ञ',
+          transliteration: 'yajña',
+          meaning: 'offering — action done for something larger than yourself',
+        },
+        storyText:
+          'A yajna was once a fire ritual, an offering poured into the flames. The Gita widens the word. Any action becomes a yajna when you do it for something larger than your own gain.\n\nThe cook feeding her family, the engineer building for people he will never meet, the volunteer who asks for nothing: all of them are offering.\n\n**Yajna is not where you act. It is why you act.**',
+        reappears:
+          'Offering is the hinge of karma yoga, the path of action you will meet among the four ways.',
+        checks: [
+          {
+            id: 'chk:concept:karma:offering',
+            kind: 'mcq',
+            prompt:
+              'Why does the Gita say action done as an offering does not bind you?',
+            options: [
+              {
+                text: 'It is done for something larger than the small self, so it leaves no residue',
+                correct: true,
+              },
+              { text: 'Because offerings only happen in temples, not in daily work' },
+              { text: 'Because the person stops acting altogether' },
+            ],
+            why: 'Action binds when it feeds the small self, my gain and my credit. The same act performed as offering leaves no residue, as a lotus leaf is not tainted by water. The leaf lives in the pond; it simply is not soaked by it.',
+          },
+        ],
+      },
+      {
+        id: 'karma-way-2',
+        kind: 'waypoint',
+        title: '5 of 6 banked',
+        learnIndex: 5,
+        storyText:
+          'Karma binds you, or it frees you, depending on why you act. One idea is left, the quiet promise that holds all of this up.',
+      },
+      {
         id: 'karma-mystery',
         title: 'The Deep Mystery of Action',
         subtitle: 'Paths Crossing in a Dense Forest',
+        takeaway:
+          'The way of action is deep. No rulebook fits it, so judge an act by three lamps.',
         openingVerse: {
           sanskrit: 'कर्मणो ह्यपि बोद्धव्यं बोद्धव्यं च विकर्मणः। अकर्मणश्च बोद्धव्यं गहना कर्मणो गतिः॥',
           transliteration: 'karmaṇo hy api boddhavyaṁ boddhavyaṁ cha vikarmaṇaḥ, akarmaṇaśh cha boddhavyaṁ gahanā karmaṇo gatiḥ',
           meaning: 'The true nature of action should be known, of forbidden action, and of inaction — the way of action is hard to understand.',
           source: 'Bhagavad Gita 4.17 (tr. Swami Sivananda)'
         },
-        storyText: '**Gahana karmano gatih** — deep, dense, hard to fathom is the course of action. Even Krishna, in the middle of explaining karma, pauses to admit its mystery.\n\nA harsh word spoken in love can heal; a kind word spoken in cowardice can wound. Help given carelessly can weaken the helped. The epics are full of this ambiguity: Yudhishthira\'s truthfulness enables a deception at Kurukshetra; Karna\'s legendary generosity, offered to the wrong request, costs him his armor and his life.\n\nThis is why karma cannot be reduced to a rulebook. Before a significant act, the tradition suggests **three lamps** to examine it by:',
+        storyText: '**Gahana karmano gatih** — deep, dense, hard to fathom is the course of action. Even Krishna, in the middle of explaining karma, pauses to admit its mystery.\n\nA harsh word spoken in love can heal; a kind word spoken in cowardice can wound. Help given carelessly can weaken the helped. The great epics are full of this ambiguity. Even Yudhishthira, a king famous for never telling a lie, once let his honesty be used to deceive an enemy in battle. And Karna, a warrior famous for never refusing a request, gave away the armour that was keeping him alive, because someone simply asked for it.\n\nThis is why karma cannot be reduced to a rulebook. Before a significant act, the tradition suggests **three lamps** to examine it by:',
         bullets: [
           'Is my **intention** clean?',
           'Does it serve **more than myself**?',
           'Would I act this way if **no one ever knew**?'
         ],
-        teachingText: 'The teaching asks for something harder than compliance: **discernment**. None of the lamps guarantees a perfect outcome; the way of action stays deep.\n\nBut a person who keeps asking becomes, over years, someone whose actions can be trusted — including by themselves.'
+        teachingText: 'The teaching asks for something harder than compliance: **discernment**. None of the lamps guarantees a perfect outcome; the way of action stays deep.\n\nBut a person who keeps asking becomes, over years, someone whose actions can be trusted — including by themselves.',
+        checks: [
+          {
+            id: 'chk:concept:karma:three-lamps',
+            kind: 'mcq',
+            prompt:
+              'The way of action is deep, and no single rule fits every case. What does the tradition offer instead of a rulebook?',
+            options: [
+              {
+                text: 'Three lamps to examine an act by: clean intention, service beyond yourself, and whether you would do it unseen',
+                correct: true,
+              },
+              { text: 'A fixed list of forbidden actions to memorise' },
+              { text: 'A priest who decides each case for you' },
+            ],
+            why: 'Karma asks for discernment, not compliance. The three lamps ask three questions: is my intention clean, does it serve more than myself, and would I act this way if no one ever knew. They do not guarantee outcomes, but a person who keeps asking becomes, over years, someone whose actions can be trusted, including by themselves.',
+          },
+        ],
       },
       {
         id: 'karma-no-effort-lost',
         title: 'No Sincere Effort Is Ever Lost',
         subtitle: 'Rain Disappearing into Soil, Green Shoots Later',
+        takeaway:
+          'On this path, nothing sincere is wasted. Even a little protects from great fear.',
         keyVerse: {
           sanskrit: 'नेहाभिक्रमनाशोऽस्ति प्रत्यवायो न विद्यते। स्वल्पमप्यस्य धर्मस्य त्रायते महतो भयात्॥',
           transliteration: 'nehābhikrama-nāśho \'sti pratyavāyo na vidyate, svalpam apy asya dharmasya trāyate mahato bhayāt',
@@ -1513,6 +2041,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'karma-worship',
         title: 'Your Work as Worship',
         subtitle: 'Ordinary Tools on an Altar',
+        takeaway:
+          'Your own ordinary work, done as offering, is worship. The wheel turns either way, and the teaching hands you the wheel.',
         keyVerse: {
           sanskrit: 'यतः प्रवृत्तिर्भूतानां येन सर्वमिदं ततम्। स्वकर्मणा तमभ्यर्च्य सिद्धिं विन्दति मानवः॥',
           transliteration: 'yataḥ pravṛittir bhūtānāṁ yena sarvam idaṁ tatam, sva-karmaṇā tam abhyarchya siddhiṁ vindati mānavaḥ',
@@ -1540,7 +2070,9 @@ export const philosophyData: PhilosophicalConcept[] = [
       },
     ],
     reflectionQuestions: [
-      'Where are you working hard but gripping the result so tightly it hurts?'
+      'Where are you working hard but gripping the result so tightly it hurts?',
+      "Where in your life are you telling yourself 'I am not doing anything', when the silence is itself a choice?",
+      'Pick one ordinary task tomorrow. Could you do it as an offering, for the people it serves rather than for the credit?',
     ]
   },
   {
@@ -1631,18 +2163,53 @@ export const philosophyData: PhilosophicalConcept[] = [
       iconImage: '/images/philosophy/ahimsa-icon.jpg'
     },
     difficulty: 'beginner',
+    kicker: "Not weakness. The Mahabharata's highest praise, spoken on a battlefield: ahimsa is the highest dharma.",
+    learnItems: [
+      'Ahimsa is the absence of the wish to harm, not just non-violence',
+      'Harm has three gates: hand, tongue, and thought',
+      'Ahimsa purges hatred from whatever conflict dharma requires',
+      'Perfected, harmlessness becomes an atmosphere others feel',
+      'The subtlest harm is aimed inward, at yourself',
+    ],
+    handoff:
+      'You have met the ideas the whole tradition is built on — dharma, karma, the wheel and the way off, the one Self, the veil, the strands, and harmlessness. Now the real test: a friend turns and asks, in plain words, so what actually is Hinduism? The next step is your own answer.',
     sections: [
+      {
+        id: 'ahimsa-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          '"Non-violence" undersells the word, and it is often mistaken for weakness. The Mahabharata — a text soaked in war — answers that mistake with its highest praise.\n\nOver the next few pages, ahimsa turns from a lofty ideal into a daily practice with three gates, one surprising promise, and a forgotten direction: inward.',
+      },
       {
         id: 'ahimsa-opening',
         title: 'The Strength That Refuses to Wound',
         subtitle: 'An Open Hand Where a Fist Could Be',
+        takeaway:
+          'Ahimsa is the absence of the wish to harm, and the tradition calls it the highest dharma — praised, of all places, on a battlefield.',
         storyText: '**Ahimsa** is usually translated "non-violence," and the translation undersells it. The word is **a-himsa** — the absence of the wish to harm — and the tradition means it in full: not wounding with the hand, not wounding with the tongue, not wounding, finally, even with the thought.\n\nIt is often mistaken for weakness. The Mahabharata — a text soaked in the moral complexities of war — answers that mistake with its most sweeping superlative: **"Ahimsa is the highest dharma**, the highest self-control, the highest gift, the highest austerity, the highest sacrifice."\n\nThe epic of the great war reserves its supreme praise for the one who harms nothing.',
         citation: 'Mahabharata, Anushasana Parva 13.117 (tr. K.M. Ganguli).'
+      },
+      {
+        id: 'ahimsa-term-ahimsa',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'अहिंसा',
+          transliteration: 'ahiṃsā',
+          meaning: 'a-himsa — the absence of the wish to harm',
+        },
+        storyText:
+          'The word is built on a negation. *Himsa* is the urge to injure, and the *a-* in front of it cancels the urge.\n\nSo ahimsa is not merely holding your fist. It is not wounding with the hand, nor the tongue, nor, finally, even the thought.',
+        reappears:
+          "Ahimsa is the first of Patanjali's five yamas, the restraints all further practice stands on.",
       },
       {
         id: 'ahimsa-three-gates',
         title: 'Three Gates of Harm',
         subtitle: 'Thought, Word, and Hand',
+        takeaway:
+          "Harm passes through three gates: hand, tongue, and thought. The hand is easiest; the mind's quiet, private war is hardest of all.",
         storyText: 'The tradition analyzes violence the way a physician traces a disease: to its origin. By the time a hand strikes, the harm is old — it lived first as a thought, then as words.\n\nSo ahimsa is practiced at **three gates**:',
         bullets: [
           '**The hand\'s gate** is the easiest — most of us pass it daily.',
@@ -1651,12 +2218,38 @@ export const philosophyData: PhilosophicalConcept[] = [
         ],
         teachingText: 'The Gita lists ahimsa among the marks of true knowledge and among the divine endowments — in both lists it keeps company with truthfulness and absence of anger, its gatekeeper virtues.\n\nAudit your three gates for one day, gently. Most people find the hand clean, the tongue occasionally armed, and the mind running a low-grade war no one else can see. Begin where the tradition begins: not by suppressing the violent thought, but by **noticing it without enlisting**.',
         citationLink: 'gita:13',
-        citation: 'Bhagavad Gita 13.7–12, 16.2 (tr. Swami Sivananda).'
+        citation: 'Bhagavad Gita 13.7–12, 16.2 (tr. Swami Sivananda).',
+        checks: [
+          {
+            id: 'chk:concept:ahimsa:gates',
+            kind: 'mcq',
+            prompt: 'Which gate of harm does the tradition call the hardest?',
+            options: [
+              {
+                text: "The mind's — the rehearsed grievance, the imagined argument won, the quiet wish to see someone fail",
+                correct: true,
+              },
+              { text: "The hand's — physical violence is the deepest form of harm" },
+              { text: "The tongue's — words always wound more than thoughts" },
+            ],
+            why: 'By the time a hand strikes, the harm is old; it lived first as a thought, then as words. Begin by noticing the violent thought without enlisting in it.',
+          },
+        ],
+      },
+      {
+        id: 'ahimsa-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          'Harm has three gates, and the hardest is the quiet one inside. Next, a paradox: this teaching is given on a battlefield, to a warrior told to fight.',
       },
       {
         id: 'ahimsa-gita-virtue',
         title: 'Harmlessness in the Gita\'s Lists',
         subtitle: 'A Virtue Named Among the Divine Endowments',
+        takeaway:
+          'Ahimsa is not the refusal of all conflict; it is purging hatred from whatever conflict dharma requires. Arjuna must fight, without the wish to harm.',
         keyVerse: {
           sanskrit: 'अहिंसा सत्यमक्रोधस्त्यागः शान्तिरपैशुनम्। दया भूतेष्वलोलुप्त्वं मार्दवं ह्रीरचापलम्॥',
           transliteration: 'ahinsā satyam akrodhas tyāgaḥ śhāntir apaiśhunam, dayā bhūteṣhv aloluptvaṁ mārdavaṁ hrīr achāpalam',
@@ -1664,29 +2257,75 @@ export const philosophyData: PhilosophicalConcept[] = [
           source: 'Bhagavad Gita 16.2 (tr. Swami Sivananda)'
         },
         storyText: 'Notice the company ahimsa keeps in the Gita\'s sixteenth chapter: truth, absence of anger, compassion, gentleness. The tradition understood these as **one organism** — you cannot practice harmlessness while cultivating anger, and you cannot be truly truthful while wishing harm, because harm distorts what you are willing to see.\n\nAnd there is a paradox the Gita holds without flinching: this teaching is given on a battlefield, to a warrior being told to fight.\n\nAhimsa in the Gita is not the refusal of all conflict; it is **the purging of hatred from whatever conflict dharma requires**. Arjuna must fight — without the wish to harm.',
-        teachingText: 'This is the adult version of the teaching: some roles — parent, judge, soldier, surgeon, manager — require acts that cause pain.\n\nAhimsa asks not that you abandon the role but that you empty it of cruelty: the discipline without the contempt, the boundary without the punishment, the truth without the twist of the knife.'
+        teachingText: 'This is the adult version of the teaching: some roles — parent, judge, soldier, surgeon, manager — require acts that cause pain.\n\nAhimsa asks not that you abandon the role but that you empty it of cruelty: the discipline without the contempt, the boundary without the punishment, the truth without the twist of the knife.',
+        checks: [
+          {
+            id: 'chk:concept:ahimsa:battlefield',
+            kind: 'mcq',
+            prompt: 'The Gita teaches ahimsa on a battlefield, to a warrior told to fight. Is that a contradiction?',
+            options: [
+              {
+                text: 'No — ahimsa empties a necessary role of cruelty: the discipline without contempt, the boundary without punishment, the truth without the twist of the knife',
+                correct: true,
+              },
+              { text: 'Yes — ahimsa means Arjuna should have refused to fight' },
+              { text: 'No — warriors are simply exempt from ahimsa' },
+            ],
+            why: 'Some roles — parent, judge, surgeon, soldier — cause pain. Ahimsa asks not that you abandon the role but that you drain the hatred from it.',
+          },
+        ],
       },
       {
         id: 'ahimsa-yoga-sutra',
+        takeaway:
+          'Perfected, harmlessness becomes an atmosphere: in its presence, hostility is abandoned. And the sutra says it is trainable.',
         title: 'The Sutra\'s Astonishing Promise',
         subtitle: 'A Predator Grown Calm in a Sage\'s Presence',
-        storyText: 'Patanjali\'s Yoga Sutras make ahimsa the first of the five **yamas** — the restraints on which all further practice stands — and attach to it the tradition\'s most beautiful promise: **"In the presence of one established in ahimsa, hostility is abandoned."**\n\nNot managed. Abandoned — by others.\n\nThe claim is that harmlessness, perfected, becomes an atmosphere: animals calm, arguments deflate, aggressive people find their aggression has nowhere to land. India\'s lore is full of sages whose presence tamed predators; modern life offers the same evidence at lower voltage — everyone knows one person around whom conflict simply doesn\'t escalate.',
+        storyText: 'The **Yoga Sutras**, the classic manual of yoga compiled by an ancient sage named **Patanjali**, make ahimsa the first of the five **yamas** — the restraints on which all further practice stands — and attach to it the tradition\'s most beautiful promise: **"In the presence of one established in ahimsa, hostility is abandoned."**\n\nNot managed. Abandoned — by others.\n\nThe claim is that harmlessness, perfected, becomes an atmosphere: animals calm, arguments deflate, aggressive people find their aggression has nowhere to land. India\'s lore is full of sages whose presence tamed predators; modern life offers the same evidence at lower voltage — everyone knows one person around whom conflict simply doesn\'t escalate.',
         teachingText: 'You have felt this atmosphere around certain people, and its opposite around others. The sutra says it is **trainable**.\n\nThe training is unglamorous: a thousand small refusals to add heat — until your presence itself becomes the de-escalation. Ask yourself which rooms get calmer when you enter, and which get tenser, and treat the answer as a progress report.',
         citation: 'Yoga Sutras of Patanjali 2.35.'
+      },
+      {
+        id: 'ahimsa-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          'Harmlessness can become an atmosphere others feel. One direction is left, and it is the one most people forget: inward.',
       },
       {
         id: 'ahimsa-self',
         title: 'The Forgotten Direction: Inward',
         subtitle: 'A Mirror Treated Gently',
+        takeaway:
+          'The subtlest harm is aimed at yourself, and it never stays contained. Befriending yourself is not indulgence; it is where ahimsa begins.',
         storyText: 'The subtlest himsa is the one aimed at yourself.\n\nThe inner voice that calls you an idiot for a small mistake, the punishing schedule, the refusal of rest, the standards you would never impose on a friend — the tradition counts all of it as violence, and notes that it never stays contained.\n\nThose who wound themselves leak the wounding outward: the harsh self-critic becomes the harsh parent; the person at war with their own body wars quietly with everyone else\'s ease. The Gita\'s counsel that "the self alone is one\'s friend, the self alone is one\'s enemy" makes the choice explicit — **befriending yourself is not indulgence; it is where ahimsa begins**.',
         teachingText: 'Listen to your inner commentary for a day as if it were spoken aloud to someone you love. Where it fails that test, it is himsa — and practicing gentler inner speech is not self-esteem homework but the **root practice** of non-violence.\n\nA person cannot give the world a peace they refuse themselves.',
         citationLink: 'gita:6',
-        citation: 'Bhagavad Gita 6.5 (tr. Swami Sivananda).'
+        citation: 'Bhagavad Gita 6.5 (tr. Swami Sivananda).',
+        checks: [
+          {
+            id: 'chk:concept:ahimsa:inward',
+            kind: 'mcq',
+            prompt: 'Where does the tradition say ahimsa begins?',
+            options: [
+              {
+                text: 'Inward — the harsh inner critic is himsa too, and it leaks outward; a person cannot give the world a peace they refuse themselves',
+                correct: true,
+              },
+              { text: 'Outward — with strict rules about how to treat others' },
+              { text: 'With a vow never to feel anger again' },
+            ],
+            why: 'Those who wound themselves leak the wounding: the harsh self-critic becomes the harsh parent. Gentler inner speech is the root practice, not self-esteem homework.',
+          },
+        ],
       },
       {
         id: 'ahimsa-daily',
         title: 'A Day of Practiced Harmlessness',
         subtitle: 'Small Choices, Repeated, Becoming a Nature',
+        takeaway:
+          'Ahimsa is a direction, not a destination: the pause before the sharp reply, repeated, until it becomes a nature that changes every room it enters.',
         storyText: 'Because ahimsa is a direction rather than a destination, the tradition renders it as daily choices:',
         bullets: [
           'The pause before the sharp reply.',
@@ -1718,7 +2357,9 @@ export const philosophyData: PhilosophicalConcept[] = [
       },
     ],
     reflectionQuestions: [
-      'Harm can travel through hand, tongue, or thought. Which one slips for you most often?'
+      'Harm can travel through hand, tongue, or thought. Which one slips for you most often?',
+      'Listen to your inner commentary for a day as if it were spoken aloud to someone you love. Where would it fail that test?',
+      'Which rooms get calmer when you enter, and which get tenser? Treat the answer as a progress report.',
     ]
   },
   {
@@ -1803,17 +2444,38 @@ export const philosophyData: PhilosophicalConcept[] = [
       iconImage: '/images/philosophy/samsara-icon.jpg'
     },
     difficulty: 'intermediate',
+    kicker: "Everything in your life already moves in circles. The tradition says the circling does not stop at the body's edge.",
+    learnItems: [
+      'Samsara is the wheel: birth, death, and birth again',
+      'Desire is what keeps the wheel turning',
+      'Even heaven is temporary — it too is on the wheel',
+      'The wheel is a school, not a sentence',
+      'Freedom is the still point at the center, not another place',
+    ],
+    handoff:
+      'The wheel turns, and even heaven is on it. So is there any way off? There is a still point at the very center, and reaching it, they do not return. The tradition calls it moksha.',
     sections: [
+      {
+        id: 'samsara-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          "Seasons return. Moods return. The argument you had with your father returns, wearing your child's face. Before samsara is a doctrine about rebirth, it is something you can watch: everything in experience cycles.\n\nOver the next few pages, the wheel goes from a strange idea about past lives to a clear picture of why life repeats, and where its quiet center is.",
+      },
       {
         id: 'samsara-opening',
         title: 'The Wheel That Keeps Turning',
         subtitle: 'A River Bending Back to Its Source',
+        takeaway:
+          'Samsara is the great circulation: birth, death, and birth again. Everything in your experience already moves this way.',
         storyText: '**Samsara** — from the Sanskrit "to flow together, to wander through" — is the tradition\'s name for the great circulation: birth, growth, decay, death, and birth again, world upon world, life upon life.\n\nBut before it is a doctrine about reincarnation, it is an observation anyone can verify: **everything in experience cycles**. Seasons return. Moods return. The argument you had with your father returns, wearing your child\'s face.\n\nThe tradition\'s claim is simply that the circulation does not stop at the body\'s edge — the traveler continues, changing vehicles.'
       },
       {
         id: 'samsara-changing-clothes',
         title: 'Worn-Out Clothes',
         subtitle: 'A Traveler Folding One Garment, Reaching for Another',
+        takeaway:
+          'Death changes the clothes, not the wearer. You have already outlived the child you once were.',
         keyVerse: {
           sanskrit: 'वासांसि जीर्णानि यथा विहाय नवानि गृह्णाति नरोऽपराणि। तथा शरीराणि विहाय जीर्णान्यन्यानि संयाति नवानि देही॥',
           transliteration: 'vāsānsi jīrṇāni yathā vihāya navāni gṛihṇāti naro \'parāṇi, tathā śharīrāṇi vihāya jīrṇāny anyāni sanyāti navāni dehī',
@@ -1826,17 +2488,59 @@ export const philosophyData: PhilosophicalConcept[] = [
         citation: 'Bhagavad Gita 2.13 (tr. Swami Sivananda).'
       },
       {
+        id: 'samsara-term-samsara',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'संसार',
+          transliteration: 'saṃsāra',
+          meaning: 'the wheel — birth, death, and birth again',
+        },
+        storyText:
+          'The word literally means *wandering through*. A soul in samsara moves from life to life the way a traveler moves from town to town.\n\nHold onto the wheel image. Everything ahead is about that wheel: first what turns it, and then how to step toward its center.',
+        reappears:
+          'Samsara is the problem that moksha, two ideas from now, is the answer to.',
+        checks: [
+          {
+            id: 'chk:concept:samsara:wearer',
+            kind: 'mcq',
+            prompt: 'Death is "casting off worn-out clothes." In the image, who does the casting off?',
+            options: [
+              {
+                text: 'The Self — the one who wore the child’s body, the youth’s, and this one, staying the same while the bodies change',
+                correct: true,
+              },
+              { text: 'The body, which then receives a new soul' },
+              { text: 'Nobody — the image means everything simply ends at death' },
+            ],
+            why: 'The clothes are the body; the wearer is the Self that has already outlived every earlier body you wore. Death changes the clothes, not the wearer.',
+          },
+        ],
+      },
+      {
         id: 'samsara-engine',
         title: 'What Drives the Wheel',
         subtitle: 'Desire as the Axle',
+        takeaway:
+          "Desire is what turns the wheel. Each life is the last life's unfinished wanting, given a new body to want with.",
         storyText: 'The wheel is not spun by punishment; it is spun by **wanting**.\n\nThe Brihadaranyaka Upanishad traces the mechanics in one breath: a person "consists of desires; as is the desire, so is the will; as is the will, so is the deed; and whatever deed he does, that he will reap" — and then completes the circuit: the one still holding unfinished desire returns to fulfill it, while "of the one without desire... his vital energies do not depart; being Brahman itself, he goes to Brahman."\n\nSamsara, in other words, is **unfinished business**. Each life is the previous life\'s wanting, given a new body to want with.',
         teachingText: 'Scale it down to watch it work: notice how today\'s restlessness is mostly yesterday\'s unfinished desires re-arising — the unanswered message, the unbought thing, the unproven point. That is the wheel, in miniature, turning daily.\n\nThe tradition\'s exit is not to crush desire but to **complete and outgrow it**: want deeper things until the shallow wanting quiets.',
         citation: 'Brihadaranyaka Upanishad 4.4.5–6 (tr. Max Müller).'
       },
       {
+        id: 'samsara-way-1',
+        kind: 'waypoint',
+        title: '2 of 5 banked',
+        learnIndex: 2,
+        storyText:
+          'So the wheel turns, and it is wanting that turns it. Next comes a surprise about how far the wheel reaches — including up, into the heavens.',
+      },
+      {
         id: 'samsara-even-heaven',
         title: 'Even Heaven Is on the Wheel',
         subtitle: 'Palaces of the Gods, Also Turning',
+        takeaway:
+          'Even heaven is on the wheel. Every earned paradise has an expiry date.',
         keyVerse: {
           sanskrit: 'आब्रह्मभुवनाल्लोकाः पुनरावर्तिनोऽर्जुन। मामुपेत्य तु कौन्तेय पुनर्जन्म न विद्यते॥',
           transliteration: 'ā-brahma-bhuvanāl lokāḥ punar āvartino \'rjuna, mām upetya tu kaunteya punar janma na vidyate',
@@ -1846,19 +2550,63 @@ export const philosophyData: PhilosophicalConcept[] = [
         storyText: 'Hindu cosmology makes a move that startles first-time readers: **even heaven is inside samsara**.\n\nThe pleasant worlds earned by good karma are real, says the Gita — and temporary. When the merit runs out, the stay ends, and the wheel resumes.\n\nThis is the tradition\'s deepest critique of the spiritual transaction: piety aimed at reward is just shopping at a higher altitude. What the Gita calls "a place of pain and impermanence" is not earth specifically — it is **anywhere the meter is running**.',
         teachingText: 'The modern translation writes itself: every achieved paradise — the promotion, the body, the house, the reputation — is a heaven with an expiry date, enjoyable and unstable.\n\nNoticing this is not cynicism; it is accuracy. The unconditioned, says the teaching, is not another better place on the wheel. It is **the axle\'s stillness** — available, the sages insist, in the middle of any turning life.',
         citationLink: 'gita:8',
-        citation: 'Bhagavad Gita 8.15–16 (tr. Swami Sivananda).'
+        citation: 'Bhagavad Gita 8.15–16 (tr. Swami Sivananda).',
+        checks: [
+          {
+            id: 'chk:concept:samsara:heaven',
+            kind: 'mcq',
+            prompt: 'The Gita says even heaven is temporary. What is it warning against?',
+            options: [
+              {
+                text: 'Piety aimed at reward is just shopping at a higher altitude — freedom is not a better seat on the wheel but the stillness at its center',
+                correct: true,
+              },
+              { text: 'That heaven does not exist at all' },
+              { text: 'That good actions are pointless' },
+            ],
+            why: 'Pleasant worlds earned by good karma are real, and temporary; when the merit runs out, the wheel resumes. The unconditioned is not a nicer place on the rim. It is the axle.',
+          },
+        ],
       },
       {
         id: 'samsara-not-punishment',
         title: 'A School, Not a Sentence',
         subtitle: 'The Same Lesson Returning Until Learned',
+        takeaway:
+          'The wheel is a school, not a sentence. It returns you, precisely, to whatever you have not yet learned.',
         storyText: 'It is easy to hear samsara as a prison sentence — trapped on the wheel until release. The tradition\'s working attitude is closer to **a school**: the wheel returns you, with great precision, to whatever you have not yet learned.\n\nThe pattern you fled in one relationship waits in the next; the lesson dodged in one decade re-enrolls you in the following one. Rebirth, on this reading, is the curriculum continuing between terms.\n\nNothing is vindictive about it — the fire that burns the hand is also the fire that cooks the food. **The wheel is neutral; the learning is optional; the repetition is not.**',
-        teachingText: 'Find your own recurring curriculum: the situation that keeps arriving with different casting — the same boss twice, the same argument in every friendship, the same crisis each spring.\n\nThe tradition\'s counsel is to stop asking "why does this keep happening to me" and start asking **"what does this keep asking of me."** Wheels release what has finished learning.'
+        teachingText: 'Find your own recurring curriculum: the situation that keeps arriving with different casting — the same boss twice, the same argument in every friendship, the same crisis each spring.\n\nThe tradition\'s counsel is to stop asking "why does this keep happening to me" and start asking **"what does this keep asking of me."** Wheels release what has finished learning.',
+        checks: [
+          {
+            id: 'chk:concept:samsara:school',
+            kind: 'mcq',
+            prompt: 'Samsara keeps returning you to the same lesson. What question does the tradition suggest you ask instead?',
+            options: [
+              {
+                text: 'Not "why does this keep happening to me," but "what does this keep asking of me"',
+                correct: true,
+              },
+              { text: '"Who is to blame for this repeating?"' },
+              { text: '"How do I make sure nothing ever changes?"' },
+            ],
+            why: 'Wheels release what has finished learning. The situation that keeps arriving with different casting is the curriculum continuing between terms.',
+          },
+        ],
+      },
+      {
+        id: 'samsara-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          'The wheel is neutral; the repetition is not. One idea remains, and it is the way through: the wheel has a center, and the center is the way out.',
       },
       {
         id: 'samsara-stepping-off',
         title: 'The Still Point',
         subtitle: 'The Axle at the Center of the Turning',
+        takeaway:
+          'The wheel has a center. Nearer the axle the same wheel turns, and you merely watch it turn.',
         storyText: 'Samsara is only half the teaching; the other half is that the wheel has an exit — or more precisely, **a center**.\n\nMoksha is not somewhere else; it is the stillness at the axle, and the Gita\'s entire counsel — act without clinging, remember the divine, love without agenda — is the inward walk from rim to hub.\n\nAt the rim, every turn of fortune flings you; nearer the center, the same wheel turns and you merely watch it turn. "Having attained Me," says Krishna, "these great souls do not take birth again." And the devotional traditions add, tenderly, that some who are free keep riding the wheel anyway — **for love of those still on it**.',
         teachingText: 'You can test the geometry today. In the next upheaval, notice where you are standing: at the rim (flung, reactive, "why me") or nearer the axle (moved, but watching).\n\nEvery practice in this app — the reading, the reflections, the remembering — is a step inward. **The wheel is not the enemy. Forgetting there is a center is.**',
         citationLink: 'gita:8',
@@ -1880,7 +2628,9 @@ export const philosophyData: PhilosophicalConcept[] = [
       },
     ],
     reflectionQuestions: [
-      'What situation keeps repeating in your life with different people — and what might it be trying to teach you?'
+      'What situation keeps repeating in your life with different people — and what might it be trying to teach you?',
+      'Where are you chasing a "heaven" with an expiry date — a title, a purchase — as if it were permanent?',
+      'In your next upheaval, can you notice whether you are standing at the rim (flung) or nearer the center (watching)?',
     ]
   },
   {
@@ -1965,19 +2715,54 @@ export const philosophyData: PhilosophicalConcept[] = [
       iconImage: '/images/philosophy/moksha-icon.jpg'
     },
     difficulty: 'advanced',
+    kicker: 'Liberation from what? Not from the world — from the cage of mistaken identity. And the door was never locked.',
+    learnItems: [
+      'Moksha is freedom from the cage of mistaken identity',
+      'Bondage is made of clinging, so freedom is release, not gain',
+      'The liberated life is lit from within',
+      'You are always rehearsing — practice re-aims the mind',
+      'You can be liberated while still living (jivanmukti)',
+    ],
+    handoff:
+      'Liberation is remembering what you already are. But what are you, underneath the body and the story that fall away? The tradition answers with two words that turn out to be one: brahman and atman.',
     // Verse translations follow Swami Sivananda's public-domain rendering
     // (bundled in gitaVerses.json), lightly trimmed for reading flow.
     sections: [
       {
+        id: 'moksha-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          'Every teaching in this tradition eventually points at one destination: moksha, liberation. The strange part is what it frees you from, and how near it already is.\n\nOver the next few pages, moksha turns from a distant reward after death into something you have already tasted, in any moment a long-carried weight was set down.',
+      },
+      {
         id: 'moksha-opening',
         title: 'The Open Cage',
         subtitle: 'A Bird Beside a Door Left Ajar',
+        takeaway:
+          'Moksha is liberation, and the cage door was never locked. You are already free; the work is to stop believing in the bars.',
         storyText: 'Every teaching in the Hindu tradition eventually points at one destination: **moksha**, liberation. But liberation from what?\n\nNot from the world — from the cage of mistaken identity: the conviction that you are only this body, this résumé, this bundle of fears aging toward an ending.\n\nThe tradition\'s startling claim is that **the cage door is not locked. It never was.** The soul is already free — unborn, undying, untouched — and the entire spiritual project is not to earn freedom but to stop believing in the bars. Moksha is not somewhere you go after death. It is what remains when the misunderstanding drops.'
+      },
+      {
+        id: 'moksha-term-moksha',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'मोक्ष',
+          transliteration: 'mokṣa',
+          meaning: 'liberation — release from the cage of mistaken identity',
+        },
+        storyText:
+          'The root means *to loosen, to release*. Moksha is not a place you travel to after death. It is what is left when the knot of "I am only this body and story" comes loose.\n\n**You are not freed into something new. You are freed from a mistake.**',
+        reappears:
+          'Moksha is the goal every path in this tradition is quietly aimed at.',
       },
       {
         id: 'moksha-beyond-sorrow',
         title: 'The Place Beyond All Evil',
         subtitle: 'A Traveler Setting Down a Heavy Pack',
+        takeaway:
+          'Bondage is made of clinging, so freedom is made of release. Nothing is added to you; things are set down.',
         keyVerse: {
           sanskrit: 'कर्मजं बुद्धियुक्ता हि फलं त्यक्त्वा मनीषिणः। जन्मबन्धविनिर्मुक्ताः पदं गच्छन्त्यनामयम्॥',
           transliteration: 'karma-jaṁ buddhi-yuktā hi phalaṁ tyaktvā manīṣhiṇaḥ, janma-bandha-vinirmuktāḥ padaṁ gachchhanty anāmayam',
@@ -1986,12 +2771,30 @@ export const philosophyData: PhilosophicalConcept[] = [
         },
         storyText: 'The Gita\'s first mention of the goal comes wrapped in the teaching of karma: the wise who release the fruits of action are "freed from the bonds of birth" and reach the place **anamayam** — beyond affliction, beyond sorrow.\n\nNotice the mechanics: **bondage is made of clinging, so liberation is made of release.** Nothing is added to the liberated person; things are set down.\n\nThe Upanishads had said it a generation of texts earlier: as desire is, so is destiny — and the one whose desires have resolved into the Self "goes to the Self."',
         teachingText: 'You have tasted anamayam already — moments when a long-carried weight was set down and the world turned vivid: after honest confession, after forgiving, after finally releasing an outcome.\n\nThe tradition asks you to take those moments seriously as data. They are not moods; they are glimpses of your actual condition with the clinging briefly removed.',
-        citation: 'Brihadaranyaka Upanishad 4.4.5–6 (tr. Max Müller).'
+        citation: 'Brihadaranyaka Upanishad 4.4.5–6 (tr. Max Müller).',
+        checks: [
+          {
+            id: 'chk:concept:moksha:from-what',
+            kind: 'mcq',
+            prompt: 'Moksha is liberation — but from what?',
+            options: [
+              {
+                text: 'From the cage of mistaken identity — the belief that you are only this body and story — not from the world itself',
+                correct: true,
+              },
+              { text: 'From ever having to act or work again' },
+              { text: 'From the body, by leaving it behind at death' },
+            ],
+            why: 'Bondage is made of clinging, so liberation is release, not escape. Nothing is added to the freed person; the weight is simply set down.',
+          },
+        ],
       },
       {
         id: 'moksha-lit-within',
         title: 'Lit from Within',
         subtitle: 'A Lamp Burning in a Windless Room',
+        takeaway:
+          'The liberated life is lit from within. Its happiness no longer switches on and off with praise and outcomes.',
         keyVerse: {
           sanskrit: 'योऽन्तःसुखोऽन्तरारामस्तथान्तर्ज्योतिरेव यः। स योगी ब्रह्मनिर्वाणं ब्रह्मभूतोऽधिगच्छति॥',
           transliteration: 'yo \'ntaḥ-sukho \'ntar-ārāmas tathāntar-jyotir eva yaḥ, sa yogī brahma-nirvāṇaṁ brahma-bhūto \'dhigachchhati',
@@ -2000,12 +2803,38 @@ export const philosophyData: PhilosophicalConcept[] = [
         },
         storyText: 'The Gita gives liberation a diagnostic: **where does your light come from?**\n\nThe unliberated life is lit from outside — happiness switched on and off by praise, purchases, outcomes, other people\'s moods. The liberated one is **antar-jyotih**, lit from within: happy within, rejoicing within, illuminated within.\n\nThis is not a personality trait but a relocation of the source. The sage Yajnavalkya, asked what light a person sees by when sun, moon, and fire are all gone, answered: **the Self is his light**.',
         teachingText: 'Run the diagnostic honestly for a day. Track each surge of happiness and each collapse: what switched it?\n\nIf every switch is external, nothing is wrong with you — that is simply the starting condition. The practices — meditation, offering the fruits, devotion — are all ways of drilling toward the inner light until some of your illumination no longer depends on the weather.',
-        citation: 'Brihadaranyaka Upanishad 4.3.6 (tr. Max Müller).'
+        citation: 'Brihadaranyaka Upanishad 4.3.6 (tr. Max Müller).',
+        checks: [
+          {
+            id: 'chk:concept:moksha:inner-light',
+            kind: 'mcq',
+            prompt: "The Gita's diagnostic for freedom asks: where does your light come from?",
+            options: [
+              {
+                text: 'The liberated one is antar-jyotiḥ, lit from within — happy within, not switched on and off by outside events',
+                correct: true,
+              },
+              { text: 'From the approval of the people around you' },
+              { text: 'From reaching a heaven after death' },
+            ],
+            why: "The unfree life is lit from outside, its joy toggled by praise, purchases, and other people's moods. Practice drills toward the inner light until some of your illumination no longer depends on the weather.",
+          },
+        ],
+      },
+      {
+        id: 'moksha-way-1',
+        kind: 'waypoint',
+        title: '3 of 5 banked',
+        learnIndex: 3,
+        storyText:
+          "Freedom is release, and it is lit from within. Next: how the mind's quiet daily rehearsal decides where it goes.",
       },
       {
         id: 'moksha-what-you-remember',
         title: 'What You Remember at the End',
         subtitle: 'A Lamp Carried Toward a Doorway',
+        takeaway:
+          'You are always practicing something, and the practiced thing surfaces at the end. Practice re-aims the mind.',
         keyVerse: {
           sanskrit: 'अन्तकाले च मामेव स्मरन्मुक्त्वा कलेवरम्। यः प्रयाति स मद्भावं याति नास्त्यत्र संशयः॥',
           transliteration: 'anta-kāle cha mām eva smaran muktvā kalevaram, yaḥ prayāti sa mad-bhāvaṁ yāti nāsty atra sanśhayaḥ',
@@ -2019,6 +2848,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'moksha-no-return',
         title: 'The Abode Without Return',
         subtitle: 'Light That Needs No Sun',
+        takeaway:
+          'Moksha is the one satisfaction that does not wear off, because it is not something you have but what you are.',
         keyVerse: {
           sanskrit: 'न तद्भासयते सूर्यो न शशाङ्को न पावकः। यद्गत्वा न निवर्तन्ते तद्धाम परमं मम॥',
           transliteration: 'na tad bhāsayate sūryo na śhaśhāṅko na pāvakaḥ, yad gatvā na nivartante tad dhāma paramaṁ mama',
@@ -2029,9 +2860,19 @@ export const philosophyData: PhilosophicalConcept[] = [
         teachingText: 'The mark of everything unliberated is that it **wears off** — the vacation, the achievement, the purchase, each demanding a next one.\n\nMoksha is the tradition\'s name for the only satisfaction that does not wear off, because it is not an experience the self has but the self\'s own nature, uncovered. Chasing states that wear off is not wrong; it is simply the wheel. Noticing the wheel is the first step off it.'
       },
       {
+        id: 'moksha-way-2',
+        kind: 'waypoint',
+        title: '4 of 5 banked',
+        learnIndex: 4,
+        storyText:
+          'Everything else wears off; moksha does not. One idea remains, and it is the most surprising of all: you need not wait for death.',
+      },
+      {
         id: 'moksha-liberated-life',
         title: 'Liberated While Living',
         subtitle: 'Serene Eyes in the Middle of the Marketplace',
+        takeaway:
+          'You can be free while still living. Moksha is not leaving your life; it is your life, finally unclenched.',
         keyVerse: {
           sanskrit: 'ब्रह्मभूतः प्रसन्नात्मा न शोचति न काङ्क्षति। समः सर्वेषु भूतेषु मद्भक्तिं लभते पराम्॥',
           transliteration: 'brahma-bhūtaḥ prasannātmā na śhochati na kāṅkṣhati, samaḥ sarveṣhu bhūteṣhu mad-bhaktiṁ labhate parām',
@@ -2040,6 +2881,36 @@ export const philosophyData: PhilosophicalConcept[] = [
         },
         storyText: 'The tradition\'s boldest idea is **jivanmukti**: liberation while alive.\n\nThe liberated one does not vanish in a flash of light — she goes on cooking, working, raising children, but from a different center. The Gita\'s portrait: serene, beyond grasping and grieving, "the same to all beings" — because she no longer sorts people by what they can give or take from her.\n\nAnd then the surprise in the verse\'s last line: this freedom does not end in cool detachment but flowers into **supreme devotion**. The freed heart, wanting nothing, finally loves without agenda.',
         teachingText: 'Liberation, scaled to a Tuesday: act fully, cling to nothing, meet everyone as the same light in different lamps, and let love — not need — be what remains.\n\nYou will manage it for moments at first. The tradition\'s patient claim is that the moments join. **Moksha is not the abandonment of your life; it is your life, finally unclenched.**'
+      },
+      {
+        id: 'moksha-term-jivanmukti',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'जीवन्मुक्ति',
+          transliteration: 'jīvanmukti',
+          meaning: 'liberation while still alive',
+        },
+        storyText:
+          "Jivan means *living*; mukti means *liberation*. Jivanmukti is the tradition's boldest claim: you do not have to die to be free.\n\nThe liberated one goes on cooking, working, raising children, from a different center. **Same life, unclenched hands.**",
+        reappears:
+          'The jivanmukta is the quiet ideal behind every practice in this app.',
+        checks: [
+          {
+            id: 'chk:concept:moksha:jivanmukti',
+            kind: 'mcq',
+            prompt: 'Jivanmukti is liberation while alive. What does that freedom flower into?',
+            options: [
+              {
+                text: 'Not cool detachment but supreme devotion — the freed heart, wanting nothing, finally loves without agenda',
+                correct: true,
+              },
+              { text: 'Complete withdrawal from people and work' },
+              { text: 'Indifference to everyone and everything' },
+            ],
+            why: 'The liberated one is "the same to all beings," no longer sorting people by what they can give or take. Wanting nothing, she is finally free to love without need.',
+          },
+        ],
       }
     ],
     sources: [
@@ -2057,7 +2928,9 @@ export const philosophyData: PhilosophicalConcept[] = [
       },
     ],
     reflectionQuestions: [
-      'How much of your happiness today depended on things outside your control?'
+      'How much of your happiness today depended on things outside your control?',
+      'What does your mind rehearse in its idle moments — grievance, worry, wanting? That is its current default direction.',
+      'Recall a moment you set down a long-carried weight. What did the world look like in the minutes just after?',
     ]
   },
   {
@@ -2158,11 +3031,31 @@ export const philosophyData: PhilosophicalConcept[] = [
       iconImage: '/images/philosophy/gunas-icon.jpg'
     },
     difficulty: 'beginner',
+    kicker: 'Same person, same bed, three different worlds. The tradition maps why — and how to change the weather.',
+    learnItems: [
+      'Three strands weave all of nature: sattva, rajas, tamas',
+      'All three bind — even sattva',
+      'Read a strand by its harvest',
+      "You feed a guna, you don't fight it",
+      'The same task, three ways, three residues',
+      'Beyond the weather is the sky that holds all three',
+    ],
+    handoff:
+      'You can name your inner weather now, and feed the clear days. The very first thing a clearer mind is asked to do is deceptively plain: cause no harm. That is ahimsa.',
     sections: [
+      {
+        id: 'gunas-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          'Some days you wake clear, some frantic, some in fog — same person, same bed. That everyday mystery has an old and useful map.\n\nOver the next few pages you will learn to name your inner weather, read it by what it leaves behind, and change it not by willpower but by what you feed it.',
+      },
       {
         id: 'gunas-opening',
         title: 'The Weather of the Mind',
         subtitle: 'Three Skies Over One Mountain',
+        takeaway:
+          'Three strands weave all of nature: sattva (clarity), rajas (restlessness), tamas (heaviness). One of them is colouring this very moment.',
         storyText: 'Some mornings you wake clear: the tea tastes bright, work flows, patience comes easily. Other mornings you wake already running: mind racing, jaw tight, five browser tabs before breakfast. And some mornings you wake in fog: heavy, unwilling, reaching for the phone to numb the grayness.\n\nSame person, same bed — three different worlds.\n\nThe Gita\'s fourteenth chapter gives this everyday mystery its oldest and most useful map. Three strands, three **gunas**, weave all of nature:',
         bullets: [
           '**Sattva** — clarity, light',
@@ -2175,6 +3068,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'gunas-three-strands',
         title: 'Naming the Strands',
         subtitle: 'Three Threads Twisted into One Rope',
+        takeaway:
+          'All three strands bind, even sattva. You are not the rope; you are the one it binds. You cannot steer a storm you believe you are.',
         keyVerse: {
           sanskrit: 'सत्त्वं रजस्तम इति गुणाः प्रकृतिसंभवाः। निबध्नन्ति महाबाहो देहे देहिनमव्ययम्॥',
           transliteration: 'sattvaṁ rajas tama iti guṇāḥ prakṛiti-sambhavāḥ, nibadhnanti mahā-bāho dehe dehinam avyayam',
@@ -2192,9 +3087,41 @@ export const philosophyData: PhilosophicalConcept[] = [
         citation: 'Bhagavad Gita 14.5–6 (tr. Swami Sivananda).'
       },
       {
+        id: 'gunas-term-guna',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'गुण',
+          transliteration: 'guṇa',
+          meaning: 'strand — a thread the rope of nature is twisted from',
+        },
+        storyText:
+          "Name your weather in real time, and it loosens its grip. Not 'I am lazy' but 'tamas is heavy this hour'; not 'I am so driven' but 'rajas is burning.'\n\n**The naming separates the witness from the weather.**",
+        reappears:
+          'The three strands run underneath dharma, karma, and even maya, which the Gita calls guna-mayi.',
+        checks: [
+          {
+            id: 'chk:concept:three-gunas:bind',
+            kind: 'mcq',
+            prompt: 'Are the gunas a ladder from sin (tamas) up to virtue (sattva)?',
+            options: [
+              {
+                text: 'No — all three bind, even sattva, which binds by attachment to happiness and knowledge; they describe the rope, and you are what it binds',
+                correct: true,
+              },
+              { text: 'Yes — the goal is to climb from tamas to pure sattva' },
+              { text: 'No — only tamas binds; sattva and rajas set you free' },
+            ],
+            why: 'The strands are a description of nature, not a moral ranking. Even clear days bind, with silken threads.',
+          },
+        ],
+      },
+      {
         id: 'gunas-fruits',
         title: 'What Each Strand Grows',
         subtitle: 'Three Seeds, Three Harvests',
+        takeaway:
+          'Read the strands by their harvest. Sattva leaves knowledge, rajas leaves greed, tamas leaves fog — and rajas always looks productive from inside.',
         keyVerse: {
           sanskrit: 'सत्त्वात्सञ्जायते ज्ञानं रजसो लोभ एव च। प्रमादमोहौ तमसो भवतोऽज्ञानमेव च॥',
           transliteration: 'sattvāt sañjāyate jñānaṁ rajaso lobha eva cha, pramāda-mohau tamaso bhavato \'jñānam eva cha',
@@ -2212,18 +3139,46 @@ export const philosophyData: PhilosophicalConcept[] = [
         citation: 'Bhagavad Gita 14.11, 14.17 (tr. Swami Sivananda).'
       },
       {
+        id: 'gunas-way-1',
+        kind: 'waypoint',
+        title: '3 of 6 banked',
+        learnIndex: 3,
+        storyText:
+          'You can name the weather and read it by its harvest. Next comes the practical mercy: how the weather actually changes.',
+      },
+      {
         id: 'gunas-feeding',
         title: 'You Cannot Fight a Guna — You Feed Another',
         subtitle: 'Tending a Fire Instead of Battling the Dark',
+        takeaway:
+          'You cannot fight a guna with willpower. Feed the strand you want, one input at a time: food, sleep, company, media.',
         storyText: 'Here is the teaching\'s great practical mercy: **the strands do not yield to willpower.**\n\nYou cannot scold tamas into clarity — the scolding just adds agitation to the fog. You cannot suppress rajas by force — suppression is itself rajasic.\n\nThe gunas respond only to **diet**, in the widest sense: food, sleep, company, media, work, and thought are each guna-flavored, and whichever strand you feed grows. The Gita\'s seventeenth chapter maps even faith and food onto the strands: fresh, nourishing food feeds sattva; bitter, burning excess feeds rajas; stale, lifeless stuff feeds tamas. The same is true of everything you consume with eyes and ears.',
         teachingText: 'Pick the strand you want more of and feed it one input at a time.\n\nFoggy? Don\'t fight the fog — add light: a walk, water, one fresh meal, ten minutes of something true. Frantic? Don\'t suppress the fire — stop fueling it: one meal seated, one hour unplugged.\n\nWorking with **inputs instead of willpower** is the whole craft, and it is why the tradition cares so much about what you eat, watch, and keep company with.',
         citationLink: 'gita:17',
-        citation: 'Bhagavad Gita 17.3, 17.8–10 (tr. Swami Sivananda).'
+        citation: 'Bhagavad Gita 17.3, 17.8–10 (tr. Swami Sivananda).',
+        checks: [
+          {
+            id: 'chk:concept:three-gunas:feed',
+            kind: 'mcq',
+            prompt: 'How do you actually shift a guna?',
+            options: [
+              {
+                text: 'Not by willpower — by diet in the widest sense: whichever strand you feed, through food, sleep, company, media, and thought, grows',
+                correct: true,
+              },
+              { text: 'By scolding yourself out of the mood' },
+              { text: 'By suppressing the feeling until it stops' },
+            ],
+            why: 'Scolding tamas adds agitation to the fog; suppressing rajas is itself rajasic. Work with inputs, not force.',
+          },
+        ],
       },
       {
         id: 'gunas-in-action',
         title: 'Three Ways of Doing the Same Task',
         subtitle: 'The Same Letter Written Three Times',
+        takeaway:
+          'The same task done in sattva, rajas, or tamas leaves three different residues. One breath of self-location changes the doer.',
         keyVerse: {
           sanskrit: 'नियतं सङ्गरहितमरागद्वेषतः कृतम्। अफलप्रेप्सुना कर्म यत्तत्सात्त्विकमुच्यते॥',
           transliteration: 'niyataṁ saṅga-rahitam arāga-dveṣhataḥ kṛitam, aphala-prepsunā karma yat tat sāttvikam uchyate',
@@ -2238,12 +3193,38 @@ export const philosophyData: PhilosophicalConcept[] = [
         ],
         teachingText: 'Same task, three actors, three karmic residues. The Gita extends this to the doer, the understanding, even the happiness each strand produces: rajasic happiness is "nectar at first, poison in the end," and sattvic happiness "poison at first, nectar in the end" — the discipline that tastes bitter on day one and sweet in year one.\n\nBefore your next significant act, take one breath and ask **which of the three actors is about to do it**. The act may not change; the doer can. That single breath of self-location — am I clear, burning, or foggy right now? — is the most portable practice this teaching offers.',
         citationLink: 'gita:18',
-        citation: 'Bhagavad Gita 18.23–28, 18.36–39 (tr. Swami Sivananda).'
+        citation: 'Bhagavad Gita 18.23–28, 18.36–39 (tr. Swami Sivananda).',
+        checks: [
+          {
+            id: 'chk:concept:three-gunas:actor',
+            kind: 'mcq',
+            prompt: 'Before a significant act, what is the one portable practice this teaching offers?',
+            options: [
+              {
+                text: 'Take a breath and ask which of the three actors is about to do it — am I clear, burning, or foggy right now?',
+                correct: true,
+              },
+              { text: 'Force yourself to feel calm before starting' },
+              { text: 'Wait until the mood passes on its own' },
+            ],
+            why: 'The act may not change; the doer can. That single breath of self-location is the practice.',
+          },
+        ],
+      },
+      {
+        id: 'gunas-way-2',
+        kind: 'waypoint',
+        title: '5 of 6 banked',
+        learnIndex: 5,
+        storyText:
+          'Same task, three actors, three residues. One idea remains, and it is the freedom no strand can bind.',
       },
       {
         id: 'gunas-beyond',
         title: 'Beyond the Weather',
         subtitle: 'The Sky That Holds All Three',
+        takeaway:
+          'Beyond the weather is the sky that holds all three. Freedom is not good weather; it is no longer arguing with any of it.',
         keyVerse: {
           sanskrit: 'मां च योऽव्यभिचारेण भक्तियोगेन सेवते। स गुणान्समतीत्यैतान् ब्रह्मभूयाय कल्पते॥',
           transliteration: 'māṁ cha yo \'vyabhichāreṇa bhakti-yogena sevate, sa guṇān samatītyaitān brahma-bhūyāya kalpate',
@@ -2265,7 +3246,9 @@ export const philosophyData: PhilosophicalConcept[] = [
       },
     ],
     reflectionQuestions: [
-      'Was your mind today mostly clear, restless, or foggy — and what did you feed it?'
+      'Was your mind today mostly clear, restless, or foggy — and what did you feed it?',
+      'Audit last year by harvest, not activity: which months left knowledge, which hunger, which fog?',
+      'Pick one input tomorrow — a meal, an hour of feed, one conversation. Which strand does it feed?',
     ]
   },
   {

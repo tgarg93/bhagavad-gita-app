@@ -110,6 +110,7 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
   onReadAgain,
   bankedTakeaways,
   learnItems,
+  handoff,
   objective,
   active = true,
   pointsAtStart,
@@ -298,6 +299,16 @@ const JourneyCelebration: React.FC<JourneyCelebrationProps> = ({
         </View>
       </Animated.View>
 
+      {/* The "what's next" teaser: the question the next step answers, so the
+          reader walks straight into it rather than stopping. Only when there is
+          a next step to walk into. */}
+      {!pathDone && !!handoff && !!next && (
+        <Animated.View style={[styles.handoffWrap, riseStyle(nextAnim)]}>
+          <Text style={styles.handoffLabel}>WHAT'S NEXT</Text>
+          <Text style={styles.handoffText}>{handoff}</Text>
+        </Animated.View>
+      )}
+
       {pathDone ? (
         <Animated.Text style={[styles.pathDone, riseStyle(nextAnim)]}>
           You have walked the entire path — every step, complete. 🙏
@@ -462,6 +473,30 @@ const styles = StyleSheet.create({
     color: colors.primary.peacockTeal,
     textAlign: 'center',
     marginBottom: spacing.lg,
+  },
+  // The "what's next" teaser card above the next-step button. Explicit
+  // fontSize/lineHeight (not spread typography.sizes.*) to avoid the tsc union.
+  handoffWrap: {
+    alignSelf: 'stretch',
+    backgroundColor: colors.neutrals.warmIvory,
+    borderRadius: borderRadius.medium,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.md,
+    marginBottom: spacing.md,
+  },
+  handoffLabel: {
+    fontSize: 10.5,
+    lineHeight: 14,
+    letterSpacing: 1.6,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    color: colors.primary.deepSaffron,
+    marginBottom: 5,
+  },
+  handoffText: {
+    fontSize: 14,
+    lineHeight: 21,
+    color: colors.neutrals.charcoalBlack,
   },
   // The arc gauge sits centered under the title.
   gaugeWrap: {
