@@ -30,6 +30,7 @@ import ScriptureContentsScreen from '../screens/ScriptureContentsScreen';
 import ProfileTabScreen from '../screens/ProfileTabScreen';
 import JourneyPathScreen from '../screens/JourneyPathScreen';
 import DataManagementScreen from '../screens/DataManagementScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 
 // Module-level ref so services (notification taps) can navigate once the
 // container is ready
@@ -184,6 +185,11 @@ const AppNavigator = () => {
         <Stack.Screen name="PrayerPlayer" component={PrayerPlayerScreen} />
         <Stack.Screen name="ScriptureContents" component={ScriptureContentsScreen} />
         <Stack.Screen name="JourneyPath" component={JourneyPathScreen} />
+        <Stack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{ headerShown: true, title: 'Settings', headerBackTitle: 'Back' }}
+        />
         <Stack.Screen
           name="DataManagement"
           component={DataManagementScreen}

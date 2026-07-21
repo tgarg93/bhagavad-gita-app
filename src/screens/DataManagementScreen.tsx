@@ -8,254 +8,92 @@ import {
   ScrollView,
   Linking,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import DataExportService from '../services/dataExportService';
-import AnalyticsService from '../services/analyticsService';
+import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import LocalStorageService from '../services/localStorageService';
+import AnalyticsService from '../services/analyticsService';
 import { deleteAccount } from '../services/supabaseClient';
-import Card from '../components/ui/Card';
-import Button from '../components/ui/Button';
+
+const C = DharmaDesignSystem.colors;
+const S = DharmaDesignSystem.spacing;
+const R = DharmaDesignSystem.borderRadius;
 
 const PRIVACY_POLICY_URL = 'https://tgarg93.github.io/bhagavad-gita-app/privacy-policy.html';
 
 const DataManagementScreen: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [analyticsData, setAnalyticsData] = useState<any>(null);
-
-  const loadAnalytics = async () => {
-    try {
-      const data = await AnalyticsService.getAnalyticsSummary();
-      setAnalyticsData(data);
-    } catch (error) {
-      console.error('Error loading analytics:', error);
-    }
-  };
-
-  React.useEffect(() => {
-    loadAnalytics();
-  }, []);
-
-  const handleExportData = async () => {
-    setLoading(true);
-    try {
-      await DataExportService.exportUserData();
-      await AnalyticsService.trackDataExported('full');
-      Alert.alert('Success', 'Your data has been exported successfully!');
-    } catch (error: any) {
-      Alert.alert('Error', error.message || 'Failed to export data');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleExportNotes = async () => {
-    setLoading(true);
-    try {
-      const localUser = await LocalStorageService.getCurrentUser();
-      await DataExportService.exportUserNotes(localUser?.id ?? 'local');
-      await AnalyticsService.trackDataExported('notes');
-      Alert.alert('Success', 'Your notes have been exported successfully!');
-    } catch (error: any) {
-      Alert.alert('Error', error.message || 'Failed to export notes');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleExportProgress = async () => {
-    setLoading(true);
-    try {
-      const localUser = await LocalStorageService.getCurrentUser();
-      await DataExportService.exportProgressSummary(localUser?.id ?? 'local');
-      await AnalyticsService.trackDataExported('progress');
-      Alert.alert('Success', 'Your progress summary has been shared!');
-    } catch (error: any) {
-      Alert.alert('Error', error.message || 'Failed to export progress');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleImportData = async () => {
-    setLoading(true);
-    try {
-      await DataExportService.importUserData();
-      Alert.alert('Success', 'Your data has been imported successfully! Please restart the app.');
-    } catch (error: any) {
-      Alert.alert('Error', error.message || 'Failed to import data');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleDeleteAccount = () => {
     Alert.alert(
-      'Delete Account & All Data',
-      'This permanently erases your progress, reflections, and notes from this device AND from our servers. This cannot be undone.',
+      'Delete account & all data',
+      'This permanently erases your progress, reflections, and notes — on this device and on our servers. This cannot be undone.',
       [
         { text: 'Cancel', style: 'cancel' },
         {
-          text: 'Delete Everything',
+          text: 'Delete everything',
           style: 'destructive',
           onPress: async () => {
             setLoading(true);
             try {
-              // Server first: wipe the account + synced rows. Local wipe follows
-              // regardless — a returning user must never see stale local data
-              // after asking to be deleted. (deleteAccount never throws.)
+              // Server first, then local — a returning user must never see
+              // stale local data after asking to be deleted.
               await deleteAccount();
               await LocalStorageService.clearAllData();
               await AnalyticsService.clearAnalyticsData();
               Alert.alert('Deleted', 'Your account and all data have been erased. Please restart the app.');
-            } catch (error: any) {
-              Alert.alert('Error', 'Failed to delete account. Please try again.');
+            } catch {
+              Alert.alert('Something went wrong', 'We could not delete your account. Please try again.');
             } finally {
               setLoading(false);
             }
-          }
-        }
+          },
+        },
       ]
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>💾 Data Management</Text>
-          <Text style={styles.headerSubtitle}>
-            Back up, export, or permanently delete your data
+      <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
+        {/* Plain-language explainer */}
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <Ionicons name="lock-closed" size={18} color={C.primary.peacockTeal} />
+            <Text style={styles.cardTitle}>Your data</Text>
+          </View>
+          <Text style={styles.bodyText}>
+            Your progress and reflections stay on this device and are backed up to a
+            private, encrypted account so you don't lose them. Messages you send to
+            Krishna are processed by Google Gemini to generate replies. We never sell
+            your data or show ads.
           </Text>
+          <TouchableOpacity onPress={() => Linking.openURL(PRIVACY_POLICY_URL)} hitSlop={8}>
+            <Text style={styles.link}>Read the full Privacy Policy →</Text>
+          </TouchableOpacity>
         </View>
 
-        {/* Privacy Info */}
-        <Card style={styles.privacyCard}>
-          <View style={styles.privacyHeader}>
-            <Ionicons name="shield-checkmark" size={24} color="#10b981" />
-            <Text style={styles.privacyTitle}>🔒 Your Data</Text>
-          </View>
-          <Text style={styles.privacyText}>
-            Your progress and reflections stay on this device and are backed up to
-            a private, encrypted account so you don't lose them. Messages you send
-            to Krishna are processed by Google Gemini to generate replies. We never
-            sell your data or show ads. You can export a backup or delete everything
-            below.
+        {/* Delete */}
+        <View style={[styles.card, styles.dangerCard]}>
+          <Text style={styles.dangerLabel}>Delete account</Text>
+          <Text style={styles.bodyText}>
+            Permanently erase your account and everything in it, on this device and on
+            our servers. This can't be undone.
           </Text>
-          <TouchableOpacity onPress={() => Linking.openURL(PRIVACY_POLICY_URL)}>
-            <Text style={styles.privacyLink}>Read the full Privacy Policy →</Text>
-          </TouchableOpacity>
-        </Card>
-
-        {/* Export Options */}
-        <Card style={styles.sectionCard}>
-          <Text style={styles.sectionTitle}>📤 Export Your Data</Text>
-          
-          <View style={styles.exportOption}>
-            <View style={styles.exportInfo}>
-              <Text style={styles.exportTitle}>Complete Backup</Text>
-              <Text style={styles.exportDescription}>
-                Export all your progress, notes, and preferences as a JSON file
-              </Text>
-            </View>
-            <Button
-              title="Export All"
-              onPress={handleExportData}
-              disabled={loading}
-              size="sm"
-              style={styles.exportButton}
-            />
-          </View>
-
-          <View style={styles.exportOption}>
-            <View style={styles.exportInfo}>
-              <Text style={styles.exportTitle}>Study Notes</Text>
-              <Text style={styles.exportDescription}>
-                Export your personal reflections and notes as a text file
-              </Text>
-            </View>
-            <Button
-              title="Export Notes"
-              onPress={handleExportNotes}
-              disabled={loading}
-              variant="outline"
-              size="sm"
-              style={styles.exportButton}
-            />
-          </View>
-
-          <View style={styles.exportOption}>
-            <View style={styles.exportInfo}>
-              <Text style={styles.exportTitle}>Progress Summary</Text>
-              <Text style={styles.exportDescription}>
-                Share your spiritual journey and reading achievements
-              </Text>
-            </View>
-            <Button
-              title="Share Progress"
-              onPress={handleExportProgress}
-              disabled={loading}
-              variant="secondary"
-              size="sm"
-              style={styles.exportButton}
-            />
-          </View>
-        </Card>
-
-        {/* Import Options */}
-        <Card style={styles.sectionCard}>
-          <Text style={styles.sectionTitle}>📥 Import Data</Text>
-          <Text style={styles.sectionDescription}>
-            Restore your data from a previously exported backup file
-          </Text>
-          <Button
-            title="Import Backup File"
-            onPress={handleImportData}
-            disabled={loading}
-            variant="outline"
-            style={styles.importButton}
-          />
-        </Card>
-
-        {/* Analytics Summary */}
-        {analyticsData && (
-          <Card style={styles.analyticsCard}>
-            <Text style={styles.sectionTitle}>📊 Your Usage (Local Only)</Text>
-            <View style={styles.analyticsGrid}>
-              <View style={styles.analyticsStat}>
-                <Text style={styles.analyticsNumber}>{analyticsData.totalSessions}</Text>
-                <Text style={styles.analyticsLabel}>Sessions</Text>
-              </View>
-              <View style={styles.analyticsStat}>
-                <Text style={styles.analyticsNumber}>{analyticsData.averageSessionDuration}</Text>
-                <Text style={styles.analyticsLabel}>Avg Minutes</Text>
-              </View>
-              <View style={styles.analyticsStat}>
-                <Text style={styles.analyticsNumber}>{analyticsData.mostUsedFeatures.length}</Text>
-                <Text style={styles.analyticsLabel}>Features Used</Text>
-              </View>
-            </View>
-            <Text style={styles.analyticsNote}>
-              This data is stored only on your device and never shared
-            </Text>
-          </Card>
-        )}
-
-        {/* Danger Zone */}
-        <Card style={styles.dangerCard}>
-          <Text style={styles.dangerTitle}>⚠️ Danger Zone</Text>
-          <Text style={styles.dangerDescription}>
-            Permanently erase your account and all data — on this device and on
-            our servers. This cannot be undone.
-          </Text>
-          <Button
-            title="Delete Account & All Data"
+          <TouchableOpacity
+            style={styles.dangerButton}
             onPress={handleDeleteAccount}
             disabled={loading}
-            variant="outline"
-            style={styles.dangerButton}
-          />
-        </Card>
+            activeOpacity={0.8}
+          >
+            {loading ? (
+              <ActivityIndicator size="small" color={C.sacred.warningRed} />
+            ) : (
+              <Text style={styles.dangerButtonText}>Delete account &amp; all data</Text>
+            )}
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -264,147 +102,67 @@ const DataManagementScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: C.neutrals.sandstoneBeige,
   },
-  scrollView: {
-    flex: 1,
+  body: {
+    padding: S.lg,
+    gap: S.md,
   },
-  header: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 10,
-  },
-  headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#111827',
-  },
-  headerSubtitle: {
-    fontSize: 16,
-    color: '#6b7280',
-    marginTop: 4,
-  },
-  privacyCard: {
-    marginHorizontal: 20,
-    marginVertical: 10,
-    backgroundColor: '#f0fdf4',
-    borderColor: '#bbf7d0',
-  },
-  privacyHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  privacyTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#166534',
-    marginLeft: 8,
-  },
-  privacyText: {
-    fontSize: 14,
-    color: '#166534',
-    lineHeight: 20,
-  },
-  privacyLink: {
-    fontSize: 14,
-    color: '#166534',
-    fontWeight: '700',
-    marginTop: 10,
-  },
-  sectionCard: {
-    marginHorizontal: 20,
-    marginVertical: 10,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#111827',
-    marginBottom: 8,
-  },
-  sectionDescription: {
-    fontSize: 14,
-    color: '#6b7280',
-    marginBottom: 16,
-  },
-  exportOption: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f3f4f6',
-  },
-  exportInfo: {
-    flex: 1,
-    marginRight: 12,
-  },
-  exportTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#111827',
-  },
-  exportDescription: {
-    fontSize: 14,
-    color: '#6b7280',
-    marginTop: 2,
-  },
-  exportButton: {
-    minWidth: 100,
-  },
-  importButton: {
-    alignSelf: 'center',
-  },
-  analyticsCard: {
-    marginHorizontal: 20,
-    marginVertical: 10,
-    backgroundColor: '#fefce8',
-    borderColor: '#fde047',
-  },
-  analyticsGrid: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginVertical: 16,
-  },
-  analyticsStat: {
-    alignItems: 'center',
-  },
-  analyticsNumber: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#a16207',
-  },
-  analyticsLabel: {
-    fontSize: 12,
-    color: '#a16207',
-    marginTop: 4,
-  },
-  analyticsNote: {
-    fontSize: 12,
-    color: '#a16207',
-    textAlign: 'center',
-    fontStyle: 'italic',
+  card: {
+    backgroundColor: C.neutrals.warmIvory,
+    borderRadius: R.large,
+    padding: S.md,
+    borderLeftWidth: 2,
+    borderLeftColor: C.primary.peacockTeal,
   },
   dangerCard: {
-    marginHorizontal: 20,
-    marginVertical: 10,
-    marginBottom: 40,
-    backgroundColor: '#fef2f2',
-    borderColor: '#fca5a5',
+    borderLeftColor: C.sacred.warningRed,
   },
-  dangerTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#dc2626',
-    marginBottom: 8,
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: S.sm,
+    marginBottom: S.sm,
   },
-  dangerDescription: {
+  cardTitle: {
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '700',
+    color: C.neutrals.charcoalBlack,
+  },
+  bodyText: {
     fontSize: 14,
-    color: '#dc2626',
-    marginBottom: 16,
+    lineHeight: 21,
+    fontWeight: '400',
+    color: C.neutrals.softAsh,
+  },
+  link: {
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '700',
+    color: C.primary.peacockTeal,
+    marginTop: S.sm,
+  },
+  dangerLabel: {
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '700',
+    color: C.sacred.warningRed,
+    marginBottom: S.sm,
   },
   dangerButton: {
-    alignSelf: 'center',
-    borderColor: '#ef4444',
+    marginTop: S.md,
+    borderWidth: 1.5,
+    borderColor: C.sacred.warningRed,
+    borderRadius: R.medium,
+    paddingVertical: 13,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dangerButtonText: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: C.sacred.warningRed,
   },
 });
 

@@ -11,7 +11,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
-  Switch,
   Image,
 } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -21,8 +20,7 @@ import * as FileSystem from 'expo-file-system';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import CelebrationGauge from '../components/CelebrationGauge';
 import OnboardingScreen from './OnboardingScreen';
-import LocalStorageService, { SpiritualProfile, ReflectionEntry, NotificationSettings } from '../services/localStorageService';
-import notificationService from '../services/notificationService';
+import LocalStorageService, { SpiritualProfile, ReflectionEntry } from '../services/localStorageService';
 import journeyService from '../services/journeyService';
 import { JourneyItem, JOURNEY_MODULES, navigateToJourneyItem } from '../data/journeyPath';
 import { getProgression, Progression, LEVELS } from '../services/progressionService';
@@ -69,25 +67,11 @@ const ProfileTabScreen: React.FC = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [nextStep, setNextStep] = useState<JourneyItem | null>(null);
 
-  const [reminders, setReminders] = useState<NotificationSettings | null>(null);
-  const [remindersPermitted, setRemindersPermitted] = useState(true);
-
   const load = useCallback(async () => {
     setProfile(await LocalStorageService.getSpiritualProfile());
     setProgression(await getProgression());
     setNextStep(await journeyService.getNextUnfinished());
-    setReminders(await notificationService.getSettings());
-    setRemindersPermitted(await notificationService.hasPermission());
   }, []);
-
-  const toggleReminder = async (key: keyof NotificationSettings, value: boolean) => {
-    const updated = await notificationService.updateSettings({ [key]: value });
-    setReminders(updated);
-    if (value && !(await notificationService.hasPermission())) {
-      await notificationService.ensurePermissions();
-      setRemindersPermitted(await notificationService.hasPermission());
-    }
-  };
 
   // Reload whenever the tab regains focus
   useFocusEffect(
@@ -258,6 +242,13 @@ const ProfileTabScreen: React.FC = () => {
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Your Journey</Text>
+          <TouchableOpacity
+            style={styles.settingsButton}
+            onPress={() => (navigation as any).navigate('Settings')}
+            hitSlop={8}
+          >
+            <Ionicons name="settings-outline" size={22} color={DharmaDesignSystem.colors.neutrals.charcoalBlack} />
+          </TouchableOpacity>
         </View>
 
         <KeyboardAvoidingView
@@ -465,48 +456,6 @@ const ProfileTabScreen: React.FC = () => {
             </View>
           )}
 
-          {reminders && (
-            <View style={styles.remindersCard}>
-              <Text style={styles.summaryLabel}>Reminders</Text>
-              {!remindersPermitted && (
-                <Text style={styles.remindersHint}>
-                  Notifications are off for this app — enable them in iOS Settings for reminders to arrive.
-                </Text>
-              )}
-              {(
-                [
-                  { key: 'dailyWisdom', label: 'Morning wisdom', sub: 'A daily Gita verse at 8:00' },
-                  { key: 'journeyNudge', label: 'Journey nudge', sub: 'Your next step, evenings you’ve been away' },
-                  { key: 'festivals', label: 'Festival reminders', sub: '3 days before and on the day' },
-                  { key: 'streak', label: 'Streak protection', sub: 'A gentle 9pm nudge when a streak is at risk' },
-                ] as { key: keyof NotificationSettings; label: string; sub: string }[]
-              ).map(row => (
-                <View key={row.key} style={styles.reminderRow}>
-                  <View style={styles.reminderText}>
-                    <Text style={styles.reminderLabel}>{row.label}</Text>
-                    <Text style={styles.reminderSub}>{row.sub}</Text>
-                  </View>
-                  <Switch
-                    value={!!reminders[row.key]}
-                    onValueChange={v => toggleReminder(row.key, v)}
-                    trackColor={{ true: colors.primary.deepSaffron, false: undefined }}
-                  />
-                </View>
-              ))}
-            </View>
-          )}
-
-          <TouchableOpacity
-            style={styles.manageRow}
-            onPress={() => (navigation as any).navigate('DataManagement')}
-          >
-            <View style={styles.reminderText}>
-              <Text style={styles.manageLabel}>Account &amp; data</Text>
-              <Text style={styles.reminderSub}>Back up, export, or delete your account</Text>
-            </View>
-            <Ionicons name="chevron-forward" size={18} color={colors.neutrals.softAsh} />
-          </TouchableOpacity>
-
           {__DEV__ && (
             <View style={styles.devSection}>
               <Text style={styles.devTitle}>Dev Tools</Text>
@@ -701,6 +650,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'rgba(230, 81, 0, 0.15)',
   },
   headerTitle: { ...typography.sizes.headingMD, color: colors.neutrals.charcoalBlack, fontWeight: '600' },
+  settingsButton: { padding: spacing.xs },
   body: { padding: spacing.lg, paddingBottom: spacing.xxl },
   // Partiful-style photo header
   photoHeader: {
