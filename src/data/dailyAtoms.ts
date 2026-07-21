@@ -6,11 +6,20 @@
 // Citation standard matches the rest of the app: every claim traces to a
 // named text (famous, publicly verifiable loci only); practices without a
 // scriptural source say so and cite the tradition honestly.
-import { getUpcomingFestivals, getDaysUntilFestival } from './festivals';
+import { getFestivalLensFor } from './festivals';
 import { hasReaderContent } from './readerContent';
 import { getDailyVerse } from './dailyVerse';
 
-export type AtomType = 'why' | 'saying' | 'word' | 'story' | 'question' | 'verse' | 'festival' | 'compare';
+export type AtomType =
+  | 'why'
+  | 'saying'
+  | 'word'
+  | 'story'
+  | 'question'
+  | 'verse'
+  | 'festival'
+  | 'compare'
+  | 'discovery';
 
 export const ATOM_TAGS: Record<AtomType, string> = {
   why: 'Why do we…?',
@@ -21,6 +30,10 @@ export const ATOM_TAGS: Record<AtomType, string> = {
   verse: "Today's verse",
   festival: 'Festival lens',
   compare: 'Across traditions',
+  // Fallback label only; a discovery atom always carries a kind-specific
+  // `tagOverride` ("Meet a deity", "An idea to explore", …) built by
+  // dailyPickService, which the card prefers over this.
+  discovery: 'Something to discover',
 };
 
 export interface DailyAtom {
@@ -40,6 +53,10 @@ export interface DailyAtom {
   // `AtomLink` "further reading" field that did exactly that, so a card citing
   // the Isha Upanishad opened Karma.
   sourceRef?: string;
+  // Overrides ATOM_TAGS[type] in the card's eyebrow row. Only discovery atoms
+  // set this, so the tag can name the specific content kind ("Meet a deity")
+  // rather than a generic "Something to discover".
+  tagOverride?: string;
   krishnaPrompt: string; // pre-seeded question for Ask Krishna
   // Structured Sanskrit for the word/saying/verse card treatments (and their
   // narration): the Devanagari is displayed prominently and spoken with the
@@ -1134,7 +1151,7 @@ const COMPARE_ATOMS: DailyAtom[] = [
   },
 ];
 
-const ATOMS_BY_TYPE: Record<Exclude<AtomType, 'festival' | 'verse'>, DailyAtom[]> = {
+const ATOMS_BY_TYPE: Record<Exclude<AtomType, 'festival' | 'verse' | 'discovery'>, DailyAtom[]> = {
   why: WHY_ATOMS,
   saying: SAYING_ATOMS,
   word: WORD_ATOMS,
@@ -1155,7 +1172,7 @@ export const ALL_AUTHORED_ATOMS: DailyAtom[] = [
 // Weekday → atom type. One day per authored type; the Gita verse holds
 // Sunday (the old second verse day, Wednesday, now belongs to the
 // across-traditions comparisons).
-const WEEKDAY_TYPE: Exclude<AtomType, 'festival'>[] = [
+const WEEKDAY_TYPE: Exclude<AtomType, 'festival' | 'discovery'>[] = [
   'verse', // Sun
   'why', // Mon
   'saying', // Tue
@@ -1190,26 +1207,29 @@ const verseAtomFor = (date: Date): DailyAtom => {
   };
 };
 
-// Within 7 days of a festival, the brief turns toward it: countdown + the
-// festival's own hook, built from data rather than authored per-day.
+// On a festival's eve or principal day, the brief turns toward it: the
+// festival's own hook, built from data rather than authored per-day. Bounded to
+// those two days by getFestivalLensFor (see it for why the old "within 7 days"
+// window let multi-day festivals like Ratha Yatra own the brief for ~16 days),
+// and keyed off the passed `date` so notification pre-baking for future days is
+// correct rather than stamping every day with today's festival.
 const festivalAtomFor = (date: Date): DailyAtom | null => {
-  const next = getUpcomingFestivals(1)[0];
-  if (!next) return null;
-  const days = getDaysUntilFestival(next);
-  if (days === null || days < 0 || days > 7) return null;
-  const when = days === 0 ? 'is today' : days === 1 ? 'is tomorrow' : `is in ${days} days`;
+  const lens = getFestivalLensFor(date);
+  if (!lens) return null;
+  const { festival, days } = lens;
+  const when = days === 0 ? 'is today' : 'is tomorrow';
   return {
-    id: `festival:${next.id}:${days}`,
+    id: `festival:${festival.id}:${days}`,
     type: 'festival',
-    hook: `${next.name} ${when}`,
-    body: next.significance
-      ? `${next.significance.replace(/([^.!?])$/, '$1.')} Read the story now, so the day itself needs no explaining.`
-      : `${next.name} is approaching — read its story now so the day itself needs no explaining.`,
+    hook: `${festival.name} ${when}`,
+    body: festival.significance
+      ? `${festival.significance.replace(/([^.!?])$/, '$1.')} Read the story now, so the day itself needs no explaining.`
+      : `${festival.name} is approaching — read its story now so the day itself needs no explaining.`,
     citation: 'From the festival guide',
     // routeForContentRef falls back to the festival calendar when there is no
     // reader for it, so this is safe either way.
-    sourceRef: `festival:${next.id}`,
-    krishnaPrompt: `What should I know about ${next.name} before it arrives — and how do I celebrate it well?`,
+    sourceRef: `festival:${festival.id}`,
+    krishnaPrompt: `What should I know about ${festival.name} before it arrives — and how do I celebrate it well?`,
   };
 };
 
@@ -1227,15 +1247,79 @@ export const ONBOARDING_ATOM: DailyAtom = {
   sanskrit: { devanagari: 'नमस्ते', transliteration: 'namaste', meaning: 'I bow to you' },
 };
 
-// Deterministic pick for a date: festival lens wins near a festival; verse
-// days come from the daily-verse rotation; otherwise the weekday's type,
-// rotating through its pool week by week.
-export const getDailyAtom = (date: Date = new Date()): DailyAtom => {
+// A targeted discovery pick: one specific, unseen piece of content the reader
+// hasn't explored yet. dailyPickService builds and ranks these (unseen + blend
+// of interests / journey position / level) into `pool`; buildDailyAtom just
+// walks the ranked pool one entry per discovery-day. Everything here is a plain
+// content ref so the card's "Read More ›" and the notification tap can route to
+// it (see routeForContentRef / navigateToContentRef).
+export interface DiscoveryCandidate {
+  ref: string; // permanent content-ref, e.g. 'deity:hanuman', 'concept:maya'
+  tag: string; // kind-specific eyebrow, e.g. 'Meet a deity'
+  hook: string; // card headline + notification body, e.g. 'Meet Hanuman'
+  body: string; // teaser (1–2 sentences)
+  citation: string; // footer line, e.g. 'From the guide to the gods'
+  krishnaPrompt: string;
+}
+
+// A once-read snapshot of user state, so atom selection stays SYNCHRONOUS: the
+// notification scheduler reads it once, then computes 28 future days without
+// awaiting. `discoveryPool` is already filtered (unseen) and ranked.
+export interface DailyPickSnapshot {
+  discoveryPool: DiscoveryCandidate[];
+}
+
+// ~half of the non-verse days are discovery days. localDayNumber parity drifts
+// against the weekday (7 is odd), so over any two weeks every authored type and
+// a discovery pick both land — the blend the user asked for, without dropping
+// any authored format.
+const isDiscoveryDay = (date: Date): boolean => localDayNumber(date) % 2 === 0;
+
+// Monotone index into the ranked discovery pool: consecutive discovery days
+// (localDayNumber apart by ≥2) map to consecutive pool entries, so day-to-day
+// picks differ and honor the ranking. `% pool.length` at the call site means it
+// never runs dry — by the time it wraps, months have passed and completed items
+// have dropped out of a freshly rebuilt pool.
+const discoveryOrdinal = (date: Date): number => Math.floor(localDayNumber(date) / 2);
+
+const discoveryAtomFor = (date: Date, snapshot: DailyPickSnapshot): DailyAtom | null => {
+  const pool = snapshot.discoveryPool;
+  if (pool.length === 0) return null;
+  const cand = pool[discoveryOrdinal(date) % pool.length];
+  return {
+    id: `discovery:${cand.ref}`,
+    type: 'discovery',
+    hook: cand.hook,
+    body: cand.body,
+    citation: cand.citation,
+    sourceRef: cand.ref,
+    tagOverride: cand.tag,
+    krishnaPrompt: cand.krishnaPrompt,
+  };
+};
+
+// Deterministic pick for a date, given an optional user snapshot:
+//   1. festival eve/principal day → the festival lens (bounded, see above);
+//   2. Sunday → the daily verse;
+//   3. with a snapshot, ~half the remaining days → a targeted discovery pick;
+//   4. otherwise → the weekday's authored type, rotating its pool week by week.
+// Called by HomeScreen with today's date and by notificationService 28× with
+// one shared snapshot, so the card and each notification agree for a given day.
+export const buildDailyAtom = (date: Date, snapshot?: DailyPickSnapshot): DailyAtom => {
   const festival = festivalAtomFor(date);
   if (festival) return festival;
   const type = WEEKDAY_TYPE[date.getDay()];
   if (type === 'verse') return verseAtomFor(date);
+  if (snapshot && isDiscoveryDay(date)) {
+    const discovery = discoveryAtomFor(date, snapshot);
+    if (discovery) return discovery;
+  }
   const pool = ATOMS_BY_TYPE[type];
   const index = Math.floor(localDayNumber(date) / 7) % pool.length;
   return pool[index];
 };
+
+// Synchronous fallback: festival + authored rotation only, no personalization.
+// Kept for callers that cannot await a snapshot (and existing imports/tests).
+// The personalized path is buildDailyAtom(date, snapshot) via dailyPickService.
+export const getDailyAtom = (date: Date = new Date()): DailyAtom => buildDailyAtom(date);

@@ -14,6 +14,7 @@ import LocalStorageService from './src/services/localStorageService';
 import krishnaContext from './src/services/krishnaContextService';
 import journeyService from './src/services/journeyService';
 import notificationService from './src/services/notificationService';
+import { navigateToContentRef } from './src/data/journeyPath';
 import { profilePhotoStore } from './src/services/profilePhotoStore';
 
 initTelemetry();
@@ -71,6 +72,10 @@ function App() {
       else if (data.url === 'journey') nav.navigate('JourneyPath');
       else if (data.url === 'festival' && data.festivalId) {
         nav.navigate('FestivalDetail', { festivalId: data.festivalId });
+      } else if (data.url === 'contentref' && typeof data.ref === 'string') {
+        // The daily chai tap lands directly on the content it named (reader,
+        // Gita player, deity/concept detail, …) via the shared ref router.
+        navigateToContentRef(nav, data.ref);
       }
     };
     const tapSub = Notifications.addNotificationResponseReceivedListener(response => {

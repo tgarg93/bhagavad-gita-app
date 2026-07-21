@@ -53,6 +53,7 @@ const ACCENTS: Record<string, { border: string; text: string }> = {
   why: { border: 'rgba(230, 81, 0, 0.14)', text: DharmaDesignSystem.colors.primary.deepSaffron },
   festival: { border: 'rgba(230, 81, 0, 0.14)', text: DharmaDesignSystem.colors.primary.deepSaffron },
   compare: { border: 'rgba(46, 88, 148, 0.24)', text: '#2E5894' },
+  discovery: { border: 'rgba(14, 124, 123, 0.25)', text: '#0E7C7B' },
 };
 
 interface DailyChaiCardProps {
@@ -154,7 +155,7 @@ const DailyChaiCard: React.FC<DailyChaiCardProps> = ({
     <View style={[styles.card, { borderColor: accent.border }]}>
       <View style={styles.top}>
         <Text style={[styles.tag, { color: accent.text }]}>
-          ☕ DAILY CHAI · {ATOM_TAGS[atom.type].toUpperCase()}
+          ☕ DAILY CHAI · {(atom.tagOverride ?? ATOM_TAGS[atom.type]).toUpperCase()}
         </Text>
         <View style={styles.icons}>
           {onToggleAudio && isSpeakable(atom) && (

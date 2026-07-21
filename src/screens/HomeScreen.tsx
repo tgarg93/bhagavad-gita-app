@@ -17,7 +17,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaColors, NavigationColors } from '../constants/colors';
 import { DharmaDesignSystem, createTextStyle, createCardStyle } from '../constants/DharmaDesignSystem';
-import { getDailyAtom } from '../data/dailyAtoms';
+import { getDailyAtom, DailyAtom } from '../data/dailyAtoms';
+import { dailyPickService } from '../services/dailyPickService';
 import DailyChaiCard, { speakableSequence } from '../components/DailyChaiCard';
 import { getTodaysFestivals, getUpcomingFestivals, getNextOccurrence, getDaysUntilFestival, Festival } from '../data/festivals';
 import journeyService from '../services/journeyService';
@@ -46,7 +47,11 @@ const continueThumbStyle = {
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
-  const [todaysAtom] = useState(getDailyAtom());
+  // Seeded with the synchronous fallback so the card never renders empty, then
+  // upgraded to the personalized targeted pick once the snapshot resolves on
+  // focus (see below). getDailyAtom() is festival + authored only; getTodaysPick
+  // adds the unseen, blend-ranked discovery pick.
+  const [todaysAtom, setTodaysAtom] = useState<DailyAtom>(() => getDailyAtom());
   const [speaking, setSpeaking] = useState(false);
   const audioService = React.useRef(AudioNarrationService.getInstance()).current;
   const [progression, setProgression] = useState<Progression | null>(null);
@@ -86,7 +91,16 @@ const HomeScreen: React.FC = () => {
         const key = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
         LocalStorageService.saveChaiLastOpened(key);
         journeyService.touchActivity();
-        capture('daily_chai_viewed', { atomType: todaysAtom.type });
+        // Resolve today's targeted pick, then upgrade the card and log it. The
+        // sync fallback already rendered instantly; this swaps in the discovery
+        // pick when it's a discovery day. sourceRef is a content id (never
+        // reflection/chat/profile text), so it's safe to send per the telemetry rule.
+        const pick = await dailyPickService.getTodaysPick();
+        setTodaysAtom(pick);
+        capture('daily_chai_viewed', {
+          atomType: pick.type,
+          ...(pick.sourceRef ? { sourceRef: pick.sourceRef } : {}),
+        });
         // "Begin the path" from onboarding lands here — carry it through
         if (journeyService.consumePendingStart() && next) {
           navigateToJourneyItem(navigation, next);

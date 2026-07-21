@@ -9,7 +9,8 @@ import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 import LocalStorageService, { NotificationSettings } from './localStorageService';
 import journeyService from './journeyService';
-import { getDailyAtom } from '../data/dailyAtoms';
+import { buildDailyAtom } from '../data/dailyAtoms';
+import { dailyPickService } from './dailyPickService';
 import { getUpcomingFestivals, getNextOccurrence } from '../data/festivals';
 
 const at = (date: Date, hour: number, minute = 0): Date => {
@@ -106,19 +107,27 @@ class NotificationService {
       let scheduled = 0;
 
       // 1) Morning Daily Chai — 28 one-shots, each with that day's atom hook,
-      //    tapping deep-links straight into the brief. Four weeks (not one) so a
-      //    lapsed reader keeps hearing from the app longer — there is no server
-      //    push to fall back on (product-spec §4.1 interim; push itself is wave 2).
+      //    tapping deep-links straight into the content it names. Four weeks (not
+      //    one) so a lapsed reader keeps hearing from the app longer — there is no
+      //    server push to fall back on (product-spec §4.1 interim; push is wave 2).
+      //    One snapshot is read here and shared across all 28 days so the picks
+      //    are personalized yet the loop stays synchronous (buildDailyAtom is
+      //    pure given a snapshot), and each day agrees with the Home card.
       if (settings.dailyWisdom) {
+        const snapshot = await dailyPickService.buildSnapshot();
         for (let day = 0; day < 28; day++) {
           const fireDate = at(daysFromNow(day), 8, 0);
           if (fireDate.getTime() <= Date.now()) continue; // today 8am already past
-          const atom = getDailyAtom(fireDate);
+          const atom = buildDailyAtom(fireDate, snapshot);
           await Notifications.scheduleNotificationAsync({
             content: {
               title: '☕ Your chai is ready',
               body: atom.hook,
-              data: { url: 'dailychai' },
+              // Deep-link into the specific content the pick names; fall back to
+              // the Home tab for atoms with no reader (e.g. a Sanskrit word).
+              data: atom.sourceRef
+                ? { url: 'contentref', ref: atom.sourceRef }
+                : { url: 'dailychai' },
             },
             trigger: {
               type: Notifications.SchedulableTriggerInputTypes.DATE,

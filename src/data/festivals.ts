@@ -4691,6 +4691,32 @@ export const getDaysUntilFestival = (festival: Festival): number | null => {
   return Math.max(0, Math.round((next.start.getTime() - startOfToday().getTime()) / DAY_MS));
 };
 
+// The festival "lens" for a given date: the festival whose EVE (start − 1) or
+// PRINCIPAL day (start) the date falls on — computed relative to the passed
+// `date`, not today, so notification pre-baking for future days is correct.
+//
+// Deliberately bounded to eve + principal day (NOT the whole multi-day run):
+// getDaysUntilFestival clamps to 0 for every day an occurrence is ongoing, so a
+// 9-day festival like Ratha Yatra used to own the daily brief for ~16 days
+// straight (7-day pre-roll + 9-day duration). Keying strictly off each
+// occurrence's start caps the lens at two days per festival, an accent rather
+// than a takeover. `days` is 0 (today) or 1 (tomorrow/eve).
+export const getFestivalLensFor = (date: Date): { festival: Festival; days: number } | null => {
+  const day = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+  let best: { festival: Festival; days: number } | null = null;
+  for (const festival of festivalData) {
+    for (const startStr of festival.occurrences) {
+      const days = Math.round((parseLocalDate(startStr).getTime() - day) / DAY_MS);
+      // Prefer the principal day (0) over an eve (1); among equals, the first
+      // festival in data order wins — fully deterministic across devices.
+      if ((days === 0 || days === 1) && (!best || days < best.days)) {
+        best = { festival, days };
+      }
+    }
+  }
+  return best;
+};
+
 export const getTodaysFestivals = (): Festival[] => {
   const today = startOfToday();
   return festivalData.filter(festival =>
