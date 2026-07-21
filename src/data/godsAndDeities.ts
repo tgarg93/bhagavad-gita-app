@@ -208,7 +208,7 @@ export const deitiesData: Deity[] = [
       {
         id: 'govardhan-lift',
         title: 'Lifting Govardhan Hill',
-        content: 'For as long as anyone could remember, Vrindavan had sent its harvest up to Indra, king of storms, hoping the rains would fall gently. Then a cowherd boy asked a dangerous question: why thank the distant sky, when it is the hill — Govardhan — whose grass feeds the cows and whose springs fill the pots? So the village turned its offering to the hill instead.\n\nIndra\'s answer was fury. He loosed the clouds of the world\'s end: seven days of rain like thrown spears, rivers climbing the doorsteps, the sky gone black at noon. Cattle bawled in the rising flood, and the whole village ran to the boy who had started it.\n\nKrishna walked out to Govardhan, crouched, and lifted the entire hill on the little finger of his left hand. And there it hung — a roof of dripping stone over every man, woman, calf, and bird of Vrindavan, while the deluge shattered against its far side and ran away harmless. Seven days he held it up, and did not tire. On the seventh, Indra\'s thunder ran out before the boy\'s patience did, and the king of the gods came down through his own spent clouds to bow before a child.',
+        content: 'For as long as anyone could remember, the village of Vrindavan had sent its harvest up to Indra, the god who rules the sky and sends the rains, hoping he would send the monsoon gently. Then a cowherd boy asked a dangerous question: why thank the far-off sky-god, when it is Govardhan, the local hill, whose grass feeds the cows and whose springs fill the water-pots? So the village turned its offering to the hill instead.\n\nIndra\'s answer was fury. He loosed the clouds of the world\'s end: seven days of rain like thrown spears, rivers climbing the doorsteps, the sky gone black at noon. Cattle bawled in the rising flood, and the whole village ran to the boy who had started it.\n\nKrishna walked out to Govardhan, crouched, and lifted the entire hill on the little finger of his left hand. And there it hung — a roof of dripping stone over every man, woman, calf, and bird of Vrindavan, while the deluge shattered against its far side and ran away harmless. Seven days he held it up, and did not tire. On the seventh, Indra\'s thunder ran out before the boy\'s patience did, and the king of the gods came down through his own spent clouds to bow before a child.',
         moralLesson: 'Honour what actually sustains you, not what merely demands tribute. And real shelter covers everyone under one roof, without first asking who deserves it.',
         category: 'miracle',
         relatedScripture: 'Bhagavata Purana, Canto 10, Chapters 24–25'
@@ -216,7 +216,7 @@ export const deitiesData: Deity[] = [
       {
         id: 'krishna-mouthful-of-universe',
         title: 'The Universe in His Mouth',
-        content: 'The village boys came running to Yashoda with a complaint: your son has been eating dirt again. Caught, Krishna denied it with a toddler\'s wounded innocence — but his mother was not fooled. "Open your mouth," she said. And he did.\n\nInside that small, muddy mouth she saw it all: the wheeling galaxies and the dark between them, the oceans and the mountains, the turning of the seasons and of time itself — and Vrindavan, and the very house she was standing in, and herself standing in it, looking into the mouth of her son who somehow held her too. For one unbearable moment the cowherd mother beheld the whole of everything.\n\nThen Krishna, out of nothing but kindness, drew his veil of mother-love back across her eyes, and she forgot. She blinked, lifted her boy onto her hip, and worried only whether he had eaten enough.',
+        content: 'One day the village boys came running to Yashoda, the woman raising Krishna as her own, with a complaint: your son has been eating dirt again. Caught, Krishna denied it with a toddler\'s wounded innocence — but his mother was not fooled. "Open your mouth," she said. And he did.\n\nInside that small, muddy mouth she saw it all: the wheeling galaxies and the dark between them, the oceans and the mountains, the turning of the seasons and of time itself — and Vrindavan, and the very house she was standing in, and herself standing in it, looking into the mouth of her son who somehow held her too. For one unbearable moment the cowherd mother beheld the whole of everything.\n\nThen Krishna, out of nothing but kindness, drew his veil of mother-love back across her eyes, and she forgot. She blinked, lifted her boy onto her hip, and worried only whether he had eaten enough.',
         moralLesson: 'The infinite hides inside the ordinary things we scold and feed and put to bed. And forgetting can be a mercy: love needs someone to hold, not everything to comprehend.',
         category: 'miracle',
         relatedScripture: 'Bhagavata Purana, Canto 10, Chapter 8'
@@ -224,7 +224,7 @@ export const deitiesData: Deity[] = [
       {
         id: 'krishna-kaliya',
         title: 'Dancing on the Serpent',
-        content: 'The serpent Kaliya had made his lair in the deepest pool of the Yamuna, and his venom had turned the water black. The trees along the bank stood leafless and dead; birds that flew too low over it dropped out of the air. The village had learned to keep away.\n\nKrishna climbed a kadamba tree on the bank, and dove straight in.\n\nKaliya came for him in a storm of coils, wound the boy tight, and dragged him under. At the water\'s edge the villagers wept, certain he was lost. Then the coils began to strain — the boy was swelling, growing, until the grip that should have crushed him simply broke apart. Krishna rose to the surface, stepped up onto the serpent\'s crowd of hoods, and began to dance. Each time a head reared in defiance his foot came down on it in rhythm, and one by one the hoods sank, until Kaliya — beaten, and understanding at last — bowed. From the black water his serpent-wives rose with folded hands to sing for the dancer. Krishna spared him, and sent him far off, to waters where his poison could reach no one.',
+        content: 'A monstrous serpent named Kaliya had made his home in the deepest pool of the river Yamuna, and his venom had turned the water black. The trees along the bank stood leafless and dead; birds that flew too low over it dropped out of the air. The whole village had learned to keep away.\n\nKrishna climbed a tree on the bank, and dived straight in.\n\nKaliya came for him in a storm of coils, wound the boy tight, and dragged him under. At the water\'s edge the villagers wept, certain he was lost. Then the coils began to strain — the boy was swelling, growing, until the grip that should have crushed him simply broke apart. Krishna rose to the surface, stepped up onto the serpent\'s crowd of hoods, and began to dance. Each time a head reared in defiance his foot came down on it in rhythm, and one by one the hoods sank, until Kaliya — beaten, and understanding at last — bowed. From the black water his serpent-wives rose with folded hands to sing for the dancer. Krishna spared him, and sent him far off, to waters where his poison could reach no one.',
         moralLesson: 'What poisons your waters must be confronted — but the goal is the poison\'s end, not the poisoner\'s destruction. Grace defeats venom by dancing on it, not by becoming it.',
         category: 'adventure',
         relatedScripture: 'Bhagavata Purana, Canto 10, Chapter 16'
@@ -286,13 +286,13 @@ export const deitiesData: Deity[] = [
         '/images/deities/krishna-gita.jpg'
       ]
     },
-    kicker: 'Not one aspect of the divine but the whole of it at once — the butter thief who also speaks the Gita.',
+    kicker: "The playful cowherd boy who grows up to become God's own voice in the Bhagavad Gita.",
     learnItems: [
-      'In Krishna, the whole of the divine came at once',
-      'The divine chose an ordinary, barefoot childhood',
-      'God is hungry for your love, not your offerings',
-      'A flute is a reed emptied of itself — so is a life',
-      'The divine is a charioteer, not a substitute',
+      'Krishna is God in human form — and somehow all of God at once',
+      'God chose an ordinary, barefoot childhood',
+      'God wants your love, not your offerings',
+      'An empty reed makes the music — and so can an emptied life',
+      'God takes the reins, but the fight stays yours',
     ],
     handoff:
       'Krishna is the divine at play, holding nothing back. The next avatar holds everything to a single line he will not cross, whatever it costs him. That is Rama.',
@@ -302,31 +302,33 @@ export const deitiesData: Deity[] = [
         kind: 'intro',
         title: "What's ahead",
         storyText:
-          "Every deity carries an aspect of the divine. Krishna's devotees make a bolder claim: in him the whole of it came at once — the child and the charioteer, the flute and the war.\n\nOver the next few pages you'll meet the god who insists the sacred does not wait for your solemn moments — and then three tales the tradition never tires of telling.",
+          "Krishna is one of the most loved gods in Hinduism, and one of the hardest to sum up. He is a mischievous child, a young cowherd, a friend, a lover — and, grown up, the guide who speaks Hinduism's most famous scripture on a battlefield.\n\nOver the next few pages you'll meet him from the very beginning, and see why so many people feel God is easiest to love in his form.",
       },
       {
         id: 'krishna-whole-divine',
-        title: 'The God Who Is Everything at Once',
-        subtitle: 'A Flute, a Chariot, a Mountain, a Mouthful of Stars',
+        title: 'Who Krishna Is',
+        subtitle: 'God, born as a cowherd boy',
         takeaway:
-          'In Krishna, the whole of the divine came at once. The absolute is also adorable, and the adorable is also absolute.',
-        storyText: 'Every deity in the tradition carries an aspect of the divine; Krishna\'s devotees make a bolder claim — that in him **the whole of it came at once**.\n\nHe is the butter thief and the speaker of the Gita, the flute player of Vrindavan and the strategist of Kurukshetra, the child in Yashoda\'s lap and — when she looked into his mouth — the container of Yashoda, Vrindavan, and every galaxy.\n\nThe **Bhagavata Purana**\'s tenth canto, the most beloved book in devotional Hinduism, insists on holding all of these together: the point of Krishna is that **the absolute is also adorable, and the adorable is also absolute**.',
-        teachingText: 'Krishna\'s completeness is a teaching about your own life: the sacred does not wait for your solemn moments.\n\nIt is as present in play, mischief, music, and love as in scripture and battle-duty. A spirituality with room for the flute as well as the sermon is the one this god embodies.',
-        citation: 'Bhagavata Purana, Canto 10 (the vision in the child\'s mouth: Chapter 8).',
+          'Krishna is Vishnu — the god who protects the world — born as a human being. And unlike most gods, who stand for one thing, he somehow seems to be all of God at once.',
+        storyText:
+          "Hindus picture God as having three great jobs: making the world, protecting it, and dissolving it so it can begin again. The protector is called **Vishnu**. When the world is in trouble, Hindus believe Vishnu comes down and is born as a living being, usually a human. Such a birth is called an **avatar**, which simply means 'a coming-down.' There have been several, and Krishna is considered the fullest and most complete of them all.\n\nWhat makes Krishna special is how much he holds at once. Most gods stand for a single quality, like power, or wisdom, or destruction. Krishna is the giggling baby stealing butter **and** the vast power behind the whole universe. He is the flute-playing village boy everyone adores **and** the calm teacher on a battlefield.\n\nSo you never have to choose between a God who is close and lovable and a God who is awesome and infinite. Krishna is both, in one person.",
+        teachingText:
+          'That is the heart of why people love him. In Krishna, God is not saved up for solemn, serious moments. He turns up in play, in mischief, in music, and in ordinary love, just as much as in prayer or scripture.',
+        citation: 'Krishna as the most complete avatar of Vishnu: Bhagavata Purana, Canto 10.',
         checks: [
           {
             id: 'chk:deity:krishna:whole-divine',
             kind: 'mcq',
-            prompt: "What do Krishna's devotees claim is special about him among the deities?",
+            prompt: 'What do Krishna\'s devotees find special about him among the many Hindu gods?',
             options: [
               {
-                text: 'In him the whole of the divine came at once — the absolute is also adorable, and the adorable is also absolute',
+                text: 'He seems to hold all of God at once — the lovable child and the cosmic power, in one person',
                 correct: true,
               },
-              { text: 'That he is the only real god and the others are false' },
-              { text: 'That he never took a human form at all' },
+              { text: 'That he is the only real god and all the others are false' },
+              { text: 'That he never actually took a human form' },
             ],
-            why: 'The child in Yashoda\'s lap and the container of every galaxy are the same Krishna. The point is that the sacred is as present in play, music, and love as in scripture and battle-duty.',
+            why: 'Most gods stand for a single quality. Krishna is the butter-stealing baby and the force behind the universe at the same time, which is why people say you never have to choose between a God who is near and one who is vast.',
           },
         ],
       },
@@ -335,9 +337,11 @@ export const deitiesData: Deity[] = [
         title: 'Born in a Prison, Raised in a Pasture',
         subtitle: 'A Basket Crossing the Yamuna at Midnight',
         takeaway:
-          'The divine chose an ordinary, barefoot childhood. Your unremarkable seasons may be the part heaven remembers most fondly.',
-        storyText: 'His story begins where Janmashtami\'s does: the tyrant Kamsa, the prophecy, the prison birth at midnight, the locks opening, and Vasudeva carrying the child across the flooding Yamuna to safety in Gokul.\n\nWhat the tradition savors is the sequel: the rescued god grew up not in a palace preparing his revenge, but in a cowherd village — **barefoot, butter-smeared, beloved**.\n\nThe divine chose ordinary rural childhood: churning, herding, flooding rivers, village festivals. Every dusty detail of common life was good enough for God to live in.',
-        teachingText: 'Krishna\'s pastoral years dignify every unglamorous stretch of a life.\n\nIf the divine spent years herding cows and stealing butter before speaking the Gita, then your own ordinary seasons — the commutes, the childcare, the unremarkable years — are not the waiting room of your real life. **They may be the part heaven remembers most fondly.**',
+          'God could have been born a prince. Instead he grew up barefoot among cowherds — which means your own ordinary life is good enough for the divine.',
+        storyText:
+          "Before Krishna was even born, a cruel king named **Kamsa** was warned by a prophecy that his sister's eighth son would one day kill him. So he threw his sister and her husband in prison and killed each baby they had. But when the eighth child, Krishna, was born at midnight, something impossible happened: the prison locks fell open on their own, the guards dropped into a deep sleep, and his father slipped out and carried him across a flooding river to safety.\n\nHe was hidden away in **Gokul**, and later **Vrindavan** — small villages of **cowherds** (families who raise and herd cattle) on the banks of the river Yamuna. And there the rescued god simply grew up. Not in a palace plotting his revenge, but barefoot and butter-smeared: herding cows, playing in the fields, adored by everyone around him.",
+        teachingText:
+          'It is a quiet but radical idea. If God himself spent years herding cattle and stealing butter before he ever spoke a word of scripture, then your own unglamorous stretches, like the commute, the childcare, the forgettable years, are not just the waiting room before your real life begins. They may be the part heaven loves most.',
         citationLink: 'festival:janmashtami-2025',
         citation: 'Bhagavata Purana, Canto 10, Chapters 1–4 (the birth), 5–10 (Gokul).'
       },
@@ -354,24 +358,26 @@ export const deitiesData: Deity[] = [
         title: 'The Thief Who Steals Only from Those Who Love Him',
         subtitle: 'A Toppled Pot, White Footprints Leading Away',
         takeaway:
-          "God is not fed by your offerings; he is hungry for your love. Prayer, in Vrindavan's dialect, is leaving the window unlatched.",
-        storyText: 'The butter theft is the tradition\'s most cherished paradox: **the Lord of the universe, sneaking**.\n\nThe gopis of Vrindavan hung their butter pots higher, and he built pyramids of friends; they locked the doors, and he was inside anyway; they marched to Yashoda to complain, and stood there hoping he\'d raid their kitchens next.\n\nThe Bhagavata\'s poets understood exactly what they were doing: **butter is the heart\'s sweetness**, churned from a whole life, and Krishna steals only what is already his — and only from homes that love him. Where there is no love, he does not even trespass.',
-        teachingText: 'The butter thief inverts the whole economy of worship: the divine is not fed by your offerings — it is hungry for **your love specifically**, and delights in taking it playfully rather than receiving it formally.\n\nPrayer, in Vrindavan\'s dialect, is leaving the window unlatched.',
+          "God isn't won over by grand offerings — he is hungry for your love, and he'd rather take it playfully. Here, prayer is just leaving a door open for him.",
+        storyText:
+          "As a boy, Krishna was a shameless butter thief. The **gopis** — the cowherd women and girls of the village — would hang their butter pots high from the ceiling to keep them safe, and he would build a wobbling tower of friends to reach them. They would lock their doors, and somehow he was inside anyway. They would march to his mother to complain about him, and then secretly hope he would come raid **their** kitchen next.\n\nThe poets who told these stories knew exactly what they meant by them. Butter is churned slowly out of milk, the sweetness drawn from a whole day's patient work, not unlike the love that gathers in a person's heart. And Krishna steals butter only from the homes that love him. Where there is no love, he does not so much as step inside.",
+        teachingText:
+          'It turns the usual idea of worship on its head. God is not fed by your gifts and rituals; he is after your love, and he would rather snatch it playfully than be handed it in a formal ceremony. In these villages, prayer was not grand ritual. It was leaving the window unlatched.',
         citation: 'Butter-thief episodes: Bhagavata Purana, Canto 10, Chapters 8–9.',
         checks: [
           {
             id: 'chk:deity:krishna:butter',
             kind: 'mcq',
-            prompt: "The butter thief steals only from homes that love him, and won't trespass where there's none. What does the image invert?",
+            prompt: 'Krishna steals butter only from homes that love him, and will not enter where there is none. What does this turn upside down?',
             options: [
               {
-                text: "The divine isn't fed by your offerings — it is hungry for your love specifically, and delights in taking it playfully",
+                text: "The usual idea of worship — God isn't won by your offerings, he is hungry for your love, and takes it playfully",
                 correct: true,
               },
-              { text: 'That theft is acceptable as long as you are divine' },
-              { text: 'That the gods require constant formal worship' },
+              { text: 'That stealing is fine as long as you are a god' },
+              { text: 'That the gods need constant formal worship to stay happy' },
             ],
-            why: 'Butter is the heart\'s sweetness, churned from a whole life, and Krishna takes only what is already his — and only where there is love. Prayer, in Vrindavan\'s dialect, is leaving the window unlatched.',
+            why: 'Butter is churned slowly from a whole day of work, a little like the love in a heart. Krishna takes it only where there is love. In these villages, prayer was not ceremony; it was leaving the window unlatched.',
           },
         ],
       },
@@ -380,9 +386,11 @@ export const deitiesData: Deity[] = [
         title: 'The Sound That Calls Everyone Home',
         subtitle: 'A Bamboo Flute at Dusk, Cows Turning Their Heads',
         takeaway:
-          "A flute is a reed emptied of itself, and only therefore musical. Emptied, a life doesn't go vacant; it becomes the instrument.",
-        storyText: 'Of all Krishna\'s emblems, the tradition loves the **flute** most.\n\nAt dusk in Vrindavan he would play, and the Bhagavata describes the whole world leaning toward the sound — cows lifting their heads, rivers slowing, the gopis leaving whatever was in their hands.\n\nThe saints read the symbol lovingly: **a flute is a reed emptied of itself** — hollowed, holed, and only therefore musical. Whoever becomes empty enough, the divine breath plays through.',
-        teachingText: 'The flute asks the question all contemplatives eventually face: **what fills you that the music cannot pass through?**\n\nThe ego\'s knots are the reed\'s blockages. The practices — reflection, offering, remembrance — are the slow hollowing. And the promise is Vrindavan\'s: emptied, a life doesn\'t become vacant. It becomes the instrument.',
+          "A flute only makes music because it's hollow. Empty yourself the same way, and something greater can play through you.",
+        storyText:
+          "Of all the images of Krishna, the tradition loves the **flute** the most. At dusk he would stand and play, and the old stories say the whole world leaned in to listen: the cows lifting their heads, the river slowing, people setting down whatever was in their hands.\n\nThe saints found a lesson in the instrument itself. A flute is nothing but a length of bamboo that has been **hollowed out**, emptied, and pierced with a few holes. It makes music only because it is empty. Whoever empties themselves in the same way, they said, lets the breath of God play through them.",
+        teachingText:
+          'So it asks an honest question: what is clogging you, so the music cannot get through? Pride, grasping, and fear are the blockages in the reed. The practices in this app, like reflecting, letting go, and remembering, are the slow hollowing-out. And the promise is that an emptied life does not end up empty. It becomes an instrument.',
         citation: 'Bhagavata Purana, Canto 10, Chapter 21 (the Venu Gita).'
       },
       {
@@ -398,29 +406,31 @@ export const deitiesData: Deity[] = [
         title: 'The God Who Took the Reins',
         subtitle: 'Two Armies Waiting, a Conversation Beginning',
         takeaway:
-          'The divine is a charioteer, not a substitute. Guidance at the reins; the fighting still yours.',
+          "When your hardest battle comes, God won't fight it for you — but he'll sit beside you, hold the reins, and tell you the truth.",
         keyVerse: {
           sanskrit: 'ईश्वरः सर्वभूतानां हृद्देशेऽर्जुन तिष्ठति। भ्रामयन्सर्वभूतानि यन्त्रारूढानि मायया॥',
           transliteration: 'īśhvaraḥ sarva-bhūtānāṁ hṛid-deśhe \'rjuna tiṣhṭhati, bhrāmayan sarva-bhūtāni yantrārūḍhāni māyayā',
           meaning: 'The Lord dwells in the hearts of all beings, O Arjuna, causing all beings to revolve by His power, as if mounted on a machine.',
           source: 'Bhagavad Gita 18.61 (tr. Swami Sivananda)'
         },
-        storyText: 'When the great war came, Krishna made a choice that defines him: offered the pick between his armies and himself unarmed, the wise took the unarmed god.\n\nHe drove Arjuna\'s chariot — held the reins, took no weapon, and in the field between two armies delivered the **Bhagavad Gita**.\n\nThe arrangement is the theology: the divine does not fight your battle for you, and does not abandon you to it. It sits at the front of your chariot, holding the horses, speaking truth exactly when despair strikes — and near the end tells you where it has been all along: **in the heart, of everyone, always**.',
-        teachingText: 'Whatever battlefield you are facing, Krishna\'s position is the promise: not a substitute who fights instead of you, not a spectator — **a charioteer**. Guidance at the reins, the fighting still yours.\n\nThe Gita is what the charioteer says. This whole app, in a sense, is an attempt to keep that voice within reach of your chariot.',
+        storyText:
+          "When Krishna grew up, a great war came. On one side stood a warrior named **Arjuna**, sick at heart because the enemy army was full of his own cousins, teachers, and friends. Offered a choice between Krishna's entire army or Krishna alone and unarmed, Arjuna chose the unarmed Krishna.\n\nAnd Krishna became his **charioteer**, the driver of his war-chariot. He picked up no weapon. He held the horses steady, and there in the no-man's-land between the two armies, as Arjuna froze in despair, Krishna turned and spoke to him. That conversation is the **Bhagavad Gita**, Hinduism's best-loved scripture. Near its end, Krishna tells Arjuna where he has secretly been the whole time: in the heart of every living being.",
+        teachingText:
+          'That picture is the promise. God does not fight your battles for you, and does not leave you to fight them alone. He sits at the front of your chariot, holding the reins, steadying you, and telling you the truth exactly when you are ready to give up. The fighting is still yours. But you are not driving alone.',
         checks: [
           {
             id: 'chk:deity:krishna:charioteer',
             kind: 'mcq',
-            prompt: "Offered the choice between Krishna's armies and Krishna himself unarmed, the wise chose the unarmed god. What is the promise in Krishna as charioteer?",
+            prompt: "Krishna drove Arjuna's chariot but picked up no weapon of his own. What is the promise in Krishna as a charioteer?",
             options: [
               {
-                text: 'Not a substitute who fights instead of you, and not a spectator — guidance at the reins, the fighting still yours',
+                text: 'God will not fight your battle for you, and will not leave you alone in it — he steadies you and tells you the truth, but the fighting is still yours',
                 correct: true,
               },
-              { text: 'That the divine will win every battle for you if you ask' },
-              { text: 'That you should avoid every conflict entirely' },
+              { text: 'That God will win every battle for you if you just ask' },
+              { text: 'That you should avoid every conflict in life' },
             ],
-            why: 'The divine does not fight your battle for you and does not abandon you to it. It holds the horses and speaks truth exactly when despair strikes — and tells you, near the end, that it has been in your own heart all along.',
+            why: 'A charioteer holds the reins and steadies the fighter, but does not fight in his place. Krishna guides Arjuna and, near the end, tells him he has been in his heart all along.',
           },
         ],
       },
@@ -429,7 +439,7 @@ export const deitiesData: Deity[] = [
         title: 'Three Tales of Krishna',
         subtitle: 'The teachings, now in motion',
         storyText:
-          "You have met the teachings. Now meet the god in motion.\n\nWhat follows are three tales the tradition has told for a thousand years: a hill lifted on one finger, a mother who saw the universe in her son's mouth, a boy who danced on a serpent's hoods. Each is a teaching you already hold, alive.",
+          "You've met the teachings. Now meet Krishna in action.\n\nWhat follow are three of the best-loved stories ever told about him: a hill lifted on one finger, a mother who saw the whole universe inside her child's mouth, and a boy who danced on a deadly serpent. Each one brings a teaching you've just met to life.",
       }
     ],
     sources: [
