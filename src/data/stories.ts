@@ -377,7 +377,7 @@ const UPANISHAD_STORIES: Story[] = [
         id: 'indra-virochana-intro',
         title: 'Before the story',
         storyText:
-          "This story, from the **Chandogya Upanishad**, is a sly little lesson about how easy it is to stop at a comfortable half-truth. Two powerful students — **Indra**, the king of the gods, and **Virochana**, the king of the **asuras** (the demons, who are the gods' rivals) — go to the same teacher to learn the secret of the true Self.\n\nThey hear identical words. Watch how differently the two of them listen.",
+          "This story, from an ancient scripture called the **Chandogya Upanishad**, is a sly little lesson about how easy it is to stop at a comfortable half-truth. Two powerful students — **Indra**, the king of the gods, and **Virochana**, the king of the **asuras** (the demons, who are the gods' rivals) — go to the same teacher to learn the secret of the true Self.\n\nThey hear identical words. Watch how differently the two of them listen.",
       },
       {
         id: 'the-announcement',
