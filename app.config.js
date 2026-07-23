@@ -29,6 +29,11 @@ export default {
       bundleIdentifier: "com.tushargarg.dharma",
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
+        // Keep narration playing when the app is backgrounded / the phone locks
+        // / it's on car Bluetooth. Paired with staysActiveInBackground:true in
+        // audioNarrationService (setAudioModeAsync REJECTS that flag without this
+        // entitlement, so the two must ship in the same build).
+        UIBackgroundModes: ["audio"],
         NSPhotoLibraryUsageDescription: "Choose a profile photo from your library",
         NSCalendarsUsageDescription: "Add festival dates to your calendar",
         NSCalendarsFullAccessUsageDescription: "Add festival dates to your calendar",

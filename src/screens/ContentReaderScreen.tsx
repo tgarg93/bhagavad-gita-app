@@ -15,6 +15,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Animated,
+  AppState,
 } from 'react-native';
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
@@ -328,6 +329,21 @@ const ContentReaderScreen: React.FC = () => {
   const sectionsWithTrailingCheckRef = useRef(sectionsWithTrailingCheck);
   sectionsWithTrailingCheckRef.current = sectionsWithTrailingCheck;
 
+  // Car / Bluetooth listening: when the app is backgrounded or the phone locks,
+  // narration keeps playing (UIBackgroundModes: audio + staysActiveInBackground)
+  // and should flow straight through instead of parking on quizzes/waypoints —
+  // you can't tap an MCQ while driving. onSegmentEnd reads this from the captured
+  // callback closure, so it's a ref (same reason as the maps above). The
+  // PrerecordedController queue holds only sections that have a clip, so with
+  // parking suppressed it auto-advances past check/reflection/waypoint pages.
+  const isBackgroundedRef = useRef(AppState.currentState !== 'active');
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (state) => {
+      isBackgroundedRef.current = state !== 'active';
+    });
+    return () => sub.remove();
+  }, []);
+
   // The section the voice is currently reading (set in onSegmentStart). Lets a
   // user swipe seek the audio while a snap-back to the same page is a no-op.
   const audioSectionRef = useRef<number | null>(null);
@@ -410,6 +426,10 @@ const ContentReaderScreen: React.FC = () => {
         const i = parseInt(m[1]);
         if (lastSegmentIdOfSectionRef.current.get(i) !== segmentId) return;
         if (!sectionsWithTrailingCheckRef.current.has(i)) return;
+        // Backgrounded / on car Bluetooth: don't park on the check. Returning here
+        // leaves the controller un-paused, so advanceSection rolls into the next
+        // clip and the interactive page is skipped (see isBackgroundedRef).
+        if (isBackgroundedRef.current) return;
         const checkPage = pageIndexForSectionRef.current[i] + 1;
         audioService.pauseNarration();
         setIsPlaying(false);

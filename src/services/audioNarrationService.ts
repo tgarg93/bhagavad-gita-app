@@ -376,11 +376,13 @@ export class AudioNarrationService {
   async initialize() {
     try {
       // Configure the audio session so TTS plays even with the iOS silent switch on.
-      // staysActiveInBackground is intentionally off — it requires a UIBackgroundModes
-      // entitlement this app doesn't have and makes the whole call reject.
+      // staysActiveInBackground keeps narration going when the app is backgrounded /
+      // the phone locks / it's on car Bluetooth. It REQUIRES the `UIBackgroundModes:
+      // audio` entitlement (ios/Dharma/Info.plist + app.config.js) — without it this
+      // whole call rejects, so the two must ship in the same build.
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: false,
-        staysActiveInBackground: false,
+        staysActiveInBackground: true,
         interruptionModeIOS: InterruptionModeIOS.DoNotMix,
         playsInSilentModeIOS: true,
         shouldDuckAndroid: true,
