@@ -11,7 +11,7 @@
 // Arrowheads are drawn as explicit <Path> triangles rather than SVG <Marker>,
 // which react-native-svg supports unevenly across platforms.
 import React from 'react';
-import { View, Text, Animated } from 'react-native';
+import { View, Text, Animated, StyleSheet } from 'react-native';
 import Svg, {
   Rect,
   Circle,
@@ -31,6 +31,7 @@ import {
   SceneFigure,
   useOneShot,
   useBreathLoop,
+  useSpin,
   Caption,
   Figure,
   InsetFigure,
@@ -614,22 +615,63 @@ const DharmaRoles: React.FC<{ active?: boolean }> = ({ active }) => (
   </InsetFigure>
 );
 
-// ── The surgeon's knife ─────────────────────────────────────────────────────
-const TwoKnives = () => (
-  <Figure caption="Same blade, opposite deeds. Ahimsa reads the intention and the necessity.">
-    <Svg width="100%" height={150} viewBox="0 0 640 188">
-      {/* two knives, mirrored */}
-      <Path d="M120 40 L196 128" stroke={TEAL} strokeWidth={7} strokeLinecap="round" />
-      <Path d="M104 26 L124 48" stroke={TEAL} strokeWidth={13} strokeLinecap="round" />
-      <SvgText x={160} y={160} textAnchor="middle" fontSize={12} fontWeight="700" fill={INK}>to heal</SvgText>
-      <SvgText x={160} y={177} textAnchor="middle" fontSize={10} fill={SOFT}>as little as possible · ahimsa kept</SvgText>
-      <Path d="M520 40 L444 128" stroke={PINK} strokeWidth={7} strokeLinecap="round" opacity={0.8} />
-      <Path d="M536 26 L516 48" stroke={PINK} strokeWidth={13} strokeLinecap="round" opacity={0.8} />
-      <SvgText x={480} y={160} textAnchor="middle" fontSize={12} fontWeight="700" fill={INK}>to harm</SvgText>
-      <SvgText x={480} y={177} textAnchor="middle" fontSize={10} fill={SOFT}>harm you don’t have to · broken</SvgText>
-      <Line x1={320} y1={36} x2={320} y2={140} stroke={RULE} strokeWidth={1.5} strokeDasharray="4 5" />
+// ── The surgeon's knife (Wave 0: full-bleed, one wound read two ways) ────────
+// The card's own words: a surgeon's and an attacker's knife can leave the SAME
+// wound — separated by intention and by necessity. So: one identical central
+// wound made by two IDENTICAL knives (same blade, same handle), read two ways.
+const KnifeIcon: React.FC<{ x: number; deg: number }> = ({ x, deg }) => (
+  <G rotation={deg} originX={x} originY={66}>
+    <Rect x={x - 5} y={40} width={10} height={24} rx={3} fill="#6B5A38" />
+    <Path d={`M${x - 6} 64 L${x + 6} 64 L${x} 94 Z`} fill="url(#kn-steel)" stroke="#9AA6AE" strokeWidth={0.7} />
+  </G>
+);
+const TwoKnives: React.FC<{ active?: boolean }> = ({ active }) => (
+  <SceneFigure
+    caption="Same blade, same wound — split by intention and by whether it had to happen."
+    active={active}
+  >
+    <Svg width="100%" height={250} viewBox="0 0 390 250">
+      <Defs>
+        <LinearGradient id="kn-bg" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0" stopColor="#FCF7E8" />
+          <Stop offset="1" stopColor="#F1E7CE" />
+        </LinearGradient>
+        <LinearGradient id="kn-steel" x1="0" y1="0" x2="1" y2="0">
+          <Stop offset="0" stopColor="#AEB8C0" />
+          <Stop offset="0.5" stopColor="#EEF2F5" />
+          <Stop offset="1" stopColor="#AEB8C0" />
+        </LinearGradient>
+      </Defs>
+      <Rect x={0} y={0} width={390} height={250} fill="url(#kn-bg)" />
+      <SvgText x={195} y={22} textAnchor="middle" fontSize={10} fontWeight="700" letterSpacing={1.1} fill="#8A6A1E">
+        TWO KNIVES · ONE WOUND
+      </SvgText>
+
+      {/* two IDENTICAL knives angled into the same wound */}
+      <KnifeIcon x={150} deg={34} />
+      <KnifeIcon x={240} deg={-34} />
+
+      {/* the one same wound */}
+      <Ellipse cx={195} cy={120} rx={46} ry={15} fill="#E7C9A6" opacity={0.6} />
+      <Path d="M176 120 Q195 114 214 119" fill="none" stroke="#B4285A" strokeWidth={3} strokeLinecap="round" />
+      <Path d="M182 116 l2 8 M195 114 l0 9 M208 116 l-2 8" stroke="#B4285A" strokeWidth={1.4} opacity={0.7} />
+      <SvgText x={195} y={150} textAnchor="middle" fontSize={10} fontStyle="italic" fill="#8A6A1E">the same wound</SvgText>
+
+      {/* LEFT reading: the surgeon */}
+      <SvgText x={96} y={180} textAnchor="middle" fontSize={12.5} fontWeight="700" fill="#1F5E55">the surgeon</SvgText>
+      <SvgText x={96} y={197} textAnchor="middle" fontSize={10} fill="#5A5A4A">to heal · had to cut</SvgText>
+      <Rect x={22} y={208} width={148} height={26} rx={13} fill={TEAL} opacity={0.15} />
+      <Path d="M46 221 l5 5 l11 -13" fill="none" stroke="#1F5E55" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
+      <SvgText x={70} y={225} fontSize={11.5} fontWeight="700" fill="#1F5E55">ahimsa kept</SvgText>
+
+      {/* RIGHT reading: the attacker */}
+      <SvgText x={294} y={180} textAnchor="middle" fontSize={12.5} fontWeight="700" fill="#B4285A">the attacker</SvgText>
+      <SvgText x={294} y={197} textAnchor="middle" fontSize={10} fill="#5A5A4A">to harm · chose to cut</SvgText>
+      <Rect x={220} y={208} width={148} height={26} rx={13} fill={PINK} opacity={0.13} />
+      <Path d="M244 216 l13 12 M257 216 l-13 12" stroke="#B4285A" strokeWidth={2} strokeLinecap="round" />
+      <SvgText x={278} y={225} fontSize={11.5} fontWeight="700" fill="#B4285A">himsa</SvgText>
     </Svg>
-  </Figure>
+  </SceneFigure>
 );
 
 // ── Rivers into the sea (Wave 0: full-bleed 1:1, one-shot flow-in) ───────────
@@ -690,53 +732,94 @@ const RiverToSea: React.FC<{ active?: boolean }> = ({ active }) => {
   );
 };
 
-// ── The four aims ───────────────────────────────────────────────────────────
-const FourAims = () => (
-  <Figure caption="Three aims for the world, and a door at the back.">
-    <Svg width="100%" height={160} viewBox="0 0 640 200">
-      {[
-        { x: 30, name: 'dharma', sub: 'live rightly', c: TEAL },
-        { x: 180, name: 'artha', sub: 'prosper', c: GOLD },
-        { x: 330, name: 'kama', sub: 'enjoy', c: PINK },
-      ].map(b => (
-        <G key={b.x}>
-          <Rect x={b.x} y={54} width={130} height={70} rx={5} fill={b.c} opacity={0.14} />
-          <Rect x={b.x} y={54} width={130} height={70} rx={5} fill="none" stroke={b.c} strokeWidth={1.6} />
-          <SvgText x={b.x + 65} y={86} textAnchor="middle" fontSize={14} fontWeight="700" fontStyle="italic" fill={INK}>{b.name}</SvgText>
-          <SvgText x={b.x + 65} y={106} textAnchor="middle" fontSize={10} fill={SOFT}>{b.sub}</SvgText>
+// ── The four aims (Wave 0: full-bleed, three rooms + a door) ─────────────────
+const AIM_ROOMS: [number, string, string, string, number][] = [
+  [24, 'dharma', 'live rightly', TEAL, 0.13],
+  [118, 'artha', 'prosper', '#C9A233', 0.16],
+  [212, 'kama', 'enjoy', PINK, 0.12],
+];
+const FourAims: React.FC<{ active?: boolean }> = ({ active }) => (
+  <SceneFigure caption="Three aims for the world, and a door at the back." active={active}>
+    <Svg width="100%" height={230} viewBox="0 0 390 230">
+      <Defs>
+        <LinearGradient id="fa-bg" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0" stopColor="#FCF7E8" />
+          <Stop offset="1" stopColor="#F1E7CE" />
+        </LinearGradient>
+        <RadialGradient id="fa-door" cx="0.5" cy="0.4" r="0.7">
+          <Stop offset="0" stopColor="#FFE7A8" />
+          <Stop offset="1" stopColor="#F0C766" />
+        </RadialGradient>
+      </Defs>
+      <Rect x={0} y={0} width={390} height={230} fill="url(#fa-bg)" />
+      <SvgText x={150} y={30} textAnchor="middle" fontSize={10} fontWeight="700" letterSpacing={1.2} fill="#8A6A1E">
+        THREE ROOMS TO LIVE IN
+      </SvgText>
+      {AIM_ROOMS.map(([x, name, sub, c, op]) => (
+        <G key={name}>
+          <Rect x={x} y={52} width={86} height={104} rx={6} fill={c} opacity={op} />
+          <Rect x={x} y={52} width={86} height={104} rx={6} fill="none" stroke={c} strokeWidth={1.6} />
+          <SvgText x={x + 43} y={98} textAnchor="middle" fontSize={14} fontWeight="700" fontStyle="italic" fill={INK}>{name}</SvgText>
+          <SvgText x={x + 43} y={116} textAnchor="middle" fontSize={10} fill={SOFT}>{sub}</SvgText>
         </G>
       ))}
-      {/* the door */}
-      <Rect x={510} y={44} width={92} height={90} rx={5} fill="none" stroke={SAFFRON} strokeWidth={2} strokeDasharray="6 4" />
-      <Circle cx={588} cy={92} r={3.5} fill={SAFFRON} />
-      <SvgText x={556} y={86} textAnchor="middle" fontSize={14} fontWeight="700" fontStyle="italic" fill={INK}>moksha</SvgText>
-      <SvgText x={556} y={106} textAnchor="middle" fontSize={10} fill={SOFT}>the open door</SvgText>
-      <SvgText x={320} y={168} textAnchor="middle" fontSize={10} fill={SOFT}>lived in these three — with the fourth kept open</SvgText>
+      {/* the open door at the back */}
+      <Rect x={322} y={40} width={52} height={128} rx={3} fill="#6B5A38" />
+      <Path d="M322 40 L374 40 L366 52 L330 52 Z" fill="#57492C" />
+      <Rect x={330} y={52} width={36} height={116} fill="url(#fa-door)" />
+      <Circle cx={360} cy={112} r={2.5} fill="#8A6A1E" />
+      <SvgText x={348} y={188} textAnchor="middle" fontSize={13} fontWeight="700" fontStyle="italic" fill={INK}>moksha</SvgText>
+      <SvgText x={348} y={202} textAnchor="middle" fontSize={9.5} fill={SOFT}>the open door</SvgText>
+      <SvgText x={195} y={220} textAnchor="middle" fontSize={10.5} fontStyle="italic" fill="#8A6A1E">
+        Live in the three — with the fourth kept open.
+      </SvgText>
     </Svg>
-  </Figure>
+  </SceneFigure>
 );
 
-// ── Four paths, one summit ──────────────────────────────────────────────────
-const FourPaths = () => (
-  <Figure caption="Four trails. One summit. The hikers meet at the top.">
-    <Svg width="100%" height={170} viewBox="0 0 640 214">
+// ── Four paths, one summit (Wave 0: full-bleed mountain) ────────────────────
+const PATH_TRAILS: [string, string, string, string, string][] = [
+  ['M70 208 C120 176 150 110 190 52', 'bhakti', 'love', PINK, '#B4285A'],
+  ['M150 208 C168 160 180 108 192 52', 'karma', 'action', TEAL, '#1F5E55'],
+  ['M240 208 C222 160 210 108 198 52', 'jnana', 'knowledge', INDIGO, '#303F9F'],
+  ['M320 208 C270 176 240 110 200 52', 'raja', 'stillness', GREEN, '#2E6B34'],
+];
+const PATH_LABEL_X = [66, 150, 240, 322];
+const FourPaths: React.FC<{ active?: boolean }> = ({ active }) => (
+  <SceneFigure caption="Four trails. One summit. The hikers meet at the top." active={active}>
+    <Svg width="100%" height={250} viewBox="0 0 390 250">
+      <Defs>
+        <LinearGradient id="fp-sky" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0" stopColor="#FBEBC4" />
+          <Stop offset="1" stopColor="#F6EFDD" />
+        </LinearGradient>
+        <LinearGradient id="fp-mtn" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0" stopColor="#B7A272" />
+          <Stop offset="1" stopColor="#8F7A4E" />
+        </LinearGradient>
+      </Defs>
+      <Rect x={0} y={0} width={390} height={250} fill="url(#fp-sky)" />
+      <Circle cx={330} cy={52} r={26} fill="#FFCF5A" opacity={0.4} />
       {/* the mountain */}
-      <Path d="M110 190 L320 44 L530 190 Z" fill={GOLD} opacity={0.12} />
-      <Path d="M110 190 L320 44 L530 190" fill="none" stroke={GOLD} strokeWidth={2.5} />
-      {/* the temple mark */}
-      <Circle cx={320} cy={38} r={9} fill="none" stroke={SAFFRON} strokeWidth={2.5} />
-      <Circle cx={320} cy={38} r={3} fill={SAFFRON} />
-      {/* four trails */}
-      <Path d="M136 186 C200 150, 250 100, 316 48" stroke={PINK} strokeWidth={2.2} strokeDasharray="6 4" fill="none" />
-      <Path d="M240 186 C270 140, 296 96, 318 50" stroke={TEAL} strokeWidth={2.2} strokeDasharray="6 4" fill="none" />
-      <Path d="M400 186 C372 140, 346 96, 322 50" stroke={INDIGO} strokeWidth={2.2} strokeDasharray="6 4" fill="none" />
-      <Path d="M504 186 C440 150, 390 100, 324 48" stroke={GREEN} strokeWidth={2.2} strokeDasharray="6 4" fill="none" />
-      <SvgText x={128} y={206} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill={INK}>bhakti</SvgText>
-      <SvgText x={240} y={206} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill={INK}>karma</SvgText>
-      <SvgText x={400} y={206} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill={INK}>jnana</SvgText>
-      <SvgText x={512} y={206} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill={INK}>raja</SvgText>
+      <Path d="M40 210 L195 40 L350 210 Z" fill="url(#fp-mtn)" />
+      <Path d="M195 40 L140 210 L250 210 Z" fill="#000000" opacity={0.06} />
+      <Path d="M195 40 L168 70 C182 78 208 78 222 70 Z" fill="#F6EFDD" opacity={0.85} />
+      {/* the summit shrine */}
+      <Path d="M188 44 L195 30 L202 44 Z" fill={SAFFRON} />
+      <Circle cx={195} cy={27} r={3.5} fill={SAFFRON} />
+      <SvgText x={195} y={18} textAnchor="middle" fontSize={9} fontWeight="700" fill="#8A6A1E">the same summit</SvgText>
+      {/* four trails + labels */}
+      {PATH_TRAILS.map(([d, , , c]) => (
+        <Path key={d} d={d} fill="none" stroke={c} strokeWidth={2.6} strokeDasharray="7 4" />
+      ))}
+      {PATH_TRAILS.map(([, name, sub, , ink], i) => (
+        <G key={name}>
+          <SvgText x={PATH_LABEL_X[i]} y={230} textAnchor="middle" fontSize={11.5} fontWeight="700" fontStyle="italic" fill={ink}>{name}</SvgText>
+          <SvgText x={PATH_LABEL_X[i]} y={243} textAnchor="middle" fontSize={8.5} fill={SOFT}>{sub}</SvgText>
+        </G>
+      ))}
     </Svg>
-  </Figure>
+  </SceneFigure>
 );
 
 // ── The lifeguard dives ─────────────────────────────────────────────────────
@@ -911,41 +994,58 @@ const YearWheel = () => (
   </Figure>
 );
 
-// ── The wheel, and the way off it ───────────────────────────────────────────
-const Samsara = () => (
-  <Figure caption="Everything turns. The whole point is to stop turning.">
-    <Svg width="100%" height={200} viewBox="0 0 640 266">
-      <Circle cx={290} cy={133} r={94} fill="none" stroke={RULE} strokeWidth={26} />
-      <Circle
-        cx={290}
-        cy={133}
-        r={94}
-        fill="none"
-        stroke={TEAL}
-        strokeWidth={26}
-        opacity={0.5}
-        strokeDasharray="444 147"
-        transform="rotate(-90 290 133)"
-      />
-      <Circle cx={290} cy={39} r={7} fill={GREEN} />
-      <SvgText x={290} y={22} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>birth</SvgText>
-      <Circle cx={384} cy={133} r={7} fill={SAFFRON} />
-      <SvgText x={402} y={137} fontSize={11} fontWeight="700" fill={INK}>a life</SvgText>
-      <Circle cx={290} cy={227} r={7} fill={INDIGO} />
-      <SvgText x={290} y={248} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>death</SvgText>
-      <Circle cx={196} cy={133} r={7} fill={PINK} />
-      <SvgText x={178} y={137} textAnchor="end" fontSize={11} fontWeight="700" fill={INK}>again</SvgText>
-      <SvgText x={290} y={126} textAnchor="middle" fontSize={10} fill={SOFT}>what you did</SvgText>
-      <SvgText x={290} y={144} textAnchor="middle" fontSize={13} fontWeight="700" fontStyle="italic" fill={INK}>karma</SvgText>
-      <SvgText x={290} y={161} textAnchor="middle" fontSize={10} fill={SOFT}>steers the wheel</SvgText>
-      <Path d="M390 94 C468 58, 518 60, 564 72" stroke={GOLD} strokeWidth={2} fill="none" strokeDasharray="5 4" />
-      <Circle cx={570} cy={74} r={16} fill="none" stroke={GOLD} strokeWidth={2} />
-      <Circle cx={570} cy={74} r={4} fill={GOLD} />
-      <SvgText x={570} y={110} textAnchor="middle" fontSize={12} fontWeight="700" fontStyle="italic" fill={INK}>moksha</SvgText>
-      <SvgText x={570} y={127} textAnchor="middle" fontSize={10} fill={SOFT}>the way off</SvgText>
-    </Svg>
-  </Figure>
-);
+// ── The wheel (Wave 0: full-bleed, rotating) ────────────────────────────────
+// Just samsara: a spoked wheel turning endlessly through fixed birth (top) and
+// death (bottom). Three stacked layers so the labels stay upright while the wheel
+// spins — a static background, the rotating wheel (native-driver transform via
+// useSpin — the app's SECOND sanctioned ambient loop, because endless turning IS
+// the concept), then the static labels on top. The View's centre (195,140) is the
+// hub, so the rotation pivots about the hub.
+const SAMSARA_SPOKES: [number, number, number, number][] = [
+  [195, 52, 195, 228],
+  [107, 140, 283, 140],
+  [133, 78, 257, 202],
+  [257, 78, 133, 202],
+  [119, 106, 271, 174],
+  [271, 106, 119, 174],
+];
+const Samsara: React.FC<{ active?: boolean }> = ({ active }) => {
+  const rotate = useSpin(active);
+  return (
+    <SceneFigure
+      caption="The wheel turns, birth to death to birth. Samsara is the turning itself."
+      active={active}
+      animate={false}
+    >
+      <View style={{ width: '100%', aspectRatio: 390 / 280 }}>
+        <Svg style={StyleSheet.absoluteFill} width="100%" height="100%" viewBox="0 0 390 280">
+          <Defs>
+            <LinearGradient id="sam-bg" x1="0" y1="0" x2="0" y2="1">
+              <Stop offset="0" stopColor="#F7F1E6" />
+              <Stop offset="1" stopColor="#EFE7D3" />
+            </LinearGradient>
+          </Defs>
+          <Rect x={0} y={0} width={390} height={280} fill="url(#sam-bg)" />
+        </Svg>
+        <Animated.View style={[StyleSheet.absoluteFill, { transform: [{ rotate }] }]}>
+          <Svg width="100%" height="100%" viewBox="0 0 390 280">
+            <Circle cx={195} cy={140} r={104} fill="none" stroke="#D8CBAE" strokeWidth={20} />
+            <Circle cx={195} cy={140} r={104} fill="none" stroke={TEAL} strokeWidth={20} opacity={0.4} />
+            {SAMSARA_SPOKES.map(([x1, y1, x2, y2]) => (
+              <Line key={`${x1}-${y1}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#B7A377" strokeWidth={3} strokeLinecap="round" />
+            ))}
+            <Circle cx={195} cy={140} r={16} fill="#EFE7D3" stroke="#B7A377" strokeWidth={3} />
+            <Circle cx={195} cy={36} r={8} fill={SAFFRON} />
+          </Svg>
+        </Animated.View>
+        <Svg style={StyleSheet.absoluteFill} width="100%" height="100%" viewBox="0 0 390 280" pointerEvents="none">
+          <SvgText x={195} y={12} textAnchor="middle" fontSize={12} fontWeight="700" fill={INK}>birth</SvgText>
+          <SvgText x={195} y={268} textAnchor="middle" fontSize={12} fontWeight="700" fill={INK}>death</SvgText>
+        </Svg>
+      </View>
+    </SceneFigure>
+  );
+};
 
 // ── Three jobs, not three ranks ─────────────────────────────────────────────
 const Trimurti = () => (

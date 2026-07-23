@@ -195,6 +195,41 @@ export function useBreathLoop(
   return t;
 }
 
+/**
+ * Continuous rotation for a figure whose concept IS endless turning (samsara).
+ * **The second sanctioned exception to the no-ambient-loops rule** (after the
+ * breath) — do NOT reach for this elsewhere. Unlike `useOneShot`/`useBreathLoop`
+ * this spins the whole SVG via a **native-driver transform**, so it costs no
+ * per-frame JS. Gated on `active` (stops when the card isn't the visible page)
+ * and disabled under Reduce Motion. Wrap the (radially-drawn) SVG in the returned
+ * `<Animated.View style={{ transform: [{ rotate }] }}>`; keep any labels that must
+ * stay upright OUTSIDE the wrapper.
+ */
+export function useSpin(active?: boolean, durationMs = 14000): Animated.AnimatedInterpolation<string> {
+  const t = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    let cancelled = false;
+    let loop: Animated.CompositeAnimation | undefined;
+    AccessibilityInfo.isReduceMotionEnabled().then(reduced => {
+      if (cancelled) return;
+      if (!active || reduced) {
+        t.setValue(0);
+        return;
+      }
+      loop = Animated.loop(
+        Animated.timing(t, { toValue: 1, duration: durationMs, easing: Easing.linear, useNativeDriver: true })
+      );
+      loop.start();
+    });
+    return () => {
+      cancelled = true;
+      if (loop) loop.stop();
+      t.setValue(0);
+    };
+  }, [active, t, durationMs]);
+  return t.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '360deg'] });
+}
+
 // ─── Current house style ────────────────────────────────────────────────────
 
 /**
