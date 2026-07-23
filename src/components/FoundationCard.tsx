@@ -13,7 +13,7 @@ import { NarrativeSection } from '../data/narrativeTypes';
 import { TextSegment } from '../services/audioNarrationService';
 import TextHighlighter from './TextHighlighter';
 import Prose from './Prose';
-import FoundationFigure from './FoundationFigure';
+import SectionFigure from './SectionFigure';
 
 const C = DharmaDesignSystem.colors;
 
@@ -85,7 +85,7 @@ const FoundationCard: React.FC<Props> = ({
       )}
       <View style={styles.rule} />
 
-      <FoundationFigure sectionId={section.id} active={active} />
+      <SectionFigure sectionId={section.id} active={active} />
 
       {!!storyText && (
         <View onLayout={e => setBlockY(storyBlock, e.nativeEvent.layout.y)}>

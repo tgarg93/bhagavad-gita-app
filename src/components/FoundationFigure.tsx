@@ -1,102 +1,35 @@
-// The Foundations diagrams. Keyed on the card's section id, so a card carries
-// no figure config — if a figure exists for that id, it renders; if not, the
-// card is text-only and nothing breaks.
+// The Foundations diagrams — one half of the section-figure registry that
+// `SectionFigure.tsx` assembles (the other half is `figures/conceptFigures.tsx`).
+// Keyed on the card's section id, so a card carries no figure config: if a figure
+// exists for that id it renders, if not the card is text-only and nothing breaks.
+//
+// These are still drawn on the ORIGINAL 640-unit canvas, which the card squeezes
+// into ~342px — everything at 53%, hence the tap-to-enlarge affordance on
+// `Figure`. The Foundations retrofit rescales them to 1:1; `DharmaRolesSvg` below
+// is the first one done, because concept:dharma reuses it.
 //
 // Arrowheads are drawn as explicit <Path> triangles rather than SVG <Marker>,
 // which react-native-svg supports unevenly across platforms.
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Pressable, Modal, useWindowDimensions, Animated, Easing, AccessibilityInfo } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { View, Text } from 'react-native';
 import Svg, { Rect, Circle, Ellipse, Path, Line, G, Text as SvgText } from 'react-native-svg';
-import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
-
-const C = DharmaDesignSystem.colors;
-const INK = C.neutrals.charcoalBlack;
-const SOFT = C.neutrals.softAsh;
-const GOLD = '#B8912F';
-const TEAL = C.primary.peacockTeal;
-const INDIGO = C.primary.indigoBlue;
-const SAFFRON = C.primary.deepSaffron;
-const PINK = C.sacred.lotusPink;
-const GREEN = C.sacred.banyanGreen;
-const TURMERIC = C.primary.turmericYellow;
-const RULE = 'rgba(0,0,0,0.14)';
-
-const Caption: React.FC<{ children: string }> = ({ children }) => (
-  <Text style={styles.caption}>{children}</Text>
-);
-
-const Figure: React.FC<{ caption: string; children: React.ReactElement; viewBox?: string }> = ({
-  caption,
-  children,
-  viewBox,
-}) => {
-  const [open, setOpen] = useState(false);
-  return (
-    <View style={styles.figure}>
-      <Pressable
-        onPress={() => setOpen(true)}
-        accessibilityRole="imagebutton"
-        accessibilityLabel={`Diagram: ${caption}. Tap to enlarge.`}
-      >
-        {children}
-        <View style={styles.enlargeHint}>
-          <Ionicons name="expand-outline" size={12} color={SOFT} />
-          <Text style={styles.enlargeText}>Tap to enlarge</Text>
-        </View>
-      </Pressable>
-      <Caption>{caption}</Caption>
-      <FigureModal open={open} onClose={() => setOpen(false)} svg={children} caption={caption} viewBox={viewBox} />
-    </View>
-  );
-};
-
-// Wide diagrams are unreadable at phone width, so a tap opens the SAME <Svg>
-// large and rotated to landscape — the only way a ~3:1 figure fills a portrait
-// screen. We clone the figure's Svg with a big width/height; its own viewBox does
-// the scaling, so the vectors stay crisp. Aspect ratio is read off the viewBox.
-const FigureModal: React.FC<{
-  open: boolean;
-  onClose: () => void;
-  svg: React.ReactElement;
-  caption: string;
-  viewBox?: string;
-}> = ({ open, onClose, svg, caption, viewBox }) => {
-  const { width, height } = useWindowDimensions();
-  const vb = String(viewBox ?? (svg.props as any).viewBox ?? '0 0 640 190').split(/\s+/).map(Number);
-  const ratio = (vb[3] || 190) / (vb[2] || 640);
-  // drawW runs along the screen's tall axis once rotated; clamp so the rotated
-  // drawH (which runs across the screen) still fits the width.
-  const drawW = Math.min(height * 0.9, (width * 0.88) / ratio);
-  const drawH = drawW * ratio;
-  return (
-    <Modal
-      visible={open}
-      transparent
-      animationType="fade"
-      onRequestClose={onClose}
-      supportedOrientations={['portrait']}
-    >
-      <Pressable style={styles.backdrop} onPress={onClose}>
-        <View style={[styles.expandRotate, { width: drawW }]}>
-          <View style={styles.expandCard}>
-            {React.cloneElement(svg, { width: drawW, height: drawH } as any)}
-          </View>
-          <Text style={styles.expandedCaption}>{caption}</Text>
-        </View>
-        <Pressable
-          style={styles.closeBtn}
-          onPress={onClose}
-          hitSlop={14}
-          accessibilityRole="button"
-          accessibilityLabel="Close"
-        >
-          <Ionicons name="close" size={30} color="#fff" />
-        </Pressable>
-      </Pressable>
-    </Modal>
-  );
-};
+import {
+  BuildIn,
+  Caption,
+  Figure,
+  InsetFigure,
+  styles,
+  INK,
+  SOFT,
+  GOLD,
+  TEAL,
+  INDIGO,
+  SAFFRON,
+  PINK,
+  GREEN,
+  TURMERIC,
+  RULE,
+} from './figures/figurePrimitives';
 
 // ── Sindhu → Hindū → Indós → India / Indus ──────────────────────────────────
 const Etymology = () => (
@@ -181,46 +114,16 @@ const STREAM_BOUGHS = [
 
 // The tree builds in once, when `active` first turns true — i.e. when the reader
 // lands on this page (for a read-along, the moment the narration reaches it). The
-// whole figure fades and grows up from the root. react-native-svg won't reliably
-// animate stroke props, so the motion lives on an Animated.View wrapper driven by the
-// native driver (the MarigoldShower pattern); the SVG itself stays static.
-//
-// Memoized so the parent's per-sentence re-renders during narration don't re-run the
-// build-in. After it plays, opacity/transform stay at their final values (the
-// Animated.Value holds at 1), so a later re-render or swiping back keeps it drawn.
-const StreamsSvg: React.FC<{ active?: boolean; width?: number | string; height?: number }> = React.memo(({
+// whole figure fades and grows up from the root. The motion lives in the shared
+// `BuildIn` wrapper (see figurePrimitives) because react-native-svg won't reliably
+// animate stroke props — the SVG itself stays static.
+const StreamsSvg: React.FC<{ active?: boolean; width?: number | string; height?: number }> = ({
   active,
   width = '100%',
   height = 190,
-}) => {
-  const progress = useRef(new Animated.Value(0)).current;
-  const played = useRef(false);
-
-  useEffect(() => {
-    if (!active || played.current) return;
-    played.current = true;
-    let cancelled = false;
-    AccessibilityInfo.isReduceMotionEnabled().then(reduced => {
-      if (cancelled) return;
-      if (reduced) { progress.setValue(1); return; }
-      Animated.timing(progress, {
-        toValue: 1,
-        duration: 850,
-        easing: Easing.out(Easing.cubic),
-        useNativeDriver: true,
-      }).start();
-    });
-    return () => { cancelled = true; };
-  }, [active, progress]);
-
-  const translateY = progress.interpolate({ inputRange: [0, 1], outputRange: [16, 0] });
-  const scale = progress.interpolate({ inputRange: [0, 1], outputRange: [0.9, 1] });
-
-  return (
-    <Animated.View
-      style={{ opacity: progress, transformOrigin: '50% 100%', transform: [{ translateY }, { scale }] }}
-    >
-      <Svg width={width} height={height} viewBox="0 0 640 244">
+}) => (
+  <BuildIn active={active}>
+    <Svg width={width} height={height} viewBox="0 0 640 244">
         <Path d="M320 244 L320 166" stroke={GOLD} strokeWidth={9} strokeLinecap="round" fill="none" />
         {STREAM_BOUGHS.map(b => (
           <G key={b.cx}>
@@ -233,10 +136,9 @@ const StreamsSvg: React.FC<{ active?: boolean; width?: number | string; height?:
         ))}
         <SvgText x={320} y={212} textAnchor="middle" fontSize={10} fill={SOFT}>one root</SvgText>
         <SvgText x={320} y={231} textAnchor="middle" fontSize={12} fontWeight="600" fill={INK}>Sanatana Dharma</SvgText>
-      </Svg>
-    </Animated.View>
-  );
-});
+    </Svg>
+  </BuildIn>
+);
 
 const Streams: React.FC<{ active?: boolean }> = ({ active }) => (
   <Figure caption="Not sects at war. Four answers to “which face do you love?”" viewBox="0 0 640 244">
@@ -471,28 +373,37 @@ const KarmaSeed = () => (
 );
 
 // ── One person, three duties ────────────────────────────────────────────────
-const DharmaRoles = () => (
-  <Figure caption="Three roles in one afternoon — three different right things.">
-    <Svg width="100%" height={165} viewBox="0 0 640 206">
-      {/* the person */}
-      <Circle cx={320} cy={52} r={20} fill="none" stroke={INK} strokeWidth={2.5} />
-      <Path d="M320 72 L320 118" stroke={INK} strokeWidth={2.5} />
-      <SvgText x={320} y={26} textAnchor="middle" fontSize={10} fill={SOFT}>the same you</SvgText>
-      {/* three branches */}
-      <Path d="M320 118 L150 158" stroke={TEAL} strokeWidth={2} />
-      <Path d="M320 118 L320 158" stroke={SAFFRON} strokeWidth={2} />
-      <Path d="M320 118 L490 158" stroke={INDIGO} strokeWidth={2} />
-      <Rect x={86} y={160} width={128} height={38} rx={4} fill={TEAL} opacity={0.13} />
-      <SvgText x={150} y={177} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>3 pm · parent</SvgText>
-      <SvgText x={150} y={192} textAnchor="middle" fontSize={9} fill={SOFT}>patience</SvgText>
-      <Rect x={256} y={160} width={128} height={38} rx={4} fill={SAFFRON} opacity={0.13} />
-      <SvgText x={320} y={177} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>4 pm · employee</SvgText>
-      <SvgText x={320} y={192} textAnchor="middle" fontSize={9} fill={SOFT}>honest work</SvgText>
-      <Rect x={426} y={160} width={128} height={38} rx={4} fill={INDIGO} opacity={0.13} />
-      <SvgText x={490} y={177} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>6 pm · driver</SvgText>
-      <SvgText x={490} y={192} textAnchor="middle" fontSize={9} fill={SOFT}>make way</SvgText>
-    </Svg>
-  </Figure>
+// FIRST FIGURE RESCALED TO 1:1 (342 = the card's padded drawable width), because
+// concept:dharma's `dharma-personal` card reuses it — a recall figure is only
+// free if the thing being recalled is already at 1:1. The labels that used to
+// render at 6.5px now render at 12. Body exported bare so a second card can wrap
+// it with its own caption.
+export const DharmaRolesSvg = () => (
+  <Svg width="100%" height={196} viewBox="0 0 342 196">
+    {/* the person */}
+    <SvgText x={171} y={18} textAnchor="middle" fontSize={10} fill={SOFT}>the same you</SvgText>
+    <Circle cx={171} cy={44} r={16} fill="none" stroke={INK} strokeWidth={2.5} />
+    <Path d="M171 60 L171 100" stroke={INK} strokeWidth={2.5} />
+    {/* three branches */}
+    <Path d="M171 100 L62 132" stroke={TEAL} strokeWidth={2} />
+    <Path d="M171 100 L171 132" stroke={SAFFRON} strokeWidth={2} />
+    <Path d="M171 100 L280 132" stroke={INDIGO} strokeWidth={2} />
+    <Rect x={10} y={134} width={104} height={44} rx={5} fill={TEAL} opacity={0.13} />
+    <SvgText x={62} y={155} textAnchor="middle" fontSize={12} fontWeight="700" fill={INK}>3 pm · parent</SvgText>
+    <SvgText x={62} y={170} textAnchor="middle" fontSize={9.5} fill={SOFT}>patience</SvgText>
+    <Rect x={119} y={134} width={104} height={44} rx={5} fill={SAFFRON} opacity={0.13} />
+    <SvgText x={171} y={155} textAnchor="middle" fontSize={12} fontWeight="700" fill={INK}>4 pm · at work</SvgText>
+    <SvgText x={171} y={170} textAnchor="middle" fontSize={9.5} fill={SOFT}>honest work</SvgText>
+    <Rect x={228} y={134} width={104} height={44} rx={5} fill={INDIGO} opacity={0.13} />
+    <SvgText x={280} y={155} textAnchor="middle" fontSize={12} fontWeight="700" fill={INK}>6 pm · driving</SvgText>
+    <SvgText x={280} y={170} textAnchor="middle" fontSize={9.5} fill={SOFT}>make way</SvgText>
+  </Svg>
+);
+
+const DharmaRoles: React.FC<{ active?: boolean }> = ({ active }) => (
+  <InsetFigure caption="Three roles in one afternoon — three different right things." active={active}>
+    <DharmaRolesSvg />
+  </InsetFigure>
 );
 
 // ── The surgeon's knife ─────────────────────────────────────────────────────
@@ -910,7 +821,7 @@ const Shelves = () => (
 
 // Figures accept an optional `active` (the section is the visible page) to trigger
 // their build-in; the static ones simply ignore it.
-const FIGURES: Record<string, React.FC<{ active?: boolean }>> = {
+export const FOUNDATIONS_FIGURES: Record<string, React.FC<{ active?: boolean }>> = {
   'f-name-river': Etymology,
   'f-thread-compare': Compare,
   'f-thread-streams': Streams,
@@ -946,107 +857,3 @@ const FIGURES: Record<string, React.FC<{ active?: boolean }>> = {
   'f-living-exchange': DarshanLoop,
   'f-living-year': YearWheel,
 };
-
-const FoundationFigure: React.FC<{ sectionId: string; active?: boolean }> = ({ sectionId, active }) => {
-  const Fig = FIGURES[sectionId];
-  return Fig ? <Fig active={active} /> : null;
-};
-
-const styles = StyleSheet.create({
-  figure: {
-    marginTop: 4,
-    marginBottom: 20,
-  },
-  caption: {
-    fontSize: 11.5,
-    lineHeight: 16,
-    color: C.neutrals.softAsh,
-    textAlign: 'center',
-    marginTop: 8,
-    fontStyle: 'italic',
-  },
-  enlargeHint: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 5,
-    marginTop: 8,
-  },
-  enlargeText: {
-    fontSize: 10.5,
-    letterSpacing: 0.3,
-    color: C.neutrals.softAsh,
-  },
-  backdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.93)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  expandRotate: {
-    transform: [{ rotate: '90deg' }],
-    alignItems: 'center',
-  },
-  expandCard: {
-    backgroundColor: C.neutrals.warmIvory,
-    borderRadius: 20,
-    padding: 16,
-  },
-  closeBtn: {
-    position: 'absolute',
-    top: 52,
-    right: 22,
-  },
-  expandedCaption: {
-    marginTop: 14,
-    fontSize: 14,
-    lineHeight: 20,
-    fontStyle: 'italic',
-    color: 'rgba(255,255,255,0.82)',
-    textAlign: 'center',
-  },
-  table: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: RULE,
-  },
-  tr: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: RULE,
-    paddingVertical: 9,
-  },
-  thead: {
-    borderBottomWidth: 1,
-    borderBottomColor: RULE,
-  },
-  th: {
-    flex: 1,
-    fontSize: 10,
-    lineHeight: 14,
-    fontWeight: '700',
-    color: C.neutrals.softAsh,
-  },
-  td: {
-    flex: 1,
-    fontSize: 10.5,
-    lineHeight: 15,
-    color: C.neutrals.softAsh,
-    paddingRight: 4,
-  },
-  colLabel: { flex: 0.85 },
-  colUs: { flex: 1.15 },
-  rowLabel: {
-    fontSize: 9.5,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    letterSpacing: 0.4,
-    color: C.neutrals.softAsh,
-  },
-  tdUs: {
-    color: C.neutrals.charcoalBlack,
-    fontWeight: '600',
-  },
-});
-
-export default FoundationFigure;
