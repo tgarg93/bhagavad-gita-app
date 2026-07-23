@@ -382,23 +382,13 @@ const SaltDissolve: React.FC<{ active?: boolean }> = ({ active }) => {
   );
 };
 
-// ── Namaste ─────────────────────────────────────────────────────────────────
-const NamasteHands = () => (
-  <Figure caption="“The divine in me bows to the divine in you” — tat tvam asi, said twice.">
-    <Svg width="100%" height={165} viewBox="0 0 640 206">
-      <Circle cx={320} cy={22} r={5} fill={TURMERIC} />
-      {/* two palms, mirrored, meeting at the center line */}
-      <Path d="M320 40 C290 76, 282 120, 286 148 C289 172, 302 186, 320 190" fill="none" stroke={SAFFRON} strokeWidth={5} strokeLinecap="round" />
-      <Path d="M320 40 C350 76, 358 120, 354 148 C351 172, 338 186, 320 190" fill="none" stroke={SAFFRON} strokeWidth={5} strokeLinecap="round" />
-      <Line x1={320} y1={52} x2={320} y2={182} stroke={SAFFRON} strokeWidth={1.6} opacity={0.5} />
-      {/* wrists */}
-      <Path d="M292 122 C258 132, 238 150, 228 172" fill="none" stroke={SAFFRON} strokeWidth={4} strokeLinecap="round" opacity={0.55} />
-      <Path d="M348 122 C382 132, 402 150, 412 172" fill="none" stroke={SAFFRON} strokeWidth={4} strokeLinecap="round" opacity={0.55} />
-      <SvgText x={132} y={96} textAnchor="middle" fontSize={11} fontStyle="italic" fill={SOFT}>the divine in me</SvgText>
-      <SvgText x={508} y={96} textAnchor="middle" fontSize={11} fontStyle="italic" fill={SOFT}>the divine in you</SvgText>
-    </Svg>
-  </Figure>
-);
+// ── Namaste (f-claim-tta-so-what) — DEFERRED TO RASTER ──────────────────────
+// Two attempts at code-vector praying hands both read as anatomically wrong.
+// Realistic hands are the one subject flat vector can't carry, so this figure
+// waits for a painted (Modern Editorial Miniature) illustration — the first item
+// in the eventual raster batch. Until then the card is intentionally text-only:
+// no registry entry, so SectionFigure renders nothing rather than a broken or
+// squeezed figure. Do NOT re-add a vector namaste.
 
 // ── The mirage (Wave 0: full-bleed 1:1) ─────────────────────────────────────
 const Mirage: React.FC<{ active?: boolean }> = ({ active }) => (
@@ -480,52 +470,114 @@ const BreatheAlong: React.FC<{ active?: boolean }> = ({ active }) => {
   );
 };
 
-// ── The three strands ───────────────────────────────────────────────────────
-const Gunas = () => (
-  <Figure caption="Not three types of people. Three threads in every person.">
-    <Svg width="100%" height={170} viewBox="0 0 640 214">
-      <Path d="M20 60 C130 60, 130 154, 240 154 C350 154, 350 60, 460 60 C540 60, 580 82, 620 96" fill="none" stroke={GOLD} strokeWidth={5} strokeLinecap="round" />
-      <Path d="M20 107 L620 107" fill="none" stroke={SAFFRON} strokeWidth={5} strokeLinecap="round" />
-      <Path d="M20 154 C130 154, 130 60, 240 60 C350 60, 350 154, 460 154 C540 154, 580 132, 620 118" fill="none" stroke={INDIGO} strokeWidth={5} strokeLinecap="round" />
-      <Circle cx={20} cy={60} r={5} fill={GOLD} />
-      <Circle cx={20} cy={107} r={5} fill={SAFFRON} />
-      <Circle cx={20} cy={154} r={5} fill={INDIGO} />
-      <SvgText x={20} y={186} fontSize={12} fontWeight="700" fontStyle="italic" fill={INK}>sattva</SvgText>
-      <SvgText x={20} y={203} fontSize={10} fill={SOFT}>clarity · light</SvgText>
-      <SvgText x={255} y={186} fontSize={12} fontWeight="700" fontStyle="italic" fill={INK}>rajas</SvgText>
-      <SvgText x={255} y={203} fontSize={10} fill={SOFT}>heat · drive</SvgText>
-      <SvgText x={480} y={186} fontSize={12} fontWeight="700" fontStyle="italic" fill={INK}>tamas</SvgText>
-      <SvgText x={480} y={203} fontSize={10} fill={SOFT}>inertia · fog</SvgText>
-      <SvgText x={630} y={28} textAnchor="end" fontSize={9.5} fontWeight="700" fill={SOFT}>
-        ALL THREE, ALWAYS — ONLY THE RATIO MOVES
+// ── The three strands, twisted into one rope (Wave 0: full-bleed 1:1) ────────
+// Three coloured strands fray from their labels on the left and twist together
+// into one cord — drawn as diagonal colour bands so it reads as a plaited rope,
+// not crossing wires. All three always present; only the ratio moves.
+const GUNA_BANDS: [number, number, string][] = [
+  [150, 30, '#C9A233'], [170, 20, '#E65100'], [182, 20, '#303F9F'],
+  [204, 30, '#C9A233'], [226, 20, '#E65100'], [238, 20, '#303F9F'],
+  [260, 30, '#C9A233'], [282, 20, '#E65100'], [294, 20, '#303F9F'],
+  [316, 30, '#C9A233'], [338, 24, '#E65100'], [356, 14, '#303F9F'],
+];
+const ROPE_OUTLINE = 'M150 88 C176 82 330 82 356 96 C362 100 362 116 356 120 C330 134 176 134 150 128 C144 124 144 92 150 88 Z';
+const Gunas: React.FC<{ active?: boolean }> = ({ active }) => (
+  <SceneFigure caption="Not three types of people. Three threads in every person." active={active}>
+    <Svg width="100%" height={250} viewBox="0 0 390 250">
+      <Defs>
+        <LinearGradient id="gu-bg" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0" stopColor="#FCF7E8" />
+          <Stop offset="1" stopColor="#F1E7CE" />
+        </LinearGradient>
+        <ClipPath id="gu-rope">
+          <Path d={ROPE_OUTLINE} />
+        </ClipPath>
+      </Defs>
+      <Rect x={0} y={0} width={390} height={250} fill="url(#gu-bg)" />
+      <SvgText x={195} y={30} textAnchor="middle" fontSize={10} fontWeight="700" letterSpacing={1.4} fill="#8A6A1E">
+        ONE ROPE, THREE STRANDS
+      </SvgText>
+
+      {/* three separate strands on the left, converging into the rope */}
+      <Path d="M40 84 C90 84 118 92 150 104" fill="none" stroke="#C9A233" strokeWidth={8} strokeLinecap="round" />
+      <Path d="M40 108 C92 108 120 108 150 108" fill="none" stroke="#E65100" strokeWidth={8} strokeLinecap="round" />
+      <Path d="M40 132 C90 132 118 124 150 112" fill="none" stroke="#303F9F" strokeWidth={8} strokeLinecap="round" />
+      <Circle cx={40} cy={84} r={5.5} fill="#C9A233" />
+      <Circle cx={40} cy={108} r={5.5} fill="#E65100" />
+      <Circle cx={40} cy={132} r={5.5} fill="#303F9F" />
+
+      {/* the twisted cord: diagonal colour bands cycling the three strands */}
+      <G clipPath="url(#gu-rope)">
+        <Rect x={150} y={82} width={212} height={52} fill="#EBD9A8" />
+        {GUNA_BANDS.map(([x, w, c], i) => (
+          <Path key={i} d={`M${x} 82 l${w} 0 l-30 52 l${-w} 0 Z`} fill={c} />
+        ))}
+        <Rect x={150} y={86} width={212} height={7} fill="#FFFFFF" opacity={0.22} />
+        <Rect x={150} y={124} width={212} height={7} fill="#000000" opacity={0.12} />
+      </G>
+      <Path d={ROPE_OUTLINE} fill="none" stroke="#8A6A1E" strokeWidth={1.4} opacity={0.4} />
+
+      <Rect x={30} y={176} width={9} height={9} rx={2} fill="#C9A233" />
+      <SvgText x={45} y={184} fontSize={13} fontWeight="700" fontStyle="italic" fill={INK}>sattva</SvgText>
+      <SvgText x={30} y={200} fontSize={10} fill={SOFT}>clarity · light</SvgText>
+      <Rect x={160} y={176} width={9} height={9} rx={2} fill="#E65100" />
+      <SvgText x={175} y={184} fontSize={13} fontWeight="700" fontStyle="italic" fill={INK}>rajas</SvgText>
+      <SvgText x={160} y={200} fontSize={10} fill={SOFT}>heat · drive</SvgText>
+      <Rect x={286} y={176} width={9} height={9} rx={2} fill="#303F9F" />
+      <SvgText x={301} y={184} fontSize={13} fontWeight="700" fontStyle="italic" fill={INK}>tamas</SvgText>
+      <SvgText x={286} y={200} fontSize={10} fill={SOFT}>inertia · fog</SvgText>
+
+      <SvgText x={195} y={230} textAnchor="middle" fontSize={11} fontStyle="italic" fill="#8A6A1E">
+        All three, always — only the ratio moves.
       </SvgText>
     </Svg>
-  </Figure>
+  </SceneFigure>
 );
 
-// ── Seed and harvest ────────────────────────────────────────────────────────
-const KarmaSeed = () => (
-  <Figure caption="The harvest is true to the seed. You are not sentenced — you are farming.">
-    <Svg width="100%" height={165} viewBox="0 0 640 206">
-      {/* ground */}
-      <Line x1={30} y1={150} x2={610} y2={150} stroke={GOLD} strokeWidth={2.5} />
-      {/* seed */}
-      <Circle cx={140} cy={168} r={8} fill={GOLD} />
-      <SvgText x={140} y={196} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>the action</SvgText>
-      {/* arrow of time */}
-      <Path d="M170 120 C240 84, 330 84, 400 104" stroke={SOFT} strokeWidth={1.6} strokeDasharray="5 5" fill="none" />
-      <Path d="M406,107 L395,102 L398,112 Z" fill={SOFT} />
-      <SvgText x={286} y={72} textAnchor="middle" fontSize={10} fill={SOFT}>seasons — sometimes lives — later</SvgText>
-      {/* tree */}
-      <Path d="M470 150 L470 92" stroke={GREEN} strokeWidth={5} strokeLinecap="round" />
-      <Circle cx={470} cy={70} r={34} fill={GREEN} opacity={0.25} />
-      <Circle cx={470} cy={70} r={22} fill={GREEN} opacity={0.4} />
-      <Circle cx={452} cy={62} r={5} fill={SAFFRON} />
-      <Circle cx={484} cy={78} r={5} fill={SAFFRON} />
-      <Circle cx={476} cy={52} r={5} fill={SAFFRON} />
-      <SvgText x={470} y={196} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>the consequence — true to its kind</SvgText>
+// ── Seed and harvest (Wave 0: full-bleed 1:1) ───────────────────────────────
+const KarmaSeed: React.FC<{ active?: boolean }> = ({ active }) => (
+  <SceneFigure caption="The harvest is true to the seed. You are not sentenced — you are farming." active={active}>
+    <Svg width="100%" height={250} viewBox="0 0 390 250">
+      <Defs>
+        <LinearGradient id="k-sky" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0" stopColor="#EAF3E4" />
+          <Stop offset="1" stopColor="#F1E7CE" />
+        </LinearGradient>
+        <LinearGradient id="k-soil" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0" stopColor="#B98A52" />
+          <Stop offset="1" stopColor="#9A6E3C" />
+        </LinearGradient>
+        <RadialGradient id="k-crown" cx="0.5" cy="0.5" r="0.5">
+          <Stop offset="0" stopColor="#5FA83F" />
+          <Stop offset="1" stopColor="#388E3C" />
+        </RadialGradient>
+      </Defs>
+      <Rect x={0} y={0} width={390} height={250} fill="url(#k-sky)" />
+      <Rect x={0} y={184} width={390} height={66} fill="url(#k-soil)" />
+      <Path d="M0 184 C60 178 120 190 190 184 C260 178 330 190 390 184 L390 190 L0 190 Z" fill="#A87C48" opacity={0.5} />
+
+      {/* the seed */}
+      <Ellipse cx={70} cy={196} rx={9} ry={12} fill="#7A5A2E" />
+      <Path d="M70 184 C70 176 66 170 72 164" fill="none" stroke="#5FA83F" strokeWidth={2.5} strokeLinecap="round" />
+      <SvgText x={70} y={228} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>the action</SvgText>
+
+      {/* time arrow */}
+      <Path d="M108 120 C170 96 236 96 292 116" fill="none" stroke="#8A6A1E" strokeWidth={1.6} strokeDasharray="5 5" />
+      <Path d="M298 118 L286 113 L289 123 Z" fill="#8A6A1E" />
+      <SvgText x={200} y={86} textAnchor="middle" fontSize={10} fill="#8A6A1E">seasons — sometimes lives — later</SvgText>
+
+      {/* the tree */}
+      <Path d="M320 184 L320 120" stroke="#7A5A2E" strokeWidth={7} strokeLinecap="round" />
+      <Path d="M320 150 C300 146 292 132 296 120 M320 140 C340 138 350 124 346 112" fill="none" stroke="#7A5A2E" strokeWidth={4} strokeLinecap="round" />
+      <Circle cx={320} cy={102} r={40} fill="url(#k-crown)" opacity={0.35} />
+      <Circle cx={320} cy={102} r={27} fill="url(#k-crown)" opacity={0.55} />
+      <Circle cx={305} cy={96} r={6} fill="#E8823C" />
+      <Circle cx={335} cy={108} r={6} fill="#E8823C" />
+      <Circle cx={326} cy={86} r={6} fill="#E8823C" />
+      <SvgText x={320} y={228} textAnchor="middle" fontSize={11} fontWeight="700" fill={INK}>the consequence</SvgText>
+      <SvgText x={320} y={242} textAnchor="middle" fontSize={9} fill="#EFE4C4">true to its kind</SvgText>
     </Svg>
-  </Figure>
+  </SceneFigure>
 );
 
 // ── One person, three duties ────────────────────────────────────────────────
@@ -580,23 +632,63 @@ const TwoKnives = () => (
   </Figure>
 );
 
-// ── Rivers into the sea ─────────────────────────────────────────────────────
-const RiverToSea = () => (
-  <Figure caption="The banks fall away; the water does not die. The drop comes home.">
-    <Svg width="100%" height={160} viewBox="0 0 640 200">
-      {/* two rivers converging */}
-      <Path d="M60 24 C160 40, 240 76, 330 108" stroke={TEAL} strokeWidth={6} strokeLinecap="round" fill="none" opacity={0.75} />
-      <Path d="M120 8 C200 26, 270 64, 342 100" stroke={TEAL} strokeWidth={4} strokeLinecap="round" fill="none" opacity={0.45} />
-      <SvgText x={92} y={58} fontSize={10} fill={SOFT}>a name, two banks</SvgText>
-      {/* the sea */}
-      <Path d="M300 128 C350 108, 420 148, 470 128 C520 108, 580 148, 622 130" stroke={INDIGO} strokeWidth={4.5} strokeLinecap="round" fill="none" opacity={0.85} />
-      <Path d="M300 154 C350 138, 420 170, 470 154 C520 138, 580 168, 622 154" stroke={INDIGO} strokeWidth={3.5} strokeLinecap="round" fill="none" opacity={0.55} />
-      <Path d="M300 176 C350 164, 420 188, 470 176 C520 164, 580 186, 622 176" stroke={INDIGO} strokeWidth={2.5} strokeLinecap="round" fill="none" opacity={0.3} />
-      <SvgText x={470} y={104} textAnchor="middle" fontSize={12} fontWeight="700" fontStyle="italic" fill={INK}>the sea</SvgText>
-      <SvgText x={470} y={196} textAnchor="middle" fontSize={9} fill={SOFT}>MUNDAKA UPANISHAD 3.2.8</SvgText>
-    </Svg>
-  </Figure>
-);
+// ── Rivers into the sea (Wave 0: full-bleed 1:1, one-shot flow-in) ───────────
+// Two blue rivers, not green land. On arrival they flow DOWN and merge into the
+// SAME sea as brahman/atman (product-spec cross-act callback, Mundaka 3.2.8): the
+// rivers reveal top→bottom via an animated clip, then rest. One-shot only — a
+// perpetual flow would be a second ambient loop, which the motion rule bans.
+const OCEAN_SURFACE_FILL = `${OCEAN_SURFACE} L390 250 L0 250 Z`;
+const RiverToSea: React.FC<{ active?: boolean }> = ({ active }) => {
+  const p = useOneShot(active, 1400);
+  const revealH = p.interpolate({ inputRange: [0, 1], outputRange: [0, 172] });
+  return (
+    <SceneFigure caption="The banks fall away; the water does not die. The drop comes home." active={active} animate={false}>
+      <Svg width="100%" height={250} viewBox="0 0 390 250">
+        <Defs>
+          <LinearGradient id="r-land" x1="0" y1="0" x2="0" y2="1">
+            <Stop offset="0" stopColor="#EFE4C4" />
+            <Stop offset="1" stopColor="#E3D3A6" />
+          </LinearGradient>
+          <LinearGradient id="r-sea" x1="0" y1="0" x2="0" y2="1">
+            <Stop offset="0" stopColor={OCEAN_TOP} />
+            <Stop offset="1" stopColor={OCEAN_DEEP} />
+          </LinearGradient>
+          <LinearGradient id="r-water" x1="0" y1="0" x2="0" y2="1">
+            <Stop offset="0" stopColor="#6E86D8" />
+            <Stop offset="1" stopColor={OCEAN_TOP} />
+          </LinearGradient>
+          <ClipPath id="r-reveal">
+            <AnimatedRect x={0} y={-4} width={390} height={revealH} />
+          </ClipPath>
+        </Defs>
+        <Rect x={0} y={0} width={390} height={250} fill="url(#r-land)" />
+
+        {/* the rivers flow down under the animated reveal */}
+        <G clipPath="url(#r-reveal)">
+          <Path d="M96 -4 C82 40 122 70 96 112 C84 132 92 142 104 150 L150 150 C150 140 138 128 140 108 C144 66 118 34 132 -4 Z" fill="url(#r-water)" />
+          <Path d="M114 0 C104 44 132 74 118 118" fill="none" stroke="#AEBEEC" strokeWidth={2} opacity={0.6} />
+          <Path d="M300 -4 C314 40 274 72 300 114 C312 132 302 142 288 150 L242 150 C244 138 256 126 254 106 C250 64 278 34 264 -4 Z" fill="url(#r-water)" />
+          <Path d="M282 0 C292 46 264 76 278 120" fill="none" stroke="#AEBEEC" strokeWidth={2} opacity={0.6} />
+        </G>
+
+        {/* the one sea — the SAME filled-wave surface as brahman/atman, over the river mouths */}
+        <Path d={OCEAN_SURFACE_FILL} fill="url(#r-sea)" />
+        <Path d={OCEAN_SURFACE} fill="none" stroke={FOAM} strokeWidth={2} opacity={0.55} />
+        <Path d="M0 186 C48 174 92 200 140 186 C188 172 232 202 280 186 C328 174 362 196 390 184" fill="none" stroke={SWELL} strokeWidth={1.6} opacity={0.3} />
+        <Path d="M0 216 C48 206 92 228 140 216 C188 206 232 228 280 216 C328 206 362 224 390 214" fill="none" stroke={FOAM} strokeWidth={1.4} opacity={0.22} />
+
+        <SvgText x={150} y={60} fontSize={11} fontWeight="600" fill="#3A4680" transform="rotate(-20 150 60)">Ganga</SvgText>
+        <SvgText x={240} y={60} fontSize={11} fontWeight="600" fill="#3A4680" transform="rotate(20 240 60)">Yamuna</SvgText>
+        <SvgText x={30} y={112} fontSize={9.5} fill="#8A7A55">a name,</SvgText>
+        <SvgText x={30} y={125} fontSize={9.5} fill="#8A7A55">two banks</SvgText>
+
+        <SvgText x={195} y={196} textAnchor="middle" fontSize={14} fontWeight="700" fontStyle="italic" fill={SKY_TOP}>the sea</SvgText>
+        <SvgText x={195} y={213} textAnchor="middle" fontSize={9.5} fill="#C7D0EC">no name, no banks</SvgText>
+        <SvgText x={195} y={236} textAnchor="middle" fontSize={9} fill={SWELL}>MUNDAKA UPANISHAD 3.2.8</SvgText>
+      </Svg>
+    </SceneFigure>
+  );
+};
 
 // ── The four aims ───────────────────────────────────────────────────────────
 const FourAims = () => (
@@ -989,7 +1081,8 @@ export const FOUNDATIONS_FIGURES: Record<string, React.FC<{ active?: boolean }>>
   'f-claim-atman-drop': DropAndOcean,
   'f-claim-tta-salt': SaltDissolve,
   'f-claim-tta-pot': PotSpace,
-  'f-claim-tta-so-what': NamasteHands,
+  // 'f-claim-tta-so-what' (namaste) intentionally has no entry — deferred to
+  // raster (see the note above), card stays text-only until the painting exists.
   'f-claim-maya': Mirage,
   'f-claim-prana-try': BreatheAlong,
   'f-claim-gunas': Gunas,
