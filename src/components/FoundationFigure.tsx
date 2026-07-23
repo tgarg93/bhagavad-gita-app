@@ -11,10 +11,26 @@
 // Arrowheads are drawn as explicit <Path> triangles rather than SVG <Marker>,
 // which react-native-svg supports unevenly across platforms.
 import React from 'react';
-import { View, Text } from 'react-native';
-import Svg, { Rect, Circle, Ellipse, Path, Line, G, Text as SvgText } from 'react-native-svg';
+import { View, Text, Animated } from 'react-native';
+import Svg, {
+  Rect,
+  Circle,
+  Ellipse,
+  Path,
+  Line,
+  G,
+  Defs,
+  LinearGradient,
+  RadialGradient,
+  Stop,
+  ClipPath,
+  Text as SvgText,
+} from 'react-native-svg';
 import {
   BuildIn,
+  SceneFigure,
+  useOneShot,
+  useBreathLoop,
   Caption,
   Figure,
   InsetFigure,
@@ -30,6 +46,24 @@ import {
   TURMERIC,
   RULE,
 } from './figures/figurePrimitives';
+
+// Animated SVG primitives for the two bespoke figures (salt dissolve, breath loop).
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+const AnimatedRect = Animated.createAnimatedComponent(Rect);
+
+// Illustration-only palette for the Core-Ideas scenes (matches the approved
+// Wave 0 Act 3 artifact). Kept local — these are scene colours, not design tokens.
+const OCEAN_TOP = '#4A5AB0';
+const OCEAN_DEEP = '#25306E';
+const SKY_TOP = '#EAF0FA';
+const SKY_BOT = '#DCE4F5';
+const FOAM = '#B4BEE8';
+const SWELL = '#9FAAE2';
+const OCEAN_INK = '#25306E';
+const OCEAN_LABEL = '#41508F';
+const CLAY = '#B07050';
+const DARKROOM_TOP = '#2A2440';
+const DARKROOM_BOT = '#151228';
 
 // ── Sindhu → Hindū → Indós → India / Indus ──────────────────────────────────
 const Etymology = () => (
@@ -146,124 +180,207 @@ const Streams: React.FC<{ active?: boolean }> = ({ active }) => (
   </Figure>
 );
 
-// ── The pot and the space ───────────────────────────────────────────────────
-const PotSpace = () => (
-  <Figure caption="The pot has walls. The space does not.">
-    <Svg width="100%" height={190} viewBox="0 0 640 244">
-      <Rect x={0} y={0} width={640} height={244} fill={INDIGO} opacity={0.07} rx={4} />
-      {[[70, 38], [180, 24], [300, 46], [430, 28], [560, 50], [612, 94], [40, 118], [520, 126]].map(([cx, cy]) => (
-        <Circle key={`${cx}`} cx={cx} cy={cy} r={1.4} fill={GOLD} opacity={0.6} />
-      ))}
-      <Path
-        d="M250 114 C238 146, 244 196, 268 210 L372 210 C396 196, 402 146, 390 114 Z"
-        fill={INDIGO}
-        opacity={0.28}
-      />
-      <Path
-        d="M250 114 C238 146, 244 196, 268 210 L372 210 C396 196, 402 146, 390 114"
-        fill="none"
-        stroke="#B07050"
-        strokeWidth={7}
-        strokeLinecap="round"
-      />
-      <Ellipse cx={320} cy={114} rx={70} ry={12} fill="none" stroke="#B07050" strokeWidth={3} opacity={0.55} strokeDasharray="3 4" />
-      <SvgText x={320} y={168} textAnchor="middle" fontSize={13} fontWeight="700" fontStyle="italic" fill={INK}>ātman</SvgText>
-      <SvgText x={320} y={186} textAnchor="middle" fontSize={10} fill={SOFT}>the space inside</SvgText>
-      <SvgText x={118} y={82} fontSize={13} fontWeight="700" fontStyle="italic" fill={INK}>brahman</SvgText>
-      <SvgText x={118} y={100} fontSize={10} fill={SOFT}>the space everywhere</SvgText>
-      <SvgText x={320} y={237} textAnchor="middle" fontSize={11} fontStyle="italic" fill={SOFT}>
+// ── The pot and the sky (Wave 0: full-bleed 1:1) ────────────────────────────
+const PotSpace: React.FC<{ active?: boolean }> = ({ active }) => (
+  <SceneFigure caption="The pot has walls. The space does not." active={active}>
+    <Svg width="100%" height={260} viewBox="0 0 390 260">
+      <Defs>
+        <LinearGradient id="p-sky" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0" stopColor={SKY_TOP} />
+          <Stop offset="1" stopColor={SKY_BOT} />
+        </LinearGradient>
+      </Defs>
+      <Rect x={0} y={0} width={390} height={260} fill="url(#p-sky)" />
+      {[[44, 42, 1.6], [120, 26, 1.4], [210, 46, 1.6], [300, 30, 1.4], [356, 54, 1.6], [60, 120, 1.4], [340, 128, 1.6], [176, 20, 1.3]].map(
+        ([cx, cy, r]) => (
+          <Circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={r} fill={GOLD} opacity={0.55} />
+        )
+      )}
+      <Path d="M150 128 C138 162 145 214 170 228 L220 228 C245 214 252 162 240 128 Z" fill="#5A6AC0" opacity={0.24} />
+      <Path d="M150 128 C138 162 145 214 170 228 L220 228 C245 214 252 162 240 128" fill="none" stroke={CLAY} strokeWidth={7} strokeLinecap="round" />
+      <Ellipse cx={195} cy={128} rx={46} ry={10} fill="none" stroke={CLAY} strokeWidth={3} opacity={0.55} strokeDasharray="3 4" />
+      <SvgText x={195} y={182} textAnchor="middle" fontSize={14} fontWeight="700" fontStyle="italic" fill={INK}>ātman</SvgText>
+      <SvgText x={195} y={199} textAnchor="middle" fontSize={10.5} fill="#5A6AC0">the space inside</SvgText>
+      <SvgText x={34} y={86} fontSize={14} fontWeight="700" fontStyle="italic" fill="#3A4680">brahman</SvgText>
+      <SvgText x={34} y={103} fontSize={10.5} fill={OCEAN_LABEL}>the space everywhere</SvgText>
+      <SvgText x={195} y={250} textAnchor="middle" fontSize={11} fontStyle="italic" fill={SOFT}>
         Break the pot and nothing is released.
       </SvgText>
     </Svg>
-  </Figure>
+  </SceneFigure>
 );
 
-// ── The ocean and its waves ─────────────────────────────────────────────────
-const OceanWaves = () => (
-  <Figure caption="Every wave is water.">
-    <Svg width="100%" height={160} viewBox="0 0 640 200">
-      <Rect x={0} y={0} width={640} height={200} fill={INDIGO} opacity={0.06} rx={4} />
-      {/* two airborne drops */}
-      <Path d="M430 30 q-13 20 -13 29 a13 13 0 0 0 26 0 q0 -9 -13 -29" fill={INDIGO} opacity={0.55} />
-      <Path d="M360 52 q-8 13 -8 18 a8 8 0 0 0 16 0 q0 -5 -8 -18" fill={INDIGO} opacity={0.4} />
-      {/* three swells */}
-      <Path d="M18 108 C70 78, 120 138, 172 108 C224 78, 274 138, 326 108 C378 78, 428 138, 480 108 C532 78, 582 130, 622 106" fill="none" stroke={INDIGO} strokeWidth={4} strokeLinecap="round" opacity={0.85} />
-      <Path d="M18 138 C70 116, 120 158, 172 138 C224 116, 274 158, 326 138 C378 116, 428 158, 480 138 C532 116, 582 152, 622 134" fill="none" stroke={TEAL} strokeWidth={4} strokeLinecap="round" opacity={0.7} />
-      <Path d="M18 164 C70 148, 120 178, 172 164 C224 148, 274 178, 326 164 C378 148, 428 178, 480 164 C532 148, 582 174, 622 160" fill="none" stroke={TEAL} strokeWidth={3} strokeLinecap="round" opacity={0.4} />
-      <SvgText x={96} y={44} fontSize={13} fontWeight="700" fontStyle="italic" fill={INK}>brahman</SvgText>
-      <SvgText x={96} y={62} fontSize={10} fill={SOFT}>the ocean — the one water</SvgText>
-      <SvgText x={470} y={72} fontSize={10} fill={SOFT}>waves, foam, drops —</SvgText>
-      <SvgText x={470} y={87} fontSize={10} fill={SOFT}>shapes the water takes</SvgText>
+// The ocean base shared by brahman and atman — the water is a FILLED path whose
+// top edge is the wave itself (not a flat rect with strokes floating in it), so
+// the two figures read as one continuous scene: atman is brahman + one drop.
+const OCEAN_SURFACE = 'M0 150 C50 134 90 168 140 150 C190 132 230 168 280 150 C330 132 362 162 390 148';
+const OceanBase = () => (
+  <>
+    <Rect x={0} y={0} width={390} height={250} fill="url(#o-sky)" />
+    <Path d={`${OCEAN_SURFACE} L390 250 L0 250 Z`} fill="url(#o-sea)" />
+    <Path d={OCEAN_SURFACE} fill="none" stroke={FOAM} strokeWidth={2} opacity={0.55} />
+    <Path d="M0 186 C48 174 92 200 140 186 C188 172 232 202 280 186 C328 174 362 196 390 184" fill="none" stroke={SWELL} strokeWidth={1.6} opacity={0.3} />
+    <Path d="M0 216 C48 206 92 228 140 216 C188 206 232 228 280 216 C328 206 362 224 390 214" fill="none" stroke={FOAM} strokeWidth={1.4} opacity={0.22} />
+  </>
+);
+const OceanDefs = ({ id }: { id: string }) => (
+  <Defs>
+    <LinearGradient id={`${id}-sky`} x1="0" y1="0" x2="0" y2="1">
+      <Stop offset="0" stopColor={SKY_TOP} />
+      <Stop offset="1" stopColor={SKY_BOT} />
+    </LinearGradient>
+    <LinearGradient id={`${id}-sea`} x1="0" y1="0" x2="0" y2="1">
+      <Stop offset="0" stopColor={OCEAN_TOP} />
+      <Stop offset="1" stopColor={OCEAN_DEEP} />
+    </LinearGradient>
+  </Defs>
+);
+
+// ── Brahman: the ocean (Wave 0: full-bleed 1:1) ─────────────────────────────
+const OceanWaves: React.FC<{ active?: boolean }> = ({ active }) => (
+  <SceneFigure caption="One water. Every form is a shape it takes." active={active}>
+    <Svg width="100%" height={250} viewBox="0 0 390 250">
+      <OceanDefs id="o" />
+      <OceanBase />
+      <SvgText x={24} y={196} fontSize={15} fontWeight="700" fontStyle="italic" fill={SKY_TOP}>brahman</SvgText>
+      <SvgText x={24} y={214} fontSize={11} fill="#C7D0EC">the ocean — the one water</SvgText>
     </Svg>
-  </Figure>
+  </SceneFigure>
 );
 
-// ── One current, many lamps ─────────────────────────────────────────────────
-const OneCurrentManyLamps = () => (
-  <Figure caption="One current; many lamps.">
-    <Svg width="100%" height={165} viewBox="0 0 640 206">
-      {/* the wire */}
-      <Path d="M20 168 L620 168" stroke={TEAL} strokeWidth={4} strokeLinecap="round" />
-      {[
-        { x: 170, r: 22, glow: TURMERIC, label: 'a lamp' },
-        { x: 320, r: 28, glow: SAFFRON, label: 'a fan' },
-        { x: 470, r: 22, glow: TURMERIC, label: 'a kettle' },
-      ].map(l => (
-        <G key={l.x}>
-          <Line x1={l.x} y1={168} x2={l.x} y2={104 + l.r} stroke={TEAL} strokeWidth={3} />
-          <Circle cx={l.x} cy={96} r={l.r + 12} fill={l.glow} opacity={0.18} />
-          <Circle cx={l.x} cy={96} r={l.r} fill={l.glow} opacity={0.45} />
-          <Circle cx={l.x} cy={96} r={l.r - 12} fill={l.glow} opacity={0.9} />
-          <SvgText x={l.x} y={46} textAnchor="middle" fontSize={10} fill={SOFT}>{l.label}</SvgText>
-        </G>
-      ))}
-      <SvgText x={320} y={192} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill={INK}>
+// ── One current, many devices (Wave 0: distinct appliances on one wire) ──────
+const OneCurrentManyLamps: React.FC<{ active?: boolean }> = ({ active }) => (
+  <SceneFigure caption="One current — a lamp lights, a fan spins, a kettle heats." active={active}>
+    <Svg width="100%" height={240} viewBox="0 0 390 240">
+      <Defs>
+        <RadialGradient id="l-glow" cx="0.5" cy="0.5" r="0.5">
+          <Stop offset="0" stopColor="#FFD766" stopOpacity={0.85} />
+          <Stop offset="1" stopColor="#FFD766" stopOpacity={0} />
+        </RadialGradient>
+        <LinearGradient id="l-bg" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0" stopColor={DARKROOM_TOP} />
+          <Stop offset="1" stopColor={DARKROOM_BOT} />
+        </LinearGradient>
+      </Defs>
+      <Rect x={0} y={0} width={390} height={240} fill="url(#l-bg)" />
+      {/* the one wire, and three cords tapping off it */}
+      <Path d="M14 200 L376 200" stroke="#00A594" strokeWidth={3.5} strokeLinecap="round" />
+      <Line x1={80} y1={200} x2={80} y2={150} stroke="#00A594" strokeWidth={2.4} />
+      <Line x1={195} y1={200} x2={195} y2={150} stroke="#00A594" strokeWidth={2.4} />
+      <Line x1={310} y1={200} x2={310} y2={176} stroke="#00A594" strokeWidth={2.4} />
+      {/* 1 · a table lamp */}
+      <Circle cx={80} cy={120} r={42} fill="url(#l-glow)" />
+      <Path d="M60 118 L100 118 L92 96 L68 96 Z" fill="#FFE39A" />
+      <Path d="M60 118 L100 118 L106 128 L54 128 Z" fill="#FFCF5A" />
+      <Line x1={80} y1={128} x2={80} y2={150} stroke="#C9BFA6" strokeWidth={2.4} />
+      <Rect x={70} y={150} width={20} height={4} rx={2} fill="#C9BFA6" />
+      <SvgText x={80} y={72} textAnchor="middle" fontSize={11} fill="#B9C2E8">a lamp</SvgText>
+      <SvgText x={80} y={86} textAnchor="middle" fontSize={8.5} fill="#6C6C8C">it lights</SvgText>
+      {/* 2 · a fan */}
+      <Circle cx={195} cy={112} r={42} fill="none" stroke="#3A3A5C" strokeWidth={2} />
+      <G fill="#8FE3D8" opacity={0.9}>
+        <Path d="M195 112 Q214 92 210 78 Q190 90 195 112 Z" />
+        <Path d="M195 112 Q220 128 214 146 Q192 132 195 112 Z" />
+        <Path d="M195 112 Q168 122 152 132 Q172 100 195 112 Z" />
+      </G>
+      <Circle cx={195} cy={112} r={7} fill="#CFE9E3" />
+      <Path d="M226 90 A40 40 0 0 1 232 116" fill="none" stroke="#8FE3D8" strokeWidth={1.6} opacity={0.55} />
+      <Path d="M234 84 A48 48 0 0 1 241 118" fill="none" stroke="#8FE3D8" strokeWidth={1.4} opacity={0.3} />
+      <SvgText x={195} y={60} textAnchor="middle" fontSize={11} fill="#B9C2E8">a fan</SvgText>
+      <SvgText x={195} y={74} textAnchor="middle" fontSize={8.5} fill="#6C6C8C">it spins</SvgText>
+      {/* 3 · an electric kettle */}
+      <Path d="M292 176 Q288 150 296 146 L330 146 Q338 150 334 176 Z" fill="#4A5A6C" />
+      <Path d="M296 146 L330 146 L328 140 L298 140 Z" fill="#5C6E82" />
+      <Path d="M292 156 Q278 154 276 142" fill="none" stroke="#4A5A6C" strokeWidth={5} strokeLinecap="round" />
+      <Path d="M334 150 Q352 152 350 170" fill="none" stroke="#4A5A6C" strokeWidth={4} />
+      <Path d="M282 132 Q276 122 284 114 Q292 106 286 96" fill="none" stroke="#8FA0B4" strokeWidth={2.2} strokeLinecap="round" opacity={0.7} />
+      <Path d="M292 128 Q286 120 293 112" fill="none" stroke="#8FA0B4" strokeWidth={2} strokeLinecap="round" opacity={0.45} />
+      <SvgText x={310} y={112} textAnchor="middle" fontSize={11} fill="#B9C2E8">a kettle</SvgText>
+      <SvgText x={310} y={126} textAnchor="middle" fontSize={8.5} fill="#6C6C8C">it heats</SvgText>
+      <SvgText x={195} y={228} textAnchor="middle" fontSize={12} fontWeight="700" fontStyle="italic" fill="#8FE3D8">
         brahman — the current you never see
       </SvgText>
     </Svg>
-  </Figure>
+  </SceneFigure>
 );
 
-// ── The drop and the ocean ──────────────────────────────────────────────────
-const DropAndOcean = () => (
-  <Figure caption="Same water, smaller shape.">
-    <Svg width="100%" height={165} viewBox="0 0 640 206">
-      <Rect x={0} y={0} width={640} height={206} fill={INDIGO} opacity={0.06} rx={4} />
-      {/* the drop */}
-      <Path d="M320 26 q-22 34 -22 48 a22 22 0 0 0 44 0 q0 -14 -22 -48" fill={INDIGO} opacity={0.65} />
-      <SvgText x={368} y={62} fontSize={13} fontWeight="700" fontStyle="italic" fill={INK}>ātman</SvgText>
-      <SvgText x={368} y={79} fontSize={10} fill={SOFT}>the drop</SvgText>
-      {/* falling home */}
-      <Line x1={320} y1={110} x2={320} y2={138} stroke={SOFT} strokeWidth={2} strokeDasharray="3 5" />
-      {/* the ocean */}
-      <Path d="M18 152 C70 128, 120 172, 172 152 C224 128, 274 172, 326 152 C378 128, 428 172, 480 152 C532 128, 582 166, 622 148" fill="none" stroke={INDIGO} strokeWidth={4} strokeLinecap="round" opacity={0.85} />
-      <Path d="M18 178 C70 160, 120 190, 172 178 C224 160, 274 190, 326 178 C378 160, 428 190, 480 178 C532 160, 582 186, 622 172" fill="none" stroke={TEAL} strokeWidth={3} strokeLinecap="round" opacity={0.5} />
-      <SvgText x={92} y={116} fontSize={13} fontWeight="700" fontStyle="italic" fill={INK}>brahman</SvgText>
-      <SvgText x={92} y={133} fontSize={10} fill={SOFT}>the ocean</SvgText>
+// ── Atman: the drop (Wave 0: the SAME ocean base + one drop) ────────────────
+const DropAndOcean: React.FC<{ active?: boolean }> = ({ active }) => (
+  <SceneFigure caption="Same water, smaller shape." active={active}>
+    <Svg width="100%" height={250} viewBox="0 0 390 250">
+      <OceanDefs id="o" />
+      <Defs>
+        <RadialGradient id="d-drop" cx="0.4" cy="0.35" r="0.7">
+          <Stop offset="0" stopColor="#8B98DC" />
+          <Stop offset="1" stopColor="#3A4680" />
+        </RadialGradient>
+      </Defs>
+      <OceanBase />
+      <SvgText x={24} y={196} fontSize={15} fontWeight="700" fontStyle="italic" fill={SKY_TOP}>brahman</SvgText>
+      <SvgText x={24} y={214} fontSize={11} fill="#C7D0EC">the ocean</SvgText>
+      {/* the one element the drop card adds, above the wave surface */}
+      <Path d="M195 30 q-20 32 -20 45 a20 20 0 0 0 40 0 q0 -13 -20 -45" fill="url(#d-drop)" />
+      <Circle cx={188} cy={66} r={5} fill={SKY_TOP} opacity={0.6} />
+      <Line x1={195} y1={98} x2={195} y2={138} stroke="#7C8AD6" strokeWidth={2} strokeDasharray="3 5" />
+      <SvgText x={232} y={60} fontSize={14} fontWeight="700" fontStyle="italic" fill={OCEAN_INK}>ātman</SvgText>
+      <SvgText x={232} y={76} fontSize={11} fill={OCEAN_LABEL}>the drop</SvgText>
     </Svg>
-  </Figure>
+  </SceneFigure>
 );
 
-// ── The salt in the water ───────────────────────────────────────────────────
-const SaltBowl = () => (
-  <Figure caption="Gone from sight — present in every sip.">
-    <Svg width="100%" height={160} viewBox="0 0 640 200">
-      {/* the bowl */}
-      <Path d="M170 58 L470 58 C458 152, 400 178, 320 178 C240 178, 182 152, 170 58 Z" fill={INDIGO} opacity={0.1} />
-      <Path d="M170 58 L470 58 C458 152, 400 178, 320 178 C240 178, 182 152, 170 58" fill="none" stroke="#B07050" strokeWidth={6} strokeLinecap="round" />
-      <Path d="M188 76 C240 92, 400 92, 452 76" fill="none" stroke={INDIGO} strokeWidth={2.5} opacity={0.55} />
-      {/* the dissolved salt */}
-      {[[236, 100], [280, 118], [322, 96], [366, 120], [404, 102], [258, 140], [318, 148], [372, 142], [300, 122], [348, 108]].map(([cx, cy]) => (
-        <Circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={2.4} fill={INK} opacity={0.5} />
-      ))}
-      <SvgText x={536} y={96} textAnchor="middle" fontSize={12} fontWeight="700" fontStyle="italic" fill={INK}>the salt</SvgText>
-      <SvgText x={536} y={113} textAnchor="middle" fontSize={10} fill={SOFT}>nowhere to point at,</SvgText>
-      <SvgText x={536} y={128} textAnchor="middle" fontSize={10} fill={SOFT}>nowhere it isn’t</SvgText>
-      <SvgText x={104} y={96} textAnchor="middle" fontSize={10} fill={SOFT}>sip from any side:</SvgText>
-      <SvgText x={104} y={111} textAnchor="middle" fontSize={10} fill={SOFT}>salty</SvgText>
-    </Svg>
-  </Figure>
-);
+// ── The salt in the water (Wave 0: one-shot dissolve, then a faint even tint) ─
+// Concept IS a transformation, so it animates: crystals fall in, sink, and fade
+// to nothing while an even haze fills in — no discrete dots left to point at.
+// One-shot on arrival; Reduce Motion jumps straight to the dissolved rest state.
+const SALT_CRYSTALS: [number, number][] = [
+  [182, 72], [190, 68], [199, 73], [187, 80], [196, 78],
+];
+const SaltDissolve: React.FC<{ active?: boolean }> = ({ active }) => {
+  const p = useOneShot(active, 2600);
+  const hazeOpacity = p.interpolate({ inputRange: [0, 0.45, 1], outputRange: [0, 0, 0.9] });
+  const crystalOpacity = p.interpolate({ inputRange: [0, 0.12, 0.55, 1], outputRange: [0, 1, 0.9, 0] });
+  return (
+    <SceneFigure caption="Gone from sight — present in every sip." active={active} animate={false}>
+      <Svg width="100%" height={250} viewBox="0 0 390 250">
+        <Defs>
+          <LinearGradient id="s-bg" x1="0" y1="0" x2="0" y2="1">
+            <Stop offset="0" stopColor="#FCF7E8" />
+            <Stop offset="1" stopColor="#F1E7CE" />
+          </LinearGradient>
+          <ClipPath id="s-clip">
+            <Path d="M96 96 L294 96 C286 168 244 198 195 198 C146 198 104 168 96 96 Z" />
+          </ClipPath>
+        </Defs>
+        <Rect x={0} y={0} width={390} height={250} fill="url(#s-bg)" />
+        <G clipPath="url(#s-clip)">
+          <Rect x={90} y={90} width={210} height={120} fill="#5A6AC0" opacity={0.14} />
+          <AnimatedRect x={90} y={90} width={210} height={120} fill="#5A6AC0" opacity={hazeOpacity} />
+          {SALT_CRYSTALS.map(([cx, y0], i) => (
+            <AnimatedCircle
+              key={i}
+              cx={cx}
+              cy={p.interpolate({ inputRange: [0, 1], outputRange: [y0, y0 + 64] })}
+              r={2.6}
+              fill="#F2EDE0"
+              opacity={crystalOpacity}
+            />
+          ))}
+        </G>
+        <Path d="M96 96 L294 96 C286 168 244 198 195 198 C146 198 104 168 96 96" fill="none" stroke={CLAY} strokeWidth={6} strokeLinecap="round" />
+        <Path d="M110 110 C160 124 230 124 280 110" fill="none" stroke="#5A6AC0" strokeWidth={2.5} opacity={0.55} />
+        <SvgText x={18} y={150} fontSize={10.5} fill={SOFT}>sip from</SvgText>
+        <SvgText x={18} y={164} fontSize={10.5} fill={SOFT}>any side:</SvgText>
+        <SvgText x={18} y={180} fontSize={12} fontWeight="700" fill={CLAY}>salty</SvgText>
+        <SvgText x={372} y={150} textAnchor="end" fontSize={12} fontWeight="700" fontStyle="italic" fill={INK}>the salt</SvgText>
+        <SvgText x={372} y={166} textAnchor="end" fontSize={10.5} fill={SOFT}>now gone</SvgText>
+        <SvgText x={372} y={180} textAnchor="end" fontSize={10.5} fill={SOFT}>from sight</SvgText>
+        <SvgText x={195} y={228} textAnchor="middle" fontSize={11} fontStyle="italic" fill="#8A6A1E">
+          Nowhere to point at — nowhere it isn’t.
+        </SvgText>
+      </Svg>
+    </SceneFigure>
+  );
+};
 
 // ── Namaste ─────────────────────────────────────────────────────────────────
 const NamasteHands = () => (
@@ -283,46 +400,85 @@ const NamasteHands = () => (
   </Figure>
 );
 
-// ── The mirage ──────────────────────────────────────────────────────────────
-const Mirage = () => (
-  <Figure caption="The road is real. “Water” was the reading.">
-    <Svg width="100%" height={165} viewBox="0 0 640 206">
-      <Rect x={0} y={0} width={640} height={206} fill={SAFFRON} opacity={0.06} rx={4} />
-      {/* the sun */}
-      <Circle cx={560} cy={44} r={22} fill={TURMERIC} opacity={0.85} />
-      <Circle cx={560} cy={44} r={34} fill={TURMERIC} opacity={0.18} />
-      {/* the road, narrowing to the horizon */}
-      <Line x1={110} y1={188} x2={296} y2={66} stroke={SOFT} strokeWidth={4} strokeLinecap="round" />
-      <Line x1={530} y1={188} x2={344} y2={66} stroke={SOFT} strokeWidth={4} strokeLinecap="round" />
-      <Path d="M320 184 L320 160 M320 146 L320 128 M320 118 L320 106 M320 98 L320 90" stroke={SOFT} strokeWidth={4} strokeDasharray="1 0" />
-      {/* the shimmer, always farther ahead */}
-      <Ellipse cx={320} cy={72} rx={34} ry={7} fill={INDIGO} opacity={0.4} />
-      <Ellipse cx={320} cy={72} rx={18} ry={4} fill={INDIGO} opacity={0.75} />
-      <SvgText x={320} y={44} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill={INK}>“water”</SvgText>
-      <SvgText x={148} y={92} textAnchor="middle" fontSize={10} fill={SOFT}>dry when</SvgText>
-      <SvgText x={148} y={107} textAnchor="middle" fontSize={10} fill={SOFT}>you arrive</SvgText>
-      <SvgText x={320} y={200} textAnchor="middle" fontSize={10} fill={SOFT}>the road — real the whole way</SvgText>
+// ── The mirage (Wave 0: full-bleed 1:1) ─────────────────────────────────────
+const Mirage: React.FC<{ active?: boolean }> = ({ active }) => (
+  <SceneFigure caption="The road is real. “Water” was the reading." active={active}>
+    <Svg width="100%" height={250} viewBox="0 0 390 250">
+      <Defs>
+        <LinearGradient id="m-sky" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0" stopColor="#FBE7B4" />
+          <Stop offset="1" stopColor="#F6D28A" />
+        </LinearGradient>
+        <LinearGradient id="m-road" x1="0" y1="1" x2="0" y2="0">
+          <Stop offset="0" stopColor="#6B6152" />
+          <Stop offset="1" stopColor="#9A8B72" />
+        </LinearGradient>
+        <RadialGradient id="m-sun" cx="0.5" cy="0.5" r="0.5">
+          <Stop offset="0" stopColor="#FFE39A" />
+          <Stop offset="1" stopColor="#FFE39A" stopOpacity={0} />
+        </RadialGradient>
+      </Defs>
+      <Rect x={0} y={0} width={390} height={250} fill="url(#m-sky)" />
+      <Circle cx={320} cy={58} r={46} fill="url(#m-sun)" />
+      <Circle cx={320} cy={58} r={20} fill="#FFCF5A" />
+      <Path d="M70 236 L182 96 L208 96 L320 236 Z" fill="url(#m-road)" />
+      <Path d="M195 232 L195 208 M195 196 L195 178 M195 168 L195 152 M195 144 L195 132" stroke="#F1E7CE" strokeWidth={4} opacity={0.8} />
+      <Ellipse cx={195} cy={98} rx={30} ry={7} fill="#5A6AC0" opacity={0.45} />
+      <Ellipse cx={195} cy={98} rx={16} ry={4} fill="#5A6AC0" opacity={0.8} />
+      <SvgText x={195} y={74} textAnchor="middle" fontSize={11} fontWeight="700" fontStyle="italic" fill="#3A4680">“water”</SvgText>
+      <SvgText x={60} y={150} fontSize={10.5} fill="#6B6152">dry when</SvgText>
+      <SvgText x={60} y={164} fontSize={10.5} fill="#6B6152">you arrive</SvgText>
+      <SvgText x={195} y={246} textAnchor="middle" fontSize={10.5} fill="#6B6152">the road — real the whole way</SvgText>
     </Svg>
-  </Figure>
+  </SceneFigure>
 );
 
-// ── The breath wave ─────────────────────────────────────────────────────────
-const BreathWave = () => (
-  <Figure caption="Automatic, and steerable — the one lever that is both.">
-    <Svg width="100%" height={140} viewBox="0 0 640 176">
-      <Path
-        d="M20 110 C55 30, 90 30, 125 110 C160 190, 195 190, 230 110 C265 30, 300 30, 335 110 C370 190, 405 190, 440 110 C475 30, 510 30, 545 110 C570 168, 595 172, 620 140"
-        fill="none"
-        stroke={TEAL}
-        strokeWidth={4}
-        strokeLinecap="round"
-      />
-      <Circle cx={335} cy={110} r={7} fill={SAFFRON} />
-      <SvgText x={72} y={22} textAnchor="middle" fontSize={10} fontWeight="700" fill={SOFT}>IN</SvgText>
-      <SvgText x={177} y={172} textAnchor="middle" fontSize={10} fontWeight="700" fill={SOFT}>OUT — slower</SvgText>
-    </Svg>
-  </Figure>
-);
+// ── The breath (Wave 0: breathe-along loop) ─────────────────────────────────
+// The one sanctioned ambient loop in the app — the "Try it now" practice card.
+// A dot rides one breath curve: quick up on the in-breath, long slow glide on
+// the exhale, so the reader can breathe with it. Points below are sampled off
+// the authored path (RN has no offset-path), keyed by cumulative arc-length
+// fraction; useBreathLoop drives `t` as that fraction (see figurePrimitives —
+// gated on `active`, disabled under Reduce Motion, do NOT copy the loop).
+const BREATH_PATH = 'M10 110 C35 60 70 52 100 52 C160 52 300 108 380 110';
+const BREATH_F = [0, 0.091, 0.163, 0.225, 0.284, 0.43, 0.623, 0.825, 1];
+const BREATH_X = [10, 30.4, 53.1, 76.8, 100, 157.8, 232.5, 310.9, 380];
+const BREATH_Y = [110, 79.8, 62.3, 54, 52, 60.8, 80.3, 100.1, 110];
+const BREATH_INHALE_FRAC = 0.284;
+const BreatheAlong: React.FC<{ active?: boolean }> = ({ active }) => {
+  const t = useBreathLoop(active, BREATH_INHALE_FRAC);
+  const cx = t.interpolate({ inputRange: BREATH_F, outputRange: BREATH_X });
+  const cy = t.interpolate({ inputRange: BREATH_F, outputRange: BREATH_Y });
+  // halo swells on the in-breath, softens on the out
+  const haloR = t.interpolate({ inputRange: [0, BREATH_INHALE_FRAC, 1], outputRange: [15, 26, 15] });
+  return (
+    <SceneFigure caption="Breathe with the dot — in for four, out for six." active={active} animate={false}>
+      <Svg width="100%" height={200} viewBox="0 0 390 200">
+        <Defs>
+          <LinearGradient id="b-bg" x1="0" y1="0" x2="0" y2="1">
+            <Stop offset="0" stopColor="#E4F3F0" />
+            <Stop offset="1" stopColor="#CFE9E3" />
+          </LinearGradient>
+          <LinearGradient id="b-wave" x1="0" y1="0" x2="1" y2="0">
+            <Stop offset="0" stopColor="#00A594" />
+            <Stop offset="1" stopColor={TEAL} />
+          </LinearGradient>
+          <RadialGradient id="b-dot" cx="0.5" cy="0.5" r="0.5">
+            <Stop offset="0" stopColor="#00A594" stopOpacity={0.35} />
+            <Stop offset="1" stopColor="#00A594" stopOpacity={0} />
+          </RadialGradient>
+        </Defs>
+        <Rect x={0} y={0} width={390} height={200} fill="url(#b-bg)" />
+        <Line x1={0} y1={110} x2={390} y2={110} stroke={TEAL} strokeWidth={1} strokeDasharray="2 6" opacity={0.3} />
+        <Path d={BREATH_PATH} fill="none" stroke="url(#b-wave)" strokeWidth={4.5} strokeLinecap="round" />
+        <AnimatedCircle cx={cx} cy={cy} r={haloR} fill="url(#b-dot)" />
+        <AnimatedCircle cx={cx} cy={cy} r={7} fill={TEAL} />
+        <SvgText x={86} y={38} fontSize={11} fontWeight="700" fill={TEAL}>in · four</SvgText>
+        <SvgText x={252} y={150} fontSize={11} fontWeight="700" fontStyle="italic" fill={TEAL}>out — long and slow · six</SvgText>
+      </Svg>
+    </SceneFigure>
+  );
+};
 
 // ── The three strands ───────────────────────────────────────────────────────
 const Gunas = () => (
@@ -831,11 +987,11 @@ export const FOUNDATIONS_FIGURES: Record<string, React.FC<{ active?: boolean }>>
   'f-claim-brahman': OceanWaves,
   'f-claim-brahman-faces': OneCurrentManyLamps,
   'f-claim-atman-drop': DropAndOcean,
-  'f-claim-tta-salt': SaltBowl,
+  'f-claim-tta-salt': SaltDissolve,
   'f-claim-tta-pot': PotSpace,
   'f-claim-tta-so-what': NamasteHands,
   'f-claim-maya': Mirage,
-  'f-claim-prana-try': BreathWave,
+  'f-claim-prana-try': BreatheAlong,
   'f-claim-gunas': Gunas,
   // Acts 4–7 (depth rework): every concept carries a figure; new figures sit on
   // the support page that tells their story, existing ones stay on their cards.

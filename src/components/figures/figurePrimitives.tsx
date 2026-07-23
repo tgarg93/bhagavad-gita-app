@@ -106,6 +106,95 @@ export const BuildIn: React.FC<{
   );
 });
 
+// ─── Bespoke figure animation ───────────────────────────────────────────────
+// Two hooks for figures whose CONCEPT is a change (salt dissolving) or a rhythm
+// (the breath) — more than BuildIn's fade. Both drive SVG geometry attributes, so
+// they use useNativeDriver:false (the native driver can't animate SVG attrs).
+
+/**
+ * One-shot 0→1 progress that runs once when `active` first turns true, and jumps
+ * straight to 1 under Reduce Motion. For dissolves / reveals whose end frame is
+ * the resting state. Interpolate SVG attrs off the returned value.
+ */
+export function useOneShot(active?: boolean, duration = 2400): Animated.Value {
+  const progress = useRef(new Animated.Value(0)).current;
+  const played = useRef(false);
+  useEffect(() => {
+    if (!active || played.current) return;
+    played.current = true;
+    let cancelled = false;
+    AccessibilityInfo.isReduceMotionEnabled().then(reduced => {
+      if (cancelled) return;
+      if (reduced) {
+        progress.setValue(1);
+        return;
+      }
+      Animated.timing(progress, {
+        toValue: 1,
+        duration,
+        easing: Easing.inOut(Easing.quad),
+        useNativeDriver: false,
+      }).start();
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [active, progress, duration]);
+  return progress;
+}
+
+/**
+ * A looping breath phase, expressed as normalized distance 0→1 along a path:
+ * 0→`inhaleFrac` over `inhaleMs` (the in-breath), `inhaleFrac`→1 over `exhaleMs`
+ * (the longer out-breath), repeating. **This is the app's ONE sanctioned ambient
+ * loop** — the "Try it now" breathe-along card — so it is deliberately gated on
+ * `active` (stops the moment the card isn't the visible page, never runs for
+ * off-screen FlatList neighbours) and disabled under Reduce Motion. Do not copy
+ * this into any other figure; the house rule is still no ambient loops.
+ */
+export function useBreathLoop(
+  active?: boolean,
+  inhaleFrac = 0.28,
+  inhaleMs = 4000,
+  exhaleMs = 6000
+): Animated.Value {
+  const t = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    let cancelled = false;
+    let loop: Animated.CompositeAnimation | undefined;
+    AccessibilityInfo.isReduceMotionEnabled().then(reduced => {
+      if (cancelled) return;
+      if (!active || reduced) {
+        t.setValue(0);
+        return;
+      }
+      loop = Animated.loop(
+        Animated.sequence([
+          Animated.timing(t, {
+            toValue: inhaleFrac,
+            duration: inhaleMs,
+            easing: Easing.inOut(Easing.sin),
+            useNativeDriver: false,
+          }),
+          Animated.timing(t, {
+            toValue: 1,
+            duration: exhaleMs,
+            easing: Easing.inOut(Easing.sin),
+            useNativeDriver: false,
+          }),
+        ])
+      );
+      loop.start();
+    });
+    return () => {
+      cancelled = true;
+      if (loop) loop.stop();
+      t.setValue(0);
+    };
+  }, [active, t, inhaleFrac, inhaleMs, exhaleMs]);
+  return t;
+}
+
 // ─── Current house style ────────────────────────────────────────────────────
 
 /**
