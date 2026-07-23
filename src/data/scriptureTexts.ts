@@ -46,6 +46,10 @@ const GENERIC_COVER = require('../../assets/images/covers/generic-cover.jpg');
 const RAMAYANA_COVER = require('../../assets/images/covers/ramayana-cover.png');
 const MOKSHA_COVER = require('../../assets/images/covers/moksha-cover.png');
 const SAMSARA_COVER = require('../../assets/images/covers/samsara-cover.png');
+// Ramayana kanda covers — Modern Editorial Miniature (docs/dharma-illustration-spec.md).
+const BALA_KANDA_COVER = require('../../assets/images/covers/bala-kanda-cover.jpg');
+const AYODHYA_KANDA_COVER = require('../../assets/images/covers/ayodhya-kanda-cover.jpg');
+const ARANYA_KANDA_COVER = require('../../assets/images/covers/aranya-kanda-cover.jpg');
 
 export const COLLECTIONS: ScriptureCollection[] = [
   {
@@ -88,7 +92,7 @@ const RAMAYANA_PARTS: ScripturePart[] = [
     sanskritName: 'बाल काण्ड',
     subtitle: 'The Book of Childhood — a kingdom’s prayer, a divine birth, a bow that made a marriage',
     order: 1,
-    coverImage: RAMAYANA_COVER,
+    coverImage: BALA_KANDA_COVER,
     sections: [
       {
         id: 'bala-question',
@@ -171,7 +175,7 @@ const RAMAYANA_PARTS: ScripturePart[] = [
     sanskritName: 'अयोध्या काण्ड',
     subtitle: 'The Book of Ayodhya — a coronation undone by two old promises, and a prince who bows to them',
     order: 2,
-    coverImage: RAMAYANA_COVER,
+    coverImage: AYODHYA_KANDA_COVER,
     sections: [
       {
         id: 'ayodhya-eve',
@@ -229,7 +233,7 @@ const RAMAYANA_PARTS: ScripturePart[] = [
     sanskritName: 'अरण्य काण्ड',
     subtitle: 'The Book of the Forest — a golden deer, a drawn line, and the abduction that starts a war',
     order: 3,
-    coverImage: RAMAYANA_COVER,
+    coverImage: ARANYA_KANDA_COVER,
     sections: [
       {
         id: 'aranya-forest',
