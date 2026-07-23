@@ -472,15 +472,15 @@ All four new deities need their canonical descriptions from Part 1's character s
 | Basant Panchami | 🆕 | generic fallback |
 | Maha Shivratri | 🆕 | generic fallback |
 | Holi | 🆕 | generic fallback |
-| Ugadi & Gudi Padwa | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
-| Hanuman Jayanti | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
-| Ratha Yatra | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
-| Guru Purnima | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
-| Raksha Bandhan | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
-| Onam | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
-| Dussehra | 🆕 | generic fallback (added July 2026, prompt not yet authored) — collision guard: Ram Navami owns the dawn courtyard, Navratri the lion; the burning effigy is unclaimed |
-| Karwa Chauth | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
-| Chhath Puja | 🆕 | generic fallback (added July 2026, prompt not yet authored) |
+| Ugadi & Gudi Padwa | 🆕 | generic fallback — prompt authored below (July 2026) |
+| Hanuman Jayanti | 🆕 | generic fallback — prompt authored below (July 2026) |
+| Ratha Yatra | 🆕 | generic fallback — prompt authored below (July 2026) |
+| Guru Purnima | 🆕 | generic fallback — prompt authored below (July 2026) |
+| Raksha Bandhan | 🆕 | generic fallback — prompt authored below (July 2026) |
+| Onam | 🆕 | generic fallback — prompt authored below (July 2026) |
+| Dussehra | 🆕 | generic fallback — prompt authored below (July 2026); the burning effigy (Ram Navami owns the dawn courtyard, Navratri the lion) |
+| Karwa Chauth | 🆕 | generic fallback — prompt authored below (July 2026) |
+| Chhath Puja | 🆕 | generic fallback — prompt authored below (July 2026) |
 
 **Janmashtami** (`janmashtami-cover.jpg`) — Tier 2, Narrative (ground level). *A single small barred window glows with warm lamplight from within a dark prison wall at midnight. No figure is visible through the window. One small star sits directly above the wall outside. The whole frame is the wall; the light is tiny.* Emotion: divinity arriving unnoticed by the powerful. Palette: Indigo-charcoal wall, Deep Saffron `#E65100` window-glow.
 *Collision guard: Krishna himself must not appear — that is exactly the collision being fixed.*
@@ -500,6 +500,37 @@ All four new deities need their canonical descriptions from Part 1's character s
 
 **Ram Navami** (`ram-navami-cover.jpg`) — Tier 2, Narrative. *Dawn light breaks over a plain palace courtyard, empty except for a single lit lamp at its center. The birth is suggested by the courtyard filling with light, not by any figure — no infant, no parents, no crowd.* Emotion: a promise-keeper's arrival. Palette: Deep Saffron `#E65100` → Gold `#D4AF37`.
 *Collision guard — two at once. Rama himself must not appear (that's the deity cover, which this festival currently wrongly borrows), and the Bala Kanda scripture part (Phase 2) also covers the birth — that one must find a different image entirely.*
+
+### Festivals added July 2026 (nine prompts)
+
+These nine shipped as content in July 2026 on the generic fallback. Prompts authored below, in calendar order; each was checked against the deity, story and prayer clusters it neighbours.
+
+**Ugadi & Gudi Padwa** (`ugadi-gudi-padwa-cover.jpg`) — Tier 1, Symbolic Still Life. *A single gudi rises against a pale spring dawn: a tall bamboo pole wound in bright silk, a sprig of fresh neem and a marigold garland knotted near the top, crowned by a small inverted copper vessel that catches the first light. It is planted and upright, anchored at the base, seen from slightly below. No figure, no balcony, no crowd.* Emotion: the new year raised like a standard. Palette: Deep Saffron `#E65100` / Turmeric `#FFC107` silk, Banyan Green `#388E3C` neem, Gold `#D4AF37` vessel, Warm Ivory sky.
+*Collision guard: Makar Sankranti owns the object rising into a brightening sky (the kite) — this gudi is planted and still, a raised standard, not something in flight. Basant Panchami owns the yellow-and-book of spring learning; keep this to silk and neem, no book.*
+
+**Hanuman Jayanti** (`hanuman-jayanti-cover.jpg`) — Tier 1, Symbolic Still Life. *A single smooth riverbed stone, in daylight, entirely coated in fresh wet vermillion sindoor so it glows orange — a fingertip's mark pressed into the surface, one leaf of silver varak catching light at its edge. This is the aniconic Hanuman, worshipped as a sindoor-smeared form. A few tulsi leaves rest beside it on a plain surface. No monkey figure.* Emotion: devotion that covers the whole body. Palette: Vermillion / Deep Saffron `#E65100` sindoor, silver leaf, Banyan Green `#388E3C` tulsi, Warm Ivory ground.
+*Collision guard — three at once. Hanuman himself must not appear (that is the deity cover); the Sundara Kanda kanda owns the ocean leap and is the one place a Hanuman figure mid-leap is permitted — not here; the Hanuman Chalisa prayer owns the forty ascending steps. And unlike Maha Shivratri's bare stone in darkness, this stone is bright, daylit, and fully coated.*
+
+**Ratha Yatra** (`ratha-yatra-cover.jpg`) — Tier 2, Narrative. *A single colossal temple chariot rises at the end of a broad road — one great carved wooden wheel taller than a person, a striped cloth canopy climbing out of the top of the frame — and one thick coir rope runs from it straight down the road toward the viewer, taut and waiting, belonging to no one. The deity beneath the canopy is left in shadow, unseen. No crowd faces.* Emotion: the doorway removed — the god comes out, and the rope refuses no one. Palette: Deep Saffron `#E65100` and Turmeric `#FFC107` canopy, dark carved wood, Warm Ivory road, a thin band of dawn sky.
+*Collision guard: the Katha Upanishad cover is also a chariot — but a horse-chariot with reins, seen from behind, as the body-as-chariot metaphor. This is a wheeled temple car pulled by rope, seen head-on, no horses, no reins. Jagannath must not be depicted. Hold the palette to red-and-yellow so Holi keeps its exclusive polychrome.*
+
+**Guru Purnima** (`guru-purnima-cover.jpg`) — Tier 2, Narrative. *A humble empty teaching seat — a plain grass mat or low wooden platform on bare ground — with a single fresh flower garland laid across it as an offering, beneath a large full moon that fills the upper sky. The moonlight is the only light, and it falls on the empty seat. No figure.* Emotion: gratitude to the one honoured even in absence. Palette: Indigo `#303F9F` night, silver-white moon, Turmeric `#FFC107` marigold garland, Warm Ivory moonlight.
+*Collision guard — three at once. Not the Guru concept's two daylight lamps (this is a night, a moon, an empty seat); not the Upanishads cover's two seated figures (the seat is empty); not Ayodhya Kanda's throne-with-sandals (a humble mat with a garland — no sandals, no throne). And unlike Karwa Chauth's moon, this one is plain and full, not seen through a sieve.*
+
+**Raksha Bandhan** (`raksha-bandhan-cover.jpg`) — Tier 1, Symbolic Still Life. *A single ornate rakhi — silk threads, a central rosette, a wisp of tinsel — tied into a finished knot and resting alone on a plain surface, its loop closed into a complete circle, beside a few grains of uncooked rice and a small smear of vermillion. No wrist, no figure.* Emotion: a thread that means protection; a bond completed. Palette: Lotus Pink / Vermillion silk, Gold `#D4AF37` thread, Turmeric `#FFC107` rice, Warm Ivory ground.
+*Collision guard: the reserved Meditation prompt owns the single gold thread running from a chest into open sky — this thread is an ornamental knot at rest, closed into a loop. No aarti plate and no lamp (those belong to the prayer covers).*
+
+**Onam** (`onam-cover.jpg`) — Tier 1, Diagrammatic. *A circular pookalam — concentric rings of fresh flower petals — laid on a plain pale floor and seen from directly above, the rings growing outward from a small bare space left open at the very centre for the awaited guest. Dense, organic petals, not clean geometry. No figure, no doorway.* Emotion: a home made ready for a beloved king's yearly return. Palette: deliberately restrained warm-floral — Turmeric `#FFC107`, Deep Saffron `#E65100`, a single Banyan Green `#388E3C` ring, Warm Ivory floor.
+*Collision guard — three at once. Holi holds the sole licence for full polychrome, so keep this to warm florals, not every colour; Om Namah Shivaya owns the clean ash-white mandala rings (these are dense living petals); Ganesh Chaturthi owns the doorstep-and-open-doorway, so frame this top-down with no threshold.*
+
+**Dussehra** (`dussehra-cover.jpg`) — Tier 2, Narrative. *Night. A single flaming arrow arcs across the dark toward a distant, towering effigy just beginning to catch fire — the effigy a dark silhouette wreathed in the first flames, seen far enough away that no face or detail reads. The archer is unseen. No crowd.* Emotion: evil met and burned — knowing it will be built again. Palette: Indigo-charcoal `#303F9F` night, Deep Saffron `#E65100` and Vermillion fire, Gold `#D4AF37` arrow-light.
+*Collision guard (per the table above): Ram Navami owns the dawn courtyard and Navratri the lion — Dussehra takes the burning effigy, uncontested. Rama must not appear (the archer stays offscreen); keep it a tall human-form effigy catching fire, distinct from Holika Dahan's bonfire pyre.*
+
+**Karwa Chauth** (`karva-chauth-cover.jpg`) — Tier 1, Portrait (close, night). *A round sieve held up to a full moon, the moonlight broken by the mesh into a fine grid of tiny points of light; the night is dark around it, and at the frame's edge a soft glow of bridal red — the barest suggestion of bangles and a dupatta — warms the dark. No face.* Emotion: seeing the beloved through the lattice of a kept vow. Palette: Indigo `#303F9F` night, silver moon through the mesh, Lotus Pink / Vermillion bridal glow, Gold `#D4AF37` sieve rim. *(Filename follows the `karva-chauth` id, not the "Karwa" display spelling.)*
+*Collision guard: the moon cluster — Guru Purnima's moon is plain and full over an empty seat; the Ganesha-and-the-Moon story has a crescent shadow over a rooftop. This moon is seen through a sieve's grid, in bridal red — Karwa Chauth's alone.*
+
+**Chhath Puja** (`chhath-puja-cover.jpg`) — Tier 1, Landscape. *A low golden sun rests exactly on the horizon of a still river, its reflection a straight column of gold on the water. In the foreground, half in the shallows, stands a laden bamboo soop — a winnowing basket heaped with fruit, thekua and a few small lit diyas, a stalk or two of sugarcane propped beside it — in silhouette. No priest, no idol, no figure; just the offering, the water, and the sun.* Emotion: worship with no intermediary at all. Palette: Deep Saffron `#E65100` and Gold `#D4AF37` sun and its reflected column, Peacock Teal `#00796B` / Indigo `#303F9F` water, dark silhouetted basket.
+*Collision guard: Makar Sankranti owns the sun as a brightening dawn sky with a kite and no water; Chhath owns the sun sitting on the river with the soop and diyas. Keep it distinct from the Vishnu Purana's circling river and Prana's landscape current — here the water is still and the sun is the subject.*
 
 ## Stories — Phase 2 (20 items, all currently on the generic fallback or borrowing another item's art)
 

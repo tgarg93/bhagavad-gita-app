@@ -1877,7 +1877,7 @@ export const festivalData: Festival[] = [
     ],
     culturalImpact: 'Ratha Yatra is Hinduism\'s great festival of access: the deity out of the sanctum, the king with a broom, and a rope that makes no distinctions, now enacted in cities on every continent.',
     relatedFestivals: ['janmashtami-2025'],
-    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: ratha-yatra-cover.png
+    heroImageUrl: require('../../assets/images/covers/ratha-yatra-cover.png'),
   },
   {
     id: 'guru-purnima-2025',
@@ -2064,7 +2064,7 @@ export const festivalData: Festival[] = [
     ],
     culturalImpact: 'Guru Purnima institutionalizes gratitude for teaching itself, and its choice of hero — an editor and teacher over any conqueror — says more about the tradition\'s values than almost any other holiday.',
     relatedFestivals: ['basant-panchami-2025'],
-    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: guru-purnima-cover.png
+    heroImageUrl: require('../../assets/images/covers/guru-purnima-cover.png'),
   },
   {
     id: 'raksha-bandhan-2025',
@@ -2991,7 +2991,7 @@ export const festivalData: Festival[] = [
     ],
     culturalImpact: 'Onam carries Kerala\'s founding ideal of an equal society, rehearsed each year in the shared sadya row, and holds the rare distinction of a purana story kept as a festival by an entire multi-religious state.',
     relatedFestivals: ['holi-2025', 'makar-sankranti-2025'],
-    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: onam-cover.png
+    heroImageUrl: require('../../assets/images/covers/onam-cover.png'),
   },
   {
     id: 'navratri-2025',
