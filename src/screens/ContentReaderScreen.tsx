@@ -405,6 +405,7 @@ const ContentReaderScreen: React.FC = () => {
 
   // --- Playback ---------------------------------------------------------
   const startPlayback = useCallback(async (fromSectionIndex: number) => {
+    if (!content) return;
     const callbacks: NarrationCallbacks = {
       onSegmentStart: (segmentId) => {
         lastSegmentIdRef.current = segmentId;
@@ -444,6 +445,19 @@ const ContentReaderScreen: React.FC = () => {
         setHighlightedSegmentId(null);
       },
       onError: (e) => console.warn('Narration error:', e),
+      // A lock-screen / CarPlay / Bluetooth play/pause/skip drives the service
+      // directly, so mirror the resulting state onto this screen's controls.
+      onPlayStateChanged: (playing) => {
+        setIsPlaying(playing);
+        setIsPaused(!playing);
+        if (!playing) setHighlightedSegmentId(null);
+      },
+    };
+    // Lock-screen / CarPlay Now Playing card: chapter/act title + cover.
+    const nowPlaying = {
+      title: content.title,
+      subtitle: content.readerLabel,
+      coverImage: content.coverImage,
     };
     setIsPlaying(true);
     setIsPaused(false);
@@ -452,16 +466,17 @@ const ContentReaderScreen: React.FC = () => {
         foundationsSegments,
         prerecordedClips,
         callbacks,
-        Math.max(0, fromSectionIndex)
+        Math.max(0, fromSectionIndex),
+        nowPlaying
       );
     } else {
       const startFromIndex = Math.max(
         0,
         audioSegments.findIndex(s => s.id.startsWith(`section-${fromSectionIndex}-`))
       );
-      await audioService.startNarration(narrationContent, callbacks, startFromIndex);
+      await audioService.startNarration(narrationContent, callbacks, startFromIndex, nowPlaying);
     }
-  }, [audioSegments, narrationContent, audioService, prerecordedClips, foundationsSegments]);
+  }, [audioSegments, narrationContent, audioService, prerecordedClips, foundationsSegments, content]);
 
   const handlePlayPause = useCallback(async () => {
     if (isPlaying) {

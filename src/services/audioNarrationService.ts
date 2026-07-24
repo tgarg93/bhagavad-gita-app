@@ -2,6 +2,10 @@ import * as Speech from 'expo-speech';
 import { Audio, InterruptionModeIOS, InterruptionModeAndroid } from 'expo-av';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { stripInlineMarkup } from '../components/RichText';
+import nowPlayingService, {
+  NowPlayingContent,
+  RemoteCommandAction,
+} from './nowPlayingService';
 
 export interface TextSegment {
   id: string;
@@ -33,6 +37,10 @@ export interface NarrationCallbacks {
   onProgressUpdate: (progress: number) => void;
   onPlaybackComplete: () => void;
   onError: (error: string) => void;
+  // Fired when playback is started/stopped from OUTSIDE the screen — i.e. a lock
+  // screen / Control Center / CarPlay / Bluetooth remote command — so the screen's
+  // own play/pause icon can stay in sync. Optional: pollers (AudioControls) ignore it.
+  onPlayStateChanged?: (isPlaying: boolean) => void;
 }
 
 const NARRATION_SPEED_KEY = 'narration_speed';
@@ -327,6 +335,13 @@ class PrerecordedController {
     if (target !== this.curSeg) this.fireSegment(target);
   }
 
+  // Real position/duration of the clip playing right now, for the Now Playing bar.
+  // Per-section (it resets when a clip changes) — whole-act timing isn't known
+  // until every clip has loaded, and iOS extrapolates between updates off the rate.
+  getClipProgress(): { elapsedMs: number; totalMs: number } {
+    return { elapsedMs: this.lastPositionMs, totalMs: this.durationMs };
+  }
+
   private async unload(): Promise<void> {
     const sound = this.sound;
     this.sound = null;
@@ -359,6 +374,9 @@ export class AudioNarrationService {
   // `mode` routes the shared transport (pause/resume/stop/seek) to the right one.
   private prerec = new PrerecordedController();
   private mode: 'tts' | 'prerecorded' = 'tts';
+  // The single remote-command listener (lock screen / CarPlay / Bluetooth) is wired
+  // lazily on the first metadata-bearing session and lives for the app's lifetime.
+  private remoteWired = false;
 
   private constructor() {
     this.loadSettings();
@@ -434,6 +452,102 @@ export class AudioNarrationService {
     } catch (error) {
       console.log('Error saving narration settings:', error);
     }
+  }
+
+  // --- Now Playing (lock screen / Control Center / CarPlay / Bluetooth) ---------
+  // A session that supplies `meta` publishes a Now Playing card and accepts remote
+  // controls; a session without `meta` (e.g. the AudioControls bar) clears any stale
+  // card and stays silent on those surfaces.
+  private beginNowPlaying(meta?: NowPlayingContent): void {
+    if (meta) {
+      this.wireRemote();
+      nowPlayingService.setContent(meta);
+    } else {
+      nowPlayingService.clear();
+    }
+  }
+
+  private wireRemote(): void {
+    if (this.remoteWired) return;
+    this.remoteWired = true;
+    nowPlayingService.setRemoteCommandHandler((action) => {
+      void this.handleRemoteCommand(action);
+    });
+  }
+
+  // Route a remote-surface button into the same transport the on-screen controls
+  // use, then tell the screen so its play/pause icon follows.
+  private async handleRemoteCommand(action: RemoteCommandAction): Promise<void> {
+    switch (action) {
+      case 'play':
+        await this.resumeNarration();
+        this.callbacks?.onPlayStateChanged?.(true);
+        break;
+      case 'pause':
+        await this.pauseNarration();
+        this.callbacks?.onPlayStateChanged?.(false);
+        break;
+      case 'toggle':
+        if (this.isActive && !this.isPaused) {
+          await this.pauseNarration();
+          this.callbacks?.onPlayStateChanged?.(false);
+        } else {
+          await this.resumeNarration();
+          this.callbacks?.onPlayStateChanged?.(true);
+        }
+        break;
+      case 'skipForward':
+        if (this.mode === 'prerecorded') await this.prerecSeekRelative(15000);
+        else await this.skipForward();
+        break;
+      case 'skipBackward':
+        if (this.mode === 'prerecorded') await this.prerecSeekRelative(-15000);
+        else await this.skipBackward();
+        break;
+    }
+    this.pushNowPlaying();
+  }
+
+  // Refresh the Now Playing bar from live state. Called on discrete transitions
+  // (segment/section change, pause/resume, seek, complete) — NOT every status tick;
+  // iOS extrapolates elapsed between updates from the playback rate.
+  private pushNowPlaying(): void {
+    let elapsedMs = 0;
+    let totalMs = 0;
+    let isPlaying = this.isActive && !this.isPaused;
+    if (this.mode === 'prerecorded') {
+      const p = this.prerec.getClipProgress();
+      elapsedMs = p.elapsedMs;
+      totalMs = p.totalMs;
+    } else {
+      const st = this.getCurrentState();
+      elapsedMs = st.elapsedMs;
+      totalMs = st.totalMs;
+      isPlaying = st.isPlaying;
+    }
+    nowPlayingService.update({ isPlaying, elapsedMs, totalMs });
+  }
+
+  // Wrap the screen's callbacks so the service can refresh Now Playing on segment /
+  // progress changes and clear the card on completion, without the screen knowing.
+  private wrapCallbacks(cb: NarrationCallbacks): NarrationCallbacks {
+    return {
+      onSegmentStart: (id, idx) => {
+        cb.onSegmentStart(id, idx);
+        this.pushNowPlaying();
+      },
+      onSegmentEnd: (id) => cb.onSegmentEnd(id),
+      onProgressUpdate: (p) => {
+        cb.onProgressUpdate(p);
+        this.pushNowPlaying();
+      },
+      onPlaybackComplete: () => {
+        nowPlayingService.clear();
+        cb.onPlaybackComplete();
+      },
+      onError: (e) => cb.onError(e),
+      onPlayStateChanged: cb.onPlayStateChanged,
+    };
   }
 
   parseContentIntoSegments(content: any[]): TextSegment[] {
@@ -540,21 +654,24 @@ export class AudioNarrationService {
   }
 
   async startNarration(
-    content: any[], 
+    content: any[],
     callbacks: NarrationCallbacks,
-    startFromIndex: number = 0
+    startFromIndex: number = 0,
+    meta?: NowPlayingContent
   ): Promise<void> {
     try {
       await this.initialize();
 
       this.mode = 'tts';
       this.segments = this.parseContentIntoSegments(content);
-      this.callbacks = callbacks;
+      this.callbacks = this.wrapCallbacks(callbacks);
       this.currentIndex = startFromIndex;
       this.isActive = true;
       this.isPaused = false;
 
+      this.beginNowPlaying(meta);
       await this.playNextSegment();
+      this.pushNowPlaying();
     } catch (error) {
       console.log('Error starting narration:', error);
       this.callbacks?.onError('Failed to start audio narration');
@@ -618,7 +735,8 @@ export class AudioNarrationService {
     foundationsSegments: TextSegment[],
     clipsBySection: Record<number, number>,
     callbacks: NarrationCallbacks,
-    fromSectionIndex: number = 0
+    fromSectionIndex: number = 0,
+    meta?: NowPlayingContent
   ): Promise<void> {
     try {
       await this.initialize();
@@ -642,11 +760,14 @@ export class AudioNarrationService {
           totalChars: segments.reduce((n, s) => n + s.text.length, 0) || 1,
         }));
 
-      this.callbacks = callbacks;
+      const wrapped = this.wrapCallbacks(callbacks);
+      this.callbacks = wrapped;
       this.isActive = true;
       this.isPaused = false;
-      this.prerec.configure(sections, callbacks);
+      this.beginNowPlaying(meta);
+      this.prerec.configure(sections, wrapped);
       await this.prerec.start(fromSectionIndex);
+      this.pushNowPlaying();
     } catch (error) {
       console.log('Error starting pre-recorded narration:', error);
       this.callbacks?.onError('Failed to start audio narration');
@@ -657,6 +778,7 @@ export class AudioNarrationService {
     this.isPaused = true;
     if (this.mode === 'prerecorded') {
       await this.prerec.pause();
+      this.pushNowPlaying();
       return;
     }
     this.currentSegmentStartedAt = null;
@@ -664,6 +786,7 @@ export class AudioNarrationService {
       await this.backend.stop();
       this.speechId = null;
     }
+    this.pushNowPlaying();
   }
 
   async resumeNarration(): Promise<void> {
@@ -671,9 +794,11 @@ export class AudioNarrationService {
     this.isPaused = false;
     if (this.mode === 'prerecorded') {
       await this.prerec.resume();
+      this.pushNowPlaying();
       return;
     }
     await this.playNextSegment();
+    this.pushNowPlaying();
   }
 
   // Jump the pre-recorded narration to a whole section (used by page-skip).
@@ -682,12 +807,14 @@ export class AudioNarrationService {
     this.isActive = true;
     this.isPaused = false;
     await this.prerec.seekToSection(sectionIndex);
+    this.pushNowPlaying();
   }
 
   // ±seconds within the current pre-recorded clip.
   async prerecSeekRelative(deltaMs: number): Promise<void> {
     if (this.mode !== 'prerecorded') return;
     await this.prerec.seekRelative(deltaMs);
+    this.pushNowPlaying();
   }
 
   async stopNarration(): Promise<void> {
@@ -695,6 +822,7 @@ export class AudioNarrationService {
     this.isPaused = false;
     this.currentIndex = 0;
     this.currentSegmentStartedAt = null;
+    nowPlayingService.clear();
     if (this.mode === 'prerecorded') {
       await this.prerec.stop();
       return;

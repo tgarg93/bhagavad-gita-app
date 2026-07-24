@@ -1,0 +1,8 @@
+{
+  "name": "expo-now-playing",
+  "version": "1.0.0",
+  "description": "Populates the iOS Now Playing info center and handles remote (lock-screen / Control Center / CarPlay / Bluetooth) commands for narration.",
+  "main": "index.ts",
+  "platforms": ["ios"],
+  "private": true
+}

@@ -301,12 +301,26 @@ const GitaVersePlayerScreen: React.FC = () => {
         setPlayingChapter(null);
       },
       onError: (e) => console.warn('Narration error:', e),
+      // Lock-screen / CarPlay / Bluetooth play/pause drives the service directly —
+      // mirror it onto this screen's controls.
+      onPlayStateChanged: (playing) => {
+        setIsPlaying(playing);
+        setIsPaused(!playing);
+        if (!playing) setHighlightedSegmentId(null);
+      },
+    };
+
+    // Lock-screen / CarPlay Now Playing card: chapter name + cover.
+    const nowPlaying = {
+      title: chapterName(chapter),
+      subtitle: 'Bhagavad Gita',
+      coverImage: getChapterCover(chapter),
     };
 
     setPlayingChapter(chapter);
     setIsPlaying(true);
     setIsPaused(false);
-    await audioService.startNarration(content, callbacks, startFromIndex);
+    await audioService.startNarration(content, callbacks, startFromIndex, nowPlaying);
   }, [verseStartIndex, audioService]);
 
   const handlePlayPause = useCallback(async () => {
