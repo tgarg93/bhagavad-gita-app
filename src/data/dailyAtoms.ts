@@ -808,6 +808,7 @@ const STORY_ATOMS: DailyAtom[] = [
     body:
       'Ganesha and his brother Kartikeya were challenged: whoever circles the world first wins the prize. Kartikeya launched at once on his peacock. Ganesha walked one slow circle around his parents, folded his hands, and said, “You are my world.” He won. What did the judges see that Kartikeya didn’t?',
     citation: 'Shiva Purana, Rudra Samhita',
+    sourceRef: 'deity:ganesha#story-ganesha-race',
     krishnaPrompt: 'What does Ganesha’s trick in the race really teach — cleverness, or something deeper about what “the world” is?',
   },
   {
@@ -815,8 +816,9 @@ const STORY_ATOMS: DailyAtom[] = [
     type: 'story',
     hook: 'The boy at the door',
     body:
-      'Parvati shaped a boy from turmeric paste and set him to guard her door. He was so loyal he refused entry even to Shiva — who, unknowing and furious, struck off the child’s head. What follows — a mother’s grief, a father’s remorse, and the head of an elephant — explains the most beloved face in all of Hinduism.',
+      'Parvati shaped a boy from turmeric paste and set him to guard her door. He was so loyal he refused entry even to Shiva — who, not knowing this was his own son, struck off the child’s head in a rage. Shiva’s remorse remade him with an elephant’s head and a decree: this child would be worshipped first before every beginning. The boy who once blocked a god’s path became Ganesha — the one we now call on to clear our own.',
     citation: 'Shiva Purana, Rudra Samhita (Kumara Khanda)',
+    sourceRef: 'deity:ganesha#story-ganesha-birth',
     krishnaPrompt: 'The Ganesha story starts with a terrible mistake by a god. Why does the tradition tell it that way?',
   },
   {
@@ -836,6 +838,7 @@ const STORY_ATOMS: DailyAtom[] = [
     body:
       'Gods and demons churned the cosmic ocean for the nectar of immortality — and the first thing to surface was halahala, a poison that could end the world. Shiva drank it and held it in his throat, which turned blue forever. The tradition’s quiet warning: every great churning yields poison before it yields nectar, and someone must be willing to swallow it.',
     citation: 'Bhagavata Purana, Canto 8; Vishnu Purana 1.9',
+    sourceRef: 'story:samudra-manthan-full',
     krishnaPrompt: 'What does the churning of the ocean say about the hard middle of any worthwhile effort?',
   },
   {
@@ -845,6 +848,7 @@ const STORY_ATOMS: DailyAtom[] = [
     body:
       'A demon king demanded to be worshiped as god; his own small son Prahlada kept praying to Vishnu instead. Poison, elephants, a bonfire in the arms of the fireproof aunt Holika — nothing touched the boy. Holika burned; Prahlada walked out singing. That bonfire is why Holi begins with one.',
     citation: 'Bhagavata Purana, Canto 7',
+    sourceRef: 'story:prahlada-full',
     krishnaPrompt: 'Prahlada defied his own father out of devotion. How does the tradition think about faith versus family?',
   },
   {
@@ -854,6 +858,7 @@ const STORY_ATOMS: DailyAtom[] = [
     body:
       'When the villagers of Vraja skipped Indra’s worship, the storm god answered with a deluge meant to drown them. Krishna — a boy of seven — lifted Govardhan hill on the little finger of one hand and held it as an umbrella for seven days. The lesson under the miracle: shelter what shelters you, and old powers do not get worship merely for being old.',
     citation: 'Bhagavata Purana, Canto 10 (chapters 24–25)',
+    sourceRef: 'deity:krishna#story-govardhan-lift',
     krishnaPrompt: 'Why did Krishna stop the worship of Indra? What was he teaching the villagers about worship itself?',
   },
   {
@@ -863,6 +868,7 @@ const STORY_ATOMS: DailyAtom[] = [
     body:
       'Savitri married Satyavan knowing he had one year to live. When Yama, god of death, came to collect, she simply followed him — and debated dharma so flawlessly, step after step, that Yama granted her boons until the only consistent outcome left was her husband’s life. Death himself, out-reasoned by devotion.',
     citation: 'Mahabharata, Vana Parva (the Pativrata-mahatmya, ch. 293–299)',
+    sourceRef: 'story:savitri-full',
     krishnaPrompt: 'Savitri won her husband back through reasoning with Death. What does her story say about persistence and dharma?',
   },
   {
@@ -882,6 +888,7 @@ const STORY_ATOMS: DailyAtom[] = [
     body:
       'A proud young scholar came home, and his father dissolved a lump of salt in water. Sip from any side — salty; yet nothing left to grasp. “In just that way,” the father said, “you do not see Being here, but it is here all the same. That is the self of all this. Tat tvam asi — you are That.” Nine times he repeated it.',
     citation: 'Chandogya Upanishad 6.13',
+    sourceRef: 'story:svetaketu-salt',
     krishnaPrompt: 'If the divine is dissolved in me like salt in water — everywhere, ungraspable — what would it mean to actually taste it?',
   },
   {
@@ -891,6 +898,7 @@ const STORY_ATOMS: DailyAtom[] = [
     body:
       'Refused a teacher because of his birth, the forest boy Ekalavya built a clay image of Drona and practiced before it until he surpassed the princes. Then the teacher who had turned him away claimed his fee: the right thumb that made him the greatest archer alive. Ekalavya cut it off with a cheerful face. The tradition holds this story open — perfect devotion and plain injustice in one frame.',
     citation: 'Mahabharata, Adi Parva',
+    sourceRef: 'story:ekalavya',
     krishnaPrompt: 'Ekalavya’s story holds both perfect devotion and real injustice. Which half do I look away from — and why?',
   },
 ];
