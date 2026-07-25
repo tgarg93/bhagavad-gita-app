@@ -226,9 +226,14 @@ const ContentReaderScreen: React.FC = () => {
         : [],
     [content, contentType, audioService]
   );
+  // The segments the pre-recorded controller plays. Foundations cards use the
+  // takeaway/story segments (FoundationCard highlight); scripture reuses the TTS
+  // narration segments (sectionsToNarrationContent → NarrativeSections highlight),
+  // so its read-along tracks the same sentences the TTS path would.
+  const prerecordedSegments = contentType === 'foundations' ? foundationsSegments : audioSegments;
   // The segment list the transport reasons over — the same one the service is
   // playing, so section indices line up for skip and seek.
-  const activeSegments: { id: string }[] = prerecordedClips ? foundationsSegments : audioSegments;
+  const activeSegments: { id: string }[] = prerecordedClips ? prerecordedSegments : audioSegments;
 
   // A section finishes when its LAST segment ends. Walk the segments in order and
   // keep the last id seen per section, so onSegmentEnd can tell a section-ending
@@ -470,7 +475,7 @@ const ContentReaderScreen: React.FC = () => {
     setIsPaused(false);
     if (prerecordedClips) {
       await audioService.startPrerecorded(
-        foundationsSegments,
+        prerecordedSegments,
         prerecordedClips,
         callbacks,
         Math.max(0, fromSectionIndex),
