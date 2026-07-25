@@ -9,14 +9,22 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import { useProfilePhoto } from '../services/profilePhotoStore';
+import RichText from './RichText';
 
-export const Bubble: React.FC<{ role: 'krishna' | 'user'; text: string }> = ({ role, text }) => {
+// `rich` renders the text through RichText so `**term**` shows bold — used by the
+// end-of-chapter Krishna dialogue, where key words (samsara, karma…) are emphasized.
+// Default off, so every existing caller renders exactly as before.
+export const Bubble: React.FC<{ role: 'krishna' | 'user'; text: string; rich?: boolean }> = ({ role, text, rich }) => {
   if (role === 'krishna') {
     return (
       <View style={styles.krishnaRow}>
         <Image source={require('../../assets/krishna-avatar.png')} style={avatarStyle} resizeMode="cover" />
         <View style={styles.krishnaBubble}>
-          <Text style={styles.krishnaBubbleText}>{text}</Text>
+          {rich ? (
+            <RichText text={text} style={styles.krishnaBubbleText} />
+          ) : (
+            <Text style={styles.krishnaBubbleText}>{text}</Text>
+          )}
         </View>
       </View>
     );

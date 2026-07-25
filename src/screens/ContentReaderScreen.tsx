@@ -42,6 +42,7 @@ import CheckPage from '../components/CheckPage';
 import CapstonePage from '../components/CapstonePage';
 import KrishnaFab from '../components/KrishnaFab';
 import KrishnaChatSheet from '../components/KrishnaChatSheet';
+import KrishnaDialoguePage from '../components/KrishnaDialoguePage';
 import journeyService from '../services/journeyService';
 import { foundationsService } from '../services/foundationsService';
 import { navigateToJourneyItem, navigateToContentRef } from '../data/journeyPath';
@@ -73,6 +74,7 @@ type ReaderPage =
   | { kind: 'section'; section: NarrativeSection; sectionIndex: number }
   | { kind: 'check'; check: McqCheck | RecallCheck }
   | { kind: 'reflection'; questionIndex: number } // one page per question
+  | { kind: 'dialogue' } // end-of-chapter Krishna dialogue, before the celebration
   | { kind: 'capstone' }
   | { kind: 'celebration' };
 
@@ -119,6 +121,11 @@ const ContentReaderScreen: React.FC = () => {
         pages.push({ kind: 'reflection', questionIndex })
       );
     }
+    // The end-of-chapter Krishna dialogue rides after the reflections and before
+    // the celebration (data-presence — only when the content has one). It never
+    // blocks completion: reaching the celebration still marks the item done, and
+    // the dialogue's Skip jumps straight there.
+    if (content.krishnaDialogue) pages.push({ kind: 'dialogue' });
     if (content.capstone) pages.push({ kind: 'capstone' });
     if (!content.capstone || capstoneResolved) pages.push({ kind: 'celebration' });
     return pages;
@@ -877,12 +884,24 @@ const ContentReaderScreen: React.FC = () => {
     </ScrollView>
   );
 
+  const renderDialogue = () => (
+    <KeyboardAvoidingView style={styles.page} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <KrishnaDialoguePage
+        dialogue={content.krishnaDialogue!}
+        getTextStyle={getTextStyle}
+        onContinue={() => skipPage(1)}
+        onAskKrishna={openKrishnaSheet}
+      />
+    </KeyboardAvoidingView>
+  );
+
   const renderItem = ({ item }: { item: ReaderPage }) => {
     switch (item.kind) {
       case 'cover': return renderCover();
       case 'section': return renderSection(item.section, item.sectionIndex);
       case 'check': return renderCheck(item.check);
       case 'reflection': return renderReflection(item.questionIndex);
+      case 'dialogue': return renderDialogue();
       case 'capstone': return renderCapstone();
       case 'celebration': return renderCelebration();
     }

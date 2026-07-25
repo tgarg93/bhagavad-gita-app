@@ -10,6 +10,7 @@ import { getPartById, getCollection } from './scriptureTexts';
 import { getFoundationsAct, takeawaysForAct, FOUNDATIONS_ACTS } from './foundations';
 import { getStageCapstone } from './stageCapstones';
 import { hasStoryBeats, parseStoryBeats, DIALOGUE_BLOCK_BASE } from './storyBeats';
+import { KRISHNA_DIALOGUES, KrishnaDialogue } from './krishnaDialogues';
 
 export type ReaderContentType =
   | 'concept'
@@ -55,6 +56,10 @@ export interface ReaderContent {
   // The stage objective — what the reader can now do. Shown on the capstone's
   // celebration, where it reads as earned rather than promised.
   objective?: string;
+  // An end-of-chapter Krishna dialogue (krishnaDialogues.ts), attached by content
+  // ref when one exists — data-presence-driven, like learnItems/handoff. Its page
+  // renders after the reflections, before the celebration.
+  krishnaDialogue?: KrishnaDialogue;
 }
 
 const FALLBACK_COVER = require('../../assets/images/covers/generic-cover.jpg');
@@ -78,7 +83,21 @@ const storyToSection = (story: {
   teachingText: story.moralLesson,
 });
 
+// Attach the end-of-chapter Krishna dialogue by content ref when one is authored
+// (data-presence — keyed `${contentType}:${contentId}`), then defer to the per-type
+// builder. Kept as a thin wrapper so every content type gets it without touching
+// each branch.
 export function getReaderContent(
+  contentType: ReaderContentType,
+  contentId: string
+): ReaderContent | null {
+  const content = buildReaderContent(contentType, contentId);
+  if (!content) return null;
+  const dialogue = KRISHNA_DIALOGUES[`${contentType}:${contentId}`];
+  return dialogue ? { ...content, krishnaDialogue: dialogue } : content;
+}
+
+function buildReaderContent(
   contentType: ReaderContentType,
   contentId: string
 ): ReaderContent | null {

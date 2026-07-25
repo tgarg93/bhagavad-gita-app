@@ -88,8 +88,10 @@ const Mcq: React.FC<{ check: McqCheck; getTextStyle: any; onResolved: () => void
 
   return (
     <View style={styles.page}>
-      <Text style={styles.eyebrow}>Check yourself</Text>
-      <Text style={getTextStyle(styles.prompt)}>{check.prompt}</Text>
+      <Text style={styles.eyebrow}>Krishna asks</Text>
+      <View style={styles.promptWrap}>
+        <Bubble role="krishna" text={check.prompt} />
+      </View>
 
       <View style={styles.options}>
         {check.options.map((opt, i) => {
@@ -127,18 +129,11 @@ const Mcq: React.FC<{ check: McqCheck; getTextStyle: any; onResolved: () => void
       </View>
 
       {answered && (
-        <View style={[styles.resultCard, answeredCorrectly ? styles.resultGood : styles.resultMiss]}>
-          <View style={styles.resultHeader}>
-            <Ionicons
-              name={answeredCorrectly ? 'checkmark-circle' : 'alert-circle'}
-              size={20}
-              color={answeredCorrectly ? GOOD : MISS}
-            />
-            <Text style={[styles.resultLabel, { color: answeredCorrectly ? GOOD : MISS }]}>
-              {answeredCorrectly ? 'Correct!' : 'Not quite'}
-            </Text>
-          </View>
-          <Text style={getTextStyle(styles.whyText)}>{check.why}</Text>
+        <View style={styles.replyWrap}>
+          <Bubble
+            role="krishna"
+            text={`${answeredCorrectly ? 'Yes, that’s it. ' : 'Not quite. '}${check.why}`}
+          />
         </View>
       )}
 
@@ -426,6 +421,8 @@ const styles = StyleSheet.create({
     color: C.neutrals.charcoalBlack,
     marginBottom: 22,
   },
+  promptWrap: { marginBottom: 20 },
+  replyWrap: { marginTop: 18 },
   options: { gap: 10 },
   option: {
     flexDirection: 'row',
