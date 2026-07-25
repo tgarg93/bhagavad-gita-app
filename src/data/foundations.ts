@@ -88,17 +88,63 @@ const ACT_NAME: FoundationsAct = {
   kicker: 'Before anything else, the word itself is wrong.',
   subtitle: 'Where the word came from, and what the tradition calls itself',
   intro: [
-    'You already have a picture of Hinduism. Almost certainly it came from someone outside it — and so did the name.',
-    'Four ideas. By the end of them you will know what it is **not**, where the word came from, what the tradition calls itself, and how something with no book survived three thousand years without one.',
+    'You already have a picture of Hinduism. This part hands you the real one, in plain words, before a single god or story arrives.',
+    'A handful of short ideas: what Hinduism actually is, the beliefs at its center, why it has no founder, where the word came from, what the tradition calls itself, and how it lasted three thousand years without one book.',
   ],
   coverImage: COVER_NAME,
   sections: [
+    {
+      id: 'f-name-what-it-is',
+      title: 'A family, not a single religion',
+      banked: false,
+      storyText:
+        'So what is Hinduism, in one honest sentence? It is a large family of related traditions that grew up together across India over thousands of years.\n\nPicture an extended family rather than one person. The cousins do not all look alike, and they do not all do things the same way. But you can see the family resemblance, because they share the same four things.',
+      bullets: [
+        '**The same gods**, understood as different faces of one reality.',
+        '**The same library** of sacred texts, with the ancient Vedas at its root.',
+        '**The same practices**, like daily worship at a small home shrine and a shared year of festivals.',
+        '**The same core ideas** about the self, action, and the way to freedom.',
+      ],
+      teachingText:
+        'Every god, story, and festival ahead in this journey is one branch of that family. This card is the trunk they all grow from.',
+      checks: [
+        {
+          id: 'chk:foundations:what-hinduism-is',
+          kind: 'mcq',
+          practice: true,
+          prompt: 'Which is the best one-sentence description of Hinduism?',
+          options: [
+            { text: 'A single religion with one holy book and one founder' },
+            { text: 'A family of related Indian traditions that share gods, texts, and core ideas', correct: true },
+            { text: 'A modern philosophy invented in the last few centuries' },
+          ],
+          why: 'It is a family, not a single system. The cousins differ, yet they share the same gods, the same library, and the same core ideas.',
+        },
+      ],
+    },
+    {
+      id: 'f-name-core-preview',
+      title: 'The ideas they all share',
+      banked: false,
+      storyText:
+        'So what are those shared ideas? You do not need to grasp them yet. Meet them once, lightly, and we will take each one slowly in the parts ahead, with a picture to go with it.',
+      bullets: [
+        '**Brahman** — one reality behind every god and every thing.',
+        '**Atman** — the self within you, deeper than the body.',
+        '**Karma** — every action has consequences that carry forward.',
+        '**Samsara** — the self is born, dies, and is born again.',
+        '**Dharma** — living the way that is truly yours to live.',
+        '**Moksha** — waking from the whole cycle, the final freedom.',
+      ],
+      teachingText:
+        'That is the shared core, the family resemblance in six words. We will unpack them one at a time, starting a couple of parts from now. For today, it is enough to know the family has a center.',
+    },
     {
       id: 'f-name-no-founder',
       title: 'No founder',
       takeaway: 'Hinduism has no founder, no single book, and no one in charge.',
       storyText:
-        "Let's start with what Hinduism is *not*. Think of Christianity (Jesus), Islam (Muhammad), or Buddhism (the Buddha) — each has a founder you can name.\n\nHinduism has none. Nobody started it. Instead, many local traditions grew up side by side across India over more than three thousand years. Only much later were they gathered under one name — mostly by outsiders, to keep things simple.\n\nSo what you're left with is:",
+        "One thing about this family surprises almost everyone. Unlike every religion you can probably name, it never had a founder.\n\nChristianity has Jesus. Islam has Muhammad. Buddhism has the Buddha. Each began with one person, at one moment in time. Hinduism did not. Nobody started it. Those many local traditions simply grew side by side, and only much later were they gathered under one name, mostly by outsiders who wanted a single word for all of it.\n\nSo three things most religions have, this one does not:",
       bullets: [
         '**No founder** — no single person who began it.',
         '**No one holy book** — a whole library instead.',
@@ -244,6 +290,60 @@ const ACT_THREAD: FoundationsAct = {
             { text: 'Hinduism turns on what you do — practice — more than on what you believe', correct: true },
           ],
           why: 'The number of gods is the surface difference. The deep one: Judaism, Christianity, and Islam ask what you believe; this one asks what you do.',
+        },
+      ],
+    },
+    {
+      id: 'f-thread-what-practice',
+      title: 'So what is the practice?',
+      banked: false,
+      storyText:
+        'If practice is what makes you Hindu, then what is the practice, exactly? It is not one grand thing. It is a handful of ordinary ones, woven through a life.\n\nMost of it happens at home, not at a temple.',
+      bullets: [
+        '**Puja**, simple daily worship at a small home shrine: a lamp, some flowers, a few words to the deity your family keeps.',
+        '**Mantra**, sacred words said or sung, from a single name of God to a longer chant.',
+        '**Festivals**, a shared calendar that lights up the year, like Diwali and Holi.',
+        '**Samskaras**, the rites that mark a life: naming a baby, a wedding, the final cremation.',
+        '**Pilgrimage**, a journey to a holy river or town, made once or many times.',
+        '**Dharma**, the quiet one: doing your everyday duties honestly.',
+      ],
+      teachingText:
+        'None of it asks what you believe. It asks what you do, on an ordinary Tuesday and on the largest days of a life.',
+      checks: [
+        {
+          id: 'chk:foundations:what-is-practice',
+          kind: 'mcq',
+          practice: true,
+          prompt: 'Which of these counts as Hindu practice?',
+          options: [
+            { text: 'Signing a statement of belief about God' },
+            { text: 'Lighting a lamp at a home shrine, keeping the festival year, marking births and weddings with rites', correct: true },
+            { text: 'Passing a written test on the scriptures' },
+          ],
+          why: 'Practice is everyday action: worship at home, the festival year, and the rites that mark a life. It is not a creed you sign.',
+        },
+      ],
+    },
+    {
+      id: 'f-thread-belonging',
+      title: 'So can anyone become Hindu?',
+      banked: false,
+      storyText:
+        'So if practice is the key, could anyone just start doing these things and become Hindu? Here the honest answer catches people off guard.\n\nBeing Hindu is less like joining a club and more like belonging to a people. It is closer to being Jewish than to being Christian. Most Hindus are Hindu because they were born into a Hindu family, raised in its practices, and grew up calling themselves Hindu. It is a whole world you live inside, not a single act you perform.\n\nSo take the hard case. If a Muslim friend lights a lamp at Diwali, or a traveler accepts a blessing at a temple, that does not make them Hindu. One borrowed practice is not the same as belonging. And it runs the other way too. Nobody gets thrown out for holding the wrong belief, because there is no committee drawing the line.\n\nCan an outsider ever join? Some traditions do welcome newcomers who take it on fully and make it their own. But there is no single gateway everyone agrees on, and no conversion ceremony you must pass. It stays a matter of belonging rather than paperwork.',
+      teachingText:
+        'So why is there no clean border? Because it was never built as a bordered club. You are simply part of the family, and you live it in your own way.',
+      checks: [
+        {
+          id: 'chk:foundations:become-hindu',
+          kind: 'mcq',
+          practice: true,
+          prompt: 'Your friend is a practicing Muslim who loves Diwali and lights a diya every year. Does that make him Hindu?',
+          options: [
+            { text: 'Yes. Doing a Hindu practice is what makes someone Hindu' },
+            { text: 'No. Being Hindu means belonging to a whole tradition you are raised in and call your own, not borrowing one practice', correct: true },
+            { text: 'Only if he gives up Islam first' },
+          ],
+          why: 'One practice is not belonging. Being Hindu is a whole world you are raised in and identify with, closer to being part of a people than joining a club.',
         },
       ],
     },

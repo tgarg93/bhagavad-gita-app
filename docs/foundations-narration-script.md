@@ -58,14 +58,30 @@ Navaratri `/ˌnʌvəˈrɑːtri/` · Janmashtami `/dʒənˈmɑːʃtəmi/`
 
 ## Part 1 — What Hinduism Is
 
+**`f-name-what-it-is.mp3`**
+> So what is Hinduism, in one honest sentence? It is a large family of related traditions that grew up together across India over thousands of years.
+>
+> Picture an extended family rather than one person. The cousins do not all look alike, and they do not all do things the same way. But you can see the family resemblance, because they share the same four things.
+>
+> [warmly] The same gods, understood as different faces of one reality… the same library of sacred texts, with the ancient "/ˈveɪdəz/" at its root… the same practices, like daily worship at a small home shrine and a shared year of festivals… and the same core ideas about the self, action, and the way to freedom.
+>
+> [warmly] Every god, story, and festival ahead in this journey is one branch of that family. This card is the trunk they all grow from.
+
+**`f-name-core-preview.mp3`**
+> So what are those shared ideas? You do not need to grasp them yet. Meet them once, lightly, and we will take each one slowly in the parts ahead, with a picture to go with it.
+>
+> "/ˈbrɑːmən/" — one reality behind every god and every thing… "/ˈɑːtmən/" — the self within you, deeper than the body… "/ˈkɑːrmə/" — every action has consequences that carry forward… "/səmˈsɑːrə/" — the self is born, dies, and is born again… "/ˈdɑːrmə/" — living the way that is truly yours to live… "/ˈmoʊkʃə/" — waking from the whole cycle, the final freedom.
+>
+> [warmly] That is the shared core, the family resemblance in six words. We will unpack them one at a time, starting a couple of parts from now. For today, it is enough to know the family has a center.
+
 **`f-name-no-founder.mp3`**
 > [thoughtful] Hinduism has no founder… no single book… and no one in charge.
 >
-> Let's start with what Hinduism is not. Think of Christianity, with Jesus… Islam, with Muhammad… Buddhism, with the Buddha — each has a founder you can name.
+> One thing about this family surprises almost everyone. Unlike every religion you can probably name, it never had a founder.
 >
-> Hinduism has none. Nobody started it. Instead, many local traditions grew up side by side across India over more than three thousand years… and only much later were they gathered under one name — mostly by outsiders, to keep things simple.
+> Christianity has Jesus. Islam has Muhammad. Buddhism has the Buddha. Each began with one person, at one moment in time. Hinduism did not. Nobody started it. Those many local traditions simply grew side by side, and only much later were they gathered under one name, mostly by outsiders who wanted a single word for all of it.
 >
-> [warmly] So what you're left with is this: no founder — no single person who began it… no one holy book — a whole library instead… and no central authority. Nobody decides what counts as correct.
+> [warmly] So three things most religions have, this one does not: no founder, no single person who began it… no one holy book, a whole library instead… and no central authority. Nobody decides what counts as correct.
 
 **`f-name-river.mp3`**
 > [curious] Even the name isn't its own… it's a river, mispronounced.
@@ -117,6 +133,26 @@ Navaratri `/ˌnʌvəˈrɑːtri/` · Janmashtami `/dʒənˈmɑːʃtəmi/`
 > Each of those three turns on a founder… a single book… a confession of faith… and a judgement, at the end of time. Judaism comes closest to Hinduism — it too is a practice and a people, more than a set of beliefs — but it still has Sinai, a covenant, and one God.
 >
 > [thoughtful] Hinduism has none of those fixed anchors. And instead of ending in one final judgement… it pictures time as a wheel that keeps turning.
+
+**`f-thread-what-practice.mp3`**
+> If practice is what makes you Hindu, then what is the practice, exactly? It is not one grand thing. It is a handful of ordinary ones, woven through a life.
+>
+> Most of it happens at home, not at a temple.
+>
+> [warmly] "/ˈpuːdʒɑː/", simple daily worship at a small home shrine: a lamp, some flowers, a few words to the deity your family keeps… mantra, sacred words said or sung, from a single name of God to a longer chant… festivals, a shared calendar that lights up the year, like "/dɪˈvɑːli/" and "/ˈhoʊli/"… sam-SKAA-ruhz, the rites that mark a life: naming a baby, a wedding, the final cremation… pilgrimage, a journey to a holy river or town, made once or many times… and "/ˈdɑːrmə/", the quiet one: doing your everyday duties honestly.
+>
+> [thoughtful] None of it asks what you believe. It asks what you do, on an ordinary Tuesday and on the largest days of a life.
+
+**`f-thread-belonging.mp3`**
+> So if practice is the key, could anyone just start doing these things and become Hindu? Here the honest answer catches people off guard.
+>
+> Being Hindu is less like joining a club and more like belonging to a people. It is closer to being Jewish than to being Christian. Most Hindus are Hindu because they were born into a Hindu family, raised in its practices, and grew up calling themselves Hindu. It is a whole world you live inside, not a single act you perform.
+>
+> So take the hard case. If a Muslim friend lights a lamp at "/dɪˈvɑːli/", or a traveler accepts a blessing at a temple, that does not make them Hindu. One borrowed practice is not the same as belonging. And it runs the other way too. Nobody gets thrown out for holding the wrong belief, because there is no committee drawing the line.
+>
+> [thoughtful] Can an outsider ever join? Some traditions do welcome newcomers who take it on fully and make it their own. But there is no single gateway everyone agrees on, and no conversion ceremony you must pass. It stays a matter of belonging rather than paperwork.
+>
+> [warmly] So why is there no clean border? Because it was never built as a bordered club. You are simply part of the family, and you live it in your own way.
 
 **`f-thread-streams.mp3`**
 > [curious] Because practice holds it together, Hinduism could branch into four streams… without ever splitting. [short pause]

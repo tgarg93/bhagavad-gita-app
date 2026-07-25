@@ -23,6 +23,8 @@ import { scriptureAudioManifest } from './scriptureAudioManifest';
 
 export const foundationsAudioManifest: Record<string, Record<string, number>> = {
   name: {
+    'f-name-what-it-is': require('../../assets/audio/foundations/f-name-what-it-is.mp3'),
+    'f-name-core-preview': require('../../assets/audio/foundations/f-name-core-preview.mp3'),
     'f-name-no-founder': require('../../assets/audio/foundations/f-name-no-founder.mp3'),
     'f-name-river': require('../../assets/audio/foundations/f-name-river.mp3'),
     'f-name-sanatana': require('../../assets/audio/foundations/f-name-sanatana.mp3'),
@@ -31,6 +33,8 @@ export const foundationsAudioManifest: Record<string, Record<string, number>> = 
   thread: {
     'f-thread-practice': require('../../assets/audio/foundations/f-thread-practice.mp3'),
     'f-thread-compare': require('../../assets/audio/foundations/f-thread-compare.mp3'),
+    'f-thread-what-practice': require('../../assets/audio/foundations/f-thread-what-practice.mp3'),
+    'f-thread-belonging': require('../../assets/audio/foundations/f-thread-belonging.mp3'),
     'f-thread-streams': require('../../assets/audio/foundations/f-thread-streams.mp3'),
     'f-thread-ishta': require('../../assets/audio/foundations/f-thread-ishta.mp3'),
   },
