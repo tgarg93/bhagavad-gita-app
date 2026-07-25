@@ -733,7 +733,11 @@ const ContentReaderScreen: React.FC = () => {
             getTextStyle={getTextStyle}
           />
         ) : section.kind === 'term' ? (
-          <TermCard section={section} getTextStyle={getTextStyle} />
+          <TermCard
+            section={section}
+            getTextStyle={getTextStyle}
+            onGoDeeper={ref => navigateToContentRef(navigation, ref)}
+          />
         ) : section.kind === 'waypoint' && content.learnItems ? (
           <WaypointCard
             section={section}

@@ -264,50 +264,111 @@ const RAMAYANA_PARTS: ScripturePart[] = [
     collection: 'ramayana',
     name: 'Ayodhya Kanda',
     sanskritName: 'अयोध्या काण्ड',
-    subtitle: 'The Book of Ayodhya — a coronation undone by two old promises, and a prince who bows to them',
+    subtitle: 'The Book of Ayodhya: a coronation undone by two old promises, and a prince who bows to them',
     order: 2,
     coverImage: AYODHYA_KANDA_COVER,
+    kicker:
+      'The morning Rama was to be crowned, two forgotten promises took the kingdom away. Watch what he does with the loss.',
+    handoff:
+      'Three of them walk into the forest now, in bark and deerskin: Rama, Sita, and Lakshmana. What waits there is fourteen quiet years, and then a golden deer that changes everything. That is the Aranya Kanda.',
     sections: [
+      {
+        id: 'ayodhya-where',
+        title: 'Where we are',
+        storyText:
+          'The Bala Kanda closed on a wedding: Rama had won **Sita**, and the four brothers of **Ayodhya** were married. Years have passed, and Rama has grown into the prince everyone hoped he would be. His old father is finally ready to hand him the crown.\n\nThis book is about the morning that was supposed to happen and did not. In a single conversation, Rama loses the throne, and we watch what a genuinely steady person does when everything is taken away.',
+      },
       {
         id: 'ayodhya-eve',
         title: 'The night before the crown',
         storyText:
-          'Dasharatha, old and ready to rest, named Rama his heir, and all of Ayodhya lit up for the coronation. But long ago the king had granted his youngest queen, Kaikeyi, two unnamed boons — and her maid Manthara, dripping poison in her ear, taught her when to spend them. On the eve of the crowning, Kaikeyi named her price: not Rama on the throne but her own son Bharata, and Rama into the forest for fourteen years. Dasharatha, bound by his given word, broke where he stood — a king undone not by an enemy but by his own past promise.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'The catastrophe turns on a word given years earlier and forgotten. The Ramayana treats a promise as a debt that time does not cancel: Dasharatha would rather lose his son and his life than his word. Whether that is nobility or tragedy is a question the epic deliberately leaves open.',
+          'King **Dasharatha**, old and tired, named Rama his heir, and all of Ayodhya lit up for the coronation. But long ago the king had granted his youngest queen, **Kaikeyi**, two wishes she had never spent. Now her maid **Manthara** poured poison in her ear:\n\n» Manthara: Once Rama is king, you and your son are nothing. Spend your two wishes tonight, while you still can.\n\nSo on the eve of the crowning, Kaikeyi went to the king and named her price:\n\n» Kaikeyi: Give the throne not to Rama but to my son Bharata. And send Rama into the forest for fourteen years.\n\nDasharatha had given his word years ago, and a king’s word cannot be unsaid. He broke where he stood, undone not by an enemy but by his own old promise.',
         citation: 'Valmiki Ramayana, Ayodhya Kanda 7–13 (Manthara, Kaikeyi, and the two boons)',
       },
       {
         id: 'ayodhya-equanimity',
         title: 'The prince who did not flinch',
         storyText:
-          'When Rama was told — coronation cancelled, fourteen years of exile instead — the watchers searched his face for the collapse. There was none. The Ramayana is precise about it: the news of losing a kingdom moved him no more than the news of gaining it had. He touched his father’s feet, reassured his weeping mother Kaushalya, and prepared to leave, saying a son’s duty is to make his father’s word true, whatever it costs the son. His calm frightened people more than rage would have.',
-        sectionHeader: 'Why it matters',
-        teachingText:
-          'This is the Gita’s equanimity shown as story before the Gita named it: Rama meets gain and loss with the same face. He does not suppress grief so much as refuse to let the outcome own him. The throne was never what he was living for, so its loss cannot unmake him.',
+          'When they told Rama — no crown, fourteen years of exile instead — everyone watched his face for the collapse. It never came. The text is careful about this: the news of losing a kingdom moved him no more than the news of gaining it had.\n\nHe touched his father’s feet and went to calm his weeping mother, **Kaushalya**.\n\n» Rama: A son’s whole duty is to make his father’s word come true, whatever it costs the son. I am going gladly.\n\nHis calm frightened people more than anger would have.',
         citation: 'Valmiki Ramayana, Ayodhya Kanda 18–19 (Rama receives the news)',
         citationLink: 'deity:rama',
+      },
+      {
+        id: 'ayodhya-equanimity-note',
+        title: 'The same face for gain and loss',
+        sectionHeader: 'What this means',
+        teachingText:
+          'This is the Gita’s great idea shown as a story, long before the Gita ever spelled it out: Rama meets gain and loss with the same face. He is not hiding his grief so much as refusing to let the outcome own him. The throne was never the thing he was living for, so losing it cannot unmake him.',
+        checks: [
+          {
+            id: 'chk:scripture:ayodhya-equanimity',
+            kind: 'mcq',
+            prompt:
+              'How did Rama react when he was told the crown was gone and he must live in the forest for fourteen years?',
+            options: [
+              { text: 'With the same calm he would have met the crown, and he set out to honor his father’s word', correct: true },
+              { text: 'He raised an army and refused to go' },
+              { text: 'He blamed Bharata and demanded the throne back' },
+            ],
+            why: 'The text says the loss moved him no more than the gain would have. The throne was never what he lived for, so losing it could not unmake him. That steadiness is the Gita’s equanimity, shown as story.',
+          },
+        ],
+      },
+      {
+        id: 'ayodhya-term-dharma',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'धर्म',
+          transliteration: 'dharma',
+          meaning: 'duty; the right thing to do',
+        },
+        storyText:
+          'Rama’s whole choice here turns on one word: **dharma**. It means the right thing to do — your duty, what is owed. Rama’s dharma as a son is to honor his father’s word, and he holds to it even when it costs him a kingdom.',
+        reappears:
+          'Dharma is the question the whole Ramayana keeps asking. You will watch Rama pay for his again and again.',
+        deeper: { ref: 'concept:dharma', label: 'dharma' },
       },
       {
         id: 'ayodhya-companions',
         title: 'Two who would not stay behind',
         storyText:
-          'Rama meant to go alone. Sita refused: a wife’s place is beside her husband, and a palace without him is the real forest. Lakshmana refused too, taking up his bow to serve his brother through every one of the fourteen years. Rama’s arguments — the forest is danger, hardship, snakes and demons — only hardened them. So three walked out of Ayodhya in bark and deerskin where a king should have ridden, and the city followed weeping to the river’s edge.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'Sita and Lakshmana redefine the exile: what looks like punishment becomes a chosen fidelity. The epic’s ideal of love is not staying comfortable together but refusing to let the other suffer alone. Devotion, here, is measured by what it walks into.',
+          'Rama meant to go into the forest alone. **Sita** would not hear of it:\n\n» Sita: A wife’s place is beside her husband. A palace without you is the real wilderness; the forest with you is home.\n\nHis brother **Lakshmana** refused too, and took up his bow to serve Rama through every one of the fourteen years. Rama argued — the forest is danger, hardship, snakes and demons — and it only made them more certain. So three of them walked out of Ayodhya in bark and deerskin, where a king should have ridden out in gold, and the whole city followed them weeping to the river’s edge.',
         citation: 'Valmiki Ramayana, Ayodhya Kanda 26–31 (Sita and Lakshmana insist on the exile)',
+      },
+      {
+        id: 'ayodhya-love-note',
+        title: 'Love measured by what it walks into',
+        sectionHeader: 'What this means',
+        teachingText:
+          'Sita and Lakshmana quietly change what the exile even is. What was meant as Rama’s punishment becomes their chosen loyalty. The epic’s picture of love is not staying comfortable together; it is refusing to let the person you love suffer alone. Here, devotion is measured by exactly what it is willing to walk into.',
       },
       {
         id: 'ayodhya-sandals',
         title: 'The sandals on the throne',
         storyText:
-          'Dasharatha died of grief within days. Bharata, away when it all happened, returned to find his father dead and his brother banished in his name — and was horrified. He rejected the throne utterly and marched to the forest to bring Rama home. Rama would not come: their father’s word had to stand. So Bharata took Rama’s sandals, carried them back, and set them on the throne — ruling for fourteen years not as king but as regent for his brother’s footwear, himself living as an ascetic outside the capital.',
-        sectionHeader: 'Why it matters',
-        teachingText:
-          'Bharata is the epic’s portrait of power refused. Handed a kingdom, he wants none of it that isn’t rightfully his brother’s, and turns the throne into a seat of waiting. The sandals are the Ramayana’s emblem of authority held in trust — leadership as service to an absent rightful claim, not a prize seized because it was offered.',
+          '**Dasharatha** died of grief within days. **Bharata**, the son the throne was stolen for, had been away through all of it. He came home to find his father dead and his brother banished in his name, and he was horrified. He refused the crown completely and marched to the forest to bring Rama back.\n\n» Bharata: The throne is yours. Come home and rule. I will not touch what was taken from you.\n\n» Rama: Our father gave his word, and it must stand. Go back and hold the kingdom until my fourteen years are done.\n\nSo Bharata took Rama’s **sandals**, carried them home, and set them on the throne. For fourteen years he ruled not as king but as a caretaker for his brother’s footwear, living like a hermit outside the capital.',
         citation: 'Valmiki Ramayana, Ayodhya Kanda 100–115 (Bharata and the sandals)',
+      },
+      {
+        id: 'ayodhya-power-note',
+        title: 'Power refused',
+        sectionHeader: 'What this means',
+        teachingText:
+          'Bharata is the epic’s portrait of power turned down. Handed a whole kingdom, he wants none of it that is not rightfully his brother’s, and he turns the throne into a seat of waiting. The sandals become the Ramayana’s emblem of authority held in trust: leadership as service to an absent, rightful claim, not a prize grabbed because it happened to be offered.',
+        checks: [
+          {
+            id: 'chk:scripture:ayodhya-bharata',
+            kind: 'mcq',
+            prompt: 'Bharata came home to a throne his mother had won for him. What did he do with it?',
+            options: [
+              { text: 'Refused it, and ruled only as a caretaker for Rama’s sandals until Rama returned', correct: true },
+              { text: 'Took it and kept it for himself' },
+              { text: 'Split the kingdom in half with Rama' },
+            ],
+            why: 'Bharata wanted no throne that was not rightfully his brother’s. He set Rama’s sandals on the seat and governed as a regent for them, living like an ascetic. Power offered, and power refused.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -322,19 +383,33 @@ const RAMAYANA_PARTS: ScripturePart[] = [
     collection: 'ramayana',
     name: 'Aranya Kanda',
     sanskritName: 'अरण्य काण्ड',
-    subtitle: 'The Book of the Forest — a golden deer, a drawn line, and the abduction that starts a war',
+    subtitle: 'The Book of the Forest: a golden deer, a drawn line, and the abduction that starts a war',
     order: 3,
     coverImage: ARANYA_KANDA_COVER,
+    kicker:
+      'Fourteen quiet years in the forest, and then the one temptation it had been saving. This is where the war begins.',
+    handoff:
+      'Sita is gone, carried south to the island of Lanka, and a dying vulture has given Rama his only clue. To follow it he needs an army he does not have, and he will find it among the broken. That is the Kishkindha Kanda.',
     sections: [
+      {
+        id: 'aranya-where',
+        title: 'Where we are',
+        storyText:
+          'Rama, Sita, and Lakshmana have spent years deep in the forest now, moving among the huts of the sages. It has been a long, quiet exile.\n\nThis book is where the quiet ends: a wounded pride far to the south, a temptation too lovely to doubt, and the moment Sita is carried off, which turns a family’s exile into a war.',
+      },
       {
         id: 'aranya-forest',
         title: 'Years among the sages',
         storyText:
-          'For over a decade the three lived in the forest, moving between the hermitages of sages who begged Rama for protection against the demons — rakshasas — that hunted them. Rama gave his word to clear the forests of them, and kept it, until word of this reached Lanka. It began, as these things do, with an insult: the demoness Surpanakha, Ravana’s sister, propositioned Rama and then Lakshmana, and when mocked, lunged at Sita — and Lakshmana cut off her nose and ears. She fled shrieking to her brother.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'The war that ends the epic begins with a small cruelty and a proportionate response that pride will not accept. Surpanakha’s humiliation is real; her brother’s reaction turns a wound to vanity into a cosmic war. The Ramayana watches how injury to ego metastasizes when power refuses to absorb it.',
+          'For over a decade the three lived among the forest hermits, who begged Rama for protection from the **rakshasas (demons)** that hunted them. Rama gave his word to clear the forest of them, and kept it, until word of this reached the demon-city of Lanka.\n\nIt began, as these things do, with an insult. A demoness named **Surpanakha**, sister of the demon-king **Ravana**, saw Rama and wanted him. When he turned her away, and Lakshmana too, she lunged at Sita in a rage. Lakshmana cut off her nose and ears, and she fled shrieking to her brother.',
         citation: 'Valmiki Ramayana, Aranya Kanda 17–18 (Surpanakha)',
+      },
+      {
+        id: 'aranya-war-note',
+        title: 'How a war begins',
+        sectionHeader: 'What this means',
+        teachingText:
+          'The war that ends the epic starts with a small cruelty and a fair response that pride cannot accept. Surpanakha’s humiliation is real. But her brother’s reaction turns a wound to his family’s vanity into a cosmic war. The Ramayana watches closely how an injury to the ego swells out of all proportion when power refuses to simply absorb it.',
       },
       {
         id: 'aranya-dharma-embodied',
@@ -348,32 +423,86 @@ const RAMAYANA_PARTS: ScripturePart[] = [
           source: 'Valmiki Ramayana, Aranya Kanda 37.13',
         },
         storyText:
-          'Ravana, inflamed by Surpanakha and by tales of Sita’s beauty, went to the demon Maricha with a plan. Maricha had already felt Rama’s arrow once and lived; he tried to talk his king out of it, and in warning him spoke one of the epic’s most quoted lines — Rama is not merely a strong man; he is dharma walking in a body, and to move against him is to move against the order of the world itself. Ravana would not hear it. Fear of his own king, Maricha decided, was better than fear of Rama; he agreed to help, knowing it would kill him.',
-        sectionHeader: 'Why it matters',
-        teachingText:
-          'The tribute comes from the enemy camp — the demon sent to destroy Rama is the one who names him dharma embodied. The Ramayana lets its deepest praise of its hero fall from a rakshasa’s mouth, and shows tyranny’s signature move: silencing the advisor who tells the truth because the truth is inconvenient.',
+          'Inflamed by his sister and by tales of Sita’s beauty, Ravana went to a demon named **Maricha** with a plan to steal her. Maricha had felt Rama’s arrow once and survived, and he tried to talk his king out of it:\n\n» Maricha: Listen to me. Rama is not just a strong man. He is dharma itself walking in a body. To move against him is to move against the order of the world. It will be the end of us.\n\nRavana would not hear it. Maricha decided that fear of his own furious king was worse than fear of Rama, and agreed to help, knowing it would kill him.',
         citation: 'Valmiki Ramayana, Aranya Kanda 37 (Maricha warns Ravana)',
         citationLink: 'deity:rama',
+      },
+      {
+        id: 'aranya-enemy-note',
+        title: 'The truth from the enemy’s mouth',
+        sectionHeader: 'What this means',
+        teachingText:
+          'Notice where the epic’s deepest praise of its hero comes from: the very demon sent to destroy him. The Ramayana lets a rakshasa be the one to name Rama dharma embodied. And it shows tyranny’s oldest move — silencing the advisor who tells you the truth, because the truth is inconvenient.',
+        checks: [
+          {
+            id: 'chk:scripture:aranya-maricha',
+            kind: 'mcq',
+            prompt:
+              'The demon Maricha, sent to help trap Rama, warned Ravana with something surprising. What did he say about Rama?',
+            options: [
+              { text: 'That Rama is dharma itself given a body, and moving against him is the end of them', correct: true },
+              { text: 'That Rama was weaker than the stories claimed' },
+              { text: 'That Rama could be bought off with treasure' },
+            ],
+            why: 'The epic lets its deepest praise fall from an enemy’s mouth. Maricha, of all people, names Rama dharma embodied — and Ravana silences the warning because it is inconvenient, which is what tyranny always does.',
+          },
+        ],
+      },
+      {
+        id: 'aranya-term-maya',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'माया',
+          transliteration: 'māyā',
+          meaning: 'illusion; a magical disguise',
+        },
+        storyText:
+          'What Maricha does next is pure **maya** — illusion, a magical disguise. He becomes a deer of gold and silver, beautiful enough that no one would doubt it is real. In the epics, maya is exactly this: something that looks completely real and is not, set in your path to pull you where someone wants you to go.',
+        reappears:
+          'You have met this word before as a whole idea: the world read wrong, the mirage taken for water.',
+        deeper: { ref: 'concept:maya', label: 'maya' },
       },
       {
         id: 'aranya-golden-deer',
         title: 'The deer that was too beautiful',
         storyText:
-          'Maricha became a golden deer, dappled with silver, and grazed near the hermitage until Sita longed for it. Rama went to catch it, warning Lakshmana to guard her. Struck at last, the deer cried out in Rama’s own voice — “Sita! Lakshmana!” — and died. Sita, terrified, drove Lakshmana to go help, though he knew it was a trap; before leaving he drew a line around the hut and begged her not to cross it. Then Ravana came, disguised as a wandering ascetic, and coaxed her across the line with a beggar’s plea. He seized her and flew for Lanka.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'The abduction needs three things and gets them: a desire too lovely to doubt, a cry that weaponizes love, and a good deed — alms to a holy man — turned into the trap. Evil in the Ramayana rarely storms the gate; it wears something you were right to want and something you were right to honor, and waits for you to step across your own line.',
+          '**Maricha** became a deer of gold dappled with silver, and grazed near the hut until Sita longed for it. Rama went to catch it, warning Lakshmana to guard her. When Rama’s arrow finally struck it, the dying deer cried out in Rama’s own voice:\n\n» The deer: Sita! Lakshmana! Help me!\n\nSita, terrified, drove Lakshmana to go after Rama, though he knew it was a trap. Before he left, he drew a line around the hut:\n\n» Lakshmana: Do not cross this line, whatever happens, and you will be safe.\n\nThen **Ravana** came, disguised as a wandering holy beggar, and with a beggar’s plea coaxed her across the line. He seized her and flew south for Lanka.',
         citation: 'Valmiki Ramayana, Aranya Kanda 42–49 (the golden deer and the abduction)',
+      },
+      {
+        id: 'aranya-evil-note',
+        title: 'How evil actually works',
+        sectionHeader: 'What this means',
+        teachingText:
+          'The abduction needs three things and gets all three: a desire too lovely to doubt, a cry that turns love itself into a weapon, and a good deed — kindness to a holy man — twisted into the trap. Evil in the Ramayana rarely breaks down the gate. It wears something you were right to want and something you were right to honor, and it waits for you to step across your own line.',
       },
       {
         id: 'aranya-jatayu',
         title: 'The old bird who fought a king',
         storyText:
-          'As Ravana carried Sita south through the sky, the aged vulture-king Jatayu — a friend of Dasharatha — heard her cries and rose to stop him. It was hopeless: an old bird against the lord of the rakshasas. Jatayu fought anyway, tore Ravana’s chariot and wounded him, and was cut down for it, wings severed, left dying on the earth. He held on only long enough to tell Rama which way Ravana had gone — his last act a piece of the map that would bring the demon down. Rama cremated him as he would a father.',
-        sectionHeader: 'Why it matters',
-        teachingText:
-          'Jatayu had no chance and acted anyway. The Ramayana honors the fight you cannot win when it is the fight dharma asks of you — his failure is not failure, because the one true thing an old bird could still do, the direction of Sita’s flight, is exactly what he stayed alive to give. Some duties are measured not by whether you succeed but by whether you rose.',
+          'As Ravana carried Sita south through the sky, an aged vulture-king named **Jatayu**, an old friend of Dasharatha, heard her cries and rose to stop him. It was hopeless, one old bird against the lord of the demons. Jatayu fought anyway, tore Ravana’s chariot apart and wounded him, and was cut down for it, his wings severed, left dying on the ground.\n\nHe held on just long enough for Rama to find him.\n\n» Jatayu: South. He took her south, to Lanka. I could not stop him, but I saw.\n\nThen he died, and Rama cremated him with the honors owed to a father.',
         citation: 'Valmiki Ramayana, Aranya Kanda 50–68 (Jatayu’s stand and death)',
+      },
+      {
+        id: 'aranya-fight-note',
+        title: 'The fight you cannot win',
+        sectionHeader: 'What this means',
+        teachingText:
+          'Jatayu had no chance and rose anyway. The Ramayana honors the fight you cannot win when it is the fight your dharma asks of you. His failure is not really failure, because the one true thing an old bird could still do — tell Rama which way Sita was taken — is exactly what he stayed alive to give. Some duties are measured not by whether you win, but by whether you got up.',
+        checks: [
+          {
+            id: 'chk:scripture:aranya-abduction',
+            kind: 'mcq',
+            prompt: 'Ravana never broke into Rama’s hut. How did he get Sita out from its protection?',
+            options: [
+              { text: 'A golden deer, a cry in Rama’s voice, and a holy beggar’s plea, until she stepped across the line herself', correct: true },
+              { text: 'He waited until she was asleep and carried her off' },
+              { text: 'He fought past Lakshmana at the door' },
+            ],
+            why: 'Evil here does not storm the gate. It uses a thing you were right to want (the deer), a cry that weaponizes love, and a good deed turned into a trap (alms to a holy man), and waits for you to cross your own line.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [

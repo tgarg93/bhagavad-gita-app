@@ -5,7 +5,7 @@
 // word-by-word trio ("**tat** — that: the one reality"); reappears the forward
 // pointer. Point-free by construction (no takeaway → never banks).
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { DharmaDesignSystem } from '../constants/DharmaDesignSystem';
 import { NarrativeSection } from '../data/narrativeTypes';
 import Prose from './Prose';
@@ -16,10 +16,12 @@ const C = DharmaDesignSystem.colors;
 interface Props {
   section: NarrativeSection;
   getTextStyle: (base: any) => any;
+  // Tap-through for a term's `deeper` invitation (routes via the content ref).
+  onGoDeeper?: (ref: string) => void;
 }
 
-const TermCard: React.FC<Props> = ({ section, getTextStyle }) => {
-  const { keyVerse, storyText, bullets, reappears } = section;
+const TermCard: React.FC<Props> = ({ section, getTextStyle, onGoDeeper }) => {
+  const { keyVerse, storyText, bullets, reappears, deeper } = section;
   return (
     <View style={styles.card}>
       <View style={styles.panel}>
@@ -51,6 +53,16 @@ const TermCard: React.FC<Props> = ({ section, getTextStyle }) => {
             <Text style={styles.reappearsArrow}>↳</Text>
             <Text style={getTextStyle(styles.reappearsText)}>{reappears}</Text>
           </View>
+        )}
+        {!!deeper && onGoDeeper && (
+          <TouchableOpacity
+            style={styles.deeper}
+            onPress={() => onGoDeeper(deeper.ref)}
+            accessibilityRole="button"
+            accessibilityLabel={`Go deeper: ${deeper.label}`}
+          >
+            <Text style={styles.deeperText}>Go deeper: {deeper.label} ›</Text>
+          </TouchableOpacity>
         )}
         {!!keyVerse?.source && <Text style={styles.source}>{keyVerse.source}</Text>}
       </View>
@@ -157,6 +169,20 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     fontWeight: '600',
     color: C.primary.peacockTeal,
+  },
+  deeper: {
+    alignSelf: 'center',
+    marginTop: 18,
+    paddingVertical: 9,
+    paddingHorizontal: 16,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: 'rgba(230, 81, 0, 0.28)',
+  },
+  deeperText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: C.primary.deepSaffron,
   },
   source: {
     fontSize: 11.5,
