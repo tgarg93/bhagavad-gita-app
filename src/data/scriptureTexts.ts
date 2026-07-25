@@ -90,57 +90,130 @@ const RAMAYANA_PARTS: ScripturePart[] = [
     collection: 'ramayana',
     name: 'Bala Kanda',
     sanskritName: 'बाल काण्ड',
-    subtitle: 'The Book of Childhood — a kingdom’s prayer, a divine birth, a bow that made a marriage',
+    subtitle: 'The Book of Childhood: a poet’s question, a divine birth, and a bow that made a marriage',
     order: 1,
     coverImage: BALA_KANDA_COVER,
+    kicker:
+      'The epic opens with a question: can a truly good person exist? Rama is the answer, and this is where it begins.',
+    handoff:
+      'Rama has just won everything: a bride, his father’s blessing, and a kingdom waiting for him to inherit. In the next book, on the very morning he is to be crowned king, he loses all of it in a single conversation. That is the Ayodhya Kanda.',
+    // Reworked July 2026 into a narrative reader: the actual story told faithfully with
+    // character dialogue kept in (`»` speech blocks), inline word glosses, sparse
+    // interpretation sections ('What this means'), two spaced MCQs at chapter breaks, and
+    // two key-word term pages. Story sections carrying `»` must NOT also set
+    // teachingText/keyVerse (they narrate out of visual order — see storyBeats.ts).
     sections: [
       {
+        id: 'bala-preface',
+        title: 'The Book of Childhood',
+        storyText:
+          'The **Ramayana** is one of India’s two great epics, and for millions of people it is the very first story they ever learn. It follows **Rama**, a prince of **Ayodhya (a kingdom in northern India)**, through a wedding, a sudden exile, the kidnapping of his wife, and a long war to win her back.\n\nThis first book is the **Bala Kanda (the Book of Childhood)**. It is the origin story: how the poem itself came to be written, how Rama came to be born at all, and the day he won his wife, **Sita**. We will follow the events as the poet Valmiki tells them, stopping now and then to notice what they mean.',
+      },
+      {
         id: 'bala-question',
-        title: 'A poet asks: does such a man exist?',
+        title: 'A poet’s question',
         openingVerse: {
           sanskrit: 'को न्वस्मिन्साम्प्रतं लोके गुणवान्कश्च वीर्यवान् ।\nधर्मज्ञश्च कृतज्ञश्च सत्यवाक्यो दृढव्रतः ॥',
           transliteration:
             'ko nv asmin sāmprataṁ loke guṇavān kaśca vīryavān\ndharmajñaśca kṛtajñaśca satyavākyo dṛḍhavrataḥ',
           meaning:
-            'Who in this world today is truly virtuous and truly mighty — one who knows what is right, remembers every kindness, speaks only truth, and holds firm to his vows?',
+            'Who in this world today is truly good and truly strong — one who knows what is right, remembers every kindness, speaks only truth, and holds firm to his vows?',
           source: 'Valmiki Ramayana, Bala Kanda 1.2',
         },
         storyText:
-          'The whole Ramayana begins as a question. The sage Valmiki asks the divine sage Narada whether there lives, anywhere, a man complete in virtue — brave, truthful, grateful, unshakably good. It is not a rhetorical flourish; it is the seed of the epic. Narada answers with a name: Rama, of the house of Ikshvaku. Everything that follows is the poem’s attempt to show what that answer looks like when it has to walk through a human life.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'The Ramayana does not open with a hero; it opens with a longing for one. Before a single event, the text names the qualities it will spend 24,000 verses examining — and asks whether they can coexist in one person at once. Rama is the tradition’s sustained answer to “what would goodness actually cost?”',
+          'The whole epic begins not with a battle but with a question. A poet named **Valmiki** asks a wandering sage named **Narada** whether a truly good person exists anywhere in the world:\n\n» Valmiki: Is there a man alive who is genuinely good, brave and truthful and kind all at once, and unshakable?\n\nNarada did not hesitate.\n\n» Narada: There is. His name is Rama, of the house of Ikshvaku.\n\nEverything that follows is the poem trying to show what that one name means once a real life has to carry it.',
         citation: 'Valmiki Ramayana, Bala Kanda 1 (the Narada Samvada)',
       },
       {
         id: 'bala-birthless-poem',
-        title: 'How the first poem was born',
+        title: 'How the poem was born',
         storyText:
-          'Walking by the Tamasa river, Valmiki saw a hunter shoot down one of a pair of mating cranes. The surviving bird’s cry of grief tore through him, and grief came out of his mouth already shaped into meter — the first shloka, born of sorrow (shoka). Brahma himself then charged him to tell Rama’s story in that new music. So the Adi Kavya, the first poem, was a form grief found for itself; the tradition has trusted ever since that the deepest things arrive as song.',
-        sectionHeader: 'Why it matters',
-        teachingText:
-          'The Ramayana is self-aware about its own origin: it says poetry itself was born from compassion for a killed creature. The epic that will praise dharma announces, in its first pages, that the impulse behind it is grief refusing to look away.',
+          'Soon after, Valmiki was walking beside a river when a hunter shot down one of a pair of birds in the middle of their courtship. The surviving bird’s cry of grief cut straight through him, and to his own surprise his grief came back out of his mouth already shaped into rhythm, the first **shloka (a verse couplet)** ever spoken.\n\nThen the creator-god **Brahma** appeared before him:\n\n» Brahma: That meter came to you for a reason. Now use it. Tell the whole story of Rama.\n\nThe Sanskrit keeps the two words a breath apart: grief is *shoka*, and the verse it turned into is *shloka*.',
         citation: 'Valmiki Ramayana, Bala Kanda 2 (the shloka born of shoka)',
       },
       {
-        id: 'bala-birth',
-        title: 'A kingdom without an heir',
-        storyText:
-          'King Dasharatha of Ayodhya had everything a ruler could want and the one thing he could not command: a child. He performed the great putrakameshti sacrifice, and from its fire rose a divine being bearing a vessel of sacred payasam for his queens. Meanwhile the gods, terrorized by the demon-king Ravana — who held a boon making him invulnerable to gods and demons but who had scorned to name mere humans — begged Vishnu to be born as a man. Vishnu agreed. Rama and his three brothers were born to Dasharatha’s queens: divinity entering the world through the one door Ravana left unguarded.',
-        sectionHeader: 'What this teaches',
+        id: 'bala-why-start',
+        title: 'Why the story starts here',
+        sectionHeader: 'What this means',
         teachingText:
-          'Ravana’s undoing is written into his own arrogance: he armored himself against gods and demons and could not be bothered to fear a man. The epic’s engine is set in motion by pride’s single blind spot — the enemy it considers beneath notice.',
+          'It is worth pausing on how the epic opens. Not with a hero, but with a longing: someone asking out loud whether goodness this complete is even possible. And not with triumph, but with grief. The poem admits that its very first note came from refusing to look away from one small creature’s death. Before Rama lifts a finger, we have already been told what kind of story this is going to be.',
+      },
+      {
+        id: 'bala-term-adikavya',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'आदि काव्य',
+          transliteration: 'ādi kāvya',
+          meaning: 'the first poem',
+        },
+        storyText:
+          'Because of that morning by the river, the Ramayana is called the **Adi Kavya**, “the first poem”: not the oldest story ever told, but the first one composed as deliberate poetry, in the shloka meter that grief handed to Valmiki.',
+        reappears:
+          'Every verse you meet from here on is a **shloka** — the form born in that one moment of compassion.',
+      },
+      {
+        id: 'bala-birth',
+        title: 'A kingdom with no heir',
+        storyText:
+          'Far to the north, in **Ayodhya**, King **Dasharatha** had everything a ruler could want except the one thing he wanted most: a child. At last he performed the **putrakameshti (a great fire-sacrifice for a son)**, and out of the flames rose a shining figure holding a bowl of sacred **payasam (sweet rice pudding)** for his queens to share.\n\nAt that very moment, far away, the gods were desperate. A demon-king named **Ravana** had grown unstoppable, and they went to **Vishnu (the god who preserves the world)** for help:\n\n» The gods: Ravana torments all three worlds, and the boon he holds has made him deaf to any fear. Only you can end this.\n\n» Vishnu: Then I will go down myself, and be born as a man.\n\nSo when Dasharatha’s queens drank the payasam, it was Vishnu himself quietly entering the world. **Rama** was born, along with his three brothers.',
         citation: 'Valmiki Ramayana, Bala Kanda 15–18 (the boon of Ravana; the birth of Rama)',
       },
       {
-        id: 'bala-vishwamitra',
-        title: 'The sage who took the boys away',
-        storyText:
-          'The sage Vishwamitra arrived at court and asked for the impossible: lend me your teenage son to guard my sacrifice from demons. Dasharatha, who had waited a lifetime for this child, nearly refused — but dharma to a great sage outranked a father’s fear. Rama and Lakshmana went to the forest, and there their education became real. Vishwamitra gave them celestial weapons and, more importantly, occasions to use them well: Rama killed the demoness Tataka, protected the sacrifice, and with a touch of his foot restored Ahalya, a woman turned to stone by a curse, back to life and grace.',
-        sectionHeader: 'Why it matters',
+        id: 'bala-blindspot',
+        title: 'The crack in Ravana’s armor',
+        sectionHeader: 'What this means',
         teachingText:
-          'Rama’s greatness is never self-generated in the epic — it is drawn out by teachers who ask more of him than his parents would dare. Dasharatha’s hardest act of love is letting his cherished son go where he can be tested. Ahalya’s redemption sets the note early: Rama’s presence restores what shame had petrified.',
-        citation: 'Valmiki Ramayana, Bala Kanda 25–48 (Tataka; the weapons; Ahalya)',
+          'Here is the hinge the whole epic turns on. Ravana’s boon had made him untouchable by gods and demons, but in his pride he had never bothered to include humans on the list. Why fear something so small? That single blind spot is why God comes down through the one door left open, born as an ordinary man. Pride tends to guard against its equals and forget about the ordinary.',
+        checks: [
+          {
+            id: 'chk:scripture:bala-blindspot',
+            kind: 'mcq',
+            prompt:
+              'Ravana’s boon made him unkillable by gods and demons. So how could anyone ever defeat him?',
+            options: [
+              { text: 'In his pride he never bothered to fear humans, so a human could kill him', correct: true },
+              { text: 'The boon quietly expired after a set number of years' },
+              { text: 'The gods found a way to cancel the boon' },
+            ],
+            why: 'Ravana guarded against everything he respected and dismissed humans as beneath his notice. That one blind spot is exactly why Vishnu is born as the man Rama. His own pride wrote the loophole.',
+          },
+        ],
+      },
+      {
+        id: 'bala-vishwamitra',
+        title: 'The sage who came for the boys',
+        storyText:
+          'Years passed, and one day a fierce sage named **Vishwamitra** strode into the court with a demand no father wants to hear:\n\n» Vishwamitra: Demons are fouling my forest rituals. Send your son Rama to guard them.\n\n» Dasharatha: He is barely more than a boy. Take my whole army instead, take me, but not him.\n\n» Vishwamitra: It must be Rama. No one else.\n\nDasharatha had waited a lifetime for this son. But you do not refuse a sage like Vishwamitra, and so Rama and his brother **Lakshmana** walked into the forest. There the boy’s real education began: he faced down a demoness named **Tataka**, was taught to use celestial weapons, and stood guard over the sage’s fire.',
+        citation: 'Valmiki Ramayana, Bala Kanda 25–48 (Tataka; the celestial weapons)',
+      },
+      {
+        id: 'bala-ahalya',
+        title: 'The woman made of stone',
+        storyText:
+          'On that same journey, they came upon a strange grey shape lying beside the path. It was **Ahalya**, a woman who, after a bitter scandal of blame, had been cursed to lie as a stone for years, unseen and unforgiven.\n\nRama simply stepped up to her and offered his respect, and the curse broke. She rose out of the stone and back into her life.',
+        citation: 'Valmiki Ramayana, Bala Kanda 48–49 (Ahalya restored)',
+      },
+      {
+        id: 'bala-drawn-out',
+        title: 'Drawn out, not simply born great',
+        sectionHeader: 'What this means',
+        teachingText:
+          'Two quiet things get set up in the forest. First, Rama’s greatness is never something he generates alone. It gets drawn out of him by teachers who ask more of him than his own parents dared, while his father’s hardest act of love is letting his cherished son walk toward danger.\n\nSecond, notice what the very first use of Rama’s power is, long before any war: he gives someone frozen by shame her life back. Hold onto that. His is the power that restores, not only the power that destroys.',
+      },
+      {
+        id: 'bala-term-svayamvara',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'स्वयंवर',
+          transliteration: 'svayaṁvara',
+          meaning: 'a bride’s own choosing',
+        },
+        storyText:
+          'A **svayamvara** is an old custom in which a bride chooses her own husband, often by way of a test the suitors must pass. The word means, literally, “self-choice.” Sita’s hand comes with a test almost no one can pass, which is how the story makes sure the right man is the one who wins her.',
+        reappears:
+          'Contests like this decide marriages across the epics — it is how a hero proves he is worthy of a queen.',
       },
       {
         id: 'bala-bow',
@@ -150,15 +223,33 @@ const RAMAYANA_PARTS: ScripturePart[] = [
           transliteration:
             'tadā rāmo mahātejāḥ sasmāreśvara-kārmukam\nbabhañja ca naraśreṣṭho madhye vīryavatāṁ varaḥ',
           meaning:
-            'Then the radiant Rama, best of men, took up Shiva’s bow — and in the sight of all the mighty, bent it until it broke.',
+            'Then the radiant Rama, best of men, took up Shiva’s bow, and in the sight of all the mighty, bent it until it broke.',
           source: 'Valmiki Ramayana, Bala Kanda 67 (paraphrase of the bow-breaking)',
         },
         storyText:
-          'In Mithila, King Janaka had set a condition for his daughter Sita’s hand: string the divine bow of Shiva, an heirloom so vast that kings had failed even to stir it. Sita was no ordinary princess — Janaka had found her in a furrow of the earth, the ground’s own daughter. Rama walked up to the bow, lifted it as if it were nothing, and in bending it to string, snapped it in two with a crack heard like thunder. Sita garlanded him. Their marriage — and those of the four brothers — closed the book of childhood.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'The bow-test is the epic’s first portrait of Rama’s strength, and it is pointedly effortless — power so complete it needs no display. Sita, born of the earth, is matched to the one man who can lift what the earth’s own weight resists. The union that the rest of the epic will tear apart and reunite is founded here, on an act of quiet, total capability.',
+          'In the kingdom of **Mithila**, King **Janaka** had set a single condition for his daughter’s marriage:\n\n» Janaka: Whoever can lift the great bow of the god Shiva, and string it, may marry my daughter Sita.\n\nThe bow was an heirloom so massive that grown kings had failed even to make it shift on its stand. And **Sita** herself was no ordinary bride. Years earlier, Janaka had found her as a baby lying in a furrow of a freshly plowed field, a daughter of the earth itself.\n\nRama walked up to the bow, lifted it as though it weighed nothing, and as he bent it to string, it snapped clean in two with a crack like thunder. Sita chose him. The weddings of all four brothers followed, and the Book of Childhood came to a close on a day of celebration.',
         citation: 'Valmiki Ramayana, Bala Kanda 66–73 (the bow of Shiva; the marriage of Sita)',
+      },
+      {
+        id: 'bala-quiet-power',
+        title: 'Strength that never performs',
+        sectionHeader: 'What this means',
+        teachingText:
+          'Watch *how* Rama passes the test, not just that he passes it. There is no straining, no showing off. The strength is simply complete, and the whole thing is over in a moment. The epic will keep drawing him exactly this way: powerful without ever needing to prove it.\n\nAnd Sita, born of the earth, is matched to the one man who can lift what the earth’s own weight resists. The bond that the rest of this long story will tear apart and then slowly reunite is founded right here.',
+        checks: [
+          {
+            id: 'chk:scripture:bala-quiet-power',
+            kind: 'mcq',
+            prompt:
+              'Why does the epic make such a point of Rama stringing Shiva’s bow so easily, when grown kings could not even lift it?',
+            options: [
+              { text: 'To show his strength is quietly complete, and never has to perform', correct: true },
+              { text: 'To show he had trained harder than the other suitors' },
+              { text: 'To show the bow was lighter than everyone believed' },
+            ],
+            why: 'Rama lifts it “as though it weighed nothing.” The epic keeps painting his power this way: total, and completely unforced. Real strength here never needs to announce itself.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
