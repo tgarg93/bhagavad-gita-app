@@ -742,51 +742,118 @@ const RAMAYANA_PARTS: ScripturePart[] = [
     collection: 'ramayana',
     name: 'Yuddha Kanda',
     sanskritName: 'युद्ध काण्ड',
-    subtitle: 'The Book of War — a bridge, a fall, and a homecoming fourteen years in the making',
+    subtitle: 'The Book of War: a bridge, a fall, and a homecoming fourteen years in the making',
     order: 6,
     coverImage: RAMAYANA_COVER,
+    kicker:
+      'The last book of the war. A bridge of stones, a ten-headed king, and the night of lamps that became Diwali.',
+    handoff:
+      'But the Ramayana does not end on triumph. There is one more book, and it is the hardest — about what victory costs, and a queen who finally answers injustice by going home. That is the Uttara Kanda.',
     sections: [
+      {
+        id: 'yuddha-where',
+        title: 'Where we are',
+        storyText:
+          '**Hanuman** is back with news: Sita lives, held in **Lanka** across the sea. Now **Rama** gathers his vanara army and marches south to the water’s edge.\n\nThis is the last book of the war — the crossing, the long siege, the fall of Ravana, and a homecoming fourteen years in the making.',
+      },
       {
         id: 'yuddha-refuge',
         title: 'The enemy who changed sides',
         storyText:
-          'As war neared, Ravana’s own brother Vibhishana counseled him to return Sita and be spared; Ravana spurned and exiled him. Vibhishana crossed to Rama’s camp and asked for refuge. Some advisors warned it was a trap. Rama overruled them with a vow that defines him: whoever comes to me even once seeking shelter, saying “I am yours,” I will protect against all beings — this is my unbreakable rule. He granted refuge, and promised Vibhishana the throne of Lanka whatever the war’s outcome.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'At the edge of the decisive war, Rama’s defining act is not martial but merciful: refuge given to the enemy’s brother, against his own advisors’ fear. The Ramayana makes sharanagati — the absolute protection of one who surrenders — the deepest expression of dharma, higher than caution, higher even than winning.',
+          'As the war neared, Ravana’s own brother **Vibhishana** urged him to give Sita back and be spared. Ravana spurned him and cast him out. So Vibhishana crossed to Rama’s camp and asked for shelter. Some of Rama’s advisors warned it was a trap — the enemy’s own brother, at the door.\n\nRama overruled them with a vow that defines him:\n\n» Rama: Whoever comes to me even once, saying ‘I am yours’ and seeking shelter, I will protect against all beings. This is my unbreakable rule.\n\nHe granted Vibhishana refuge, and promised him the throne of Lanka whatever the war’s outcome.',
         citation: 'Valmiki Ramayana, Yuddha Kanda 17–18 (Vibhishana’s refuge)',
         citationLink: 'deity:rama',
+      },
+      {
+        id: 'yuddha-refuge-note',
+        title: 'Refuge, higher than caution',
+        sectionHeader: 'What this means',
+        teachingText:
+          'At the edge of the decisive war, Rama’s defining act is not a weapon but a mercy: shelter given to the enemy’s brother, against his own advisors’ fear. The Ramayana makes **sharanagati** — the absolute protection of anyone who surrenders — the deepest expression of dharma, higher than caution, higher even than winning.',
+        checks: [
+          {
+            id: 'chk:scripture:yuddha-refuge',
+            kind: 'mcq',
+            prompt:
+              'Vibhishana, Ravana’s own brother, crossed to Rama’s camp for shelter, and Rama’s advisors called it a trap. What did Rama do?',
+            options: [
+              { text: 'He granted refuge anyway — protecting whoever surrenders is his unbreakable rule', correct: true },
+              { text: 'He turned Vibhishana away as too dangerous' },
+              { text: 'He took him prisoner to be safe' },
+            ],
+            why: 'Rama makes sharanagati — the protection of anyone who surrenders — higher than caution, higher even than winning. He grants refuge and even promises Vibhishana the throne of Lanka.',
+          },
+        ],
+      },
+      {
+        id: 'yuddha-term-sharanagati',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'शरणागति',
+          transliteration: 'śaraṇāgati',
+          meaning: 'taking refuge; surrender',
+        },
+        storyText:
+          '**Sharanagati** means taking refuge — surrendering yourself to someone’s protection. Rama’s vow to shelter anyone who asks, even his enemy’s brother, makes it the highest form of dharma in the epic. Whole paths of devotion were later built on this single idea: that the divine never turns away the one who surrenders.',
+        reappears:
+          'This is the promise at the heart of bhakti: come as you are, and you will not be refused.',
       },
       {
         id: 'yuddha-bridge',
         title: 'The bridge of stones',
         storyText:
-          'The ocean barred the way. Rama sat in appeal to the sea itself for three days; when it would not answer, he took up his bow in wrath, and the sea-god appeared and yielded a plan: let the vanaras build. So the monkey-army raised a causeway of boulders and trees across the water to Lanka — the Setu — stone by stone, each name-inscribed rock floating where it should have sunk. Across it the army poured, and the siege of Lanka began.',
-        sectionHeader: 'Why it matters',
-        teachingText:
-          'The bridge is the epic’s image of the impossible made passable by many hands. What one crossing (Hanuman’s leap) did by singular power, the army does by collective labor — and the war is won not by a lone hero but by the patient, unglamorous work of countless ordinary hands laying one stone at a time.',
+          'The ocean itself barred the way to Lanka. Rama sat in appeal to the sea for three days, and when it would not answer, he took up his bow in anger. The sea-god appeared and offered a plan:\n\n» The sea: I cannot part myself. But your vanaras can build across me. Let them.\n\nSo the monkey-army raised a causeway of boulders and tree-trunks across the water — the **Setu** — stone by stone, each name-inscribed rock floating where it should have sunk. Across it the whole army poured, and the siege of Lanka began.',
         citation: 'Valmiki Ramayana, Yuddha Kanda 22 (the building of the bridge)',
+      },
+      {
+        id: 'yuddha-bridge-note',
+        title: 'The impossible, made passable by many hands',
+        sectionHeader: 'What this means',
+        teachingText:
+          'The bridge is the epic’s image of the impossible made crossable by many hands. What one leap did by a single hero’s power, the army does by collective labor — and the war is won not by a lone champion but by the patient, unglamorous work of countless ordinary hands, laying one stone at a time.',
       },
       {
         id: 'yuddha-ravana',
         title: 'The fall of Ravana',
         storyText:
-          'The war was long and terrible. Rama’s ally Sugriva, his brother Lakshmana struck down and revived by a Himalayan herb Hanuman carried mountain and all, the demon-ranks falling one by one — until only Ravana remained. Rama and Ravana faced each other at last. Ravana’s heads grew back as fast as they were cut, until Rama loosed the divine weapon given by the sages, and it found the demon-king’s heart. Ten-headed Ravana — scholar, devotee, tyrant — fell, and the tradition, remarkably, has Rama order him honored in death: a great one has died, and enmity ends at the pyre.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'Ravana is no cartoon: a brilliant scholar and Shiva-devotee undone by a single ungoverned appetite. The Ramayana kills him and then honors him, insisting that enmity is a thing of the living and that greatness gone wrong is still greatness mourned. Evil here is not the absence of gifts but gifts unmoored from restraint.',
+          'The war was long and terrible. Sugriva fought, **Lakshmana** was struck down and revived by a Himalayan herb that Hanuman carried back mountain and all, and the demon-ranks fell one by one, until only **Ravana** was left.\n\nRama and Ravana faced each other at last. Every head Rama cut from the ten-headed king grew back as fast as it fell, until Rama loosed the divine weapon the sages had given him, and it found Ravana’s heart. The ten-headed king — scholar, devotee, and tyrant all at once — fell.\n\nAnd then, remarkably, Rama ordered his enemy honored in death:\n\n» Rama: A great one has died. Enmity ends at the pyre. Give him the rites of a king.',
         citation: 'Valmiki Ramayana, Yuddha Kanda 108–111 (the death of Ravana)',
+      },
+      {
+        id: 'yuddha-ravana-note',
+        title: 'Evil is gifts unmoored from restraint',
+        sectionHeader: 'What this means',
+        teachingText:
+          'Ravana is no cartoon. He was a brilliant scholar and a genuine devotee of Shiva, undone by a single ungoverned appetite. The Ramayana kills him and then honors him, insisting that enmity belongs to the living and that greatness gone wrong is still greatness worth mourning. Evil here is not the absence of gifts. It is gifts cut loose from restraint.',
+        checks: [
+          {
+            id: 'chk:scripture:yuddha-ravana',
+            kind: 'mcq',
+            prompt: 'After Rama finally killed Ravana, what did he order?',
+            options: [
+              { text: 'That Ravana be honored in death — a great one had died, and enmity ends at the pyre', correct: true },
+              { text: 'That Ravana’s body be left unburied as a warning' },
+              { text: 'That all of Lanka be destroyed' },
+            ],
+            why: 'Ravana was a scholar and a devotee undone by one appetite. Rama kills him and then honors him: the epic insists enmity ends at the pyre, and that greatness gone wrong is still mourned.',
+          },
+        ],
       },
       {
         id: 'yuddha-return',
         title: 'The lamps of the homecoming',
         storyText:
-          'Sita was recovered — after an ordeal by fire that the epic records unflinchingly, a test of her purity that the tradition has questioned ever since. Vibhishana was crowned in Lanka. And with the fourteen years exactly spent, Rama, Sita, and Lakshmana flew home to Ayodhya, where Bharata was waiting with the sandals and the whole city, told they were coming, lit every lamp it had to guide them in. That night of lamps for a homecoming is the night the tradition still keeps as Diwali.',
-        sectionHeader: 'Why it matters',
-        teachingText:
-          'The exile ends not in triumph but in return — to family, to the waiting brother, to a city that kept its light burning. The Ramayana’s deepest reward is not the throne regained but the coming home; and the lamps of Ayodhya became a festival because the tradition understood that the return of the good is worth illuminating the whole world for.',
+          'Sita was recovered — but not before an ordeal the epic records without flinching. Mindful of what his people would whisper about a queen who had lived in another man’s city, Rama asked her to prove her purity by walking into fire. She did, and the flames refused to touch her; the fire-god himself gave her back unharmed. The tradition has questioned that demand ever since.\n\n**Vibhishana** was crowned in Lanka. And with the fourteen years exactly spent, Rama, Sita, and Lakshmana flew home to **Ayodhya**, where Bharata waited with the sandals and the whole city, told they were coming, lit every lamp it had to guide them in. That night of lamps for a homecoming is the night the tradition still keeps as **Diwali**.',
         citation: 'Valmiki Ramayana, Yuddha Kanda 116–131 (the return to Ayodhya); Diwali: living tradition',
         citationLink: 'festival:diwali-2025',
+      },
+      {
+        id: 'yuddha-return-note',
+        title: 'The reward is the coming home',
+        sectionHeader: 'What this means',
+        teachingText:
+          'The exile ends not in triumph but in return: to family, to the waiting brother, to a city that kept its light burning. The Ramayana’s deepest reward is not the throne regained but the coming home. And the lamps of Ayodhya became a festival because the tradition understood that the return of the good is worth lighting up the whole world for.',
       },
     ],
     reflectionQuestions: [
@@ -801,49 +868,115 @@ const RAMAYANA_PARTS: ScripturePart[] = [
     collection: 'ramayana',
     name: 'Uttara Kanda',
     sanskritName: 'उत्तर काण्ड',
-    subtitle: 'The Final Book — the hard aftermath of victory, and a queen who returns to the earth',
+    subtitle: 'The Final Book: the hard aftermath of victory, and a queen who returns to the earth',
     order: 7,
     coverImage: RAMAYANA_COVER,
+    kicker:
+      'The victory won, the harder book begins: the cost of a king’s good name, and a queen who answers injustice by going home.',
+    handoff:
+      'This is where the epic ends: not in triumph but in a loss even Rama could not undo. You have followed a whole life lived by dharma, its sorrows kept in alongside its glory. That honesty is the gift it hands you — goodness is real, and it still costs.',
     sections: [
+      {
+        id: 'uttara-where',
+        title: 'Where we are',
+        storyText:
+          'The war is won. **Rama** is home in **Ayodhya** at last, crowned king, the exile finally behind him. This should be where the story ends happily.\n\nBut the Ramayana has one more book, and it is the hardest one — about what victory costs, and about a queen who finally answers injustice by going home.',
+      },
       {
         id: 'uttara-ramarajya',
         title: 'The reign everyone longed for',
         storyText:
-          'Rama’s rule became the byword the tradition never let go of: Ram Rajya, the kingdom where dharma stands whole. The rains came on time, the earth gave freely, no parent buried a child, no one lied or lacked. For a while the Uttara Kanda lets the ideal simply exist — a realm ordered so justly that later reformers, Gandhi among them, invoked "Ram Rajya" as the name of the society still worth building.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'The Ramayana pauses on the reward: a whole society at peace because its ruler holds himself to the strictest account. Ram Rajya endures as an ideal precisely because it locates good governance not in power or wealth but in a leader’s unbending fidelity to dharma — and it is against that very standard that the book’s tragedy will measure Rama himself.',
+          'Rama’s rule became the name the tradition never let go of: **Ram Rajya**, the kingdom where dharma stands whole. The rains came on time and the earth gave freely; no parent buried a child; no one lied or went without. For a while the last book simply lets the ideal exist — a realm so justly ordered that reformers ever after, Gandhi among them, would invoke “Ram Rajya” as the name of the society still worth building.',
         citation: 'Valmiki Ramayana, Uttara Kanda (the reign of Rama)',
+      },
+      {
+        id: 'uttara-ramarajya-note',
+        title: 'What Ram Rajya really locates',
+        sectionHeader: 'What this means',
+        teachingText:
+          'The Ramayana pauses on the reward: a whole society at peace because its ruler holds himself to the strictest account. Ram Rajya endures as an ideal precisely because it locates good governance not in power or wealth but in a leader’s unbending fidelity to dharma. And it is against that very standard that the book’s coming tragedy will measure Rama himself.',
+      },
+      {
+        id: 'uttara-term-ramrajya',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'राम राज्य',
+          transliteration: 'rāma rājya',
+          meaning: 'the reign of Rama; an ideal just society',
+        },
+        storyText:
+          '**Ram Rajya** means, literally, “the reign of Rama” — and it became the tradition’s word for a perfectly just society, where dharma holds and no one is wronged. It is less a memory of the past than a standard for the future: the kind of world worth trying to build.',
+        reappears:
+          'Gandhi used this very phrase for the India he hoped to see. An old story became a living political ideal.',
       },
       {
         id: 'uttara-banishment',
         title: 'The cost of a king’s good name',
         storyText:
-          'Then the epic turns bleak. A washerman’s gossip questioned whether a queen who had lived in Ravana’s city could be pure, and the whisper spread. Rama — the king whose one duty was to be above reproach in his people’s eyes — banished the pregnant, innocent Sita to the forest to protect the throne’s good name. It is the Ramayana’s most painful passage, and the text does not excuse it: the perfect man commits, by the logic of a king’s reputation, a deep injustice against the person most loyal to him.',
-        sectionHeader: 'Why it matters',
-        teachingText:
-          'The Uttara Kanda refuses to let its hero off. Having shown Rama as dharma embodied, it shows dharma’s duties colliding — the king’s to his people’s trust against the husband’s to his innocent wife — and lets Rama choose in a way that has troubled and angered readers for centuries. The epic’s honesty is that it records the wound instead of resolving it.',
+          'Then the book turns bleak. A washerman, quarreling with his wife, threw out a cruel line that spread through the city:\n\n» A citizen: I am not Rama, to take back a wife who has lived in another man’s house.\n\nThe whisper grew until it reached the throne. And **Rama** — the one king whose whole duty was to be above reproach in his people’s eyes — banished the pregnant, innocent **Sita** to the forest, to protect the good name of the crown.\n\nIt is the Ramayana’s most painful passage, and the text does not excuse it. The perfect man, by the cold logic of a king’s reputation, commits a deep injustice against the person most loyal to him.',
         citation: 'Valmiki Ramayana, Uttara Kanda (the banishment of Sita)',
+      },
+      {
+        id: 'uttara-banishment-note',
+        title: 'The epic refuses to let its hero off',
+        sectionHeader: 'What this means',
+        teachingText:
+          'Having shown Rama as dharma embodied, the Uttara Kanda shows dharma’s own duties colliding — the king’s duty to his people’s trust against the husband’s duty to his innocent wife — and lets Rama choose in a way that has troubled and angered readers for centuries. The epic’s honesty is that it records the wound instead of healing it. It does not ask you to approve. It asks you to see clearly.',
+        checks: [
+          {
+            id: 'chk:scripture:uttara-banishment',
+            kind: 'mcq',
+            prompt: 'After everything Sita had endured, why did Rama banish her?',
+            options: [
+              { text: 'To protect the throne’s reputation after a citizen’s gossip questioned her — an injustice the epic records without excusing', correct: true },
+              { text: 'Because he had stopped loving her' },
+              { text: 'Because she asked to leave the palace' },
+            ],
+            why: 'The Uttara Kanda does not let its hero off. Rama sacrifices his innocent, loyal wife to the good name of the crown, and the text records the wound plainly rather than resolving it.',
+          },
+        ],
       },
       {
         id: 'uttara-sons',
         title: 'The twins who sang his story',
         storyText:
-          'Sita took refuge in the hermitage of Valmiki — the poet himself — and there bore twin sons, Lava and Kusha. Valmiki taught the boys the Ramayana he had composed, and years later they sang it, unknowing, before Rama’s own court. Rama recognized his sons in their faces and the truth in their song. He sent for Sita, asking her to prove her purity once more before the assembly so he could take her back.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'The poem folds back on itself: Rama’s own children learn his life as a song from the poet who wrote it, and carry it back to him. The Ramayana becomes a story about the power of its own telling — that a life recounted truthfully returns to teach even the one who lived it.',
+          '**Sita** took refuge in the hermitage of **Valmiki** — the poet who had composed the Ramayana itself — and there she bore Rama twin sons, **Lava** and **Kusha**. Valmiki taught the boys the great poem, and years later they sang it, not knowing whose story it was, before Rama’s own court. Rama saw his own face in theirs, and heard the truth in their song. He sent for Sita, asking her to prove her purity once more before the assembly so that he could take her back.',
         citation: 'Valmiki Ramayana, Uttara Kanda (Lava, Kusha, and the recital)',
+      },
+      {
+        id: 'uttara-poem-note',
+        title: 'The poem folds back on itself',
+        sectionHeader: 'What this means',
+        teachingText:
+          'The story turns back on itself here: Rama’s own children learn his life as a song from the poet who wrote it, and carry it back to the man who lived it. The Ramayana becomes, for a moment, a story about the power of its own telling — that a life recounted truthfully returns to teach even the one who lived it.',
       },
       {
         id: 'uttara-earth',
         title: 'The daughter of the earth goes home',
         storyText:
-          'Sita had had enough of tests. Asked to prove herself a final time, she made a different answer. If I have been true, she said, let my mother the earth receive me — for she had been born of a furrow, the ground’s own daughter. The earth opened, a throne rose, and Sita descended into it and was gone, beyond any court’s judgment forever. Rama ruled on, bereft, until his own time came and he too laid down the human life, and the story closed.',
-        sectionHeader: 'Why it matters',
-        teachingText:
-          'Sita’s last act is refusal dressed as return: she will not be tested again, and she takes herself beyond the reach of a world that keeps demanding she prove her worth. The Ramayana ends not in tidy reunion but in loss the hero cannot undo — the tradition’s acknowledgment that even a life lived by dharma does not escape sorrow, and that the earth’s own daughter answered injustice by going home.',
+          'Sita had had enough of tests. Asked to prove herself one final time before the court, she gave a different answer. She had been born of a furrow in a plowed field, the earth’s own daughter; now she called on her mother to take her back:\n\n» Sita: If I have been true, let the earth that bore me open and receive me.\n\nThe ground split, a throne rose from it, and Sita descended into the earth and was gone — beyond any court’s judgment, forever. Rama ruled on without her, bereft, until his own time came and he too laid down his human life. There the story closes.',
         citation: 'Valmiki Ramayana, Uttara Kanda (Sita returns to the earth)',
+      },
+      {
+        id: 'uttara-earth-note',
+        title: 'Refusal dressed as return',
+        sectionHeader: 'What this means',
+        teachingText:
+          'Sita’s last act is a refusal dressed as a return: she will not be tested again, and she takes herself beyond the reach of a world that keeps demanding she prove her worth. The Ramayana ends not in tidy reunion but in a loss the hero cannot undo — the tradition’s honest acknowledgment that even a life lived by dharma does not escape sorrow, and that the earth’s own daughter answered injustice by going home.',
+        checks: [
+          {
+            id: 'chk:scripture:uttara-earth',
+            kind: 'mcq',
+            prompt: 'Asked to prove her purity one last time, what did Sita do?',
+            options: [
+              { text: 'She refused, called on the earth that bore her to receive her, and was gone beyond any court’s judgment', correct: true },
+              { text: 'She proved herself again and lived on happily with Rama' },
+              { text: 'She fled to raise her sons in secret' },
+            ],
+            why: 'Sita will not keep proving herself to a world that keeps demanding it. She calls on her mother the earth, who opens and takes her home — the epic ending in loss rather than tidy reunion.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
