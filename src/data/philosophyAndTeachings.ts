@@ -185,11 +185,19 @@ export const philosophyData: PhilosophicalConcept[] = [
     difficulty: 'beginner',
     sections: [
       {
+        id: 'overview-what-it-is',
+        title: 'A Family, Not a Single Religion',
+        subtitle: 'What it actually is',
+        storyText:
+          'So what is Hinduism, in one honest sentence? It is a large family of related traditions that grew up together across the Indian subcontinent over thousands of years.\n\nThink of an extended family rather than one person. The branches do not all worship the same way or tell the same stories. But they share a family resemblance: the same **gods**, understood as faces of one reality; the same **library** of sacred texts, with the **Vedas** at its root; the same repertoire of **practice**, from the home shrine to the festival year; and the same **core ideas** running underneath everything, like dharma, karma, rebirth, and liberation.\n\nEverything below is one branch of that family. What follows is the shape of the whole.',
+        citation: 'Hinduism as a plural family of traditions sharing Vedic authority, deities, practice, and core concepts — standard scholarly framing',
+      },
+      {
         id: 'overview-river',
         title: 'The River That Named It',
         subtitle: 'A religion with no founder',
         storyText:
-          'Every other major religion can point to a beginning — a founder, a revelation, a date. Hinduism cannot, and that is the first thing to understand about it.\n\nIt grew the way a river system grows: countless streams, some four thousand years old, feeding one another until no one could say where the water began.\n\nEven the name came from outside. Persian travelers used **Hindu** — their pronunciation of **Sindhu**, the river Indus — for the people who lived beyond that river. The people themselves had no single name for what they practiced, because they never thought of it as a single thing.',
+          'One thing about this family surprises almost everyone. Every other major religion can point to a beginning, a founder, a revelation, a date. Hinduism cannot.\n\nIt grew the way a river system grows: countless streams, some four thousand years old, feeding one another until no one could say where the water began.\n\nEven the name came from outside. Persian travelers used **Hindu** — their pronunciation of **Sindhu**, the river Indus — for the people who lived beyond that river. The people themselves had no single name for what they practiced, because they never thought of it as a single thing.',
         citation: '"Hindu" from Persian for the Sindhu (Indus) river — standard etymology',
       },
       {
@@ -341,7 +349,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         ],
         sectionHeader: 'Your family\u2019s way',
         teachingText:
-          'This is why your family\u2019s Hinduism may look different from your friend\u2019s — different deities on the altar, different festival foods, different fasts. None of that is confusion. **It is the design.**\n\nThis is one common map; **ask your family how they walk it**. Their answers are part of the tradition too — the living part. Four thousand years of conversation are waiting. Take the next step.',
+          'This is why your family\u2019s Hinduism may look different from your friend\u2019s — different deities on the altar, different festival foods, different fasts. None of that is confusion. **It is the design.**\n\nAnd it is why there is no belief test for belonging. Being Hindu is less a creed you sign than a family you are raised in and a practice you keep, closer to belonging to a people than to joining a club.\n\nThis is one common map; **ask your family how they walk it**. Their answers are part of the tradition too — the living part. Four thousand years of conversation are waiting. Take the next step.',
         citationLink: 'gita:4',
         citation: 'The four streams: sampradaya tradition; the Gita\u2019s pluralism: 4.11, tr. Sivananda (public domain)',
       },
