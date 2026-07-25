@@ -517,41 +517,105 @@ const RAMAYANA_PARTS: ScripturePart[] = [
     collection: 'ramayana',
     name: 'Kishkindha Kanda',
     sanskritName: 'किष्किन्धा काण्ड',
-    subtitle: 'The Book of Kishkindha — an alliance of the broken, and a strength that had to be remembered',
+    subtitle: 'The Book of Kishkindha: an alliance of the broken, and a strength that had to be remembered',
     order: 4,
     coverImage: RAMAYANA_COVER,
+    kicker:
+      'Rama has no army, only grief. Watch him build a war out of others as broken as he is.',
+    handoff:
+      'One vanara now carries the whole hope of the search on his shoulders, and an ocean stands in his way. As Jambavan reminds him what he is, Hanuman begins to grow. That is the Sundara Kanda.',
     sections: [
+      {
+        id: 'kishkindha-where',
+        title: 'Where we are',
+        storyText:
+          'Rama has one thing to go on: a dying vulture’s word that Sita was carried **south**, to the island of **Lanka**. He has no army and no allies, only his brother Lakshmana and his grief.\n\nThis book is where he starts to build a war, and he builds it out of others as broken as he is.',
+      },
       {
         id: 'kishkindha-meeting',
         title: 'Two exiled kings meet',
         storyText:
-          'Searching for Sita, Rama and Lakshmana reached Kishkindha, kingdom of the vanaras — the forest people — and met Hanuman, minister to the deposed monkey-king Sugriva. Hanuman brought them to Sugriva, himself an exile: his brother Vali had driven him out and taken his wife. Two dispossessed kings recognized each other, and over a sacred fire they swore an alliance — Rama would win back Sugriva’s throne, and Sugriva would turn all his armies to finding Sita. Grief made them allies before anything else did.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'Rama does not arrive at the war with an army; he builds one out of the equally broken. The alliance with Sugriva is founded on shared loss, not strength — the epic’s quiet claim that those who have been dispossessed understand one another, and that help most often comes from the ones who also need it.',
+          'Searching south, Rama and Lakshmana reached **Kishkindha**, kingdom of the **vanaras (the forest people, a race of monkeys)**. There they met **Hanuman**, wisest of them, minister to a deposed monkey-king named **Sugriva**. Hanuman brought them to Sugriva, himself an exile: his own brother **Vali** had driven him out and taken his wife.\n\nTwo dispossessed kings recognized each other, and over a sacred fire they swore an alliance:\n\n» Rama: Win me back Sita, and I will win you back your throne.\n\n» Sugriva: Kill Vali and set me back in Kishkindha, and every vanara I have will search the earth for your wife.\n\nGrief made them allies before anything else did.',
         citation: 'Valmiki Ramayana, Kishkindha Kanda 4–5 (Rama and Sugriva’s pact)',
         citationLink: 'deity:hanuman',
+      },
+      {
+        id: 'kishkindha-broken-note',
+        title: 'An army of the broken',
+        sectionHeader: 'What this means',
+        teachingText:
+          'Rama does not arrive at the war with an army. He builds one out of the equally broken. The alliance with Sugriva is founded on shared loss, not on strength — the epic’s quiet claim that people who have been dispossessed understand one another, and that help most often comes from the ones who also need it.',
+      },
+      {
+        id: 'kishkindha-term-vanara',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'वानर',
+          transliteration: 'vānara',
+          meaning: 'the forest people; a race of monkeys',
+        },
+        storyText:
+          'The **vanaras** are the forest people, a race of monkeys with speech, kings, and cities of their own. They carry the whole middle of the epic: it is a vanara, Hanuman, who finds Sita, and a vanara army that builds the bridge to Lanka.',
+        reappears:
+          'Keep an eye on Hanuman. The quietest one in the room turns out to be the one the whole story leans on.',
       },
       {
         id: 'kishkindha-vali',
         title: 'The arrow from hiding',
         storyText:
-          'To keep his side of the pact, Rama had to defeat Vali — and Vali was the stronger. When Sugriva challenged his brother, Rama shot Vali from concealment, and the dying Vali accused him bitterly: is this dharma, for a righteous prince to kill from ambush a warrior fighting another? Rama’s answer is one of the epic’s hardest passages — that Vali had seized his brother’s wife and ruled by sheer force, that justice was owed, and that a king’s justice does not always come from the front. The tradition has debated the killing ever since; the Ramayana does not tidy it away.',
-        sectionHeader: 'Why it matters',
-        teachingText:
-          'The epic lets its hero do a troubling thing and lets the victim voice the objection, unanswered to everyone’s full satisfaction. Rama is dharma embodied and still acts in a way readers have argued about for two thousand years — the Ramayana’s honesty is that it preserves the discomfort rather than erasing it.',
+          'To keep his side of the pact, Rama had to defeat **Vali** — and Vali was the stronger of the two. When Sugriva challenged his brother to a fight, Rama shot Vali from hiding. The dying Vali was bitter:\n\n» Vali: Is this dharma? You are called the most righteous of princes, and you kill a man from concealment while he fights another?\n\n» Rama: You seized your brother’s wife and ruled by force. Justice was owed, and a king’s justice does not always come from the front.\n\nThe tradition has argued over this killing ever since. The Ramayana does not tidy it away.',
         citation: 'Valmiki Ramayana, Kishkindha Kanda 16–18 (the killing of Vali)',
+      },
+      {
+        id: 'kishkindha-vali-note',
+        title: 'The killing readers still argue about',
+        sectionHeader: 'What this means',
+        teachingText:
+          'Here the epic lets its hero do a troubling thing, and lets the victim say so out loud. Rama is dharma embodied, and he still acts in a way people have argued about for two thousand years. That is the Ramayana’s kind of honesty: it keeps the discomfort in the story instead of smoothing it over. You are allowed to sit with the question.',
+        checks: [
+          {
+            id: 'chk:scripture:kishkindha-vali',
+            kind: 'mcq',
+            prompt:
+              'Rama killed Vali with an arrow from hiding, and the dying Vali called it unfair. How does the epic handle that moment?',
+            options: [
+              { text: 'It leaves the discomfort in: Vali’s objection is spoken, and the killing has been debated ever since', correct: true },
+              { text: 'It shows Rama was plainly right and Vali plainly wrong' },
+              { text: 'It leaves the killing out of the story' },
+            ],
+            why: 'The Ramayana lets its hero do a hard thing and lets the victim voice the objection, unanswered to everyone’s full satisfaction. Its honesty is that it preserves the discomfort rather than erasing it.',
+          },
+        ],
       },
       {
         id: 'kishkindha-forgetting',
         title: 'The strength he had forgotten',
         storyText:
-          'With Sugriva restored, the vanaras spread out to search. The southern party reached the ocean’s edge and despaired: a hundred yojanas of sea lay between them and Lanka, and no one could cross it. Then old Jambavan turned to Hanuman — silent, unassuming Hanuman — and reminded him of what a boyhood curse had made him forget: that he was the son of the wind, that no distance could hold him, that he had powers he had simply stopped remembering he owned. As Jambavan spoke, Hanuman began to grow.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'The epic’s most beloved figure spends most of it not knowing what he can do. Hanuman does not lack the strength to cross the ocean; he lacks the memory of it, until a friend’s testimony returns it to him. The Ramayana suggests that much of what stops us is not weakness but forgetting — and that the great service one person does another is to say, plainly, what they are.',
+          'With Sugriva restored to his throne, the vanaras spread across the world to search. The southern party reached the edge of the ocean and lost heart: a hundred **yojanas** of sea lay between them and Lanka, and no one could cross it.\n\nThen old **Jambavan**, the wise bear-king, turned to **Hanuman**, who had sat silent the whole time, and reminded him of what a boyhood curse had made him forget:\n\n» Jambavan: You are the son of the wind. No distance can hold you. You have simply forgotten what you are.\n\nAs Jambavan spoke, Hanuman began to grow.',
         citation: 'Valmiki Ramayana, Kishkindha Kanda 65–66 (Jambavan reminds Hanuman)',
         citationLink: 'deity:hanuman',
+      },
+      {
+        id: 'kishkindha-forgetting-note',
+        title: 'Most of what stops us is forgetting',
+        sectionHeader: 'What this means',
+        teachingText:
+          'The epic’s most beloved figure spends most of it not knowing what he can do. Hanuman does not lack the strength to cross the ocean; he lacks the memory of it, until a friend says plainly what he is. The Ramayana suggests that much of what stops us is not weakness but forgetting — and that the great service one person does another is to remind them who they are.',
+        checks: [
+          {
+            id: 'chk:scripture:kishkindha-hanuman',
+            kind: 'mcq',
+            prompt:
+              'The vanaras reached the ocean and despaired. What was actually stopping Hanuman from leaping across it?',
+            options: [
+              { text: 'Not a lack of strength, but that he had forgotten he had it', correct: true },
+              { text: 'The ocean was simply too wide for anyone' },
+              { text: 'He was too afraid of Ravana to try' },
+            ],
+            why: 'Hanuman had the power all along; a boyhood curse had made him forget it. Jambavan’s gift was not strength but the memory of strength. Much of what stops us is forgetting, not weakness.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -566,41 +630,104 @@ const RAMAYANA_PARTS: ScripturePart[] = [
     collection: 'ramayana',
     name: 'Sundara Kanda',
     sanskritName: 'सुन्दर काण्ड',
-    subtitle: 'The Beautiful Book — one devotee’s leap, and the hope he carried across an ocean',
+    subtitle: 'The Beautiful Book: one devotee’s leap, and the hope he carried across an ocean',
     order: 5,
     coverImage: RAMAYANA_COVER,
+    kicker:
+      'The most beloved book in the epic, and its hero is not Rama or Ravana. It is a servant on an errand.',
+    handoff:
+      'Now Rama comes with his army to the sea’s edge, and the last book begins: the bridge across the water, the war for Lanka, and the long way home. That is the Yuddha Kanda.',
     sections: [
+      {
+        id: 'sundara-where',
+        title: 'Where we are',
+        storyText:
+          'Reminded of who he is, **Hanuman** has grown vast. Now he will do alone what a whole army could not: cross the ocean to **Lanka** to find **Sita**.\n\nThis is the book the tradition loves most and recites most often — the **Sundara Kanda**, the Beautiful Book. Its beauty is that its hero is not Rama or Ravana, but a servant carrying out an errand for someone he loves.',
+      },
       {
         id: 'sundara-leap',
         title: 'The leap across the sea',
         storyText:
-          'Remembering himself, Hanuman climbed a mountain, pressed it flat beneath his feet, and hurled his body across a hundred yojanas of ocean toward Lanka. Sea-monsters and mountains rose to test him; he passed each — bursting through one, honoring another. This is the book the tradition loves best and recites most: the Sundara Kanda, the Beautiful Book, named for the beauty of a servant’s single-minded devotion in flight. Alone, unaided, he crossed what an army could not.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'The most celebrated book of the Ramayana centers not on Rama or Ravana but on a servant carrying out an errand. Its beauty, the tradition says, is exactly that: devotion in motion, a mind so fixed on the work of the one it loves that the ocean becomes a step. Greatness here is not rank; it is wholehearted service.',
+          'Hanuman climbed a mountain, pressed it flat beneath his feet, and hurled his body across a hundred yojanas of open ocean toward Lanka. The sea sent up monsters and mountains to test him along the way, and he passed each one — bursting through one, honoring another, outwitting a third. Alone, unaided, he crossed what an army could not.',
         citation: 'Valmiki Ramayana, Sundara Kanda 1 (the crossing)',
         citationLink: 'deity:hanuman',
+      },
+      {
+        id: 'sundara-beautiful-note',
+        title: 'Why the Beautiful Book is about a servant',
+        sectionHeader: 'What this means',
+        teachingText:
+          'The most celebrated book of the whole Ramayana centers not on the hero or the villain but on a servant running an errand. Its beauty, the tradition says, is exactly that: devotion in motion, a mind so fixed on the work of the one it loves that an ocean becomes a single step. Greatness here is not rank. It is wholehearted service.',
+      },
+      {
+        id: 'sundara-term-bhakti',
+        kind: 'term',
+        title: 'Key word',
+        keyVerse: {
+          sanskrit: 'भक्ति',
+          transliteration: 'bhakti',
+          meaning: 'loving devotion',
+        },
+        storyText:
+          'What carries Hanuman across the sea is **bhakti** — loving devotion. Not duty done grudgingly, but love so complete that the hardest task feels light. Hanuman is the tradition’s clearest picture of it: the servant whose devotion makes him greater than kings.',
+        reappears:
+          'Bhakti is one of the great paths to the divine. You will meet it again as a whole way of living.',
       },
       {
         id: 'sundara-ashoka',
         title: 'Sita in the grove',
         storyText:
-          'Shrunk to the size of a cat, Hanuman searched Ravana’s city through the night and found Sita at last in the Ashoka grove — thin with grief, ringed by demon-guards, refusing Ravana’s threats and pleas alike, choosing death over dishonor. From the trees Hanuman dropped Rama’s signet ring into her lap. She wept to know Rama lived and was coming. He offered to carry her back on his own shoulders that instant; she refused — Rama himself must come and win her, so that his honor and hers stood whole. Hanuman took her jewel and her message instead.',
-        sectionHeader: 'Why it matters',
-        teachingText:
-          'Sita in the grove is not a prize awaiting rescue; she is a will that Ravana cannot bend and that even her rescuer cannot override. Her refusal of the easy escape — insisting Rama come himself — is her own claim on dignity: she will be won back rightly or not at all. The Ramayana’s captive is its most unbreakable character.',
+          'Shrunk now to the size of a cat, Hanuman searched Ravana’s city all night, and found Sita at last in the **Ashoka grove** — thin with grief, ringed by demon-guards, refusing Ravana’s threats and pleas alike, choosing death over dishonor. From the trees, Hanuman let **Rama’s ring** fall into her lap. She wept to know Rama was alive and coming.\n\nHanuman offered to carry her home himself, that instant, on his shoulders.\n\n» Sita: No. Rama must come himself and win me back, so that his honor and mine both stand whole. Carry him my message, not me.\n\nHe took her jewel and her words instead.',
         citation: 'Valmiki Ramayana, Sundara Kanda 36–39 (Hanuman finds Sita)',
+      },
+      {
+        id: 'sundara-captive-note',
+        title: 'The captive who cannot be bent',
+        sectionHeader: 'What this means',
+        teachingText:
+          'Sita in the grove is not a prize waiting to be collected. She is a will that Ravana cannot bend and that even her rescuer cannot override. Her refusal of the easy escape — insisting that Rama come himself — is her own claim on her dignity: she will be won back rightly, or not at all. The Ramayana’s captive is its most unbreakable character.',
+        checks: [
+          {
+            id: 'chk:scripture:sundara-sita',
+            kind: 'mcq',
+            prompt:
+              'Hanuman offered to carry Sita out of Lanka on his shoulders that very moment. Why did she refuse?',
+            options: [
+              { text: 'She insisted Rama come and win her back himself, so his honor and hers both stood whole', correct: true },
+              { text: 'She was afraid of Hanuman’s size' },
+              { text: 'She had come to prefer her life in Lanka' },
+            ],
+            why: 'Sita is not a prize to be collected; she is a will of her own. Refusing the quick escape is her claim on her dignity — she will be won back rightly or not at all.',
+          },
+        ],
       },
       {
         id: 'sundara-burning',
         title: 'The tail that lit a city',
         storyText:
-          'To take Ravana’s measure, Hanuman let himself be captured and hauled before the throne. Ravana ordered him killed; his brother Vibhishana insisted an envoy must not be slain, so instead they set Hanuman’s tail alight to shame him. It was a mistake. Hanuman slipped his bonds, leapt roof to roof with his burning tail, and set Lanka ablaze — a warning written in fire across the demon-king’s own capital — then quenched the flame in the sea and leapt home to lay Sita’s jewel in Rama’s hands.',
-        sectionHeader: 'What this teaches',
-        teachingText:
-          'The punishment meant to humiliate Hanuman becomes the instrument of Ravana’s warning. The Ramayana keeps showing pride arranging its own downfall: the fire lit to mock a servant announces, in letters no one in Lanka can miss, that the reckoning has already crossed the sea.',
+          'To take Ravana’s measure before he left, Hanuman let himself be captured and hauled before the throne. Ravana ordered him killed, but his own brother **Vibhishana** stopped it:\n\n» Vibhishana: You cannot kill a messenger. It is against all law.\n\nSo instead they wrapped Hanuman’s tail in cloth and set it alight to shame him. It was a mistake. Hanuman slipped his bonds and, leaping roof to roof with his burning tail, set **Lanka** ablaze — a warning written in fire across the demon-king’s own capital. Then he quenched the flame in the sea and leapt home to lay Sita’s jewel in Rama’s hands.',
         citation: 'Valmiki Ramayana, Sundara Kanda 51–55 (the burning of Lanka)',
         citationLink: 'deity:hanuman',
+      },
+      {
+        id: 'sundara-pride-note',
+        title: 'Pride arranging its own downfall',
+        sectionHeader: 'What this means',
+        teachingText:
+          'The punishment meant to humiliate Hanuman becomes the instrument of Ravana’s own warning. The Ramayana keeps showing pride arrange its own downfall: the fire lit to mock a servant announces, in letters no one in Lanka can miss, that the reckoning has already crossed the sea.',
+        checks: [
+          {
+            id: 'chk:scripture:sundara-mission',
+            kind: 'mcq',
+            prompt: 'What did Hanuman actually accomplish on his errand to Lanka?',
+            options: [
+              { text: 'He found Sita, gave her Rama’s ring, and left the city burning as a warning', correct: true },
+              { text: 'He rescued Sita and carried her home himself' },
+              { text: 'He killed Ravana in single combat' },
+            ],
+            why: 'Hanuman’s job was to find Sita, not free her — Sita herself insisted Rama come. He confirmed she lived, gave her Rama’s ring, and left Lanka in flames as a promise of what was coming.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
