@@ -2258,7 +2258,7 @@ export const festivalData: Festival[] = [
     ],
     culturalImpact: 'Raksha Bandhan keeps kinship in repair on an annual schedule, and its thread has proven elastic enough to bind siblings, students to vows, coasts to seas, and communities to each other.',
     relatedFestivals: ['janmashtami-2025', 'onam-2025'],
-    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: raksha-bandhan-cover.png
+    heroImageUrl: require('../../assets/images/covers/raksha-bandhan-cover.png'),
   },
   {
     id: 'janmashtami-2025',
@@ -2783,7 +2783,7 @@ export const festivalData: Festival[] = [
     ],
     culturalImpact: 'Promotes community unity, artistic expression, and environmental awareness.',
     relatedFestivals: ['diwali-2025'],
-    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: ganesh-chaturthi-cover.png
+    heroImageUrl: require('../../assets/images/covers/ganesh-chaturthi-cover.png'),
     reflectionQuestions: [
       'Ganesha is welcomed in as a guest — and then, deliberately, given back to the water. What would it take for you to hold something that lightly?',
     ],
@@ -3794,7 +3794,7 @@ export const festivalData: Festival[] = [
     ],
     culturalImpact: 'Dussehra turns moral struggle into civic theater: an entire society rehearses, every single year, that evil regrows and must be re-defeated, and that the day of victory is the right day to begin.',
     relatedFestivals: ['navratri-2025', 'ram-navami-2025', 'diwali-2025'],
-    heroImageUrl: require('../../assets/images/covers/generic-cover.jpg'), // TODO cover shopping list: dussehra-cover.png
+    heroImageUrl: require('../../assets/images/covers/dussehra-cover.png'),
   },
   {
     id: 'karva-chauth-2025',

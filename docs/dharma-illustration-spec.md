@@ -467,7 +467,7 @@ All four new deities need their canonical descriptions from Part 1's character s
 | Diwali | ✅ `diwali-cover.png` | |
 | Janmashtami | 🆕 — **fix required** | borrows `krishna-cover.jpg` (the deity's own cover) |
 | Ram Navami | 🆕 — **fix required** | borrows `ramayana-cover.png` (the scripture's own cover) |
-| Ganesh Chaturthi | 🆕 | generic fallback |
+| Ganesh Chaturthi | ✅ `ganesh-chaturthi-cover.png` | |
 | Makar Sankranti | 🆕 | generic fallback |
 | Basant Panchami | 🆕 | generic fallback |
 | Maha Shivratri | 🆕 | generic fallback |
@@ -476,9 +476,9 @@ All four new deities need their canonical descriptions from Part 1's character s
 | Hanuman Jayanti | 🆕 | generic fallback — prompt authored below (July 2026) |
 | Ratha Yatra | 🆕 | generic fallback — prompt authored below (July 2026) |
 | Guru Purnima | 🆕 | generic fallback — prompt authored below (July 2026) |
-| Raksha Bandhan | 🆕 | generic fallback — prompt authored below (July 2026) |
+| Raksha Bandhan | ✅ `raksha-bandhan-cover.png` | |
 | Onam | 🆕 | generic fallback — prompt authored below (July 2026) |
-| Dussehra | 🆕 | generic fallback — prompt authored below (July 2026); the burning effigy (Ram Navami owns the dawn courtyard, Navratri the lion) |
+| Dussehra | ✅ `dussehra-cover.png` | burning effigy (Ram Navami owns the dawn courtyard, Navratri the lion) |
 | Karwa Chauth | 🆕 | generic fallback — prompt authored below (July 2026) |
 | Chhath Puja | 🆕 | generic fallback — prompt authored below (July 2026) |
 
