@@ -506,6 +506,20 @@ export const philosophyData: PhilosophicalConcept[] = [
         teachingText: 'Hold this frame and the tradition\'s bewildering variety becomes legible. When you meet a Hindu practice that looks nothing like your family\'s, you are not seeing error or dilution.\n\nYou are seeing another stream — older than most countries, carried by unbroken handover, and headed the same direction as yours.',
         citationLink: 'gita:4',
         citation: 'Sampradaya ("handing over"): standard Sanskrit etymology; the Gita\'s pluralism: Bhagavad Gita 4.11',
+        checks: [
+          {
+            id: 'chk:concept:branches-of-hinduism:no-pope',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Christianity has a Pope and Islam has scholars of consensus. Why is there no equivalent central authority in Hinduism?',
+            options: [
+              { text: 'Spiritual authority passes down through many teacher-lineages, never one central institution', correct: true },
+              { text: 'Hindus simply never thought to organize one' },
+              { text: 'The government forbids religious leaders' },
+            ],
+            why: 'Authority runs through sampradayas, lineages where a teacher hands the tradition to a student. There are many such lines, so there was never one seat to rule them all.',
+          },
+        ],
       },
       {
         id: 'branches-vaishnava',
@@ -540,6 +554,20 @@ export const philosophyData: PhilosophicalConcept[] = [
         storyText: 'The fourth stream, associated with the great reformer **Shankara**, refuses to choose.\n\nSmarta practice sets five (sometimes six) deities on one altar — Vishnu, Shiva, Devi, Ganesha, Surya — and worships the one Brahman through whichever face the worshiper loves: the **ishta-devata** principle made liturgy.\n\nBeneath all four streams run the **darshanas**, the six classical schools of philosophy. Two remain giants: **Vedanta**, the inquiry into Brahman and Atman that Shankara sharpened into Advaita (non-dualism), and **Yoga**, Patanjali\'s discipline of stilling the mind. The streams tell you whom to love; the schools examine what loving them means.',
         teachingText: 'Smartism is the tradition auditing itself: if Truth is one and the wise call it by many names, then the names must be interchangeable at the altar.\n\nAnd the schools are the tradition thinking: Hinduism never separated devotion from philosophy — its greatest philosophers wrote hymns, and its greatest hymns argue metaphysics.',
         citation: 'Smarta panchayatana worship: tradition attributed to Adi Shankara; the six darshanas: classical doxography',
+        checks: [
+          {
+            id: 'chk:concept:branches-of-hinduism:streams',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'What mainly separates a Vaishnava, a Shaiva, and a Shakta?',
+            options: [
+              { text: 'Which face of the one divine they center their devotion on, Vishnu, Shiva, or the Goddess', correct: true },
+              { text: 'They worship completely different, unrelated religions' },
+              { text: 'One believes in God and the others do not' },
+            ],
+            why: 'Each stream centers on a different face of the same reality: Vaishnavas on Vishnu, Shaivas on Shiva, Shaktas on the Goddess. Smartas honor all of them together. Same reality, different doorway.',
+          },
+        ],
       },
       {
         id: 'branches-yours',
