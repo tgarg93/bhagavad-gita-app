@@ -3992,7 +3992,21 @@ export const festivalData: Festival[] = [
         storyText: 'The most beloved of Diwali\'s stories is **a homecoming**.\n\nFourteen years of exile — the forest, the abduction of Sita, the bridge to Lanka, the war, Ravana\'s fall — and then, at last, the flight home. Tradition holds that Rama, Sita, and Lakshmana returned to Ayodhya on the new-moon night of Kartika, and the city, refusing to let its king come home in darkness, **lit every street and sill with rows of lamps**.\n\nThe diyas of every Diwali since are Ayodhya\'s welcome, renewed: light kept burning for the good that is on its way back.',
         teachingText: 'Everyone has an exile running — a person, a hope, a version of themselves that has been fourteen years in the forest.\n\nAyodhya\'s posture is the teaching: **prepare the welcome before the return is visible.** Light the lamp for what you are still waiting for; the lamp is how the waiting stays alive.',
         citationLink: 'deity:rama',
-        citation: 'Valmiki Ramayana, Yuddha Kanda; the lamplit return: living tradition.'
+        citation: 'Valmiki Ramayana, Yuddha Kanda; the lamplit return: living tradition.',
+        checks: [
+          {
+            id: 'chk:festival:diwali:homecoming',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Diwali’s rows of lamps most famously trace back to which homecoming?',
+            options: [
+              { text: 'Rama returning to Ayodhya after fourteen years of exile, the city lighting every street to welcome him', correct: true },
+              { text: 'Krishna returning to Vrindavan after defeating Kamsa' },
+              { text: 'The gods returning to heaven after the churning of the ocean' },
+            ],
+            why: 'Tradition holds that Ayodhya lit rows of lamps to guide Rama, Sita, and Lakshmana home on the new-moon night. Every Diwali since renews that welcome.',
+          },
+        ],
       },
       {
         id: 'diwali-lakshmi',
@@ -4001,7 +4015,21 @@ export const festivalData: Festival[] = [
         storyText: 'On the main night, homes across India perform **Lakshmi Puja** — for the goddess of wealth and well-being who, the Puranas tell, emerged radiant from the churning of the cosmic ocean.\n\nDoorways are washed and painted with rangoli; tiny footprints are stenciled walking inward; windows glow; account books open to new pages. The theology of the customs is precise: Lakshmi visits homes that are clean, lit, and harmonious — **abundance is invited, not seized**.\n\nThe same churning that yielded poison first (Shiva\'s story) yields the goddess later: prosperity, the sequence says, comes to those who stayed through the difficult part.',
         teachingText: 'The customs are a checklist worth taking literally once a year: clear the clutter, settle the quarrels, light the entrance, open a fresh page.\n\nWhether or not the goddess walks in, the household that did those four things has already prospered. **Lakshmi\'s footprints point inward — abundance is a direction, not an amount.**',
         citationLink: 'deity:lakshmi',
-        citation: 'Lakshmi from the churning: Vishnu Purana 1.9; Diwali Lakshmi Puja: living tradition.'
+        citation: 'Lakshmi from the churning: Vishnu Purana 1.9; Diwali Lakshmi Puja: living tradition.',
+        checks: [
+          {
+            id: 'chk:festival:diwali:lakshmi',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Families clean and light the whole house before Lakshmi Puja. What idea is that custom built on?',
+            options: [
+              { text: 'Abundance is invited, not seized, Lakshmi enters a home that is clean, lit, and harmonious', correct: true },
+              { text: 'The brighter your house, the more money you are guaranteed' },
+              { text: 'Lakshmi only visits temples, never homes' },
+            ],
+            why: 'The customs say it precisely: Lakshmi visits homes that are clean, lit, and settled. So the household clears clutter, ends quarrels, and opens a fresh page, abundance is invited, not grabbed.',
+          },
+        ],
       },
       {
         id: 'diwali-five-days',
