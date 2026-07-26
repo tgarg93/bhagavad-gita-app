@@ -156,6 +156,67 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
     },
   },
 
+  'concept:dharma': {
+    id: 'dlg:dharma',
+    start: 'word',
+    nodes: {
+      word: {
+        id: 'word',
+        krishna: ['People translate **dharma** as “duty,” and it starts to sound like a rulebook someone hands you. When you hear “do your dharma,” what does it land as for you?'],
+        choices: [
+          { text: 'Follow the rules, do what’s expected', reply: 'That’s the usual read, and it’s exactly where dharma turns into a weight. But it was never one rulebook handed to everyone the same. Look at what the word actually points at.', next: 'yours' },
+          { text: 'Be a good person, basically', reply: 'Warmer than the rulebook version, and closer. But dharma is more specific than “be good.” It’s about what’s yours to do in particular, that nobody else can do quite the same way.', next: 'yours' },
+          { text: 'Honestly, I’m not sure', reply: 'That’s a fair place to start. Most people carry the word around for years without anyone telling them what it means. Let me.', next: 'yours' },
+        ],
+      },
+      yours: {
+        id: 'yours',
+        krishna: [
+          'The root of **dharma** means to hold up, to support. So your dharma is just the piece of the world that’s yours to hold up. A parent holds up a child. A doctor holds up the sick. A friend holds up you.',
+          'And here’s the part that trips everyone: it’s different for different people. A soldier’s dharma and a mother’s dharma aren’t the same, and both are right. So the real question was never “what’s the rule?” It’s “what’s mine to do, here, as who I am?”',
+          'Most of the time that’s quiet and obvious. The trouble starts when two of them pull against each other. Have you ever been stuck between two right things?',
+        ],
+        choices: [
+          { text: 'Yeah, more than once', reply: 'Then you already know the real problem with dharma. It isn’t telling right from wrong. It’s when two things are both right, and only one of them fits the moment.', next: 'arjuna' },
+          { text: 'Not that I can think of', reply: 'You will. Everyone hits it eventually. It’s the knot at the center of dharma: not right against wrong, but one right against another.', next: 'arjuna' },
+        ],
+      },
+      arjuna: {
+        id: 'arjuna',
+        krishna: [
+          'Let me tell you where I first heard this question, really heard it. A soldier named **Arjuna** stood on a battlefield, bow in hand, and looked across at the other army. There they were: his cousins, his teachers, the grandfather who raised him.',
+          'His duty as a warrior said fight, this is a just war. His love said these are my people, I can’t. Two dharmas, tearing him in half. He sat down in the chariot and said he’d rather do nothing at all.',
+          'So when two duties collide like that, what do you think actually settles it?',
+        ],
+        citation: 'Bhagavad Gita 1–2 — Arjuna’s collapse between his duty and his love.',
+        choices: [
+          { text: 'Pick the one that hurts fewer people', reply: 'That’s a real instinct, and it often points the right way. Dharma does lean toward whatever holds up the most life. But it isn’t only arithmetic, or you could talk yourself into almost anything.', next: 'svadharma' },
+          { text: 'Do the harder, less selfish one', reply: 'There’s something to that. Self-interest is usually the thumb on the scale. But harder isn’t always right. Sometimes the loving thing is also the easy thing. This was never about punishing yourself.', next: 'svadharma' },
+          { text: 'Honestly, I wouldn’t know', reply: 'Good, because there’s no formula, and anyone who sells you one is lying. What I gave Arjuna wasn’t a rule. It was a question steady enough to stand on.', next: 'svadharma' },
+        ],
+      },
+      svadharma: {
+        id: 'svadharma',
+        krishna: [
+          'Here’s what I told him. Don’t grab someone else’s dharma to escape your own. A warrior who runs from a just fight to go play the monk hasn’t become holy. He’s just dropped the thing that was his to carry.',
+          'Better to do your own part imperfectly than to perform someone else’s perfectly. Your life, your roles, the people actually leaning on you, that’s your ground. Stand there.',
+          'So does any of this touch a regular Tuesday? Or does it only matter on battlefields?',
+        ],
+        citation: 'Bhagavad Gita 3.35 — better your own dharma, imperfectly done, than another’s done well.',
+        choices: [
+          { text: 'Feels a bit epic for my life', reply: 'I get that. But swap the battlefield for a group chat, a hospital waiting room, a decision about an aging parent. Same knot, smaller stage. You face little versions of that battlefield all the time.', next: 'close' },
+          { text: 'No, I feel this all the time', reply: 'You do. Job against family. Honesty against keeping the peace. What you owe your parents against what you owe your kids. Every one of those is Arjuna’s chariot, just quieter.', next: 'close' },
+        ],
+      },
+      close: {
+        id: 'close',
+        krishna: ['So that’s **dharma**. It isn’t a rulebook you memorize. It’s the honest question underneath a hard choice: what’s actually mine to hold up here? Ask it plainly, and most of the time you already know.'],
+        practice: 'Catch yourself in one real tug-of-war this week, two people or duties pulling opposite ways. Don’t ask “what’s the rule?” Ask “which choice actually holds up the people depending on me?” Do that one, and let the guilt about the other go.',
+        end: true,
+      },
+    },
+  },
+
   'concept:maya': {
     id: 'dlg:maya',
     start: 'mirage',
