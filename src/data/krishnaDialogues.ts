@@ -490,4 +490,42 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
     },
   },
+
+  'concept:hinduism-overview': {
+    id: 'dlg:hinduism-overview',
+    start: 'many',
+    nodes: {
+      many: {
+        id: 'many',
+        krishna: ['You just met a lot of gods in there, Brahma, Vishnu, Shiva, Durga, and plenty more. If a friend leaned over and said “so you guys worship, what, a few hundred gods?”, what would you say back?'],
+        choices: [
+          { text: 'Honestly, I’d fumble it', reply: 'Most people do, and it’s not your fault. The overview just handed you the real answer, so let me pull it to the front.', next: 'one' },
+          { text: 'Something about one God underneath', reply: 'That’s exactly the thread. You’ve got it. Let’s make it something you could actually say out loud.', next: 'one' },
+          { text: 'I’d just say yeah, many gods', reply: 'You could, and on the surface you wouldn’t be wrong. But there’s a deeper answer that lands better, and it happens to be truer.', next: 'one' },
+        ],
+      },
+      one: {
+        id: 'one',
+        krishna: [
+          'Three thousand years ago the Rig Veda already said the quiet part out loud: what exists is one, and the wise simply call it by many names. So underneath Vishnu, Shiva, Durga, all of them, Hindus point to a single reality. They call it **Brahman**.',
+          'Picture one white light behind a stained-glass window. A red pane, a blue pane, a gold pane. Different colors, one light. The gods are the panes. Brahman is the light.',
+          'So when a Hindu grandmother bows before a small Krishna statue at home, what do you figure she believes she’s bowing to?',
+        ],
+        citation: 'Rig Veda 1.164.46 — “Truth is one; the wise call it by many names.”',
+        choices: [
+          { text: 'The statue itself, I assumed', reply: 'That’s the outsider’s read, and it misses her completely. To her, that statue is a doorway she walks through. She’s using a face she loves to reach the one reality behind it.', next: 'thread' },
+          { text: 'The one reality, through that form', reply: 'Exactly. The form is just a doorway she walks through. She loves that particular face because a face is something you can actually love, where the formless is hard to hold onto.', next: 'thread' },
+        ],
+      },
+      thread: {
+        id: 'thread',
+        krishna: [
+          'So here’s the whole overview in one breath, for when someone asks. Hinduism is a huge family of traditions with no single founder, held together by a few old questions, that sees one reality wearing many faces, and lets you reach it through the face you love most.',
+          'You don’t have to memorize the rest. Hold that one thread, and every god, festival, and story you meet later just hangs off it.',
+        ],
+        practice: 'Next time someone asks “why so many gods?”, try one sentence: “Most Hindus see one reality behind all of them, and each god is a different face of it.” Say it out loud once this week, even just to yourself, and notice how much less tangled the whole thing feels.',
+        end: true,
+      },
+    },
+  },
 };
