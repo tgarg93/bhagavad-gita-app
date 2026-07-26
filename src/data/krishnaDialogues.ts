@@ -173,12 +173,12 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
         id: 'yours',
         krishna: [
           'The root of **dharma** means to hold up, to support. So your dharma is just the piece of the world that’s yours to hold up. A parent holds up a child. A doctor holds up the sick. A friend holds up you.',
-          'And here’s the part that trips everyone: it’s different for different people. A soldier’s dharma and a mother’s dharma aren’t the same, and both are right. So the real question was never “what’s the rule?” It’s “what’s mine to do, here, as who I am?”',
+          'And here’s the part that trips everyone: it’s different for different people. A soldier’s dharma and a mother’s dharma pull in different directions, and both are right. So the real question is always the same one: what’s mine to do here, as who I am?',
           'Most of the time that’s quiet and obvious. The trouble starts when two of them pull against each other. Have you ever been stuck between two right things?',
         ],
         choices: [
-          { text: 'Yeah, more than once', reply: 'Then you already know the real problem with dharma. It isn’t telling right from wrong. It’s when two things are both right, and only one of them fits the moment.', next: 'arjuna' },
-          { text: 'Not that I can think of', reply: 'You will. Everyone hits it eventually. It’s the knot at the center of dharma: not right against wrong, but one right against another.', next: 'arjuna' },
+          { text: 'Yeah, more than once', reply: 'Then you already know the hard part. Nobody agonizes over whether to rob a bank. We agonize when two right things pull opposite ways and we can only honor one.', next: 'arjuna' },
+          { text: 'Not that I can think of', reply: 'You will, everyone hits it eventually. It’s the knot at the center of dharma: two right things, wanting opposite moves from you, and only room for one.', next: 'arjuna' },
         ],
       },
       arjuna: {
@@ -191,8 +191,8 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
         citation: 'Bhagavad Gita 1–2 — Arjuna’s collapse between his duty and his love.',
         choices: [
           { text: 'Pick the one that hurts fewer people', reply: 'That’s a real instinct, and it often points the right way. Dharma does lean toward whatever holds up the most life. But it isn’t only arithmetic, or you could talk yourself into almost anything.', next: 'svadharma' },
-          { text: 'Do the harder, less selfish one', reply: 'There’s something to that. Self-interest is usually the thumb on the scale. But harder isn’t always right. Sometimes the loving thing is also the easy thing. This was never about punishing yourself.', next: 'svadharma' },
-          { text: 'Honestly, I wouldn’t know', reply: 'Good, because there’s no formula, and anyone who sells you one is lying. What I gave Arjuna wasn’t a rule. It was a question steady enough to stand on.', next: 'svadharma' },
+          { text: 'Do the harder, less selfish one', reply: 'There’s something to that, self-interest is usually the thumb on the scale. Though be careful, the harder road isn’t automatically the right one. Sometimes the kind thing and the easy thing are the same thing, and choosing it is allowed.', next: 'svadharma' },
+          { text: 'Honestly, I wouldn’t know', reply: 'Good, because there’s no formula, and anyone who sells you one is lying. So I didn’t hand Arjuna a rule. I gave him a question steady enough to stand on.', next: 'svadharma' },
         ],
       },
       svadharma: {
@@ -210,7 +210,7 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
       close: {
         id: 'close',
-        krishna: ['So that’s **dharma**. It isn’t a rulebook you memorize. It’s the honest question underneath a hard choice: what’s actually mine to hold up here? Ask it plainly, and most of the time you already know.'],
+        krishna: ['So that’s **dharma**. Underneath every hard choice, it comes down to one honest question: what’s actually mine to hold up here? Ask it plainly, and most of the time you already know the answer.'],
         practice: 'Catch yourself in one real tug-of-war this week, two people or duties pulling opposite ways. Don’t ask “what’s the rule?” Ask “which choice actually holds up the people depending on me?” Do that one, and let the guilt about the other go.',
         end: true,
       },
