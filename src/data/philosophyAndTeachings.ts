@@ -223,6 +223,20 @@ export const philosophyData: PhilosophicalConcept[] = [
         teachingText:
           'Every scripture, god, festival, and practice you will meet on this journey is an answer to one of these four. Keep them in your pocket — they are the map\u2019s legend.',
         citation: 'The framing is editorial; the questions are the classical concerns of the Upanishads and Dharmashastra',
+        checks: [
+          {
+            id: 'chk:concept:hinduism-overview:holds-together',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Hinduism has no founder, no single holy book, and no central authority. So what actually holds it together?',
+            options: [
+              { text: 'A shared set of ancient questions that every part of the tradition keeps answering', correct: true },
+              { text: 'A single prophet whose teachings everyone follows' },
+              { text: 'One official book that all Hindus are required to read' },
+            ],
+            why: 'With no founder or central text, what unifies it is a shared set of questions, about the self, suffering, death, and how to live, that every scripture, god, and festival answers in its own way.',
+          },
+        ],
       },
       {
         id: 'overview-shruti',
@@ -277,6 +291,20 @@ export const philosophyData: PhilosophicalConcept[] = [
         storyText:
           '"How many gods do Hindus worship?" The **Rig Veda** — the oldest book on the oldest shelf — answered this three thousand years before anyone thought to ask it as a challenge.\n\nNaming god after god — Indra, Mitra, Varuna, Agni — the hymn suddenly stops and says the quiet part aloud: **what exists is One**. The sages simply give it many names.\n\nEverything about the gods unfolds from that single line.',
         citation: 'Rig Veda 1.164.46, tr. Griffith (public domain)',
+        checks: [
+          {
+            id: 'chk:concept:hinduism-overview:one-many',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'A friend asks, “So do Hindus believe in one God or many?” What does the tradition’s oldest answer say?',
+            options: [
+              { text: 'One reality, which the wise simply call by many names', correct: true },
+              { text: 'Many completely separate gods with no connection between them' },
+              { text: 'Exactly one God, and all the others are fakes' },
+            ],
+            why: 'The Rig Veda says it plainly: “Truth is one; the wise call it by many names.” The many gods are faces of a single reality, not rival deities.',
+          },
+        ],
       },
       {
         id: 'overview-faces',
@@ -319,6 +347,20 @@ export const philosophyData: PhilosophicalConcept[] = [
         teachingText:
           'Notice the generosity. A tradition that blesses prosperity and pleasure alongside duty and liberation is not asking you to choose between a good life and a spiritual one. It is claiming they were **never two different things**.',
         citation: 'Purusharthas: Dharmashastra tradition',
+        checks: [
+          {
+            id: 'chk:concept:hinduism-overview:four-aims',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'The four aims include dharma and moksha. What surprises many newcomers about the other two, artha and kama?',
+            options: [
+              { text: 'Prosperity and pleasure are treated as legitimate goals of a life, not things to be ashamed of', correct: true },
+              { text: 'They are forbidden to anyone seeking liberation' },
+              { text: 'They apply only to the gods, not to people' },
+            ],
+            why: 'Hinduism is unusually generous here. Artha (prosperity) and kama (pleasure) sit right alongside duty and liberation, a good life and a spiritual life treated as one thing.',
+          },
+        ],
       },
       {
         id: 'overview-mechanics',
