@@ -1126,7 +1126,21 @@ export const festivalData: Festival[] = [
           'By no weapon — **with claws**.'
         ],
         teachingText: 'The loopholes that made a tyrant fearless became the exact coordinates of his ending. Then the terrible form grew gentle for one person only: the boy, who came forward without fear and was blessed.\n\nEvery fortress of self-justification has the same architecture as the boon — clauses and conditions that feel airtight. The story\'s warning is that **reality honors the letter of our rationalizations while ending their spirit**. And its comfort is the counter-image: what terrifies the arrogant is tender toward the trusting.',
-        citation: 'Bhagavata Purana, Canto 7, Chapters 8–10.'
+        citation: 'Bhagavata Purana, Canto 7, Chapters 8–10.',
+        checks: [
+          {
+            id: 'chk:festival:holi:narasimha',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Hiranyakashipu had a boon that no man or beast could kill him, indoors or out, by day or night. How did Vishnu get past it?',
+            options: [
+              { text: 'As Narasimha, half man and half lion, at dusk on the threshold, slipping through every gap in the boon', correct: true },
+              { text: 'By sending a human warrior to defeat him in open battle at noon' },
+              { text: 'By waiting for the boon to expire on its own' },
+            ],
+            why: 'Vishnu came as Narasimha, neither fully man nor beast, at twilight, on the doorway’s threshold, defeating him inside the boon’s own loopholes.',
+          },
+        ],
       },
       {
         id: 'holi-krishna-colors',
@@ -1135,7 +1149,21 @@ export const festivalData: Festival[] = [
         storyText: 'The color-play\'s beloved origin is a Krishna story, kept warm in the Braj tradition.\n\nThe dark-skinned child Krishna complained to his mother Yashoda: **why is Radha so fair while I am dark?** Yashoda, laughing, offered a mother\'s solution — go paint her whatever color you like. Krishna did, gleefully, and Radha painted him back, and the cowherd village dissolved into the first Holi.\n\nIn Braj — Mathura, Vrindavan, Barsana — Holi still runs for days, the great equalizer descended from one mother\'s joke: **if the difference bothers you, color over it with love.**',
         teachingText: 'The theology hiding in the play: smeared with gulal, every face — rich, poor, old, young, every shade — turns the same colors. For one morning, India repaints itself into what the sages said it always was: **one consciousness in a billion disguises.**\n\n**"Bura na mano, Holi hai"** — take no offense — is the day\'s liturgy: the permission to touch, laugh, and forgive across every line the other 364 days maintain.',
         citationLink: 'deity:krishna',
-        citation: 'The Braj Holi (Mathura, Vrindavan, Barsana): living tradition.'
+        citation: 'The Braj Holi (Mathura, Vrindavan, Barsana): living tradition.',
+        checks: [
+          {
+            id: 'chk:festival:holi:colors',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Once everyone at Holi is smeared in the same colors, what happens to the usual differences between people?',
+            options: [
+              { text: 'They wash out, for a day rank, age, and old grudges stop mattering and everyone meets as equals', correct: true },
+              { text: 'They sharpen, since each color marks a person’s status' },
+              { text: 'Nothing, the colors are only decorative' },
+            ],
+            why: 'Under the gulal you cannot tell rich from poor or friend from rival. Holi levels everyone for a day, which is why people settle old scores with color instead of anger.',
+          },
+        ],
       },
       {
         id: 'holi-spring',
@@ -3019,7 +3047,21 @@ export const festivalData: Festival[] = [
         storyText: 'The nine nights commemorate the Devi Mahatmya\'s central war.\n\n**Mahishasura**, the shape-shifting buffalo demon, held a boon protecting him from man and god alike. **Durga** — born of the pooled radiance of every deva, armed with all their weapons — fought him through nine nights of shifting forms and slew him as the tenth day dawned.\n\n**Vijayadashami**, "the tenth of victory," is that dawn. The whole structure of the festival is the battle\'s shape: nine nights of holding steady while the deception cycles, and then the morning where truth pins it.',
         teachingText: 'Whatever you are contending with this season — a habit, a fear, a long injustice — Navratri\'s counsel is the Goddess\'s method: **do not chase every disguise it wears. Keep the vigil.**\n\nNine nights of steadiness beat nine days of frantic pursuit, and the tenth morning belongs to the one who did not waver.',
         citationLink: 'deity:durga',
-        citation: 'Devi Mahatmya (Markandeya Purana), Chapters 2–3.'
+        citation: 'Devi Mahatmya (Markandeya Purana), Chapters 2–3.',
+        checks: [
+          {
+            id: 'chk:festival:navratri:mahishasura',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'The nine nights of Navratri remember the Goddess’s battle against whom?',
+            options: [
+              { text: 'Mahishasura, the buffalo demon no single god could defeat, so the gods pooled their power into Durga', correct: true },
+              { text: 'Ravana, the ten-headed king of Lanka' },
+              { text: 'Kamsa, the tyrant who imprisoned Krishna’s parents' },
+            ],
+            why: 'When no god could beat the buffalo demon Mahishasura, they poured their combined power into one being, and Durga arose to fight him across the nine nights.',
+          },
+        ],
       },
       {
         id: 'navratri-garba',
@@ -3033,7 +3075,21 @@ export const festivalData: Festival[] = [
         title: 'The Goddess at the Door',
         subtitle: 'Young Girls Seated as Honored Guests',
         storyText: 'On Ashtami or Navami, the festival performs its most literal theology: **kanya puja**.\n\nYoung girls are invited in, their feet washed, tikka placed on their brows, and fed the best food in the house — worshiped, for one morning, as living embodiments of the Goddess. It is the Devi Mahatmya\'s great litany — **"to the Goddess who abides in ALL beings"** — enforced at household scale, and it lands with an edge in a world that does not always treat its daughters as divine.\n\nThen comes Vijayadashami: the demon falls, Ravana burns in the north, and the sprouted barley from the first night is distributed — nine nights of the dark made visibly, tenderly green.',
-        teachingText: 'Kanya puja asks the festival\'s sharpest question on its way out the door: **is your reverence portable?**\n\nIt is easy to honor the Goddess in a pandal; the practice is honoring her in the beings around you — starting with the ones your culture is most tempted to overlook.'
+        teachingText: 'Kanya puja asks the festival\'s sharpest question on its way out the door: **is your reverence portable?**\n\nIt is easy to honor the Goddess in a pandal; the practice is honoring her in the beings around you — starting with the ones your culture is most tempted to overlook.',
+        checks: [
+          {
+            id: 'chk:festival:navratri:kanya',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Near the end of Navratri, families invite young girls in and honor them with food and gifts. What does this custom express?',
+            options: [
+              { text: 'The Goddess is seen as present in them, the divine feminine honored as near and living', correct: true },
+              { text: 'The girls are being asked to perform the rituals for the adults' },
+              { text: 'It is a fundraiser for the temple' },
+            ],
+            why: 'In kanya puja the girls are honored as forms of the Goddess herself, the festival’s reminder that the same power that beat the demon is also the child at your door.',
+          },
+        ],
       }
     ],
     reflectionQuestions: [
@@ -3664,7 +3720,21 @@ export const festivalData: Festival[] = [
         subtitle: 'When the Nine Nights End',
         storyText: 'For nine nights, India honors the Goddess. Then comes the tenth day, and it has its own name: **Vijayadashami**, the tenth of victory.\n\nTwo victories share this one date, and the tradition sees them as the same victory wearing two faces. In the Goddess\'s story, this is the dawn when **Durga** finally pins the shape-shifting buffalo demon. In the Ramayana, this is the day **Rama** kills **Ravana**, the ten-headed king of Lanka who stole his wife.\n\nThe northern name of the day comes from the second story. **Dussehra**, from dasha-hara, the destruction of the ten-headed one.\n\nNavratri\'s reader tells the Goddess\'s war. This one tells Rama\'s, and what a billion people do with its ending.',
         citationLink: 'festival:navratri-2025',
-        citation: 'Vijayadashami as the shared victory day — Devi Mahatmya tradition and Ramayana tradition.'
+        citation: 'Vijayadashami as the shared victory day — Devi Mahatmya tradition and Ramayana tradition.',
+        checks: [
+          {
+            id: 'chk:festival:dussehra:victory',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Dussehra, or Vijayadashami, marks the tenth-day victory in which story?',
+            options: [
+              { text: 'Rama’s defeat of Ravana, the same tenth day the Goddess is said to have beaten Mahishasura', correct: true },
+              { text: 'Krishna lifting Mount Govardhan' },
+              { text: 'The churning of the cosmic ocean' },
+            ],
+            why: 'Vijayadashami is the shared victory day: Rama over Ravana, and Durga over Mahishasura, both falling on the tenth day after the nine nights.',
+          },
+        ],
       },
       {
         id: 'dussehra-lanka',
@@ -3679,7 +3749,21 @@ export const festivalData: Festival[] = [
         subtitle: 'Ramlila Grounds at Dusk',
         storyText: 'For weeks before Dussehra, in thousands of towns, the Ramayana is not read. It is **performed**.\n\nThe **Ramlila** is the epic staged by ordinary neighbors: the schoolteacher as Dasharatha, the wrestler as Hanuman, boys as the princes. UNESCO lists it among humanity\'s cultural treasures, and Varanasi\'s Ramnagar Ramlila runs a full month with the whole town as its stage. By the ninth night, everyone, performer and audience, has walked the exile again.\n\nThen, on Dussehra evening, the crowds gather on open grounds where three towering effigies stand: **Ravana** with his ten heads, flanked by his brother Kumbhakarna and son Meghnada, all packed with fireworks. The actor playing Rama looses a flaming arrow, and the ten-headed king goes up in a roar of fire and light.\n\nAnd next year they will build him again, and burn him again. That is not a failure of the ritual. It is the ritual\'s honest heart.',
         teachingText: 'A popular reading gives Ravana\'s ten heads names: lust, anger, greed, pride, envy, and their cousins. Take the reading or leave it; the burning teaches the same thing either way.\n\nEvil does not stay defeated. It regrows, in the world and in a person, which is why the arrow has to be loosed again every single year. The festival is not a monument to one old victory. It is scheduled practice.',
-        citation: 'Ramlila — UNESCO Intangible Cultural Heritage (2008), documented tradition; ten-vices reading, popular tradition, labeled as such.'
+        citation: 'Ramlila — UNESCO Intangible Cultural Heritage (2008), documented tradition; ten-vices reading, popular tradition, labeled as such.',
+        checks: [
+          {
+            id: 'chk:festival:dussehra:ten-heads',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'A popular reading says the ten heads of the burning Ravana effigy stand for what?',
+            options: [
+              { text: 'Ten faults every person carries, ego, greed, anger, lust and the rest, burned away each year', correct: true },
+              { text: 'The ten kingdoms Ravana ruled' },
+              { text: 'The ten days of the festival' },
+            ],
+            why: 'The effigy burns every year because those ten heads, read as ego, greed, anger and other vices, grow back in everyone. Burning Ravana is a yearly nudge to burn your own.',
+          },
+        ],
       },
       {
         id: 'dussehra-other-keepings',
