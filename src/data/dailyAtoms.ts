@@ -658,7 +658,7 @@ const SAYING_ATOMS: DailyAtom[] = [
     type: 'saying',
     hook: '“Aham Brahmasmi” — I am Brahman.',
     body:
-      'Not a boast — a discovery. The Brihadaranyaka Upanishad places these words at the moment a seeker realizes the self they have been protecting and polishing was never separate from the whole. It is one of the four “great sayings” every school of Vedanta must wrestle with.',
+      'Not a boast — a discovery. Brahman is the one reality behind everything, and this saying marks the moment a seeker realizes the self they had spent a lifetime protecting and polishing was never separate from it. The Brihadaranyaka Upanishad places the words right at that recognition. It is one of Vedanta’s four “great sayings.”',
     citation: 'Brihadaranyaka Upanishad 1.4.10',
     krishnaPrompt: 'How is “I am Brahman” different from arrogance? Where does the ego end and this truth begin?',
     sanskrit: { devanagari: 'अहं ब्रह्मास्मि', transliteration: 'ahaṁ brahmāsmi' },
@@ -932,7 +932,7 @@ const QUESTION_ATOMS: DailyAtom[] = [
     type: 'question',
     hook: 'Which of your fears might be a rope, misread at dusk?',
     body:
-      'The traveler leapt from a snake that was never there — and the terror was real anyway. Maya’s question is not “is this real?” but “is this the rope, or my snake?”',
+      'The traveler leapt from a snake that was never there — and the terror was real anyway. That is maya, the mind misreading what is in front of it: the question is not “is this real?” but “is this the rope, or my snake?”',
     citation: 'The rope-snake teaching: Advaita tradition',
     krishnaPrompt: 'Help me examine a fear I have — how do I tell the rope from the snake?',
   },
