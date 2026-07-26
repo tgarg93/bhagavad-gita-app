@@ -604,4 +604,119 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
     },
   },
+
+  'festival:holi-2025': {
+    id: 'dlg:holi',
+    start: 'fight',
+    nodes: {
+      fight: {
+        id: 'fight',
+        krishna: ['Holi mostly shows up online as a giant, joyful color fight, strangers drenching each other in pink and green. Fun, sure. But is there anything underneath all that powder, you think?'],
+        choices: [
+          { text: 'Probably, I just don’t know it', reply: 'There is, and it’s two things really, hiding in plain sight. A fire the night before, and then the color. Let me take them in order.', next: 'fire' },
+          { text: 'Feels like just a party', reply: 'It is a party, a glorious one. But it’s built on top of an old story and an older idea, and both are worth having.', next: 'fire' },
+          { text: 'Isn’t it a Krishna thing?', reply: 'Krishna’s in there, he’s why there’s color at all. But the night before the color there’s a fire, and the fire comes first for a reason.', next: 'fire' },
+        ],
+      },
+      fire: {
+        id: 'fire',
+        krishna: [
+          'The night before, people light a big bonfire, **Holika Dahan**. It comes from the story of **Prahlada**, a boy who kept loving God even though his own father, a tyrant king, tried everything to stop him, including fire.',
+          'His aunt **Holika**, who believed she couldn’t burn, carried the boy into the flames to kill him. She burned. He walked out untouched. So the bonfire every year carries one message: cruelty burns itself out, and what’s true in you survives the fire.',
+          'So before the color comes the fire. What do you figure you’re meant to throw into it?',
+        ],
+        citation: 'Prahlada and Holika: Bhagavata Purana, Canto 7.',
+        choices: [
+          { text: 'No idea what I’d burn', reply: 'Fair, most people just enjoy the flames. But the tradition offers a use: the grudge you’ve been feeding, the version of yourself you’re tired of. The fire’s a place to set it down.', next: 'color' },
+          { text: 'The stuff I’m carrying', reply: 'That’s it exactly. The grudge, the old anger, the version of yourself you’re done being. The fire’s an old, honest place to let it go.', next: 'color' },
+        ],
+      },
+      color: {
+        id: 'color',
+        krishna: [
+          'Then, in the morning, the color. And here’s the quiet genius of it: once everyone’s smeared head to toe in pink and green, you can’t tell the rich from the poor, the elder from the kid, your friend from the person you’ve been feuding with. For one day, the ranks just wash out.',
+          'That’s why people settle old scores with a handful of color instead of a fight. You smear your rival, they smear you, and somewhere in the laughing it gets hard to stay angry. Holi is the year’s reset button.',
+        ],
+        practice: 'You don’t need the festival to use it. This week, pick one small grudge you’ve been quietly carrying, and let it go, the way you’d let it burn in the Holika fire. If you can, do one warm thing toward the person. That’s Holi, powder optional.',
+        end: true,
+      },
+    },
+  },
+
+  'festival:navratri-2025': {
+    id: 'dlg:navratri',
+    start: 'dance',
+    nodes: {
+      dance: {
+        id: 'dance',
+        krishna: ['Navratri is nine nights of music and dancing in circles, and from the outside it can look like one long, colorful party. But nine nights is a lot to set aside. What do you think it’s actually marking?'],
+        choices: [
+          { text: 'A goddess, I think?', reply: 'Yes, the Goddess, and specifically a fight she won that nobody else could. Let me tell you who she beat, because it says something surprising about power.', next: 'durga' },
+          { text: 'No clue, honestly', reply: 'Most people just dance and enjoy it. But underneath is one of the boldest ideas in the whole tradition. Here it is.', next: 'durga' },
+          { text: 'Isn’t it just about dancing?', reply: 'The dancing is real and joyful. But it circles something, literally, and what it circles is worth knowing.', next: 'durga' },
+        ],
+      },
+      durga: {
+        id: 'durga',
+        krishna: [
+          'There was a demon, **Mahishasura**, that no god could defeat. One by one the great gods tried and lost. So they did something they had never done: they poured all their power into a single being, and out of that combined force rose **Durga**, the Goddess, riding a lion.',
+          'She fought him for nine nights and won on the tenth. Sit with the claim buried in that: when the gods needed power itself, power turned out to be her. That’s why the dancers circle a single lamp, the light in the center is the Mother, and everyone turns around her.',
+          'So the nine nights are really nine nights of facing something down. Is there a Mahishasura in your life right now, something you keep losing to?',
+        ],
+        citation: 'Durga and Mahishasura: Devi Mahatmya (Markandeya Purana), Chapters 2–3.',
+        choices: [
+          { text: 'Yeah, more than one', reply: 'Then Navratri is aimed right at you. The whole promise of the story is that the power to face your demon is already in you, the way it was already in the gods. Not borrowed, not somewhere else. Yours.', next: 'door' },
+          { text: 'Not really sure', reply: 'Maybe a habit, a fear, a temper you keep meaning to master. The nine nights are a good window to pick one and turn toward it, with the Mother’s nerve.', next: 'door' },
+        ],
+      },
+      door: {
+        id: 'door',
+        krishna: [
+          'One more piece, and it’s my favorite. Near the end, families invite young girls into the home and honor them with food and gifts, because the Goddess is seen as present in them. The divine itself, sitting at your table as a nine-year-old, not a statue and not a faraway heaven.',
+          'That’s the whole festival in a gesture: the power that beat the undefeatable demon is also the girl at your door. Fierce and near, both at once.',
+        ],
+        practice: 'Pick one Mahishasura of your own for these nine nights, one habit or fear you keep losing to. Each night, take one small step against it, however tiny. You don’t have to win by the tenth day. The practice is just turning toward it each night, with the Mother’s nerve, instead of away.',
+        end: true,
+      },
+    },
+  },
+
+  'festival:dussehra-2025': {
+    id: 'dlg:dussehra',
+    start: 'effigy',
+    nodes: {
+      effigy: {
+        id: 'effigy',
+        krishna: ['On Dussehra, towns build a giant effigy of **Ravana**, the ten-headed demon king, and set it on fire while everyone cheers. He lost his war thousands of years ago. So why burn him again every single year?'],
+        choices: [
+          { text: 'To celebrate Rama winning', reply: 'That’s the surface of it, and it’s true. But if it were only history, we’d have gotten bored of it centuries ago. There’s a reason it stays urgent.', next: 'heads' },
+          { text: 'Honestly, no idea', reply: 'A fair thing to wonder while the sparks fly. The answer is hiding in his ten heads.', next: 'heads' },
+          { text: 'Tradition, I guess?', reply: 'It is tradition, but a pointed one. Look closely at those ten heads, that’s where the meaning lives.', next: 'heads' },
+        ],
+      },
+      heads: {
+        id: 'heads',
+        krishna: [
+          'Ravana had ten heads, and a favorite reading says each one is a fault every person carries: ego, greed, anger, lust, jealousy, and the rest. He was no distant monster. Brilliant, powerful, deeply learned, and undone by the one thing he refused to master in himself.',
+          'So the effigy burns every year for a living reason: those ten heads grow back, in you, in me, in everyone. Setting him alight is a nudge to go after your own.',
+          'If you had to name just one of your own ten heads, the fault that trips you up most, which would it be?',
+        ],
+        citation: 'Ravana’s fall: Valmiki Ramayana, Yuddha Kanda; the ten-heads-as-vices reading: popular tradition.',
+        choices: [
+          { text: 'Anger, probably', reply: 'A common one, and an honest pick. Anger feels powerful in the moment, which is exactly how it runs its Ravanas. Naming it is already the first cut.', next: 'burn' },
+          { text: 'Ego, if I’m honest', reply: 'The hardest to admit, so good on you. Ego was Ravana’s real downfall, the one head that grew all the others. Just naming it loosens its grip.', next: 'burn' },
+          { text: 'I’d rather not say', reply: 'That’s alright, you don’t have to say it out loud. Just knowing which one it is, quietly, is enough to start.', next: 'burn' },
+        ],
+      },
+      burn: {
+        id: 'burn',
+        krishna: [
+          'Remember how Rama actually won. One well-aimed arrow, straight to the one weak spot. Your faults have weak spots too: a moment of honesty, a pause before you react, one small honest choice.',
+          'That’s Dussehra, really. You cheer the hero from long ago, sure, and you also take one clean shot at the thing in you that keeps growing back.',
+        ],
+        practice: 'This Dussehra, name one “head” of your own, one fault you’re tired of, and take a single clean shot at it this week. Not the whole war, just one arrow: skip the thing once, pause once, choose the better move once. That’s how the effigy actually burns.',
+        end: true,
+      },
+    },
+  },
 };
