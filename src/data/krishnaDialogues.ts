@@ -528,4 +528,42 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
     },
   },
+
+  'concept:branches-of-hinduism': {
+    id: 'dlg:branches-of-hinduism',
+    start: 'sects',
+    nodes: {
+      sects: {
+        id: 'sects',
+        krishna: ['You just met the four big streams, Vaishnava, Shaiva, Shakta, Smarta. If you grew up around churches, that might ring a bell, like Catholics and Protestants and Baptists. So are these Hindu streams basically rival denominations?'],
+        choices: [
+          { text: 'Yeah, sounds the same', reply: 'It’s the natural comparison, and it’s where most people land. But something here is different, and it changes the whole picture. Let me show you.', next: 'split' },
+          { text: 'I figured they must disagree', reply: 'They do disagree, plenty. But watch what they never did, the thing Christian denominations famously did.', next: 'split' },
+          { text: 'No idea how it works', reply: 'Fair, it’s genuinely strange from the outside. Here’s the piece that makes it click.', next: 'split' },
+        ],
+      },
+      split: {
+        id: 'split',
+        krishna: [
+          'Christianity split. Councils met, lines got drawn, and people who landed on the wrong side were called heretics and pushed out. That’s how you get separate churches.',
+          'Hinduism never had that machinery. There was no council with the power to expel anyone, so nobody was ever expelled. It branched the way a tree grows new limbs, but it never split into rival institutions. Same tree, different branches.',
+          'So picture a home where the grandmother keeps Shiva and her grandson keeps Krishna. In that house, who’s right?',
+        ],
+        citation: 'Sampradaya (“handing over”): authority passes through teacher-lineages, not one central church.',
+        choices: [
+          { text: 'They’d have to argue it out', reply: 'You’d think so, but they don’t. Both are right, and everyone in the house knows it. She reaches the one reality through Shiva, he reaches the same reality through Krishna. Different doors into the same house.', next: 'yours' },
+          { text: 'Both, I’m guessing', reply: 'Exactly. Both, and nobody in the house finds it strange. She reaches the one reality through Shiva, he reaches the same one through Krishna. Different doors into the same house.', next: 'yours' },
+        ],
+      },
+      yours: {
+        id: 'yours',
+        krishna: [
+          'So the streams are really just the different wings of one big family, each with a favorite face of the divine. You can walk between the wings, and plenty of families keep more than one.',
+          'You don’t have to pick a stream to belong. Most Hindus never announce one at all. The little shrine at home quietly shows which way they lean, and that’s plenty.',
+        ],
+        practice: 'If you meet a Hindu this week, try gently asking which deity their family keeps at home. It’s a warm question, really, which face of the one they love most. Most people light up at it.',
+        end: true,
+      },
+    },
+  },
 };
