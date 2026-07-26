@@ -383,4 +383,111 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
     },
   },
+
+  'concept:ahimsa': {
+    id: 'dlg:ahimsa',
+    start: 'word',
+    nodes: {
+      word: {
+        id: 'word',
+        krishna: ['**Ahimsa** gets translated as “non-violence,” and right away people picture something soft. A pushover, someone who lets the world walk over them. When you hear it, does it sound a little like weakness to you?'],
+        choices: [
+          { text: 'Yeah, kind of passive', reply: 'That’s the usual picture, and it’s almost backwards. Ahimsa takes more strength than throwing a punch, not less. Let me show you why.', next: 'gates' },
+          { text: 'No, I think it’s strength', reply: 'You’re ahead of most people. It is strength, the hardest kind. But there’s a twist in it that even fans of the idea usually miss.', next: 'gates' },
+          { text: 'Not sure what it really means', reply: 'Fair. Most people only know the Gandhi-postcard version. The word itself is sharper than that.', next: 'gates' },
+        ],
+      },
+      gates: {
+        id: 'gates',
+        krishna: [
+          'Break the word open. **Himsa** means harm. The “a” in front flips it: **ahimsa**, no harm. But here’s the part that stings. Harm doesn’t only come out of your fists. It comes through three gates: the hand, the word, and even the thought.',
+          'Most of us never raise a hand to anyone, so we call ourselves gentle. Then we cut someone down with a single sentence. So, honestly, which gate does your harm usually sneak out of?',
+        ],
+        citation: 'Bhagavad Gita 16.2 & 17.14 — harmlessness counted across body, speech, and mind.',
+        choices: [
+          { text: 'The word, definitely', reply: 'You’re in good company. For most of us it’s the tongue. A punch heals in a week. The right cruel sentence can sit in someone for years.', next: 'strength' },
+          { text: 'Honestly, the thought', reply: 'An honest one, and a real gate. The contempt you rehearse in private leaks out in a hundred small ways, even when you never say it out loud.', next: 'strength' },
+          { text: 'I try not to harm at all', reply: 'Good aim. And notice how often it slips through anyway, a sharp reply, a quiet judgment. Ahimsa is less a finish line than something you keep practicing.', next: 'strength' },
+        ],
+      },
+      strength: {
+        id: 'strength',
+        krishna: [
+          'Now the part most people miss. A rabbit isn’t gentle, it just has no claws. Real ahimsa is a person who could wound and chooses not to.',
+          'The old texts even say that around someone truly settled in it, the hostility in others starts to drain away, and not because they’re soft. There’s just nothing left in them to push against.',
+          'So does that mean you should never cause any harm at all? Even to protect someone?',
+        ],
+        citation: 'Yoga Sutras of Patanjali 2.35 — near one established in ahimsa, hostility falls away.',
+        choices: [
+          { text: 'That can’t be right', reply: 'It isn’t. Ahimsa asks for something narrower than “never cause pain.” It asks you to cause no harm you don’t have to. A surgeon cuts, and that’s still ahimsa, because it heals and there was no gentler way. The only test is whether the harm was truly necessary.', next: 'inward' },
+          { text: 'I guess sometimes harm is needed', reply: 'Right. Same rule as before: cause no harm you don’t have to. Protect the child, of course, but use the least force the moment truly needs, and not a bit more. That “not a bit more” is the whole discipline.', next: 'inward' },
+        ],
+      },
+      inward: {
+        id: 'inward',
+        krishna: [
+          'One last gate, and it’s the one people forget completely. Yourself. The cruelest voice most people meet all day is the one inside their own head.',
+          'Ahimsa points inward too. The same gentleness you’d give a friend who messed up, you’re allowed to give yourself. Talk to your own mind the way you’d talk to someone you’re trying to help back onto their feet.',
+        ],
+        citation: 'Bhagavad Gita 6.5 — lift yourself by yourself; be your own friend, not your own enemy.',
+        choices: [
+          { text: 'That’s the one I need', reply: 'A lot of people do. You can be endlessly patient with everyone but you. Let some of that patience turn around.', next: 'close' },
+          { text: 'I’m harder on myself than anyone', reply: 'Then that’s exactly where your ahimsa begins. Not with strangers, with the voice in your own head.', next: 'close' },
+        ],
+      },
+      close: {
+        id: 'close',
+        krishna: ['So that’s **ahimsa**. More than just keeping your fists down, it’s watching all three gates, hand, word, and thought, and causing no harm you don’t truly have to. Yourself included.'],
+        practice: 'Catch one sharp thing before it leaves your mouth this week, a cutting reply you could land but don’t need to. Let it go unsaid. And once, when you catch yourself being cruel in your own head, answer back the way you would to a friend.',
+        end: true,
+      },
+    },
+  },
+
+  'concept:three-gunas': {
+    id: 'dlg:three-gunas',
+    start: 'day',
+    nodes: {
+      day: {
+        id: 'day',
+        krishna: ['Ever notice the same day can feel like three different days? You wake up foggy and heavy. By noon you’re wired and restless. On an evening walk, everything’s suddenly calm and clear. Same you, same day. What do you figure actually changed?'],
+        choices: [
+          { text: 'Just my mood, I guess', reply: 'That’s what we usually call it. But the tradition names it more precisely, and once you can name it, you can start to work with it.', next: 'strands' },
+          { text: 'Coffee and blood sugar, honestly', reply: 'Ha, partly, sure. But underneath the coffee there’s a pattern people mapped out a very long time ago. Three of them, actually.', next: 'strands' },
+          { text: 'No idea, it just happens', reply: 'It does feel like weather that just rolls in. The tradition gave that weather three names.', next: 'strands' },
+        ],
+      },
+      strands: {
+        id: 'strands',
+        krishna: [
+          'The tradition says three strands run through everything, and every moment is some braid of them. They’re called the **gunas**. Think of them as three kinds of weather in your mind.',
+          '**Tamas** is the heavy one, the 7am fog, the couch you can’t get off. **Rajas** is the fire, the restless noon drive. **Sattva** is the clear one, the calm evening where things just make sense. All three are in you right now. Only the mix changes.',
+          'One thing people get wrong, though. Does this mean some people are simply sattvic, calm and wise, and others are stuck being tamasic, dull and lazy?',
+        ],
+        citation: 'Bhagavad Gita 14.5 — sattva, rajas, and tamas, the three strands born of nature.',
+        choices: [
+          { text: 'Yeah, isn’t that personality?', reply: 'That’s the common mistake. But nobody is one guna. All three run in everyone, all day. The wisest person has foggy mornings, and the laziest gets flashes of clarity. The mix keeps shifting, so no single label ever really sticks.', next: 'feed' },
+          { text: 'No, it shifts around', reply: 'Exactly. Nobody’s just one. All three run in everyone, and the mix moves hour to hour. That’s the good news, really, because a mix can be changed.', next: 'feed' },
+        ],
+      },
+      feed: {
+        id: 'feed',
+        krishna: [
+          'Here’s the useful part. When you’re stuck in the fog, what most people do is fight it. Push, scold themselves, try to force clarity. It almost never works.',
+          'You can’t punch fog. What you can do is light a small fire nearby. A short walk, a cold splash of water, one tiny finished task, a little sunlight, each one feeds a bit of sattva. Tend that fire, and the fog lifts on its own.',
+        ],
+        citation: 'Bhagavad Gita 17.8–10 — the foods and acts that grow each strand.',
+        choices: [
+          { text: 'So stop fighting the fog', reply: 'Right. Fighting it just stacks rajas on top, now you’re foggy AND frustrated. Feed one small bit of sattva instead, and let it spread on its own.', next: 'close' },
+          { text: 'What actually feeds sattva?', reply: 'Simple, unglamorous stuff. Light, movement, real food, calm company, finishing one small thing. Nothing mystical. The mind clears the way a room brightens when you open one shade.', next: 'close' },
+        ],
+      },
+      close: {
+        id: 'close',
+        krishna: ['So that’s the **gunas**: three kinds of weather moving through you all day, and you’re not stuck in any of them for long. Name the weather, and if you don’t like it, feed a little of the strand you’d rather be in.'],
+        practice: 'Each morning this week, name your weather in one word, foggy, restless, or clear. Don’t judge it, just name it. Then on a heavy day, feed one small bit of sattva: step outside, finish one tiny thing, splash cold water. Watch the mix move.',
+        end: true,
+      },
+    },
+  },
 };
