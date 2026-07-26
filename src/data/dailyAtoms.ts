@@ -767,11 +767,11 @@ const WORD_ATOMS: DailyAtom[] = [
     type: 'word',
     hook: 'Om — the syllable the universe hums in',
     body:
-      'The Mandukya Upanishad devotes itself entirely to this one sound: A-U-M, mapped to waking, dreaming, and deep sleep — and the silence after it, to what you are beyond all three. “Om is all this,” the text begins. Every mantra in the tradition rides on it.',
-    citation: 'Mandukya Upanishad 1',
+      'Om is the sound Hinduism calls the first — not a word with a meaning, but the hum the universe is made of, the sound-form of ultimate reality (**Brahman**). That is why every prayer and mantra opens and closes with it. Chanted as **A-U-M**, its three sounds hold waking, dreaming, and deep sleep, and the silence after holds what you are beyond all three.',
+    citation: 'Mandukya Upanishad 1–2',
     sourceRef: 'scripture:mandukya-upanishad#mandukya-om',
     krishnaPrompt: 'What is actually happening when I chant Om? Why this sound and not another?',
-    sanskrit: { devanagari: 'ॐ', transliteration: 'om (a-u-m)', meaning: 'the syllable that holds all this' },
+    sanskrit: { devanagari: 'ॐ', transliteration: 'om (a-u-m)', meaning: 'the sound the universe is made of' },
   },
   {
     id: 'word:avatar',
