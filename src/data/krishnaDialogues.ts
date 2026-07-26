@@ -566,4 +566,42 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
     },
   },
+
+  'festival:diwali-2025': {
+    id: 'dlg:diwali',
+    start: 'outside',
+    nodes: {
+      outside: {
+        id: 'outside',
+        krishna: ['Diwali, from the outside, can look like fireworks, shopping, and a mountain of sweets. If someone asked you what it’s actually about, what would you tell them?'],
+        choices: [
+          { text: 'Lights, and Rama coming home', reply: 'That’s the story on the surface, and a good start. But there’s a reason that particular story became a festival of lamps, and it’s about you as much as about Rama.', next: 'light' },
+          { text: 'Honestly, not sure', reply: 'Most people aren’t, even people who celebrate it every year. Let me give you the one line that ties the whole thing together.', next: 'light' },
+          { text: 'Something about good beating evil', reply: 'Right on the nose. Now let me show you where that battle actually happens, because it’s closer to home than a battlefield.', next: 'light' },
+        ],
+      },
+      light: {
+        id: 'light',
+        krishna: [
+          'Every lamp on Diwali is lit on **Amavasya**, the darkest night of the month, when there’s no moon at all. That’s the whole point. Nobody lights a lamp at noon. You light it exactly when the dark is deepest.',
+          'The Upanishads gave the night its prayer three thousand years ago: “from darkness, lead me to light.” The Ramayana gave the darkness a face, fourteen years of exile, and Rama finally coming home to a city that lit every window to guide him back. But that lamp was always pointing at something inside you too.',
+          'So when you light a diya this year, what do you figure it’s really meant to push back?',
+        ],
+        citation: 'Brihadaranyaka Upanishad 1.3.28 — “tamaso mā jyotir gamaya,” from darkness lead me to light.',
+        choices: [
+          { text: 'The literal dark outside', reply: 'That’s where it starts, a light in the window. But the tradition means the other darkness too, the fear and the fog you’ve been carrying. One lamp says: not in here, not tonight.', next: 'home' },
+          { text: 'Something in me', reply: 'Yes. The fear, the grudge, the heaviness you’ve been carrying around. The lamp is small on purpose. One small flame is enough to say the dark doesn’t get the last word tonight.', next: 'home' },
+        ],
+      },
+      home: {
+        id: 'home',
+        krishna: [
+          'There’s a reason families scrub and light the whole house first. **Lakshmi**, abundance herself, is said to enter a home that’s clean and glowing, and walk right past one that’s shut and dark. Make a little room for the good, and it tends to show up.',
+          'How your own family does all of this, the sweets, the rangoli, the prayers, is theirs to teach you. Ask them. That’s part of the festival too.',
+        ],
+        practice: 'This Diwali, before the noise starts, light one diya on your own. As you light it, name one bit of darkness you’re done carrying, a worry, a grudge, a fear. You don’t have to solve it. Just let the small flame stand for choosing light over it, once, on purpose.',
+        end: true,
+      },
+    },
+  },
 };
