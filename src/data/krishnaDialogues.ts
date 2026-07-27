@@ -1237,4 +1237,152 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
     },
   },
+
+  'deity:krishna': {
+    id: 'dlg:deity-krishna',
+    start: 'me',
+    nodes: {
+      me: {
+        id: 'me',
+        krishna: ['Alright, this one’s a little strange for me, it’s my own chapter. So let me ask you the question people always trip over: which one am I, really? The butter-stealing kid with the flute, or the one who showed Arjuna the whole universe inside my mouth?'],
+        choices: [
+          { text: 'The cowherd, mostly', reply: 'That’s the one most people fall for first, and I don’t mind a bit. But hold that thought, because the flute and the universe are the same me, and that’s the whole point.', next: 'both' },
+          { text: 'The cosmic one, I guess', reply: 'The grand version, sure. But if I were only that, you’d admire me and keep your distance. The flute is there so you don’t. Let me explain.', next: 'both' },
+          { text: 'Aren’t they different?', reply: 'That’s exactly the puzzle. They look like two gods. They’re one, and that’s the most interesting thing about me. Here’s why.', next: 'both' },
+        ],
+      },
+      both: {
+        id: 'both',
+        krishna: [
+          'Most gods stand for one big thing. I insisted on being all of it at once: the baby you scold for stealing butter, and the force the whole universe runs on. Both true, both me.',
+          'And there’s a reason for it, not just showing off. A God you can only bow to stays far away. A God you can also tease, argue with, and feed gets close. I made myself easy to love on purpose.',
+        ],
+        citation: 'Krishna as the complete avatar: Bhagavata Purana, Canto 10.',
+        choices: [
+          { text: 'Honestly, far off', reply: 'Then start with the flute, not the cosmic form. Talk to me like a friend who’s in the room. That closeness is the front door I built for you.', next: 'friend' },
+          { text: 'Pretty close, actually', reply: 'Good. That closeness is the whole invitation. The grandeur is real, but you don’t have to earn your way up to it. You start as a friend and the rest unfolds.', next: 'friend' },
+        ],
+      },
+      friend: {
+        id: 'friend',
+        krishna: [
+          'That’s really all I want you to take from my chapter. You don’t have to approach the biggest thing there is on your knees and trembling. You can approach it the way you’d approach someone who loves you.',
+          'The Gita, the cosmos, all of that is here too. But it started with a boy, a flute, and a pasture full of friends. Start there.',
+        ],
+        practice: 'This week, try talking to the divine the way you’d talk to a close friend, out loud, plainly, no special voice. Tell it about your day. Complain, thank, ask. Notice whether the distance shrinks even a little. That informal closeness is the door I’m holding open.',
+        end: true,
+      },
+    },
+  },
+
+  'deity:shiva': {
+    id: 'dlg:deity-shiva',
+    start: 'destroyer',
+    nodes: {
+      destroyer: {
+        id: 'destroyer',
+        krishna: ['Let me introduce you to **Shiva**, and clear up the scariest word attached to him first: “destroyer.” When you hear that, what do you picture?'],
+        choices: [
+          { text: 'Something frightening', reply: 'Most people do. But what he governs is endings, and an ending is really just the clearing that makes room for the next thing. Stay with me.', next: 'endings' },
+          { text: 'Not sure, honestly', reply: 'Fair. The title does him a disservice. What he actually governs is endings, and endings turn out to be less the enemy than they sound. Let me show you.', next: 'endings' },
+          { text: 'Isn’t he the meditation god?', reply: 'That too, the still one on the mountain. And that stillness and the “destroyer” turn out to be the same thing seen from two sides. Here’s how.', next: 'endings' },
+        ],
+      },
+      endings: {
+        id: 'endings',
+        krishna: [
+          'Think of a gardener pruning a plant, or a forest fire that lets new growth come. Something has to end for something to begin. Shiva is the god of that necessary ending, the out-breath of the whole universe.',
+          'There’s a story that shows his heart. When the gods churned the ocean, out came a poison that could destroy everything. Someone had to drink it. Shiva did, and held it in his throat, which turned blue. He takes in what would ruin everyone else, and stays standing.',
+        ],
+        citation: 'The blue throat (Nilakantha): the churning of the ocean, Puranic tradition.',
+        choices: [
+          { text: 'Someone has to stay steady', reply: 'Exactly. When things are ending and everyone’s panicking, Shiva is the one sitting perfectly still in the middle of it. That stillness is a strength most people never build.', next: 'still' },
+          { text: 'Not sure it does', reply: 'Think of the calmest person you know in a crisis, and how much you want them near when things fall apart. Shiva is that, turned all the way up. The stillness is the point.', next: 'still' },
+        ],
+      },
+      still: {
+        id: 'still',
+        krishna: [
+          'One more thing worth knowing: for all his fierceness, Shiva is famously the easiest god to please. No gold, no grand ritual, a little water on a plain stone and a sincere heart, and he’s moved. The tradition calls him Bholenath, the simple lord.',
+          'So he’s a strange, wonderful mix: the one who sits calmly with endings and poison, and the one who melts at a cup of water offered honestly. Fierce with the big things, tender with the small.',
+        ],
+        practice: 'This week, find one thing in your life that’s genuinely ending, a habit, a role, a chapter, and instead of clinging, try sitting with it the way Shiva sits: still, unpanicked, letting it go so the next thing has room. Just one ending, met calmly.',
+        end: true,
+      },
+    },
+  },
+
+  'deity:durga': {
+    id: 'dlg:deity-durga',
+    start: 'warrior',
+    nodes: {
+      warrior: {
+        id: 'warrior',
+        krishna: ['Meet **Durga**, and notice the first strange thing about her: a calm, almost gentle motherly face, sitting above ten arms each holding a weapon, riding a lion into battle. Serenity and ferocity in one figure. What do you make of that combination?'],
+        choices: [
+          { text: 'A protective mother?', reply: 'Exactly the read. There’s no fury like a mother’s when what she loves is threatened. But there’s something even bigger in how she was born. Let me tell you.', next: 'born' },
+          { text: 'Kind of contradictory', reply: 'It looks that way until you’ve met a calm person who’s also completely unafraid to fight. That’s her. And her origin explains why. Here it is.', next: 'born' },
+          { text: 'Isn’t she just a warrior?', reply: 'She’s that, but the serene face matters as much as the weapons. She fights without losing her center. Watch where she comes from.', next: 'born' },
+        ],
+      },
+      born: {
+        id: 'born',
+        krishna: [
+          'A demon named Mahishasura had a boon: no man and no god could kill him. One by one the great gods tried and failed. So they did something they had never done, they poured all their power into a single point, and out of that combined fire rose **Durga**.',
+          'Sit with what that means. When the crisis was total and no one could face it alone, the power they created took the form of the Goddess. She is what pure power looks like when it stands up in a body.',
+        ],
+        citation: 'Durga’s birth and the Mahishasura battle: Devi Mahatmya, Chapters 2–3.',
+        choices: [
+          { text: 'That strength can be loving', reply: 'Yes. The fiercest force in the story is also the most protective. Her ten weapons are all in service of the ones she shelters, strength and tenderness in the same hands.', next: 'shelter' },
+          { text: 'Hadn’t thought about it', reply: 'Most traditions picture ultimate power as a king or a father. This one looked at raw, world-saving strength and called it Mother. That choice says a lot about what strength is for.', next: 'shelter' },
+        ],
+      },
+      shelter: {
+        id: 'shelter',
+        krishna: [
+          'So Durga is what the tradition reaches for when things are truly threatening, not a distant judge but a mother who rides straight into the fight for her own, fierce precisely because she loves.',
+          'And she points at something about your own strength: the worth of any power you have is in what it protects. Fury with nothing to guard is just wreckage. Hers always has someone behind it.',
+        ],
+        practice: 'This week, think of one person or thing you’d protect without hesitation, and let that sharpen your sense of your own strength. Do one concrete thing to guard or support them. Notice how different strength feels when it’s in service of something you love.',
+        end: true,
+      },
+    },
+  },
+
+  'deity:ganesha': {
+    id: 'dlg:deity-ganesha',
+    start: 'first',
+    nodes: {
+      first: {
+        id: 'first',
+        krishna: ['**Ganesha** is the one Hindus call on before almost anything new, a wedding, a business, a journey, even the first page of a book. Elephant head, big belly, riding a tiny mouse. Why do you think he gets called first, before every fresh start?'],
+        choices: [
+          { text: 'He removes obstacles?', reply: 'Exactly, that’s his whole job. But there’s a beautiful story in how he got that elephant head, and it says why he’s the god of beginnings. Let me tell it.', next: 'remade' },
+          { text: 'Not sure', reply: 'He’s the remover of obstacles, greeted first so the path ahead clears. And how he came to look the way he does is the heart of it. Here’s the story.', next: 'remade' },
+          { text: 'The elephant thing is odd', reply: 'It is, and it’s the best part. That head came through a loss and a second chance, which is exactly why he guards beginnings. Watch.', next: 'remade' },
+        ],
+      },
+      remade: {
+        id: 'remade',
+        krishna: [
+          'Parvati shaped a boy from turmeric to guard her door. Shiva came home, didn’t know him, and in a flash of temper struck off his head. When he saw Parvati’s grief, he brought the boy back to life with the head of the first creature nearby, an elephant.',
+          'So the god you greet at every beginning began with a loss and a remaking. He knows, in his own body, that a start can come straight out of a break. That’s part of why he’s so reassuring at the threshold of anything new.',
+        ],
+        citation: 'Ganesha’s origin: Shiva Purana, Rudra Samhita, Kumara Khanda.',
+        choices: [
+          { text: 'That cleverness beats speed', reply: 'Partly. But look closer: asked to race around the world, he skipped the obvious sprint and circled his parents, saying “you are my world.” He won by seeing what actually mattered. That kind of clear sight is how obstacles dissolve.', next: 'remove' },
+          { text: 'Something about wisdom?', reply: 'Yes. In the famous race, his athletic brother sprinted off around the earth; Ganesha just circled his parents, “you are my world,” and won. His gift is seeing what’s really there, which is how most obstacles actually clear.', next: 'remove' },
+        ],
+      },
+      remove: {
+        id: 'remove',
+        krishna: [
+          'That’s the quiet truth about Ganesha. Most of what blocks us isn’t a wall out in the world. It’s a misunderstanding, a wrong assumption, running the wrong race. He clears the way by helping you see clearly, and then the path opens on its own.',
+          'So calling on him first is less superstition than a small ritual of pausing before you begin, to ask: do I actually see this situation as it is?',
+        ],
+        practice: 'Before you start something new this week, take one Ganesha pause. Ask, honestly: what’s the real obstacle here, and is it out in the world or in how I’m seeing it? Name it plainly before you begin. Half the time, naming it is most of the way to clearing it.',
+        end: true,
+      },
+    },
+  },
 };
