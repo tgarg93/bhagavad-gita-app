@@ -830,4 +830,115 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
     },
   },
+
+  'festival:ram-navami-2025': {
+    id: 'dlg:ram-navami',
+    start: 'noon',
+    nodes: {
+      noon: {
+        id: 'noon',
+        krishna: ['Here’s a small thing most people never notice. **Krishna**, that’s me, is born at midnight, hidden away in a prison. **Rama** is born at high noon, sun blazing over the city. Same divine, two very different entrances. Why do you suppose the tradition lights Rama up in full daylight?'],
+        choices: [
+          { text: 'No idea, but now I’m curious', reply: 'Good, because the daylight is the whole clue. Rama is the divine you can see clearly, in the open, all the time. Let me show you what that means.', next: 'ideal' },
+          { text: 'Because he’s the good example?', reply: 'That’s exactly it. Rama is the one held up as the model, and a model has to be visible. Here’s what he models.', next: 'ideal' },
+          { text: 'Solar dynasty thing?', reply: 'Yes, he’s of the sun line, born with the sun at its peak. And that fits what he stands for perfectly. Watch.', next: 'ideal' },
+        ],
+      },
+      ideal: {
+        id: 'ideal',
+        krishna: [
+          'Rama is what the tradition calls **maryada purushottam**, roughly, the perfect man of conduct. On the very morning he is to be crowned king, the order flips: fourteen years of exile instead, over a promise his father once made. Rama hears it and walks out the same hour, no argument, no bitterness.',
+          'That is his whole character in one motion. He does the right thing when it costs him everything, in plain sight, with no one forcing him. Where my path is play and closeness, his is the straight, bright example of dharma held all the way down.',
+        ],
+        citation: 'Rama’s exile and character: Valmiki Ramayana, Ayodhya Kanda.',
+        choices: [
+          { text: 'That’s a high bar', reply: 'It is, and it is meant to be. You don’t clear it in a day. But you can aim at it, one honest choice at a time, which is all Rama ever asks.', next: 'daylight' },
+          { text: 'Feels almost too perfect', reply: 'People say that. Think of him less as a scold and more as a fixed star: something true to steer by, useful even on the nights you wander off course.', next: 'daylight' },
+        ],
+      },
+      daylight: {
+        id: 'daylight',
+        krishna: [
+          'So Rama’s noon is the festival’s quiet claim: some goodness is meant to be done in the open, in full daylight, when nobody is making you and everybody can see.',
+          'You already know the feeling. The moment where the easy thing and the right thing part ways, and only you would know if you took the shortcut. That’s your bit of Ayodhya.',
+        ],
+        practice: 'This week, catch one small “nobody would know” moment, where you could cut a corner and no one would see. Do the Rama thing instead: the honest, upright choice, made quietly, in the full daylight of your own conscience. Notice how it sits with you afterward.',
+        end: true,
+      },
+    },
+  },
+
+  'festival:makar-sankranti-2025': {
+    id: 'dlg:makar-sankranti',
+    start: 'turn',
+    nodes: {
+      turn: {
+        id: 'turn',
+        krishna: ['Almost every Hindu festival rides the moon, so the dates wander year to year. Makar Sankranti is the odd one out, it rides the sun, and lands on nearly the same date every January. What do you figure a whole festival built around the sun is actually celebrating?'],
+        choices: [
+          { text: 'The sun, literally?', reply: 'Partly, yes, but a specific thing the sun does on this day. And that thing turns out to be a lesson about your whole life. Here it is.', next: 'degree' },
+          { text: 'No clue, honestly', reply: 'Fair, it’s an easy one to miss. What it marks is tiny and enormous at the same time. Let me show you.', next: 'degree' },
+          { text: 'Isn’t it the kite one?', reply: 'That’s the one, kites everywhere. But under the kites is a quieter idea, and it’s worth having.', next: 'degree' },
+        ],
+      },
+      degree: {
+        id: 'degree',
+        krishna: [
+          'On this day the sun turns north, and the days start getting longer. The word **sankranti** just means “transition.” Notice what the festival honors: not an arrival, not a finish line, but the turn itself, the exact moment the direction changes.',
+          'And here is why that matters. The turn is almost nothing on the day, a few seconds of extra light, imperceptible. But it compounds. That is what real turnarounds look like: no drama on the day, just a changed direction that adds up by summer.',
+        ],
+        citation: 'Uttarayana, the sun’s northern turn: Bhagavad Gita 8.24.',
+        choices: [
+          { text: 'So small turns, big results', reply: 'Exactly. You almost never feel the day you turn. You feel it months later, when the light is everywhere and you realize you’ve been climbing the whole time.', next: 'sweet' },
+          { text: 'Wish my turnarounds felt bigger', reply: 'They rarely feel like anything on the day, that’s the trap. The turn is quiet. One degree, held for six months, is how a winter becomes a summer.', next: 'sweet' },
+        ],
+      },
+      sweet: {
+        id: 'sweet',
+        krishna: [
+          'There is a sweet custom too. People hand each other little sesame-and-jaggery treats and say, in effect, take this sweet and speak sweetly. It’s a yearly, edible peace treaty, a nudge to mend what soured over the cold months.',
+          'So the day carries two gifts: turn your direction by a degree, and sweeten one thing that went bitter. Both small. Both compound.',
+        ],
+        practice: 'Pick one direction in your life you want to turn, just one degree this week, not a whole transformation. Then do the tilgul move: reach out to one person things went cold with, and offer something sweet, a kind word, a small gesture. Small turns, held, are how a year changes.',
+        end: true,
+      },
+    },
+  },
+
+  'festival:basant-panchami-2025': {
+    id: 'dlg:basant-panchami',
+    start: 'white',
+    nodes: {
+      white: {
+        id: 'white',
+        krishna: ['On Basant Panchami, everyone wears yellow and honors **Saraswati**. Here’s the odd detail: unlike the gods of wealth or power, she carries no weapon and wears plain white, just a book and a **veena**, a stringed instrument. What do you think a goddess dressed like that is the goddess of?'],
+        choices: [
+          { text: 'Learning, maybe?', reply: 'Exactly right. She is knowledge itself, music, speech, study, wisdom. And the way she’s dressed says something the modern world half-forgets.', next: 'sacred' },
+          { text: 'Not sure, honestly', reply: 'She is the goddess of knowledge, learning, and music. And her plain white robes carry a claim worth hearing.', next: 'sacred' },
+          { text: 'Art and music?', reply: 'Close, and included. She covers all of it: music, speech, study, the whole life of the mind. And notice what she does not carry.', next: 'sacred' },
+        ],
+      },
+      sacred: {
+        id: 'sacred',
+        krishna: [
+          'No sword, no gold, no crown. Just an instrument and a book. The tradition is making a quiet, radical claim: **learning itself is sacred**. Holy in its own right, worth reverence the way wealth or power is, and not merely because it lands you a paycheck.',
+          'That’s why on this day even books get a holiday, set down before the goddess and honored. And it’s why a child’s very first lesson is treated as a religious event.',
+        ],
+        citation: 'Saraswati, goddess of learning: Puranic tradition; the river hymn, Rig Veda 6.61.',
+        choices: [
+          { text: 'What’s the child’s first lesson?', reply: 'The sweetest custom of the day. A little one sits in a grandparent’s lap and traces their first letters in a tray of rice, everyone clapping as if a kingdom were won. It is called vidyarambha, the beginning of knowledge.', next: 'begin' },
+          { text: 'Learning as holy is a nice idea', reply: 'It changes how you hold it. On this day a child even traces their first letters in a tray of rice, in a grandparent’s lap, blessed and applauded. The beginning is made an occasion, not a test.', next: 'begin' },
+        ],
+      },
+      begin: {
+        id: 'begin',
+        krishna: [
+          'The wisdom in that custom is simple: your whole relationship with learning is shaped by its first emotional taste. So the tradition made that first taste sweet on purpose, lap, laughter, blessing, and no judgment for the first clumsy stroke.',
+          'And it is not only for children. Whatever you’ve been meaning to learn, the language, the instrument in its case, the skill you keep postponing, has its own first letters waiting.',
+        ],
+        practice: 'Pick one “first letters” of your own, something you’ve wanted to learn and kept putting off. This week, begin it the vidyarambha way: start small, be kind to the first clumsy attempt, and treat the beginning as something to celebrate rather than judge. Beginnings deserve ceremony.',
+        end: true,
+      },
+    },
+  },
 };
