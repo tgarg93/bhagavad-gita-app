@@ -947,7 +947,21 @@ export const festivalData: Festival[] = [
         storyText: 'The Shiva Purana\'s beloved Shivratri story stars no sage but **a hunter** — a rough man who had never worshiped anything.\n\nBenighted in the forest and afraid of beasts, he climbed a bilva tree and, to stay awake through the cold night, plucked its leaves one by one and dropped them below. Unknown to him, **a Shiva linga stood at the tree\'s foot**; unknowing, hungry, and frightened, he kept an accidental all-night vigil, showering it with Shiva\'s favorite leaves on Shiva\'s own night.\n\nBy dawn, the story insists, his heart had changed — and heaven counted the night as perfect worship.',
         teachingText: 'The hunter\'s story is the tradition at its most generous: intention matters, but **attention counts even when it doesn\'t know itself as worship**.\n\nWhatever kept you awake and watchful through your own hard nights — grief, fear, care — may have been closer to prayer than you knew. Tonight, do knowingly what the hunter did by accident.',
         citationLink: 'deity:shiva',
-        citation: 'Shiva Purana (Shivratri mahatmya tellings).'
+        citation: 'Shiva Purana (Shivratri mahatmya tellings).',
+        checks: [
+          {
+            id: 'chk:festival:shivratri:hunter',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'A hunter stuck in a bilva tree all night kept dropping leaves that happened to land on a Shiva linga below, and the story says Shiva was pleased. What does that teach?',
+            options: [
+              { text: 'Shiva responds to sincerity over show, even worship offered by accident reaches him', correct: true },
+              { text: 'You must drop exactly the right number of leaves' },
+              { text: 'Only trained priests can worship Shiva correctly' },
+            ],
+            why: 'The hunter did not even mean to worship. Shiva is Bholenath, the easily pleased, moved by a wakeful, sincere heart far more than by correct ritual.',
+          },
+        ],
       },
       {
         id: 'shivratri-wedding',
@@ -956,7 +970,21 @@ export const festivalData: Festival[] = [
         storyText: 'The night\'s most joyful reading: Maha Shivratri as **the wedding anniversary of Shiva and Parvati**.\n\nParvati won the unwinnable — the ash-smeared ascetic who had burned desire itself — not by beauty but by matching his discipline with her own tapasya. Their wedding procession is the tradition\'s wildest scene: Shiva arriving on his bull with an entourage of ghosts and misfits, the mountain-king\'s court aghast, Parvati serene.\n\n**Shakti — power, energy, life — married Shiva — stillness, consciousness** — and the philosophers have read the whole cosmos as that marriage ever since.',
         teachingText: 'The union is also inner counsel: **your stillness and your power are meant to be wedded, not alternated.** Meditation that never acts is Shiva without Shakti; action that never stills is Shakti without Shiva.\n\nShivratri, falling weeks before the action-festival of Holi, holds the still pole of the pair. Ask which pole your life over-weights, and what a wedding of the two would change.',
         citationLink: 'deity:parvati',
-        citation: 'Shiva Purana, Rudra Samhita (the wedding).'
+        citation: 'Shiva Purana, Rudra Samhita (the wedding).',
+        checks: [
+          {
+            id: 'chk:festival:shivratri:wedding',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Maha Shivratri also marks the wedding of Shiva and Parvati. What does that union represent?',
+            options: [
+              { text: 'Stillness joined with power, pure awareness (Shiva) and the energy that acts (Parvati), each needing the other', correct: true },
+              { text: 'The end of Shiva’s role as a god' },
+              { text: 'A purely historical royal marriage' },
+            ],
+            why: 'Shiva is stillness and awareness; Parvati is Shakti, the power that moves. The marriage says the two belong together: awareness without power does nothing, and power without awareness runs wild.',
+          },
+        ],
       }
     ],
     sources: [
@@ -2428,6 +2456,20 @@ export const festivalData: Festival[] = [
         teachingText:
           'Kamsa\u2019s tragedy is instructive: **the prophecy did not doom him \u2014 his response to it did.** Fear made him cruel, and his cruelty manufactured the very enemy he feared. When threatening news arrives, watch what it makes of you.',
         citation: 'Bhagavata Purana, Canto 10, Chapter 1 (vedabase.io / wisdomlib.org)',
+        checks: [
+          {
+            id: 'chk:festival:janmashtami:prophecy',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Why did the tyrant Kamsa imprison his own sister Devaki and kill her babies?',
+            options: [
+              { text: 'A voice from the sky warned him that her eighth child would be the one to kill him', correct: true },
+              { text: 'She had committed a crime against his kingdom' },
+              { text: 'It was an ancient royal custom' },
+            ],
+            why: 'On Devaki’s wedding day a prophecy told Kamsa her eighth child would kill him. He locked her away and killed each newborn, trying to outrun the very fate he was busy bringing about.',
+          },
+        ],
       },
       {
         id: 'janmashtami-prison-years',
@@ -2467,6 +2509,20 @@ export const festivalData: Festival[] = [
         teachingText:
           'Kamsa spent eight years guarding one door, and destiny walked out another. **Control is the tyrant\u2019s illusion** \u2014 the story\u2019s quiet verdict on every attempt to cage the future.',
         citation: 'Bhagavata Purana, Canto 10, Chapter 4',
+        checks: [
+          {
+            id: 'chk:festival:janmashtami:swap',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Krishna was secretly carried to safety and a baby girl left in the prison. When Kamsa tried to kill her, what happened?',
+            options: [
+              { text: 'She slipped from his hands as the goddess and warned him his killer was already born and beyond his reach', correct: true },
+              { text: 'She defeated Kamsa’s whole army single-handed' },
+              { text: 'Nothing, Kamsa spared her and repented' },
+            ],
+            why: 'The substitute child revealed herself as the goddess, telling Kamsa the one who would end him was already alive and safe. No prison could hold what was coming.',
+          },
+        ],
       },
       {
         id: 'janmashtami-why-born',
@@ -2727,7 +2783,21 @@ export const festivalData: Festival[] = [
         storyText: 'The birth the festival honors is the Shiva Purana\'s fierce and tender story: Parvati shaping a son from the turmeric paste of her own body, the boy\'s unbending loyalty at her door, Shiva\'s terrible mistake, and **the repair that outgrew the wound** — an elephant\'s head, command of the ganas, and the decree that this child would be worshiped first among all gods.\n\n**Chaturthi**, the fourth day of the waxing moon of Bhadrapada, is kept as the day that grace took form.',
         teachingText: 'Every murti brought home on Chaturthi re-enacts the story\'s ending: **the wounded one enthroned first**.\n\nFamilies who have weathered their own ruptures know why India loves this birthday — it celebrates not a perfect family, but a repaired one.',
         citationLink: 'deity:ganesha',
-        citation: 'Shiva Purana, Rudra Samhita, Kumara Khanda, Chapters 13–18.'
+        citation: 'Shiva Purana, Rudra Samhita, Kumara Khanda, Chapters 13–18.',
+        checks: [
+          {
+            id: 'chk:festival:ganesh:birth',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'How was Ganesha created, in the popular story?',
+            options: [
+              { text: 'Parvati shaped a boy from turmeric to guard her door; Shiva, not knowing him, beheaded him, then restored him with an elephant’s head', correct: true },
+              { text: 'He was born fully grown from Shiva’s third eye' },
+              { text: 'He emerged from the churning of the ocean' },
+            ],
+            why: 'Parvati made a boy from the paste of her own body to stand guard. Shiva, refused entry by a child he did not recognize, struck off his head, then brought him back to life with the head of an elephant.',
+          },
+        ],
       },
       {
         id: 'ganesh-chaturthi-moon',
@@ -2750,7 +2820,21 @@ export const festivalData: Festival[] = [
         title: 'The Art of Letting Go',
         subtitle: 'A Murti Dissolving into Water at Dusk',
         storyText: 'The festival\'s genius is its ending.\n\nAfter days of intimacy — feeding, singing, decorating — the family carries their guest to the water and **lets him dissolve**. The chant on every procession holds both halves of the heart: **"Ganpati Bappa Morya, pudhchya varshi laukar ya"** — beloved Ganesha, come again early next year. Grief and trust in one breath.\n\nThe clay returns to the riverbed it came from; the form returns to the formless; and the family walks home lighter, having practiced, with their own hands, **the hardest spiritual skill there is**.',
-        teachingText: 'Visarjan is rehearsal for every farewell your life will ask of you: children leaving, seasons ending, the body itself one day returned.\n\nThe festival\'s instruction is precise — love fully while the guest is here, release fully when the time comes, and trust the return. **Welcome. Host. Release. Repeat.**'
+        teachingText: 'Visarjan is rehearsal for every farewell your life will ask of you: children leaving, seasons ending, the body itself one day returned.\n\nThe festival\'s instruction is precise — love fully while the guest is here, release fully when the time comes, and trust the return. **Welcome. Host. Release. Repeat.**',
+        checks: [
+          {
+            id: 'chk:festival:ganesh:visarjan',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'After days of hosting the clay Ganesha as a guest, families immerse the murti in water. What does this visarjan teach?',
+            options: [
+              { text: 'Everything you love is welcomed fully, then released, love it while it is here and let go when it is time', correct: true },
+              { text: 'The murti was never really sacred' },
+              { text: 'Water is the only proper place to store a murti' },
+            ],
+            why: 'Visarjan is a rehearsal for every farewell. You make the guest with your own hands, host him with love, then let the clay dissolve back into the river. Welcome, host, release, and trust the return.',
+          },
+        ],
       }
     ],
     mythology: [
