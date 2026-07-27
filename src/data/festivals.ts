@@ -1402,14 +1402,42 @@ export const festivalData: Festival[] = [
         subtitle: 'One Day, Two Names',
         storyText: 'When does the Hindu year begin? The honest answer is that it depends on where your family is from, and one of the great answers is today.\n\n**Chaitra Shukla Pratipada** is the first day after the new moon of the month of Chaitra, in early spring. On this morning the Telugu and Kannada worlds celebrate **Ugadi**, from yuga and adi, meaning the beginning of the age. Maharashtra and Goa celebrate the same day as **Gudi Padwa**.\n\nThe day carries an old weight. Tradition holds that Brahma, the creator, began the making of the universe on this morning, so every new year since is a small echo of the first one.\n\nThe same sunrise also opens Chaitra Navratri, nine nights of the Goddess, and on the ninth day Rama is born. The spring calendar is built like a staircase, and today is its first step.',
         citationLink: 'festival:ram-navami-2025',
-        citation: 'Brahma Purana — creation beginning on Chaitra Shukla Pratipada; purana tradition.'
+        citation: 'Brahma Purana — creation beginning on Chaitra Shukla Pratipada; purana tradition.',
+        checks: [
+          {
+            id: 'chk:festival:ugadi:newyear',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Ugadi marks the new year. What does tradition say began on this very day?',
+            options: [
+              { text: 'Creation itself, Brahma is said to have begun making the world on this day', correct: true },
+              { text: 'The birth of Rama' },
+              { text: 'The end of the Mahabharata war' },
+            ],
+            why: 'Tradition places the start of creation on Chaitra Shukla Pratipada, the Ugadi day, so the new year echoes a cosmic fresh start.',
+          },
+        ],
       },
       {
         id: 'ugadi-pachadi',
         title: 'Six Tastes in One Spoon',
         subtitle: 'The New Year, Served as a Chutney',
         storyText: 'Before the feasting, a Telugu or Kannada home does something quietly profound. It serves the year.\n\n**Ugadi pachadi** is a small bowl of chutney with six ingredients, one for each taste the tongue knows. Neem flowers for the bitter. Jaggery for the sweet. Raw mango for the tang. Tamarind for the sour. Salt for itself. Chili for the heat.\n\nEvery member of the family eats a spoonful, all six tastes at once, before anything else. The meaning is spoken aloud to children every year. The months ahead will bring sweetness, and they will also bring bitterness, sourness, and heat, and the family accepts all of it in advance, together, in one bite.\n\nMost new year customs promise a good year. This one promises a whole year, and calls that better.',
-        citation: 'Ugadi pachadi — festival practice, labeled as tradition.'
+        citation: 'Ugadi pachadi — festival practice, labeled as tradition.',
+        checks: [
+          {
+            id: 'chk:festival:ugadi:pachadi',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'The Ugadi pachadi is eaten at the year’s start with six tastes at once, sweet, sour, bitter, salty, spicy, tangy. What does that express?',
+            options: [
+              { text: 'The year ahead will hold all of it, joy and grief and surprise, and you take the whole spoon together', correct: true },
+              { text: 'Only sweet foods are allowed on Ugadi' },
+              { text: 'It is purely about nutrition' },
+            ],
+            why: 'The one spoon carries every taste on purpose. It is a ritual acceptance that a real year brings sweetness and bitterness both, and a mature life takes the whole spoon.',
+          },
+        ],
       },
       {
         id: 'ugadi-gudi',
@@ -2378,14 +2406,42 @@ export const festivalData: Festival[] = [
         subtitle: 'A Queen, a Losing War, and a Consecrated Thread',
         storyText: 'The oldest story attached to the day surprises most people: the first raksha was tied by a wife.\n\nThe **Bhavishya Purana** tells of a war the gods were losing. Indra, their king, faced the asura Bali\'s forces and was being driven back. His queen, **Shachi**, prepared a thread, consecrated by prayer, and bound it to her husband\'s wrist on the full moon of Shravana. Indra returned to the field and won.\n\nThe same purana gives the rite its mantra, still recited today, which swears by the binding of **King Bali**, the same generous demon king whom Kerala\'s Onam welcomes home every year. The traditions braid into each other like this constantly.\n\nSo before the rakhi belonged to siblings, it was simply a **raksha**: a protection any loving hand could tie onto any wrist being sent out into danger. Priests tied them to patrons. Wives to husbands. Mothers to sons. The sister-brother form came to hold the center, but the older, wider meaning never left.',
         citationLink: 'festival:onam-2025',
-        citation: 'Bhavishya Purana, Uttara Parva — the Indra-Shachi raksha and the yena baddho mantra.'
+        citation: 'Bhavishya Purana, Uttara Parva — the Indra-Shachi raksha and the yena baddho mantra.',
+        checks: [
+          {
+            id: 'chk:festival:raksha:origin',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'The rakhi is usually a sister tying a thread on a brother. But the oldest rakhi stories aren’t about siblings. What was the thread first?',
+            options: [
+              { text: 'A consecrated thread tied for protection before danger, a bond broader than brother and sister', correct: true },
+              { text: 'A wedding ornament' },
+              { text: 'A badge of royal rank' },
+            ],
+            why: 'In the older tellings, a queen ties a protective thread on Indra before battle. The rakhi began as a bond of protection, only later settling into the brother-sister custom.',
+          },
+        ],
       },
       {
         id: 'raksha-bandhan-draupadi',
         title: 'A Strip of Silk, Repaid Without Limit',
         subtitle: 'Krishna and Draupadi',
         storyText: 'The story most families tell over the thali is about Krishna and **Draupadi**.\n\nKrishna\'s finger is bleeding, cut by his own discus in one telling. Court remedies are sent for, but Draupadi does not wait. She tears a strip from the end of her own sari, silk she is wearing, and binds the wound on the spot.\n\nKrishna, the story says, counted the torn strip as a rakhi, and declared the debt open-ended. Years later, when Draupadi is dragged into the Kaurava court and a hand grips her sari to strip her before the assembly, she calls his name. The sari becomes endless. The hall fills with cloth, and the man pulling at it collapses exhausted. One strip of silk, repaid without limit.\n\nBe honest about the source, as this app tries to be: the rakhi framing of this story is later devotional tradition, not the critical text of the Mahabharata. It is told every Shravana anyway, because it teaches what the thread means better than any definition: protection flows toward spontaneous love, and it returns multiplied.',
-        citation: 'Krishna-Draupadi rakhi — later devotional tradition, labeled as such; the court scene, Mahabharata, Sabha Parva (tr. Ganguli).'
+        citation: 'Krishna-Draupadi rakhi — later devotional tradition, labeled as such; the court scene, Mahabharata, Sabha Parva (tr. Ganguli).',
+        checks: [
+          {
+            id: 'chk:festival:raksha:draupadi',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Draupadi once tore a strip from her sari to bind Krishna’s bleeding finger. How did the story say he repaid that small kindness?',
+            options: [
+              { text: 'Without limit, later shielding her in her hour of deepest danger', correct: true },
+              { text: 'He forgot it entirely' },
+              { text: 'He repaid her with gold' },
+            ],
+            why: 'A scrap of silk given in care was repaid beyond measure. The rakhi says a bond of protection runs both ways and outlasts the thread.',
+          },
+        ],
       },
       {
         id: 'raksha-bandhan-many-threads',
@@ -3161,7 +3217,21 @@ export const festivalData: Festival[] = [
         title: 'The Festival for a Banished King',
         subtitle: 'Kerala Waits for a Guest',
         storyText: 'Every year, as the monsoon ends, Kerala prepares for a guest.\n\nHouses are cleaned. New clothes are bought. Flower carpets appear on doorsteps and grow larger every morning for ten days. And then comes the strangest part. The guest everyone is waiting for is an **asura**, a being from the family that Hindu stories usually cast as the villains.\n\nHis name is **Mahabali**, or Maveli for short, and Malayalis will tell you with real affection that he was the best king their land ever had. An old Onam song says that when Maveli ruled, all people were equal, nobody cheated anybody, and nobody went hungry.\n\nOnam is the time of year his people believe he comes back to visit them. The whole festival is a welcome.',
-        citation: 'The Maveli song (Onappattu) — Malayalam folk tradition, not scripture.'
+        citation: 'The Maveli song (Onappattu) — Malayalam folk tradition, not scripture.',
+        checks: [
+          {
+            id: 'chk:festival:onam:mahabali',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Onam welcomes the yearly return of King Mahabali. Why is a defeated king so beloved?',
+            options: [
+              { text: 'Under him everyone was equal and happy; Onam prepares a joyful welcome for his one visit home each year', correct: true },
+              { text: 'He was feared, and people celebrate his exile' },
+              { text: 'He invented the Onam feast himself' },
+            ],
+            why: 'Mahabali’s reign is remembered as a golden age of fairness and plenty. The flower carpets and the great feast are a people readying a welcome for a good king’s annual return.',
+          },
+        ],
       },
       {
         id: 'onam-vamana',
@@ -3169,7 +3239,21 @@ export const festivalData: Festival[] = [
         subtitle: 'Three Paces of Land',
         storyText: 'So how did a beloved king end up banished? The story is told in the **Bhagavata Purana**.\n\nBali was the grandson of **Prahlada**, the boy devotee the Holi story remembers. Like his grandfather he was devoted to Vishnu, and he was generous almost beyond sense. By strength and by virtue he won all three worlds, and the unseated gods went looking for help.\n\nVishnu came, but not with a weapon. He was born as **Vamana**, a small brahmin boy with an umbrella, and he walked into the great sacrifice where Bali was giving gifts to anyone who asked.\n\nThe boy asked for something absurdly small. Three paces of land, measured by his own little feet. Bali smiled and agreed. His teacher Shukracharya pulled him aside and warned him that the boy was Vishnu himself and that the gift would cost him everything. Bali gave his word anyway. A king who breaks a promise, he said, loses more than land.',
         citationLink: 'festival:holi-2025',
-        citation: 'Bhagavata Purana, Canto 8, chapters 15–19.'
+        citation: 'Bhagavata Purana, Canto 8, chapters 15–19.',
+        checks: [
+          {
+            id: 'chk:festival:onam:vamana',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Onam tells of Vamana, a small boy who asked the generous King Mahabali for just three paces of land. What happened?',
+            options: [
+              { text: 'Vamana grew cosmic, two steps covered all the worlds, and the third pressed the king gently down below', correct: true },
+              { text: 'The boy was turned away empty-handed' },
+              { text: 'Mahabali refused and was destroyed' },
+            ],
+            why: 'The little boy was Vishnu. Two strides spanned the universe; the third, placed on Mahabali’s head, sent him to the underworld, humbling his pride while honoring his generosity.',
+          },
+        ],
       },
       {
         id: 'onam-three-steps',
@@ -4206,14 +4290,42 @@ export const festivalData: Festival[] = [
         title: 'Waiting for the Moon',
         subtitle: 'Dusk, a Rooftop, a Sieve',
         storyText: 'On one October evening a year, the rooftops of North India fill with women in bridal red, holding sieves, watching the horizon.\n\nThey have not eaten since before sunrise. Most have not taken water. This is **Karwa Chauth**, the fourth day of Kartika\'s dark fortnight, and the fast, among the strictest in the Hindu year, is kept by married women for one stated purpose: the long life of their husbands.\n\nThe name is domestic on purpose. A **karwa** is a small clay water pot, the kind every old kitchen held. **Chauth** just means the fourth. No cosmic vocabulary, because the festival\'s subject is not the cosmos. It is a marriage.\n\nThe fast ends only when the moon rises, and Chaturthi moons rise late. So the day builds toward the year\'s most patient hour: everyone on the roof, hungry and laughing, scanning the clouds for a rim of silver.',
-        citation: 'Karwa Chauth vrat — North Indian tradition; the fast\'s form is folk practice, stated as such.'
+        citation: 'Karwa Chauth vrat — North Indian tradition; the fast\'s form is folk practice, stated as such.',
+        checks: [
+          {
+            id: 'chk:festival:karva:moonrise',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'On Karva Chauth, the day-long fast is broken in a particular way at moonrise. How?',
+            options: [
+              { text: 'The faster views the moon through a sieve, then looks at their spouse through it, and only then takes water and food', correct: true },
+              { text: 'At the first star, with a large meal' },
+              { text: 'At noon, with sweets' },
+            ],
+            why: 'The fast holds from before dawn until the moon is sighted. The moon is viewed through a sieve, then the spouse, and the first sip of water passes from their hand.',
+          },
+        ],
       },
       {
         id: 'karva-chauth-veervati',
         title: 'The Story Told at the Fast',
         subtitle: 'Veervati and the False Moon',
         storyText: 'Every vrat, every ritual fast, carries a story that is retold while it is kept. Karwa Chauth\'s is the katha of **Veervati**.\n\nVeervati, the only sister of seven brothers, keeps her first Karwa Chauth at her parents\' home. By late afternoon she is faint with thirst, and her brothers cannot bear to watch. So they stage a mercy: one climbs a distant tree with a lamp and a sieve, and they tell her the moon has risen. She breaks her fast.\n\nWith the first bite, word arrives that her husband is dead.\n\nThe rest of the katha is her refusal to accept it. In the telling most families use, she keeps vigil by his body for a year of fourth-days, fasting each one fully, until the goddess **Parvati** is moved and restores his life. Other tellings bring Yama, the death god, into the negotiation, as with Savitri of the Mahabharata, the scriptural grandmother of every wife-versus-death story.\n\nSay it plainly, as the katha tradition itself would: this is a folk story, not scripture. It is told because it teaches the vrat\'s one rule about devotion: kept fully, it holds; interrupted kindly, it breaks.',
-        citation: 'Karwa Chauth vrat katha — folk tradition, labeled as such; Savitri and Yama — Mahabharata, Vana Parva (tr. Ganguli).'
+        citation: 'Karwa Chauth vrat katha — folk tradition, labeled as such; Savitri and Yama — Mahabharata, Vana Parva (tr. Ganguli).',
+        checks: [
+          {
+            id: 'chk:festival:karva:vow',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'The vrat katha of Veervati, tricked into breaking her fast early by a false moon, warns about what?',
+            options: [
+              { text: 'A vow keeps its meaning only when kept fully, shortcuts hollow it out', correct: true },
+              { text: 'Fasting is dangerous and should be avoided' },
+              { text: 'The moon cannot be trusted' },
+            ],
+            why: 'Veervati’s brothers faked an early moonrise to spare her hunger, and the fast’s protection unravelled. A freely chosen vow is only itself when it is held all the way through.',
+          },
+        ],
       },
       {
         id: 'karva-chauth-day',
@@ -4901,7 +5013,21 @@ export const festivalData: Festival[] = [
         title: 'The Festival With Nothing in Between',
         subtitle: 'A River Ghat at Dusk',
         storyText: 'Picture a festival with no priest, no idol, and no temple. What is left?\n\nEverything, it turns out. At dusk on Kartika\'s sixth day, the riverbanks of Bihar fill with thousands of families. Women in turmeric-yellow saris walk into the water until it reaches their waists. In their raised hands are winnowing baskets of fruit and homemade sweets. Facing them: the setting sun. Nothing stands between the worshipper and the worshipped, and that is the design.\n\nThis is **Chhath**, from the word for sixth. It honors **Surya**, the sun, the one deity in the Hindu world no one has ever needed a murti to see, together with **Chhathi Maiya**, the mother goddess of the sixth day, protector of children. Most vratis, the fasting worshippers, are mothers, and the blessing most asked is not for themselves. It is for their children\'s lives and health.\n\nThe sun is the oldest god in the tradition\'s book. The Rig Veda, its most ancient text, sings to him again and again. Chhath\'s form is folk and regional; its object is as old as the scriptures get.',
-        citation: 'Rig Veda 1.50 (to Surya, tr. Griffith); the festival\'s form — regional tradition of Bihar and Mithila, labeled as such.'
+        citation: 'Rig Veda 1.50 (to Surya, tr. Griffith); the festival\'s form — regional tradition of Bihar and Mithila, labeled as such.',
+        checks: [
+          {
+            id: 'chk:festival:chhath:surya',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Chhath Puja is devoted to worshipping whom?',
+            options: [
+              { text: 'The Sun (Surya), offered water while standing in a river at dawn and dusk', correct: true },
+              { text: 'The Moon' },
+              { text: 'The river goddess Ganga alone' },
+            ],
+            why: 'Chhath is sun worship. Devotees stand in the water and offer arghya to the sun, thanking the source that feeds all life.',
+          },
+        ],
       },
       {
         id: 'chhath-four-days',
@@ -4915,7 +5041,21 @@ export const festivalData: Festival[] = [
           '**Usha Arghya** (day four): after a night of vigil and song, the same water, the rising sun, the morning offering — and only then is the fast broken'
         ],
         teachingText: 'Notice the order, because it is the festival\'s most quoted teaching. Chhath honors the **setting** sun first, and the rising one only after.\n\nGratitude that faces only what is rising is half a gratitude. The sun that is leaving gave you today; you thank it first, and trust it back at dawn.',
-        citation: 'The four-day sequence — Chhath tradition of Bihar and Mithila, labeled as tradition.'
+        citation: 'The four-day sequence — Chhath tradition of Bihar and Mithila, labeled as tradition.',
+        checks: [
+          {
+            id: 'chk:festival:chhath:setting-sun',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Unusually, Chhath offers its first arghya to the setting sun, the evening before the sunrise offering. What is striking about that?',
+            options: [
+              { text: 'It honors the sun even as it declines, gratitude to what is fading, not only to what is rising', correct: true },
+              { text: 'It is a mistake later corrected' },
+              { text: 'The setting sun is considered evil and warded off' },
+            ],
+            why: 'Most sun worship greets the dawn. Chhath bows first to the setting sun, a rare thanks offered to what has given all day and is now going down.',
+          },
+        ],
       },
       {
         id: 'chhath-discipline',

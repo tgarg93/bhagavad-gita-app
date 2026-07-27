@@ -1052,4 +1052,189 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
     },
   },
+
+  'festival:ugadi-gudi-padwa-2025': {
+    id: 'dlg:ugadi',
+    start: 'spoon',
+    nodes: {
+      spoon: {
+        id: 'spoon',
+        krishna: ['Ugadi, the new year across much of the south, opens with a very odd dish: a single spoonful of chutney, the **pachadi**, made on purpose to taste sweet, sour, bitter, salty, spicy, and tangy all at once. Why start a fresh year with bitter mixed right into the sweet?'],
+        choices: [
+          { text: 'To taste everything?', reply: 'Exactly the instinct. It’s a picture of the year you’re walking into. Let me spell it out.', next: 'taste' },
+          { text: 'No idea, sounds gross', reply: 'It’s a bit of a shock to the tongue, on purpose, and that shock is the teaching. Here’s what it means.', next: 'taste' },
+          { text: 'Some new-year ritual?', reply: 'It is, and a wise one. It sets the expectation for a whole year in a single bite. Watch.', next: 'taste' },
+        ],
+      },
+      taste: {
+        id: 'taste',
+        krishna: [
+          'Each taste stands for something the year will bring. Sweet for joy, bitter for grief, sour for the things that don’t go your way, spice for the surprises. You take them together, in one spoon, at the very start.',
+          'Notice what it refuses to promise: a year of only sweet. It hands you the whole flavor of a real life up front, and asks you to swallow it with a kind of cheerful readiness.',
+        ],
+        citation: 'Ugadi pachadi: festival tradition of the Deccan new year.',
+        choices: [
+          { text: 'That’s weirdly comforting', reply: 'It is, isn’t it. There’s relief in being told the truth on day one: it won’t all be sweet, and that’s not a failure. That’s just the recipe.', next: 'ready' },
+          { text: 'Bit pessimistic, no?', reply: 'It’s the opposite, really. It makes peace with all of it in advance, so the bitter days land as part of the recipe instead of a betrayal.', next: 'ready' },
+        ],
+      },
+      ready: {
+        id: 'ready',
+        krishna: [
+          'So the whole festival is one wise spoonful: the year will be sweet and bitter and everything between, and you meet it whole, without demanding only the good bits.',
+          'People who can taste the bitter without spitting out the spoon tend to be the ones who stay steady when a year turns hard. That steadiness is what Ugadi is trying to hand you.',
+        ],
+        practice: 'At the start of this week, name the six tastes of your life right now, out loud or on paper: one sweet thing, one bitter, one sour, and so on. Don’t fix them or rank them. Just take the whole spoon, and notice you can hold all of it at once.',
+        end: true,
+      },
+    },
+  },
+
+  'festival:raksha-bandhan-2025': {
+    id: 'dlg:raksha-bandhan',
+    start: 'thread',
+    nodes: {
+      thread: {
+        id: 'thread',
+        krishna: ['Raksha Bandhan looks like a sweet, simple thing: a sister ties a colorful thread on her brother’s wrist, he gives a gift, everyone eats sweets. But the name means “the bond of protection.” What do you think the thread is actually for?'],
+        choices: [
+          { text: 'A promise of some kind?', reply: 'Exactly. The thread is the easy part; the promise it stands for is the real thing. And it started out bigger than brothers and sisters.', next: 'origin' },
+          { text: 'Just a sibling tradition?', reply: 'That’s what it’s become, and it’s lovely. But the oldest versions weren’t sibling stories at all. Let me show you.', next: 'origin' },
+          { text: 'No clue, honestly', reply: 'It’s a vow, tied in string. And its first tellings had nothing to do with brothers and sisters. Here they are.', next: 'origin' },
+        ],
+      },
+      origin: {
+        id: 'origin',
+        krishna: [
+          'In one old story a queen ties a blessed thread on her husband before he rides into a war he’s losing, protection sent along in a strand of cotton. In another, **Draupadi** tears a strip from her sari to wrap my bleeding finger, and I promise to repay that scrap without limit, which, years later, I do, when she needs shielding most.',
+          'So the thread was never really about gender or blood. It’s a portable vow: I’m tying this to say I’ve got you, and you’ve got me.',
+        ],
+        citation: 'The Indra-Shachi and Krishna-Draupadi rakhis: Bhavishya Purana and Mahabharata tradition.',
+        choices: [
+          { text: 'So it’s mutual', reply: 'That’s the heart of it. One ties, one protects, and often it runs both ways. More and more, people tie rakhis to friends, cousins, whoever they mean to promise.', next: 'promise' },
+          { text: 'Nice, but does string do anything?', reply: 'The string does nothing. The named promise does everything. That’s why the wise version of this festival has people say the promise out loud, not just tie the knot.', next: 'promise' },
+        ],
+      },
+      promise: {
+        id: 'promise',
+        krishna: [
+          'Here’s what most people miss on the day. The thread frays and falls off within a week. What lasts, if anything does, is a specific promise: I’ll call every month, I’ll show up in the hard season, I’ll be reachable when it counts.',
+          'A vow you can name is worth a hundred pretty threads. The rakhi is just the reminder, tied where you can see it.',
+        ],
+        practice: 'Pick one person you’d protect, a sibling, a friend, anyone. This week don’t just feel it, name it: tell them one concrete thing you’ll actually do for them this year. A monthly call, a standing invitation, help with the thing they dread. Say the promise out loud. That’s the real rakhi.',
+        end: true,
+      },
+    },
+  },
+
+  'festival:onam-2025': {
+    id: 'dlg:onam',
+    start: 'welcome',
+    nodes: {
+      welcome: {
+        id: 'welcome',
+        krishna: ['Onam is Kerala’s biggest festival, flower carpets, a giant feast, boat races, all to welcome a returning king named **Mahabali**. Here’s the twist: he’s a king the gods actually defeated and sent away. Why throw a joyful party every year for a banished ruler?'],
+        choices: [
+          { text: 'Because they loved him?', reply: 'Exactly. He was that good. Let me tell you what kind of king earns a welcome even after he’s gone.', next: 'king' },
+          { text: 'That is strange', reply: 'It is, until you hear who he was. This isn’t mourning a loss, it’s keeping faith with someone beloved. Here’s the story.', next: 'king' },
+          { text: 'Isn’t there a dwarf god?', reply: 'There is, Vamana, and he’s the one who sent Mahabali away. But even that story bends over backwards to honor the king. Watch.', next: 'king' },
+        ],
+      },
+      king: {
+        id: 'king',
+        krishna: [
+          'Under **Mahabali**, the songs say, everyone was equal, no one went hungry, and no one lied. A golden age. He was also generous to a fault, which is exactly what got used.',
+          'A small boy, **Vamana**, one of my own forms, came begging just three paces of land. Mahabali, ever generous, agreed. The boy grew vast: two steps spanned all the worlds, and the third gently pressed the king below. Moved by his goodness, though, they granted him one visit home each year. Onam is that visit.',
+        ],
+        citation: 'Mahabali and Vamana: Bhagavata Purana, Canto 8; the Maveli song, Kerala tradition.',
+        choices: [
+          { text: 'So even the “loser” is honored', reply: 'That’s the beauty of it. The story humbles his pride but never his goodness. A whole people spend a week making the place worthy of a good man’s return.', next: 'home' },
+          { text: 'Why humble a good king at all?', reply: 'It was his pride that needed the touch, not his kindness. The third step was a gentle right-sizing, and it came with a gift: come home every year and see your people happy.', next: 'home' },
+        ],
+      },
+      home: {
+        id: 'home',
+        krishna: [
+          'So Onam is a whole people preparing a welcome. The flower carpet at the door, the feast laid out, the house made beautiful, all so a beloved, humbled, generous king finds things well when he arrives.',
+          'And there’s a quiet question folded into it: if someone who loved you came back to see how you’re living, would they find you kind? Onam makes a whole state answer that once a year.',
+        ],
+        practice: 'This week, get one small corner of your life “ready for Mahabali,” as if someone who believed in your goodness were coming to visit. Clean the corner, mend the quarrel, set one thing right. Live a single day as if a good king were coming to see how you turned out.',
+        end: true,
+      },
+    },
+  },
+
+  'festival:karva-chauth-2025': {
+    id: 'dlg:karva-chauth',
+    start: 'fast',
+    nodes: {
+      fast: {
+        id: 'fast',
+        krishna: ['Karva Chauth is a day when, traditionally, a wife fasts from dawn until moonrise for her husband’s long life. I’ll be honest, to a modern ear that can land as pretty one-sided. Does it strike you that way?'],
+        choices: [
+          { text: 'Yeah, a little', reply: 'Fair, and worth saying plainly. The old form is gendered, no pretending otherwise. But under the form is something real, and many couples now do it together. Let me get at the real part.', next: 'choose' },
+          { text: 'Not sure', reply: 'It’s worth looking at honestly. The traditional shape is one-directional, and plenty of couples now fast for each other. Strip the gender off, though, and something worthwhile is left. Here it is.', next: 'choose' },
+          { text: 'It’s romantic, I think', reply: 'For many it deeply is. And there’s a real thing under the romance, one that doesn’t depend on who fasts for whom. Let me name it.', next: 'choose' },
+        ],
+      },
+      choose: {
+        id: 'choose',
+        krishna: [
+          'A freely chosen hardship is one of the oldest ways humans say “you matter to me.” Going without food all day, and meaning it, puts love into the body, not just into words. That part is real, whoever does the fasting.',
+          'And the story told on the day, of **Savitri**, is no tale of a meek wife. It’s about a woman who followed Death himself and out-argued him to win her husband back. The devotion here has spine.',
+        ],
+        citation: 'The Karwa Chauth vrat katha; Savitri and Yama: Mahabharata, Vana Parva.',
+        choices: [
+          { text: 'So it’s about commitment', reply: 'That’s the durable core. A chosen, embodied “I’ve got you.” And it lands best when it’s mutual, two people each willing to go without something for the other.', next: 'mutual' },
+          { text: 'Still feels dated to me', reply: 'The one-way version can be, and you’re allowed to think so. Keep the marrow, a chosen sacrifice that says you matter, and let it flow both ways. Plenty of couples already have.', next: 'mutual' },
+        ],
+      },
+      mutual: {
+        id: 'mutual',
+        krishna: [
+          'So the keepable heart of Karva Chauth is simple: love gets realer when it costs you something you chose to give. Which way the fast runs is the disposable part.',
+          'A gift that costs nothing is easy to doubt. One that cost you a day of hunger, or an evening of your own comfort, is hard to mistake.',
+        ],
+        practice: 'This week, do one small chosen “fast” for someone you love, and ideally ask them to do one back. Give up something real for a day, an hour of your time, a comfort, a habit, as a way of saying you matter without using words. Let it go both directions.',
+        end: true,
+      },
+    },
+  },
+
+  'festival:chhath-puja-2025': {
+    id: 'dlg:chhath-puja',
+    start: 'sun',
+    nodes: {
+      sun: {
+        id: 'sun',
+        krishna: ['Chhath Puja is four days of serious austerity, standing waist-deep in cold water, no priest, everything done by your own hands, all to worship the **Sun**. But here’s the detail that stops me every time: the first great offering goes to the setting sun, the evening before the sunrise one. Why thank the sun as it’s leaving?'],
+        choices: [
+          { text: 'Huh, that is unusual', reply: 'It really is. Almost everyone worships the sunrise. Chhath bows first to the sunset, and that choice is the whole heart of it. Let me open it up.', next: 'setting' },
+          { text: 'No idea', reply: 'Most sun worship greets the dawn. Chhath greets the going-down first, and that flip is the teaching. Here it is.', next: 'setting' },
+          { text: 'Isn’t new light the point?', reply: 'You’d think so, and the rising sun does get its offering the next morning. But the setting sun comes first, on purpose. Watch why.', next: 'setting' },
+        ],
+      },
+      setting: {
+        id: 'setting',
+        krishna: [
+          'Think about what the setting sun is. It’s the one that already gave, all day, warmth and light and every growing thing, and is now spent and going down. Chhath turns to that sun first and says thank you, before it’s gone.',
+          'Gratitude that only shows up for the sunrise is cheap. Anyone can cheer what’s rising. It takes something deeper to honor what’s fading, the giver on its way out.',
+        ],
+        citation: 'Chhath’s arghya to the setting and rising sun: Bihar and Mithila tradition; Surya hymn, Rig Veda 1.50.',
+        choices: [
+          { text: 'That’s quietly beautiful', reply: 'It is. And notice the rigor around it, no priest, no shortcut, everything by your own hand, standing in the cold water yourself. Some thanks you don’t outsource.', next: 'hands' },
+          { text: 'Why all the hardship, though?', reply: 'Because the difficulty is part of the message. Cold water at dawn, days of fasting, all of it by your own hand, it makes the gratitude cost something. And costly gratitude is the kind that changes you.', next: 'hands' },
+        ],
+      },
+      hands: {
+        id: 'hands',
+        krishna: [
+          'So Chhath does two quietly radical things at once: it thanks what’s declining, not only what’s rising, and it does so with your own hands, nobody standing in between.',
+          'It’s a festival for everything in your life that gave and is now going, a season, a chapter, a person who carried you and is stepping back. Turn and thank it before it sets.',
+        ],
+        practice: 'This week, thank one “setting sun” in your life, something or someone that gave a lot and is now fading or stepping back: a finished chapter, an aging mentor, a friendship quietly winding down. Don’t wait for it to be gone. Offer the thanks now, while the light is still on the water.',
+        end: true,
+      },
+    },
+  },
 };
