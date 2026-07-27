@@ -1496,4 +1496,41 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
     },
   },
+
+  'deity:lakshmi': {
+    id: 'dlg:deity-lakshmi',
+    start: 'want',
+    nodes: {
+      want: {
+        id: 'want',
+        krishna: ['Everybody wants **Lakshmi** around, she’s the goddess of wealth and good fortune. But she has one famously strange habit that trips people up: the harder you try to trap her, the faster she leaves. Any guess why?'],
+        choices: [
+          { text: 'Wealth likes to move?', reply: 'Exactly. She’s literally nicknamed “the restless.” Let me show you the story that makes the point.', next: 'miser' },
+          { text: 'No idea', reply: 'It’s the most useful thing about her, honestly. Her nickname is Chanchala, the restless one. Here’s what it means.', next: 'miser' },
+          { text: 'Isn’t she just about money?', reply: 'Money, yes, but also harvest, health, beauty, a well-kept home, abundance of every kind. And all of it obeys the same odd rule. Watch.', next: 'miser' },
+        ],
+      },
+      miser: {
+        id: 'miser',
+        krishna: [
+          'There’s an old story. A miser prayed so hard that Lakshmi agreed to live in his house. Delighted, he sealed every door so she could never leave, stopped giving, stopped spending, wouldn’t even light a lamp in case the oil ran low. Within days the house was dark, airless, empty of guests and laughter, and one morning, empty of the goddess too. She’d slipped out through the one crack no lock can close.',
+          'That’s her whole teaching in one tale. Wealth, love, energy, knowledge, anything Lakshmi governs lives by moving. Dam it up and it goes stale in your hands. Look at how she’s drawn: coins pouring endlessly from an open palm. A fountain, not a vault.',
+        ],
+        citation: 'The Chanchala (restless) Lakshmi: pan-Indian proverb tradition.',
+        choices: [
+          { text: 'Money, if I’m honest', reply: 'The most common one, and the story is oddly freeing about it: give from the flow and the flow keeps arriving. The miser ended up with a full vault and a dark, empty life.', next: 'flow' },
+          { text: 'More like time or affection', reply: 'Same law, and a deeper cut. Hoarded time, withheld affection, they go stale exactly like sealed gold. What you keep in motion keeps coming back; what you clutch quietly dies.', next: 'flow' },
+        ],
+      },
+      flow: {
+        id: 'flow',
+        krishna: [
+          'That’s Lakshmi’s quiet correction to how most people think. You don’t get more by gripping harder. You stay in the current by keeping things moving, a little given, a little shared, the doors and windows open.',
+          'And a companion detail: she rides an owl, which sees in the dark but goes blind in daylight. The warning built into the blessing, wealth with no wisdom to guide it just blinds you. It’s why she’s worshipped right alongside Ganesha, so the fortune comes with the sense to use it.',
+        ],
+        practice: 'Find one thing you’ve been quietly sealing up this week, money, time, a skill, a kind word, and let a little of it flow on purpose. Give some without expecting return. Notice the giving doesn’t empty you the way you feared. That noticing is Lakshmi’s actual lesson.',
+        end: true,
+      },
+    },
+  },
 };
