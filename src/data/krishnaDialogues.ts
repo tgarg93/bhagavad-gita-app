@@ -719,4 +719,115 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
     },
   },
+
+  'festival:janmashtami-2025': {
+    id: 'dlg:janmashtami',
+    start: 'midnight',
+    nodes: {
+      midnight: {
+        id: 'midnight',
+        krishna: ['My own birthday, Janmashtami, gets celebrated at midnight, and the story sets it not in a temple but in a prison cell. Odd place for a party, right? Any guess why my arrival is put there?'],
+        choices: [
+          { text: 'No, that is strange', reply: 'It is meant to be. The where and the when are the whole message. Let me set the scene.', next: 'prison' },
+          { text: 'Something symbolic, I bet', reply: 'Exactly the instinct. The prison and the midnight are a picture of something, not just history. Here it is.', next: 'prison' },
+          { text: 'Wasn’t there a wicked king?', reply: 'There was, Kamsa, and his fear is what put me in that cell to begin with. Let me tell it.', next: 'prison' },
+        ],
+      },
+      prison: {
+        id: 'prison',
+        krishna: [
+          'A prophecy told King **Kamsa** that his sister’s eighth child would kill him. So he locked her in a cell and killed each baby as it came, fear doing what fear does, harming the very people closest to it.',
+          'And then, on the darkest night of the month, in that locked cell, to a prisoner with everything against her, I was born. The guards slept, the chains fell open, and my father carried me across a flooded river to safety. Hope arrived exactly where it looked impossible.',
+        ],
+        citation: 'Krishna’s birth: Bhagavata Purana, Canto 10, Chapters 1–4.',
+        choices: [
+          { text: 'So light shows up in the dark', reply: 'That’s the whole of it. Not in the palace, not on a bright afternoon. In the cell, at midnight, in chains. That’s where the story insists the divine chooses to be born.', next: 'lamp' },
+          { text: 'Feels a bit hopeful for a prison', reply: 'That’s exactly why it’s set in one. Anyone can feel held up on a good day. The story is built for the locked-in nights, when hope runs lowest.', next: 'lamp' },
+        ],
+      },
+      lamp: {
+        id: 'lamp',
+        krishna: [
+          'So the prison is any heart shut tight by fear, and midnight is any hour when hope runs low. Janmashtami’s quiet instruction is to keep one lamp lit in that darkness, because that’s exactly the moment something new tends to arrive.',
+          'And notice how the story ends, not in solemn prayer but in stolen butter and songs sung too loud. Once the fear is behind it, the whole thing tips into joy. Delight, it turns out, is also a way to worship.',
+        ],
+        practice: 'Think of one “prison” you’re in right now, a worry, a stuck situation, a fear on a loop. This week light one small lamp against it: a hopeful act, a kindness, a moment of joy you choose on purpose. You don’t have to break the cell open. Just keep one light on inside it.',
+        end: true,
+      },
+    },
+  },
+
+  'festival:ganesh-chaturthi-2025': {
+    id: 'dlg:ganesh-chaturthi',
+    start: 'guest',
+    nodes: {
+      guest: {
+        id: 'guest',
+        krishna: ['Here’s a strange one from the outside. On Ganesh Chaturthi a family brings home a clay statue of **Ganesha**, treats him as an honored houseguest for days, feeds and sings to him, then carries him out and lets him dissolve in the sea. Why go to all that trouble just to let him go?'],
+        choices: [
+          { text: 'No idea, seems sad', reply: 'It looks sad, and there are real tears at the water. But the letting-go is the whole teaching, not an accident. Let me walk you through it.', next: 'made' },
+          { text: 'Some ritual thing?', reply: 'It’s ritual, yes, but one built to teach a single hard, useful thing. Watch what it points at.', next: 'made' },
+          { text: 'Isn’t he the elephant god?', reply: 'He is, the remover of obstacles, greeted first before anything begins. And how he got that elephant head is worth hearing, it’s part of the point.', next: 'made' },
+        ],
+      },
+      made: {
+        id: 'made',
+        krishna: [
+          'The old story: **Parvati** shaped a boy out of turmeric to guard her door. **Shiva** came home, did not recognize the child blocking his way, and in a flash of temper struck off his head. Then, seeing Parvati’s grief, he brought the boy back with the head of the first creature he found, an elephant.',
+          'Sit with that. A new, wiser life came through a break, through loss. The god you greet at every beginning got his own beginning out of something ending.',
+        ],
+        citation: 'Ganesha’s origin: Shiva Purana, Rudra Samhita, Kumara Khanda.',
+        choices: [
+          { text: 'So endings make room', reply: 'That’s it. And the festival makes you rehearse exactly that. You build him, love him, then hand him back to the water with your own hands.', next: 'water' },
+          { text: 'Why let the murti go, though?', reply: 'Because holding on forever was never the lesson. You made him from clay, loved him fully, and now you let the clay return to the river. The releasing is the skill being taught.', next: 'water' },
+        ],
+      },
+      water: {
+        id: 'water',
+        krishna: [
+          'The chant as he goes into the water carries both halves at once: come, beloved Ganesha, and come again soon. Grief and trust in one breath. The clay came from the riverbed, and back it goes, and the family walks home lighter.',
+          'That’s the whole festival in a gesture. Welcome fully, host fully, release fully, and trust it comes back around. It’s rehearsal for every real goodbye a life will ask of you.',
+        ],
+        practice: 'Pick one thing you’re gripping a little too tight this week, a plan, an outcome, even a good mood you wish would stay. Try the Ganesha move: enjoy it fully while it’s here, and when it’s time, open your hand and let it go to the water. Notice you’re still standing.',
+        end: true,
+      },
+    },
+  },
+
+  'festival:maha-shivratri-2025': {
+    id: 'dlg:maha-shivratri',
+    start: 'awake',
+    nodes: {
+      awake: {
+        id: 'awake',
+        krishna: ['On Maha Shivratri people stay up the whole night, no sleep, one lamp burning. A festival whose main practice is basically not falling asleep. What do you suppose staying awake has to do with **Shiva**?'],
+        choices: [
+          { text: 'Genuinely no idea', reply: 'A fair thing to wonder at 3 a.m. with your eyes burning. The answer is that Shiva is what the wakefulness is pointing at.', next: 'still' },
+          { text: 'Some test of devotion?', reply: 'People treat it that way, but it’s less a test than a practice, and what it practices is worth knowing.', next: 'still' },
+          { text: 'Isn’t Shiva the destroyer?', reply: 'That’s his loud title. Underneath the drama he’s something much quieter, and the vigil is aimed at that quiet thing.', next: 'still' },
+        ],
+      },
+      still: {
+        id: 'still',
+        krishna: [
+          'Under all the stories, Shiva is stillness itself, pure awareness, the silent watcher that’s there whether you’re busy or bored. So the night vigil is a small rehearsal: stay awake, stay aware, right when everything in you wants to dull out and drift off.',
+          'There’s a gentle story here too. A hunter, stuck up a tree all night, kept nervously dropping leaves that happened to land on a Shiva stone below. He wasn’t even trying to pray, and Shiva was moved anyway, because a wakeful, sincere heart reaches him, polished ritual or not.',
+        ],
+        citation: 'The hunter’s vigil: Shiva Purana, Shivratri mahatmya.',
+        choices: [
+          { text: 'So it’s about being present', reply: 'That’s the heart of it. Not the perfect prayer, just staying awake and sincere. That alone gets through to him.', next: 'wedding' },
+          { text: 'I’m bad at staying present', reply: 'Everyone is, that’s why it’s a practice and not a talent. The hunter was no saint. He just happened to stay awake and mean it, and that was enough.', next: 'wedding' },
+        ],
+      },
+      wedding: {
+        id: 'wedding',
+        krishna: [
+          'One more piece: Shivratri also marks Shiva’s wedding to **Parvati**. She is Shakti, the power that acts. He is the stillness that watches. The night celebrates the two of them becoming one.',
+          'And that’s the quiet lesson. You need both in you: the awareness to see clearly, and the energy to actually do something with it. Stillness alone just sits. Power alone runs wild. Together they make a life that works.',
+        ],
+        practice: 'You don’t need to pull an all-nighter. This week pick one ordinary moment, washing a dish, waiting in a line, and instead of drifting into your phone or your worries, stay fully awake to it for sixty seconds. That small wakefulness is the whole vigil, in miniature.',
+        end: true,
+      },
+    },
+  },
 };
