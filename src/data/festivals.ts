@@ -236,7 +236,21 @@ export const festivalData: Festival[] = [
           source: 'Bhagavad Gita 8.24 (tr. Swami Sivananda)'
         },
         storyText: 'Most Hindu festivals ride the moon; Makar Sankranti rides **the sun** — which is why it alone lands on nearly the same date every year.\n\nIt marks the sun\'s entry into Makara (Capricorn) and the felt beginning of **uttarayana**, the six-month northern journey when days lengthen and light gains. The tradition ranked this half of the year as the gods\' own daytime, and the Gita numbers the northern path among the luminous circumstances of a blessed departure.\n\n**Sankranti means "transition"** — and the festival\'s quiet teaching is that transitions themselves can be holy.',
-        teachingText: 'The year\'s light turns on this day by a few seconds — **imperceptible, and decisive**. Most real turnarounds look like this: no drama on the day itself, only a changed direction that compounds.\n\nSankranti honors the turn, not the arrival. What direction, turned today by one degree, would change your year by June?'
+        teachingText: 'The year\'s light turns on this day by a few seconds — **imperceptible, and decisive**. Most real turnarounds look like this: no drama on the day itself, only a changed direction that compounds.\n\nSankranti honors the turn, not the arrival. What direction, turned today by one degree, would change your year by June?',
+        checks: [
+          {
+            id: 'chk:festival:sankranti:transition',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Most Hindu festivals follow the moon, but Makar Sankranti follows the sun. What does it mark?',
+            options: [
+              { text: 'The sun turning northward and the days beginning to lengthen; sankranti means “transition”', correct: true },
+              { text: 'The longest night of the year' },
+              { text: 'A full moon in winter' },
+            ],
+            why: 'Makar Sankranti marks the sun’s turn into its northern course, when light begins to gain. Sankranti means transition, and the festival honors the turn itself, not any arrival.',
+          },
+        ],
       },
       {
         id: 'sankranti-bhishma',
@@ -244,7 +258,21 @@ export const festivalData: Festival[] = [
         subtitle: 'An Old Warrior on a Bed of Arrows, Watching the Sky',
         storyText: 'The Mahabharata gives uttarayana its most solemn witness.\n\n**Bhishma** — grandsire of both armies, bound by the boon of choosing his own hour of death — fell in battle pierced by countless arrows, and lay on that **bed of arrows** for weeks, alive by will alone.\n\nHe was waiting: the sun was still in its southern course, and he had resolved to release his life only when it turned north. When uttarayana came, he taught his final teachings to Yudhishthira and let go — **timing even his death to the side of the light**.',
         teachingText: 'Bhishma\'s vigil is the festival\'s deepest layer: some things should not be ended in the dark season — a role, a relationship, a chapter.\n\nIf an ending is yours to time, time it like Bhishma: settle your teachings, wait for the light to turn, and leave on the upswing. And where you cannot choose the timing, you can still choose his posture — **patience, clarity, and a last act of generosity**.',
-        citation: 'Mahabharata, Bhishma Parva (the bed of arrows); his passing: Anushasana Parva (tr. K.M. Ganguli).'
+        citation: 'Mahabharata, Bhishma Parva (the bed of arrows); his passing: Anushasana Parva (tr. K.M. Ganguli).',
+        checks: [
+          {
+            id: 'chk:festival:sankranti:bhishma',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'On his bed of arrows, the warrior Bhishma held on for weeks, waiting until Makar Sankranti to die. Why?',
+            options: [
+              { text: 'He could choose his hour, and waited for the sun to turn north so he could leave on the side of the light', correct: true },
+              { text: 'He was hoping his side would still win the war' },
+              { text: 'He was waiting for a healer to save him' },
+            ],
+            why: 'Bhishma had the boon of timing his own death. He held on through the dark half of the year and let go only when uttarayana came, timing even his passing to the turning light.',
+          },
+        ],
       },
       {
         id: 'sankranti-tilgul',
@@ -767,14 +795,42 @@ export const festivalData: Festival[] = [
         storyText: 'Saraswati is unlike any other great goddess: **she carries no weapon.**\n\nBorn, the Puranas tell, from the mind of Brahma the creator — who found his new universe silent and formless until **she gave it speech, music, and order** — she holds instead a veena, a book, and a rosary, and rides a white swan said to be able to separate milk from water: discrimination itself, the mind\'s power to tell the true from the mixed. Her white robes refuse ornament; knowledge needs none.\n\nShe is also the memory of a real river — the Saraswati of the Rig Veda, "best of mothers, best of rivers, best of goddesses" — whose waters became, in the tradition\'s imagination, **the flowing of wisdom itself**.',
         teachingText: 'The unarmed goddess is the festival\'s quiet thesis: **knowledge is a power that needs no weapon**, and the swan\'s discrimination — telling truth from noise — may be the most protective skill a person can own.\n\nAsk what your swan currently drinks: what mixture of milk and water does your daily attention take in undivided?',
         citationLink: 'deity:saraswati',
-        citation: 'Saraswati\'s birth: Puranic tradition; the river: Rig Veda 6.61 (tr. Griffith, public domain).'
+        citation: 'Saraswati\'s birth: Puranic tradition; the river: Rig Veda 6.61 (tr. Griffith, public domain).',
+        checks: [
+          {
+            id: 'chk:festival:basant:saraswati',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Basant Panchami honors Saraswati. What is she the goddess of?',
+            options: [
+              { text: 'Knowledge, learning, music, and speech, the divine as wisdom itself', correct: true },
+              { text: 'Wealth and prosperity' },
+              { text: 'War and victory' },
+            ],
+            why: 'Saraswati, white-robed with a veena and a book and no weapon, is the goddess of learning, music, and speech. Basant Panchami treats knowledge itself as something sacred.',
+          },
+        ],
       },
       {
         id: 'basant-first-letters',
         title: 'First Letters in a Tray of Rice',
         subtitle: 'A Grandparent\'s Hand Guiding a Small Finger',
         storyText: 'The festival\'s most tender custom is **vidyarambha**: a young child, seated in a grandparent\'s lap before the goddess, traces their first-ever letters in a tray of rice, everyone applauding as if a kingdom had been won.\n\nThe tradition understood something modern education sometimes forgets — that **a person\'s relationship with learning is set by its first emotional taste**. So it engineered the first taste to be sweet: lap, laughter, sweets, blessing.\n\nBooks themselves rest before the goddess today; even they get a holiday, honored as vessels.',
-        teachingText: 'Whatever your age, you have "first letters" waiting — the language not started, the instrument in its case, the skill postponed.\n\nBasant Panchami\'s counsel is to begin it the vidyarambha way: held by encouragement, celebrated for the first clumsy stroke, sweet from the first taste. **Beginnings deserve ceremony, not judgment.**'
+        teachingText: 'Whatever your age, you have "first letters" waiting — the language not started, the instrument in its case, the skill postponed.\n\nBasant Panchami\'s counsel is to begin it the vidyarambha way: held by encouragement, celebrated for the first clumsy stroke, sweet from the first taste. **Beginnings deserve ceremony, not judgment.**',
+        checks: [
+          {
+            id: 'chk:festival:basant:vidyarambha',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'On Basant Panchami, a small child is guided to trace their first letters in a tray of rice (vidyarambha). What does this custom express?',
+            options: [
+              { text: 'A person’s first taste of learning should be sweet and celebrated, beginnings deserve ceremony', correct: true },
+              { text: 'Children must learn to write before any other skill' },
+              { text: 'Rice is sacred and cannot be eaten that day' },
+            ],
+            why: 'Vidyarambha makes a child’s very first letters an occasion of laughter, sweets, and blessing. The tradition set the first taste of learning to be sweet on purpose, because that first taste shapes a lifetime.',
+          },
+        ],
       },
       {
         id: 'basant-kites',
@@ -1532,7 +1588,21 @@ export const festivalData: Festival[] = [
         storyText: 'The Valmiki Ramayana opens the story with an ache: **Dasharatha**, king of Ayodhya, mighty and beloved, has three queens and no child.\n\nOn his sages\' counsel he performs the **putrakameshti yajna** — the fire rite for offspring. From the flames rises a radiant being bearing a vessel of divine kheer for the queens. Kausalya bears Rama, Kaikeyi bears Bharata, Sumitra bears the twins Lakshmana and Shatrughna.\n\nHeaven, meanwhile, has its own reason: the gods, oppressed by Ravana — untouchable by divine hands through his boon — have asked **Vishnu to be born as a man**. The king\'s longing and the world\'s need meet in one child.',
         teachingText: 'The tradition loves this convergence: Rama is born because a father ached for a son AND because the world ached for a rescuer — **private longing and cosmic purpose in one birth**.\n\nIt reads every birth that way. The child given to you, or the one you were, arrives carrying both a family\'s hope and some purpose the family cannot yet see.',
         citationLink: 'deity:rama',
-        citation: 'Valmiki Ramayana, Bala Kanda, sargas 8–16.'
+        citation: 'Valmiki Ramayana, Bala Kanda, sargas 8–16.',
+        checks: [
+          {
+            id: 'chk:festival:ramnavami:birth',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'In the Ramayana, how were Rama and his brothers born?',
+            options: [
+              { text: 'King Dasharatha, childless, held a fire sacrifice; a figure rose from the flames with sacred kheer for his queens, and the sons were born', correct: true },
+              { text: 'They descended fully grown from the heavens' },
+              { text: 'They were found floating in a basket on the river' },
+            ],
+            why: 'Dasharatha longed for a son and held a great fire sacrifice. From the flames came a divine being with a vessel of blessed kheer for the queens, and Rama and his brothers followed.',
+          },
+        ],
       },
       {
         id: 'ram-navami-noon-birth',
@@ -1540,7 +1610,21 @@ export const festivalData: Festival[] = [
         subtitle: 'The Sun at Its Height Over Ayodhya',
         storyText: 'Krishna arrives at midnight in a prison; **Rama arrives at high noon in a rejoicing palace** — Chaitra Shukla Navami, Punarvasu nakshatra, the sun exalted.\n\nThe tradition reads the contrast as a teaching about how dharma comes into the world: sometimes as hidden rescue in the dark, sometimes as **open glory in full daylight**. Rama is the noon-born — the standard held up publicly, the ideal that does not hide.\n\nAyodhya\'s celebration lasted days; the Ramayana lingers on the city\'s joy the way it will later linger on the city\'s grief at his exile.',
         teachingText: 'Midnight births and noon births both happen in a life — some of your best chapters begin in secret difficulty, others in open blessing.\n\nRam Navami honors the noon kind: **the visible commitments, publicly made** — a marriage, a vow, a stand taken in daylight. What in your life needs to be born at noon, where everyone can see it and hold you to it?',
-        citation: 'Valmiki Ramayana, Bala Kanda, sarga 18.'
+        citation: 'Valmiki Ramayana, Bala Kanda, sarga 18.',
+        checks: [
+          {
+            id: 'chk:festival:ramnavami:noon',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Krishna is born at midnight; Rama is born at high noon. What does Rama’s noon birth signal?',
+            options: [
+              { text: 'Rama of the solar line, the divine as upright daylight, dharma held openly and in full view', correct: true },
+              { text: 'That Rama’s story is less important than Krishna’s' },
+              { text: 'Nothing, the timing is a coincidence' },
+            ],
+            why: 'Rama belongs to the solar dynasty and is born with the sun at its peak. Where Krishna arrives hidden at midnight, Rama arrives in full daylight, the model of right conduct held out in the open.',
+          },
+        ],
       },
       {
         id: 'ram-navami-story-festival',
