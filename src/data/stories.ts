@@ -525,6 +525,20 @@ const UPANISHAD_STORIES: Story[] = [
         teachingText:
           'Every contemplative practice in the tradition is, one way or another, the eating bird glancing up. You cannot stop tasting the fruit — living means eating. But the moment of remembering that something in you is watching, undisturbed, is available in the middle of any experience whatsoever. Grief, the verse insists, ends not by improving the fruit but by noticing the other bird.',
         citation: 'Mundaka Upanishad 3.1.1–2; the image recurs at Shvetashvatara Upanishad 4.6–7',
+        checks: [
+          {
+            id: 'chk:story:two-birds:witness',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Two birds sit on one tree: one eats the fruit and frets, the other simply watches, serene. What does the image teach?',
+            options: [
+              { text: 'You are the watching Self, not the striving, grieving one, and turning toward the witness frees you from sorrow', correct: true },
+              { text: 'One bird is good and the other evil' },
+              { text: 'You should stop eating and only watch the world' },
+            ],
+            why: 'The eating bird is the self caught in pleasure and pain; the watching bird is the calm witness within. When the grieving bird notices the other, its sorrow lifts.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -574,6 +588,20 @@ const UPANISHAD_STORIES: Story[] = [
         teachingText:
           'Wrong answers honestly earned are the curriculum, not the failure. Each of Bhrigu’s five answers was kept, deepened, and outgrown — the tradition’s model for how understanding actually moves: not from false to true, but from true to truer.',
         citation: 'Taittiriya Upanishad 3.1–3.10; the calculus of bliss at 2.8',
+        checks: [
+          {
+            id: 'chk:story:bhrigu:ananda',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Bhrigu climbed rung by rung asking what Brahman is: food, then life, then mind, then knowledge. Where did he finally arrive?',
+            options: [
+              { text: 'Bliss (ananda) — at the deepest level, the ground of everything turns out to be joy', correct: true },
+              { text: 'Emptiness, a void with nothing in it' },
+              { text: 'Food, the first answer, was also the last' },
+            ],
+            why: 'Each answer Bhrigu tested was true but not final, until he reached ananda. The Taittiriya’s startling claim is that reality bottoms out not in dead matter but in bliss.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -627,6 +655,20 @@ const KATHA_STORIES: Story[] = [
         teachingText:
           'The story stages the tradition’s hierarchy of power in one afternoon: everything a kingdom can seize loses to what austerity has earned. But its deeper teaching is in the sequel — envy transmuted into aspiration. Vishwamitra is remembered not as the king who coveted a cow but as the seer of the Gayatri mantra: proof that wanting what a better person has can, pursued long enough, make you that person.',
         citation: 'Valmiki Ramayana, Bala Kanda 51–65; Vishwamitra as seer of the Gayatri: Rig Veda 3.62.10 tradition',
+        checks: [
+          {
+            id: 'chk:story:vishwamitra:power',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'King Vishwamitra could not seize the sage’s wish-cow by military force. What did he conclude, and do?',
+            options: [
+              { text: 'That spiritual power outranks brute strength — so he gave up his throne and undertook ages of tapas to become a seer himself', correct: true },
+              { text: 'That he needed a larger army, and returned to conquer' },
+              { text: 'That the gods had cheated him, and he renounced religion' },
+            ],
+            why: 'Defeated by a sage’s inner power, the king wanted that power, not more soldiers. His long, fierce discipline eventually made him a brahmarishi and the seer of the Gayatri.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -674,6 +716,20 @@ const KATHA_STORIES: Story[] = [
         teachingText:
           'The story is deliberately extreme: it removes every cushion, then asks whether truth is a policy or an identity. A policy bends when the cost is your child. The tradition’s answer — that the universe itself ultimately rearranges around the person who will not bend — is less a promise about outcomes than a portrait of what integrity means when it is total.',
         citation: 'Gandhi on Harishchandra: An Autobiography, Part I',
+        checks: [
+          {
+            id: 'chk:story:harishchandra:truth',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Harishchandra lost his kingdom, his wealth, his wife and son, and ended up laboring at a cremation ground, rather than do what?',
+            options: [
+              { text: 'Break his word or tell a single lie — he held to truth through every loss', correct: true },
+              { text: 'Fight a war he knew he would lose' },
+              { text: 'Bow to a rival king' },
+            ],
+            why: 'His entire ordeal was a test of truthfulness, and he never wavered. A young Gandhi read this story and it shaped his life’s devotion to truth.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -722,6 +778,20 @@ const KATHA_STORIES: Story[] = [
         teachingText:
           'The story is honest about its starting point — Dhruva’s quest began in humiliation and wounded pride, not holiness. The tradition does not require pure motives to begin; it requires that you actually begin. Walk far enough toward the Lord for a small enough reason, and the reason itself is what gets transformed on the way.',
         citation: 'Bhagavata Purana, Canto 4, Chapter 12 (Dhruva-loka)',
+        checks: [
+          {
+            id: 'chk:story:dhruva:polestar',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Stung by a slight, the boy Dhruva went to the forest and undertook fierce tapas. How does his story end?',
+            options: [
+              { text: 'Vishnu appears and fixes him in the sky as the Pole Star, the one unmoving point — a symbol of steadfastness', correct: true },
+              { text: 'He returns home and takes the throne by force' },
+              { text: 'He gives up and comes home empty-handed' },
+            ],
+            why: 'Dhruva means “fixed, immovable.” His unwavering devotion earns him the still center of the turning sky, the star every other star wheels around.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
