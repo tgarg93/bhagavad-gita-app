@@ -2298,28 +2298,86 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/lakshmi-icon.jpg',
       galleryImages: []
     },
+    kicker: 'The lotus-throned goddess of abundance — who slips away the moment wealth is hoarded, and stays only where it keeps flowing.',
+    learnItems: [
+      'Abundance settles on the steward, not the one who grabs hardest',
+      'Lakshmi is Chanchala, the restless — wealth lives in flow and dies in storage',
+      'Prosperity favors clean, lit, welcoming spaces — order is the invitation',
+      'Riches without wisdom is an owl at noon',
+    ],
+    handoff:
+      'Lakshmi is wealth that flows. Her counterpart is the other thing every life needs, and the two rarely share a house: Saraswati, the goddess of knowledge.',
     sections: [
+      {
+        id: 'lakshmi-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          'Lakshmi is the goddess of wealth and good fortune, the one whose lamps fill every window at Diwali. But the tradition means something sharper by "wealth" than you might expect, and it comes with a warning riding an owl.\n\nOver the next few pages: what abundance actually chooses, why hoarding it backfires, how you invite it in, and the catch hidden at her feet.',
+      },
       {
         id: 'lakshmi-choice',
         title: 'What Abundance Chooses',
         subtitle: 'A garland walked past every power',
+        takeaway:
+          "Abundance doesn't settle on whoever grabs hardest; it stays with whoever can be trusted to sustain things.",
         storyText: 'When Lakshmi rose from the churned ocean, the entire assembly of gods and demons stood as suitors.\n\nThe story slows down here on purpose: she carries a garland — the ancient gesture by which a woman chose — and reviews the candidates. Strength is there, and cunning, and raw force fresh from the churning.\n\nShe passes them all and garlands **Vishnu**: the god whose entire job description is **maintenance**. Not the most dazzling. The most reliable.',
         sectionHeader: 'The steward\'s secret',
         teachingText: 'The tradition is telling you how prosperity actually works. **Abundance does not stay with whoever grabs hardest; it settles where things are sustained** — the tended shop, the maintained friendship, the balanced ledger, the kept promise.\n\nIf you want Lakshmi\'s garland, the story says, do not perform brilliance. Demonstrate stewardship.',
-        citation: 'Vishnu Purana 1.9; Bhagavata Purana, Canto 8 (samudra manthan)'
+        citation: 'Vishnu Purana 1.9; Bhagavata Purana, Canto 8 (samudra manthan)',
+        checks: [
+          {
+            id: 'chk:deity:lakshmi:choice',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Risen from the ocean, Lakshmi could have garlanded strength or cunning. Who did abundance choose, and why?',
+            options: [
+              { text: 'Vishnu the sustainer, because abundance settles on whoever can be trusted to maintain things', correct: true },
+              { text: 'The strongest god, since wealth follows power' },
+              { text: 'No one, she stayed independent' },
+            ],
+            why: 'She walked past strength and cunning and chose the maintainer. Prosperity settles where things are sustained, not where they are grabbed.',
+          },
+        ],
       },
       {
         id: 'lakshmi-flow',
         title: 'The Restless One',
         subtitle: 'Why hoarded wealth goes stale',
+        takeaway:
+          'Lakshmi is Chanchala, the restless: wealth lives in circulation and dies in storage.',
         storyText: 'Of all her thousand names, the tradition\'s most honest is **Chanchala** — the restless, the one who does not stay put.\n\nFolk tale after folk tale repeats the pattern: the miser who seals the goddess into his house and wakes to find everything gone; the generous household whose lamps somehow never run out of oil.\n\nHer iconography says it without words: coins stream from her open palm continuously. **Not a vault. A fountain.**',
         teachingText: 'This is a complete theory of wealth in one epithet. Money, energy, knowledge, love — everything Lakshmi governs behaves the same way: **it lives in circulation and dies in storage.**\n\nThe practical instruction hiding in the theology: build channels, not dams. Give from the flow and the flow continues; pinch it shut and you are the miser in the dark house, holding a full vault and nothing else.',
-        citation: 'Chanchala epithet: pan-Indian devotional and proverb tradition; flowing-coin iconography is standard Lakshmi imagery'
+        citation: 'Chanchala epithet: pan-Indian devotional and proverb tradition; flowing-coin iconography is standard Lakshmi imagery',
+        checks: [
+          {
+            id: 'chk:deity:lakshmi:restless',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Why is Lakshmi nicknamed Chanchala, “the restless one”?',
+            options: [
+              { text: 'The wealth she governs lives in flow and goes stale when hoarded, so she leaves a sealed house', correct: true },
+              { text: 'She is easily angered and hard to please' },
+              { text: 'She never appears in the same form twice' },
+            ],
+            why: 'Chanchala means restless. Lakshmi does not stay where she is hoarded, because abundance is a current, not a pond.',
+          },
+        ],
+      },
+      {
+        id: 'lakshmi-way-1',
+        kind: 'waypoint',
+        title: '2 of 4 banked',
+        learnIndex: 2,
+        storyText:
+          'You have met her and seen what she chooses, and why hoarding her backfires. Two more to go: how you actually invite her in, and the warning hidden at her feet.',
       },
       {
         id: 'lakshmi-diwali',
         title: 'Why the Lamps Are for Her',
         subtitle: 'The theology of a clean, lit house',
+        takeaway:
+          'Prosperity favors prepared, clean, welcoming spaces: order is how you invite it.',
         storyText: 'On Diwali night, hundreds of millions of households do the same three things: **clean the house to its corners, draw a welcome at the threshold, and set lamps in every window.**\n\nThe stated reason is one of the tradition\'s loveliest images — Lakshmi walks the earth that night, and she enters homes that are clean, bright, and open.\n\nLedgers are opened fresh; doorways are decorated; the dark and cluttered corner is, for one night at least, abolished.',
         sectionHeader: 'Order as invitation',
         teachingText: 'Strip the metaphor and it still runs: prosperity in every form favors **prepared, ordered, welcoming systems**. The cleaned house is the audited ledger, the maintained tool, the answered email, the tidy codebase.\n\nLakshmi Puja is the annual rehearsal of a daily truth — abundance is not summoned by wanting; it is welcomed by readiness. **Light the corner you have been avoiding.**',
@@ -2327,12 +2385,36 @@ export const deitiesData: Deity[] = [
         citation: 'Diwali Lakshmi Puja: pan-Indian living tradition; see also Sri Sukta (Rig Veda khila) — the ancient hymn recited at her worship'
       },
       {
+        id: 'lakshmi-way-2',
+        kind: 'waypoint',
+        title: '3 of 4 banked',
+        learnIndex: 3,
+        storyText:
+          'One piece left, and it is the warning the tradition hid at her feet.',
+      },
+      {
         id: 'lakshmi-owl',
         title: 'The Owl at Her Feet',
         subtitle: 'The warning built into the blessing',
+        takeaway:
+          'Wealth amplifies but does not educate: riches without wisdom is an owl at noon.',
         storyText: 'It is easy to miss, at the foot of all that gold: Lakshmi\'s vahana is **an owl**.\n\nThe tradition chose it deliberately and lets the double meaning stand. The owl sees in the dark — wealth rightly held illuminates places nothing else reaches. And the owl is blind in daylight — **the being who cannot see precisely when everything is bright.**\n\nSanskrit proverb sharpened the point long ago: riches without wisdom is an owl at noon.',
         teachingText: 'Every gift in this tradition ships with its own warning label, and the owl is Lakshmi\'s. **Wealth amplifies; it does not educate.** It will light the dark or blind you at noon depending entirely on what you bring to it.\n\nWhich is why the goddess of fortune is traditionally worshiped alongside Ganesha, remover of obstacles and lord of wisdom — the tradition refusing to hand you the gold without the sight.',
-        citation: 'Uluka vahana: standard Lakshmi iconography, especially in Bengal; the paired Lakshmi–Ganesha Diwali worship is living tradition'
+        citation: 'Uluka vahana: standard Lakshmi iconography, especially in Bengal; the paired Lakshmi–Ganesha Diwali worship is living tradition',
+        checks: [
+          {
+            id: 'chk:deity:lakshmi:owl',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Why does an owl, blind in daylight, ride with the goddess of wealth?',
+            options: [
+              { text: 'A warning: wealth amplifies but does not educate, and riches without wisdom blinds you', correct: true },
+              { text: 'The owl guards her treasure at night' },
+              { text: 'It simply looked regal beside her' },
+            ],
+            why: 'The owl is the warning built into the blessing. Riches without wisdom is an owl at noon, which is why Lakshmi is worshipped beside Ganesha.',
+          },
+        ],
       }
     ],
     sources: [
