@@ -60,3 +60,42 @@ Manual smoke tests until automated coverage lands (Wave 2). Run the **Simulator 
 - [ ] Archive + upload (recipe: memory `testflight-release-recipe` — Xcode 26.1 via `DEVELOPER_DIR`, `build/exportOptions.plist`)
 - [ ] Build attached to the **Family** external group; public link still enabled
 - [ ] Release notes filled in TestFlight ("What to Test")
+
+---
+
+# Release checklist — Google Play (Android)
+
+Android ships from the same JS. The `android/` native project is committed (like `ios/`);
+regenerate it only with `npx expo prebuild --platform android` when native config changes.
+Builds/submits go through EAS (recipe: memory `android-release-recipe`).
+
+## Pre-flight (Android)
+
+- [ ] `npx tsc --noEmit` — at or below baseline (77); no new errors
+- [ ] `grep -rn "TEMP-VERIFY" src App.tsx` — clean
+- [ ] `android.versionCode` bumped by 1 in `app.config.js` (Play rejects a re-used code)
+- [ ] `versionName` in `app.config.js` `version` matches the iOS release
+- [ ] If native config changed: re-ran `expo prebuild --platform android` and committed `/android`
+
+## Build & submit
+
+- [ ] `eas build -p android --profile preview` → install the APK on a device for the smoke pass
+- [ ] `eas build -p android --profile production` → produces the AAB
+- [ ] After the build, confirm runtime config reached the release bundle (the `extra` channel):
+      the app talks to Supabase, and Sentry/PostHog events land in their dashboards — this is the
+      Android analog of grepping the archived `.app`
+- [ ] `eas submit -p android` → uploads the AAB to the Play **internal testing** track
+      (needs `play-service-account.json`; see `android-release-recipe`)
+
+## Device pass (Android — edge-to-edge device ideally)
+
+- [ ] **Safe-area insets**: no screen draws content under the status bar or gesture nav bar —
+      spot-check Home, Journey (path), Onboarding, a paged reader, Ask Krishna, Settings
+- [ ] Foundations SVG diagrams render (not "Unimplemented component" — react-native-svg is native)
+- [ ] Notification permission prompt appears (Android 13+ `POST_NOTIFICATIONS`); scheduled
+      "☕ Your chai is ready" fires and deep-links to Home
+- [ ] Narration read-along plays **while foregrounded** with sentence highlight; a sane TTS voice
+      is chosen and Sanskrit segments aren't silently skipped
+      (background-audio-while-locked and lock-screen controls are **intentionally iOS-only**)
+- [ ] Ask Krishna streams a reply word-by-word (XHR path) and the keyboard doesn't cover the input
+- [ ] App icon (adaptive), display name, splash correct on the launcher

@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   TouchableOpacity,
   ScrollView,
   TextInput,
@@ -12,6 +11,7 @@ import {
   Animated,
   AccessibilityInfo,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Typed separately: inside StyleSheet.create the style resolves to a union
 // that Image's style prop rejects

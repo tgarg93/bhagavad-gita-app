@@ -47,7 +47,10 @@ export default {
         backgroundColor: "#fff7ed"
       },
       edgeToEdgeEnabled: true,
-      package: "com.tushargarg.dharma"
+      package: "com.tushargarg.dharma",
+      // Play Store build number. Bump by 1 before every Android upload (the
+      // Android analog of iOS CFBundleVersion). Play rejects a re-used code.
+      versionCode: 1
     },
     extra: {
       // The `extra` block is the config channel PROVEN to survive the Xcode

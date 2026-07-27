@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   Modal,
-  SafeAreaView,
   ScrollView,
   TouchableOpacity,
   TextInput,
@@ -13,6 +12,7 @@ import {
   Alert,
   Image,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';

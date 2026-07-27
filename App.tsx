@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as Sentry from '@sentry/react-native';
 import * as Notifications from 'expo-notifications';
 import { initTelemetry, capture } from './src/services/telemetryService';
@@ -105,24 +106,28 @@ function App() {
   // First launch: Krishna-guided onboarding before the main app
   if (needsOnboarding) {
     return (
-      <ErrorBoundary>
-        <OnboardingScreen
-          onComplete={() => {
-            capture('onboarding_completed');
-            setNeedsOnboarding(false);
-          }}
-        />
-        <StatusBar style="dark" />
-      </ErrorBoundary>
+      <SafeAreaProvider>
+        <ErrorBoundary>
+          <OnboardingScreen
+            onComplete={() => {
+              capture('onboarding_completed');
+              setNeedsOnboarding(false);
+            }}
+          />
+          <StatusBar style="dark" />
+        </ErrorBoundary>
+      </SafeAreaProvider>
     );
   }
 
   // Show main app after splash
   return (
-    <ErrorBoundary>
-      <AppNavigator />
-      <StatusBar style="dark" />
-    </ErrorBoundary>
+    <SafeAreaProvider>
+      <ErrorBoundary>
+        <AppNavigator />
+        <StatusBar style="dark" />
+      </ErrorBoundary>
+    </SafeAreaProvider>
   );
 }
 

@@ -3,12 +3,13 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   ScrollView,
   TouchableOpacity,
   Switch,
   Linking,
+  Platform,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
@@ -52,7 +53,13 @@ const SettingsScreen: React.FC = () => {
   };
 
   const version = Constants.expoConfig?.version ?? '1.0.0';
-  const build = (Constants.expoConfig as any)?.ios?.buildNumber ?? Constants.nativeBuildVersion ?? '';
+  const cfg = Constants.expoConfig as any;
+  const build =
+    (Platform.OS === 'android'
+      ? cfg?.android?.versionCode
+      : cfg?.ios?.buildNumber) ??
+    Constants.nativeBuildVersion ??
+    '';
 
   return (
     <SafeAreaView style={styles.container}>
