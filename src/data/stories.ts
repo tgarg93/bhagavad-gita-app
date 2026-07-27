@@ -840,6 +840,20 @@ const KATHA_STORIES: Story[] = [
         teachingText:
           'Markandeya did not become strong enough to fight Death; he attached himself to what Death cannot touch. The tradition’s claim is not that devotion extends the lifespan — it is that a life wrapped around the deathless participates in it. His parents’ choice haunts the story productively: they chose depth over duration, and depth, it turned out, contained duration.',
         citation: 'Shiva Purana; the Mahamrityunjaya mantra tradition associates his rescue with Rig Veda 7.59.12',
+        checks: [
+          {
+            id: 'chk:story:markandeya:death',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'The boy Markandeya was fated to die at sixteen. When Death came with his noose, what happened?',
+            options: [
+              { text: 'He clung to the Shiva linga in devotion, and Shiva burst forth, stopped Death, and granted him deathless youth', correct: true },
+              { text: 'He fought Death with a sword and lost' },
+              { text: 'He accepted his fate quietly and died on schedule' },
+            ],
+            why: 'His whole-hearted devotion is what saved him. The story is why his name is bound to the Mahamrityunjaya, the great “conquest of death” mantra.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -888,6 +902,20 @@ const KATHA_STORIES: Story[] = [
         teachingText:
           'Two teachings share this story without resolving. One: devotion so complete that it learns from a teacher’s mere image — the inner guru is real, and Ekalavya proves it. The other: institutions that demand loyalty owe justice in return, and the epic preserves — perhaps deliberately — the case where they didn’t. Hold both. The tradition at its best does.',
         citation: 'Mahabharata, Adi Parva; Ekalavya’s later appearances: Sabha and Drona Parvas',
+        checks: [
+          {
+            id: 'chk:story:ekalavya:thumb',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Refused a teacher, Ekalavya trained himself before a clay image of Drona and surpassed Arjuna. What did Drona then demand as his teacher’s fee?',
+            options: [
+              { text: 'His right thumb — which Ekalavya gave without hesitation, ending his archery', correct: true },
+              { text: 'That he never touch a bow again, which he refused' },
+              { text: 'A fortune in gold he did not have' },
+            ],
+            why: 'To keep Arjuna the greatest archer, Drona asked the impossible, and Ekalavya paid it. The tradition preserves the story as much to indict the injustice as to praise the devotion.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -935,6 +963,20 @@ const KATHA_STORIES: Story[] = [
         teachingText:
           'Sharanagati — giving refuge — is treated by the tradition as near-absolute: the one who surrenders to your protection acquires a claim on you that grows, not shrinks, as the price rises. And the scale’s arithmetic teaches the harder lesson: partial sacrifice kept trying to make the problem someone else’s. Only when Shibi offered the whole self did the weighing end.',
         citation: 'The refuge ethic across the epics; cf. Ramayana, Yuddha Kanda (Vibhishana’s refuge)',
+        checks: [
+          {
+            id: 'chk:story:shibi:refuge',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'A dove fled to King Shibi for protection, and the hawk chasing it demanded its rightful meal. How did Shibi answer?',
+            options: [
+              { text: 'He offered his own flesh, weight for weight, rather than surrender one who had sought his refuge', correct: true },
+              { text: 'He killed the hawk to save the dove' },
+              { text: 'He handed the dove over, since the hawk needed to eat' },
+            ],
+            why: 'To Shibi, a creature that asks for shelter cannot be given up, whatever it costs him. The story enshrines the sacredness of granting refuge.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -984,6 +1026,20 @@ const KATHA_STORIES: Story[] = [
         teachingText:
           'The Gita’s promise — a leaf, a flower, water, offered with love, I accept — is this story in doctrine form. What moved Krishna was not the rice but the cost: poha was everything Sudama’s house could give, and the friendship asked for nothing. Grace, the story insists, reads the proportion, not the amount — and answers what was never asked aloud.',
         citation: 'Bhagavata Purana 10.81; the principle: Bhagavad Gita 9.26',
+        checks: [
+          {
+            id: 'chk:story:sudama:offering',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Sudama brought his now-royal friend Krishna only a handful of beaten rice, too poor and ashamed to ask for anything. What did Krishna do?',
+            options: [
+              { text: 'Received him with overwhelming love and, unasked, transformed his life — the humble gift, given with love, was everything', correct: true },
+              { text: 'Turned him away for bringing so little' },
+              { text: 'Gave him a loan to be repaid later' },
+            ],
+            why: 'Krishna measured the love, not the rice. It is the Gita’s promise made flesh: a leaf, a flower, a handful of grain offered with devotion is fully received.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -1031,6 +1087,20 @@ const KATHA_STORIES: Story[] = [
         teachingText:
           'This is the tradition’s cleanest picture of sharanagati, surrender: not laziness — Gajendra fought longer than anyone could ask — but the honest recognition of the boundary where my power ends. The lotus matters too: even at the bottom of his strength, the offering went up with the cry. Empty hands can still hold one flower.',
         citation: 'Bhagavata Purana, Canto 8, Chapters 2–4; the offering principle: Bhagavad Gita 9.26',
+        checks: [
+          {
+            id: 'chk:story:gajendra:surrender',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Gripped by a crocodile and exhausted after struggling for ages, the elephant Gajendra finally did what — and was saved?',
+            options: [
+              { text: 'He let go of his own struggle and cried out to God in total surrender, and Vishnu came at once', correct: true },
+              { text: 'He summoned the strength for one last pull and broke free himself' },
+              { text: 'The other elephants rescued him' },
+            ],
+            why: 'As long as Gajendra relied on his own strength he stayed trapped. Rescue came the moment he surrendered completely and called out. The story is the tradition’s image of grace meeting helplessness.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -1079,6 +1149,20 @@ const KATHA_STORIES: Story[] = [
         teachingText:
           'Hiranyakashipu’s boon is the tradition’s parable about control: he legislated every case he could imagine, and reality arrived through the cases he couldn’t. Prahlada is the counter-figure — no protections at all, only trust, and untouchable. The story asks which security you are building.',
         citation: 'Bhagavata Purana, Canto 7, Chapters 9–10',
+        checks: [
+          {
+            id: 'chk:story:prahlada:everywhere',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Prahlada’s father tried fire, poison, and worse to break the boy’s devotion, then sneered, “is your God even in this pillar?” and struck it. What happened?',
+            options: [
+              { text: 'Narasimha burst from the pillar — God was there too, and no cruelty had shaken Prahlada’s devotion', correct: true },
+              { text: 'The pillar cracked but nothing came out' },
+              { text: 'Prahlada finally renounced his God' },
+            ],
+            why: 'Nothing his father did could touch Prahlada’s faith, and the challenge “is God in this pillar?” was answered on the spot. The tale insists the divine is everywhere, especially where the powerful deny it.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -1126,6 +1210,20 @@ const KATHA_STORIES: Story[] = [
         teachingText:
           'Savitri never once asks Death for an exception; she reasons within the rules until the rules themselves return her husband. The tradition holds her up not for dying devotion but for the rarer thing — devotion that thinks. Love, argued flawlessly and refused nothing less than everything, is the strongest force in the epic’s universe.',
         citation: 'Mahabharata, Vana Parva, chapters 293–299; Vat Savitri vrat: living tradition',
+        checks: [
+          {
+            id: 'chk:story:savitri:death',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Warned that her husband Satyavan would die within a year, Savitri married him anyway. When Death came and took his soul, what did she do?',
+            options: [
+              { text: 'She followed Death itself, won boons through her wit and devotion, and worded one so cleverly it restored Satyavan to life', correct: true },
+              { text: 'She accepted his death and mourned' },
+              { text: 'She fought Death with weapons' },
+            ],
+            why: 'Savitri did not beg; she reasoned with Death and out-thought him. Devotion here is sharp-witted and relentless, which is why women still keep the Vat Savitri vow in her name.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -1173,6 +1271,20 @@ const KATHA_STORIES: Story[] = [
         teachingText:
           'The tradition put its anti-body-shaming lesson in the sky, on a repeating schedule: the moon’s monthly thinning is beauty doing penance for laughing at a body it thought lesser. And Ganesha’s own response to his tumble — repack the modaks, belt on the snake, carry on — is the working definition of dignity the story actually recommends.',
         citation: 'Told as Puranic and folk tradition, cited honestly as such',
+        checks: [
+          {
+            id: 'chk:story:ganesha-moon:mockery',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'By the popular tale, why do people avoid looking at the moon on Ganesh Chaturthi night?',
+            options: [
+              { text: 'The moon laughed at Ganesha when he stumbled, so he cursed it: whoever gazes at it that night will be wrongly blamed', correct: true },
+              { text: 'The moon is considered unlucky all year round' },
+              { text: 'Looking at it means you cannot eat sweets' },
+            ],
+            why: 'A lighter tale with a real edge: the moon’s mockery of a stumble earned a curse, and the taboo is a yearly reminder that laughing at someone’s fall has a cost.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -1222,6 +1334,20 @@ const KATHA_STORIES: Story[] = [
         teachingText:
           'Every serious effort churns up poison before nectar — and the poison must be swallowed by someone willing, usually someone who wanted nothing from the project. The treasures come mid-effort and are all distractions before the last one. And the amrita arrives only after the partnership collapses, through wisdom wearing an unexpected form. It is the tradition’s complete theory of great undertakings, told as one story.',
         citation: 'Bhagavata Purana, Canto 8, Chapters 8–12; the Kumbh drops: Puranic tradition',
+        checks: [
+          {
+            id: 'chk:story:samudra-manthan:poison-first',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'When the gods and demons churned the ocean for the nectar of immortality, what surfaced first, before any treasure?',
+            options: [
+              { text: 'A world-destroying poison, which Shiva drank — the nectar came only at the very end', correct: true },
+              { text: 'The nectar of immortality itself, right away' },
+              { text: 'The goddess Lakshmi, and nothing else' },
+            ],
+            why: 'The great goods, Lakshmi, the healer, and finally the nectar, came only after the poison. The churning is the tradition’s image that the sweetest results arrive last, once you have worked through the bitter.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
