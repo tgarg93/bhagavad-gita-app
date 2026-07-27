@@ -1048,6 +1048,20 @@ const UPANISHAD_PARTS: ScripturePart[] = [
         teachingText:
           'The chariot dismantles a comforting illusion — that “you” are in charge by default. The self only rides; whether the ride ends anywhere worth reaching depends on whether the intellect is awake and the mind is held. Freedom is not doing whatever the horses want; it is the charioteer’s steady hands.',
         citation: 'Katha Upanishad 1.3.3–9',
+        checks: [
+          {
+            id: 'chk:scripture:katha:chariot',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'The Katha pictures a person as a chariot. In the image, who is the rider, and what does the steering?',
+            options: [
+              { text: 'The Self (atman) rides; the intellect is the charioteer, the mind the reins, the senses the horses', correct: true },
+              { text: 'The body is the rider and the soul is the horse' },
+              { text: 'There is no rider; the chariot drives itself' },
+            ],
+            why: 'The Self is the passenger, not the driver. Steady the horses (senses) with the reins (mind) and a clear charioteer (intellect), and the rider reaches the goal.',
+          },
+        ],
         citationLink: 'concept:three-gunas',
       },
       {
@@ -1102,6 +1116,20 @@ const UPANISHAD_PARTS: ScripturePart[] = [
         teachingText:
           'The verse dissolves a false choice. It does not say renounce the world or enjoy the world; it says enjoy it by renouncing ownership of it. The grip is what poisons the having. What you hold with an open hand you can actually taste; what you clutch, you only guard.',
         citation: 'Isha Upanishad 1',
+        checks: [
+          {
+            id: 'chk:scripture:isha:renounce-enjoy',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'The Isha’s very first verse hands you a paradox in a few words. What is it?',
+            options: [
+              { text: 'Renounce, and enjoy — everything belongs to the divine, so hold it lightly, and in that letting-go, enjoy it fully', correct: true },
+              { text: 'Own everything you can, and enjoy none of it' },
+              { text: 'Renounce the world and never enjoy anything again' },
+            ],
+            why: 'Tena tyaktena bhunjithah. Not grasping and not fleeing, but enjoying what passes through your hands without clutching it. Gandhi said if all scripture vanished but this verse, Hinduism would live on.',
+          },
+        ],
         citationLink: 'concept:karma',
       },
       {
@@ -1170,6 +1198,20 @@ const UPANISHAD_PARTS: ScripturePart[] = [
         teachingText:
           'The Kena builds humility into the pursuit of the highest truth. Every other subject rewards the confidence of mastery; this one punishes it. The verse is a permanent corrective to spiritual arrogance — the moment you are certain you have it, you have traded the living reality for a tidy idea of it.',
         citation: 'Kena Upanishad 2.1–2.3',
+        checks: [
+          {
+            id: 'chk:scripture:kena:not-knowing',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'The Kena says of Brahman: “if you think you know it well, you know it only a little.” Why?',
+            options: [
+              { text: 'Brahman is the knower behind all knowing, never an object you can grasp — make it a thing you’ve caught and you’ve missed it', correct: true },
+              { text: 'Because only priests are allowed to know it' },
+              { text: 'Because it changes shape every time you look' },
+            ],
+            why: 'You cannot see the eye that sees or know the knower as a thing. Brahman is what does the knowing in you, so the honest posture is humility, not a claim to have it pinned down.',
+          },
+        ],
       },
       {
         id: 'kena-gods',
@@ -1207,6 +1249,20 @@ const UPANISHAD_PARTS: ScripturePart[] = [
         teachingText:
           'The Mundaka is not anti-intellectual — it calls the Vedas knowledge — but it refuses to confuse accumulation with transformation. You can master every book about water and still be thirsty. The higher knowledge is not more facts; it is the shift from knowing about the Self to being awake as it.',
         citation: 'Mundaka Upanishad 1.1.4–5',
+        checks: [
+          {
+            id: 'chk:scripture:mundaka:two-knowledges',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'The Mundaka splits knowledge into two kinds, higher and lower. What is the difference?',
+            options: [
+              { text: 'Lower is everything you can study and memorize; higher is the direct knowing of the imperishable — and only the higher liberates', correct: true },
+              { text: 'Lower is for children and higher is for adults' },
+              { text: 'Lower is false and higher is true' },
+            ],
+            why: 'Even the Vedas and sciences count as “lower” knowledge, valuable but about things. The “higher” is knowing the changeless ground directly, which is what actually sets you free.',
+          },
+        ],
       },
       {
         id: 'mundaka-two-birds',
@@ -1282,6 +1338,20 @@ const UPANISHAD_PARTS: ScripturePart[] = [
         teachingText:
           'The Mandukya finds its evidence not in scripture but in your own night. You already visit three completely different worlds every day and survive the total dissolution of deep sleep intact. That something remains continuous across waking, dream, and dreamless sleep is the text’s quiet proof that you are not only the contents of any one state.',
         citation: 'Mandukya Upanishad 3–6 (the four quarters of the Self)',
+        checks: [
+          {
+            id: 'chk:scripture:mandukya:states',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'The Mandukya maps the sound A-U-M onto three states of consciousness. Which three?',
+            options: [
+              { text: 'Waking, dream, and deep sleep — with the silence after Om as the fourth, the Self beyond all three', correct: true },
+              { text: 'Past, present, and future' },
+              { text: 'Body, mind, and speech' },
+            ],
+            why: 'A is waking, U is dream, M is dreamless sleep, and the quiet after the sound is turiya, the pure awareness underneath all three states.',
+          },
+        ],
       },
       {
         id: 'mandukya-turiya',
@@ -1345,6 +1415,20 @@ const UPANISHAD_PARTS: ScripturePart[] = [
         teachingText:
           'The five sheaths give a map for the question “who am I?” — and its method is subtraction. You are not merely the body of food, nor only the breath, nor even the mind or the intellect; peel each, and something subtler remains. It is the Upanishad’s answer to a life spent identifying with the outermost layer: you are not the garment, however fine.',
         citation: 'Taittiriya Upanishad 2.1–2.5 (the pancha-kosha)',
+        checks: [
+          {
+            id: 'chk:scripture:taittiriya:sheaths',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'The Taittiriya pictures the self as five nested sheaths. What is the outermost one?',
+            options: [
+              { text: 'The sheath made of food — the physical body; within it lie breath, mind, wisdom, and finally bliss', correct: true },
+              { text: 'The sheath made of bliss, on the outside' },
+              { text: 'There is only one sheath, not five' },
+            ],
+            why: 'You peel inward from the body (food) through breath, mind, and wisdom to the innermost sheath of bliss (ananda). The Self is what wears all five, like layered clothing.',
+          },
+        ],
         citationLink: 'concept:prana',
       },
       {
