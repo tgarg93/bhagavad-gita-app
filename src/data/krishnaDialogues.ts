@@ -1533,4 +1533,78 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
     },
   },
+
+  'deity:brahma': {
+    id: 'dlg:deity-brahma',
+    start: 'notemple',
+    nodes: {
+      notemple: {
+        id: 'notemple',
+        krishna: ['A quick oddity to start with **Brahma**: he’s the creator of the entire universe, and yet he has almost no temples, basically one, in all of India. The preserver and the destroyer get thousands each. Why do you think the maker of everything gets left out?'],
+        choices: [
+          { text: 'Did he do something wrong?', reply: 'There are stories like that, a prideful little lie, a curse. But there’s a deeper, structural reason, and it’s oddly wise. Let me show you.', next: 'finished' },
+          { text: 'No idea, that is strange', reply: 'It is strange, and the real answer isn’t a scandal. It’s a priority the whole tradition quietly holds. Here it is.', next: 'finished' },
+          { text: 'Isn’t creation the biggest job?', reply: 'You’d think it would earn the most temples. The tradition sees it the other way, and the reason is worth carrying. Watch.', next: 'finished' },
+        ],
+      },
+      finished: {
+        id: 'finished',
+        krishna: [
+          'Here’s the structural answer: creation is finished. It already happened. Preservation and transformation, though, are going on right now, in your body, your family, your city. So the tradition pours its devotion toward the work still in motion, and lets the creator rest.',
+          'That isn’t a snub, Brahma opens nearly every scripture. It’s a priority, and a striking one: honor beginnings, but worship what’s still going.',
+        ],
+        citation: 'Brahma’s single temple (Pushkar) and the finished-creation reading: Puranic and living tradition.',
+        choices: [
+          { text: 'Honestly, hard for me', reply: 'You’re in good company, and Brahma is the patron saint of the hard part. A maker who won’t step back starts to strangle the thing he made. The tradition’s counsel is blunt: what you started should matter to you less than what it became.', next: 'clock' },
+          { text: 'I can let go alright', reply: 'That’s a real skill, and a rare one. Brahma models it at cosmic scale: create fully, then release completely, and let preservation take over. The making was never meant to be the whole of your identity.', next: 'clock' },
+        ],
+      },
+      clock: {
+        id: 'clock',
+        krishna: [
+          'One more gift from Brahma, and it’s a strange comfort. The tradition measures time in his days. A single day of Brahma is over four billion years. He lives a hundred years of those, and then even he ends, and another begins.',
+          'That clock isn’t there to make you feel small, you were never small. It’s there to right-size the things shouting loudest: this quarter, this fight, this failure. From the scale of a day of Brahma, most of what’s crushing you is happening in an afternoon.',
+        ],
+        practice: 'Two small moves this week. First, take one thing you started and are gripping too tightly, and deliberately let it be a little more its own, less managed by you. Second, when a worry feels enormous, hold it against a single day of Brahma, four billion years, and watch it shrink to its actual size.',
+        end: true,
+      },
+    },
+  },
+
+  'deity:saraswati': {
+    id: 'dlg:deity-saraswati',
+    start: 'plain',
+    nodes: {
+      plain: {
+        id: 'plain',
+        krishna: ['**Saraswati** is one of the most revered goddesses in Hinduism, and also the one who owns almost nothing. No gold, no weapons, no crown, just a white robe, a book, and a stringed instrument. Lakshmi streams coins; Saraswati wears plain white. What do you figure she’s the goddess of, to be dressed like that?'],
+        choices: [
+          { text: 'Knowledge, learning?', reply: 'Exactly. Knowledge, music, speech, the whole life of the mind. And the plain white is a deliberate message. Let me unpack it.', next: 'give' },
+          { text: 'Not sure', reply: 'She’s the goddess of knowledge and learning. And what she wears, and doesn’t, is the first thing she’s teaching. Here it is.', next: 'give' },
+          { text: 'Poverty, maybe?', reply: 'Close in a way, but it’s chosen, not forced on her. She governs a kind of wealth that has no use for gold. Watch what it is.', next: 'give' },
+        ],
+      },
+      give: {
+        id: 'give',
+        krishna: [
+          'Here’s the wealth she governs, and its one miraculous property. Split any ordinary treasure between two people and each share shrinks. Split knowledge, teach it, and both shares grow. The teacher ends up with more, not less.',
+          'An old proverb puts it plainly: knowledge is the wealth thieves can’t steal, kings can’t tax, and giving away only multiplies. That’s why she needs no vault and no gold. You can’t hoard the only thing she deals in.',
+        ],
+        citation: 'Knowledge as the wealth that grows when given: Subhashita (Sanskrit proverb) tradition.',
+        choices: [
+          { text: 'Yeah, probably', reply: 'Most people guard their expertise, afraid of giving away an edge. Saraswati says the opposite: teach it and you understand it better, and it comes back multiplied. Hoarding is the one sure way to lose it.', next: 'white' },
+          { text: 'I share pretty freely', reply: 'Then you already know her secret firsthand, the odd way explaining something out loud makes it clearer in your own head. That’s her puja, done in its original form: not flowers, but teaching.', next: 'white' },
+        ],
+      },
+      white: {
+        id: 'white',
+        krishna: [
+          'One last thing, and it’s pointed for your century. She wears white, the color before distraction, and holds one book, one instrument, one string of beads. The message: real learning asks you to subtract. One thing at a time, fully.',
+          'In an age built to shatter your attention, that plain white is almost a rebellion. So her two lessons sit together: guard your attention fiercely, then give away freely whatever it earns you.',
+        ],
+        practice: 'This week, do one act of Saraswati worship, which in her tradition means teaching, not flowers. Take one thing you genuinely understand and explain it, clearly and patiently, to one person who wants it. Notice you walk away understanding it better than before. That’s her whole economy in a single act.',
+        end: true,
+      },
+    },
+  },
 };

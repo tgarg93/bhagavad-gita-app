@@ -1910,40 +1910,122 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/brahma-icon.jpg',
       galleryImages: []
     },
+    kicker: 'The four-headed creator who made everything, then stepped back — worshipped almost nowhere, because his is the one job already finished.',
+    learnItems: [
+      'The creator has almost no temples, because his work is done — honor beginnings, worship what is still going',
+      'The universe\'s first act was meditation, not making — creation begins in humility',
+      'No weapons, and a swan that separates milk from water — creation is discrimination, not force',
+      'One day of Brahma is 4.32 billion years — a clock built to right-size your crises',
+    ],
+    handoff:
+      'Brahma is the maker. The knowledge he creates the world with has a goddess all her own, the one who governs learning, music, and speech: Saraswati.',
     sections: [
+      {
+        id: 'brahma-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          'Brahma is the creator, the four-headed god who made the universe. And he comes with a genuine puzzle: for the maker of everything, he is worshipped almost nowhere.\n\nOver the next few pages: why the creator has no temples, how his very first act was to sit still, what his four heads and lone swan are telling you, and the staggering size of a single day of his.',
+      },
       {
         id: 'brahma-question',
         title: 'The God With No Temples',
         subtitle: 'The question every child asks first',
+        takeaway:
+          'The creator has almost no temples because creation is finished. The tradition honors beginnings, but pours its devotion into the work still going on.',
         storyText: 'Here is a puzzle the tradition planted on purpose: Hinduism worships the preserver in ten thousand temples and the destroyer in ten thousand more — and **the creator of everything has, for practical purposes, one**, at Pushkar in Rajasthan.\n\nAsk why and you will hear the stories: the contest with Shiva where Brahma\'s pride produced a small lie, or the yajna where a curse fell.\n\nBut sit with it longer and a structural answer emerges. **Creation is finished.** Preservation and transformation are happening right now, in your body, your family, your world — and the tradition pours its devotion toward the work that is still going on.',
         teachingText: 'This is not disrespect; Brahma opens the cosmology of nearly every Purana. It is a priority: **honor beginnings, worship continuations.**\n\nAny parent who has launched a child, any founder who has handed off a company, knows the Brahma position — essential, then over. The tradition\'s quiet counsel to everyone in it: what you started must matter less to you than what it became.',
-        citation: 'Shiva Purana, Vidyeshvara Samhita (Lingodbhava); Padma Purana (the Pushkar tradition)'
+        citation: 'Shiva Purana, Vidyeshvara Samhita (Lingodbhava); Padma Purana (the Pushkar tradition)',
+        checks: [
+          {
+            id: 'chk:deity:brahma:no-temples',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Why does the creator of everything, Brahma, have almost no temples, while the preserver and destroyer have thousands each?',
+            options: [
+              { text: 'Creation is already finished; the tradition pours devotion into the work still going on', correct: true },
+              { text: 'Brahma asked not to be worshipped' },
+              { text: 'His temples were all destroyed in a war' },
+            ],
+            why: 'Preservation and transformation are happening right now; creation already happened. The tradition honors beginnings but worships what is still in motion.',
+          },
+        ],
       },
       {
         id: 'brahma-lotus-section',
         title: 'Born on a Lotus, Looking for the Bottom',
         subtitle: 'The first act of the first being',
+        takeaway:
+          'Brahma woke alone with no instructions and his first act was not to build but to sit and look inward. Creation begins in humility.',
         storyText: 'The Bhagavata Purana opens creation like this: Vishnu rests on the cosmic waters, and from his navel grows a lotus. In it wakes Brahma — **alone, in the dark, with no memory and no instructions.**\n\nHe climbs down the stem to find where it comes from and finds no bottom. He climbs up and finds no top.\n\nAnd so the first conscious act of the new universe is not making; **it is meditation.** Brahma sits in his lotus and turns inward, and only after perceiving the one he grew from does he begin to create.',
         sectionHeader: 'Creation begins in humility',
         teachingText: 'The tradition could have made its creator omniscient from the first instant. Instead it gave him our situation: waking into a world he did not choose, unable to see his own source, having to begin anyway.\n\nHis answer — **sit, look inward, then work** — is the pattern for every creative act since. You do not need to see the bottom of the stem to make something worthy on top of it.',
-        citation: 'Bhagavata Purana, Canto 3, Chapters 8–9'
+        citation: 'Bhagavata Purana, Canto 3, Chapters 8–9',
+        checks: [
+          {
+            id: 'chk:deity:brahma:first-act',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Waking alone on his lotus with no memory and no instructions, what was Brahma’s very first act?',
+            options: [
+              { text: 'He sat and turned inward, seeking his own source, and only then began to create', correct: true },
+              { text: 'He immediately spoke the world into being' },
+              { text: 'He went looking for other gods to help him' },
+            ],
+            why: 'He climbed the lotus stem and found no bottom or top, then sat in meditation. Creation begins in humility: sit, look inward, then work.',
+          },
+        ],
+      },
+      {
+        id: 'brahma-way-1',
+        kind: 'waypoint',
+        title: '2 of 4 banked',
+        learnIndex: 2,
+        storyText:
+          'You know why he is barely worshipped and how humbly he began. Now what his strange four-headed form is quietly telling you.',
       },
       {
         id: 'brahma-heads',
         title: 'Four Heads, Four Vedas, One Swan',
         subtitle: 'What the iconography is saying',
+        takeaway:
+          'Brahma carries no weapons and rides a swan said to drink milk from water. Creation is a matter of discrimination, not force.',
         storyText: 'Brahma\'s four heads face the four directions and speak the four Vedas — **knowledge looking every way at once**.\n\nIn his hands: the Vedas, a rosary counting time, a water pot holding the causal waters, a lotus. **No weapons; he is the only major deity who carries none.**\n\nAnd beneath him, his vahana: the **hamsa**, the swan the tradition credits with the ability to drink milk mixed with water and leave the water behind — discrimination, the power to separate what matters from what merely surrounds it.',
         teachingText: 'Read as a diagram, Brahma is a theory of creative work: wide attention, deep sources, patience with time, and no force — **creation cannot be done at swordpoint.**\n\nThe swan completes it: a maker\'s central skill is neither speed nor volume but knowing, in the mixture of everything available, **which part is the milk**.',
         citation: 'Standard Puranic iconography; the hamsa-discrimination motif is proverbial across Sanskrit literature'
       },
       {
+        id: 'brahma-way-2',
+        kind: 'waypoint',
+        title: '3 of 4 banked',
+        learnIndex: 3,
+        storyText:
+          'One idea left, and it is the largest clock ever imagined, kept for a surprisingly practical reason.',
+      },
+      {
         id: 'brahma-time',
         title: 'A Day of Brahma',
         subtitle: 'The largest clock ever imagined',
+        takeaway:
+          'One day of Brahma is 4.32 billion years. The tradition keeps a clock this vast to right-size the crises that claim to be enormous.',
         storyText: 'The Puranas measure the universe in Brahma\'s time.\n\nOne day of Brahma — one **kalpa** — is a thousand cycles of the four ages: **4.32 billion human years**. At its end the worlds dissolve into night; at dawn they are made again. Brahma lives a hundred such years, and then he too ends, and after a pause, another begins.\n\nThe tradition arrived at time-spans of this scale — with cosmoses born and dissolved in endless series — while most of the world still counted history in a few thousand years.',
         sectionHeader: 'What the big clock is for',
         teachingText: 'This is not trivia; it is therapy. Every anxiety you have is happening inside an afternoon of a single day of a being who has days without number.\n\nThe scale is not meant to make you feel small — atman was never small — but to **right-size the things that claim to be enormous**: this quarter, this failure, this feud. The tradition keeps a clock that makes empires look brief, precisely so its people can hold their crises lightly.',
-        citation: 'Kalpa reckoning: Bhagavata Purana, Canto 3, Chapter 11; Vishnu Purana, Book 1'
+        citation: 'Kalpa reckoning: Bhagavata Purana, Canto 3, Chapter 11; Vishnu Purana, Book 1',
+        checks: [
+          {
+            id: 'chk:deity:brahma:time',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'One “day of Brahma” lasts 4.32 billion years. Why does the tradition imagine time on such a scale?',
+            options: [
+              { text: 'To right-size the crises that feel enormous, this quarter, this feud, seen against a day without number', correct: true },
+              { text: 'To calculate the exact age of the universe for science' },
+              { text: 'To frighten people into worship' },
+            ],
+            why: 'The vast clock is therapy, not trivia. Held against a single day of Brahma, most of what feels crushing turns out to be happening in an afternoon.',
+          },
+        ],
       }
     ],
     sources: [
@@ -2524,19 +2606,53 @@ export const deitiesData: Deity[] = [
       iconImage: '/images/deities/saraswati-icon.jpg',
       galleryImages: []
     },
+    kicker: 'The white-robed goddess of knowledge, music, and speech — who owns almost nothing, because the one wealth she governs is the kind that grows when you give it away.',
+    learnItems: [
+      'She began as a sacred river and became the current of thought itself — what is essential outlives its container',
+      'Plain white, no gold: real learning asks you to subtract, not decorate',
+      'She is vak, speech itself — treat the word as sacred enough to give it banks',
+      'Knowledge is the wealth that grows when shared — teaching is her truest worship',
+    ],
+    handoff:
+      'Saraswati is the wealth that multiplies when you give it. The surest way to grow it is to hand it on, which is exactly what the tradition means by a teacher, a guru.',
     sections: [
+      {
+        id: 'saraswati-intro',
+        kind: 'intro',
+        title: "What's ahead",
+        storyText:
+          'Saraswati is the goddess of knowledge, music, and speech, and the odd one out among the great goddesses: no gold, no weapons, just a white robe, a book, and a stringed instrument.\n\nOver the next few pages: how she began as a river, why she wears no gold, why she lives in your very speech, and the one kind of wealth that grows the more you give it away.',
+      },
       {
         id: 'saraswati-oldest',
         title: 'The Oldest Goddess Still Worshiped',
         subtitle: 'From riverbank to raga',
+        takeaway:
+          'Saraswati began as a sacred river; when it dried up she became every flow that remained, speech, memory, music. What is essential survives the loss of its container.',
         storyText: 'Before she held a veena, Saraswati held a watershed.\n\nIn the **Rig Veda** — humanity\'s oldest religious text in continuous use — she is a physical river, hymned with awe: best of mothers, best of rivers, best of goddesses. The sages composed on her banks; her water was the first thing the tradition called sacred.\n\nThen, over centuries, the river of legend dwindled into the desert — and the goddess performed **the most graceful pivot in religious history**. She went underground and resurfaced as every flow that remained: speech, memory, mathematics, music. The river became the current of thought itself.',
         teachingText: 'There is a teaching in the transformation beyond the history: **what is essential survives the loss of its original container.**\n\nWhen a chapter of your life dries up — a career, a role, a place — the Saraswati move is not to mourn the riverbed but to ask **where the water went**. It is usually still flowing, one channel over.',
-        citation: 'Rig Veda 6.61 and 2.41.16, tr. Griffith (public domain); the vanished-river and Triveni traditions'
+        citation: 'Rig Veda 6.61 and 2.41.16, tr. Griffith (public domain); the vanished-river and Triveni traditions',
+        checks: [
+          {
+            id: 'chk:deity:saraswati:river',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Before she was the goddess of knowledge, what was Saraswati?',
+            options: [
+              { text: 'A sacred river; when it dried up she resurfaced as the current of thought itself, speech, memory, music', correct: true },
+              { text: 'A mortal queen who was later deified' },
+              { text: 'Shiva’s first wife' },
+            ],
+            why: 'In the Rig Veda she is a physical river, the best of rivers and mothers. As the river vanished into the desert, the goddess became every flow that remained. What is essential outlives its container.',
+          },
+        ],
       },
       {
         id: 'saraswati-white',
         title: 'Why She Wears No Gold',
         subtitle: 'The iconography of attention',
+        takeaway:
+          'Alone among the great goddesses, Saraswati wears plain white and no gold: real learning asks you to subtract, not decorate.',
         storyText: 'Stand her beside the other great goddesses and the contrast is the message. Lakshmi streams gold; Durga bristles with borrowed weapons; **Saraswati wears plain white** and owns, by divine standards, almost nothing. Every element is about undivided attention:',
         bullets: [
           '**White** — the color before distraction.',
@@ -2547,25 +2663,73 @@ export const deitiesData: Deity[] = [
         ],
         sectionHeader: 'The luxury of focus',
         teachingText: 'The tradition dressed its knowledge-goddess in the absence of ornament on purpose: **learning does not need decoration, and mostly cannot survive it.** In an age engineered to shatter attention, Saraswati\'s plain white is almost political.\n\nThe instruction hiding in the image: to learn anything real, **subtract**. One instrument, one book, one repetition at a time, and the swan\'s ruthless question of everything you consume — milk, or water?',
-        citation: 'Standard Saraswati iconography; Saraswati Vandana (traditional invocation) for the whiteness imagery'
+        citation: 'Standard Saraswati iconography; Saraswati Vandana (traditional invocation) for the whiteness imagery',
+        checks: [
+          {
+            id: 'chk:deity:saraswati:white',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Lakshmi streams gold and Durga bristles with weapons, but Saraswati wears plain white and owns almost nothing. Why?',
+            options: [
+              { text: 'Learning needs undivided attention, not decoration — the image says: to learn, subtract', correct: true },
+              { text: 'She is poorer than the other gods' },
+              { text: 'White is simply her favorite color, with no meaning' },
+            ],
+            why: 'The knowledge-goddess is dressed in the absence of ornament on purpose. In an age built to shatter attention, her plain white is almost political: one book, one instrument, one thing at a time.',
+          },
+        ],
+      },
+      {
+        id: 'saraswati-way-1',
+        kind: 'waypoint',
+        title: '2 of 4 banked',
+        learnIndex: 2,
+        storyText:
+          'You know where she came from and why she wears no gold. Now the most intimate thing about her: she lives in your own speech.',
       },
       {
         id: 'saraswati-speech',
         title: 'The Goddess in Your Mouth',
         subtitle: 'Speech as a river with banks',
+        takeaway:
+          'Saraswati is vak, speech itself. The practice she asks for is to treat the word as sacred enough to give it banks.',
         storyText: 'Her deepest identification is with **vak** — speech, the power of the word.\n\nThe Vedic tradition regarded speech not as labels pasted on things but as **a creative force**: the hymns were heard, not composed, and to speak truly was to participate in the world\'s making.\n\nSaraswati is that power personified, which is why she is **Vagdevi**, goddess of the word, and why a traditional blessing says she should dwell on a person\'s tongue. When someone speaks with unusual grace or truth, the old idiom is literal: Saraswati sits in their mouth.',
         teachingText: 'A river nourishes when it has banks and floods when it does not — and speech is exactly such a river.\n\nThe daily practice her tradition suggests is **an audit of the word**: is what I am about to say true? Is it useful? Does it flow toward or away from understanding? To honor Saraswati is not to speak beautifully; it is to treat the power of the word as sacred enough to bank.',
         citation: 'Vak in the Vedic tradition: Rig Veda 10.125 (the Vak Sukta); Vagdevi epithet, traditional'
       },
       {
+        id: 'saraswati-way-2',
+        kind: 'waypoint',
+        title: '3 of 4 banked',
+        learnIndex: 3,
+        storyText:
+          'One idea left, and it is the strangest, most generous property of the wealth she governs.',
+      },
+      {
         id: 'saraswati-giving',
         title: 'The Wealth That Grows When Given',
         subtitle: 'Vasant Panchami and the first letters',
+        takeaway:
+          'Knowledge is the one wealth that grows when given away. Teaching what you know is Saraswati worship in its original form.',
         storyText: 'On Vasant Panchami, when the mustard fields turn the color of her festival, small children across India are carried to her altar to **write their first letters** — a finger guided through the alphabet in a plate of rice.\n\nThe tradition calls it **Vidyarambham**, the beginning of knowledge, and treats it with the gravity of a sacrament, because it is one.\n\nThe child is being inducted into the one form of wealth with a miraculous property: **split any other treasure and each share shrinks. Split knowledge — teach it — and both shares grow.**',
         sectionHeader: 'The teacher\'s economy',
         teachingText: 'A Sanskrit proverb states her economics plainly: knowledge is the wealth that **thieves cannot steal, kings cannot tax, and giving cannot diminish** — it grows by being spent.\n\nThis is why the guru sits so high in this tradition, and why the truest Saraswati worship is not the flowers but the explaining: every time you teach what you know, you are performing her puja in its original form.',
         citationLink: 'festival:basant-panchami-2025',
-        citation: 'Vidyarambham / Vasant Panchami: living tradition; the knowledge-wealth proverb: Subhashita tradition (traditional Sanskrit verse)'
+        citation: 'Vidyarambham / Vasant Panchami: living tradition; the knowledge-wealth proverb: Subhashita tradition (traditional Sanskrit verse)',
+        checks: [
+          {
+            id: 'chk:deity:saraswati:giving',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'A Sanskrit proverb calls knowledge a wealth unlike any other. What makes it unique?',
+            options: [
+              { text: 'Thieves cannot steal it, kings cannot tax it, and giving it away only makes it grow', correct: true },
+              { text: 'It can be traded for gold at any temple' },
+              { text: 'It disappears if you ever share it' },
+            ],
+            why: 'Split any other treasure and each share shrinks; teach knowledge and both shares grow. That is why the truest Saraswati worship is not the flowers but the explaining.',
+          },
+        ],
       }
     ],
     sources: [
