@@ -941,4 +941,115 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
     },
   },
+
+  'festival:hanuman-jayanti-2025': {
+    id: 'dlg:hanuman-jayanti',
+    start: 'wind',
+    nodes: {
+      wind: {
+        id: 'wind',
+        krishna: ['**Hanuman** is the strongest figure in the whole tradition, he lifts mountains, leaps oceans, walks through fire unharmed. But here’s the strange part: the most famous moment in his story is when he forgot he could do any of it. Guess what fixed that?'],
+        choices: [
+          { text: 'Someone reminded him?', reply: 'Exactly. Let me tell you the scene, because it’s the whole point of him.', next: 'shore' },
+          { text: 'No idea', reply: 'No new power, no magic weapon. Just a friend, and a few words. Here’s the moment.', next: 'shore' },
+          { text: 'Isn’t he the monkey god?', reply: 'He is, son of the wind, devoted to Rama. And his greatest feat started with him sitting on a beach, feeling useless. Watch.', next: 'shore' },
+        ],
+      },
+      shore: {
+        id: 'shore',
+        krishna: [
+          'The army reached the sea. Rama’s wife was held captive on an island across a vast stretch of open water, and someone had to leap it. Hanuman, who could have cleared it easily, sat there discouraged, because a curse in his childhood had made him forget his own strength.',
+          'Then an old bear named **Jambavan** simply reminded him: you are the son of the wind, you have crossed skies, this ocean is nothing to you. As he listened, Hanuman grew, remembered, and cleared the whole sea in a single leap.',
+        ],
+        citation: 'Hanuman’s leap: Valmiki Ramayana, Kishkindha and Sundara Kandas.',
+        choices: [
+          { text: 'Yeah, definitely', reply: 'Most people have. And often what breaks the spell isn’t a lecture, it’s one person who sees you clearly and says it out loud. Stay near those people, and be that person when you can.', next: 'serve' },
+          { text: 'Maybe right now', reply: 'Then you’re on Hanuman’s beach. The kindness of the story is that he didn’t have to manufacture new power. He just needed reminding of what was already his. Who’s your Jambavan?', next: 'serve' },
+        ],
+      },
+      serve: {
+        id: 'serve',
+        krishna: [
+          'One more thing about Hanuman, and it’s why he’s so loved. All that power, and he wanted nothing for himself. Every bit of it went to serving Rama, something he loved beyond his own ego.',
+          'The tradition holds him up as the ideal for exactly that: enormous strength, placed entirely in the service of something larger than himself.',
+        ],
+        practice: 'Two small moves this week. First, name one strength you’ve been forgetting you have, and use it once, on purpose. Second, be someone’s Jambavan: tell one person, plainly, a strength you see in them that they seem to have forgotten.',
+        end: true,
+      },
+    },
+  },
+
+  'festival:ratha-yatra-2025': {
+    id: 'dlg:ratha-yatra',
+    start: 'out',
+    nodes: {
+      out: {
+        id: 'out',
+        krishna: ['Most of the year a temple’s main deity sits deep in an inner sanctum, and historically not everyone was allowed in to see him. Ratha Yatra flips that completely. For one day, the god leaves the temple. Any idea why that’s such a big deal?'],
+        choices: [
+          { text: 'So everyone can see him?', reply: 'Exactly, that’s the heart of it. Let me show you what it looks like.', next: 'chariot' },
+          { text: 'Not sure', reply: 'Because it turns the usual arrangement inside out. The one who was hard to reach comes looking for you. Here’s the scene.', next: 'chariot' },
+          { text: 'Isn’t this the giant chariot one?', reply: 'That’s the one, chariots so huge the English word “juggernaut” came from them. And what rides out on them matters even more than their size.', next: 'chariot' },
+        ],
+      },
+      chariot: {
+        id: 'chariot',
+        krishna: [
+          '**Jagannath**, a form of Krishna, is pulled through the streets of Puri on a chariot so massive it takes thousands of hands on the ropes. And here’s the thing: anyone can grab a rope. Every caste, every stranger, every person who could never enter the inner sanctum, all pulling the same god down the same road.',
+          'There’s even a moment where the king himself, the highest man present, sweeps the chariot platform with a golden broom. Before the god on the open road, the mighty and the lowly stand on the same ground.',
+        ],
+        citation: 'Ratha Yatra: Skanda Purana, Purushottama Kshetra Mahatmya; the king’s sweeping, Puri tradition.',
+        choices: [
+          { text: 'Kind of moving, actually', reply: 'It is. The message is simple and huge: you don’t have to earn your way into the sanctum. Once a year at least, the sanctum comes out to the street to find you.', next: 'unfinished' },
+          { text: 'Why does that matter?', reply: 'Because so much of religion can feel like a locked room you’re not holy enough to enter. Ratha Yatra says the opposite, on wheels: the god will come to you, wherever you happen to be standing.', next: 'unfinished' },
+        ],
+      },
+      unfinished: {
+        id: 'unfinished',
+        krishna: [
+          'One last detail I love. The Jagannath murti is deliberately left **unfinished**, stumpy arms, huge round eyes, no fine features. Some say the sculptor was interrupted; the tradition kept it that way on purpose.',
+          'The quiet message: the divine doesn’t wait to be polished and perfect before it shows up for you. It rolls out into the street half-carved, wide-eyed, and available. So can you.',
+        ],
+        practice: 'This week, notice where you’ve been waiting to be “finished” before you show up, more ready, more worthy, more polished, before you reach out or start or let someone really see you. Take the Jagannath approach once: roll out unfinished anyway.',
+        end: true,
+      },
+    },
+  },
+
+  'festival:guru-purnima-2025': {
+    id: 'dlg:guru-purnima',
+    start: 'teacher',
+    nodes: {
+      teacher: {
+        id: 'teacher',
+        krishna: ['Guru Purnima is, on the surface, a day to honor teachers, which might sound a bit like a greeting-card holiday. But the word **guru** carries something much bigger than “teacher.” Want to guess what it literally breaks down to?'],
+        choices: [
+          { text: 'No idea', reply: 'Gu means darkness, ru means remover. A guru is anyone who removes a bit of your darkness. That’s a very different job than teaching facts.', next: 'darkness' },
+          { text: 'Something about light?', reply: 'Close, from the other side: darkness. Gu is darkness, ru is its remover. A guru dispels a patch of your not-knowing.', next: 'darkness' },
+          { text: 'Just “teacher,” no?', reply: 'That’s the usual translation, but it’s thinner than the word. Gu is darkness, ru is remover. Removing darkness is more than handing over information.', next: 'darkness' },
+        ],
+      },
+      darkness: {
+        id: 'darkness',
+        krishna: [
+          'So a **guru** isn’t only the person at the front of a classroom. It’s anyone whose presence lifts a bit of your ignorance, a mentor, a grandmother, even a hard experience that taught you what no book could.',
+          'And here’s why the tradition takes it so seriously. For most of history there were no books to learn the deep things from. It all passed hand to hand, teacher to student, a living chain called **parampara**. Lose a link and a whole line of knowledge could vanish. The teacher was the bridge, the only way across.',
+        ],
+        citation: 'Guru (gu-ru, darkness-remover): Guru Gita tradition; approaching a teacher, Bhagavad Gita 4.34.',
+        choices: [
+          { text: 'A few people, yeah', reply: 'Good. Those are your gurus, whether they ever held the title or not. The festival mostly exists to make sure they get thanked out loud, which almost never happens on its own.', next: 'thanks' },
+          { text: 'Hadn’t thought about it', reply: 'Most people haven’t, because a guru rarely announces themselves. Someone just quietly made you less lost than you were. Today is the day to notice who.', next: 'thanks' },
+        ],
+      },
+      thanks: {
+        id: 'thanks',
+        krishna: [
+          'The other half of the day is staying a student yourself. Even **Vyasa**, the sage who arranged the Vedas and wrote the Mahabharata, is honored today as the great teacher, and the tradition still calls itself a student before him. Nobody outgrows learning.',
+          'So that’s the posture Guru Purnima asks for: grateful to those who taught you, and humble enough to keep being taught.',
+        ],
+        practice: 'This week, actually thank one guru of yours, out loud or in writing, not just in your head. A teacher, a mentor, a parent, anyone who removed some darkness for you. Name the specific thing they helped you see. It lands harder than you’d expect.',
+        end: true,
+      },
+    },
+  },
 };

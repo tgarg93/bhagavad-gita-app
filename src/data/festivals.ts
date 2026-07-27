@@ -1758,7 +1758,21 @@ export const festivalData: Festival[] = [
         title: 'The Baby Who Leapt at the Sun',
         subtitle: 'A Fruit Too Bright to Resist',
         storyText: 'The Ramayana\'s final book tells his childhood in one astonishing scene.\n\nThe infant Hanuman wakes hungry. Through the trees he sees the rising sun, round and golden, and takes it for a ripe fruit. So he jumps for it. Not toward the treetops. Toward the sun, gaining on it, while the sky gods watch in alarm.\n\nIndra, king of the gods, hurls his thunderbolt. It strikes the child\'s jaw and drops him to the earth, and from that broken jaw, hanu in Sanskrit, comes the name **Hanuman**. His father the wind, in grief, pulls the air out of the world until the gods relent. They heap the boy with boons: strength no weapon can undo, life no fight can end.\n\nBut power like that in a child is chaos, and after some well-aimed mischief at the hermitages, the sages set one final condition on him. **Hanuman would forget what he could do, until someone reminded him.**',
-        citation: 'Valmiki Ramayana, Uttara Kanda, sargas 35–36 — the childhood story, as the epic\'s tradition tells it.'
+        citation: 'Valmiki Ramayana, Uttara Kanda, sargas 35–36 — the childhood story, as the epic\'s tradition tells it.',
+        checks: [
+          {
+            id: 'chk:festival:hanuman:sun',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'As a baby, Hanuman leapt into the sky straight toward the sun. Why?',
+            options: [
+              { text: 'He mistook the glowing sun for a ripe fruit and jumped to eat it, a sign of his power and fearlessness from infancy', correct: true },
+              { text: 'He was trying to escape a demon' },
+              { text: 'He was told to fetch it by his father' },
+            ],
+            why: 'The infant Hanuman saw the rising sun as a bright fruit and sprang to grab it. Even as a baby, his strength and fearlessness were already off the scale.',
+          },
+        ],
       },
       {
         id: 'hanuman-jayanti-leap',
@@ -1766,7 +1780,21 @@ export const festivalData: Festival[] = [
         subtitle: 'At the Shore of a Hundred-Yojana Sea',
         storyText: 'Years later that condition becomes the hinge of the whole epic.\n\nThe search parties looking for the kidnapped Sita reach the southern shore and stop dead. The ocean to Lanka is a hundred yojanas wide. No monkey on the beach can jump it, and the mission is hours from failing.\n\nThen **Jambavan**, the old bear king, turns to the quiet one sitting apart and begins to speak. He tells Hanuman his own story back to him. Son of the wind. The child who leapt at the sun. Strength without measure, sleeping only because you forgot it. Why do you sit silent, he asks, when you alone can do this?\n\nAnd Hanuman remembers. He grows until the mountain he stands on groans under him, and he leaps, and the next book of the Ramayana, the **Sundara Kanda**, the beautiful chapter, is his alone: the crossing, the finding of Sita, the burning of Lanka, the return.',
         teachingText: 'The tradition has held onto this scene for thousands of years because everyone is standing on that beach eventually.\n\nHanuman\'s strength was never gone. It was forgotten, and it took a friend naming it out loud to bring it back. Some years you are Hanuman, talked out of your own capacity. Some years your only job is to be Jambavan for somebody else.',
-        citation: 'Valmiki Ramayana, Kishkindha Kanda, sargas 66–67; Sundara Kanda, sarga 1.'
+        citation: 'Valmiki Ramayana, Kishkindha Kanda, sargas 66–67; Sundara Kanda, sarga 1.',
+        checks: [
+          {
+            id: 'chk:festival:hanuman:reminder',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'At the ocean’s shore, the mighty Hanuman sat unable to cross to Lanka until Jambavan spoke to him. What was wrong?',
+            options: [
+              { text: 'A curse had made him forget his own strength; he needed a friend to remind him what he could do', correct: true },
+              { text: 'He was physically injured from an earlier battle' },
+              { text: 'The ocean was enchanted so no one could cross it' },
+            ],
+            why: 'A childhood curse had hidden Hanuman’s power from himself. He only leapt the sea once Jambavan reminded him he was the son of the wind, and the strength came flooding back.',
+          },
+        ],
       },
       {
         id: 'hanuman-jayanti-devotee',
@@ -1919,14 +1947,42 @@ export const festivalData: Festival[] = [
         title: 'The Day the God Comes Out',
         subtitle: 'Grand Road, Puri, a Sea of Hands',
         storyText: 'A temple is a house with a threshold, and a threshold can be a barrier. For centuries, not everyone could enter the great temple at Puri.\n\nOnce a year, the temple answers that problem in the most direct way imaginable. **The god comes out.**\n\nOn Ratha Yatra morning, **Jagannath**, whose name means Lord of the Universe, is carried out of his sanctum with his elder brother **Balabhadra** and his sister **Subhadra**, and the three are seated on three enormous wooden chariots, as tall as buildings, on the Grand Road. Then a million people take up the ropes and pull them, three kilometers, to the Gundicha temple where they will spend nine days.\n\nOn the road there is no doorway and no restriction of caste, creed, or faith. Whoever reaches the rope, pulls. Nineteenth-century British observers, staggered by the scale of the unstoppable chariots, took one of Jagannath\'s names into English: **juggernaut**.',
-        citation: 'Skanda Purana, Purushottama Kshetra Mahatmya — the festival\'s charter; "juggernaut" etymology, documented history.'
+        citation: 'Skanda Purana, Purushottama Kshetra Mahatmya — the festival\'s charter; "juggernaut" etymology, documented history.',
+        checks: [
+          {
+            id: 'chk:festival:ratha:comes-out',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'What makes Ratha Yatra unusual among temple festivals?',
+            options: [
+              { text: 'The deity leaves the temple and rides out into the streets on a giant chariot, so anyone at all can see and pull him', correct: true },
+              { text: 'It is the only festival held entirely inside the inner sanctum' },
+              { text: 'No images of the deity are allowed that day' },
+            ],
+            why: 'Most of the year the deity stays in the inner sanctum. On Ratha Yatra Jagannath comes out to the street on a massive chariot, where every person, whoever they are, can pull the ropes.',
+          },
+        ],
       },
       {
         id: 'ratha-yatra-jagannath',
         title: 'The Unfinished God',
         subtitle: 'Great Round Eyes in Neem Wood',
         storyText: 'Jagannath does not look like other murtis, and that is the first thing everyone notices. A great blocky form of painted neem wood, stumps for arms, and enormous round eyes that never blink.\n\nOdia tradition tells why with a story. The divine craftsman **Vishwakarma** agreed to carve the deity on one condition: the door stays shut until the work is done. Weeks passed in silence. The king, unable to bear it, opened the door early, and the craftsman vanished, leaving the form unfinished. The unfinished form is what has been worshiped ever since.\n\nThe tradition kept the accident as a teaching. The god does not require completion to be present, and neither does anything else you are waiting to finish before you show it.\n\nHe is understood as **Krishna** in his Puri form, and unlike stone deities, the wooden bodies are periodically remade in a rite called Nabakalebara, the new embodiment. The god stays; the form is allowed to be replaced.',
-        citation: 'The unfinished-murti story — Odia tradition, labeled as tradition; Jagannath as Krishna, per the Puri tradition.'
+        citation: 'The unfinished-murti story — Odia tradition, labeled as tradition; Jagannath as Krishna, per the Puri tradition.',
+        checks: [
+          {
+            id: 'chk:festival:ratha:unfinished',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Jagannath’s murti at Puri is famously left unfinished, with great round eyes and unformed limbs. What is often read into that?',
+            options: [
+              { text: 'The divine does not wait to be polished and perfect to be fully present, it meets you unfinished', correct: true },
+              { text: 'The sculptor was punished for laziness' },
+              { text: 'It is a temporary murti replaced each year with a finished one' },
+            ],
+            why: 'The stumpy arms and huge eyes were kept on purpose. The quiet message is that God shows up half-carved and available, not waiting to be perfect first.',
+          },
+        ],
       },
       {
         id: 'ratha-yatra-king-sweeps',
@@ -2101,14 +2157,42 @@ export const festivalData: Festival[] = [
         title: 'A Holiday for Teachers',
         subtitle: 'The Full Moon of Ashadha',
         storyText: 'Every culture thanks its heroes. Hinduism went further and scheduled a full moon for thanking its **teachers**.\n\n**Guru Purnima** falls on the full moon of Ashadha, as the monsoon breaks over India. The word guru is usually translated as teacher, and a beloved traditional etymology, given in the Guru Gita, reads it as two syllables: **gu**, darkness, and **ru**, its removal. The one who removes darkness.\n\nThe tradition means the word generously. The sage on a riverbank is a guru, and so is the woman who taught you to read, the father who taught you to drive, the senior who showed you how the job is really done. Today is for all of them.\n\nWhy this full moon? The rains were when India\'s wandering teachers stopped wandering. For four months, the **chaturmasya**, monks settled in one place, and students gathered. The year\'s great season of learning opened tonight.',
-        citation: 'Guru Gita (Skanda Purana tradition) — the gu-ru etymology, given as traditional; chaturmasya, monastic tradition.'
+        citation: 'Guru Gita (Skanda Purana tradition) — the gu-ru etymology, given as traditional; chaturmasya, monastic tradition.',
+        checks: [
+          {
+            id: 'chk:festival:guru:meaning',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'The word “guru” literally breaks down to mean what?',
+            options: [
+              { text: 'Gu (darkness) plus ru (remover): one who removes darkness, not merely a teacher of facts', correct: true },
+              { text: '“Wise old man,” from a word for age' },
+              { text: '“Master,” from a word for ownership' },
+            ],
+            why: 'Gu is darkness, ru is its remover. A guru is anyone whose presence dispels a patch of your not-knowing, which is a bigger job than passing on information.',
+          },
+        ],
       },
       {
         id: 'guru-purnima-vyasa',
         title: 'The Editor the Tradition Worships',
         subtitle: 'Vyasa Purnima',
         storyText: 'The day\'s older name is **Vyasa Purnima**, because tradition holds it as the birthday of **Vyasa**, and his resume explains the honor.\n\nTradition credits Vyasa with arranging the single ocean of the Veda into the **four Vedas**, so that human memory could carry them. With composing the **Mahabharata**, the world\'s longest epic, holding the Bhagavad Gita inside it. With compiling the great **Puranas**. His name literally means the arranger, the editor.\n\nNotice what the tradition did here. Of all its kings, warriors, and miracle-workers, it gave one of the year\'s holiest days to the man who **organized knowledge and passed it on**.\n\nTo this day, the seat a traditional teacher speaks from is called the **vyasa-pitha**, Vyasa\'s seat, and every guru lineage, the parampara, traces its line back through him. When anyone teaches dharma anywhere, the tradition says, they are sitting in his chair.',
-        citation: 'Mahabharata, Adi Parva — Vyasa as arranger of the Vedas and author of the epic (tr. Ganguli); his jayanti on this day, tradition.'
+        citation: 'Mahabharata, Adi Parva — Vyasa as arranger of the Vedas and author of the epic (tr. Ganguli); his jayanti on this day, tradition.',
+        checks: [
+          {
+            id: 'chk:festival:guru:vyasa',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Guru Purnima is also called Vyasa Purnima. Who was Vyasa?',
+            options: [
+              { text: 'The sage who arranged the Vedas and composed the Mahabharata, honored as the archetypal guru', correct: true },
+              { text: 'A king who founded the first temple' },
+              { text: 'A demon defeated by Rama' },
+            ],
+            why: 'Vyasa gathered and ordered the Vedas and authored the Mahabharata. The tradition treats him as the source-teacher, so his full-moon day became the day to honor all gurus.',
+          },
+        ],
       },
       {
         id: 'guru-purnima-parampara',
