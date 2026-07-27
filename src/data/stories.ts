@@ -261,6 +261,20 @@ const UPANISHAD_STORIES: Story[] = [
         teachingText:
           'At the exact moment when lineage could have barred the door, the Upanishad rules that truthfulness — not birth — is the mark of a brahmana. The boy whose honest answer should have disqualified him was admitted because of it. Where the truth is inconvenient is precisely where it counts.',
         citation: 'Chandogya Upanishad 4.9.1–3',
+        checks: [
+          {
+            id: 'chk:story:satyakama:truth',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Satyakama did not know his father, and told the teacher so plainly. Why did that answer get him admitted?',
+            options: [
+              { text: 'His fearless honesty marked him as a true seeker, the qualification that mattered more than lineage', correct: true },
+              { text: 'The teacher pitied him for having no family' },
+              { text: 'He bought his way in with the four hundred cows' },
+            ],
+            why: 'Only someone devoted to truth would speak so unflattering a fact so plainly. Gautama took that honesty as proof of a real student, not the family name.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -308,6 +322,20 @@ const UPANISHAD_STORIES: Story[] = [
         teachingText:
           'Maitreyi’s question is a test anyone can run on any acquisition: would this make me deathless? If not, it belongs to the category of the finite, and the heart’s full weight should not rest on it. Not a rejection of wealth — Yajnavalkya divided his fairly — but a refusal to confuse its category.',
         citation: 'Brihadaranyaka Upanishad 2.4 (and its reprise at 4.5)',
+        checks: [
+          {
+            id: 'chk:story:maitreyi:immortal',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'Offered half her husband’s wealth as he left to renounce the world, what did Maitreyi ask for instead?',
+            options: [
+              { text: 'The teaching that leads to the deathless, once she saw wealth could not make her immortal', correct: true },
+              { text: 'A larger share than her co-wife' },
+              { text: 'To be left the house and lands' },
+            ],
+            why: 'She asked, “if the whole earth were mine, would it make me immortal?” Told no, she chose knowledge over property. What we truly love in anything, the Upanishad says, is the Self shining through it.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
@@ -355,6 +383,20 @@ const UPANISHAD_STORIES: Story[] = [
         teachingText:
           'Gargi is the tradition’s standing rebuttal to the idea that its deepest debates excluded women — she is in the arena, armed, feared, and decisive. And her method is the method: push every answer one level deeper until you reach what questions cannot go behind. Doubt, pressed honestly and all the way, arrives at reverence.',
         citation: 'Brihadaranyaka Upanishad 3.8.12',
+        checks: [
+          {
+            id: 'chk:story:gargi:akshara',
+            kind: 'mcq',
+            practice: true,
+            prompt: 'In the great debate, Gargi pressed Yajnavalkya on what the whole universe is “woven upon.” What was his final answer?',
+            options: [
+              { text: 'The imperishable (akshara), the changeless ground on which everything else is woven', correct: true },
+              { text: 'The god Indra' },
+              { text: 'Nothing; the question had no answer' },
+            ],
+            why: 'Gargi drove the questioning down to the base of reality, and Yajnavalkya named the akshara, the imperishable. Her relentless inquiry is why the tradition remembers a woman among its sharpest philosophers.',
+          },
+        ],
       },
     ],
     reflectionQuestions: [
