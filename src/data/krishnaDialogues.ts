@@ -1385,4 +1385,115 @@ export const KRISHNA_DIALOGUES: Record<string, KrishnaDialogue> = {
       },
     },
   },
+
+  'deity:hanuman': {
+    id: 'dlg:deity-hanuman',
+    start: 'strength',
+    nodes: {
+      strength: {
+        id: 'strength',
+        krishna: ['**Hanuman** can lift a mountain, leap an ocean, and level an army. By raw power he might be the strongest figure in the whole tradition. And yet the thing everyone loves him for isn’t the strength at all. Any guess what it is?'],
+        choices: [
+          { text: 'His devotion?', reply: 'Exactly. All that staggering power, and he keeps none of it for himself. Let me show you what that looks like.', next: 'serve' },
+          { text: 'No idea', reply: 'It’s what he does with the strength. He hands every ounce of it to something he loves, and keeps nothing back. Here’s the shape of it.', next: 'serve' },
+          { text: 'Isn’t he just the strong one?', reply: 'That’s the surface. The strength is real, but it’s the second most interesting thing about him. The first is where all of it goes. Watch.', next: 'serve' },
+        ],
+      },
+      serve: {
+        id: 'serve',
+        krishna: [
+          'Everything Hanuman does, crossing the sea, carrying a whole mountain when he can’t find the one healing herb on it, he does in service of Rama, someone he loves. Not one feat is for his own glory. He genuinely wants nothing for himself.',
+          'And here’s the surprising part: that isn’t weakness or having no self. A person that strong, choosing to place all of it in service, is the freest figure in the epic. Nothing owns him, because his ego isn’t in the game.',
+        ],
+        citation: 'Hanuman’s devotion: Valmiki Ramayana, Sundara Kanda.',
+        choices: [
+          { text: 'Kind of freeing, actually', reply: 'That’s exactly what Hanuman knows. When it isn’t about you, the fear drops away. You stop guarding your image and just do the thing. That’s where his fearlessness comes from.', next: 'ego' },
+          { text: 'Easier said than done', reply: 'True, the ego doesn’t leave quietly. You don’t have to erase it though, just aim your effort at something you love more than your own credit. Hanuman points the way; he doesn’t expect you there today.', next: 'ego' },
+        ],
+      },
+      ego: {
+        id: 'ego',
+        krishna: [
+          'That’s why the tradition holds Hanuman up as the ideal devotee. Not for being the strongest, though he is, but for showing what strength is actually for: to be spent on something you love, not hoarded for yourself.',
+          'A talent kept only for your own advancement stays small, however big it is. The same talent poured into something beyond you gets enormous. That’s the Hanuman move.',
+        ],
+        practice: 'This week, take one real strength of yours, something you’re genuinely good at, and use it once purely in service of someone else, expecting nothing back, not even thanks. Notice how different it feels to spend a strength instead of showing it off.',
+        end: true,
+      },
+    },
+  },
+
+  'deity:rama': {
+    id: 'dlg:deity-rama',
+    start: 'word',
+    nodes: {
+      word: {
+        id: 'word',
+        krishna: ['**Rama** is loved above all for one thing: he keeps his word, even when it costs him everything. The morning he’s to be crowned king, an old promise of his father’s surfaces, and instead of the throne Rama now owes fourteen years of exile. What do you think he does?'],
+        choices: [
+          { text: 'Argues, surely?', reply: 'You’d expect it. Anyone would. But he doesn’t, and that’s the whole point of him. Here’s what happens.', next: 'exile' },
+          { text: 'Takes the exile?', reply: 'He does, and without a trace of bitterness. That calm is what the tradition can’t stop marveling at. Let me set the scene.', next: 'exile' },
+          { text: 'That’s not fair to him', reply: 'It absolutely isn’t, and hold onto that, because it’s the honest tension in Rama. Watch what he does with an unfair thing.', next: 'exile' },
+        ],
+      },
+      exile: {
+        id: 'exile',
+        krishna: [
+          'Rama hears the order and walks out of the palace the same hour, crown set down without a tremor, to keep a promise he didn’t even make, one his father made. No loophole, no delay, no sulking. He simply honors the word.',
+          'That’s why he’s called the one who would not cross the line. Say what you’ll do, then do it, whatever it ends up costing. In a world of easy excuses, that kind of unbending integrity is almost shocking to watch.',
+        ],
+        citation: 'Rama’s exile: Valmiki Ramayana, Ayodhya Kanda.',
+        choices: [
+          { text: 'It can go too far', reply: 'A fair and grown-up answer, and the epics wrestle with exactly that, especially later in Rama’s story. Holding a line perfectly can cost the people around you. Rama is the ideal and the hard case at once, and that honesty is part of why he lasts.', next: 'keep' },
+          { text: 'A promise is a promise', reply: 'There’s real strength in that, and Rama is its patron saint. Just keep your eyes open: the same story, later, shows how costly perfect rigidity can be. Admire the integrity, and stay awake to its edges.', next: 'keep' },
+        ],
+      },
+      keep: {
+        id: 'keep',
+        krishna: [
+          'Set the grand epic aside, though, and Rama lands somewhere very ordinary. He’s the answer to a small daily question: when you said you’d do the thing, and now it’s inconvenient, do you still do it?',
+          'Most broken trust is quiet, a hundred small “I’ll get to it”s that never happen. Rama is the opposite habit made holy: your word means the thing gets done.',
+        ],
+        practice: 'This week, keep one small promise you’d normally let slide, the callback, the favor, the thing you said “sure” to and half-forgot. Do it precisely because you said you would, even though it’s a little inconvenient now. That’s Rama, sized for a Tuesday.',
+        end: true,
+      },
+    },
+  },
+
+  'deity:parvati': {
+    id: 'dlg:deity-parvati',
+    start: 'home',
+    nodes: {
+      home: {
+        id: 'home',
+        krishna: ['**Parvati** is the gentle Mother-Goddess, Shiva’s wife and Ganesha’s mother. And she settles one of the oldest arguments in the tradition just by who she is. The argument: do you have to renounce the world, cave and mountaintop, to reach the divine? What’s your instinct?'],
+        choices: [
+          { text: 'Feels like you do, a bit', reply: 'That’s the common assumption, and Parvati’s whole life is the counter-argument. Let me show you how she makes it.', next: 'win' },
+          { text: 'Hope not', reply: 'Good, because Parvati is living proof you don’t. She reaches the highest through a home and a marriage, not away from them. Here’s the story.', next: 'win' },
+          { text: 'Isn’t she just Shiva’s wife?', reply: 'That’s how she’s often filed, and it badly undersells her. She’s the one who pulled the ultimate renunciate into a marriage, on purpose, to make a point. Watch.', next: 'win' },
+        ],
+      },
+      win: {
+        id: 'win',
+        krishna: [
+          'Shiva was the great ascetic, lost in meditation on his mountain, wanting nothing and no one. Parvati set out to marry him anyway. Beauty didn’t move him, so she beat him at his own game: she took up fierce meditation and discipline until even he had to open his eyes.',
+          'Think about what that means. She used the ascetic’s own tools, discipline, devotion, endurance, to build a home and a family right at the center of the world, not to escape it. For her, love itself was the discipline.',
+        ],
+        citation: 'Parvati’s tapas and marriage to Shiva: Shiva Purana, Rudra Samhita.',
+        choices: [
+          { text: 'It still feels like it’s elsewhere', reply: 'Most people carry that quietly, the sense that the holy life is the one they’re not living. Parvati says otherwise. The patience a family demands, the daily selflessness, is discipline of the hardest kind. You’re already on the mountain.', next: 'ardha' },
+          { text: 'Home feels like the real thing', reply: 'Then you already understand her. The demands of loving actual people, day after day, are every bit the discipline a cave is, maybe more. She made the ordinary home a sacred one.', next: 'ardha' },
+        ],
+      },
+      ardha: {
+        id: 'ardha',
+        krishna: [
+          'There’s an image that holds her best: **Ardhanarishvara**, one body split down the middle, Shiva on one half, Parvati on the other. The still, renouncing half and the engaged, world-embracing half, fused into a single figure.',
+          'That’s her quiet teaching. You don’t have to choose between a spiritual life and a fully human one, the peak or the household. The whole picture is both halves in one body.',
+        ],
+        practice: 'This week, take one ordinary domestic thing you usually treat as a chore, cooking for someone, cleaning up, a hard conversation with family, and do it as if it were your spiritual practice, because Parvati says it is. Full attention, a little love. Notice whether the “chore” changes character.',
+        end: true,
+      },
+    },
+  },
 };
