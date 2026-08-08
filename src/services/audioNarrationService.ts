@@ -5,7 +5,9 @@ import { stripInlineMarkup } from '../components/RichText';
 import nowPlayingService, {
   NowPlayingContent,
   RemoteCommandAction,
+  InterruptionEvent,
 } from './nowPlayingService';
+import { clipDurationMsByModule } from '../data/foundationsAudioManifest';
 
 export interface TextSegment {
   id: string;
@@ -172,11 +174,16 @@ class PrerecordedController {
         progressUpdateIntervalMillis: 120,
       });
       this.sound = sound;
-      let dur = status.isLoaded && status.durationMillis ? status.durationMillis : 0;
-      // durationMillis is frequently absent on createAsync's initial status (the file
-      // isn't parsed yet), and until it's known onStatus can't map position → sentence,
-      // so the highlight freezes on the first line. Fetch it up front (resolves in a
-      // tick or two) so advancement is deterministic instead of racing the clip's load.
+      // Prefer our authoritative, ffprobe-measured duration (audioClipDurations):
+      // onStatus maps position → sentence by positionMillis/durationMs, and on
+      // Android MediaPlayer frequently never reports durationMillis for these mp3s,
+      // which left durationMs at 0 and froze the highlight on the first line.
+      // Seeding from the map removes that dependency entirely.
+      let dur =
+        clipDurationMsByModule.get(sec.clip as number) ??
+        (status.isLoaded && status.durationMillis ? status.durationMillis : 0);
+      // Fallback only for any clip missing from the map: poll the platform, which
+      // often omits durationMillis on createAsync's first status (file not parsed yet).
       for (let tries = 0; !dur && this.token === myToken && tries < 12; tries++) {
         await new Promise((r) => setTimeout(r, 40));
         const s = await sound.getStatusAsync();
@@ -377,6 +384,10 @@ export class AudioNarrationService {
   // The single remote-command listener (lock screen / CarPlay / Bluetooth) is wired
   // lazily on the first metadata-bearing session and lives for the app's lifetime.
   private remoteWired = false;
+  // True while narration is paused because the audio session was interrupted (a
+  // call, Siri, Maps voice guidance…), so we only auto-resume audio WE paused and
+  // never override a manual pause the user made during the interruption.
+  private pausedByInterruption = false;
 
   private constructor() {
     this.loadSettings();
@@ -473,6 +484,31 @@ export class AudioNarrationService {
     nowPlayingService.setRemoteCommandHandler((action) => {
       void this.handleRemoteCommand(action);
     });
+    nowPlayingService.setInterruptionHandler((event) => {
+      void this.handleInterruption(event);
+    });
+  }
+
+  // Pause when another app takes the audio session and resume when it hands back
+  // (if the OS allows) — Spotify-style yielding. Reuses the same pause/resume
+  // transport as the on-screen and remote controls, so both playback modes and the
+  // Now Playing bar stay consistent.
+  private async handleInterruption(event: InterruptionEvent): Promise<void> {
+    if (event.type === 'began') {
+      if (this.isActive && !this.isPaused) {
+        this.pausedByInterruption = true;
+        await this.pauseNarration();
+        this.callbacks?.onPlayStateChanged?.(false);
+      }
+      return;
+    }
+    // type === 'ended'
+    const resume = event.shouldResume && this.pausedByInterruption;
+    this.pausedByInterruption = false;
+    if (resume) {
+      await this.resumeNarration();
+      this.callbacks?.onPlayStateChanged?.(true);
+    }
   }
 
   // Route a remote-surface button into the same transport the on-screen controls

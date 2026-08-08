@@ -104,17 +104,17 @@ const KrishnaGuide: React.FC<KrishnaGuideProps> = ({
           accessibilityLabel={typing ? 'Show the rest' : undefined}
         >
           {typewriter ? (
-            // The full string is rendered invisibly to reserve the bubble's
-            // final height; the revealed slice is drawn over it. Without this
-            // the bubble grows line by line and visibly jumps on every wrap.
-            <View>
-              <Text style={styles.bubbleText} accessible={false}>
-                <Text style={styles.hidden}>{message}</Text>
-              </Text>
-              <Text style={[styles.bubbleText, StyleSheet.absoluteFill]}>
-                {message.slice(0, revealed)}
-              </Text>
-            </View>
+            // One Text lays out the WHOLE message; the not-yet-revealed tail is
+            // just colored transparent. Because it's a single text block, the
+            // bubble reserves its final height and wraps identically as it fills
+            // — no second copy to line up. The earlier approach stacked an
+            // invisible full copy under an absolutely-positioned revealed slice;
+            // on Android nested-Text opacity leaked and the two layers wrapped
+            // differently, drawing text over text.
+            <Text style={styles.bubbleText}>
+              {message.slice(0, revealed)}
+              <Text style={styles.hidden}>{message.slice(revealed)}</Text>
+            </Text>
           ) : (
             <Text style={styles.bubbleText}>{message}</Text>
           )}
@@ -164,7 +164,9 @@ const styles = StyleSheet.create({
     lineHeight: 26,
   },
   hidden: {
-    opacity: 0,
+    // Transparent (not opacity:0) so the unrevealed tail reserves layout while
+    // staying invisible — reliable inside a nested Text on Android.
+    color: 'transparent',
   },
 });
 

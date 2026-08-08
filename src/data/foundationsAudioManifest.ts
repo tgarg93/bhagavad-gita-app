@@ -20,6 +20,7 @@
 // sentence highlight (TermCard/IntroCard aren't wired to segment ids), and the
 // capstone recap likewise (it renders via NarrativeSections).
 import { scriptureAudioManifest } from './scriptureAudioManifest';
+import { audioClipDurationMs } from './audioClipDurations';
 
 export const foundationsAudioManifest: Record<string, Record<string, number>> = {
   name: {
@@ -155,4 +156,20 @@ export function prerecordedClipsFor(
     if (manifest[sid]) clips[i] = manifest[sid];
   });
   return Object.keys(clips).length ? clips : null;
+}
+
+// Runtime lookup from a bundled clip's asset-module id → its true duration (ms),
+// built by joining both manifests (sectionId → module id) with the ffprobe-
+// measured durations (sectionId → ms). PrerecordedController seeds its durationMs
+// from this so the read-along highlight never depends on the platform reporting
+// a clip duration — Android's MediaPlayer frequently fails to, which froze the
+// highlight on the first sentence even while audio played.
+export const clipDurationMsByModule: Map<number, number> = new Map();
+for (const manifest of [foundationsAudioManifest, scriptureAudioManifest]) {
+  for (const sections of Object.values(manifest)) {
+    for (const [sectionId, moduleId] of Object.entries(sections)) {
+      const ms = audioClipDurationMs[sectionId];
+      if (ms) clipDurationMsByModule.set(moduleId, ms);
+    }
+  }
 }

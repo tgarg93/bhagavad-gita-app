@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppState, AppStateStatus } from 'react-native';
+import { AppState, AppStateStatus, Text as RNText, TextInput as RNTextInput } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as Sentry from '@sentry/react-native';
@@ -20,6 +20,46 @@ import { navigateToContentRef } from './src/data/journeyPath';
 import { profilePhotoStore } from './src/services/profilePhotoStore';
 
 initTelemetry();
+
+// --- App-wide typography defaults -------------------------------------------
+const RNTextAny = RNText as unknown as {
+  defaultProps?: Record<string, unknown>;
+  render?: (...args: unknown[]) => any;
+  __poppinsPatched?: boolean;
+};
+const RNTextInputAny = RNTextInput as unknown as { defaultProps?: Record<string, unknown> };
+
+// Cap OS font scaling. Without this the device "Font size / Display size"
+// accessibility setting multiplies every label with no ceiling (Android
+// especially), blowing up the iOS-tuned layout. 1.2 keeps text readable for
+// low-vision users without letting the design break; allowFontScaling stays on.
+(RNTextAny.defaultProps ??= {}).maxFontSizeMultiplier = 1.2;
+(RNTextInputAny.defaultProps ??= {}).maxFontSizeMultiplier = 1.2;
+
+// Make Poppins the app-wide default family. The design system names Poppins but
+// most Text styles set only fontWeight (no fontFamily), so they rendered in the
+// system font — Roboto on Android, which looks oversized next to iOS. We can't
+// use defaultProps.style (it does NOT merge — it's ignored whenever a style prop
+// is present), so we wrap Text's render and inject Poppins as the BASE family;
+// explicit styles (e.g. Crimson Text) still win because they come after it, and
+// fontWeight resolves to a real Poppins face via the per-weight faces registered
+// in app.config.js. Devanagari is skipped: Poppins has no such glyphs, so forcing
+// it would render boxes — those keep the system font's Devanagari fallback.
+const DEVANAGARI = /[ऀ-ॿ]/;
+const hasDevanagari = (c: unknown): boolean =>
+  typeof c === 'string' ? DEVANAGARI.test(c) : Array.isArray(c) ? c.some(hasDevanagari) : false;
+const baseTextRender = RNTextAny.render;
+if (baseTextRender && !RNTextAny.__poppinsPatched) {
+  RNTextAny.__poppinsPatched = true;
+  RNTextAny.render = function patchedTextRender(...args: unknown[]) {
+    const element = baseTextRender.apply(this, args) as React.ReactElement<{ style?: unknown }>;
+    const props = args[0] as { children?: unknown } | undefined;
+    if (hasDevanagari(props?.children)) return element;
+    return React.cloneElement(element, {
+      style: [{ fontFamily: 'Poppins' }, element.props.style],
+    });
+  };
+}
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);

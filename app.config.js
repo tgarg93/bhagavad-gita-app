@@ -1,5 +1,37 @@
 import 'dotenv/config';
 
+// Custom fonts the design system names (DharmaDesignSystem.typography). Until
+// now these were never bundled, so both platforms fell back to their system
+// font — on Android that's Roboto, which renders larger/looser than iOS SF and
+// made the whole app look oversized. The expo-font plugin embeds them natively.
+// On Android we register per-weight faces UNDER the family name (fontDefinitions
+// → app:fontWeight), because Android does NOT synthesize weights for custom
+// fonts — the app sets fontWeight in hundreds of styles, so each weight needs a
+// real face or bold would silently render regular. iOS matches weight from the
+// faces' own metadata, so it just takes the flat path list.
+const poppinsDir = './node_modules/@expo-google-fonts/poppins';
+const crimsonDir = './node_modules/@expo-google-fonts/crimson-text';
+const poppinsDefs = [
+  { path: `${poppinsDir}/300Light/Poppins_300Light.ttf`, weight: 300, style: 'normal' },
+  { path: `${poppinsDir}/400Regular/Poppins_400Regular.ttf`, weight: 400, style: 'normal' },
+  { path: `${poppinsDir}/500Medium/Poppins_500Medium.ttf`, weight: 500, style: 'normal' },
+  { path: `${poppinsDir}/600SemiBold/Poppins_600SemiBold.ttf`, weight: 600, style: 'normal' },
+  { path: `${poppinsDir}/700Bold/Poppins_700Bold.ttf`, weight: 700, style: 'normal' },
+  { path: `${poppinsDir}/800ExtraBold/Poppins_800ExtraBold.ttf`, weight: 800, style: 'normal' },
+  { path: `${poppinsDir}/900Black/Poppins_900Black.ttf`, weight: 900, style: 'normal' },
+  { path: `${poppinsDir}/400Regular_Italic/Poppins_400Regular_Italic.ttf`, weight: 400, style: 'italic' },
+  { path: `${poppinsDir}/600SemiBold_Italic/Poppins_600SemiBold_Italic.ttf`, weight: 600, style: 'italic' },
+];
+const crimsonDefs = [
+  { path: `${crimsonDir}/400Regular/CrimsonText_400Regular.ttf`, weight: 400, style: 'normal' },
+  { path: `${crimsonDir}/600SemiBold/CrimsonText_600SemiBold.ttf`, weight: 600, style: 'normal' },
+  { path: `${crimsonDir}/700Bold/CrimsonText_700Bold.ttf`, weight: 700, style: 'normal' },
+  { path: `${crimsonDir}/400Regular_Italic/CrimsonText_400Regular_Italic.ttf`, weight: 400, style: 'italic' },
+  { path: `${crimsonDir}/600SemiBold_Italic/CrimsonText_600SemiBold_Italic.ttf`, weight: 600, style: 'italic' },
+  { path: `${crimsonDir}/700Bold_Italic/CrimsonText_700Bold_Italic.ttf`, weight: 700, style: 'italic' },
+];
+const iosFontPaths = [...poppinsDefs, ...crimsonDefs].map((d) => d.path);
+
 export default {
   expo: {
     name: "Dharma",
@@ -14,7 +46,19 @@ export default {
     plugins: [
       "expo-dev-client",
       "expo-notifications",
-      "expo-calendar"
+      "expo-calendar",
+      [
+        "expo-font",
+        {
+          android: {
+            fonts: [
+              { fontFamily: "Poppins", fontDefinitions: poppinsDefs },
+              { fontFamily: "Crimson Text", fontDefinitions: crimsonDefs },
+            ],
+          },
+          ios: { fonts: iosFontPaths },
+        },
+      ],
     ],
     splash: {
       image: "./assets/dharma-lotus-transparent.png",
@@ -58,7 +102,7 @@ export default {
       package: "com.tushargarg.dharma",
       // Play Store build number. Bump by 1 before every Android upload (the
       // Android analog of iOS CFBundleVersion). Play rejects a re-used code.
-      versionCode: 1
+      versionCode: 2
     },
     extra: {
       // The `extra` block is the config channel PROVEN to survive the Xcode

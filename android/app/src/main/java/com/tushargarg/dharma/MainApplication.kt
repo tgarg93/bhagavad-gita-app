@@ -1,4 +1,5 @@
 package com.tushargarg.dharma
+import com.facebook.react.common.assets.ReactFontManager
 
 import android.app.Application
 import android.content.res.Configuration
@@ -42,6 +43,10 @@ class MainApplication : Application(), ReactApplication {
 
   override fun onCreate() {
     super.onCreate()
+    // @generated begin xml-fonts-init - expo prebuild (DO NOT MODIFY) sync-06d181f0a904f29226a59b74cbacf53ba0ca605a
+    ReactFontManager.getInstance().addCustomFont(this, "Poppins", R.font.xml_poppins)
+    ReactFontManager.getInstance().addCustomFont(this, "Crimson Text", R.font.xml_crimson_text)
+    // @generated end xml-fonts-init
     SoLoader.init(this, OpenSourceMergedSoMapping)
     if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
       // If you opted-in for the New Architecture, we load the native entry point for this app.
