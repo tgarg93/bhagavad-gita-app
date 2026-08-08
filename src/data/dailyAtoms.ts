@@ -637,6 +637,191 @@ const WHY_ATOMS: DailyAtom[] = [
     citation: 'The Panchanga (Hindu lunisolar calendar) tradition',
     krishnaPrompt: 'How does the Hindu calendar work — tithis, lunar months, and why do some years have two of the same month?',
   },
+  // Everyday-practice expansion (Aug 2026): the customs guests ask about at
+  // family gatherings — household rites, weddings, folk protections, death.
+  // Interleaved by theme so consecutive Mondays don’t stack one category.
+  {
+    id: 'why:tikka-welcome',
+    type: 'why',
+    hook: 'Why does a guest get a red mark and a few grains of rice on the forehead?',
+    body:
+      'The tilak of welcome is drawn where the tradition places the inner eye, in kumkum or roli — a wish for the guest’s wellbeing pressed onto the highest point of the body. The grains stuck to it are akshata, unbroken rice: uncut, and so the emblem of a blessing that stays whole. “Atithi devo bhava,” says the Taittiriya Upanishad — the guest is God; the mark makes the sentence visible.',
+    citation: 'Living puja tradition (kumkum + akshata); the welcome it enacts is Taittiriya Upanishad 1.11 — “atithi devo bhava”',
+    sourceRef: 'scripture:taittiriya-upanishad#taittiriya-convocation',
+    krishnaPrompt: 'Why is a guest treated as divine in Hindu homes — and what does “atithi devo bhava” ask of me as a host?',
+  },
+  {
+    id: 'why:saat-phere',
+    type: 'why',
+    hook: 'Why do weddings circle the fire seven times?',
+    body:
+      'Agni, the fire, is the one witness a Hindu marriage cannot do without — whatever is spoken before him is spoken before the gods. In the saptapadi, the couple takes seven steps together, and with each a vow: nourishment, strength, prosperity, happiness, children, the seasons, and lifelong friendship. The old law is blunt about the seventh: with that step, the marriage is complete and irrevocable.',
+    citation: 'The saptapadi of the Grihya Sutras (e.g. Ashvalayana); Agni as the witness',
+    krishnaPrompt: 'What are the seven vows a couple actually takes around the fire — and do they still mean anything today?',
+  },
+  {
+    id: 'why:evil-eye',
+    type: 'why',
+    hook: 'Why the lemon-and-chillies at the door, and the black dot on a baby?',
+    body:
+      'Nazar — the belief that admiration, envy, even a loving gaze can carry a weight the beautiful thing then has to bear. A smudge of kajal on a baby’s cheek, a black thread, a string of lemon and green chillies over the shop door: each is a small deliberate flaw, something to catch the eye before it settles on what you love. No scripture commands it; it is folk instinct, honest about a real feeling — that too much looking can bruise.',
+    citation: 'Folk custom (drishti / nazar) — not scripture, and said so honestly',
+    krishnaPrompt: 'Is there anything real to the “evil eye,” or is it just superstition — and why is the instinct so universal?',
+  },
+  {
+    id: 'why:shraddha-crows',
+    type: 'why',
+    hook: 'Why do we set out food for crows to honor the dead?',
+    body:
+      'For a fortnight each year — Pitru Paksha — families cook for those who came before them and offer the first share to a crow, trusted messenger between the living and the departed. It answers a debt the tradition names outright: pitru rina, what every person owes their ancestors simply for existing. The rite is grief given something to do with its hands — you cannot phone the dead, so you feed them.',
+    citation: 'The shraddha tradition (Pitru Paksha); the three debts — Taittiriya Samhita 6.3.10',
+    krishnaPrompt: 'What is the debt we owe our ancestors, and how do rites like shraddha actually discharge it?',
+  },
+  {
+    id: 'why:conch',
+    type: 'why',
+    hook: 'Why do we blow a conch?',
+    body:
+      'The shankh’s single deep note is heard as the sound the universe began in — Om made audible — so it opens what is sacred and clears the air of what is not. Krishna’s conch has a name, Panchajanya, and its blast is the first sound of the Gita, the note that begins the great war. Part announcement, part purification: the room, and you in it, are put on notice that something has begun.',
+    citation: 'Bhagavad Gita 1.15 — Krishna’s conch Panchajanya',
+    sourceRef: 'gita:1#15',
+    krishnaPrompt: 'Why does sound — the conch, the bell, Om — do so much spiritual work in Hinduism?',
+  },
+  {
+    id: 'why:haldi',
+    type: 'why',
+    hook: 'Why smear turmeric on the bride and groom?',
+    body:
+      'Days before the wedding, both families rub the couple with a paste of turmeric — haldi — until they glow yellow, the tradition’s color of the auspicious and the pure. Part of it is plain wisdom: turmeric is an old antiseptic and skin-brightener, readying the body for its most photographed day. Part is blessing made tactile — the whole family’s hands on you, wishing you well, before your life changes.',
+    citation: 'Living wedding tradition (the haldi rite); turmeric’s use is Ayurvedic — offered as custom, not scripture',
+    krishnaPrompt: 'How much of a Hindu wedding is scripture and how much is beloved custom — and does the difference matter?',
+  },
+  {
+    id: 'why:no-sweeping-night',
+    type: 'why',
+    hook: 'Why don’t we sweep the house after dark?',
+    body:
+      'The tradition dresses a practical rule in a goddess: Lakshmi, wealth and wellbeing, is said to enter homes at dusk, and to sweep her out the moment she arrives would be folly. Underneath is pre-electric common sense — in lamplight you cannot see what you might sweep away, a dropped coin or a ring. A useful habit remembered as reverence, which is how a great deal of custom survives.',
+    citation: 'Folk custom — not scripture, offered honestly',
+    krishnaPrompt: 'How do I tell which Hindu household rules are spiritual and which are old practicality dressed up?',
+  },
+  {
+    id: 'why:terahvin',
+    type: 'why',
+    hook: 'Why does mourning last thirteen days?',
+    body:
+      'The tradition holds that the departed does not leave at once: for a stretch of days the soul lingers as a preta, a spirit still tied to the life it lost, and daily offerings of rice balls — pinda — feed it on the way. On the thirteenth day a final rite ushers it into the company of the ancestors, the pitrs, and only then does the household step back out of grief and into the world. The number is a container: mourning given a shape, and an end.',
+    citation: 'The antyeshti and shraddha rites; the preta-to-pitr passage is described in the Garuda Purana (Preta Khanda)',
+    krishnaPrompt: 'What do the texts say happens to the soul in the days right after death — and what are the rites really for?',
+  },
+  {
+    id: 'why:book-forehead',
+    type: 'why',
+    hook: 'Why do we touch a dropped book to our forehead?',
+    body:
+      'Let a book, a pen, or money fall to the floor and an Indian hand will pick it up and touch it to the eyes or brow before setting it right. Knowledge is the goddess Saraswati; wealth is the goddess Lakshmi — to let either lie underfoot is to slight her, and the touch is a quick, wordless apology. A whole theology of respect, carried out in half a second without anyone being taught it.',
+    citation: 'Living tradition (Saraswati in books and learning, Lakshmi in wealth)',
+    krishnaPrompt: 'Why does Hinduism treat knowledge and money as goddesses — what changes when you see them that way?',
+  },
+  {
+    id: 'why:mundan',
+    type: 'why',
+    hook: 'Why do we shave off a baby’s first hair?',
+    body:
+      'The chudakarana is one of the oldest samskaras, the life-cycle rites: sometime in the first years, the hair a child was born with is shaved away and offered. That first hair is thought to carry something of the life before this one — shaving it is a clean start, the child’s own and unborrowed. Practical too, in a hot land — but the ceremony is about beginning, not the barber.',
+    citation: 'The chudakarana (mundan) samskara of the Grihya Sutras',
+    krishnaPrompt: 'What are the samskaras — the Hindu life-cycle rites — and what is each one meant to mark?',
+  },
+  {
+    id: 'why:muhurat',
+    type: 'why',
+    hook: 'Why do we wait for an “auspicious time” to begin things?',
+    body:
+      'Before a wedding, a housewarming, even a first day of business, families consult the panchanga — the Hindu almanac — for a muhurta, a window when the moon, stars, and hour are held to favor the undertaking. The premise is old and gentle: we live inside larger rhythms, and it is wiser to launch a boat with the tide than against it. Not fate — timing; the same instinct as planting in spring.',
+    citation: 'The muhurta / panchanga tradition of Jyotisha',
+    krishnaPrompt: 'Does the timing of when I start something really matter — or is muhurat just superstition?',
+  },
+  {
+    id: 'why:kalava',
+    type: 'why',
+    hook: 'Why do we tie a red thread around the wrist?',
+    body:
+      'The kalava — also mauli, or raksha sutra, the “protection thread” — is tied by a priest or an elder at the start of a puja, on the right wrist for men and the left for women. Red and yellow, its three strands often read as the three great gods, it marks you as one who has taken a vow and asks their guard over it. It stays until it frays and falls on its own — you never cut a blessing off.',
+    citation: 'Living tradition (the kautuka / raksha-sutra rite)',
+    krishnaPrompt: 'What is the red puja thread on the wrist actually for — and why is it wrong to cut it off?',
+  },
+  {
+    id: 'why:mangalsutra',
+    type: 'why',
+    hook: 'Why do married women wear a mangalsutra?',
+    body:
+      'At the wedding’s heart, the groom ties a cord of black beads and gold around the bride’s neck — the mangala sutra, the “auspicious thread” — and from that knot she is married. The black beads are said to turn away harm; the gold is Lakshmi, wellbeing. Unlike sindoor in the parting, this vow you can hold in your hand: a marriage worn close to the heart.',
+    citation: 'Living tradition; the mangalsutra is tied during the wedding rites, especially in the south and west',
+    krishnaPrompt: 'Sindoor, mangalsutra, toe rings — what does each marriage marker mean, and which are scripture versus custom?',
+  },
+  {
+    id: 'why:griha-pravesh',
+    type: 'why',
+    hook: 'Why do a puja before moving into a new home?',
+    body:
+      'A house is walls; a home is a house that has been welcomed. In the griha-pravesh, a family boils milk until it rises and spills over the threshold — abundance overflowing — and invites in the household gods and the spirit of the site, Vastu Purusha, before a single night is spent there. You do not simply take a home; the tradition has you ask it, and the powers of the place, to take you in.',
+    citation: 'The griha-pravesh and Vastu tradition',
+    krishnaPrompt: 'What is a griha-pravesh actually invoking — and what is Vastu, really?',
+  },
+  {
+    id: 'why:kalash',
+    type: 'why',
+    hook: 'Why do we set up a pot topped with a coconut and mango leaves?',
+    body:
+      'At almost every auspicious rite stands the kalash: a brass or clay pot of water, a ring of mango leaves at its mouth, a coconut crowning it. Filled, the purna-kumbha is the tradition’s emblem of fullness itself — the waters of creation, the womb the world pours from — and the divine is invited to be present in it for the ceremony. A whole cosmos, set on a small table, so the sacred has somewhere to sit.',
+    citation: 'The purna-kumbha (kalash) tradition; the full pot as abundance is Rig-Vedic imagery',
+    krishnaPrompt: 'What does the kalash — the pot with the coconut — actually represent in a puja?',
+  },
+  {
+    id: 'why:janeu',
+    type: 'why',
+    hook: 'Why is a sacred thread worn across the chest?',
+    body:
+      'The yajnopavita is given in the upanayana, once counted among the most important samskaras: with it a boy was said to be “twice-born” — his first birth from his mother, his second into a life of study. Its three strands are read as three debts, to the sages, the gods, and the ancestors, worn as a standing reminder. Historically the rite was restricted by caste and to men; that restriction is later social history, contested today, and worth naming honestly rather than pretending it was never there.',
+    citation: 'The upanayana samskara; the three rinas (debts) — Taittiriya Samhita 6.3.10.5',
+    krishnaPrompt: 'Give me the honest story of the sacred thread — what it means, who wore it, and how that has been challenged.',
+  },
+  {
+    id: 'why:weekday-fast',
+    type: 'why',
+    hook: 'Why fast on Monday for Shiva, Tuesday for Hanuman?',
+    body:
+      'Each day of the week is given to a deity — Monday to Shiva, Tuesday to Hanuman and the Devi, Thursday to the guru and Vishnu, Saturday to Shani — and devotees keep a light vrat on their chosen day, eating simply and turning the mind toward that god. It threads devotion through ordinary time: not a festival you wait a year for, but a small weekly appointment with the divine. Which day is “yours” usually comes down to which prayer your family has always carried.',
+    citation: 'The vaar-vrat (weekday fast) tradition; the weekday–deity pairings',
+    krishnaPrompt: 'How do I choose a weekday fast — and what is a vrat supposed to do beyond skipping a meal?',
+  },
+  {
+    id: 'why:sun-arghya',
+    type: 'why',
+    hook: 'Why do we offer water to the rising sun?',
+    body:
+      'At dawn many Hindus lift a small vessel and pour a thin stream of water toward the sun, watching the light break through it. Surya is the one god you can actually see — the visible face of the divine — and the offering goes with the Gayatri, the tradition’s most sacred prayer, a plea that his light kindle the mind. A gesture of the humblest logic: give a little water back to the source of all light, first thing.',
+    citation: 'The Surya-arghya tradition; the Gayatri mantra — Rig Veda 3.62.10',
+    krishnaPrompt: 'What is the Gayatri mantra asking for — and why is the sun treated as the visible face of God?',
+  },
+  {
+    id: 'why:sit-on-floor',
+    type: 'why',
+    hook: 'Why do we sit on the floor to eat?',
+    body:
+      'Cross-legged on the floor, plate on the ground, the whole family in one row — pankti bhojana. The posture is half of it: sitting in sukhasana and leaning in for each bite is quietly good for digestion, the way yoga would have you sit. The other half is levelling — no head of the table, no high chair, everyone brought to the same ground before the same food.',
+    citation: 'Custom and Ayurveda (the sukhasana posture) — offered as such, not scriptural mandate',
+    krishnaPrompt: 'How much of Hindu eating practice — floor-sitting, right hand, food offered first — is health, and how much is spiritual?',
+  },
+  {
+    id: 'why:incense',
+    type: 'why',
+    hook: 'Why do we light incense before the shrine?',
+    body:
+      'A puja offers the deity what a good host offers a guest — a seat, water, a lamp, food — and among them, dhupa: incense, the offering of fragrance. Its smoke is the one gift you cannot see arrive, only smell, filling a space the way the divine is said to — everywhere at once, felt before found. It readies the room and the breath, drawing attention inward toward what has no form.',
+    citation: 'The pancha-upachara (five-offering) puja tradition',
+    krishnaPrompt: 'What are the offerings in a puja — lamp, incense, flowers, food — each meant to represent?',
+  },
 ];
 
 // ---------------------------------------------------------------------------
