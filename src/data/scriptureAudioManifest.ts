@@ -16,6 +16,7 @@ export const scriptureAudioManifest: Record<string, Record<string, number>> = {
     'bala-birthless-poem': require('../../assets/audio/ramayana/bala-birthless-poem.mp3'),
     'bala-why-start': require('../../assets/audio/ramayana/bala-why-start.mp3'),
     'bala-term-adikavya': require('../../assets/audio/ramayana/bala-term-adikavya.mp3'),
+    'bala-ravana': require('../../assets/audio/ramayana/bala-ravana.mp3'),
     'bala-birth': require('../../assets/audio/ramayana/bala-birth.mp3'),
     'bala-blindspot': require('../../assets/audio/ramayana/bala-blindspot.mp3'),
     'bala-vishwamitra': require('../../assets/audio/ramayana/bala-vishwamitra.mp3'),

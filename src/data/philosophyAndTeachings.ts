@@ -107,7 +107,7 @@ export const philosophyData: PhilosophicalConcept[] = [
     sanskritName: 'सनातन धर्म',
     category: 'core_concepts',
     description: 'The map before the journey — one tradition, many rivers',
-    detailedExplanation: 'Hinduism is not one religion in the way the word usually means. It has no founder, no single scripture, no central authority — and it never wanted them. It is a family of traditions that grew up together over four thousand years around one shared set of questions: What am I, really? Why is there suffering? What happens after death? And how should a person live? The tradition\'s own name for itself is Sanatana Dharma — the eternal way. This overview is the map: the books, the gods, the goal, and the many honest paths to it.',
+    detailedExplanation: 'Hinduism is a family of traditions more than a single religion in the way the word usually means. It has no founder, no single scripture, no central authority — and it never wanted them. These many traditions grew up together over four thousand years around one shared set of questions: What am I, really? Why is there suffering? What happens after death? And how should a person live? The tradition\'s own name for itself is Sanatana Dharma — the eternal way. This overview is the map: the books, the gods, the goal, and the many honest paths to it.',
     etymology: '"Hindu" began as geography, not theology: the Persian pronunciation of "Sindhu," the river Indus — the people who lived beyond that river. The tradition\'s own name, Sanatana Dharma, means "the eternal dharma."',
     keyAspects: [
       'No founder, no single book, no central authority — a family of traditions',
@@ -189,7 +189,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         title: 'A Family, Not a Single Religion',
         subtitle: 'What it actually is',
         storyText:
-          'So what is Hinduism, in one honest sentence? It is a large family of related traditions that grew up together across the Indian subcontinent over thousands of years.\n\nThink of an extended family rather than one person. The branches do not all worship the same way or tell the same stories. But they share a family resemblance: the same **gods**, understood as faces of one reality; the same **library** of sacred texts, with the **Vedas** at its root; the same repertoire of **practice**, from the home shrine to the festival year; and the same **core ideas** running underneath everything, like dharma, karma, rebirth, and liberation.\n\nEverything below is one branch of that family. What follows is the shape of the whole.',
+          'So what is Hinduism, in one honest sentence? It is a large family of related traditions that grew up together across the Indian subcontinent over thousands of years.\n\nThink of an extended family. The branches do not all worship the same way or tell the same stories. But they share a family resemblance: the same **gods**, understood as faces of one reality; the same **library** of sacred texts, with the **Vedas** at its root; the same repertoire of **practice**, from the home shrine to the festival year; and the same **core ideas** running underneath everything, like dharma, karma, rebirth, and liberation.\n\nEverything below is one branch of that family. What follows is the shape of the whole.',
         citation: 'Hinduism as a plural family of traditions sharing Vedic authority, deities, practice, and core concepts — standard scholarly framing',
       },
       {
@@ -205,7 +205,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         title: 'What It Calls Itself',
         subtitle: 'The eternal way',
         storyText:
-          'The tradition\u2019s own name for itself is **Sanatana Dharma** — the eternal way.\n\nNot eternal because it refuses to change. It never stops changing. Eternal because it organizes itself around questions that do not age.\n\nHold onto this: Hinduism is not a set of answers you must accept. It is a very old, very patient **conversation** — and you are allowed to join it from wherever you stand.',
+          'The tradition\u2019s own name for itself is **Sanatana Dharma** — the eternal way.\n\nNot eternal because it refuses to change. It never stops changing. Eternal because it organizes itself around questions that do not age.\n\nHold onto this: Hinduism is a very old, very patient **conversation** — and you are allowed to join it from wherever you stand.',
         citation: '"Sanatana Dharma" as the tradition\u2019s self-designation — traditional usage',
       },
       {
@@ -320,7 +320,7 @@ export const philosophyData: PhilosophicalConcept[] = [
           '**The avatars** — the divine descending into history: **Rama** the ideal king, **Krishna** the friend and guide',
         ],
         teachingText:
-          'When you meet the deities later in this journey, you are not being introduced to a crowd of gods. You are being shown **the same light through different windows**.',
+          'When you meet the deities later in this journey, you are being shown **the same light through different windows**.',
         citationLink: 'gita:4',
         citation: 'Trimurti, Devi, and avatar doctrine: Puranic tradition; avatars: Bhagavad Gita 4.7\u20138',
       },
@@ -329,7 +329,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         title: 'The Face You Love',
         subtitle: 'Ishta-devata — devotion made personal',
         storyText:
-          'The tradition has a word for the most personal part of all this: **ishta-devata** — the chosen deity. The face of the divine your own heart answers to.\n\nA family of Krishna devotees and a family of Shiva devotees are not practicing rival religions. They are loving the **same ocean** through different rivers.\n\nYou may already have an ishta-devata without knowing the word — the face that was on your family\u2019s altar, or the one whose stories quietly stayed with you.',
+          'The tradition has a word for the most personal part of all this: **ishta-devata** — the chosen deity. The face of the divine your own heart answers to.\n\nA family of Krishna devotees and a family of Shiva devotees are loving the **same ocean** through different rivers.\n\nYou may already have an ishta-devata without knowing the word — the face that was on your family\u2019s altar, or the one whose stories quietly stayed with you.',
         citation: 'Ishta-devata: standard devotional concept across sampradayas',
       },
       {
@@ -345,7 +345,7 @@ export const philosophyData: PhilosophicalConcept[] = [
           '**Moksha** — liberation: the final freedom that asks what the other three were for',
         ],
         teachingText:
-          'Notice the generosity. A tradition that blesses prosperity and pleasure alongside duty and liberation is not asking you to choose between a good life and a spiritual one. It is claiming they were **never two different things**.',
+          'Notice the generosity. A tradition that blesses prosperity and pleasure alongside duty and liberation is claiming a good life and a spiritual one were **never two different things**.',
         citation: 'Purusharthas: Dharmashastra tradition',
         checks: [
           {
@@ -374,7 +374,7 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'That thou art — you are That',
         },
         teachingText:
-          'The **atman** within you and **Brahman** behind everything were never two. Liberation is not going somewhere after death — it is **waking up to what was always true**. Every practice in this tradition, at bottom, is an alarm clock.',
+          'The **atman** within you and **Brahman** behind everything were never two. Liberation is **waking up to what was always true**. Every practice in this tradition, at bottom, is an alarm clock.',
         citation: 'Tat tvam asi: Chandogya Upanishad 6.8.7, tr. M\u00fcller (public domain)',
       },
       {
@@ -429,7 +429,7 @@ export const philosophyData: PhilosophicalConcept[] = [
     sanskritName: 'सम्प्रदाय',
     category: 'core_concepts',
     description: 'Vaishnava, Shaiva, Shakta, Smarta — why Hinduism branches, and why that is its strength',
-    detailedExplanation: 'Hinduism never had a central authority to enforce one version of itself — so instead of one church, it grew great streams: Vaishnavas who approach the divine through Vishnu and his avatars, Shaivas through Shiva, Shaktas through the Goddess, and Smartas who honor all the faces as one reality. Beneath the devotional streams run the darshanas, the classical schools of philosophy, of which Vedanta and Yoga are the living giants. None of these is a denomination in the Western sense; families blend them freely, and the same person may sing to Krishna in the morning and keep Shivratri in the spring. The branches are not fragmentation. They are the tradition\'s honest admission that people differ, and that the ocean can be entered from any shore.',
+    detailedExplanation: 'Hinduism never had a central authority to enforce one version of itself — so instead of one church, it grew great streams: Vaishnavas who approach the divine through Vishnu and his avatars, Shaivas through Shiva, Shaktas through the Goddess, and Smartas who honor all the faces as one reality. Beneath the devotional streams run the darshanas, the classical schools of philosophy, of which Vedanta and Yoga are the living giants. None of these is a denomination in the Western sense; families blend them freely, and the same person may sing to Krishna in the morning and keep Shivratri in the spring. The branches are the tradition\'s honest admission that people differ, and that the ocean can be entered from any shore.',
     etymology: 'Sampradaya — "that which is handed over": a lineage of teaching and practice passed teacher to student',
     keyAspects: [
       'No central authority — lineages (sampradayas) instead of a church',
@@ -502,8 +502,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'branches-why',
         title: 'Why There Is No Hindu Pope',
         subtitle: 'Lineages instead of a church',
-        storyText: 'Every tradition faces the same problem: how do you keep a teaching alive across generations without freezing it or losing it?\n\nMost religions solved it with a center — a church, a council, a chair somewhere with the final word. Hinduism solved it with lineages: **sampradayas**, living chains of teacher and student, each "handing over" (the word\'s literal meaning) a complete way of approaching the divine. No lineage could silence another; each rose or fell on the depth of its saints and the loyalty of its households.\n\nThe result, after three thousand years, is not chaos but an ecosystem — **great streams flowing side by side toward the same ocean**.',
-        teachingText: 'Hold this frame and the tradition\'s bewildering variety becomes legible. When you meet a Hindu practice that looks nothing like your family\'s, you are not seeing error or dilution.\n\nYou are seeing another stream — older than most countries, carried by unbroken handover, and headed the same direction as yours.',
+        storyText: 'Every tradition faces the same problem: how do you keep a teaching alive across generations without freezing it or losing it?\n\nMost religions solved it with a center — a church, a council, a chair somewhere with the final word. Hinduism solved it with lineages: **sampradayas**, living chains of teacher and student, each "handing over" (the word\'s literal meaning) a complete way of approaching the divine. No lineage could silence another; each rose or fell on the depth of its saints and the loyalty of its households.\n\nThe result, after three thousand years, is an ecosystem — **great streams flowing side by side toward the same ocean**.',
+        teachingText: 'Hold this frame and the tradition\'s bewildering variety becomes legible. When you meet a Hindu practice that looks nothing like your family\'s, you are seeing another stream — older than most countries, carried by unbroken handover, and headed the same direction as yours.',
         citationLink: 'gita:4',
         citation: 'Sampradaya ("handing over"): standard Sanskrit etymology; the Gita\'s pluralism: Bhagavad Gita 4.11',
         checks: [
@@ -542,8 +542,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'branches-shakta',
         title: 'Shaktism: The Way of the Mother',
         subtitle: 'Power itself, personified',
-        storyText: 'The third stream makes the boldest claim of all: ultimate reality is **Shakti** — power, energy, the force that makes everything go — and Shakti is **the Goddess**.\n\nIn Shaktism, Durga, Kali, Lakshmi, and Saraswati are not consorts orbiting male gods; they are the supreme, and the male gods act only by the power she lends. Its charter text is the **Devi Mahatmya**, in which the gods, defeated, pool their energies and the Goddess emerges to do what none of them could.\n\nBengal\'s Durga Puja, the year\'s twin Navratris, the whispered power of the word "Maa" — all flow from this stream.',
-        teachingText: 'Shaktism\'s wager is that the divine is not beyond the world but IS the world\'s aliveness — and therefore fiercely, maternally near.\n\nIts gift to the tradition is the theology every child already knows: **the first face of unconditional power most humans meet is a mother\'s**.',
+        storyText: 'The third stream makes the boldest claim of all: ultimate reality is **Shakti** — power, energy, the force that makes everything go — and Shakti is **the Goddess**.\n\nIn Shaktism, Durga, Kali, Lakshmi, and Saraswati are the supreme, and the male gods act only by the power she lends. Its charter text is the **Devi Mahatmya**, in which the gods, defeated, pool their energies and the Goddess emerges to do what none of them could.\n\nBengal\'s Durga Puja, the year\'s twin Navratris, the whispered power of the word "Maa" — all flow from this stream.',
+        teachingText: 'Shaktism\'s wager is that the divine IS the world\'s aliveness — and therefore fiercely, maternally near.\n\nIts gift to the tradition is the theology every child already knows: **the first face of unconditional power most humans meet is a mother\'s**.',
         citationLink: 'deity:durga',
         citation: 'Devi Mahatmya (Markandeya Purana, chapters 81–93), tr. public-domain editions',
       },
@@ -580,7 +580,7 @@ export const philosophyData: PhilosophicalConcept[] = [
           'Whose stories were told when the power went out?'
         ],
         sectionHeader: 'The living part',
-        teachingText: 'The answers locate your family in this map — Vaishnava-leaning, Shaiva-leaning, Shakta-leaning, or (most common of all) **a blend the streams themselves would smile at**. There is no purity test. The blending is not confusion; it is what three thousand years of neighboring streams naturally do.\n\nThis is one common map; ask your family how they walk it. Ask which stream their parents drank from, and their parents before. The answers you gather are not trivia — they are the living part of the tradition, **the handover happening in real time, with you as the next pair of hands**.',
+        teachingText: 'The answers locate your family in this map — Vaishnava-leaning, Shaiva-leaning, Shakta-leaning, or (most common of all) **a blend the streams themselves would smile at**. There is no purity test. The blending is what three thousand years of neighboring streams naturally do.\n\nThis is one common map; ask your family how they walk it. Ask which stream their parents drank from, and their parents before. The answers you gather are the living part of the tradition, **the handover happening in real time, with you as the next pair of hands**.',
         citation: 'Family sampradaya practice: living tradition — the map here is descriptive, not prescriptive',
       },
     ],
@@ -616,7 +616,7 @@ export const philosophyData: PhilosophicalConcept[] = [
     sanskritName: 'माया',
     category: 'core_concepts',
     description: 'Not "the world is fake" — the world is misread. The tradition\'s theory of illusion',
-    detailedExplanation: 'Maya is the most misquoted idea in Hinduism. It does not claim the world is a hallucination; it claims the world is real but systematically misperceived — a rope read as a snake in dim light. What maya conceals is not the world\'s existence but its nature: one reality appearing as many separate things, one Self appearing as billions of rival selves. The Gita calls maya divine and hard to cross; the Advaita tradition made its analysis a science. The practical point is not to escape the world but to stop mistaking your reading of it for the thing itself.',
+    detailedExplanation: 'Maya is the most misquoted idea in Hinduism. It does not claim the world is a hallucination; it claims the world is real but systematically misperceived — a rope read as a snake in dim light. What maya conceals is not the world\'s existence but its nature: one reality appearing as many separate things, one Self appearing as billions of rival selves. The Gita calls maya divine and hard to cross; the Advaita tradition made its analysis a science. The practical point is to stop mistaking your reading of it for the thing itself.',
     etymology: 'From the root "ma" — to measure, to form: the power by which the immeasurable appears measured, bounded, many',
     keyAspects: [
       'Illusion as misreading, not hallucination — the rope really exists',
@@ -704,7 +704,7 @@ export const philosophyData: PhilosophicalConcept[] = [
       {
         id: 'maya-misquote',
         title: 'The Most Misquoted Idea in Hinduism',
-        subtitle: 'What maya does not mean',
+        subtitle: 'What maya really means',
         takeaway:
           "Maya does not say the world is absent; it says the world is misread. Ask not 'is this real?' but 'is this the rope, or my snake?'",
         storyText: 'Somewhere along the way, "maya" got translated as "the world is an illusion" and a caricature was born: Hindus supposedly believe nothing is real, so nothing matters. The tradition claims almost the opposite.\n\n**Maya does not say the world is absent; it says the world is misread.**\n\nThe classic image, sharpened by the great philosopher Shankara and his followers, is exact: a traveler at dusk leaps back from a **snake** on the path. A lamp is brought — it is a **rope**. The rope was there all along, fully real. The snake was never there at all. And yet the traveler\'s terror was real, the racing heart was real, the leap was real.\n\nIllusion, in this tradition, means **real experience built on a misreading of something real**.',
@@ -956,7 +956,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         takeaway:
           "Hinduism's center is one claim: Brahman, the one reality, and atman, the Self you call 'I,' are the same.",
         storyText: 'Every tradition has a center of gravity. Buddhism centres on the idea that everything arises from causes and then passes away; the Abrahamic faiths (Judaism, Christianity, and Islam) centre on a covenant, a sacred promise between God and humanity. Hinduism\'s center is an identity claim.\n\n**Brahman** — the one reality that the Rig Veda (the oldest sacred hymns of Hinduism) said the wise call by many names — and **Atman** — the Self you refer to every time you say "I" — are **the same**. Not similar. Not connected. The same, the way the space in a jar and the space in the room were never actually two spaces.\n\nTake this wall out and the house falls: karma becomes bookkeeping, moksha becomes a destination, the gods become a committee. Put it in and everything else in the tradition becomes either a consequence of the claim or a method for verifying it.',
-        teachingText: 'Notice what kind of claim it is: not ethical advice, not a story, but a statement about what you are — **checkable, the Upanishads insist, from the inside**.\n\nThe rest of this course is the tradition\'s three great verification methods: an experiment, a negation, and four sentences.',
+        teachingText: 'Notice what kind of claim it is: a statement about what you are, rather than ethical advice or a story — **checkable, the Upanishads insist, from the inside**.\n\nThe rest of this course is the tradition\'s three great verification methods: an experiment, a negation, and four sentences.',
         citation: 'Brahman/Atman identity: the central thesis of the principal Upanishads (Chandogya 6, Brihadaranyaka 1.4, Mandukya)',
       },
       {
@@ -1361,7 +1361,7 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'guru-now',
         title: 'Your Gurus, Present Tense',
         subtitle: 'The chain runs through ordinary rooms',
-        storyText: 'Strip the exotic costume off the word and count your actual gurus: the grandmother whose festival hands taught yours; the teacher who saw you before you were visible to yourself; the mentor whose one sentence rerouted a decade; the friend who plays Jambavan and reminds you of strength you had misfiled.\n\nThe tradition\'s claim is not that you need a robed figure on a mountain — it is that the darkness-removing function is real, distributable, and **already operating in your life, mostly unthanked**.\n\n**Guru Purnima**, the summer full moon, exists precisely for the accounting: one day a year to name the chain you hang from.',
+        storyText: 'Strip the exotic costume off the word and count your actual gurus: the grandmother whose festival hands taught yours; the teacher who saw you before you were visible to yourself; the mentor whose one sentence rerouted a decade; the friend who plays Jambavan and reminds you of strength you had misfiled.\n\nThe tradition\'s claim is that the darkness-removing function is real, distributable, and **already operating in your life, mostly unthanked**.\n\n**Guru Purnima**, the summer full moon, exists precisely for the accounting: one day a year to name the chain you hang from.',
         sectionHeader: 'Both directions',
         teachingText: 'And the chain points both ways. **Parampara** — the unbroken succession — only stays unbroken if each link accepts both roles.\n\nSomewhere downstream of you, someone is sitting in your old darkness, and what you carry — the recipe, the prayer, the hard-won professional judgment, this very tradition you are learning — is the lamp they are waiting for.\n\nThe final teaching of the guru principle is that you do not get to remain only a student. **Sit near. Then be sat near.**',
         citation: 'Guru Purnima and parampara: living tradition; the teaching function as distributed: cf. Dattatreya\'s 24 gurus, Bhagavata Purana 11.7–9',
@@ -1895,8 +1895,8 @@ export const philosophyData: PhilosophicalConcept[] = [
         id: 'karma-meaning',
         title: 'What Karma Really Means',
         subtitle: 'A Seed Becoming a Tree',
-        takeaway: 'Karma just means action. Not fate, not luck, not punishment.',
-        storyText: '**Karma** comes from the Sanskrit root **kri** — to do, to act. It simply means action. Yet centuries of use have buried it under misreadings: fate, luck, punishment, "what goes around comes around."\n\nThe oldest teaching is more precise and more empowering. The Brihadaranyaka Upanishad says of a person: "As is his desire, so is his will; and as is his will, so is his deed; and whatever deed he does, that he will reap."\n\n**Desire shapes intention, intention shapes action, and action shapes who you become.** Karma is not something that happens TO you. It is the trail you are laying down, one choice at a time, in the direction your attention is already pointing.',
+        takeaway: 'Karma just means action — what you do, and what your doing sets in motion.',
+        storyText: '**Karma** comes from the Sanskrit root **kri** — to do, to act. It simply means action. Yet centuries of use have buried it under misreadings: fate, luck, punishment, "what goes around comes around."\n\nThe oldest teaching is more precise and more empowering. The Brihadaranyaka Upanishad says of a person: "As is his desire, so is his will; and as is his will, so is his deed; and whatever deed he does, that he will reap."\n\n**Desire shapes intention, intention shapes action, and action shapes who you become.** Karma is the trail you are laying down, one choice at a time, in the direction your attention is already pointing.',
         teachingText: 'Notice the chain begins with **desire**, not deed. This is why Hindu thought insists that intention matters as much as action: two people can perform the identical act — one from love, one from calculation — and plant entirely different seeds.\n\nIf you want to know your future, the Upanishad suggests, do not consult the stars. Watch what you are doing, and wanting, today.',
         citation: 'Brihadaranyaka Upanishad 4.4.5 (tr. Max Müller).'
       },
@@ -2002,7 +2002,7 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'Endowed with wisdom and evenness of mind, one casts off in this life both good and evil deeds; therefore devote yourself to Yoga — Yoga is skill in action.',
           source: 'Bhagavad Gita 2.50 (tr. Swami Sivananda)'
         },
-        storyText: 'Krishna gives karma yoga its famous definition: **yogah karmasu kaushalam** — yoga is skill in action. The skill is not technical mastery; it is **evenness**.\n\nA verse earlier he describes it: "Perform action, abandoning attachment, balanced in success and failure; evenness of mind is called Yoga."\n\nWatch a surgeon, a musician, a parent soothing a feverish child at 3 a.m. — the ones who are truly skillful have a stillness at the center of their effort. They are fully engaged and strangely unhurried, because none of their energy is leaking into "what if this fails?"',
+        storyText: 'Krishna gives karma yoga its famous definition: **yogah karmasu kaushalam** — yoga is skill in action. The skill he means is **evenness**.\n\nA verse earlier he describes it: "Perform action, abandoning attachment, balanced in success and failure; evenness of mind is called Yoga."\n\nWatch a surgeon, a musician, a parent soothing a feverish child at 3 a.m. — the ones who are truly skillful have a stillness at the center of their effort. They are fully engaged and strangely unhurried, because none of their energy is leaking into "what if this fails?"',
         teachingText: 'Evenness is trainable, and daily life is the gym.\n\nThe next time something goes well, notice the surge of "I am wonderful" — and let it pass through without grabbing it. The next time something flops, notice "I am terrible" — and let that pass too.\n\nWhat remains when both waves settle is the steady worker the Gita calls the yogi. From that steadiness, your next action is cleaner than the last.',
         citationLink: 'gita:2',
         citation: 'Bhagavad Gita 2.48 (tr. Swami Sivananda).'
@@ -2278,7 +2278,7 @@ export const philosophyData: PhilosophicalConcept[] = [
           meaning: 'a-himsa — the absence of the wish to harm',
         },
         storyText:
-          'The word is built on a negation. *Himsa* is the urge to injure, and the *a-* in front of it cancels the urge.\n\nSo ahimsa is not merely holding your fist. It is not wounding with the hand, nor the tongue, nor, finally, even the thought.',
+          'The word is built on a negation. *Himsa* is the urge to injure, and the *a-* in front of it cancels the urge.\n\nSo ahimsa reaches far past the fist: it is the discipline of not wounding — with the hand, nor the tongue, nor, finally, even the thought.',
         reappears:
           "Ahimsa is the first of Patanjali's five yamas, the restraints all further practice stands on.",
       },

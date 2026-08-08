@@ -5,13 +5,16 @@ Every card is recorded as **its own clip**, named for the card's section id
 (`f-name-river` → `f-name-river.mp3`), keyed one MP3 per section id in
 `scripts/generate-foundations-audio.mjs` and `src/data/foundationsAudioManifest.ts`.
 
+> **Aug 2026 — scripts are now auto-derived.** The generators (`scripts/generate-foundations-audio.mjs`, `scripts/generate-ramayana-audio.mjs`) build each clip's text straight from the on-screen prose in `foundations.ts` / `scriptureTexts.ts` via `scripts/lib/` (extract → assemble → apply pronunciation), so the audio can never drift from the cards again. There is no hand-maintained `SCRIPTS` block anymore. This doc is now the **pronunciation key** (kept in sync with `scripts/lib/pronunciation.mjs`) and the delivery/voice reference; the old per-part script text below is historical. Trade-off: per-clip `[audio tags]` are not applied by the auto-derive — layer them back later if desired.
+
 ## How to record (v3)
 
 - **Model:** `eleven_v3`. **Voice:** Oliver. **Stability:** *Natural* (default) — bump to
   *Creative* for the dramatic clips (tat-tvam-asi, Shakti, the Gita). *Robust* is flat, like v2.
-- **Pronunciation → IPA.** Sanskrit/Hindi terms are written as **IPA inside `"/…/"`** — v3's
-  method (phoneme/SSML tags do **not** work in v3). See the key below. Only keyed terms are
-  wrapped; each occurrence keeps its IPA.
+- **Pronunciation → phonetic respellings.** Sanskrit/Hindi terms are written as **phonetic
+  respellings** (e.g. moksha → MOAK-shuh) inline in the script — v3 renders these more reliably
+  than IPA, and phoneme/SSML tags do **not** work in v3. See the key below. Only keyed terms are
+  respelled; each occurrence keeps its respelling.
 - **Pacing → no `<break>` tags.** v3 ignores them. Pauses come from **ellipses `…`**,
   **`[short pause]` / `[long pause]`**, and **line breaks** (the takeaway is its own line,
   the body follows).
@@ -19,40 +22,52 @@ Every card is recorded as **its own clip**, named for the card's section id
   `[curious]`, `[reassuring]`, `[cautiously]`, and for the big beats `[dramatically]`,
   `[whispers]`. Default is a **warm teacher**; a handful of clips lean dramatic. Keep it to a
   few tags per clip — overusing them makes v3 unstable.
-- Highlight still maps by **sentence** to the on-screen card, so the IPA/tags in the recording
-  don't break read-along.
+- Highlight still maps by **sentence** to the on-screen card, so the respellings/tags in the
+  recording don't break read-along.
 
-## IPA key (validate/tweak by ear)
+## Pronunciation key (validate/tweak by ear)
 
-**Concepts:** Brahman `/ˈbrɑːmən/` · atman `/ˈɑːtmən/` · Sanatana Dharma **suh-NAA-tuh-nuh DHUR-muh** *(phonetic — IPA underperformed here)* ·
-dharma `/ˈdɑːrmə/` · karma `/ˈkɑːrmə/` · moksha `/ˈmoʊkʃə/` · maya **Maaya** *(phonetic — the IPA `/ˈmɑːjɑː/` read badly)* · prana `/ˈprɑːnə/` ·
-gunas `/ˈɡuːnɑːs/` · sattva `/ˈsɑːtvə/` · rajas `/ˈrɑːdʒəs/` · tamas `/ˈtɑːməs/` · samsara `/səmˈsɑːrə/` ·
-ahimsa `/əˈhɪmsɑː/` · purusharthas `/ˌpʊrʊˈʃɑːrtəs/` · artha `/ˈɑːrtə/` · kama `/ˈkɑːmə/` ·
-ishta-devata `/ˈɪʃtə ˈdeɪvətɑː/` · jnana `/ˈɡjɑːnə/` · bhakti `/ˈbʌkti/` · raja `/ˈrɑːdʒə/` ·
-Trimurti `/trɪˈmuːrti/` · avatar `/ˈɑːvətɑːr/` · Shakti `/ˈʃʌkti/` · shruti `/ˈʃruːti/` · smriti `/ˈsmrɪti/` ·
-murti `/ˈmuːrti/` · puja `/ˈpuːdʒɑː/` · prasad `/prəˈsɑːd/` · darshan `/ˈdɑːrʃən/` · Samskrita `/ˈsʌmskrɪtə/` ·
-tat tvam asi `/tʌt tvʌm ˈʌsi/` · triguna **tree-GOO-nuh** *(phonetic)* · mrigatrishna **mrig-uh-TRISH-naa** *(phonetic)* ·
-namaste `/ˌnʌməsˈteɪ/` · himsa **HIM-saa** *(phonetic)* · shodasha upachara **SHOH-duh-shuh oo-puh-CHAA-ruh** *(phonetic)* ·
-Vedas `/ˈveɪdəz/` · Upanishads `/uːˈpʌnɪʃədz/` · Puranas `/pʊˈrɑːnəz/` · Sindhu `/ˈsɪnduː/`
+Written as **phonetic respellings** (natural, correct Indian pronunciation), not IPA —
+v3 renders respellings more reliably. CAPS = stressed syllable; `aa` = long a (father),
+`uh` = short a, `ee`/`oo` = long i/u, `oh`/`oa` = o; aspirates kept (`bh dh th kh gh`).
 
-**Deities / nouns:** Shiva `/ˈʃɪvə/` · Vishnu `/ˈvɪʃnuː/` · Brahma `/ˈbrɑːmɑː/` · Krishna `/ˈkrɪʃnə/` ·
-Rama `/ˈrɑːmə/` · Ganesha `/ɡəˈneɪʃə/` · Hanuman `/ˈhənʊmɑːn/` · Parvati `/ˈpɑːrvəti/` · Durga `/ˈdʊrɡɑː/` ·
-Kali `/ˈkɑːli/` · Sita `/ˈsiːtɑː/` · Ravana `/ˈrɑːvənə/` · Arjuna `/ˈɑːrdʒʊnə/` · Devi `/ˈdeɪvi/` ·
+**Concepts:** Brahman **BRUH-mun** · atman **AAT-mun** · Sanatana Dharma **suh-NAA-tuh-nuh DHUR-muh** ·
+dharma **DHUR-muh** · karma **KUR-muh** · moksha **MOAK-shuh** · maya **MAA-yaa** · prana **PRAA-nuh** ·
+gunas **GOO-nuhz** · sattva **SUHT-tvuh** · rajas **RUH-juss** *(short a, s not z)* · tamas **TUH-muss** · samsara **sum-SAA-ruh** ·
+ahimsa **uh-HING-saa** · purusharthas **poo-roo-SHAAR-thuhz** · artha **UR-thuh** · kama **KAA-muh** ·
+ishta-devata **ISH-tuh DEV-uh-taa** · jnana **GYAA-nuh** · bhakti **BHUH-ktee** · raja **RAA-juh** ·
+Trimurti **tri-MOOR-tee** · avatar **UH-vuh-taar** · Shakti **SHUHK-tee** · shruti **SHROO-tee** · smriti **SMRI-tee** ·
+murti **MOOR-tee** · puja **POO-jaa** · prasad **pruh-SAAD** · darshan **DUR-shun** · Samskrita **SUNS-kri-tuh** ·
+tat tvam asi **tut-tvum-UH-see** · triguna **tree-GOO-nuh** · mrigatrishna **mri-guh-TRISH-naa** ·
+namaste **nuh-muh-STAY** · himsa **HING-saa** · shodasha upachara **SHOH-duh-shuh oo-puh-CHAA-ruh** ·
+Vedas **VAY-duhz** · Upanishads **oo-PUH-ni-shudz** · Puranas **poo-RAA-nuhz** · Sindhu **SIN-dhoo** · Sanskrit **SUNS-krit**
+
+**Deities / nouns:** Shiva **SHIH-vuh** · Vishnu **VISH-noo** · Brahma **BRUH-maa** · Krishna **KRISH-nuh** ·
+Rama **RAA-muh** · Ganesha **guh-NAY-shuh** · Hanuman **HUH-noo-maan** · Parvati **PAAR-vuh-tee** · Durga **DOOR-gaa** ·
+Kali **KAA-lee** · Sita **SEE-taa** · Ravana **RAA-vuh-nuh** · Arjuna **UR-joo-nuh** · Devi **DAY-vee** ·
 Uddalaka **ood-DAA-luh-kuh** · Shvetaketu **shvay-tuh-KAY-too** · Chandogya **chaan-DOHG-yuh** · Mundaka **MOON-duh-kuh** ·
-Lakshmi **LUCK-shmee** · Bhishma **BHEESH-muh** · Drona **DROH-nuh** · Bharata **BAH-ruh-tuh** *(all phonetic)* ·
-Vaishnava `/ˈvaɪʃnəvə/` · Shaiva `/ˈʃaɪvə/` · Shakta `/ˈʃɑːktə/` · Smarta `/ˈsmɑːrtə/`
+Lakshmi **LUCK-shmee** · Bhishma **BHEESH-muh** · Drona **DROH-nuh** ·
+Bharata **BHUH-ruh-tuh** *(भरत, the person)* / **BHAA-ruh-tuh** *(भारत — the Gita's vocative “O Bharata”)* ·
+Vaishnava **VUYSH-nuh-vuh** · Shaiva **SHY-vuh** · Shakta **SHAAK-tuh** · Smarta **SMAAR-tuh**
 
-**Texts / festivals:** Mahabharata `/ˌmɑːhɑːˈbɑːrətə/` · Ramayana `/rɑːˈmɑːjənə/` ·
-Bhagavad Gita `/ˈbɑːɡəvəd ˈɡiːtɑː/` · Gita `/ˈɡiːtɑː/` · Diwali `/dɪˈvɑːli/` · Holi `/ˈhoʊli/` ·
-Navaratri `/ˌnʌvəˈrɑːtri/` · Janmashtami `/dʒənˈmɑːʃtəmi/`
+**Texts / festivals:** Mahabharata **muh-haa-BHAA-rut** · Ramayana **raa-MAA-yuh-nuh** ·
+Bhagavad Gita **BHUH-guh-vud GEE-taa** · Gita **GEE-taa** · Diwali **dee-VAA-lee** · Holi **HOH-lee** ·
+Navaratri **nuh-vuh-RAAT-ree** · Janmashtami **junm-AASH-tuh-mee**
 
-(Common English-adopted words — yoga, guru, Sanskrit — are left plain; the voice handles them.)
+(Common English-adopted words — yoga, guru — are left plain; the voice handles them.)
 
 ## ⚠️ Pending re-record
 
+- **ALL clips (Aug 2026):** the pronunciation key above was reworked into one consistent phonetic
+  respelling scheme (natural, correct Indian) — fixing Americanized/inconsistent takes on
+  Upanishads, Sanskrit, rajas, ahimsa, moksha, Shakti, Ravana, Ramayana, Mahabharata, Bharata,
+  and normalizing dharma/karma/darshan/bhakti etc. This means **every Foundations clip needs
+  regenerating** with the new respellings. Folds into the deferred audio pass that already has to
+  re-sync SCRIPTS to the edited card text — one build, not a separate one. Validate by ear on
+  regen and tweak any respelling that reads oddly.
 - *(resolved July 2026)* The **maya** IPA issue: all Part 3–7 clips and **`f-capstone-recap.mp3`**
   were regenerated with the **Maaya** respelling in the depth-rework re-record. Parts 1–2 keep
-  their original takes (their text did not change).
+  their original takes (their text did not change). *(Superseded by the Aug 2026 full re-record above.)*
 
 ---
 

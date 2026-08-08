@@ -107,7 +107,7 @@ const RAMAYANA_PARTS: ScripturePart[] = [
         id: 'bala-preface',
         title: 'The Book of Childhood',
         storyText:
-          'The **Ramayana** is one of India’s two great epics, and for millions of people it is the very first story they ever learn. It follows **Rama**, a prince of **Ayodhya (a kingdom in northern India)**, through a wedding, a sudden exile, the kidnapping of his wife, and a long war to win her back.\n\nThis first book is the **Bala Kanda (the Book of Childhood)**. It is the origin story: how the poem itself came to be written, how Rama came to be born at all, and the day he won his wife, **Sita**. We will follow the events as the poet Valmiki tells them, stopping now and then to notice what they mean.',
+          'The **Ramayana** is one of India’s two great epics, and for millions of people it is the very first story they ever learn. It follows **Rama**, a prince of **Ayodhya (a kingdom in northern India)**, through a wedding, a sudden exile, the kidnapping of his wife, and a long war to win her back.\n\nThe poem is told in seven books, and each one is called a **kanda** — a word meaning a “section” or “book.” They are named for a setting or a theme, so this first one is the **Bala Kanda**: *bala* means “child,” making it the Book of Childhood. It is the origin story: how the poem itself came to be written, how Rama came to be born at all, and the day he won his wife, **Sita**. We will follow the events as the poet Valmiki tells them, stopping now and then to notice what they mean.',
       },
       {
         id: 'bala-question',
@@ -153,11 +153,18 @@ const RAMAYANA_PARTS: ScripturePart[] = [
           'Every verse you meet from here on is a **shloka** — the form born in that one moment of compassion.',
       },
       {
+        id: 'bala-ravana',
+        title: 'The demon-king of Lanka',
+        storyText:
+          'Before Rama can be born, you have to meet the reason he must be. Far to the south, on the island kingdom of **Lanka**, ruled a **rakshasa (a demon)** named **Ravana** — and he was no ordinary demon. He was hugely learned, a master of the scriptures and a fierce devotee of the god Shiva, and he is pictured with **ten heads and twenty arms** to capture the sheer scale of him. Through years of brutal penance he had won a boon from the creator-god **Brahma**: that no god, no demon, and no other celestial being could ever kill him.\n\nArmored by that boon, Ravana had conquered all three worlds and made them suffer, until even the gods lived in fear of him. At last they went together to **Vishnu (the god who preserves the world)** and begged him to act:\n\n» The gods: Ravana torments all three worlds, and his boon has made him deaf to any fear. Only you can end this.\n\n» Vishnu: Then I will go down myself, and be born as a man.\n\nWhy be born as a *man*, when Vishnu could take any form at all? The answer is hidden inside Ravana’s own boon — and the story is about to spring it.',
+        citation: 'Valmiki Ramayana, Bala Kanda 14–16 (Ravana’s boon; the gods petition Vishnu)',
+      },
+      {
         id: 'bala-birth',
         title: 'A kingdom with no heir',
         storyText:
-          'Far to the north, in **Ayodhya**, King **Dasharatha** had everything a ruler could want except the one thing he wanted most: a child. At last he performed the **putrakameshti (a great fire-sacrifice for a son)**, and out of the flames rose a shining figure holding a bowl of sacred **payasam (sweet rice pudding)** for his queens to share.\n\nAt that very moment, far away, the gods were desperate. A demon-king named **Ravana** had grown unstoppable, and they went to **Vishnu (the god who preserves the world)** for help:\n\n» The gods: Ravana torments all three worlds, and the boon he holds has made him deaf to any fear. Only you can end this.\n\n» Vishnu: Then I will go down myself, and be born as a man.\n\nSo when Dasharatha’s queens drank the payasam, it was Vishnu himself quietly entering the world. **Rama** was born, along with his three brothers.',
-        citation: 'Valmiki Ramayana, Bala Kanda 15–18 (the boon of Ravana; the birth of Rama)',
+          'Meanwhile, far to the north in **Ayodhya**, the vehicle for that descent was being readied — though no one there yet knew it. King **Dasharatha** had everything a ruler could want except the one thing he wanted most: a child to succeed him. At last he performed the **putrakameshti (a great fire-sacrifice for a son)**, and out of the flames rose a shining figure holding a bowl of sacred **payasam (sweet rice pudding)** for his queens to share.\n\nAs the queens drank it, it was Vishnu himself quietly entering the world, exactly as he had promised the gods. Soon **Rama** was born to Dasharatha’s eldest queen, Kaushalya — and three more sons followed to his other queens: **Bharata**, and the twins **Lakshmana** and **Shatrughna**. Four princes, and the eldest of them was God in a boy’s body.',
+        citation: 'Valmiki Ramayana, Bala Kanda 18 (the birth of Rama)',
       },
       {
         id: 'bala-blindspot',
@@ -184,7 +191,7 @@ const RAMAYANA_PARTS: ScripturePart[] = [
         id: 'bala-vishwamitra',
         title: 'The sage who came for the boys',
         storyText:
-          'Years passed, and one day a fierce sage named **Vishwamitra** strode into the court with a demand no father wants to hear:\n\n» Vishwamitra: Demons are fouling my forest rituals. Send your son Rama to guard them.\n\n» Dasharatha: He is barely more than a boy. Take my whole army instead, take me, but not him.\n\n» Vishwamitra: It must be Rama. No one else.\n\nDasharatha had waited a lifetime for this son. But you do not refuse a sage like Vishwamitra, and so Rama and his brother **Lakshmana** walked into the forest. There the boy’s real education began: he faced down a demoness named **Tataka**, was taught to use celestial weapons, and stood guard over the sage’s fire.',
+          'Years passed, and one day a fierce sage named **Vishwamitra** strode into the court with a demand no father wants to hear:\n\n» Vishwamitra: Demons are fouling my forest rituals. Send your son Rama to guard them.\n\n» Dasharatha: He is barely more than a boy. Take my whole army instead, take me, but not him.\n\n» Vishwamitra: It must be Rama. No one else.\n\nDasharatha had waited a lifetime for this son. But you do not refuse a sage like Vishwamitra, and so Rama and his brother **Lakshmana** walked into the forest. There the boy’s real education began: he faced down a demoness named **Tataka**, was taught to use celestial weapons, and stood guard over the sage’s fire.\n\nWith his forest rituals safe at last, Vishwamitra did not send the boys home. He led them onward, east toward the kingdom of **Mithila**, where a great contest was about to be held — and on the way, they came upon something that called for a very different kind of strength.',
         citation: 'Valmiki Ramayana, Bala Kanda 25–48 (Tataka; the celestial weapons)',
       },
       {
@@ -227,7 +234,7 @@ const RAMAYANA_PARTS: ScripturePart[] = [
           source: 'Valmiki Ramayana, Bala Kanda 67 (paraphrase of the bow-breaking)',
         },
         storyText:
-          'In the kingdom of **Mithila**, King **Janaka** had set a single condition for his daughter’s marriage:\n\n» Janaka: Whoever can lift the great bow of the god Shiva, and string it, may marry my daughter Sita.\n\nThe bow was an heirloom so massive that grown kings had failed even to make it shift on its stand. And **Sita** herself was no ordinary bride. Years earlier, Janaka had found her as a baby lying in a furrow of a freshly plowed field, a daughter of the earth itself.\n\nRama walked up to the bow, lifted it as though it weighed nothing, and as he bent it to string, it snapped clean in two with a crack like thunder. Sita chose him. The weddings of all four brothers followed, and the Book of Childhood came to a close on a day of celebration.',
+          'So the brothers came at last to **Mithila**. Its king, **Janaka**, renowned for his wisdom, had set a single condition for the marriage of his daughter:\n\n» Janaka: Whoever can lift the great bow of the god Shiva, and string it, may marry my daughter Sita.\n\nThe bow was an heirloom so massive that grown kings had failed even to make it shift on its stand. And **Sita** herself was no ordinary bride. She was Janaka’s daughter, though not by birth: years earlier he had found her as a baby lying in a furrow of a freshly plowed field, and had raised this child of the earth as his own.\n\nRama walked up to the bow, lifted it as though it weighed nothing, and as he bent it to string, it snapped clean in two with a crack like thunder. Sita chose him. The weddings of all four brothers followed, and the Book of Childhood came to a close on a day of celebration.',
         citation: 'Valmiki Ramayana, Bala Kanda 66–73 (the bow of Shiva; the marriage of Sita)',
       },
       {
@@ -282,7 +289,7 @@ const RAMAYANA_PARTS: ScripturePart[] = [
         id: 'ayodhya-eve',
         title: 'The night before the crown',
         storyText:
-          'King **Dasharatha**, old and tired, named Rama his heir, and all of Ayodhya lit up for the coronation. But long ago the king had granted his youngest queen, **Kaikeyi**, two wishes she had never spent. Now her maid **Manthara** poured poison in her ear:\n\n» Manthara: Once Rama is king, you and your son are nothing. Spend your two wishes tonight, while you still can.\n\nSo on the eve of the crowning, Kaikeyi went to the king and named her price:\n\n» Kaikeyi: Give the throne not to Rama but to my son Bharata. And send Rama into the forest for fourteen years.\n\nDasharatha had given his word years ago, and a king’s word cannot be unsaid. He broke where he stood, undone not by an enemy but by his own old promise.',
+          'King **Dasharatha**, old and tired, named Rama his heir, and all of Ayodhya lit up for the coronation. But long ago, on a battlefield, his youngest queen **Kaikeyi** had saved his wounded life — and a grateful Dasharatha had promised her two wishes, to claim whenever she chose. She had never spent them. Now her maid **Manthara** poured poison in her ear:\n\n» Manthara: Once Rama is king, you and your son are nothing. Spend your two wishes tonight, while you still can.\n\nSo on the eve of the crowning, Kaikeyi went to the king and named her price:\n\n» Kaikeyi: Give the throne not to Rama but to my son Bharata. And send Rama into the forest for fourteen years.\n\nDasharatha had given his word years ago, and a king’s word cannot be unsaid. He broke where he stood, undone not by an enemy but by his own old promise.',
         citation: 'Valmiki Ramayana, Ayodhya Kanda 7–13 (Manthara, Kaikeyi, and the two boons)',
       },
       {
@@ -347,7 +354,7 @@ const RAMAYANA_PARTS: ScripturePart[] = [
         id: 'ayodhya-sandals',
         title: 'The sandals on the throne',
         storyText:
-          '**Dasharatha** died of grief within days. **Bharata**, the son the throne was stolen for, had been away through all of it. He came home to find his father dead and his brother banished in his name, and he was horrified. He refused the crown completely and marched to the forest to bring Rama back.\n\n» Bharata: The throne is yours. Come home and rule. I will not touch what was taken from you.\n\n» Rama: Our father gave his word, and it must stand. Go back and hold the kingdom until my fourteen years are done.\n\nSo Bharata took Rama’s **sandals**, carried them home, and set them on the throne. For fourteen years he ruled not as king but as a caretaker for his brother’s footwear, living like a hermit outside the capital.',
+          '**Dasharatha** died of grief within days. **Bharata**, the son the throne was stolen for, had been away visiting his mother’s family through all of it. He came home to find his father dead and his brother banished in his name, and he was horrified. He refused the crown completely and marched to the forest to bring Rama back.\n\n» Bharata: The throne is yours. Come home and rule. I will not touch what was taken from you.\n\n» Rama: Our father gave his word, and it must stand. Go back and hold the kingdom until my fourteen years are done.\n\nSo Bharata took Rama’s **sandals**, carried them home, and set them on the throne. For fourteen years he ruled not as king but as a caretaker for his brother’s footwear, living like a hermit outside the capital.',
         citation: 'Valmiki Ramayana, Ayodhya Kanda 100–115 (Bharata and the sandals)',
       },
       {

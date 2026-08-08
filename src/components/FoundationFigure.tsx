@@ -181,36 +181,6 @@ const Streams: React.FC<{ active?: boolean }> = ({ active }) => (
   </Figure>
 );
 
-// ── The pot and the sky (Wave 0: full-bleed 1:1) ────────────────────────────
-const PotSpace: React.FC<{ active?: boolean }> = ({ active }) => (
-  <SceneFigure caption="The pot has walls. The space does not." active={active}>
-    <Svg width="100%" height={260} viewBox="0 0 390 260">
-      <Defs>
-        <LinearGradient id="p-sky" x1="0" y1="0" x2="0" y2="1">
-          <Stop offset="0" stopColor={SKY_TOP} />
-          <Stop offset="1" stopColor={SKY_BOT} />
-        </LinearGradient>
-      </Defs>
-      <Rect x={0} y={0} width={390} height={260} fill="url(#p-sky)" />
-      {[[44, 42, 1.6], [120, 26, 1.4], [210, 46, 1.6], [300, 30, 1.4], [356, 54, 1.6], [60, 120, 1.4], [340, 128, 1.6], [176, 20, 1.3]].map(
-        ([cx, cy, r]) => (
-          <Circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={r} fill={GOLD} opacity={0.55} />
-        )
-      )}
-      <Path d="M150 128 C138 162 145 214 170 228 L220 228 C245 214 252 162 240 128 Z" fill="#5A6AC0" opacity={0.24} />
-      <Path d="M150 128 C138 162 145 214 170 228 L220 228 C245 214 252 162 240 128" fill="none" stroke={CLAY} strokeWidth={7} strokeLinecap="round" />
-      <Ellipse cx={195} cy={128} rx={46} ry={10} fill="none" stroke={CLAY} strokeWidth={3} opacity={0.55} strokeDasharray="3 4" />
-      <SvgText x={195} y={182} textAnchor="middle" fontSize={14} fontWeight="700" fontStyle="italic" fill={INK}>ātman</SvgText>
-      <SvgText x={195} y={199} textAnchor="middle" fontSize={10.5} fill="#5A6AC0">the space inside</SvgText>
-      <SvgText x={34} y={86} fontSize={14} fontWeight="700" fontStyle="italic" fill="#3A4680">brahman</SvgText>
-      <SvgText x={34} y={103} fontSize={10.5} fill={OCEAN_LABEL}>the space everywhere</SvgText>
-      <SvgText x={195} y={250} textAnchor="middle" fontSize={11} fontStyle="italic" fill={SOFT}>
-        Break the pot and nothing is released.
-      </SvgText>
-    </Svg>
-  </SceneFigure>
-);
-
 // The ocean base shared by brahman and atman — the water is a FILLED path whose
 // top edge is the wave itself (not a flat rect with strokes floating in it), so
 // the two figures read as one continuous scene: atman is brahman + one drop.
@@ -1173,14 +1143,13 @@ export const FOUNDATIONS_FIGURES: Record<string, React.FC<{ active?: boolean }>>
   'f-name-river': Etymology,
   'f-thread-compare': Compare,
   'f-thread-streams': Streams,
-  // Act 3 (depth rework, July 2026): every concept carries a figure. PotSpace
-  // moved from f-claim-tat-tvam-asi to the support page that now tells its
-  // story; RopeSerpent retired with the rope analogy (maya runs on the mirage).
+  // Act 3 (depth rework, July 2026): every concept carries a figure. The
+  // pot-and-sky card was retired (redundant with the drop and ocean); RopeSerpent
+  // retired with the rope analogy (maya runs on the mirage).
   'f-claim-brahman': OceanWaves,
   'f-claim-brahman-faces': OneCurrentManyLamps,
   'f-claim-atman-drop': DropAndOcean,
   'f-claim-tta-salt': SaltDissolve,
-  'f-claim-tta-pot': PotSpace,
   // 'f-claim-tta-so-what' (namaste) intentionally has no entry — deferred to
   // raster (see the note above), card stays text-only until the painting exists.
   'f-claim-maya': Mirage,

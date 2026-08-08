@@ -95,10 +95,10 @@ const ACT_NAME: FoundationsAct = {
   sections: [
     {
       id: 'f-name-what-it-is',
-      title: 'A family, not a single religion',
+      title: 'A family of traditions',
       banked: false,
       storyText:
-        'So what is Hinduism, in one honest sentence? It is a large family of related traditions that grew up together across India over thousands of years.\n\nPicture an extended family rather than one person. The cousins do not all look alike, and they do not all do things the same way. But you can see the family resemblance, because they share the same four things.',
+        'So what is Hinduism, in one honest sentence? It is a large family of related traditions that grew up together across India over thousands of years.\n\nPicture an extended family. The cousins do not all look alike, and they do not all do things the same way. But you can see the family resemblance, because they share the same four things.',
       bullets: [
         '**The same gods**, understood as different faces of one reality.',
         '**The same library** of sacred texts, with the ancient Vedas at its root.',
@@ -118,7 +118,7 @@ const ACT_NAME: FoundationsAct = {
             { text: 'A family of related Indian traditions that share gods, texts, and core ideas', correct: true },
             { text: 'A modern philosophy invented in the last few centuries' },
           ],
-          why: 'It is a family, not a single system. The cousins differ, yet they share the same gods, the same library, and the same core ideas.',
+          why: 'It is a family of traditions. The cousins differ, yet they share the same gods, the same library, and the same core ideas.',
         },
       ],
     },
@@ -168,9 +168,9 @@ const ACT_NAME: FoundationsAct = {
     {
       id: 'f-name-river',
       title: 'A river, mispronounced',
-      takeaway: "Even the name isn't its own — it's a river, mispronounced.",
+      takeaway: "Even the name is borrowed — it's a river, mispronounced.",
       storyText:
-        "So where did the word *Hindu* even come from? Not from Hindus. It began as the name of a river.\n\nIn Sanskrit, the great river to the northwest was called the *Sindhu*. Persians living west of it couldn't pronounce the S and said *Hindu* instead — they just meant “the people over there,” past the river. Later, the Greeks dropped the H too.\n\nThat single river-name became three words we still use: **Hindu, India, and Indus**. For most of history, *Hindu* pointed to a place — not a religion.",
+        "So where did the word *Hindu* even come from? From outsiders — and it began as the name of a river.\n\nIn Sanskrit, the great river to the northwest was called the *Sindhu*. Persians living west of it couldn't pronounce the S and said *Hindu* instead — they just meant “the people over there,” past the river. Later, the Greeks dropped the H too.\n\nThat single river-name became three words we still use: **Hindu, India, and Indus**. For most of history, *Hindu* pointed to a place — a where, long before it meant a religion.",
       citation: 'Sindhu → Hindū (Old Persian) → Indós (Greek) → India (Latin)',
       checks: [
         {
@@ -182,7 +182,7 @@ const ACT_NAME: FoundationsAct = {
             { text: 'A Sanskrit word meaning “believer”' },
             { text: 'The name of the first Hindu king' },
           ],
-          why: 'It started as the river Sindhu. Persians said “Hindu” for the people over there; for most of history the word named a place, not a faith.',
+          why: 'It started as the river Sindhu. Persians said “Hindu” for the people over there; for most of history the word named a place, long before it named a faith.',
         },
       ],
     },
@@ -191,7 +191,7 @@ const ACT_NAME: FoundationsAct = {
       title: 'Sanatana Dharma',
       takeaway: 'The name it gives itself is Sanatana Dharma — the eternal way.',
       storyText:
-        "If outsiders supplied the word *Hindu*, what do followers call it themselves? **Sanatana Dharma** — usually translated as “the eternal way.”\n\nThe idea behind the name: this isn't a club you sign up for. It's more like a natural order that was always here and always will be — something you *wake up to* and live by, not something you join.\n\nThat's also why there's no founder. Nobody invents the sunrise; you just notice it.",
+        "If outsiders supplied the word *Hindu*, what do followers call it themselves? **Sanatana Dharma** — usually translated as “the eternal way.”\n\nThe idea behind the name: it points to a natural order that was always here and always will be — something you *wake up to* and live by, the way you wake into a morning that started without you.\n\nThat's also why there's no founder. Nobody invents the sunrise; you just notice it.",
       keyVerse: {
         sanskrit: 'सनातन धर्म',
         transliteration: 'sanātana dharma',
@@ -201,7 +201,7 @@ const ACT_NAME: FoundationsAct = {
     {
       id: 'f-name-sanskrit',
       title: 'Sanskrit',
-      takeaway: 'An eternal way still has to be carried — so Sanskrit was built to be remembered, not read.',
+      takeaway: 'An eternal way still has to be carried — so Sanskrit was built for the ear, to be remembered aloud.',
       storyText:
         "But it still had to be passed down somehow. For centuries there was no book to keep it in — writing wasn't used for it yet.\n\nSo how did it survive? People memorized it, word for word, and recited it aloud — one generation teaching the next. The language they used is **Sanskrit** (*saṃskṛta*, “put together properly”).\n\nIt was practically built for the ear: exact rhythm, so a wrong word breaks the beat; exact pitch, fixed for every syllable; and repetition woven in as a backup.\n\nThe result: two reciters a thousand miles apart would land on the very same syllable. These spoken texts are the **Vedas** — chanted for centuries before anyone finally wrote them down.",
       keyVerse: {
@@ -216,7 +216,7 @@ const ACT_NAME: FoundationsAct = {
           kind: 'mcq',
           prompt: 'Why was Sanskrit built with such exact rhythm and pitch?',
           options: [
-            { text: 'So the texts could be memorized and recited identically, since they were carried by voice, not writing', correct: true },
+            { text: 'So the texts could be memorized and recited identically, since they were carried by voice, from memory to memory', correct: true },
             { text: 'So only trained priests could ever read the script' },
             { text: 'To make the language sound more beautiful than everyday speech' },
           ],
@@ -254,11 +254,11 @@ const ACT_THREAD: FoundationsAct = {
   sections: [
     {
       id: 'f-thread-practice',
-      title: 'Practice, not creed',
-      takeaway: "What makes someone Hindu isn't a belief — it's what they practice.",
+      title: 'Practice is the thread',
+      takeaway: "What makes someone Hindu is what they practice — how they live, worship, and mark the year.",
       storyText:
-        "If there's no founder, no single book, and no one in charge, what makes someone a Hindu at all?\n\nHere's the surprising part: it isn't what they believe. There's no creed to sign and no moment of conversion. A Hindu can hold that God is one, or many, or everything, or an open question — and still be a Hindu in good standing, with nobody calling them a heretic.\n\nWhat holds it all together is **practice** — how you live, what you do at the shrine, how you mark the year. Practice is the membership. That single idea is the hinge the whole tradition turns on.",
-      citation: 'The tradition is orthoprax (right practice) rather than orthodox (right belief).',
+        "If there's no founder, no single book, and no one in charge, what makes someone a Hindu at all?\n\nHere's the surprising part: you can believe almost anything. There's no creed to sign and no moment of conversion. A Hindu can hold that God is one, or many, or everything, or an open question — and still be a Hindu in good standing, with nobody calling them a heretic.\n\nWhat holds it all together is **practice** — how you live, what you do at the shrine, how you mark the year. Practice is the membership. That single idea is the hinge the whole tradition turns on.",
+      citation: 'The tradition is orthoprax — centered on right practice more than right belief.',
       checks: [
         {
           id: 'chk:foundations:what-makes-a-hindu',
@@ -269,7 +269,7 @@ const ACT_THREAD: FoundationsAct = {
             { text: 'Being born in India' },
             { text: 'What they practice — how they live, worship, and mark the year', correct: true },
           ],
-          why: 'Practice, not creed. It is why one family can hold a monotheist, a polytheist and a skeptic, and nobody is a heretic.',
+          why: 'Practice is the thread. It is why one family can hold a monotheist, a polytheist and a skeptic, and nobody is a heretic.',
         },
       ],
     },
@@ -278,7 +278,7 @@ const ACT_THREAD: FoundationsAct = {
       title: 'Beside the others',
       takeaway: 'Judaism, Christianity, and Islam ask what you believe; Hinduism asks what you do.',
       storyText:
-        "Line Hinduism up against Judaism, Christianity, and Islam, and the real difference isn't the number of gods.\n\nEach of those three turns on a **founder**, a **single book**, a **confession of faith**, and a **judgement** at the end of time. Judaism comes closest to Hinduism — it too is a practice and a people more than a set of beliefs — but it still has Sinai, a covenant, and one God.\n\nHinduism has none of those fixed anchors. And instead of ending in one final judgement, it pictures time as a wheel that keeps turning.",
+        "Line Hinduism up against Judaism, Christianity, and Islam, and the difference that matters lies deeper than the number of gods.\n\nEach of those three turns on a **founder**, a **single book**, a **confession of faith**, and a **judgement** at the end of time. Judaism comes closest to Hinduism — it too is a practice and a people more than a set of beliefs — but it still has Sinai, a covenant, and one God.\n\nHinduism travels without those fixed anchors. And where they end in one final judgement, it pictures time as a wheel that keeps turning.",
       checks: [
         {
           id: 'chk:foundations:practice-not-creed',
@@ -298,7 +298,7 @@ const ACT_THREAD: FoundationsAct = {
       title: 'So what is the practice?',
       banked: false,
       storyText:
-        'If practice is what makes you Hindu, then what is the practice, exactly? It is not one grand thing. It is a handful of ordinary ones, woven through a life.\n\nMost of it happens at home, not at a temple.',
+        'If practice is what makes you Hindu, then what is the practice, exactly? It is a handful of ordinary things, woven through a life.\n\nMost of it happens at home, at a small shrine, long before it ever reaches a temple.',
       bullets: [
         '**Puja**, simple daily worship at a small home shrine: a lamp, some flowers, a few words to the deity your family keeps.',
         '**Mantra**, sacred words said or sung, from a single name of God to a longer chant.',
@@ -320,7 +320,7 @@ const ACT_THREAD: FoundationsAct = {
             { text: 'Lighting a lamp at a home shrine, keeping the festival year, marking births and weddings with rites', correct: true },
             { text: 'Passing a written test on the scriptures' },
           ],
-          why: 'Practice is everyday action: worship at home, the festival year, and the rites that mark a life. It is not a creed you sign.',
+          why: 'Practice is everyday action: worship at home, the festival year, and the rites that mark a life.',
         },
       ],
     },
@@ -329,7 +329,7 @@ const ACT_THREAD: FoundationsAct = {
       title: 'So can anyone become Hindu?',
       banked: false,
       storyText:
-        'So if practice is the key, could anyone just start doing these things and become Hindu? Here the honest answer catches people off guard.\n\nBeing Hindu is less like joining a club and more like belonging to a people. It is closer to being Jewish than to being Christian. Most Hindus are Hindu because they were born into a Hindu family, raised in its practices, and grew up calling themselves Hindu. It is a whole world you live inside, not a single act you perform.\n\nSo take the hard case. If a Muslim friend lights a lamp at Diwali, or a traveler accepts a blessing at a temple, that does not make them Hindu. One borrowed practice is not the same as belonging. And it runs the other way too. Nobody gets thrown out for holding the wrong belief, because there is no committee drawing the line.\n\nCan an outsider ever join? Some traditions do welcome newcomers who take it on fully and make it their own. But there is no single gateway everyone agrees on, and no conversion ceremony you must pass. It stays a matter of belonging rather than paperwork.',
+        'So if practice is the key, could anyone just start doing these things and become Hindu? Here the honest answer catches people off guard.\n\nBeing Hindu is less like joining a club and more like belonging to a people. It is closer to being Jewish than to being Christian. Most Hindus are Hindu because they were born into a Hindu family, raised in its practices, and grew up calling themselves Hindu. It is a whole world you live inside, bigger than any single act you perform.\n\nSo take the hard case. If a Muslim friend lights a lamp at Diwali, or a traveler accepts a blessing at a temple, that does not make them Hindu. Belonging runs deeper than any one borrowed practice. And it runs the other way too: belief stays free, because there is no committee drawing the line.\n\nCan an outsider ever join? Some traditions do welcome newcomers who take it on fully and make it their own. But each has its own threshold, and belonging is something you grow into more than a ceremony you pass.',
       teachingText:
         'So why is there no clean border? Because it was never built as a bordered club. You are simply part of the family, and you live it in your own way.',
       checks: [
@@ -340,10 +340,10 @@ const ACT_THREAD: FoundationsAct = {
           prompt: 'Your friend is a practicing Muslim who loves Diwali and lights a diya every year. Does that make him Hindu?',
           options: [
             { text: 'Yes. Doing a Hindu practice is what makes someone Hindu' },
-            { text: 'No. Being Hindu means belonging to a whole tradition you are raised in and call your own, not borrowing one practice', correct: true },
+            { text: 'No. Being Hindu means belonging to a whole tradition you are raised in and call your own', correct: true },
             { text: 'Only if he gives up Islam first' },
           ],
-          why: 'One practice is not belonging. Being Hindu is a whole world you are raised in and identify with, closer to being part of a people than joining a club.',
+          why: 'Being Hindu is a whole world you are raised in and identify with — closer to being part of a people than joining a club.',
         },
       ],
     },
@@ -366,14 +366,14 @@ const ACT_THREAD: FoundationsAct = {
       title: 'Your own god',
       takeaway: 'Nobody assigns you a god — you choose the one you love. That is your ishta-devata.',
       storyText:
-        "So which stream are you? In Hinduism, nobody hands you the answer.\n\nYour **ishta-devata** (*iṣṭa-devatā*) is your *chosen deity* — the form of the divine you feel closest to. You pick it, and your worship reaches the one reality through that face.\n\nA grandmother keeps Krishna, her son keeps Shiva, her granddaughter keeps Durga — all under one roof, and nothing is wrong. That isn't the system straining to cope. **That is the system working exactly as designed.**",
+        "So which stream are you? In Hinduism, nobody hands you the answer.\n\nYour **ishta-devata** (*iṣṭa-devatā*) is your *chosen deity* — the form of the divine you feel closest to. You pick it, and your worship reaches the one reality through that face.\n\nA grandmother keeps Krishna, her son keeps Shiva, her granddaughter keeps Durga — all under one roof, and nothing is wrong. **That is the system working exactly as designed.**",
       keyVerse: {
         sanskrit: 'इष्टदेवता',
         transliteration: 'iṣṭa-devatā',
         meaning: 'the deity you choose for yourself',
       },
       citation:
-        'Ishta-devata is a living practice rather than a scriptural rule — no text assigns anyone a deity.',
+        'Ishta-devata is a living practice — scripture leaves the choice to the worshipper.',
       checks: [
         {
           id: 'chk:foundations:ishta-devata',
@@ -432,7 +432,7 @@ const ACT_CLAIM: FoundationsAct = {
       kind: 'intro',
       title: 'Part 3 · What’s ahead',
       storyText:
-        'This part is the deep end of the whole tradition, and it is friendlier than it sounds. There are six ideas. We will take them one at a time, and I will check each one off with you as we go.',
+        'This part is the deep end of the whole tradition, and it is friendlier than it sounds. There are six ideas.\n\nThey come from the oldest layer of Hindu scripture: the **Vedas**, the memorized hymns you met in Part 1, and above all the **Upanishads**, the searching teacher-and-student dialogues recorded at the close of the Vedas, where these very questions get chased down. We will take the six one at a time, and I will check each one off with you as we go.',
     },
     // ── concept 1 · Brahman ──────────────────────────────────────────────────
     {
@@ -440,7 +440,7 @@ const ACT_CLAIM: FoundationsAct = {
       title: 'Brahman',
       takeaway: 'Behind every god and every form is a single reality. It is called Brahman.',
       storyText:
-        'Behind the thousands of gods, is there one thing? Hinduism says yes, and it has a name for it.\n\nStart with a picture. Imagine the whole universe as one huge ocean. Waves rise and fall on it. Foam gathers and scatters. Drops leap into the air and land again. Every one of those is a shape the water takes for a while, and every one of them is water.\n\n**Brahman** is the ocean. Brahman is not a god sitting somewhere in the sky, watching you. Brahman is the single reality that everything is made of, including every person, every object, and every god.\n\nThe oldest scripture Hindus have, the Rig Veda, says it in a single line:',
+        'Behind the thousands of gods, is there one thing? Hinduism says yes, and it has a name for it.\n\nStart with a picture. Imagine the whole universe as one huge ocean. Waves rise and fall on it. Foam gathers and scatters. Drops leap into the air and land again. Every one of those is a shape the water takes for a while, and every one of them is water.\n\n**Brahman** is the ocean itself, the single reality that everything is made of — including every person, every object, and every god. Picture the water rather than a ruler above it.\n\nThe oldest scripture Hindus have, the Rig Veda, says it in a single line:',
       keyVerse: {
         sanskrit: 'एकं सद्विप्रा बहुधा वदन्ति',
         transliteration: 'ekaṃ sad viprā bahudhā vadanti',
@@ -470,9 +470,9 @@ const ACT_CLAIM: FoundationsAct = {
       id: 'f-claim-brahman-faces',
       title: 'One current, many lamps',
       banked: false,
-      takeaway: 'The gods are not rivals to the one reality — they are its faces, shaped for human hands.',
+      takeaway: 'The gods are the faces of the one reality, shaped for human hands to hold.',
       storyText:
-        'If there is only one reality, why are there so many gods? The answer is sitting in the room with you.\n\nOne electric current runs through your home. You have never seen it, and you never will. What you see is a lamp, a fan, a kettle. Each one takes the same invisible current and gives it a shape you can actually use.\n\nThe gods work the same way. Brahman is the current, and each god is a lamp. The one reality is given a form that a person can love, pray to, and hold onto, because the formless is hard to love and a face is not.\n\nSo many gods never meant many truths. It has always been one current, shining through many lamps.',
+        'If there is only one reality, why are there so many gods? The answer is sitting in the room with you.\n\nOne electric current runs through your home. You have never seen it, and you never will. What you see is a lamp, a fan, a kettle. Each one takes the same invisible current and gives it a shape you can actually use.\n\nThe gods work the same way. Brahman is the current, and each god is a lamp. The one reality is given a form that a person can love, pray to, and hold onto, because a face gives love something to hold, and the formless is hard to love.\n\nSo the many gods were always many faces of one truth. It has always been one current, shining through many lamps.',
       checks: [
         {
           id: 'chk:foundations:brahman',
@@ -483,7 +483,7 @@ const ACT_CLAIM: FoundationsAct = {
             { text: 'The priestly class of Hindu society' },
             { text: 'The single formless reality underlying everything — awareness itself', correct: true },
           ],
-          why: 'Brahman is not one god among many, and it is not the same word as “Brahmin,” the priesthood. It is the ground of everything, and every deity is a face placed on it.',
+          why: 'Brahman is the ground of everything, and every deity is a face placed on it. Mind the look-alikes: it is not the top god in a lineup, nor the same word as “Brahmin,” the priesthood.',
         },
       ],
     },
@@ -501,7 +501,7 @@ const ACT_CLAIM: FoundationsAct = {
       title: 'Atman',
       takeaway: 'The same one reality is also what looks out from inside you — your true self, atman.',
       storyText:
-        'Brahman is the ocean out there. But what about in here? Who is reading this sentence right now?\n\nWatch your own mind for a moment. A thought arrives, stays a little while, and leaves. The thoughts keep changing, but the watching of them does not. Your body keeps changing too. And still you say “when **I** was eight,” and the word *I* keeps pointing at the same someone.\n\nHinduism has a name for that someone. It is **atman**, your true self. Atman is not your thoughts, and it is not your body. **Atman is the one who has been watching them both, the whole time.**',
+        'Brahman is the ocean out there. But what about in here? Who is reading this sentence right now?\n\nWatch your own mind for a moment. A thought arrives, stays a little while, and leaves. The thoughts keep changing, but the watching of them does not. Your body keeps changing too. And still you say “when **I** was eight,” and the word *I* keeps pointing at the same someone.\n\nHinduism has a name for that someone. It is **atman**, your true self — the watcher behind every thought and every version of your body. **The one who has been there the whole time.**',
     },
     {
       id: 'f-claim-atman-drop',
@@ -509,7 +509,7 @@ const ACT_CLAIM: FoundationsAct = {
       banked: false,
       takeaway: 'Take one drop from the ocean: smaller than the sea, yet nothing in it but sea. That is atman.',
       storyText:
-        'So there is Brahman, the ocean, and there is you. How are the two of you related? Go back to the water.\n\nTake a single drop out of the ocean. The drop is small and the ocean is vast. But look inside the drop. It is the same water, the same salt, the same taste. Nothing in the drop is anything other than ocean.\n\n**Atman is that drop.** Your deepest self is not a fragment that broke off the one reality, and it is not a visitor sent from it. Atman is Brahman, in a drop-sized shape.\n\nHold onto the drop. The next pages give this exact idea its three famous words.',
+        'So how are you and that ocean related? Go back to the water.\n\nTake a single drop out of the ocean. The drop is small and the ocean is vast. But look inside the drop. It is the same water, the same salt, the same taste. Nothing in the drop is anything other than ocean.\n\n**Atman is that drop.** Your deepest self is the one reality itself, worn in a drop-sized shape — the whole ocean in miniature, not a fragment chipped off it. Atman is Brahman.\n\nHold onto the drop. The next pages give this exact idea its three famous words.',
     },
     {
       id: 'f-claim-term-atman',
@@ -554,7 +554,7 @@ const ACT_CLAIM: FoundationsAct = {
       title: 'You are that',
       takeaway: 'Brahman and atman are not two things — they are one. That is the whole claim.',
       storyText:
-        'The drop is ocean. Now say the same thing about yourself. Brahman is the one reality out there, and atman is the watcher in here. The whole tradition turns on what comes next.\n\n**They are not two things.** The reality out there and the watcher in here are one and the same. The Upanishads say it in three Sanskrit words:',
+        'The drop is ocean. Now say the same thing about yourself. The whole tradition turns on what comes next.\n\n**They are not two things.** The reality out there and the watcher in here are one and the same. The Upanishads say it in three Sanskrit words:',
       keyVerse: {
         sanskrit: 'तत्त्वमसि',
         transliteration: 'tat tvam asi',
@@ -562,7 +562,7 @@ const ACT_CLAIM: FoundationsAct = {
         source: 'Chandogya Upanishad 6.8.7',
       },
       teachingText:
-        'This does not mean you are close to that, and it does not mean a piece of that lives inside you. It is plain identity. The drop is not near the ocean, and it is not on loan from it. The drop simply is water. **You are that.**',
+        'This is plain identity. The drop does not sit near the ocean, or borrow from it — it simply is water. **You are that.**',
       citation: 'Chandogya Upanishad 6.8.7',
     },
     {
@@ -581,25 +581,16 @@ const ACT_CLAIM: FoundationsAct = {
         '**asi** — are: not “are near,” not “contain.” Are.',
       ],
       reappears:
-        'Every road out of the wheel in Part 4 is a way of making these three words felt, not just heard.',
+        'Every road out of the wheel in Part 4 is a way of turning these three words from something heard into something felt.',
     },
     {
       id: 'f-claim-tta-salt',
       title: 'The father and the son',
       banked: false,
-      takeaway: 'You cannot find the salt anywhere in the water — and there is nowhere in the water it isn’t.',
+      takeaway: 'You cannot see the salt anywhere in the water, yet every drop of it is salt.',
       storyText:
         'Where do those three words come from? They come from a father teaching his son, in the Chandogya Upanishad.\n\nShvetaketu comes home at twenty-four, proud of twelve years of schooling. His father, Uddalaka, asks him one question. “Did they teach you the one thing by which everything is known?” The son does not even understand the question.\n\nSo the father teaches him. “Put this lump of salt in water, and come back in the morning.” In the morning he says, “Bring me the salt.” Shvetaketu reaches into the bowl, and the salt is gone. “Sip from this side. From the middle. From that side.” Salty, salty, salty.\n\n“You cannot see it, but it is everywhere in the water. The finest essence of everything is like that. And *tat tvam asi*, Shvetaketu. **You are that**.”',
       citation: 'Chandogya Upanishad 6.12–6.13 · The full story is in Stage 4 — The Stories.',
-    },
-    {
-      id: 'f-claim-tta-pot',
-      title: 'The pot and the sky',
-      banked: false,
-      takeaway: 'Break the pot and nothing is set free — there was only ever one space, briefly shaped.',
-      storyText:
-        'There is one more picture worth carrying, and this one explains why you feel separate when you are not.\n\nPicture a clay pot standing in the open air. There is space inside the pot, and there is the great space of the sky. They look like two different spaces, one small and one endless. But look again. The pot has walls. The space never did.\n\nNow break the pot. Nothing spills out, and nothing is set free, because there was only ever one space. The walls just made it look like two.\n\n**You are the space inside the pot.** The body and its story are the walls. The walls are real, but the separateness they suggest is not.',
-      citation: 'The pot-space image comes from the Advaita Vedanta commentarial tradition.',
     },
     {
       id: 'f-claim-tta-so-what',
@@ -607,7 +598,7 @@ const ACT_CLAIM: FoundationsAct = {
       banked: false,
       takeaway: 'If you are that, so is everyone else — and the tradition built its daily greeting to say so.',
       storyText:
-        'If those three words are true, what actually changes? Start with the person across from you.\n\nThe same one reality looks out from behind their eyes too. It is the same sky, sitting in a different pot. Take that seriously about a difficult person for one minute, and notice how much harder it becomes to hold onto contempt.\n\nHinduism folded this idea into its everyday hello. **Namaste**, said with the palms together and a small bow, is often translated as “the divine in me bows to the divine in you.” That is not poetry invented for yoga studios. It is *tat tvam asi*, exchanged twice a day, with everyone you meet.\n\nWhat you are, everyone else is too. The greeting simply says it out loud.',
+        'If those three words are true, what actually changes? Start with the person across from you.\n\nThe same one reality looks out from behind their eyes too. It is the same ocean, in a different drop. Take that seriously about a difficult person for one minute, and notice how much harder it becomes to hold onto contempt.\n\nHinduism folded this idea into its everyday hello. **Namaste** comes from *namas*, “I bow,” and *te*, “to you” — literally “I bow to you.” Said with the palms together and a small bow, it is often unfolded as “the divine in me bows to the divine in you.” That greeting carries *tat tvam asi* into ordinary life, exchanged twice a day, with everyone you meet.\n\nWhat you are, everyone else is too. The greeting simply says it out loud.',
       checks: [
         {
           id: 'chk:foundations:tat-tvam-asi',
@@ -621,7 +612,7 @@ const ACT_CLAIM: FoundationsAct = {
             },
             { text: 'That you will become divine if you live well enough' },
           ],
-          why: 'The claim is not about being close to the divine, and it is not a reward for good behavior. It is identity. The pot does not contain a piece of the sky. There was never a boundary at all, only walls that made it look like there was one.',
+          why: 'The claim is plain identity. The drop does not hold a piece of the ocean — it simply is ocean. There was never a boundary at all, only a shape that made it look separate.',
         },
       ],
     },
@@ -639,7 +630,7 @@ const ACT_CLAIM: FoundationsAct = {
       title: 'Maya',
       takeaway: "Why doesn't oneness feel true? Because the world is misread, not unreal — that misreading is maya.",
       storyText:
-        'Why does the oneness not feel true? The tradition answers with an experience you may know from any long drive on a hot day.\n\nFar ahead, the road is shining with water. You can see it clearly. But when you reach that spot, the road is dry, and now the water is shining farther ahead.\n\nThe road is real. The light is real. Only the reading was wrong, because there was never any water.\n\nSanskrit has a word built on this exact picture. *Mṛgatṛṣṇā* means “deer’s thirst,” for the deer that chases that water until it drops. The world is not fake. The mistake is in what you take it to be. **That mistake is maya.**',
+        'Why does the oneness not feel true? The tradition answers with an experience you may know from any long drive on a hot day.\n\nFar ahead, the road is shining with water. You can see it clearly. But when you reach that spot, the road is dry, and now the water is shining farther ahead.\n\nThe road is real. The light is real. Only the reading was wrong, because there was never any water.\n\nSanskrit has a word built on this exact picture. *Mṛgatṛṣṇā* means “deer’s thirst,” for the deer that chases that water until it drops. The world is real. The mistake is in what you take it to be. **That mistake is maya.**',
       citation:
         'Mṛgatṛṣṇā (the mirage, “deer’s thirst”) is a standard illustration of maya in the Vedanta commentarial tradition.',
       deeper: { ref: 'concept:maya', label: 'Maya' },
@@ -650,7 +641,7 @@ const ACT_CLAIM: FoundationsAct = {
       banked: false,
       takeaway: 'The shimmer stays even after you know the road is dry. Knowing about maya does not switch it off.',
       storyText:
-        '“Maya means the world is an illusion.” You will hear that sentence often, and it is the mistranslation that has done the most damage. The mirage shows what is wrong with it.\n\nThe road was never fake, and the light was never fake. Only your reading of them was false. Maya works the same way. The world is real. What is false is how you read it, as many separate things, with you as one more separate thing among them, small and apart.\n\nThe road has one more lesson. Even after you know the shimmer is not water, it still looks like water. **Knowing about maya does not switch it off.** That is why oneness can be true and still not feel true, and why the tradition built practices instead of stopping at arguments.\n\nSo maya, said plainly, is not a fake world. It is a real one, misread.',
+        '“Maya means the world is an illusion.” You will hear that sentence often, and it is the mistranslation that has done the most damage. The mirage shows what is wrong with it.\n\nThe road was real and the light was real. Only your reading of them was false. Maya works the same way. The world is real. What is false is how you read it, as many separate things, with you as one more separate thing among them, small and apart.\n\nThat is the very misreading this part has been undoing: the one ocean read as a million cut-off drops, and *tat tvam asi* — “you are that” — felt instead as “you are separate.” Maya is the veil over the drop, the reason it forgets it was ever the sea.\n\nThe road has one more lesson. Even after you know the shimmer is only light, it still looks like water. **Knowing about maya leaves the shimmer right where it is.** That is why oneness can be true and still not feel true, and why the tradition puts its trust in practice, where arguments alone fall short.\n\nSo maya, said plainly, is a real world, misread.',
     },
     {
       id: 'f-claim-term-maya',
@@ -659,7 +650,7 @@ const ACT_CLAIM: FoundationsAct = {
       keyVerse: {
         sanskrit: 'माया',
         transliteration: 'māyā',
-        meaning: 'the misreading — not the thing',
+        meaning: 'the misreading of the thing',
       },
       storyText:
         'Test every translation you meet against the mirage. “Illusion” says the road itself is fake. Maya says the road is real, and that calling it water was your mistake.\n\nIn the same way, the world is the road, and **the separateness is the water.**',
@@ -769,7 +760,7 @@ const ACT_CLAIM: FoundationsAct = {
         '**Tamas** — inertia, heaviness, fog. The 7 a.m. blanket.',
       ],
       teachingText:
-        'All three strands run in everyone, all the time, and only the mix changes. The gunas are not three types of people. **They are the three threads that every moment is woven from.**',
+        'All three strands run in everyone, all the time, and only the mix changes. **The gunas are the three threads that every moment is woven from.**\n\nAnd notice who watched the weather shift all day: atman, the witness from the start of this part. The self never changes; the gunas are the changing weather it watches. A changeless witness, and a world in constant motion — that is the whole of Part 3 in one breath.',
       citation: 'Bhagavad Gita, Chapter 14',
       citationLink: 'gita:14',
       deeper: { ref: 'concept:three-gunas', label: 'The Three Gunas' },
@@ -780,7 +771,7 @@ const ACT_CLAIM: FoundationsAct = {
       banked: false,
       takeaway: 'None of the three strands is the enemy. The practice is noticing which one is steering you right now.',
       storyText:
-        'What do the strands look like in an ordinary day? Watch one go by, hour by hour.\n\n**7:00 a.m.** The alarm rings and your body votes no. Everything feels heavy, slow, and fogged. That is **tamas** in the lead. Tamas is not evil. It is also the strand that lets you sleep, rest, and heal.\n\n**11:30 a.m.** A deadline, a coffee, three arguments open in your head. Your heart is quick and your thoughts are quicker. Now **rajas** has taken over, and rajas is not evil either. Nothing gets built without it.\n\n**9:00 p.m.** A walk after dinner. The mind is quiet, kind, and clear, with **sattva** out in front. This is the strand the practices try to feed.\n\nThe teaching is not that you should be sattvic all day and never rest or strive. The teaching is simply to notice which strand is steering you right now, because once you can see it, you can work with it.',
+        'What do the strands look like in an ordinary day? Watch one go by, hour by hour.\n\n**7:00 a.m.** The alarm rings and your body votes no. Everything feels heavy, slow, and fogged. That is **tamas** in the lead. Tamas has its place: it is the strand that lets you sleep, rest, and heal.\n\n**11:30 a.m.** A deadline, a coffee, three arguments open in your head. Your heart is quick and your thoughts are quicker. Now **rajas** has taken over, and rajas has its place too. Nothing gets built without it.\n\n**9:00 p.m.** A walk after dinner. The mind is quiet, kind, and clear, with **sattva** out in front. This is the strand the practices try to feed.\n\nThe practice is not to chase sattva all day — it is to notice which strand is steering you right now, because once you can see it, you can work with it.',
       citation: 'Bhagavad Gita 14.11–14.13 describes the marks of each guna’s dominance.',
     },
     {
@@ -798,7 +789,7 @@ const ACT_CLAIM: FoundationsAct = {
         '**tamas** — तमस् · weight, inertia, rest',
       ],
       storyText:
-        'These are not good, better, and best. They are three threads in one weave, all running in you right now, and only the mix changes.',
+        'These are three equal threads in one weave, all running in you right now, and only the mix changes.',
       reappears:
         'The Gita gives these three strands a whole chapter, Chapter 14, and you will read it later on this journey.',
       checks: [
@@ -852,7 +843,7 @@ const ACT_WHEEL: FoundationsAct = {
   coverImage: COVER_WHEEL,
   learnItems: [
     '**Samsara** — the wheel of birth, death, and birth again',
-    '**Karma** — action, and why it isn’t fate',
+    '**Karma** — action, and why it’s yours to steer',
     '**Dharma** — “what is mine to do?”',
     '**Ahimsa** — cause no harm you don’t have to',
     '**Moksha** — the way off the wheel',
@@ -874,7 +865,7 @@ const ACT_WHEEL: FoundationsAct = {
       title: 'Samsara',
       takeaway: 'If the witness is what you truly are, death changes the clothes, not the wearer.',
       storyText:
-        'So what happens when the body dies? Part 3 said that you are the watcher, not the body. If you take that seriously, death changes its meaning.\n\nDeath is not the end of the watcher. It is a change of clothes. The body wears out, and the one inside it steps into another. The Bhagavad Gita says it in a single image:',
+        'So what happens when the body dies? Part 3 said the watcher is what you truly are, deeper than the body. If you take that seriously, death changes its meaning.\n\nFor the watcher, death is a change of clothes. The body wears out, and the one inside it steps into another. The Bhagavad Gita says it in a single image:',
       keyVerse: {
         sanskrit: 'वासांसि जीर्णानि यथा विहाय',
         transliteration: 'vāsāṃsi jīrṇāni yathā vihāya',
@@ -882,7 +873,7 @@ const ACT_WHEEL: FoundationsAct = {
         source: 'Bhagavad Gita 2.22',
       },
       teachingText:
-        'This endless round of birth, a life, death, and birth again is called **samsara**, the wheel. Samsara is not a punishment, and it is not a reward. It is simply how things are. **The wheel turns, until one day it doesn’t.**',
+        'This endless round of birth, a life, death, and birth again is called **samsara**, the wheel. Samsara is simply how things are — the wheel itself, neither a punishment nor a prize. **The wheel turns, until one day it doesn’t.**',
       citation: 'Bhagavad Gita 2.22',
       citationLink: 'gita:2',
       deeper: { ref: 'concept:samsara', label: 'Samsara' },
@@ -929,15 +920,15 @@ const ACT_WHEEL: FoundationsAct = {
       title: 'Part 4 · 1 of 7 banked',
       learnIndex: 1,
       storyText:
-        'That is samsara, banked. The wheel turns. Next comes the thing that steers it, and it is not fate.',
+        'That is samsara, banked. The wheel turns. Next comes the thing that steers it — and it is entirely yours.',
     },
     // ── concept 2 · Karma ────────────────────────────────────────────────────
     {
       id: 'f-wheel-karma',
       title: 'Karma',
-      takeaway: 'What steers the wheel is what you do. Karma means action, not fate.',
+      takeaway: 'What steers the wheel is what you do. Karma means action — the one thing always yours to change.',
       storyText:
-        'So what steers the wheel? Who decides what the next life looks like?\n\nNobody does. There is no judge keeping score. There is only **karma**.\n\nKarma is a Sanskrit word, and it simply means **action**. Something you do. Hindus believe that every action has consequences, and that those consequences do not end when this life ends. They travel with you into the next life, just like the report card that followed you from one school to the next.\n\nOnce you see this, a common saying falls apart. People sigh and say, “It is my karma, there is nothing I can do.” That has the word backwards. Karma is not something that happens to you. Karma is what you do. **And what you do is the one thing in your life that is always yours to change.**',
+        'So what steers the wheel? Who decides what the next life looks like?\n\nNobody does. There is no judge keeping score. There is only **karma**.\n\nKarma is a Sanskrit word, and it simply means **action**. Something you do. Hindus believe that every action has consequences, and that those consequences do not end when this life ends. They travel with you into the next life, just like the report card that followed you from one school to the next.\n\nOnce you see this, a common saying falls apart. People sigh and say, “It is my karma, there is nothing I can do.” That has the word backwards. Karma is what you *do* — your own action. **And what you do is the one thing in your life that is always yours to change.**',
       deeper: { ref: 'concept:karma', label: 'Karma' },
     },
     {
@@ -950,7 +941,7 @@ const ACT_WHEEL: FoundationsAct = {
         meaning: 'action — the deed itself',
       },
       storyText:
-        'People misread this word in two ways. Karma is not fate, because fate is what you cannot change, and karma is what you do. And karma is not cosmic revenge, because nobody is punishing you. Consequences are simply growing from seeds you planted.\n\n**Karma is the verb of your life.**',
+        'This word gets pulled out of shape two ways. Really, karma is your own action, the one thing you can always change — which is why “it’s just my fate” gets it exactly backwards. And its consequences grow the way a harvest grows from a seed, not the way a sentence is handed down from a court.\n\n**Karma is the verb of your life.**',
       reappears:
         'The four roads at the end of this part include karma yoga, which is action itself, turned into a path.',
     },
@@ -990,9 +981,9 @@ const ACT_WHEEL: FoundationsAct = {
     {
       id: 'f-wheel-dharma',
       title: 'Dharma',
-      takeaway: "The real question isn't “what is the rule?” but “what is mine to do?” That is dharma.",
+      takeaway: "Dharma turns on a single question: “what is mine to do?”",
       storyText:
-        'If your actions steer the wheel, the next question matters a great deal. Which actions are the right ones? Hinduism answers with a question of its own.\n\nThe question is not “what is the rule?” The question is **“what is mine to do?”** That question, together with its answer for your particular life, is **dharma**.\n\nDharma is not a set of ten commandments handed to everyone alike. A soldier’s dharma and a mother’s dharma are genuinely different, and both are right. **The right thing depends on who you are, where you stand, and who depends on you.**',
+        'If your actions steer the wheel, the next question matters a great deal. Which actions are the right ones? Hinduism answers with a question of its own.\n\nThe question is **“what is mine to do?”** — and that question, together with its answer for your particular life, is **dharma**.\n\nDharma is personal. A soldier’s dharma and a mother’s dharma are genuinely different, and both are right. **The right thing depends on who you are, where you stand, and who depends on you.**',
       deeper: { ref: 'concept:dharma', label: 'Dharma' },
     },
     {
@@ -1015,14 +1006,14 @@ const ACT_WHEEL: FoundationsAct = {
       banked: false,
       takeaway: 'In one afternoon you owe three different things to three different people — and meeting each one is dharma.',
       storyText:
-        'Maybe “it depends on your role” sounds slippery to you. If it does, watch yourself for one afternoon.\n\nAt three o’clock you are a parent, and your duty is patience with a child who is learning slowly. At four you are an employee, and your duty is honest work, delivered on time. At six you are a driver in traffic, and your duty is to pull aside and let the ambulance pass, even though you are late.\n\nThat is three hours, three roles, and three different right things. You already navigate all of it without calling it philosophy. Dharma simply says that this is what ethics really is. Not one rule for everybody, but the right thing for the role you are standing in.',
+        'Maybe “it depends on your role” sounds slippery to you. If it does, watch yourself for one afternoon.\n\nAt three o’clock you are a parent, and your duty is patience with a child who is learning slowly. At four you are an employee, and your duty is honest work, delivered on time. At six you are a driver in traffic, and your duty is to pull aside and let the ambulance pass, even though you are late.\n\nThat is three hours, three roles, and three different right things. You already navigate all of it without calling it philosophy. Dharma simply says that this is what ethics really is: the right thing for the role you are standing in.',
       checks: [
         {
           id: 'chk:foundations:dharma-situational',
           kind: 'mcq',
           prompt: 'Why can a soldier’s dharma and a mother’s dharma be genuinely different — and both be right?',
           options: [
-            { text: 'Because dharma is the right action for your particular role and situation, not one rule for everyone', correct: true },
+            { text: 'Because dharma is the right action for your particular role and situation', correct: true },
             { text: 'Because soldiers are simply held to a lower standard' },
             { text: 'Because dharma only really applies to priests' },
           ],
@@ -1052,7 +1043,7 @@ const ACT_WHEEL: FoundationsAct = {
         source: 'Mahabharata, Anushasana Parva 115.1',
       },
       teachingText:
-        'Ahimsa is a discipline rather than a mood. It is harmlessness deliberately chosen by someone who is perfectly capable of doing otherwise. Gandhi built a whole freedom movement on it. **Cause no harm you don’t have to.** That is the entire rule.',
+        'Ahimsa is a discipline: harmlessness deliberately chosen by someone perfectly capable of doing otherwise. Gandhi built a whole freedom movement on it. **Cause no harm you don’t have to.** That is the entire rule.',
       citation: 'Mahabharata, Anushasana Parva 115.1',
       deeper: { ref: 'concept:ahimsa', label: 'Ahimsa' },
     },
@@ -1063,10 +1054,10 @@ const ACT_WHEEL: FoundationsAct = {
       keyVerse: {
         sanskrit: 'अहिंसा',
         transliteration: 'ahiṃsā',
-        meaning: 'non-harming — chosen, not accidental',
+        meaning: 'non-harming, deliberately chosen',
       },
       storyText:
-        'The *a-* at the front of the word is a negation. *Himsa* is harm, and *ahimsa* is its deliberate absence.\n\nMildness is not the point here. **Strength held back is the point.** A person with no power to harm is merely harmless. Ahimsa is what you call it when the powerful choose not to.',
+        'The *a-* at the front of the word is a negation. *Himsa* is harm, and *ahimsa* is its deliberate absence.\n\n**Strength held back is the point.** A person with no power to harm is merely harmless. Ahimsa is what you call it when the powerful choose restraint.',
       reappears:
         'You will meet ahimsa wherever Gandhi comes up, and at the dinner table, where it shapes why many Hindus are vegetarian.',
     },
@@ -1074,7 +1065,7 @@ const ACT_WHEEL: FoundationsAct = {
       id: 'f-wheel-surgeon',
       title: 'The surgeon’s knife',
       banked: false,
-      takeaway: 'Ahimsa is not “never cause pain.” It is “cause no harm you don’t have to” — and the last four words carry the weight.',
+      takeaway: 'Ahimsa is “cause no harm you don’t have to” — and the last four words carry the weight.',
       storyText:
         'Does non-harming mean a surgeon must never cut? Look closely at the cut, because the answer is in it.\n\nA surgeon’s knife and an attacker’s knife can leave the same wound. What separates them is everything ahimsa cares about. One thing is the intention behind the hand. The other is whether the harm was necessary at all.\n\nThe surgeon cuts to heal, cuts as little as possible, and would rather not cut at all. That is harm, and it is still ahimsa, because none of it is harm the surgeon did not have to cause.\n\nSo read the rule with its last four words attached. Cause no harm *you don’t have to*. The discipline lives in checking, each time, whether you really have to.',
       checks: [
@@ -1091,7 +1082,7 @@ const ACT_WHEEL: FoundationsAct = {
             },
             { text: 'Only if the operation fails' },
           ],
-          why: 'Ahimsa is a discipline of intention and necessity, not a ban on all pain. The surgeon cuts to heal and cuts no more than needed. The harm you must avoid is the kind you did not have to cause.',
+          why: 'Ahimsa is a discipline of intention and necessity. The surgeon cuts to heal and cuts no more than needed. The harm to avoid is the kind you did not have to cause.',
         },
       ],
     },
@@ -1107,9 +1098,9 @@ const ACT_WHEEL: FoundationsAct = {
     {
       id: 'f-wheel-moksha',
       title: 'Moksha',
-      takeaway: 'The goal is not heaven. It is getting off the wheel altogether — moksha.',
+      takeaway: 'The goal is moksha — release from the wheel altogether, past even heaven.',
       storyText:
-        'So where does all this steering lead? What is the finish line? The answer surprises most newcomers, because the answer is not heaven.\n\nIn this picture, even heaven is temporary. It is a pleasant stop that you eventually have to leave, which makes it just another turn of the wheel. The real goal is **moksha**, which means release from the wheel altogether.\n\nMoksha is waking up out of the whole round of birth and death, because you finally see what you always were. You were the drop, and the drop was never separate from the ocean. **There is no next costume and no next classroom. You are home.**',
+        'So where does all this steering lead? What is the finish line? The answer surprises most newcomers, because it looks past heaven entirely.\n\nIn this picture, even heaven is temporary. It is a pleasant stop that you eventually have to leave, which makes it just another turn of the wheel. The real goal is **moksha**, which means release from the wheel altogether.\n\nMoksha is waking up out of the whole round of birth and death, because you finally see what you always were. You were the drop, and the drop was never separate from the ocean. **There is no next costume and no next classroom. You are home.**',
       deeper: { ref: 'concept:moksha', label: 'Moksha' },
     },
     {
@@ -1122,7 +1113,7 @@ const ACT_WHEEL: FoundationsAct = {
         meaning: 'release — the way off the wheel',
       },
       storyText:
-        'The word comes from the root *muc*, which means to let go. Moksha is not a place you travel to. It is a seeing that sets you loose, the way waking up ends a dream without moving you an inch.\n\nHeaven, in this picture, is just a better seat on the wheel. **Moksha is stepping off.**',
+        'The word comes from the root *muc*, which means to let go. Moksha is a seeing that sets you loose, the way waking up ends a dream without moving you an inch.\n\nHeaven, in this picture, is just a better seat on the wheel. **Moksha is stepping off.**',
       reappears:
         'The last two ideas of this part are both about moksha. One asks whether you must sprint for it, and the answer is no. The other names the four roads that lead there.',
     },
@@ -1130,9 +1121,9 @@ const ACT_WHEEL: FoundationsAct = {
       id: 'f-wheel-river',
       title: 'The river reaches the sea',
       banked: false,
-      takeaway: 'As rivers lose their names in the sea, the freed one loses the walls — the drop comes home to the ocean.',
+      takeaway: 'As rivers lose their names in the sea, the freed self loses its edges — the drop comes home to the ocean.',
       storyText:
-        'What does release actually look like? The Upanishads answer with a picture you already own.\n\nWatch a river reach the sea. For a thousand miles it had a name, two banks, and a shape of its own. At the mouth, the banks fall away, and the water does not die. It simply stops being the river and goes back to being water.\n\nThe Mundaka Upanishad says exactly this. As flowing rivers merge into the sea and lose their name and form, the one who knows is freed.\n\nYou met all of this in Part 3, in the drop, the pot, and the walls. **Moksha is the walls coming down.** It is not the end of you. It is the end of the smallness you mistook for you.',
+        'What does release actually look like? The Upanishads answer with a picture you already own.\n\nWatch a river reach the sea. For a thousand miles it had a name, two banks, and a shape of its own. At the mouth, the banks fall away, and the water does not die. It simply stops being the river and goes back to being water.\n\nThe Mundaka Upanishad says exactly this. As flowing rivers merge into the sea and lose their name and form, the one who knows is freed.\n\nYou met all of this in Part 3, in the drop and the ocean. **Moksha is the drop remembering the ocean.** It is not the end of you. It is the end of the smallness you mistook for you.',
       citation: 'Mundaka Upanishad 3.2.8 — as rivers flow into the sea, losing name and form',
       checks: [
         {
@@ -1173,7 +1164,7 @@ const ACT_WHEEL: FoundationsAct = {
         '**Moksha** — to be free of the whole cycle.',
       ],
       teachingText:
-        'Prosperity is on the list, and so is pleasure. This is not an ascetic religion that grudgingly tolerates the world. **It is a world-affirming religion that keeps an exit door open at the back.**',
+        'Prosperity is on the list, and so is pleasure. **This is a world-affirming religion, one that keeps an exit door open at the back.**',
       citation: 'The purusharthas are a classical framework of the Dharmashastra tradition.',
     },
     {
@@ -1200,9 +1191,9 @@ const ACT_WHEEL: FoundationsAct = {
       id: 'f-wheel-permission',
       title: 'Permission to live well',
       banked: false,
-      takeaway: 'A tradition that lists pleasure among life’s proper aims is not a trap-escape religion — the world is a life to live rightly.',
+      takeaway: 'A tradition that lists pleasure among life’s proper aims treats the world as a life to live well.',
       storyText:
-        'Think about what this list does to the stereotype. The stereotype says that Eastern religion means renouncing everything, and it comes with a cave, a beard, and wanting nothing.\n\nThe purusharthas say otherwise. Build a business honestly, and that is artha, an aim fulfilled. Fall in love, cook a feast, enjoy something beautiful, and that is kama, another aim fulfilled. Neither one needs an apology, as long as dharma frames them.\n\nThe cave is real, but it is a stage of life, not the whole syllabus. Most Hindu lives are lived inside the first three aims, with the fourth kept like a door at the back of the house. It is known, it is respected, and it is walked through when its time comes.',
+        'Think about what this list does to the stereotype. The stereotype says that Eastern religion means renouncing everything, and it comes with a cave, a beard, and wanting nothing.\n\nThe purusharthas say otherwise. Build a business honestly, and that is artha, an aim fulfilled. Fall in love, cook a feast, enjoy something beautiful, and that is kama, another aim fulfilled. Neither one needs an apology, as long as dharma frames them.\n\nThe cave is real, but it belongs to one season of life among several. Most Hindu lives are lived inside the first three aims, with the fourth kept like a door at the back of the house. It is known, it is respected, and it is walked through when its time comes.',
       checks: [
         {
           id: 'chk:foundations:aims',
@@ -1217,7 +1208,7 @@ const ACT_WHEEL: FoundationsAct = {
             },
             { text: 'Wealth is a proper aim, but pleasure is forbidden' },
           ],
-          why: 'The purusharthas put artha and kama on the list of life’s proper goals. This is a world-affirming tradition with an exit door, not an ascetic one with a guilt complex.',
+          why: 'The purusharthas put artha and kama on the list of life’s proper goals. This is a world-affirming tradition with an exit door held open.',
         },
       ],
     },
@@ -1272,7 +1263,7 @@ const ACT_WHEEL: FoundationsAct = {
       banked: false,
       takeaway: 'Four trails climb one mountain. Arguing about the best trail misses the point — the summit is the same.',
       storyText:
-        'Why four roads and not one? Picture a mountain with a temple at the top.\n\nFrom the east, a trail climbs up through villages, and the pilgrims walk it singing. That is bhakti. From the west there is a service road, built and maintained by people who love to work. That is karma yoga. From the north there is a steep scramble for those who have to see the truth for themselves. That is jnana. And from the south there is a silent switchback for those who climb best alone. That is raja.\n\nFour trails, one summit. A lover of God, a tireless volunteer, a philosopher, and a meditator are not four different religions. **They are four hikers, and they meet at the top.**',
+        'Why four roads and not one? Picture a mountain with a temple at the top.\n\nFrom the east, a trail climbs up through villages, and the pilgrims walk it singing. That is bhakti. From the west there is a service road, built and maintained by people who love to work. That is karma yoga. From the north there is a steep scramble for those who have to see the truth for themselves. That is jnana. And from the south there is a silent switchback for those who climb best alone. That is raja.\n\nFour trails, one summit. A lover of God, a tireless volunteer, a philosopher, and a meditator are four hikers on one mountain. **They meet at the top.**',
       checks: [
         {
           id: 'chk:foundations:yogas',
@@ -1331,7 +1322,7 @@ const ACT_FACES: FoundationsAct = {
   ],
   coverImage: COVER_FACES,
   learnItems: [
-    '**The Trimurti** — three jobs, not three ranks',
+    '**The Trimurti** — three jobs, one motion',
     '**Avatars** — when Vishnu comes down',
     '**Shakti** — the power the gods act by',
     '**The family map** — six names that unlock the stories',
@@ -1351,7 +1342,7 @@ const ACT_FACES: FoundationsAct = {
       title: 'The Trimurti',
       takeaway: 'Nobody falls in love with a philosophy — so it grew faces. Start with the great three.',
       storyText:
-        'Part 3 ended with lamps. The one current is given faces that a person can love. Now it is time to meet those faces, starting with the greatest three, who are together called the **Trimurti**.\n\n**Brahma** creates the universe. **Vishnu** preserves it. **Shiva** dissolves it. These are three jobs, not three ranks. No one of them outranks the others, because a universe needs all three motions.\n\nThere is one oddity worth knowing. Brahma, the creator, is barely worshiped anywhere today. Making the world, it seems, was the easy part.',
+        'Part 3 ended with lamps. The one current is given faces that a person can love. Now it is time to meet those faces, starting with the greatest three, who are together called the **Trimurti**.\n\n**Brahma** creates the universe. **Vishnu** preserves it. **Shiva** dissolves it. These are three jobs, and no one of them outranks the others, because a universe needs all three motions.\n\nThere is one oddity worth knowing. Brahma, the creator, is barely worshiped anywhere today. Making the world, it seems, was the easy part.',
       citation: 'The Trimurti as a formal triad is a Puranic development.',
     },
     {
@@ -1377,9 +1368,9 @@ const ACT_FACES: FoundationsAct = {
       id: 'f-faces-breath',
       title: 'The universe breathes',
       banked: false,
-      takeaway: 'Destruction is not evil here — it is the out-breath that makes the next in-breath possible.',
+      takeaway: 'Destruction here is the out-breath that makes the next in-breath possible.',
       storyText:
-        'Why give dissolution a god at all? Because of what ending actually does.\n\nWatch a gardener prune a rose bush. She cuts living wood, and the cutting is not cruelty. It is exactly what lets the bush bloom again next spring. Without the pruning, there is no bloom.\n\nIn this picture, the universe breathes. Creation is the in-breath, preservation is the long holding, and dissolution is the out-breath. Then it breathes in again. Shiva’s job is the out-breath. **Ending is not the opposite of creating. It is what makes room for it.**',
+        'Why give dissolution a god at all? Because of what ending actually does.\n\nWatch a gardener prune a rose bush. She cuts living wood, and that cutting is exactly what lets the bush bloom again next spring. Without the pruning, there is no bloom.\n\nIn this picture, the universe breathes. Creation is the in-breath, preservation is the long holding, and dissolution is the out-breath. Then it breathes in again. Shiva’s job is the out-breath. **Ending is what makes room for creating — the far side of the same motion.**',
       checks: [
         {
           id: 'chk:foundations:shiva-destroyer',
@@ -1390,9 +1381,19 @@ const ACT_FACES: FoundationsAct = {
             { text: 'Because Shiva is weaker than Brahma and Vishnu' },
             { text: 'Because destruction here means dissolving the old to make room for the new', correct: true },
           ],
-          why: 'The universe breathes in and out. Ending is not evil, because it is what clears space for the next creation. Destruction and renewal are one motion.',
+          why: 'The universe breathes in and out. Ending clears space for the next creation, so destruction and renewal are one motion.',
         },
       ],
+    },
+    {
+      id: 'f-faces-shiva',
+      title: 'Shiva',
+      banked: false,
+      takeaway: 'The great ascetic and the cosmic dancer in one — the god who ends a world so the next can begin.',
+      storyText:
+        'You just met Shiva as the third of the Trimurti, the god whose job is dissolution. But for millions of Hindus he is not one department of the divine — he is the whole of it, God entire. And the way they picture him is unlike any other god in this family. Shiva is the great **ascetic**: he sits in deep meditation, alone, high on **Mount Kailash**, a snow-peak in the Himalayas (in present-day Tibet), his body smeared with ash, a crescent moon in his matted hair, a serpent coiled at his neck, and the sacred river **Ganga** pouring down from the top of his head.\n\nThat still, silent figure has an opposite face, and the two together are the heart of Shiva. He is also **Nataraja**, the Lord of the Dance: hair flying, one foot raised, dancing the universe into and out of existence inside a ring of fire. The stillness and the dance are the same god — the one who can sit perfectly quiet, and the one whose movement ends a world so the next one can begin. His **third eye**, kept closed on his forehead, opens only to burn away what has to go.\n\nThe fearsome mountain-god is also, at home, a husband and a father. His wife is the goddess **Parvati** — whose power you are about to meet as Shakti — and together they have two sons: **Ganesha**, the elephant-headed remover of obstacles, and **Kartikeya**, a warrior god.\n\nOne story tells you what the tradition loves in him. When the gods churned the cosmic ocean for its treasures, a poison rose first that could have destroyed all creation. Nobody would touch it — so Shiva drank it himself and held it in his throat, which turned blue. He is the one who swallows what would poison everyone else. Ascetic, dancer, family man, protector: what runs through all of it is transformation — the clearing-away that every new beginning depends on.',
+      citation: 'Shiva Purana; the churning of the ocean (Samudra Manthan) is told in the Puranas and the Mahabharata.',
+      deeper: { ref: 'deity:shiva', label: 'Shiva' },
     },
     {
       id: 'f-faces-way-1',
@@ -1416,7 +1417,7 @@ const ACT_FACES: FoundationsAct = {
         source: 'Bhagavad Gita 4.7',
       },
       teachingText:
-        'Hold onto one fact and half of a beginner’s confusion clears at once. **Rama is Vishnu, and Krishna is Vishnu.** They are not rival gods. They are the same god, come down twice, into two different emergencies.',
+        'Hold onto one fact and half of a beginner’s confusion clears at once. **Rama is Vishnu, and Krishna is Vishnu.** They are the same god, come down twice, into two different emergencies.',
       citation: 'Bhagavad Gita 4.7–8',
       citationLink: 'gita:4',
       deeper: { ref: 'deity:krishna', label: 'Krishna' },
@@ -1461,6 +1462,26 @@ const ACT_FACES: FoundationsAct = {
       ],
     },
     {
+      id: 'f-faces-rama',
+      title: 'Rama',
+      banked: false,
+      takeaway: 'Vishnu born as the perfect prince — the man who kept his word and his duty, whatever it cost him.',
+      storyText:
+        'Like Krishna, **Rama** is **Vishnu** come down into a human life — an avatar. But where Krishna is playful and warm, Rama is the picture of duty done perfectly. He is the eldest son of **Dasharatha**, king of **Ayodhya** (a real city, in the northern Indian state of Uttar Pradesh), and he was born to rule after his father.\n\nOn the very eve of his crowning, everything changed. Because of an old promise his father had been trapped into keeping, Rama was ordered into the forest for fourteen years of exile instead. He could have refused — he had every right, and the people’s love. He simply bowed and went, that same day, without a word of complaint. His devoted wife **Sita** and his loyal brother **Lakshmana** went with him. That single act, duty accepted whatever it costs, is what the whole story is about.\n\nIn the forest, a demon king named **Ravana**, who ruled the island kingdom of **Lanka** (identified with present-day Sri Lanka), kidnapped Sita and carried her across the sea. Rama’s long search for her becomes the heart of the epic. He is helped by **Hanuman**, the mighty monkey-devotee you will meet in a moment, who leaps the ocean to find her. In the end Rama defeats Ravana, frees Sita, and returns home to Ayodhya to be crowned at last — and the rows of lamps that welcomed him back are the reason Hindus light **Diwali** to this day.\n\nRama is remembered as *maryada purushottam*, the perfect man, the one who holds the line. Where Krishna teaches you how to love, Rama shows you how to carry a duty you did not choose, with grace. His whole life is one long answer to a question this track already asked you: what is mine to do?',
+      citation: 'The Ramayana of Valmiki. Rama’s homecoming is the story behind Diwali.',
+      deeper: { ref: 'deity:rama', label: 'Rama' },
+    },
+    {
+      id: 'f-faces-krishna',
+      title: 'Krishna',
+      banked: false,
+      takeaway: 'Vishnu, living a human life — the cowherd child who grew up to become the teacher of the Gita.',
+      storyText:
+        'Start with who Krishna actually is: he is **Vishnu**, the preserver, born into a human body — an avatar, exactly the idea from a few cards ago. Of all the gods, he is the one Hindus tend to love first. To see why, you have to hear how he came to be born.\n\nThere was a cruel king named **Kamsa**. A prophecy had warned him that the eighth child of his own sister, **Devaki**, would one day grow up and kill him. So Kamsa threw Devaki and her husband, **Vasudeva**, into a prison cell, and each time they had a baby, he killed it — seven children, one after another. **Krishna was their eighth child, the one the prophecy meant.** On the night he was born, the impossible happened: the prison locks fell open by themselves, the guards sank into a deep sleep, and Vasudeva slipped out and carried the newborn across a flooding river to a cowherd village, where he could be raised in secret, safe from the king.\n\nSo Krishna did not grow up as a prince plotting revenge. He grew up among cowherds, in the village of **Vrindavan** — and this is a real place you can visit today. It is a town in the northern Indian state of **Uttar Pradesh**, on the banks of the Yamuna river, a few hours south of Delhi, and it remains one of the most visited pilgrimage towns in the whole country, precisely because Krishna is said to have spent his childhood there. In those fields he was barefoot and butter-smeared: herding cattle, stealing butter, and playing a flute that stopped everyone who heard it. In one beloved story, a furious storm-god flooded the village, and the boy Krishna lifted an entire hill, **Govardhan**, on one finger, holding it over his people like an umbrella for seven days and nights. This is the surprising heart of Krishna: God chose to spend his happiest years in the plain, ordinary world, and delighted in every part of it.\n\nKrishna did grow up, and in time a great war came to his people. He took a humble role in it — the **charioteer** who drives another man’s chariot — for a warrior named **Arjuna**. On the morning of battle, Arjuna looked across the field, saw his own cousins and teachers waiting to fight him, and broke down; he could not do it. What Krishna said to steady him *is* the **Bhagavad Gita** — the very conversation you met in Part 6. So the butter-thief of Vrindavan and the calm teacher on the battlefield are one and the same god.\n\nYou will recognize him anywhere: skin the blue-black of a rain cloud, a peacock feather in his hair, a length of yellow silk, and a flute at his lips. And of everything the tradition says about him, one thing matters most. Krishna does not ask you for fear, or for expensive offerings. He asks for love, freely given — and he gives it back.',
+      citation: 'His childhood is told in the Bhagavata Purana; the war and the teaching are in the Mahabharata and the Bhagavad Gita.',
+      deeper: { ref: 'deity:krishna', label: 'Krishna' },
+    },
+    {
       id: 'f-faces-way-2',
       kind: 'waypoint',
       title: 'Part 5 · 2 of 4 banked',
@@ -1472,9 +1493,9 @@ const ACT_FACES: FoundationsAct = {
     {
       id: 'f-faces-shakti',
       title: 'Shakti',
-      takeaway: 'Not one of the gods can act without her. The Goddess is power itself — Shakti.',
+      takeaway: 'Every god acts only through her. The Goddess is power itself — Shakti.',
       storyText:
-        'So far, the faces have all been male. Now comes the correction, and it changes everything. **Not one of those gods can act without her.**\n\n**Shakti** means power. It is energy, capability, the very ability to do anything at all. She is not a god’s wife standing politely to the side. She is the force his actions are made of. The tradition says it bluntly. Shiva without his Shakti is a corpse.\n\nAnd she is one Goddess who wears many tempers. **Parvati is Durga is Kali.** She is the gentle wife, and the lion-riding warrior, and the terrifying one who ends things. For millions of Hindus, She is the supreme reality, full stop.',
+        'So far, the faces have all been male. Now comes the correction, and it changes everything. **Every one of those gods acts only through her.**\n\n**Shakti** means power. It is energy, capability, the very ability to do anything at all. She is the force his actions are made of. The tradition says it bluntly. Shiva without his Shakti is a corpse.\n\nAnd she is one Goddess who wears many tempers. **Parvati is Durga is Kali.** She is the gentle wife, and the lion-riding warrior, and the terrifying one who ends things. For millions of Hindus, She is the supreme reality, full stop.',
       citation: 'Devi Mahatmya — the Goddess as the supreme power',
       deeper: { ref: 'deity:durga', label: 'Durga' },
     },
@@ -1496,9 +1517,9 @@ const ACT_FACES: FoundationsAct = {
       id: 'f-faces-fire',
       title: 'Fire and its heat',
       banked: false,
-      takeaway: 'Fire and its heat are not two things — take the heat away and only a picture of fire is left. So it is with god and Shakti.',
+      takeaway: 'Fire and its heat are one thing — take the heat away and only a picture of fire is left. So it is with god and Shakti.',
       storyText:
-        'How can power itself be a person? The classical image is the nearest fire.\n\nThink of a flame and its heat. They are not two objects. You cannot point at the flame here and its heat over there. And yet, if you could take the heat away, what remained would not be fire at all. It would only be a picture of fire.\n\n**Shakti is the heat.** The god is the flame’s shape, and she is what makes it actually burn. That is why the fiercest forms of the Goddess, like Durga on her lion and Kali with her garland, are not departures from the gentle Parvati. They are the same heat, turned up to what the moment demands.',
+        'How can power itself be a person? The classical image is the nearest fire.\n\nThink of a flame and its heat. They come as one. You cannot point at the flame here and its heat over there. And yet, if you could take the heat away, what remained would only be a picture of fire.\n\n**Shakti is the heat.** The god is the flame’s shape, and she is what makes it actually burn. That is why the fiercest forms of the Goddess, like Durga on her lion and Kali with her garland, are the same heat as the gentle Parvati, turned up to what the moment demands.',
       checks: [
         {
           id: 'chk:foundations:shakti-power',
@@ -1512,6 +1533,16 @@ const ACT_FACES: FoundationsAct = {
           why: 'Shakti means energy, capability, and power. Shiva without her is described as inert. Parvati, Durga, and Kali are all her, and for millions of Hindus, She is the supreme reality.',
         },
       ],
+    },
+    {
+      id: 'f-faces-durga',
+      title: 'Durga',
+      banked: false,
+      takeaway: 'The warrior Goddess the gods made when they could not win alone — Shakti, riding a lion into battle.',
+      storyText:
+        'You have just met **Shakti**, the Goddess as power itself. **Durga** is that power with a sword in her hand. She is the warrior form of the Goddess, and her story means something the tradition takes seriously: when the male gods together could not defeat a certain evil, it took the Goddess to do it.\n\nThe evil was a buffalo-demon named **Mahishasura**, who had won a boon that no man and no god could kill him, and had used it to conquer heaven itself. The gods, beaten, poured all their energy into one place — and out of that combined light rose **Durga**, a radiant woman with many arms, each god placing his own weapon in one of her hands. Riding a **lion**, she met Mahishasura in a battle that raged for days, and struck him down where the assembled gods had failed. That victory is exactly what Hindus celebrate each autumn at **Navaratri** and **Durga Puja**, the great festival of the Goddess, kept most gloriously in eastern India.\n\nRemember what the last card said: Durga, gentle **Parvati**, and fierce **Kali** are not three goddesses but one — the same power in different weather. Parvati is the Goddess at home; Durga is the Goddess who rides out to war; Kali is the Goddess at her most terrifying, when even Durga’s fury is not enough. For millions of Hindus, She — the Goddess, in all these forms — is the supreme reality, full stop.',
+      citation: 'The Devi Mahatmya (part of the Markandeya Purana) tells of Durga and the slaying of Mahishasura.',
+      deeper: { ref: 'deity:durga', label: 'Durga' },
     },
     {
       id: 'f-faces-way-3',
@@ -1529,6 +1560,26 @@ const ACT_FACES: FoundationsAct = {
       storyText:
         'Now put the whole cast on one page. It comes down to six names and how they connect, because the relationships are what make the stories readable.\n\nEvery god is paired with a goddess. Vishnu comes down as **Rama** and as **Krishna**. Shiva and Parvati have a son named **Ganesha**, the elephant-headed one, who is greeted first before anything begins.\n\nAnd off to the side stands **Hanuman**, who can do absolutely anything, and who wants nothing except to serve Rama. The tradition holds him up as its ideal, and that tells you exactly what it admires.',
       deeper: { ref: 'deity:ganesha', label: 'Ganesha' },
+    },
+    {
+      id: 'f-faces-ganesha',
+      title: 'Ganesha',
+      banked: false,
+      takeaway: 'The elephant-headed son of Shiva — the beloved remover of obstacles, greeted first before anything begins.',
+      storyText:
+        '**Ganesha** is the easiest god to recognize and, for many families, the most beloved: a round, cheerful figure with the head of an elephant on the body of a child, a small mouse waiting at his feet. He is the son of **Shiva** and **Parvati**. He is the **remover of obstacles** and the lord of beginnings — which is why he is greeted first, before a wedding, a new business, a journey, an exam, even a prayer to another god. Begin anything at all, and you begin with Ganesha.\n\nHow did he come to have an elephant’s head? The best-loved story goes like this. Parvati shaped a boy from the earth and oils of her own body and set him to guard her door while she bathed. When Shiva came home, the boy — who had never met him — refused to let him pass. In the clash that followed, Shiva struck off the boy’s head. Parvati’s grief was so terrible that Shiva swore to restore him, and sent his attendants for the head of the first creature they met. It was an elephant. Shiva set it on the boy and breathed him back to life, and so Ganesha became their son a second time.\n\nThere is meaning folded into his shape: the great head for wisdom, the wide ears for listening, the small mouth for speaking little, and a single broken tusk — which he is said to have snapped off to use as a pen when he wrote down the vast epic, the **Mahabharata**. He loves sweets, and bowls of **modak** are left for him; his festival, **Ganesh Chaturthi**, fills the streets, especially in western India, and ends with his clay images carried down to the water. Wherever a Hindu begins something and hopes it goes well, Ganesha is the first name spoken.',
+      citation: 'Ganesha’s birth is told in the Shiva Purana and the Ganesha Purana.',
+      deeper: { ref: 'deity:ganesha', label: 'Ganesha' },
+    },
+    {
+      id: 'f-faces-hanuman',
+      title: 'Hanuman',
+      banked: false,
+      takeaway: 'The mighty monkey who can do anything and wants only one thing — to serve Rama. The tradition’s ideal.',
+      storyText:
+        '**Hanuman** is a *vanara*, a divine monkey, and one of the most loved figures in all of Hinduism. He is a son of the wind: immensely strong, able to grow huge or shrink small, to fly, and to lift mountains. But the tradition does not love him for his power. It loves him for what he does with it.\n\nHanuman gave himself, completely, to the service of **Rama**, whom you just met. When Ravana carried Sita off to the island of **Lanka** (present-day Sri Lanka), it was Hanuman who **leaped clear across the ocean** to find her, slipped into the demon’s fortress, and brought Rama word that she was alive. Later, when Rama’s brother lay dying on the battlefield and only a single healing herb from a far-off mountain could save him, Hanuman flew to the mountain — and, unable to tell which herb was the right one, simply lifted the **entire mountain** and carried it back on one hand.\n\nThat is the whole of Hanuman: unlimited strength placed entirely at the service of someone he loves. The tradition holds him up as its ideal, and that choice tells you exactly what it admires — not power for its own sake, but power given in devotion. To this day he is the god people turn to for courage and protection, and his hymn, the **Hanuman Chalisa**, is among the most recited prayers in the country.',
+      citation: 'Hanuman’s deeds are told in the Ramayana; the Hanuman Chalisa is by the poet Tulsidas.',
+      deeper: { ref: 'deity:hanuman', label: 'Hanuman' },
     },
     {
       id: 'f-faces-read-one',
@@ -1594,7 +1645,7 @@ const ACT_LIBRARY: FoundationsAct = {
       title: 'Two shelves',
       takeaway: 'There is no one holy book. There is a library — and it has just two shelves.',
       storyText:
-        'So where are the gods’ stories actually written down? Part 1 warned you that there is no single holy book. There is a whole **library**, and knowing its two shelves is most of what a beginner needs.\n\nThe top shelf is called **shruti**, which means “heard.” It holds the Vedas and, at their end, the **Upanishads**. These texts were received rather than authored, and they carry the deepest authority. Everything in Core Beliefs came from this shelf, including Brahman, atman, and *you are that*.\n\nThe bottom shelf is called **smriti**, which means “remembered.” It holds the Gita, the two epics, and the Puranas, all retold, adapted, and argued with for centuries. The deepest authority sits on the top shelf, but the stories everyone actually knows live on the bottom one.',
+        'So where are the gods’ stories actually written down? Part 1 warned you that there is no single holy book. There is a whole **library**, and knowing its two shelves is most of what a beginner needs.\n\nThe top shelf is called **shruti**, which means “heard.” It holds the Vedas and, at their end, the **Upanishads**. These texts were received as revelation, and they carry the deepest authority. Everything in Core Beliefs came from this shelf, including Brahman, atman, and *you are that*.\n\nThe bottom shelf is called **smriti**, which means “remembered.” It holds the Gita, the two epics, and the Puranas, all retold, adapted, and argued with for centuries. The deepest authority sits on the top shelf, but the stories everyone actually knows live on the bottom one.',
     },
     {
       id: 'f-library-term-shelves',
@@ -1698,7 +1749,7 @@ const ACT_LIBRARY: FoundationsAct = {
       banked: false,
       takeaway: 'Everyone, sooner or later, stands where Arjuna stands: between two duties, with no clean choice.',
       storyText:
-        'Slow the scene down, because the scene is the point.\n\nArjuna is not afraid of dying. He is the best archer alive. What breaks him is seeing. He sees his grandfather Bhishma, who raised him. He sees Drona, who taught him to hold the very bow in his hand. He sees cousins he grew up beside. To win this war means killing them. To walk away means abandoning his brothers and leaving injustice on the throne.\n\nTwo duties, family and justice, are pulling him in opposite directions, and every path costs something he cannot afford.\n\nYou do not need a battlefield to stand where he stands. Think of a job that feeds your family but hollows you out, or a parent who needs care and a career that cannot wait. **The Gita is read at kitchen tables because Arjuna’s field is anywhere a person freezes between two rights.**',
+        'Slow the scene down, because the scene is the point.\n\nArjuna is the best archer alive, and death holds no fear for him. What breaks him is seeing. He sees his grandfather Bhishma, who raised him. He sees Drona, who taught him to hold the very bow in his hand. He sees cousins he grew up beside. To win this war means killing them. To walk away means abandoning his brothers and leaving injustice on the throne.\n\nTwo duties, family and justice, are pulling him in opposite directions, and every path costs something he cannot afford.\n\nYou do not need a battlefield to stand where he stands. Think of a job that feeds your family but hollows you out, or a parent who needs care and a career that cannot wait. **The Gita is read at kitchen tables because Arjuna’s field is anywhere a person freezes between two rights.**',
       checks: [
         {
           id: 'chk:foundations:arjuna',
@@ -1716,6 +1767,21 @@ const ACT_LIBRARY: FoundationsAct = {
             'Arjuna has to fight people he loves, and he freezes. It is not cowardice. It is that both choices are wrong. That is why the Gita travels so well. It is about anyone paralyzed by a decision with no clean way out.',
         },
       ],
+    },
+    {
+      id: 'f-library-recap',
+      title: 'The library, in one page',
+      banked: false,
+      takeaway: 'One library, two shelves — and now you can find your way around all of it.',
+      storyText:
+        'Before you leave the library, put the whole of it on a single map. These few names unlock every Hindu text you will ever hear of.',
+      bullets: [
+        '**The two shelves.** Everything sits on one of two. **Shruti** (“heard”) is the older, higher shelf — the **Vedas**, and at their close the **Upanishads** — received as revelation, carrying the deepest authority. **Smriti** (“remembered”) is the shelf of the stories everyone actually knows: the **Gita**, the two epics, and the Puranas.',
+        '**The two epics** sit on the smriti shelf. The **Ramayana** is the tidy one: one man, Rama, doing right at any cost. The **Mahabharata** is the messy one: a whole family tearing itself apart. One is the ideal; the other is the mirror.',
+        '**The Gita** sits *inside* the Mahabharata — seven hundred verses where Krishna talks the warrior Arjuna back from the edge of despair. It is the most-read text in all of Hinduism, and you now know exactly where it lives.',
+      ],
+      teachingText:
+        'That is the whole library in three lines. A single holy book was never the point — a whole shelf of them was. And now you can tell, from almost any title, which shelf it belongs on.',
     },
   ],
   reflectionQuestions: [],
@@ -1761,9 +1827,9 @@ const ACT_LIVING: FoundationsAct = {
     {
       id: 'f-living-murti',
       title: 'The murti',
-      takeaway: 'None of this is a religion you read. It is one you do — starting by welcoming a guest.',
+      takeaway: 'Above all, this is a religion you do — and it starts by welcoming a guest.',
       storyText:
-        'Remember the first thing this track taught you. Being Hindu is about what you practice, not what you profess. So what does the practicing actually look like? It begins in front of a **murti**, the sculpted form of a god.\n\nCalling a murti an “idol” gets the grammar of the thing completely wrong, and one look at **puja**, which is the word for worship, shows why:',
+        'Remember the first thing this track taught you. Being Hindu comes down to what you practice. So what does the practicing actually look like? It begins in front of a **murti**, the sculpted form of a god.\n\nCalling a murti an “idol” gets the grammar of the thing completely wrong, and one look at **puja**, which is the word for worship, shows why:',
       keyVerse: {
         sanskrit: 'मूर्ति',
         transliteration: 'mūrti',
@@ -1783,7 +1849,7 @@ const ACT_LIVING: FoundationsAct = {
         meaning: 'a form — shaped so the formless can be met',
       },
       storyText:
-        'Part 3 said it first. The formless is hard to love, and a face is not. A murti is that idea, carved in stone or bronze.\n\nIt is not an idol claiming to be god. **It is a form where god agrees to be met.**',
+        'Part 3 said it first. The formless is hard to love, and a face gives love something to hold. A murti is that idea, carved in stone or bronze.\n\n**It is a form where god agrees to be met.**',
       reappears:
         'Darshan, the next idea, is what you go to a murti for.',
     },
@@ -1822,7 +1888,7 @@ const ACT_LIVING: FoundationsAct = {
       title: 'Darshan and prasad',
       takeaway: 'You go to the temple to see the god — and to be seen by them. That is darshan.',
       storyText:
-        'So why go to a temple at all? The answer surprises people, because it is not mainly to ask for things.\n\nYou go for **darshan**, which means seeing. You go to look at the deity, and just as much, **to be looked at in return**. That is why a murti’s eyes are carved large and open, and why the crowd surges forward when the curtain parts. The meeting runs both ways.\n\nAsk a grandmother what she went to the temple for. She will not say that she went to request something. She will say she took darshan. She saw, and she was seen.',
+        'So why go to a temple at all? The answer surprises people, because asking for things is the least of it.\n\nYou go for **darshan**, which means seeing. You go to look at the deity, and just as much, **to be looked at in return**. That is why a murti’s eyes are carved large and open, and why the crowd surges forward when the curtain parts. The meeting runs both ways.\n\nAsk a grandmother what she went to the temple for. She will say she took darshan. She saw, and she was seen.',
     },
     {
       id: 'f-living-term-darshan',
@@ -1842,7 +1908,7 @@ const ACT_LIVING: FoundationsAct = {
       id: 'f-living-exchange',
       title: 'The exchange',
       banked: false,
-      takeaway: 'You bring something, you see, you are seen, you carry something home. Worship here is a loop, not a letter of requests.',
+      takeaway: 'You bring something, you see, you are seen, you carry something home. Worship here is a loop of hospitality.',
       storyText:
         'Put the pieces together and look at the shape of a temple visit.\n\nYou arrive carrying something small, maybe fruit, or flowers, or a coconut. You give it. You stand before the murti, you look, and you are looked at. That is darshan. Then a portion of what was offered comes back to you as **prasad**, the deity’s own share passed onward, which is exactly as intimate as it sounds. You eat it there, or you carry it home to someone who could not come.\n\nNow trace the whole movement. You give, you see, you are seen, you receive, and you carry something home. It is a loop of hospitality, much closer to visiting a beloved elder than to filing a petition. Nobody leaves a request form. Everybody leaves with their hands full.',
       checks: [
@@ -1943,6 +2009,24 @@ const ACT_LIVING: FoundationsAct = {
         },
       ],
     },
+    {
+      id: 'f-living-caste',
+      title: 'Caste, honestly',
+      banked: false,
+      takeaway: 'A real and unfinished injustice — best explained, never defended.',
+      storyText:
+        'The old texts describe society as four broad functions: priests and teachers (**Brahmins**), rulers and soldiers (**Kshatriyas**), traders and farmers (**Vaishyas**), and workers and servers (**Shudras**). One late Vedic hymn pictures the four as parts of a single body. In that ideal, they were roles, meant to match temperament and the stage of a life.\n\nWhat actually developed was different, and far harsher. Over centuries the four **varnas** splintered into thousands of **jatis** — birth-groups you were born into, married within, and could not leave. It set into a fixed hierarchy, propped up by later law-books, with one group, the so-called “untouchables,” pushed outside the system entirely and made to carry its cruelties.\n\nThe tradition has argued against this from the inside for a very long time. The Bhakti poet-saints insisted that devotion, not birth, was all that God ever counted. In the twentieth century **B. R. Ambedkar** — born into an “untouchable” community — led the movement against caste and went on to draft independent India’s constitution, which **abolished untouchability by law**.\n\nNone of that erased it. Caste still shapes lives, especially around marriage and in the villages, and the honest thing is to say so. When a friend asks, you do not have to defend any of it. You can explain it: a social order the tradition itself has spent centuries trying to undo.',
+      citation: 'The four varnas: Purusha Sukta, Rig Veda 10.90. Untouchability abolished: Constitution of India, Article 17.',
+    },
+    {
+      id: 'f-living-beef',
+      title: 'Beef, honestly',
+      banked: false,
+      takeaway: 'Why the cow, and why the caution — the honest version, history and all.',
+      storyText:
+        'The second question is usually about **beef**, so start with why the cow holds the place it does. In an old farming world, the cow gave milk, butter, and ghee; her dung fuelled the fire and fed the fields. She gave, year after year, and asked almost nothing back. The tradition reads that as a kind of motherhood and calls her **gau mata**, cow-mother. Protecting the animal that quietly sustains you sits naturally with **ahimsa**, the non-harming you met in Part 4.\n\nNow the honest history, because half-truths help no one. In the earliest Vedic period cattle were wealth, and they were also sacrificed and eaten, beef included — the old texts themselves show it. The strong turn toward protecting the cow, and away from eating her, came later and deepened over many centuries. So cow reverence is real and ancient, but it is something the tradition grew into, not a rule that was there on the first day.\n\nToday, practice varies more than outsiders expect. Plenty of Hindus eat meat of other kinds; most avoid beef in particular; and some communities and regions — in Kerala, in the Northeast, among many Dalits — do eat it. There is no single Hindu diet handed down to everyone, only a strong and widely shared reluctance around beef.\n\nThe last thing to know is that the cow has become **political**. Cow protection is written into law in many Indian states, and it can flare into real, sometimes violent tension between communities. When the subject comes up, you do not have to take a side to be honest about it: the cow is genuinely revered, the history is more mixed than the slogans allow, and the modern fight is as much about politics as about faith.',
+      citation: 'Vedic-era cattle offerings appear in the Rig Veda and the ritual texts; cow protection is elaborated in later Dharmashastra and Puranic literature.',
+    },
   ],
   reflectionQuestions: [],
   handoff: 'Which leaves only one thing left to do — the thing this was all for.',
@@ -2005,7 +2089,7 @@ const ACT_CAPSTONE: FoundationsAct = {
     ],
     passCount: 4, // 4 of 6 — generous on purpose; the point is that they can say it
     modelAnswer:
-      'Hinduism is less one religion than a family of traditions — no founder, no single book. Behind its many gods it holds that there is one reality, and that your innermost self is not separate from it. Your actions carry consequences across lives, and the goal is not heaven but release from that cycle altogether. What makes someone a Hindu is not a creed but a practice — how they live, worship, and mark the year.',
+      'Hinduism is a family of traditions more than a single religion, with no founder and no one holy book. Behind its many gods it sees a single reality, and it holds that your innermost self is that same reality. Your actions carry consequences across lives, and the goal is release from that cycle altogether — a freedom past even heaven. What makes someone a Hindu is, above all, a practice: how they live, worship, and mark the year.',
   },
   sources: [],
 };
@@ -2046,9 +2130,9 @@ const RECAP_BY_ID: Record<string, string> = {
   'f-name-no-founder': 'No founder, no single book, no one in charge.',
   'f-name-river': 'Even the name is a river, mispronounced.',
   'f-name-sanatana': 'It calls itself Sanatana Dharma — the eternal way.',
-  'f-name-sanskrit': 'Sanskrit was built to be remembered, not read.',
+  'f-name-sanskrit': 'Sanskrit was built for the ear, to be remembered aloud.',
   // What Makes Someone Hindu
-  'f-thread-practice': 'Being Hindu is what you practice, not what you believe.',
+  'f-thread-practice': 'Being Hindu is what you practice — how you live.',
   'f-thread-compare': 'Others ask what you believe; Hinduism asks what you do.',
   'f-thread-streams': 'It branched into four streams without ever splitting.',
   'f-thread-ishta': 'You choose the god you love — your ishta-devata.',
@@ -2061,7 +2145,7 @@ const RECAP_BY_ID: Record<string, string> = {
   'f-claim-gunas': 'Nature is woven from three strands — the gunas.',
   // Karma & Rebirth
   'f-wheel-samsara': 'Death changes the clothes, not the wearer.',
-  'f-wheel-karma': 'Karma means action, not fate.',
+  'f-wheel-karma': 'Karma means action — always yours to change.',
   'f-wheel-dharma': 'Dharma is “what is mine to do?”',
   'f-wheel-ahimsa': 'Ahimsa — cause no harm you don’t have to.',
   'f-wheel-moksha': 'Moksha — getting off the wheel altogether.',
@@ -2073,7 +2157,7 @@ const RECAP_BY_ID: Record<string, string> = {
   'f-faces-shakti': 'The Goddess is power itself — Shakti.',
   'f-faces-family': 'Six names unlock almost any Hindu story.',
   // The Scriptures
-  'f-library-shelves': 'Not one book — a library, on two shelves.',
+  'f-library-shelves': 'A whole library, on just two shelves.',
   'f-library-epics': 'Two epics: one man does right; one family self-destructs.',
   'f-library-gita': 'A soldier lays down his bow — and gets the Gita.',
   // Rituals & Festivals
