@@ -140,7 +140,7 @@ Six stages (`JOURNEY_MODULES`, `ALL_MODULES`), built by `buildJourneyPath()`. Ea
 
 ## 4. Notifications (local today; remote push specced in § 4.1 for wave 2)
 
-All current notifications are **local** — scheduled on-device, no backend, no APNs. Idempotent reschedule-all on every app open. "Fires only after absence" = one-shots scheduled for future days, cancelled+rescheduled on each open.
+All current notifications are **local** — scheduled on-device, no backend, no APNs. Idempotent reschedule-all on every app **foreground** — cold start *and* every real background→active resume (`AppState` listener in App.tsx, throttled to at most once / 2h so app-switching doesn't churn it). Cold-start-only would silently drain the window: on iOS the app stays resident, so a user who only ever resumes it (never relaunches) would never top up the one-shots and eventually hear nothing. "Fires only after absence" = one-shots scheduled for future days, cancelled+rescheduled on each foreground. Reschedule builds the full request list **before** cancelling the old one, so a mid-build throw leaves the existing schedule intact rather than wiping it to zero.
 
 | Type | When | Content | Deep link |
 |---|---|---|---|
@@ -151,23 +151,28 @@ All current notifications are **local** — scheduled on-device, no backend, no 
 
 Tap handling: `navigationRef` + response listener in App.tsx (incl. cold-start via `getLastNotificationResponseAsync`). Permission is requested only at warm moments (onboarding finish, celebrations) and never re-nagged.
 
-### 4.1 Remote push (future — wave 2, not implemented)
+### 4.1 Remote push — iOS win-back (wave 2)
 
-**Why**: local one-shots exhaust after the last app open — the lapsed user, the one notifications exist for, eventually hears nothing. Remote push is the only complete fix. The cheap interim **shipped July 2026** (build 9): 28 Daily Chai one-shots + absence nudges through day 28 + next 4 festivals ≈ 42 pending, comfortably under iOS's 64-pending limit. Decision recorded in the production plan: push stays out of v1.
+**Why**: local one-shots exhaust after the last app foreground — the lapsed user, the one notifications exist for, eventually hears nothing. (The foreground reschedule keeps the window full for users who *return* to the app; it does nothing for the fully-lapsed user who never reopens at all — that gap is what remote push closes.) The cheap interim shipped July 2026 (build 9): ≈42 local one-shots under iOS's 64-pending limit. Wave 2 adds the only complete fix for the **fully-dormant** user: a server-driven **win-back push**.
 
-**Requires**:
-- Backend + device push-token registry — build alongside accounts in wave 2; until accounts land, tokens key to the local anonymous id.
-- Delivery: start with the **Expo Push Service** (`getExpoPushTokenAsync`, server POSTs to Expo's push API — no APNs plumbing). Direct APNs/FCM is the later opt-out path if Expo's service becomes a constraint.
-- Credentials: APNs key on the Apple team that owns `com.tushargarg.dharma` (managed via EAS credentials); FCM key for Android. The push entitlement arrives with the build config — nothing manual in Xcode.
-- Server-side scheduler that reproduces atom content: the **authored/festival/verse** path (`getDailyAtom(date)`) is deterministic per date — needs a build step exporting atoms to JSON so local and remote say the same thing on the same day for free. The **discovery** path is snapshot-dependent (per-user unseen + profile), so the server would either mirror the user's completion/profile state or fall back to the authored path for remote pushes; simplest is remote-only-on-authored-days.
+**What ships (iOS only):** once a user has been silent past the local window, the server pushes **that day's Daily Chai atom**. Android remote push is deferred — it needs an FCM setup (`google-services.json` + FCM V1 key) the app has never had; `registerPushTokenAsync` no-ops off iOS.
 
-**Unlocks**: win-back after 7+ days of silence; festival-day pushes regardless of last open; announcements/content drops; server-side timezone correctness.
+**Trigger:** dormant **30–90 days** (≥30 so remote never duplicates the 28-day local window; ≤90 so we stop nagging the long-gone), at most a **monthly** touch per user. Dormancy is read straight from the already-synced `journey_activity.lastActiveDate` — no separate heartbeat.
 
-**Coexistence rules** (the contract future work must honor):
+**Architecture:**
+- **Token:** `notificationService.registerPushTokenAsync()` (iOS + real device, called on each permission grant and cold start) stores `push_registration` `{token, platform, updatedAt}`; it's a `SYNC_KEYS` member, so `syncService` mirrors it to `user_data` for free. Carries only the opaque Expo token.
+- **Delivery:** the **Expo Push Service** (`getExpoPushTokenAsync({ projectId })` client-side; the function POSTs to `https://exp.host/--/api/v2/push/send`). APNs key managed via EAS credentials; the push entitlement (`aps-environment`) is added by expo-notifications at build — nothing manual in Xcode.
+- **Function:** `supabase/functions/send-winback-push` — a **batch** job with no user JWT, so `verify_jwt = false` and it's guarded by an `x-cron-secret` header (`CRON_SECRET` secret). Service-role: calls the `dormant_push_targets(min, max, cooldown)` SQL function (security-definer, service-role-only, like the `ai_usage` RPC), sends the batch, records `push_winback.last_sent_at` (dedupe), and prunes any token Expo reports `DeviceNotRegistered`.
+- **Content:** `scripts/generate-winback-atoms.mjs` precomputes `getDailyAtom(date)` for ~400 days into a bundled `atoms.json` (esbuild bundles the RN data graph with asset requires stubbed) — the server reproduces the **authored/festival/verse** atom exactly without running RN code. The personalized **discovery** path is deliberately excluded (snapshot-dependent, not server-reproducible). Regenerate + redeploy when atom content changes.
+- **Schedule:** a daily `pg_cron` + `pg_net` job invokes the function (Phase 2). The `push_winback` cooldown makes a daily run idempotent. Fixed server hour for now; per-user timezone is a later unlock.
+
+**Coexistence rules** (satisfied):
 - Local notifications remain the primary channel — offline and no-account users keep working unchanged.
-- No double-fire: the server only sends what the device cannot have pending — i.e., remote takes over after N days of silence, inferred from an app-open heartbeat, and never duplicates the locally scheduled week.
-- Same deep-link payload shape (`{url, festivalId?, ref?}` — `url:'contentref'` carries a content `ref` routed via `navigateToContentRef`) so App.tsx tap handling works unchanged for both channels.
-- Permission UX unchanged (warm-moment ask, never re-nagged); token registration happens only after grant. New AsyncStorage keys for token/consent — append-only, as always.
+- No double-fire: the 30-day threshold sits past the 28-day local window, so remote never duplicates a locally-scheduled notification.
+- Same deep-link payload shape (`{url, festivalId?, ref?}` — `url:'contentref'` carries a content `ref` routed via `navigateToContentRef`), so App.tsx tap handling works unchanged for both channels.
+- Permission UX unchanged (warm-moment ask, never re-nagged); token registration happens only after grant. `push_registration` is append-only, as always.
+
+**Still deferred:** Android remote push (FCM); per-user timezone correctness; personalized discovery-day atoms in remote push; festival-day / announcement / content-drop pushes (the same function can grow to these later).
 
 ## 5. Readers
 

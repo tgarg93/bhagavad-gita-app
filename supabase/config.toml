@@ -418,3 +418,7 @@ verify_jwt = true
 
 [functions.delete-account]
 verify_jwt = true
+
+# Batch cron job, no user JWT — guarded by the x-cron-secret header instead.
+[functions.send-winback-push]
+verify_jwt = false

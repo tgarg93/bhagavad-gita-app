@@ -6,6 +6,8 @@
 // scheduled for FUTURE days and cancelled/rescheduled on every open: they can
 // only ever fire after a day (or more) of absence.
 import * as Notifications from 'expo-notifications';
+import * as Device from 'expo-device';
+import Constants from 'expo-constants';
 import { Platform } from 'react-native';
 import LocalStorageService, { NotificationSettings } from './localStorageService';
 import journeyService from './journeyService';
@@ -49,6 +51,35 @@ class NotificationService {
         importance: Notifications.AndroidImportance.DEFAULT,
       }).catch(() => {});
     }
+    // If permission is already granted (returning user), (re)capture the push
+    // token on cold start so a rotated token stays fresh. Self-guards + silent.
+    this.registerPushTokenAsync();
+  }
+
+  // Register this device's Expo push token so the server can reach it once the
+  // local one-shot window has drained — the win-back path for the fully-dormant
+  // user (product-spec §4.1). iOS-only: Android remote push needs FCM, which the
+  // app doesn't ship, so it no-ops there. Fail-soft — a missing token just means
+  // no remote push, never a broken launch. Cheap + idempotent: skips the write
+  // when the token is unchanged, so it can run on every grant / cold start.
+  async registerPushTokenAsync(): Promise<void> {
+    try {
+      if (Platform.OS !== 'ios' || !Device.isDevice) return; // simulators have no token
+      if (!(await this.hasPermission())) return;
+      const projectId = (Constants.expoConfig?.extra as any)?.eas?.projectId;
+      if (!projectId) return;
+      const { data: token } = await Notifications.getExpoPushTokenAsync({ projectId });
+      if (!token) return;
+      const existing = await LocalStorageService.getPushRegistration();
+      if (existing?.token === token) return; // unchanged — don't churn the sync
+      await LocalStorageService.savePushRegistration({
+        token,
+        platform: 'ios',
+        updatedAt: new Date().toISOString(),
+      });
+    } catch (error) {
+      console.log('[notifications] push token registration failed:', error);
+    }
   }
 
   async getSettings(): Promise<NotificationSettings> {
@@ -80,6 +111,7 @@ class NotificationService {
         if (!settings.permissionAsked) {
           await LocalStorageService.saveNotificationSettings({ ...settings, permissionAsked: true });
         }
+        this.registerPushTokenAsync();
         await this.rescheduleAll();
         return true;
       }
@@ -87,6 +119,7 @@ class NotificationService {
       const { status } = await Notifications.requestPermissionsAsync();
       await LocalStorageService.saveNotificationSettings({ ...settings, permissionAsked: true });
       if (status === 'granted') {
+        this.registerPushTokenAsync();
         await this.rescheduleAll();
         return true;
       }
@@ -103,8 +136,12 @@ class NotificationService {
     try {
       if (!(await this.hasPermission())) return;
       const settings = await this.getSettings();
-      await Notifications.cancelAllScheduledNotificationsAsync();
-      let scheduled = 0;
+
+      // Build the full request list FIRST, then cancel + re-add. If anything in
+      // the content build throws, we return with the existing schedule intact
+      // rather than having already wiped it — a mid-build failure must never
+      // leave the user with zero notifications.
+      const requests: Notifications.NotificationRequestInput[] = [];
 
       // 1) Morning Daily Chai — 28 one-shots, each with that day's atom hook,
       //    tapping deep-links straight into the content it names. Four weeks (not
@@ -119,7 +156,7 @@ class NotificationService {
           const fireDate = at(daysFromNow(day), 8, 0);
           if (fireDate.getTime() <= Date.now()) continue; // today 8am already past
           const atom = buildDailyAtom(fireDate, snapshot);
-          await Notifications.scheduleNotificationAsync({
+          requests.push({
             content: {
               title: '☕ Your chai is ready',
               body: atom.hook,
@@ -134,7 +171,6 @@ class NotificationService {
               date: fireDate,
             },
           });
-          scheduled++;
         }
       }
 
@@ -143,7 +179,7 @@ class NotificationService {
         const next = await journeyService.getNextUnfinished();
         if (next) {
           for (const day of [1, 3, 7, 14, 21, 28]) {
-            await Notifications.scheduleNotificationAsync({
+            requests.push({
               content: {
                 title: 'Your path awaits 🛕',
                 body: `Next step: ${next.title}. A few quiet minutes is all it takes.`,
@@ -154,7 +190,6 @@ class NotificationService {
                 date: at(daysFromNow(day), 19, 0),
               },
             });
-            scheduled++;
           }
         }
       }
@@ -166,7 +201,7 @@ class NotificationService {
           if (!start) continue;
           const threeBefore = at(new Date(start.getTime() - 3 * 24 * 60 * 60 * 1000), 9, 0);
           if (threeBefore.getTime() > Date.now()) {
-            await Notifications.scheduleNotificationAsync({
+            requests.push({
               content: {
                 title: `${festival.emoji} ${festival.name} is in 3 days`,
                 body: 'Read the story and get ready to celebrate.',
@@ -174,11 +209,10 @@ class NotificationService {
               },
               trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: threeBefore },
             });
-            scheduled++;
           }
           const morningOf = at(start, 8, 30);
           if (morningOf.getTime() > Date.now()) {
-            await Notifications.scheduleNotificationAsync({
+            requests.push({
               content: {
                 title: `${festival.emoji} Today is ${festival.name}!`,
                 body: festival.significance,
@@ -186,7 +220,6 @@ class NotificationService {
               },
               trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: morningOf },
             });
-            scheduled++;
           }
         }
       }
@@ -195,7 +228,7 @@ class NotificationService {
       if (settings.streak) {
         const { streak } = await journeyService.getStreak();
         if (streak >= 1) {
-          await Notifications.scheduleNotificationAsync({
+          requests.push({
             content: {
               title: `🔥 ${streak}-day streak on the line`,
               body: 'One small step tonight keeps your journey unbroken.',
@@ -206,11 +239,16 @@ class NotificationService {
               date: at(daysFromNow(1), 21, 0),
             },
           });
-          scheduled++;
         }
       }
 
-      console.log('[notifications] scheduled', scheduled, 'local notifications');
+      // Requests built without throwing — now it's safe to swap the schedule.
+      await Notifications.cancelAllScheduledNotificationsAsync();
+      for (const request of requests) {
+        await Notifications.scheduleNotificationAsync(request);
+      }
+
+      console.log('[notifications] scheduled', requests.length, 'local notifications');
     } catch (error) {
       console.log('[notifications] reschedule failed:', error);
     } finally {

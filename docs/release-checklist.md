@@ -53,6 +53,7 @@ Manual smoke tests until automated coverage lands (Wave 2). Run the **Simulator 
 - [ ] Narration audible with the **silent switch on**
 - [ ] Notification permission prompt appears at onboarding finish; next-morning "☕ Your chai is ready" arrives at 8:00 and **deep-links to Home**
 - [ ] Journey nudge deep-links to the path (test: set device clock or wait)
+- [ ] **Remote win-back push** (iOS, physical device): after granting notifications a `push_registration` row appears in `user_data`; a manual `send-winback-push` invoke (backdate `journey_activity.lastActiveDate` ≥30d, POST with `x-cron-secret`) delivers "☕ Your chai is ready" and the tap deep-links to the atom's content — and returns **nobody** when last-active < 30d (no double-fire with local)
 - [ ] App icon, display name, splash correct on the home screen
 
 ## Ship

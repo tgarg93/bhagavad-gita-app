@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { AppState, AppStateStatus } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as Sentry from '@sentry/react-native';
@@ -87,7 +88,28 @@ function App() {
         if (response) navigateFromNotification(response.notification.request.content.data as any);
       })
       .catch(() => {});
-    return () => tapSub.remove();
+
+    // Top up the one-shot notification window on every real foreground resume.
+    // The schedule is 28 days of future-dated one-shots, but the mount effect
+    // above only runs on a COLD start — on iOS the app stays resident, so weeks
+    // of warm resumes would otherwise drain the window to zero and everything
+    // goes silent. Throttled so rapid app-switching doesn't churn it.
+    let prevAppState = AppState.currentState;
+    let lastForegroundReschedule = Date.now(); // mount already reschedules
+    const RESCHEDULE_THROTTLE_MS = 2 * 60 * 60 * 1000; // 2h
+    const appStateSub = AppState.addEventListener('change', (next: AppStateStatus) => {
+      const resumed = prevAppState.match(/inactive|background/) && next === 'active';
+      prevAppState = next;
+      if (!resumed) return;
+      if (Date.now() - lastForegroundReschedule < RESCHEDULE_THROTTLE_MS) return;
+      lastForegroundReschedule = Date.now();
+      journeyService.touchActivity().then(() => notificationService.rescheduleAll());
+    });
+
+    return () => {
+      tapSub.remove();
+      appStateSub.remove();
+    };
   }, []);
 
   // Handle splash animation completion

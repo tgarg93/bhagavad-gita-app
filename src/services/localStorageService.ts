@@ -112,6 +112,14 @@ export const DEFAULT_NOTIFICATION_SETTINGS: NotificationSettings = {
   streak: true,
 };
 
+// Expo push token, mirrored to the server (SYNC_KEYS) so the win-back push
+// function can reach a dormant device. iOS-only today (Android push needs FCM).
+export interface PushRegistration {
+  token: string; // ExponentPushToken[...]
+  platform: 'ios' | 'android';
+  updatedAt: string; // ISO
+}
+
 // Device-calendar sync bookkeeping (deviceCalendarService). Distinct from
 // syncService — that's the push-only Supabase mirror; this is local-only
 // state about what's been written into the OS calendar.
@@ -234,6 +242,7 @@ class LocalStorageService {
     LEVEL_LAST_CELEBRATED: 'level_last_celebrated',
     PRAYER_RECITATIONS: 'prayer_recitations',
     FOUNDATIONS_PROGRESS: 'foundations_progress',
+    PUSH_REGISTRATION: 'push_registration',
   };
 
   private static readonly TOTAL_GITA_VERSES = 700;
@@ -622,6 +631,27 @@ class LocalStorageService {
       await AsyncStorage.setItem(this.KEYS.NOTIFICATION_SETTINGS, JSON.stringify(settings));
     } catch (error) {
       console.error('Error saving notification settings:', error);
+    }
+  }
+
+  // ——— Push registration (Expo token, synced to the server) ———
+
+  static async getPushRegistration(): Promise<PushRegistration | null> {
+    try {
+      const json = await AsyncStorage.getItem(this.KEYS.PUSH_REGISTRATION);
+      if (json) return JSON.parse(json);
+    } catch (error) {
+      console.error('Error getting push registration:', error);
+    }
+    return null;
+  }
+
+  static async savePushRegistration(reg: PushRegistration) {
+    // setAndSync → mirrored to user_data so the win-back function can read it.
+    try {
+      await this.setAndSync(this.KEYS.PUSH_REGISTRATION, JSON.stringify(reg));
+    } catch (error) {
+      console.error('Error saving push registration:', error);
     }
   }
 

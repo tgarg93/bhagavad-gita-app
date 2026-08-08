@@ -27,6 +27,14 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: "com.tushargarg.dharma",
+      // Remote push (win-back, §4.1). Declared here so a future `expo prebuild`
+      // regenerates the entitlement; the committed ios/Dharma.entitlements
+      // carries it for the current build (EAS builds the committed native dir
+      // without re-running prebuild). 'development' → archive builds promote to
+      // production APNs automatically at signing.
+      entitlements: {
+        "aps-environment": "development",
+      },
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
         // Keep narration playing when the app is backgrounded / the phone locks
@@ -64,6 +72,9 @@ export default {
       sentryDsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
       posthogApiKey: process.env.EXPO_PUBLIC_POSTHOG_API_KEY,
       posthogHost: process.env.EXPO_PUBLIC_POSTHOG_HOST,
+      eas: {
+        projectId: "0cbde64b-e5b1-4bce-bdcd-e723aecb1a57"
+      }
     }
   }
 };

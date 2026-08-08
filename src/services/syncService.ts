@@ -14,9 +14,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppState } from 'react-native';
 import { supabase, ensureSignedIn } from './supabaseClient';
 
-// The 11 synced keys (see the production plan for the per-key rationale).
+// The synced keys (see the production plan for the per-key rationale).
 // Deliberately device-local: notification_settings, preferences, analytics,
 // reader positions, audio positions, the legacy current-user record.
+// push_registration rides this mirror so the win-back push function can reach a
+// dormant device (product-spec §4.1) — it carries only the opaque Expo token.
 export const SYNC_KEYS = [
   'bhagavad_gita_user_progress',
   'bhagavad_gita_study_notes',
@@ -29,6 +31,7 @@ export const SYNC_KEYS = [
   'journey_activity',
   'daily_chai_last_opened',
   'level_last_celebrated',
+  'push_registration',
 ] as const;
 
 const SYNC_STATE_KEY = 'sync_state_v1';
